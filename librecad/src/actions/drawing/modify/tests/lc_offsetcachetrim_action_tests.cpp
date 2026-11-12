@@ -1854,21 +1854,24 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         return false;
     };
     std::size_t fileIndex = 0;
+    for (const unsigned profileKind : {0u, 1u})
     for (const double scale : {.1, 1.0, 10.0})
     for (const unsigned cutterKind : {0u, 1u, 2u})
     for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(scale, cutterKind, parabolaFirst);
-        const double distance = .51 * scale;
+        CAPTURE(profileKind, scale, cutterKind, parabolaFirst);
+        const double distance = (profileKind == 0 ? .51 : -2.295) * scale;
         const RS_Vector translation{2 * scale, -scale};
         const auto mapPoint = [&](RS_Vector point) {
             point *= scale;
             return RS_Vector{cosine * point.x - sine * point.y,
                              sine * point.x + cosine * point.y} + translation;
         };
-        const LC_ParabolaData sourceData{{mapPoint({-1, 1}), mapPoint({0, -1}), mapPoint({1, 1})}};
+        const LC_ParabolaData sourceData = profileKind == 0
+            ? LC_ParabolaData{{mapPoint({-1, 1}), mapPoint({0, -1}), mapPoint({1, 1})}}
+            : LC_ParabolaData{{mapPoint({-1, 0}), mapPoint({0, 1}), mapPoint({2, 0})}};
         Drawing<true> f;
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, distance, false);
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {100, 0}, 1, 0, 1, false});
+        auto initial = LC_OffsetCurve::create(seed, std::abs(distance), distance < 0);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
@@ -1877,11 +1880,12 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
         const auto direct = LC_CurveOffset::buildDirectBranches(*parabola,
-            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance),
-            LC_CurveOffset::makeDirectOptions(*parabola, distance, 1e-4),
+            LC_CurveOffset::makeSideRequest(distance < 0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                            std::abs(distance)),
+            LC_CurveOffset::makeDirectOptions(*parabola, std::abs(distance)),
             LC_CurveOffset::makeDirectSourceBudget());
         REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
-        REQUIRE(direct.branches.size() == 3);
+        REQUIRE(direct.branches.size() == (profileKind == 0 ? 3u : 2u));
 
         UpdateSourceProbe update(&f.context);
         update.init(0);
@@ -1967,8 +1971,8 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         for (const auto format : formats) {
             const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4")
-                    .arg(scale).arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
+                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4-%5")
+                    .arg(profileKind).arg(scale).arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
@@ -1995,7 +1999,7 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             for (const auto* entity : reopenedEntities)
                 if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
                     actual.push_back(entity);
-            CAPTURE(scale, cutterKind, parabolaFirst, format);
+            CAPTURE(profileKind, scale, cutterKind, parabolaFirst, format);
             REQUIRE(actual.size() == expected.size());
             std::vector<bool> consumed(actual.size(), false);
             for (const auto* sourceEntity : expected) {
