@@ -471,7 +471,9 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
         RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const std::size_t transformIndex = GENERATE(std::size_t{0}, std::size_t{1}, std::size_t{2});
-    const bool closed = GENERATE(false, true);
+    const std::size_t profileIndex = GENERATE(std::size_t{0}, std::size_t{1}, std::size_t{2}, std::size_t{3},
+        std::size_t{4}, std::size_t{5}, std::size_t{6}, std::size_t{7}, std::size_t{8}, std::size_t{9});
+    const bool closed = (profileIndex >= 4 && profileIndex <= 7) || profileIndex == 9;
     const bool towardCentre = GENERATE(false, true);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
 #ifdef DWGSUPPORT
@@ -495,7 +497,13 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    const double distance = (closed ? .2 : .02) * scale;
+    const double gap = profileIndex < 4 ? 2e-4
+        : profileIndex < 8 ? 2e-3
+        : closed ? 5.1e-4 : 5.1e-5;
+    const double distanceScale = profileIndex < 4 ? .002
+        : profileIndex < 8 ? .02
+        : closed ? .2 : .02;
+    const double distance = distanceScale * scale;
     auto* target = native(graphic, distance, towardCentre);
     target->setLayer(graphic.findLayer("0"));
     const RS_Pen pen(RS_Color(255, 0, 0), RS2::WidthDefault, RS2::SolidLine);
@@ -505,11 +513,25 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
 
     LC_SplinePointsData data{closed, false};
     data.fitTolerance = 1e-8 * scale;
-    const double gap = closed ? 5.1e-4 : 5.1e-5;
-    if (closed)
+    if (profileIndex == 0)
+        data.splinePoints = {{0, 0}, {gap, 0}, {1, 1}, {2, 0}, {3, 1}};
+    else if (profileIndex == 1 || profileIndex == 3)
+        data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+    else if (profileIndex == 2)
+        data.splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3 + gap, 1}};
+    else if (profileIndex == 4)
+        data.splinePoints = {{0, 0}, {gap, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    else if (profileIndex == 5)
+        data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    else if (profileIndex == 6)
+        data.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {13 + gap, 8}, {4, 13}, {-3, 8}};
+    else if (profileIndex == 7)
+        data.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, gap}};
+    else if (closed)
         data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
     else
         data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+    if (profileIndex == 3) std::reverse(data.splinePoints.begin(), data.splinePoints.end());
     for (RS_Vector& point : data.splinePoints) {
         point.x = origin.x + scale * point.x;
         point.y = origin.y + scale * (reflected ? -point.y : point.y);
@@ -536,7 +558,8 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     REQUIRE(updateAction);
     updateAction->setSourceKind(SourceKind::SplinePoints);
     const RS_Vector pick = data.splinePoints[2];
-    CAPTURE(format, closed, towardCentre, scale, origin.x, origin.y, reflected, distance, pick.x, pick.y);
+    CAPTURE(format, profileIndex, closed, towardCentre, scale, origin.x, origin.y, reflected,
+            gap, distance, pick.x, pick.y);
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
     mouse(*update, view, pick, true);
     lc::test::awaitUpdate(*updateAction);
