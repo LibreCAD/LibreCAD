@@ -2430,7 +2430,6 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
     for (const double sourceBulge : {1.0, .5})
         for (const bool addThirdSpan : {false, true})
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
-        if (addThirdSpan && sourceBulge != 1.0) continue;
         CAPTURE(sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});

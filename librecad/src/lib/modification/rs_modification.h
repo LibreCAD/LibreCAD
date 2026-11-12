@@ -440,7 +440,8 @@ struct LC_TrimResult {
 struct LC_StoredCacheTrimOptions {
     LC_OffsetCacheTrim::Limits kernel;
     LC_OffsetCacheTrim::Cancellation cancellation;
-    std::size_t maxOutputEntities = 4;
+    static constexpr std::size_t maxOutputEntitiesLimit = 16;
+    std::size_t maxOutputEntities = maxOutputEntitiesLimit;
     std::size_t maxDisplayEntities = kDefaultOffsetDeepEntitiesPerSource;
 };
 

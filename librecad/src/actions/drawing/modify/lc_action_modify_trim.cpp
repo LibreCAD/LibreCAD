@@ -556,12 +556,15 @@ void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrim
     auto* limit = work->nested ? work->nestedOperand.get() : work->limit;
     const auto result = RS_Modification::trimStoredCachePrepared(*m_document, *work->target, work->targetPick,
         *limit, work->limitPick, m_both, batch, *receipt, work->options);
-    std::array<std::unique_ptr<RS_Entity>, 4> owners;
-    if (batch.entitiesToAdd.size() > qsizetype(owners.size())) {
-        for (auto* entity : std::as_const(batch.entitiesToAdd)) delete entity;
+    if (batch.entitiesToAdd.size() > qsizetype(LC_StoredCacheTrimOptions::maxOutputEntitiesLimit)) {
+        qDeleteAll(batch.entitiesToAdd);
+        batch.entitiesToAdd.clear();
         throw std::runtime_error("Trim preview output exceeded");
     }
-    for (qsizetype i = 0; i < batch.entitiesToAdd.size(); ++i) owners[std::size_t(i)].reset(batch.entitiesToAdd[i]);
+    std::vector<std::unique_ptr<RS_Entity>> owners;
+    try { owners.reserve(std::size_t(batch.entitiesToAdd.size())); }
+    catch (...) { qDeleteAll(batch.entitiesToAdd); batch.entitiesToAdd.clear(); throw; }
+    for (auto* entity : std::as_const(batch.entitiesToAdd)) owners.emplace_back(entity);
     if (!alive) return;
     if (!result.result || !currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
     deletePreviewAndHighlights();
@@ -600,12 +603,15 @@ void LC_ActionModifyTrim::completeNativeTrim(const std::shared_ptr<NativeTrimWor
     LC_DocumentModificationBatch batch;
     const auto result = RS_Modification::trimStoredCachePrepared(*m_document, *work->target, work->targetPick,
         *work->limit, work->limitPick, m_both, batch, *receipt, work->options);
-    std::array<std::unique_ptr<RS_Entity>, 4> owners;
-    if (batch.entitiesToAdd.size() > qsizetype(owners.size())) {
-        for (auto* entity : std::as_const(batch.entitiesToAdd)) delete entity;
+    if (batch.entitiesToAdd.size() > qsizetype(LC_StoredCacheTrimOptions::maxOutputEntitiesLimit)) {
+        qDeleteAll(batch.entitiesToAdd);
+        batch.entitiesToAdd.clear();
         throw std::runtime_error("Trim output exceeded");
     }
-    for (qsizetype i = 0; i < batch.entitiesToAdd.size(); ++i) owners[std::size_t(i)].reset(batch.entitiesToAdd[i]);
+    std::vector<std::unique_ptr<RS_Entity>> owners;
+    try { owners.reserve(std::size_t(batch.entitiesToAdd.size())); }
+    catch (...) { qDeleteAll(batch.entitiesToAdd); batch.entitiesToAdd.clear(); throw; }
+    for (auto* entity : std::as_const(batch.entitiesToAdd)) owners.emplace_back(entity);
     if (!alive) return;
     if (m_actionData->work != work) return;
     if (!result.result) {

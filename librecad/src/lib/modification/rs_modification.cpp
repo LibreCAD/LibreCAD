@@ -2994,7 +2994,7 @@ LC_TrimResult RS_Modification::trimStoredCacheImpl(RS_Document& document, RS_Ent
         result.result = false; result.cacheRefusal = reason; return result;
     };
     constexpr std::size_t memberCap = std::size_t{1} << 20;
-    const auto outputCap = std::min<std::size_t>(options.maxOutputEntities, 4);
+    const auto outputCap = std::min(options.maxOutputEntities, LC_StoredCacheTrimOptions::maxOutputEntitiesLimit);
     const auto displayCap = std::min(options.maxDisplayEntities, kDefaultOffsetDeepEntitiesPerSource);
     // Membership is checked by POINTER before dereferencing a replacement
     // source. No countDeep(), recursive findEntity(), native clone or C call.
