@@ -37274,6 +37274,8 @@ Each of the 12 worker-generated caches is round-tripped through R14 DXF,
 R2000 DXF/DWG, R2007 DWG, and R2018 DWG, for 60 application save/reopens. The
 available LibreDWG reader independently parses and geometry-checks all 36 DWG
 files. The focused test passes 17,881 assertions; `git diff --check` passes.
+The full `[lc-offsetcurve][worker-kernel][fit-points]` selection passes
+21,859 assertions across seven cases on the current checkout.
 After this expansion, the full `[lc-offsetcurve][worker-client][fit-points]`
 selection also passes 59,476 assertions across four cases.
 
