@@ -113,10 +113,13 @@ implementation slice is opened by this clarification. Continue Slice 4 for
 unqualified family variants through generation, worker/cache, trimming and
 applicable DXF/DWG persistence, and Slice 5 for visible interaction and
 delivery acceptance. Picker availability alone does not close those gates.
-The focused headless source-picker rerun on code revision `150616aa5` passes
-14,831 assertions across 43 cases (`librecad_tests
+The focused headless source-picker rerun on the current code passes 14,831
+assertions across 43 cases (`librecad_tests
 '[gui][dialog][offsetcurve][source]'`); it is automated evidence, not visible
-GUI acceptance.
+GUI acceptance. The latest request is therefore recorded as a reconfirmation,
+not an unimplemented picker change. The same audit found that Trim admitted only
+ellipse-backed editable definitions despite the general-source update action
+accepting typed hyperbolas; see section 1013 for the targeted repair and test.
 
 **Scope reconfirmed (2026-11-11):** “Expand source curve support to all
 supported types” means keep replacement available across the complete current
@@ -38133,3 +38136,32 @@ The `librecad_tests` target builds and `git diff --check` passes. This closes
 only the stated similarity transforms, ratios and intervals. Nonuniform or
 arbitrary transformations, additional parameter bounds, visible trim
 interaction, and ODA/AutoCAD acceptance remain open.
+
+## 1013. Reconfirm Source-Type Switching and Trim Typed Hyperbolas (2026-11-12)
+
+The latest source-widget request is already met by the Properties replacement
+flow: its selector is populated from `LC_OffsetSourceGeometry::SupportedKinds`,
+switching a family refreshes the eligible candidates without changing the
+stored source, and the existing source indication remains until the candidate
+passes asynchronous preparation. The current nine-kind inventory includes a
+distinct parabola entry. The focused picker regression suite was rerun and
+passes 14,831 assertions across 43 cases. This remains headless evidence; the
+visible-GUI acceptance gate stays open.
+
+The same end-to-end audit exposed an adjacent support gap: the Trim action
+rejected a valid generalized-source native offset because its native-ready
+predicate only admitted ellipse definitions. Code commit `fec4d929b` allows a
+consistent generalized source definition through the same owner/cache checks.
+Its regression exercises Properties Update from Source with a bounded thin
+hyperbola, removes the original source, performs the real asynchronous Trim
+action against a cutter, verifies atomic demotion to a plain spline fragment,
+checks undo/redo, and compares R2018 DXF save/reopen geometry.
+
+Validation: the targeted regression passes 40 assertions; all offset trim-action
+tests pass 17,545 assertions across 69 cases; and the source-picker selector
+above passes. The CMake `librecad_tests` target builds and `git diff --check`
+passes. This covers one bounded thin-hyperbola profile through Properties trim,
+not all hyperbola parameters, other generalized source families, visible GUI,
+or external ODA/AutoCAD validation. Continue Slice 4's family/variant matrix
+and Slice 5 acceptance gates; do not treat the widget's complete type list as
+proof that every family can yet be trimmed or round-tripped.
