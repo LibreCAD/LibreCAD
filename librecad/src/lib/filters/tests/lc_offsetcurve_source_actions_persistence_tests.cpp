@@ -469,6 +469,8 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     lc::test::QuietLog quiet;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
         RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const std::size_t transformIndex = GENERATE(std::size_t{0}, std::size_t{1}, std::size_t{2});
+    const bool closed = GENERATE(false, true);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
 #ifdef DWGSUPPORT
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
@@ -480,21 +482,36 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    view.getViewPort()->setOffsetAndFactor(20, 20, 30.);
+    const std::array<double, 3> scales{{1e-4, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> origins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    const double scale = scales[transformIndex];
+    const RS_Vector origin = origins[transformIndex] * scale;
+    const bool reflected = transformIndex == 2;
+    const double zoom = 30.0 / scale;
+    view.getViewPort()->setOffsetAndFactor(qRound(200.0 - origin.x * zoom),
+                                          qRound(200.0 - origin.y * zoom), zoom);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    auto* target = native(graphic, .02);
+    const double distance = (closed ? .2 : .02) * scale;
+    auto* target = native(graphic, distance);
     target->setLayer(graphic.findLayer("0"));
     const RS_Pen pen(RS_Color(255, 0, 0), RS2::WidthDefault, RS2::SolidLine);
     target->setPen(pen);
     const auto expectedDistance = target->definition().towardCentre
         ? -target->definition().distance : target->definition().distance;
 
-    LC_SplinePointsData data{false, false};
-    data.fitTolerance = 1e-8;
-    data.splinePoints = {{10, -20}, {11, -21}, {11.000051, -21.000051},
-                         {12, -20}, {13, -21}};
+    LC_SplinePointsData data{closed, false};
+    data.fitTolerance = 1e-8 * scale;
+    const double gap = closed ? 5.1e-4 : 5.1e-5;
+    if (closed)
+        data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    else
+        data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+    for (RS_Vector& point : data.splinePoints) {
+        point.x = origin.x + scale * point.x;
+        point.y = origin.y + scale * (reflected ? -point.y : point.y);
+    }
     const LC_OffsetSourceGeometry expectedSource{data};
     REQUIRE(expectedSource.isWellFormed());
     auto sourceOwner = expectedSource.makeEntity();
@@ -517,6 +534,7 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     REQUIRE(updateAction);
     updateAction->setSourceKind(SourceKind::SplinePoints);
     const RS_Vector pick = data.splinePoints[2];
+    CAPTURE(format, closed, scale, origin.x, origin.y, reflected, distance, pick.x, pick.y);
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
     mouse(*update, view, pick, true);
     lc::test::awaitUpdate(*updateAction);
