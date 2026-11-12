@@ -39782,3 +39782,18 @@ refusals recorded in sections 1080 and 1085-1086 for these exact two parabola
 profiles, distances, and transverse line cutters. Other cusp roots/control
 nets, cutter families, wider distance/transform matrices, visible GUI,
 cross-platform builds, and external-CAD acceptance remain open.
+
+## 1088. Revalidate Recursive qmake6 After Cusp Trim Changes (2026-11-12)
+
+At code/test/plan head `37b6bb4d6`, the recursive qmake6 Release build in
+`/private/tmp/offset2961-qmake6-current` completed `make -j6` successfully
+against this worktree, linking the LibreCAD application and native offset
+worker. An immediate second recursive `make -j6` also exited 0. The build used
+Qt 6.12.0, macOS ARM64, Xcode SDK 27.0, and a 14.4 deployment target; qmake
+does not build or run the CMake trim regression target.
+
+Existing warnings include the absent
+`/private/tmp/libdxfrw-cargo/env` shell startup script and missing aggregate
+field initializers in trim and DWG metadata code. They did not prevent the
+application/worker link. This is current-head qmake6 integration evidence, not
+a clean-tree build, visible GUI, another-platform, or external-CAD acceptance.
