@@ -106,7 +106,11 @@ struct Checked {
  * as hidden, or at a transition.
  */
 Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, const double t0, const double t1,
-              const double d, double visibleFrom = -1.0) {
+              const double d, double visibleFrom = -1.0,
+              const std::function<double(const RS_Vector&)>& sourceDistance = {}) {
+    const auto distanceToSource = [&](const RS_Vector& point) {
+        return sourceDistance ? sourceDistance(point) : distanceTo(source, t0, t1, point);
+    };
     if (visibleFrom < 0.0) {
         visibleFrom = d * (1.0 - 1e-4);
     }
@@ -120,7 +124,7 @@ Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, 
                 chords.emplace_back(previous, p);
                 previous = p;
                 if (k % 32 == 0) {
-                    result.nearestKept = std::min(result.nearestKept, distanceTo(source, t0, t1, p));
+                    result.nearestKept = std::min(result.nearestKept, distanceToSource(p));
                 }
             }
         }
@@ -133,7 +137,7 @@ Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, 
             continue; // no normal, where the source stands still
         }
         const RS_Vector q = c.point + RS_Vector{-c.first.y, c.first.x} / c.first.magnitude() * trimmed.signedDistance;
-        if (distanceTo(source, t0, t1, q) < visibleFrom) {
+        if (distanceToSource(q) < visibleFrom) {
             continue; // hidden, or at a transition
         }
         double nearest = RS_MAXDOUBLE;
@@ -350,25 +354,34 @@ TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
         data.splinePoints = std::move(fitPoints);
         return data;
     };
-    const LC_SplinePointsData profile =
-        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}});
+    const std::array<LC_SplinePointsData, 2> profiles{{
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}})
+    }};
 
-    LC_SplinePoints source{nullptr, profile};
-    REQUIRE_FALSE(source.getData().controlPoints.empty());
-    REQUIRE(LC_OffsetSourceGeometry::capture(source));
-    const double endParameter = static_cast<double>(source.getSegmentCount());
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        REQUIRE_FALSE(source.getData().controlPoints.empty());
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {0.2, 0.5}) {
-            CAPTURE(side, distance);
-            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(result.branches.empty());
-            const double tolerance =
-                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
-            const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
-            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
-            CHECK(checked.worstMissing <= 2.0 * tolerance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance,
+                                              -1.0, sourceDistance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
         }
     }
 }
