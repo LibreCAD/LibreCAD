@@ -1601,7 +1601,7 @@ TEST_CASE("T Source update preserves opposite-side cusp topology for an asymmetr
     }
 }
 
-TEST_CASE("T Trim Two trims exact-stall and safely refuses unresolved multi-branch cusp caches",
+TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][trim-two]") {
     for (const double distance : {0.5, 0.51})
     for (const bool parabolaFirst : {false, true}) {
@@ -1662,29 +1662,6 @@ TEST_CASE("T Trim Two trims exact-stall and safely refuses unresolved multi-bran
         const RS_Vector cutterPick = intersection + (cutterEnd - cutterStart) * .25;
         const auto kernelTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
             LC_OffsetCacheTrim::Pick{nativePick});
-        if (distance == .51) {
-            CHECK(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
-            const auto before = trimGeometry(*native);
-            const auto cutterBefore = trimGeometry(*cutter);
-            const auto entityCount = live(f.graphic).size();
-            const auto undoEpoch = f.graphic.undoStateEpoch();
-            f.action->click(parabolaFirst ? nativePick : cutterPick);
-            REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
-            f.action->hover(parabolaFirst ? cutterPick : nativePick);
-            f.action->waitForTrim();
-            CHECK(trimPreview(*f.action->m_preview).empty());
-            f.action->click(parabolaFirst ? cutterPick : nativePick);
-            f.action->waitForTrim();
-            CHECK_FALSE(native->isDeleted());
-            CHECK_FALSE(cutter->isDeleted());
-            CHECK(trimGeometry(*native) == before);
-            CHECK(trimGeometry(*cutter) == cutterBefore);
-            CHECK(live(f.graphic).size() == entityCount);
-            CHECK(f.graphic.undoStateEpoch() == undoEpoch);
-            REQUIRE_FALSE(f.context.messages.empty());
-            CHECK(f.context.messages.back().contains("nothing changed"));
-            continue;
-        }
         REQUIRE(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
         const auto nativeBefore = trimGeometry(*native);
         const auto cutterBefore = trimGeometry(*cutter);
@@ -1734,7 +1711,7 @@ TEST_CASE("T Trim Two trims exact-stall and safely refuses unresolved multi-bran
     }
 }
 
-TEST_CASE("T Trim Two trims exact and safely refuses beyond-cusp asymmetric branches",
+TEST_CASE("T Trim Two trims exact and beyond-cusp asymmetric branches",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][asymmetric][trim-two]") {
     QTemporaryDir directory;
     REQUIRE(directory.isValid());
@@ -1833,31 +1810,31 @@ TEST_CASE("T Trim Two trims exact and safely refuses beyond-cusp asymmetric bran
         const auto cutterPick = intersection + (cutterEnd - cutterStart) * .25;
         const auto kernelTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
             LC_OffsetCacheTrim::Pick{nativePick});
-        if (ratio > 1.0) {
-            CHECK(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
-            const auto nativeBefore = trimGeometry(*native);
-            const auto cutterBefore = trimGeometry(*cutter);
-            const auto entityCount = live(f.graphic).size();
-            const auto undoEpoch = f.graphic.undoStateEpoch();
-            f.action->click(parabolaFirst ? nativePick : cutterPick);
-            REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
-            f.action->hover(parabolaFirst ? cutterPick : nativePick);
-            f.action->waitForTrim();
-            CHECK(trimPreview(*f.action->m_preview).empty());
-            f.action->click(parabolaFirst ? cutterPick : nativePick);
-            f.action->waitForTrim();
-            CHECK_FALSE(native->isDeleted());
-            CHECK_FALSE(cutter->isDeleted());
-            CHECK(trimGeometry(*native) == nativeBefore);
-            CHECK(trimGeometry(*cutter) == cutterBefore);
-            CHECK(live(f.graphic).size() == entityCount);
-            CHECK(f.graphic.undoStateEpoch() == undoEpoch);
-            REQUIRE_FALSE(f.context.messages.empty());
-            CHECK(f.context.messages.back().contains("nothing changed"));
-            continue;
-        }
         REQUIRE(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
         CHECK_FALSE(kernelTrim.fragments.empty());
+        const auto& cacheData = native->getData();
+        std::size_t spanCount = 0;
+        std::size_t cuspSpan = cacheData.controlPoints.size();
+        for (std::size_t begin = 0; begin < cacheData.knotslist.size();) {
+            std::size_t end = begin + 1;
+            while (end < cacheData.knotslist.size() && cacheData.knotslist[end] == cacheData.knotslist[begin]) ++end;
+            if (end < cacheData.knotslist.size()) {
+                if (end - begin == cacheData.degree + 1) cuspSpan = spanCount;
+                ++spanCount;
+            }
+            begin = end;
+        }
+        REQUIRE(cuspSpan < spanCount);
+        std::vector<bool> untouchedBranchSpans(spanCount - cuspSpan, false);
+        for (const auto& fragment : kernelTrim.fragments)
+            for (const auto& section : fragment.sourceSections) {
+                if (section.rawSpan < cuspSpan) continue;
+                REQUIRE(section.from == 0);
+                REQUIRE(section.to == 1);
+                untouchedBranchSpans[section.rawSpan - cuspSpan] = true;
+            }
+        CHECK(std::all_of(untouchedBranchSpans.begin(), untouchedBranchSpans.end(),
+                          [](const bool kept) { return kept; }));
 
         const auto nativeBefore = trimGeometry(*native);
         const auto cutterBefore = trimGeometry(*cutter);
@@ -1885,55 +1862,53 @@ TEST_CASE("T Trim Two trims exact and safely refuses beyond-cusp asymmetric bran
         CHECK(committed == expectedPreview);
         CHECK(fragments.size() >= direct.branches.size());
 
-        if (ratio == 1.0) {
-            std::vector<const RS_Entity*> expected;
-            for (const auto* entity : fragments)
-                if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
-                    expected.push_back(entity);
-            REQUIRE_FALSE(expected.empty());
-            for (const auto format : formats) {
-                const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-                const auto file = std::filesystem::path(directory.filePath(
-                    QStringLiteral("asymmetric-cusp-trim-%1").arg(fileIndex++) +
-                    (dwg ? ".dwg" : ".dxf")).toStdString());
-                REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+        std::vector<const RS_Entity*> expected;
+        for (const auto* entity : fragments)
+            if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
+                expected.push_back(entity);
+        REQUIRE_FALSE(expected.empty());
+        for (const auto format : formats) {
+            const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("asymmetric-cusp-trim-%1").arg(fileIndex++) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
-                if (dwg && !libreDwgReader.isEmpty()) {
-                    QProcess reader;
-                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
-                    REQUIRE(reader.waitForStarted());
-                    REQUIRE(reader.waitForFinished(30000));
-                    INFO(reader.readAllStandardError().toStdString());
-                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-                    REQUIRE(reader.exitCode() == 0);
-                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
-                    REQUIRE(document.isObject());
-                    CHECK_FALSE(document.object().value("OBJECTS").toArray().isEmpty());
-                }
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                CHECK_FALSE(document.object().value("OBJECTS").toArray().isEmpty());
+            }
 #endif
-                RS_Graphic reopened;
-                REQUIRE(lc::test::importDrawing(reopened, file, format));
-                std::vector<const RS_Entity*> actual;
-                const auto reopenedEntities = live(reopened);
-                CHECK(std::count_if(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
-                    return entity->rtti() == RS2::EntityOffsetCurve;
-                }) == 0);
-                for (const auto* entity : reopenedEntities)
-                    if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
-                        actual.push_back(entity);
-                CAPTURE(format, parabolaFirst);
-                REQUIRE(actual.size() == expected.size());
-                std::vector<bool> consumed(actual.size(), false);
-                for (const auto* sourceEntity : expected) {
-                    bool found = false;
-                    for (std::size_t i = 0; i < actual.size(); ++i) {
-                        if (consumed[i] || !sameGeometry(*sourceEntity, *actual[i])) continue;
-                        consumed[i] = true;
-                        found = true;
-                        break;
-                    }
-                    CHECK(found);
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, format));
+            std::vector<const RS_Entity*> actual;
+            const auto reopenedEntities = live(reopened);
+            CHECK(std::count_if(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
+                return entity->rtti() == RS2::EntityOffsetCurve;
+            }) == 0);
+            for (const auto* entity : reopenedEntities)
+                if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
+                    actual.push_back(entity);
+            CAPTURE(format, parabolaFirst);
+            REQUIRE(actual.size() == expected.size());
+            std::vector<bool> consumed(actual.size(), false);
+            for (const auto* sourceEntity : expected) {
+                bool found = false;
+                for (std::size_t i = 0; i < actual.size(); ++i) {
+                    if (consumed[i] || !sameGeometry(*sourceEntity, *actual[i])) continue;
+                    consumed[i] = true;
+                    found = true;
+                    break;
                 }
+                CHECK(found);
             }
         }
 

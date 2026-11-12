@@ -665,12 +665,28 @@ bool closure(const RS_SplineData& data, const Spans& spans) {
 
 struct Component { std::size_t begin = 0, end = 0; bool closed = false; };
 
+bool isCuspBranchBreak(const Geo::CacheSpan& before, const Geo::CacheSpan& after) {
+    if (before.degree != after.degree || after.controlOffset < before.controlOffset ||
+        after.controlOffset - before.controlOffset != before.degree + 1 ||
+        !same(before.controls[before.degree], after.controls[0])) return false;
+    return same(before.controls[before.degree - 1], before.controls[before.degree]) &&
+           same(after.controls[0], after.controls[1]);
+}
+
 std::vector<Component> components(const Spans& spans) {
     std::vector<Component> result;
     if (spans.empty()) return result;
     std::size_t begin = 0;
     for (std::size_t i = 1; i <= spans.size(); ++i) {
-        if (i != spans.size() && same(spans[i - 1].controls[spans[i - 1].degree], spans[i].controls[0])) continue;
+        if (i != spans.size() &&
+            (isCuspBranchBreak(spans[i - 1], spans[i]) ||
+             !same(spans[i - 1].controls[spans[i - 1].degree], spans[i].controls[0]))) {
+            result.push_back({begin, i,
+                same(spans[begin].controls[0], spans[i - 1].controls[spans[i - 1].degree])});
+            begin = i;
+            continue;
+        }
+        if (i != spans.size()) continue;
         result.push_back({begin, i,
             same(spans[begin].controls[0], spans[i - 1].controls[spans[i - 1].degree])});
         begin = i;
