@@ -9321,6 +9321,8 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}});
     const LC_SplinePointsData separatedRepeats =
         profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}});
+    const LC_SplinePointsData twoInteriorRepeats =
+        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {2, 0}, {3, 1}});
     const LC_SplinePointsData leadingRepeat =
         profile({{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}});
     const LC_SplinePointsData trailingRepeat =
@@ -9337,8 +9339,9 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         }
         return data;
     };
-    const std::array<std::pair<LC_SplinePointsData, double>, 7> profiles{{
+    const std::array<std::pair<LC_SplinePointsData, double>, 8> profiles{{
         {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
+        {twoInteriorRepeats, 1.0},
         {leadingRepeat, 1.0}, {trailingRepeat, 1.0}, {tripleInteriorRepeat, 1.0},
         {rotatedTranslated(adjacentRepeat), 1.0},
         {rotatedTranslated(separatedRepeats), 1.0}
@@ -9400,7 +9403,7 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         LC_SplinePointsData oracleProfile = profiles[profileIndex].first;
-        if (profileIndex >= 5) {
+        if (profileIndex >= 6) {
             for (RS_Vector& point : oracleProfile.splinePoints) {
                 point.x -= 1e6;
                 point.y += 2e6;
@@ -9424,7 +9427,7 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                 oracleSource, signedDistance, 1e-4, false};
             const auto options = LC_OffsetWorkerTolerance::directOptions(
                 oracleDefinition, *fitPointSource);
-            if (profileIndex >= 2 && profileIndex <= 4) CHECK_FALSE(options);
+            if (profileIndex >= 3 && profileIndex <= 5) CHECK_FALSE(options);
             const req::Request generation{token,
                 req::GenerateSource{definition, {}}};
             if (!options) {
@@ -9446,7 +9449,7 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
             REQUIRE(centered.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(centered.ordinaryStatus == result::OrdinaryStatus::Complete);
             REQUIRE(centered.ordinary.size() == generated.ordinary.size());
-            const RS_Vector expectedTranslation = profileIndex >= 5
+            const RS_Vector expectedTranslation = profileIndex >= 6
                 ? RS_Vector{1e6, -2e6} : RS_Vector{0, 0};
             for (std::size_t branchIndex = 0; branchIndex < generated.ordinary.size(); ++branchIndex) {
                 const auto* worldSpline = std::get_if<RS_SplineData>(
@@ -9491,8 +9494,30 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                        bezier[2] * (3.0 * inverse * parameter * parameter) +
                        bezier[3] * (parameter * parameter * parameter);
             };
+            const auto arcDeviation = [](const RS_Vector& point,
+                                         const LC_OffsetBranchProvenance& provenance) {
+                const double radius = std::abs(provenance.signedDistance);
+                const double middle = 0.5 * (provenance.sourceT0 + provenance.sourceT1);
+                const double half = 0.5 * std::abs(provenance.sourceT1 - provenance.sourceT0);
+                const RS_Vector relative = point - provenance.arcCentre;
+                double deviation = std::abs(relative.magnitude() - radius);
+                const double angle = std::atan2(relative.y, relative.x);
+                const double twoPi = 2.0 * std::acos(-1.0);
+                const double unwrapped = angle + twoPi * std::round((middle - angle) / twoPi);
+                if (std::abs(unwrapped - middle) > half) {
+                    const auto endpoint = [&](const double endpointAngle) {
+                        return provenance.arcCentre +
+                            RS_Vector{std::cos(endpointAngle), std::sin(endpointAngle)} * radius;
+                    };
+                    deviation = std::max(deviation, std::min(
+                        point.distanceTo(endpoint(provenance.sourceT0)),
+                        point.distanceTo(endpoint(provenance.sourceT1))));
+                }
+                return deviation;
+            };
             double maximumDeviation = 0.0;
             double maximumWorkerDeviation = 0.0;
+            double maximumSourceEvaluationDeviation = 0.0;
             std::size_t samples = 0;
             for (const auto& branch : geometry.branches) {
                 for (std::size_t pieceIndex = 0; pieceIndex < branch.cubicPieces.size(); ++pieceIndex) {
@@ -9500,37 +9525,55 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                     const double localWidth = piece.localU1 - piece.localU0;
                     REQUIRE(localWidth > 0.0);
                     for (const double fraction : {.2, .5, .8}) {
-                        const double parameter = piece.provenance.sourceT0 +
-                            (piece.provenance.sourceT1 - piece.provenance.sourceT0) * fraction;
                         const double localParameter = piece.localU0 + localWidth * fraction;
-                        const std::size_t sourceSpan = piece.provenance.sourceSpan;
-                        REQUIRE(sourceSpan < fitPointSource->getSegmentCount());
-                        LC_SplinePointsSegment sourceSegment;
-                        REQUIRE(fitPointSource->tryGetSegment(sourceSpan, sourceSegment));
-                        const double sourceLocal = parameter - static_cast<double>(sourceSpan);
-                        RS_Vector sourcePoint;
-                        RS_Vector sourceTangent;
-                        if (sourceSegment.kind == LC_SplinePointsSegment::Kind::Quadratic) {
-                            const double inverse = 1.0 - sourceLocal;
-                            sourcePoint = sourceSegment.start * (inverse * inverse) +
-                                          sourceSegment.control * (2.0 * inverse * sourceLocal) +
-                                          sourceSegment.end * (sourceLocal * sourceLocal);
-                            sourceTangent =
-                                (sourceSegment.control - sourceSegment.start) * (2.0 * inverse) +
-                                (sourceSegment.end - sourceSegment.control) * (2.0 * sourceLocal);
-                        } else if (sourceSegment.kind == LC_SplinePointsSegment::Kind::Line) {
-                            sourcePoint = sourceSegment.start * (1.0 - sourceLocal) +
-                                          sourceSegment.end * sourceLocal;
-                            sourceTangent = sourceSegment.end - sourceSegment.start;
+                        RS_Vector exactOffset;
+                        double deviation = 0.0;
+                        if (piece.provenance.arcCentre.valid) {
+                            const double angle = piece.provenance.sourceT0 +
+                                (piece.provenance.sourceT1 - piece.provenance.sourceT0) * fraction;
+                            exactOffset = piece.provenance.arcCentre +
+                                RS_Vector{std::cos(angle), std::sin(angle)} * std::abs(signedDistance);
+                            deviation = arcDeviation(cubicPoint(piece.bezier, localParameter),
+                                                     piece.provenance);
                         } else {
-                            FAIL("A repeated fit-point source unexpectedly contains a point segment");
+                            const double parameter = piece.provenance.sourceT0 +
+                                (piece.provenance.sourceT1 - piece.provenance.sourceT0) * fraction;
+                            const std::size_t sourceSpan = piece.provenance.sourceSpan;
+                            REQUIRE(sourceSpan < fitPointSource->getSegmentCount());
+                            LC_SplinePointsSegment sourceSegment;
+                            REQUIRE(fitPointSource->tryGetSegment(sourceSpan, sourceSegment));
+                            const double sourceLocal = parameter - static_cast<double>(sourceSpan);
+                            RS_Vector sourcePoint;
+                            RS_Vector sourceTangent;
+                            if (sourceSegment.kind == LC_SplinePointsSegment::Kind::Quadratic) {
+                                const double inverse = 1.0 - sourceLocal;
+                                sourcePoint = sourceSegment.start * (inverse * inverse) +
+                                              sourceSegment.control * (2.0 * inverse * sourceLocal) +
+                                              sourceSegment.end * (sourceLocal * sourceLocal);
+                                sourceTangent =
+                                    (sourceSegment.control - sourceSegment.start) * (2.0 * inverse) +
+                                    (sourceSegment.end - sourceSegment.control) * (2.0 * sourceLocal);
+                            } else if (sourceSegment.kind == LC_SplinePointsSegment::Kind::Line) {
+                                sourcePoint = sourceSegment.start * (1.0 - sourceLocal) +
+                                              sourceSegment.end * sourceLocal;
+                                sourceTangent = sourceSegment.end - sourceSegment.start;
+                            } else {
+                                FAIL("A repeated fit-point source unexpectedly contains a point segment");
+                            }
+                            const double speed = sourceTangent.magnitude();
+                            REQUIRE(speed > 0.0);
+                            const RS_Vector normal{-sourceTangent.y / speed,
+                                                   sourceTangent.x / speed};
+                            exactOffset = sourcePoint + normal * signedDistance;
+                            LC_CurveJet sourceJet;
+                            REQUIRE(fitPointSource->tryEvaluateJet(
+                                parameter, LC_CurveEvaluationSide::Interior, sourceJet));
+                            maximumSourceEvaluationDeviation = std::max(
+                                maximumSourceEvaluationDeviation,
+                                sourcePoint.distanceTo(sourceJet.point));
+                            deviation = cubicPoint(piece.bezier, localParameter)
+                                            .distanceTo(exactOffset);
                         }
-                        const double speed = sourceTangent.magnitude();
-                        REQUIRE(speed > 0.0);
-                        const RS_Vector normal{-sourceTangent.y / speed, sourceTangent.x / speed};
-                        const RS_Vector exactOffset = sourcePoint + normal * signedDistance;
-                        const double deviation = cubicPoint(piece.bezier, localParameter)
-                                                     .distanceTo(exactOffset);
                         maximumDeviation = std::max(maximumDeviation, deviation);
                         double workerDeviation = RS_MAXDOUBLE;
                         for (const auto& workerSpline : workerSplines) {
@@ -9543,10 +9586,12 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                     }
                 }
             }
-            CAPTURE(maximumDeviation, maximumWorkerDeviation, samples, geometry.branches.size(),
+            CAPTURE(maximumDeviation, maximumWorkerDeviation,
+                    maximumSourceEvaluationDeviation, samples, geometry.branches.size(),
                     generated.ordinary.size(), cache.controlPoints.size(),
                     options->tolerance.requestedGeometry);
             REQUIRE(samples > 0);
+            CHECK(maximumSourceEvaluationDeviation <= 1e-10);
             CHECK(maximumDeviation <= options->tolerance.requestedGeometry);
             CHECK(maximumWorkerDeviation <= options->tolerance.requestedGeometry);
 

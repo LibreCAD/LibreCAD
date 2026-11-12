@@ -233,10 +233,11 @@ does not by itself prove that the offset can be generated successfully.
 Properties workflow for replacing the source of an editable offset, not a
 request to replace the existing chooser with a canvas-picking tool. While
 choosing a replacement in the Properties widget, the user can change the
-requested source type at any point before choosing a candidate; the chooser
-then offers eligible entities of that type, not only the current source's
-type. Switching type refreshes candidates without leaving the replacement
-workflow or changing the committed source/cache. Choosing a candidate starts
+requested source type at any point before choosing a candidate, including
+after already browsing candidates from another family; the chooser then offers
+eligible entities of the selected type, not only the current source's type.
+Switching type refreshes candidates without leaving the replacement workflow
+or changing the committed source/cache. Choosing a candidate starts
 asynchronous preparation, during which both controls are disabled; successful
 validation alone publishes the replacement. The control covers every
 currently modeled offset source family: line, arc, circle, ellipse, spline,
@@ -259,7 +260,7 @@ following slices in order, preserving the detailed safety requirements below:
 | 1. Inventory and selector | The UI contract and directed family transitions are implemented: while browsing replacements, the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Switching family does not mutate the committed source/cache; both controls become disabled only after choosing a candidate and while its worker preparation is active. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 894's latest focused source-picker suite passes 14,827 assertions / 43 cases. The typed source-picker regression changes family before each candidate and verifies controls lock during preparation. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Automated lifecycle and identity handling is qualified for resolved, initially missing/ambiguous, duplicate, hidden, locked, moved, deleted, and replaced sources. Temporary highlighting remains separate from persistent selection. Physical stale-peer UI and scale limits beyond the recorded stress case are Delivery/acceptance work, not an unimplemented code path. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][highlight]` passes 348 assertions / 20 cases; the incremental subset passes 83 / 6; the 1,024-candidate x 256-control-point benchmark passes 26 / 1, with reported type-filter refresh 2.89521 ms and highlight validation 81.4885 ms. The tests preserve unrelated selection and overlays and cover lifecycle/revision changes. Broader workload sizes and physical stale-peer interaction remain open under Slice 5. |
 | 3. Atomic replacement | The automated ordered-family-pair and stale-publication contract is qualified: every modeled source kind can be replaced by every destination kind through worker preparation; chosen entities are revalidated at publication, and stale/deleted/changed inputs or context swaps do not mutate the prior curve/cache. Family geometry variants remain Slice 4. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][typed]` passes 9,683 assertions / 4 cases, including all ordered family pairs; `[gui][dialog][offsetcurve][source][stale][async]` passes 886 / 5. The tests cover changed/deleted candidates, viewport/document swaps, late replies after target rebinding, and preservation on refusal. Visible physical interaction and cross-platform delivery remain Slice 5. |
-| 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
+| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify its eligible geometry variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming while retaining its distinct type. For any unsupported or malformed variant, require an explicit atomic refusal rather than silent candidate loss or partial replacement. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Include cross-family replacement into each family and verify that the prior source/cache survives refusal. Uncovered variants remain open; picker visibility is not acceptance evidence. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 Existing picker and parabola tests are useful regression evidence, not a
@@ -37339,3 +37340,24 @@ the focused mixed positive/refusal worker oracle passes 21,820 assertions.
 This adds one explicit refusal boundary; it does not imply triple repeats are
 the only unsupported interior pattern or expand the accepted repeated-point
 matrix.
+
+## 974. Qualify Two Separated Interior Repeat Spans (2026-11-11)
+
+This validation slice extends the repeated-fit-point matrix with
+`(0,0),(1,1),(1,1),(2,0),(2,0),(3,1)`. Its rounded corner pieces carry angle
+parameters, not source spline parameters; the independent oracle now checks
+those pieces against the bounded circular arc and continues checking ordinary
+pieces against exact analytic source normals. This distinction avoids treating
+arc angles as native spline parameters while still checking the actual returned
+worker splines by bounded closest-point distance.
+
+The kernel fit-point selection passes 30,172 assertions across seven cases;
+the process-backed client fit-point selection passes 65,675 assertions across
+five cases. The persistence matrix now includes this profile with the prior
+three, all four signed distances, and five DXF/DWG format lanes (80 generated
+save/reopens total); LibreDWG independently reads the generated DWGs when
+available. The focused four-profile persistence case passes 22,058 assertions.
+
+This qualifies only the added two-interior-repeat placement and recorded
+distances. Other repeated-point layouts, continuous Hausdorff certification,
+visible GUI behavior, and ODA/AutoCAD acceptance remain open.
