@@ -976,6 +976,28 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     const LC_OffsetSourceGeometry illConditionedFitSource{conditionedFitPoints};
     CHECK_FALSE(illConditionedFitSource.isWellFormed());
     CHECK_FALSE(values::encodeSourceGeometry(illConditionedFitSource));
+    const std::array<double, 3> conditioningScales{{1e-4, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> conditioningOrigins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    for (const bool closed : {false, true}) {
+        for (std::size_t transformIndex = 0; transformIndex < conditioningScales.size(); ++transformIndex) {
+            LC_SplinePointsData transformed{closed, false};
+            const double gap = closed ? 1e-4 : 1e-5;
+            if (closed)
+                transformed.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+            else
+                transformed.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+            const double scale = conditioningScales[transformIndex];
+            const RS_Vector origin = conditioningOrigins[transformIndex] * scale;
+            const bool reflected = transformIndex == 2;
+            for (RS_Vector& point : transformed.splinePoints) {
+                point.x = origin.x + scale * point.x;
+                point.y = origin.y + scale * (reflected ? -point.y : point.y);
+            }
+            const LC_OffsetSourceGeometry rejected{transformed};
+            CHECK_FALSE(rejected.isWellFormed());
+            CHECK_FALSE(values::encodeSourceGeometry(rejected));
+        }
+    }
     const auto validFitSource = values::encodeSourceGeometry(sources[2]);
     REQUIRE(validFitSource);
     CHECK_FALSE(values::decodeSourceGeometry(changed(*validFitSource, {1, 6}, -1.0)));
