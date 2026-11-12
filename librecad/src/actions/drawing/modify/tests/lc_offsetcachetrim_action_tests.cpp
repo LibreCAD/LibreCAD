@@ -2448,7 +2448,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u})
     for (const bool arcFirst : {false, true}) {
         CAPTURE(profile, arcFirst);
         Drawing<true> f;
@@ -2465,7 +2465,11 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
                     ? RS_ArcData{{-5, 3}, 2.8, .4, 2.0 * M_PI - .4, true}
                     : profile == 3
                         ? RS_ArcData{{3, -4}, 4.0, 1e-4, 2.0 * M_PI - 1e-4, false}
-                        : RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-4, 1e-4, true};
+                        : profile == 4
+                            ? RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-4, 1e-4, true}
+                            : profile == 5
+                                ? RS_ArcData{{3, -4}, 4.0, 1e-8, 2.0 * M_PI - 1e-8, false}
+                                : RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-8, 1e-8, true};
         REQUIRE(sourceData.isValid());
         auto* source = new RS_Arc(&f.graphic, sourceData);
         f.graphic.addEntity(source);
