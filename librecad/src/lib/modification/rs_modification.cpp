@@ -3005,7 +3005,8 @@ LC_TrimResult RS_Modification::trimStoredCacheImpl(RS_Document& document, RS_Ent
     };
     const auto live = [&](const RS_Entity* source) { return member(source) && !source->isLocked(); };
     const auto nativeReady = [&](const LC_OffsetCurve& source) {
-        if (!source.isOwner() || source.size() > kDefaultOffsetDeepEntitiesPerSource || !source.hasEditableDefinition()) return false;
+        if (!source.isOwner() || source.size() > kDefaultOffsetDeepEntitiesPerSource ||
+            !(source.hasEditableDefinition() || source.hasGeneralizedSourceDefinition())) return false;
         for (const auto* child : source) {
             if (!child || child->getParent() != &source || child->rtti() != RS2::EntityLine) return false;
         }

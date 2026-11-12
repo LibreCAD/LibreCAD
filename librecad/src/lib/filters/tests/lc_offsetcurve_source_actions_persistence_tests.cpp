@@ -8,7 +8,10 @@
 #include <memory>
 
 #include <QApplication>
+#include <QCoreApplication>
 #include <QCursor>
+#include <QElapsedTimer>
+#include <QEventLoop>
 #include <QFile>
 #include <QMouseEvent>
 #include <QJsonArray>
@@ -19,7 +22,9 @@
 #include <QStandardPaths>
 #include <QStringList>
 #include <QTemporaryDir>
+#include <QThread>
 
+#include "lc_action_modify_trim.h"
 #include "lc_action_offsetcurve_updatesource.h"
 #include "lc_action_offsetcurve_restoreoriginal.h"
 #include "lc_actionhandlerfactory.h"
@@ -712,4 +717,108 @@ TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset"
     CHECK(reopenedCurve->getPen(true) == pen);
     CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
           RS_Spline::geometryFingerprint(updated->getData()));
+}
+
+TEST_CASE("I trimmed typed-hyperbola offsets demote atomically to plain fragments",
+          "[lc-offsetcurve][trim-action][typed-source][hyperbola][cusp]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    constexpr double semiMajor = 10.0;
+    constexpr double ratio = .2;
+    constexpr double vertexRadius = semiMajor * ratio * ratio;
+    const double distance = .5 * vertexRadius;
+    auto* target = native(graphic, distance);
+    const LC_HyperbolaData sourceData{{0, 0}, {semiMajor, 0}, ratio, -.4, .4, false};
+    auto sourceOwner = std::make_unique<LC_Hyperbola>(nullptr, sourceData);
+    REQUIRE(sourceOwner->isValid());
+    auto* source = sourceOwner.get();
+    source->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(source);
+    sourceOwner.release();
+    graphic.select(QList<RS_Entity*>{target}, true);
+
+    auto update = LC_ActionsHandlerFactory::createActionInstance(RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::BoundedHyperbola);
+    const RS_Vector sourcePick = source->getPrimaryVertex();
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*updateAction);
+    REQUIRE(updateAction->lastReport().updated == 1);
+    auto* nativeCurve = onlyNative(graphic);
+    REQUIRE(nativeCurve->hasGeneralizedSourceDefinition());
+    REQUIRE(nativeCurve->sourceDefinition());
+    CHECK(nativeCurve->sourceDefinition()->source.kind() == SourceKind::BoundedHyperbola);
+    REQUIRE(graphic.removeEntity(source));
+
+    double parameterStart = 0.0;
+    double parameterEnd = 0.0;
+    REQUIRE(nativeCurve->getParameterDomain(parameterStart, parameterEnd));
+    LC_CurveJet jet;
+    const double cutParameter = parameterStart + .75 * (parameterEnd - parameterStart);
+    REQUIRE(nativeCurve->tryEvaluateJet(cutParameter, LC_CurveEvaluationSide::Interior, jet));
+    RS_Vector cutterDirection{-jet.first.y, jet.first.x};
+    REQUIRE(cutterDirection.magnitude() > 0.0);
+    cutterDirection = cutterDirection / cutterDirection.magnitude() * .5;
+    auto* cutter = new RS_Line(&graphic, jet.point - cutterDirection, jet.point + cutterDirection);
+    cutter->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(cutter);
+    const RS_Vector targetPick = nativeCurve->getPointAt(
+        parameterStart + .1 * (parameterEnd - parameterStart));
+    REQUIRE(targetPick.valid);
+    LC_ActionModifyTrim trim(&context);
+    trim.init(0);
+    mouse(trim, view, jet.point + cutterDirection * .75, true);
+    mouse(trim, view, targetPick, true);
+    QElapsedTimer trimWait;
+    trimWait.start();
+    while (!nativeCurve->isDeleted() && trimWait.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    REQUIRE(nativeCurve->isDeleted());
+    CHECK(nativeCurve->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    std::vector<const RS_Spline*> fragments;
+    for (const auto* entity : graphic) {
+        if (!entity || entity->isDeleted() || entity == cutter) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        CHECK(dynamic_cast<const LC_OffsetCurve*>(spline) == nullptr);
+        fragments.push_back(spline);
+        CHECK(spline->getDrwExtData().empty());
+    }
+    REQUIRE(fragments.size() == 1);
+    const RS_SplineData trimmed = fragments.front()->getData();
+    CHECK_FALSE(trimmed.m_closedFlag);
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(nativeCurve->isDeleted());
+    CHECK(nativeCurve->hasGeneralizedSourceDefinition());
+    REQUIRE(graphic.redo());
+    CHECK(nativeCurve->isDeleted());
+    REQUIRE(fragments.size() == 1);
+    const auto output = std::filesystem::path(directory.filePath("trimmed-hyperbola.dxf").toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, RS2::FormatDXFRW2018));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, RS2::FormatDXFRW2018));
+    std::vector<const RS_Spline*> reopenedFragments;
+    for (const auto* entity : reopened)
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(entity)) reopenedFragments.push_back(spline);
+    REQUIRE(reopenedFragments.size() == 1);
+    CHECK(RS_Spline::geometryFingerprint(reopenedFragments.front()->getData()) ==
+          RS_Spline::geometryFingerprint(trimmed));
 }
