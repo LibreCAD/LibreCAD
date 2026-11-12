@@ -39615,6 +39615,26 @@ assertions / 1 case; `[source-update]` passes 441 assertions across 2 cases;
 the target builds; and `git diff --check` passes. This qualifies similarity
 transforms and these two normalized distances for one symmetric control net.
 It does not close the beyond-cusp Trim proof limit in section 1080, test other
-parabola control nets or a continuous distance interval, or establish file-lane
-persistence for transformed cusp caches. Broader geometry, visible-GUI,
-cross-platform, and external-CAD gates remain open.
+parabola control nets or a continuous distance interval. Section 1082 adds
+five-lane persistence for these transformed cusp fixtures. Broader geometry,
+visible-GUI, cross-platform, and external-CAD gates remain open.
+
+## 1082. Persist Transformed Parabola Cusp Caches Through Five File Lanes (2026-11-12)
+
+Test commit `70d3e82c4` extends section 1081's 12-case similarity matrix
+through R12 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Each reopened
+drawing must contain exactly one generalized typed-parabola offset with the
+original signed distance and a cache fingerprint identical to the worker-
+published cache. LibreDWG independently parses both DWG versions when its
+reader is available. The matrix includes the exact cusp and 2%-beyond-cusp
+topologies at scales `0.1`, `1`, and `10`, in identity and rotated/translated
+frames.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+transformed persistence case passes 901 assertions / 1 case; `[source-update]`
+passes 1,066 assertions across 2 cases; both DWG versions parse for all 12
+fixtures; the test target builds; and `git diff --check` passes. This closes
+the transformed-cache file-lane gap for this symmetric control net and these
+similarity transforms. It does not close the beyond-cusp Trim proof limit in
+section 1080, cover other parabola constructions or continuous cusp distances,
+or establish visible-GUI, cross-platform, or external-CAD acceptance.
