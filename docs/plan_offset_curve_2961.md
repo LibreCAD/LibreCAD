@@ -38808,3 +38808,16 @@ for the same single bounded-hyperbola profile and transverse-circle fixture;
 it does not establish external geometry equivalence, ODA/AutoCAD acceptance,
 other profiles or source kinds, visible GUI behavior, or cross-platform
 validation.
+
+## 1043. Revalidate the Nine-family Source Replacement Picker (2026-11-12)
+
+At PR head `d8c46b948`, the current CMake Release test binary reruns the
+source-related UI and action selector `[offsetcurve][source]`: 14,834
+assertions pass across 44 cases. This covers the nine-kind selector inventory
+and headless family replacement/filter behavior, including the distinct
+parabola family, highlighted-source preservation, and stale-candidate guards.
+It is additional verification of the already implemented picker contract in
+section 1040, not a new widget implementation. The test binary uses the
+offscreen Qt platform, so real desktop highlight visibility and interactive
+replacement confirmation remain open; geometry generation, Trim, and file
+round-trip evidence remain governed by their separate family/variant gates.
