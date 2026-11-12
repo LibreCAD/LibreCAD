@@ -1024,11 +1024,12 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
     for (const bool asymmetric : {false, true})
     for (const double scale : {0.1, 1.0, 10.0})
     for (const bool transformed : {false, true})
+    for (const bool oppositeSide : {false, true})
     for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(asymmetric, scale, transformed, parabolaFirst);
+        CAPTURE(asymmetric, scale, transformed, oppositeSide, parabolaFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .05 * scale, false);
+        auto initial = LC_OffsetCurve::create(seed, .05 * scale, oppositeSide);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
@@ -1066,6 +1067,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
         REQUIRE(native->hasGeneralizedSourceDefinition());
         REQUIRE(native->sourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        CHECK(native->sourceDefinition()->signedDistance == (oppositeSide ? -.05 * scale : .05 * scale));
 
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
