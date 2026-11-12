@@ -38699,3 +38699,22 @@ bounded-hyperbola definition, cache topology, cutter placement, and Trim mode
 through the GUI action/worker path. Other hyperbola profiles, both Trim modes,
 file round-trip of the action-produced fragments, visible application
 interaction, cross-platform runs, and external-CAD acceptance remain open.
+
+## 1038. Round-trip Typed Hyperbola Trim Action Output Through Five File Lanes (2026-11-12)
+
+Test commit `40d8cda2f` extends the action fixture in section 1037: after Trim
+commits, the surviving hyperbola source, cutter, and ordinary spline fragments
+are exported and reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+The test compares the complete reopened entity-geometry inventory with the
+committed drawing for each lane, and rejects any reimported editable-offset
+entity. This verifies product-writer persistence of the actual action result,
+not only persistence of a separately prepared equivalent geometry.
+
+Validation on macOS arm64 CMake Release: `librecad_tests` rebuilds; the focused
+`"T native Trim action previews commits and undoes a worker-created typed
+hyperbola offset"` case passes 212 assertions, including all five export,
+reopen, and geometry-comparison lanes; and `git diff --check` passes. The
+broader `[trim-action]` suite passed 22,002 assertions / 73 cases before this
+file-lane extension. This remains one bounded-hyperbola profile and one Trim
+mode; other profiles, Trim Two, visible application interaction, independent
+ODA/AutoCAD acceptance, and cross-platform runs remain open.
