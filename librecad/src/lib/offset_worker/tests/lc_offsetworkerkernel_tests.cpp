@@ -10056,6 +10056,28 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(ellipseRoundTripped.roots[1].target.rawSpan == 0);
     CHECK(ellipseRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(ellipseRoundTripped.roots[3].target.rawSpan == 1);
+
+    const req::Request arcInput{token,
+        req::TrimConic{ellipseCache, RS_ArcData{{0, 0}, 2, 0, 3.14159265358979323846, false},
+            {{.1, .9}}, {}, {}}};
+    const auto arcReply = LC_OffsetWorkerKernel::run(arcInput);
+    const auto& arcOutput = trimmed(arcReply, 3);
+    REQUIRE(arcOutput.refusal == trim::Refusal::None);
+    REQUIRE(arcOutput.roots.size() == 3);
+    CHECK(arcOutput.roots[0].target.rawSpan == 0);
+    CHECK(arcOutput.roots[1].target.rawSpan == 0);
+    CHECK(arcOutput.roots[2].target.rawSpan == 1);
+    REQUIRE(arcOutput.conicFragments.size() == 2);
+    const auto arcEncoded = result::encode(arcReply, arcInput);
+    REQUIRE(arcEncoded);
+    const auto arcDecoded = result::decode(*arcEncoded, arcInput);
+    REQUIRE(arcDecoded);
+    const auto& arcRoundTripped = std::get<trim::Result>(arcDecoded->result);
+    REQUIRE(arcRoundTripped.conicFragments.size() == 2);
+    REQUIRE(arcRoundTripped.roots.size() == 3);
+    CHECK(arcRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(arcRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(arcRoundTripped.roots[2].target.rawSpan == 1);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",

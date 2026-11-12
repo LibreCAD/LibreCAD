@@ -1490,6 +1490,44 @@ TEST_CASE("Conic-only trim combines disconnected contacts on an ellipse", tags) 
     CHECK(ellipse.getData().angle2 == ellipseBefore.angle2);
 }
 
+TEST_CASE("Conic-only trim preserves an arc domain across disconnected components", tags) {
+    RS_SplineData source{1, false};
+    source.controlPoints = {{-3, .25}, {3, .25}, {.5, -2}, {.5, 2},
+                            {-3, 5}, {3, 5}, {0, 4}, {0, 6}};
+    source.weights.assign(source.controlPoints.size(), 1);
+    source.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    const auto before = source;
+    RS_Arc arc{nullptr, {{0, 0}, 2, 0, pi, false}};
+    const auto arcBefore = arc.getData();
+
+    const auto result = Trim::prepareConic(source, arc, {{.1, .9}});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+        result.work.intersections.generatedItems);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
+    REQUIRE(result.roots.size() == 3);
+    CHECK(result.roots[0].target.rawSpan == 0); CHECK(result.roots[1].target.rawSpan == 0);
+    CHECK(result.roots[2].target.rawSpan == 1);
+    REQUIRE(result.conicFragments.size() == 2);
+    const auto retained = [&](double angle) {
+        unsigned count = 0;
+        for (const auto& fragment : result.conicFragments)
+            count += unsigned(angularMember(fragment.data, angle));
+        return count;
+    };
+    CHECK(retained(.1) == 1);
+    CHECK(retained(.9) == 1);
+    CHECK(retained(1.5) == 0);
+    CHECK(retained(3.1) == 1);
+    equalData(source, before);
+    CHECK(arc.getData().center == arcBefore.center);
+    CHECK(arc.getData().radius == arcBefore.radius);
+    CHECK(arc.getData().angle1 == arcBefore.angle1);
+    CHECK(arc.getData().angle2 == arcBefore.angle2);
+    CHECK(arc.getData().reversed == arcBefore.reversed);
+}
+
 TEST_CASE("Conic endpoint certificates use the actual whole frame chart and refuse symmetric closest ties", tags) {
     const auto source = cache({{-6, .5}, {6, .5}}); const auto before = source;
     for (bool reverse : {false, true}) {
