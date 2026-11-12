@@ -47,6 +47,9 @@
 #include "rs_undo.h"
 #include "rs_variable.h"
 #include "rs_filterdxfrw.h"
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_pattern.h"
 #ifdef DWGSUPPORT
 
@@ -1961,7 +1964,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
     source.getData().fitStartTangent = start.first;
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
-    std::array<LC_SplinePointsData, 9> profiles;
+    std::array<LC_SplinePointsData, 10> profiles;
     profiles[0] = source.getData();
     LC_SplinePoints reversed{nullptr, profiles[0]};
     reversed.revertDirection();
@@ -1990,6 +1993,8 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
     profiles[7].controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
     profiles[8] = LC_SplinePointsData{false, false};
     profiles[8].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[9] = LC_SplinePointsData{false, false};
+    profiles[9].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}};
 
     struct FileLane {
         RS2::FormatType format;
@@ -2024,11 +2029,12 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
                 RS_Graphic drawing;
                 drawing.initForNewDocument();
                 drawing.onLoadingCompleted();
-                std::vector<const RS_Spline*> expected;
+                std::vector<const RS_Entity*> expected;
                 for (const auto& entity : generated.entities) {
-                    const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
-                    REQUIRE(spline);
-                    expected.push_back(spline);
+                    REQUIRE((dynamic_cast<const RS_Spline*>(entity.get()) != nullptr ||
+                             dynamic_cast<const RS_Polyline*>(entity.get()) != nullptr ||
+                             dynamic_cast<const RS_Line*>(entity.get()) != nullptr));
+                    expected.push_back(entity.get());
                     auto* copy = entity->clone();
                     REQUIRE(copy);
                     copy->setLayer(drawing.getActiveLayer());
@@ -2050,19 +2056,61 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
                 RS_Graphic reopened;
                 RS_FilterDXFRW reader;
                 REQUIRE(reader.fileImport(reopened, path, lane.format));
-                std::vector<const RS_Spline*> actual;
+                std::vector<const RS_Entity*> actual;
                 for (const RS_Entity* entity : reopened)
-                    if (const auto* spline = dynamic_cast<const RS_Spline*>(entity))
-                        actual.push_back(spline);
+                    if (dynamic_cast<const RS_Spline*>(entity) != nullptr ||
+                        dynamic_cast<const RS_Polyline*>(entity) != nullptr ||
+                        dynamic_cast<const RS_Line*>(entity) != nullptr)
+                        actual.push_back(entity);
                 REQUIRE(actual.size() == expected.size());
                 for (std::size_t splineIndex = 0; splineIndex < expected.size(); ++splineIndex) {
-                    for (int sample = 0; sample <= 32; ++sample) {
-                        const double t = static_cast<double>(sample) / 32.0;
-                        const RS_Vector before = expected[splineIndex]->getPointAt(t);
-                        const RS_Vector after = actual[splineIndex]->getPointAt(t);
-                        REQUIRE(before.valid);
-                        REQUIRE(after.valid);
-                        CHECK(before.distanceTo(after) < 1e-8);
+                    const RS_Entity* beforeEntity = expected[splineIndex];
+                    const RS_Entity* afterEntity = actual[splineIndex];
+                    REQUIRE(beforeEntity->rtti() == afterEntity->rtti());
+                    if (const auto* beforeSpline = dynamic_cast<const RS_Spline*>(beforeEntity)) {
+                        const auto* afterSpline = dynamic_cast<const RS_Spline*>(afterEntity);
+                        REQUIRE(afterSpline);
+                        for (int sample = 0; sample <= 32; ++sample) {
+                            const double t = static_cast<double>(sample) / 32.0;
+                            const RS_Vector p0 = beforeSpline->getPointAt(t);
+                            const RS_Vector p1 = afterSpline->getPointAt(t);
+                            REQUIRE(p0.valid);
+                            REQUIRE(p1.valid);
+                            CHECK(p0.distanceTo(p1) < 1e-8);
+                        }
+                    } else if (const auto* beforePolyline = dynamic_cast<const RS_Polyline*>(beforeEntity)) {
+                        const auto* afterPolyline = dynamic_cast<const RS_Polyline*>(afterEntity);
+                        REQUIRE(beforePolyline);
+                        REQUIRE(afterPolyline);
+                        CHECK(beforePolyline->isClosed() == afterPolyline->isClosed());
+                        const QList<RS_Vector> beforeVertices = beforePolyline->getVertexes();
+                        const QList<RS_Vector> afterVertices = afterPolyline->getVertexes();
+                        REQUIRE(beforeVertices.size() == afterVertices.size());
+                        for (qsizetype vertex = 0; vertex < beforeVertices.size(); ++vertex) {
+                            CHECK(beforeVertices[vertex].distanceTo(afterVertices[vertex]) < 1e-8);
+                        }
+                        const QList<RS_Entity*>& beforeSegments = beforePolyline->getEntityList();
+                        const QList<RS_Entity*>& afterSegments = afterPolyline->getEntityList();
+                        REQUIRE(beforeSegments.size() == afterSegments.size());
+                        for (qsizetype segment = 0; segment < beforeSegments.size(); ++segment) {
+                            CHECK(beforeSegments[segment]->rtti() == afterSegments[segment]->rtti());
+                            CHECK(beforeSegments[segment]->getStartpoint().distanceTo(
+                                      afterSegments[segment]->getStartpoint()) < 1e-8);
+                            CHECK(beforeSegments[segment]->getEndpoint().distanceTo(
+                                      afterSegments[segment]->getEndpoint()) < 1e-8);
+                            if (const auto* beforeArc = dynamic_cast<const RS_Arc*>(beforeSegments[segment])) {
+                                const auto* afterArc = dynamic_cast<const RS_Arc*>(afterSegments[segment]);
+                                REQUIRE(afterArc);
+                                CHECK(beforeArc->getBulge() == Catch::Approx(afterArc->getBulge()).margin(1e-10));
+                            }
+                        }
+                    } else {
+                        const auto* beforeLine = dynamic_cast<const RS_Line*>(beforeEntity);
+                        const auto* afterLine = dynamic_cast<const RS_Line*>(afterEntity);
+                        REQUIRE(beforeLine);
+                        REQUIRE(afterLine);
+                        CHECK(beforeLine->getStartpoint().distanceTo(afterLine->getStartpoint()) < 1e-8);
+                        CHECK(beforeLine->getEndpoint().distanceTo(afterLine->getEndpoint()) < 1e-8);
                     }
                 }
 #ifdef DWGSUPPORT
@@ -2080,17 +2128,31 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
                     REQUIRE(parseError.error == QJsonParseError::NoError);
                     REQUIRE(document.isObject());
                     std::vector<QJsonObject> externalSplines;
+                    std::vector<QJsonObject> externalLines;
                     for (const QJsonValue& value : document.object()
                              .value("OBJECTS").toArray()) {
                         const QJsonObject object = value.toObject();
                         if (object.value("entity").toString() == "SPLINE")
                             externalSplines.push_back(object);
+                        else if (object.value("entity").toString() == "LINE")
+                            externalLines.push_back(object);
                     }
-                    REQUIRE(externalSplines.size() == expected.size());
-                    for (std::size_t splineIndex = 0;
-                         splineIndex < expected.size(); ++splineIndex) {
-                        const auto& data = expected[splineIndex]->getData();
-                        const QJsonObject& external = externalSplines[splineIndex];
+                    const std::size_t expectedSplineCount = static_cast<std::size_t>(std::count_if(
+                        expected.begin(), expected.end(), [](const auto* entity) {
+                            return dynamic_cast<const RS_Spline*>(entity) != nullptr;
+                        }));
+                    const std::size_t expectedLineCount = static_cast<std::size_t>(std::count_if(
+                        expected.begin(), expected.end(), [](const auto* entity) {
+                            return dynamic_cast<const RS_Line*>(entity) != nullptr;
+                        }));
+                    REQUIRE(externalSplines.size() == expectedSplineCount);
+                    REQUIRE(externalLines.size() == expectedLineCount);
+                    std::size_t externalSplineIndex = 0;
+                    for (const auto* expectedEntity : expected) {
+                        const auto* expectedSpline = dynamic_cast<const RS_Spline*>(expectedEntity);
+                        if (expectedSpline == nullptr) continue;
+                        const auto& data = expectedSpline->getData();
+                        const QJsonObject& external = externalSplines[externalSplineIndex++];
                         CHECK(external.value("degree").toInt() == data.degree);
                         const QJsonArray controls = external.value("ctrl_pts").toArray();
                         REQUIRE(controls.size() == static_cast<qsizetype>(data.controlPoints.size()));
@@ -2109,7 +2171,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 36);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 40);
 #endif
 }
 
