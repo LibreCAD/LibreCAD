@@ -3989,6 +3989,67 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
     }
 }
 
+TEST_CASE("Singular fit-point trims fail closed through worker preparation",
+          "[lc-offsetcurve][worker-client][ordered-preparation][fit-points][singular][trim]") {
+    auto& rt = runtime();
+    OwnedClient client{rt};
+    std::array<LC_SplinePointsData, 3> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
+    profiles[2] = LC_SplinePointsData{false, false};
+    profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        const auto originalData = source.getData();
+        RS_OffsetData data;
+        data.coord = {0.5, 0.5};
+        data.distance = 0.2;
+        data.number = 1;
+        data.multipleCopies = true;
+        data.keepOriginals = true;
+        LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
+        LC_DocumentModificationBatch batch;
+
+        REQUIRE_FALSE(prepared.advance(batch));
+        CHECK(prepared.pendingSource() == &source);
+        auto request = prepared.request(token(1 + profileIndex));
+        REQUIRE(request);
+        REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+        const auto& operation = std::get<Req::Produce>(request->operation);
+        REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
+        CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
+              LC_OffsetSourceGeometry::Kind::SplinePoints);
+
+        Receipts receipts;
+        REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+        const auto& completion = completed(receipts.at(0), 1 + profileIndex, 5);
+        const auto* result = std::get_if<Reply::Produced>(&completion.reply().result);
+        REQUIRE(result);
+        CHECK(result->outputStatus == Reply::OrdinaryStatus::None);
+        CHECK(result->source.status == LC_OffsetSourceStatus::OffsetFailed);
+        CHECK(result->source.copiesMade == 0);
+        CHECK(result->source.engineStatus == LC_CurveOffsetStatus::InvalidRequest);
+        CHECK(result->outputs.empty());
+
+        REQUIRE(prepared.accept(completion));
+        REQUIRE(prepared.advance(batch));
+        REQUIRE(prepared.outcome().sources.size() == 1);
+        CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+        CHECK_FALSE(prepared.outcome().sources.front().complete());
+        CHECK(batch.entitiesToAdd.empty());
+        CHECK(batch.entitiesToDelete.empty());
+        CHECK_FALSE(source.isDeleted());
+        CHECK(source.getData().splinePoints == originalData.splinePoints);
+        CHECK(source.getData().controlPoints == originalData.controlPoints);
+        prepared.release();
+    }
+}
+
 TEST_CASE("Stationary control-point spline-points trim runs through worker preparation",
           "[lc-offsetcurve][worker-client][ordered-preparation][spline-points][stationary][trim]") {
     auto& rt = runtime();
