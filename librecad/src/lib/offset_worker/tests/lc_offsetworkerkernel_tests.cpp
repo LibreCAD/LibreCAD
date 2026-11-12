@@ -10123,6 +10123,36 @@ TEST_CASE("offset worker transports component-aware trim results",
         CHECK(ellipseArcRoundTripped.roots[1].target.rawSpan == 0);
         CHECK(ellipseArcRoundTripped.roots[2].target.rawSpan == 1);
     }
+
+    RS_SplineData curvedCache{3, false};
+    curvedCache.controlPoints = {
+        {-3, 0}, {-1, 1.5}, {1, 1.5}, {3, 0},
+        {-3, 0}, {-1, -1.5}, {1, -1.5}, {3, 0}
+    };
+    curvedCache.weights.assign(curvedCache.controlPoints.size(), 1.0);
+    curvedCache.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const req::Request curvedInput{token,
+        req::TrimConic{curvedCache, RS_CircleData{{0, 0}, 2}, {{0, 2}}, {}, {}}};
+    const auto curvedReply = LC_OffsetWorkerKernel::run(curvedInput);
+    const auto& curvedOutput = trimmed(curvedReply, 3);
+    REQUIRE(curvedOutput.refusal == trim::Refusal::None);
+    REQUIRE(curvedOutput.conicFragments.size() == 1);
+    REQUIRE(curvedOutput.roots.size() == 4);
+    CHECK(curvedOutput.roots[0].target.rawSpan == 0);
+    CHECK(curvedOutput.roots[1].target.rawSpan == 0);
+    CHECK(curvedOutput.roots[2].target.rawSpan == 1);
+    CHECK(curvedOutput.roots[3].target.rawSpan == 1);
+    const auto curvedEncoded = result::encode(curvedReply, curvedInput);
+    REQUIRE(curvedEncoded);
+    const auto curvedDecoded = result::decode(*curvedEncoded, curvedInput);
+    REQUIRE(curvedDecoded);
+    const auto& curvedRoundTripped = std::get<trim::Result>(curvedDecoded->result);
+    REQUIRE(curvedRoundTripped.conicFragments.size() == 1);
+    REQUIRE(curvedRoundTripped.roots.size() == 4);
+    CHECK(curvedRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(curvedRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(curvedRoundTripped.roots[2].target.rawSpan == 1);
+    CHECK(curvedRoundTripped.roots[3].target.rawSpan == 1);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",
