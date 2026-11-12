@@ -948,8 +948,21 @@ TEST_CASE("I update source type changes the live candidate filter without changi
     Fixture f;
     auto* target = f.arc(.25);
     const auto fingerprint = RS_Spline::geometryFingerprint(target->getData());
-    auto* line = f.add(new RS_Line(&f.document(), {-5, 0}, {5, 0}));
-    auto* ellipse = f.add(new RS_Ellipse(&f.document(), RS_EllipseData{{20, 0}, {5, 0}, .5, 0, 0, false}));
+    struct Candidate {
+        Kind kind;
+        RS_Entity* entity;
+        RS_Vector pick;
+    };
+    std::vector<Candidate> candidates;
+    for (const Kind kind : LC_OffsetSourceGeometry::SupportedKinds) {
+        auto geometry = sourceGeometry(kind);
+        REQUIRE(geometry.isWellFormed());
+        auto owner = geometry.makeEntity();
+        REQUIRE(owner);
+        auto* entity = f.add(owner.get());
+        owner.release();
+        candidates.push_back({kind, entity, entity->getNearestPointOnEntity({0, 0}, true)});
+    }
     f.start({target});
 
     std::unique_ptr<LC_ActionOptionsWidget> options(f.action->createOptionsWidget());
@@ -957,19 +970,21 @@ TEST_CASE("I update source type changes the live candidate filter without changi
     options->setAction(f.action.get());
     auto* selector = options->findChild<QComboBox*>("cbUpdateSourceKind");
     REQUIRE(selector);
-    selector->setCurrentIndex(selector->findData(static_cast<int>(Kind::Line)));
-    CHECK(f.action->candidateAt({0, 0}) == line);
-    CHECK(f.action->candidateAt({25, 0}) != ellipse);
-    CHECK(target->isSelected());
-    CHECK(RS_Spline::geometryFingerprint(target->getData()) == fingerprint);
-    CHECK_FALSE(target->sourceDefinition());
-
-    selector->setCurrentIndex(selector->findData(static_cast<int>(Kind::Ellipse)));
-    CHECK(f.action->candidateAt({25, 0}) == ellipse);
-    CHECK(f.action->candidateAt({0, 0}) != line);
-    CHECK(target->isSelected());
-    CHECK(RS_Spline::geometryFingerprint(target->getData()) == fingerprint);
-    CHECK_FALSE(target->sourceDefinition());
+    REQUIRE(selector->count() == static_cast<int>(candidates.size()));
+    for (const Candidate& selected : candidates) {
+        const int index = selector->findData(static_cast<int>(selected.kind));
+        REQUIRE(index >= 0);
+        selector->setCurrentIndex(index);
+        CHECK(f.action->sourceKind() == selected.kind);
+        CHECK(f.action->candidateAt(selected.pick) == selected.entity);
+        for (const Candidate& other : candidates) {
+            if (other.kind == selected.kind) continue;
+            CHECK(f.action->candidateAt(other.pick) != other.entity);
+        }
+        CHECK(target->isSelected());
+        CHECK(RS_Spline::geometryFingerprint(target->getData()) == fingerprint);
+        CHECK_FALSE(target->sourceDefinition());
+    }
 }
 
 TEST_CASE("I update refuses a changed or missing document view context before overlay or batch work",
