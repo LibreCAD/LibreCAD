@@ -39350,3 +39350,21 @@ built for newer macOS versions than the 14.4 deployment target; and existing
 deprecated-macro and aggregate-initializer warnings appeared. No warning
 prevented linking. This is an incremental recursive qmake6 validation for the
 current code, not a clean-tree qmake build or visible GUI run.
+
+## 1069. Unify Trim Output-ceiling Admission (2026-11-12)
+
+Commit `64ab0e2ea` adds one `LC_StoredCacheTrimOptions::admittedOutputEntities()`
+calculation and uses it in both stored-cache result admission and action
+preview/commit staging. The focused contract test covers caller values `0`,
+`4`, `16`, and `17`, verifying zero remains closed, lower caps are preserved,
+and values above the hard limit are clamped. The real five-output polyline
+Trim case remains the end-to-end publication check, with a separate four-output
+refusal check proving atomicity.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused cap
+contract passes 5 assertions / 1 case; the focused three-span polyline action
+passes 6,282 assertions / 1 case; `[trim-action]` passes 32,735 assertions /
+80 cases; the test target builds; and `git diff --check` passes. The contract
+test verifies cap arithmetic, not actual production of exactly sixteen output
+entities. End-to-end exact-16 and attempted-17 output geometry remain open,
+along with the visible GUI, cross-platform, and external-CAD gates.
