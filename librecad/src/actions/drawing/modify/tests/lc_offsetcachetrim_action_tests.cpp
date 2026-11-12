@@ -40,6 +40,7 @@
 #include "lc_action_offsetcurve_updatesource.h"
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "lc_offsetcurveactiontestsupport.h"
 #include "lc_filtertestsupport.h"
@@ -995,6 +996,111 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
         CHECK(trimGeometry(*native) == nativeBefore);
         CHECK(trimGeometry(*circle) == circleBefore);
+        for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(circle->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
+TEST_CASE("T Trim Two action trims a worker-created typed parabola against a circle in both pick orders",
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
+    for (const bool parabolaFirst : {false, true}) {
+        CAPTURE(parabolaFirst);
+        Drawing<true> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, .05, false);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        const LC_ParabolaData sourceData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}};
+        auto* parabola = new LC_Parabola(&f.graphic, sourceData);
+        f.graphic.addEntity(parabola);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
+        update.use(parabola);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        REQUIRE(previous->isDeleted());
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        REQUIRE(native->hasGeneralizedSourceDefinition());
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+
+        double first = 0, last = 0;
+        REQUIRE(native->getParameterDomain(first, last));
+        const auto breaks = native->getBreakParameters();
+        REQUIRE(breaks.size() >= 2);
+        const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+        const RS_Vector intersection = native->getPointAt(parameter);
+        const double step = std::max(1e-7, (last - first) * 1e-5);
+        const RS_Vector before = native->getPointAt(parameter - step);
+        const RS_Vector after = native->getPointAt(parameter + step);
+        RS_Vector tangent{after.x - before.x, after.y - before.y};
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        const RS_Vector normal{-tangent.y, tangent.x};
+        constexpr double circleRadius = .1;
+        const RS_Vector circleCenter = intersection + tangent * circleRadius;
+        auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
+        f.graphic.addEntity(circle);
+        const RS_Vector nativePick = native->getPointAt(
+            breaks.front() + (breaks[1] - breaks.front()) * .9);
+        const RS_Vector circlePick = circleCenter + normal * circleRadius;
+        const auto nativeBefore = trimGeometry(*native);
+        const auto circleBefore = trimGeometry(*circle);
+        const RS_Vector initialVertex = parabola->getData().m_controlPoints[1];
+        f.action->click(parabolaFirst ? nativePick : circlePick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(parabolaFirst ? circlePick : nativePick);
+        const auto preview = trimPreview(*f.action->m_preview);
+        REQUIRE_FALSE(preview.empty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+
+        f.action->click(parabolaFirst ? circlePick : nativePick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(circle->isDeleted());
+        std::vector<RS_Entity*> fragments;
+        std::vector<std::string> committed;
+        for (auto* entity : live(f.graphic)) {
+            if (entity == parabola) continue;
+            REQUIRE(entity->rtti() != RS2::EntityOffsetCurve);
+            fragments.push_back(entity);
+            committed.push_back(trimGeometry(*entity));
+        }
+        CHECK(committed == preview);
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntitySpline;
+        }));
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityArc;
+        }));
+
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        CHECK_FALSE(parabola->isDeleted());
+        REQUIRE(native->hasGeneralizedSourceDefinition());
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(parabola->getData().m_controlPoints[1] == initialVertex);
         for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
         REQUIRE(f.graphic.redo());
         CHECK(native->isDeleted());
