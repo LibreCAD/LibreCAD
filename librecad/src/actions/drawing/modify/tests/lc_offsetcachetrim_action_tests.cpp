@@ -803,13 +803,18 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
 
 TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][trim-two]") {
+    constexpr double rotation = .37;
+    for (const unsigned profile : {0u, 1u})
     for (const bool leftBranch : {false, true})
     for (const bool hyperbolaFirst : {false, true}) {
-        CAPTURE(leftBranch, hyperbolaFirst);
+        CAPTURE(profile, leftBranch, hyperbolaFirst);
         Drawing<true> f;
         auto* previous = addNative(f.graphic);
-        auto* hyperbola = new LC_Hyperbola(&f.graphic,
-            LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, leftBranch});
+        const LC_HyperbolaData sourceData = profile == 0
+            ? LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, leftBranch}
+            : LC_HyperbolaData{{5, -4}, {3 * std::cos(rotation), 3 * std::sin(rotation)},
+                               .75, -.55, 1.15, leftBranch};
+        auto* hyperbola = new LC_Hyperbola(&f.graphic, sourceData);
         f.graphic.addEntity(hyperbola);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -953,8 +958,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         for (std::size_t i = 0; i < formats.size(); ++i) {
             const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("typed-hyperbola-trim-two-%1-%2")
-                    .arg(leftBranch ? QStringLiteral("left") : QStringLiteral("right")).arg(i) +
+                QStringLiteral("typed-hyperbola-trim-two-%1-%2-%3")
+                    .arg(profile).arg(leftBranch ? QStringLiteral("left") : QStringLiteral("right")).arg(i) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
 #ifdef DWGSUPPORT
