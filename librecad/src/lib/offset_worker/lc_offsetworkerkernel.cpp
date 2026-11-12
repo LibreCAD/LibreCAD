@@ -210,6 +210,26 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         }
         *parabola = LC_ParabolaData{points};
     }
+    else if (auto* fitPoints = std::get_if<LC_SplinePointsData>(&definition.source.value)) {
+        const RS_Vector* origin = nullptr;
+        if (fitPoints->useControlPoints && !fitPoints->controlPoints.empty())
+            origin = &fitPoints->controlPoints.front();
+        else if (!fitPoints->splinePoints.empty())
+            origin = &fitPoints->splinePoints.front();
+        else if (!fitPoints->controlPoints.empty())
+            origin = &fitPoints->controlPoints.front();
+        if (origin) {
+            outputTranslation = {origin->x, origin->y};
+            const auto localize = [&](std::vector<RS_Vector>& points) {
+                for (RS_Vector& point : points) {
+                    point.x -= outputTranslation.x;
+                    point.y -= outputTranslation.y;
+                }
+            };
+            localize(fitPoints->splinePoints);
+            localize(fitPoints->controlPoints);
+        }
+    }
     else if (auto* polyline = std::get_if<LC_OffsetPolylineData>(&definition.source.value)) {
         outputTranslation = polyline->startpoint;
         // Validate and construct in the original frame first. Rechecking

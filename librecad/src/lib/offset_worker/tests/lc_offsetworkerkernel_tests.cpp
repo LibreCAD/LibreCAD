@@ -9317,23 +9317,61 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         data.splinePoints = std::move(points);
         return data;
     };
-    const std::array<LC_SplinePointsData, 2> profiles{{
-        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
-        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}})
+    const LC_SplinePointsData adjacentRepeat =
+        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}});
+    const LC_SplinePointsData separatedRepeats =
+        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}});
+    const auto rotatedTranslated = [](LC_SplinePointsData data) {
+        const double angle = 37.0 * std::acos(-1.0) / 180.0;
+        const double cosine = std::cos(angle);
+        const double sine = std::sin(angle);
+        for (RS_Vector& point : data.splinePoints) {
+            point = {1e6 + point.x * cosine - point.y * sine,
+                     -2e6 + point.x * sine + point.y * cosine};
+        }
+        return data;
+    };
+    const std::array<std::pair<LC_SplinePointsData, double>, 4> profiles{{
+        {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
+        {rotatedTranslated(adjacentRepeat), 1.0},
+        {rotatedTranslated(separatedRepeats), 1.0}
     }};
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
-        const LC_OffsetSourceGeometry source{profiles[profileIndex]};
-        auto sourceEntity = source.makeEntity();
+        LC_SplinePointsData oracleProfile = profiles[profileIndex].first;
+        if (profileIndex >= 2) {
+            for (RS_Vector& point : oracleProfile.splinePoints) {
+                point.x -= 1e6;
+                point.y += 2e6;
+            }
+            for (RS_Vector& point : oracleProfile.controlPoints) {
+                point.x -= 1e6;
+                point.y += 2e6;
+            }
+        }
+        const LC_OffsetSourceGeometry source{profiles[profileIndex].first};
+        const LC_OffsetSourceGeometry oracleSource{oracleProfile};
+        auto sourceEntity = oracleSource.makeEntity();
         REQUIRE(sourceEntity);
         const auto* fitPointSource = dynamic_cast<const LC_SplinePoints*>(sourceEntity.get());
         REQUIRE(fitPointSource);
-        for (const double signedDistance : {-.5, -.2, .2, .5}) {
-            CAPTURE(signedDistance);
+        for (const double baseDistance : {-.5, -.2, .2, .5}) {
+            const double signedDistance = baseDistance * profiles[profileIndex].second;
+            CAPTURE(baseDistance, signedDistance);
             const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const LC_OffsetSourceDefinition oracleDefinition{
+                oracleSource, signedDistance, 1e-4, false};
             const auto options = LC_OffsetWorkerTolerance::directOptions(
-                definition, *fitPointSource);
+                oracleDefinition, *fitPointSource);
             REQUIRE(options);
+            const req::Request generation{token,
+                req::GenerateSource{definition, {}}};
+            const auto reply = LC_OffsetWorkerKernel::run(generation);
+            const auto& generated = native(reply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+
             const auto geometry = LC_CurveOffset::buildDirectBranches(
                 *fitPointSource,
                 LC_CurveOffset::makeSideRequest(
@@ -9342,14 +9380,6 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                     std::abs(signedDistance)),
                 *options, LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
-
-            const req::Request generation{token,
-                req::GenerateSource{definition, {}}};
-            const auto reply = LC_OffsetWorkerKernel::run(generation);
-            const auto& generated = native(reply, 7);
-            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
-            REQUIRE_FALSE(generated.ordinary.empty());
 
             RS_SplineData cache;
             REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
