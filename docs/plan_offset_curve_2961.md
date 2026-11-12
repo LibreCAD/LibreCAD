@@ -39197,3 +39197,52 @@ passes 31,724 assertions across 82 cases; `librecad_tests` rebuilds; and
 `git diff --check` passes. This completes persistence for the single
 exact-knot-plus-interior-crossing fixture only. Other exact-knot arrangements,
 visible GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1063. Keep Replacement Type Switching Explicit in the Current GUI Gate (2026-11-12)
+
+The current source-replacement requirement is that the user can change the
+candidate-family type while browsing for a new source, and that choosing a
+candidate changes the widget's displayed/current source type to the chosen
+entity's actual supported family. The full supported inventory remains line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola is a distinct supported family, not a spline-points alias.
+
+Sections 1040 and 1051 already record the implemented picker/state contract;
+do not add another selector or a separate parabola-only picker. The remaining
+work is visible GUI acceptance. Exercise repeated family changes across the
+supported inventory, select a candidate whose family differs from the current
+source, and verify that the source-type control follows the candidate. Until
+worker preparation succeeds, the existing source identity, definition, and
+cache must remain intact and the existing source must remain visibly
+highlighted. Accepting the prepared candidate must then replace the source and
+update the displayed type; a stale or rejected preparation must leave the old
+source and highlight intact. Include parabola in the transition checks.
+
+This UI gate is independent of concrete-family geometry generation, worker
+cache construction, Trim behavior, and DXF/DWG round-trip coverage. Do not use
+picker coverage as evidence that all variants of the nine families are
+implemented. Status: headless picker/state-transition coverage is complete;
+visible replacement-flow confirmation, cross-platform validation, and
+external-CAD acceptance remain open.
+
+## 1064. Verify Three Disconnected Cutter Components Through the Worker (2026-11-12)
+
+Test commit `94aa840ff` extends disconnected-cutter coverage beyond the two
+component profiles in section 1060. A single straight cache is intersected by
+three disconnected degree-1 spline components at source parameters `.2`,
+`.5`, and `.8`. The direct trim-kernel test requires all three certified roots
+to be ordered on the original cache span and checks the retained source
+section. The worker-kernel test sends the equivalent trim request through
+`LC_OffsetWorkerKernel`, encodes and decodes its result, and verifies the same
+three ordered root enclosures and retained fragment survive transport.
+
+Validation on macOS arm64 CMake Release: `[lc-offsetcurve][trim-kernel]`
+passes 41,281 assertions across 71 cases; the worker transport case passes
+294 assertions; `[worker-kernel][trim]` passes 348 assertions across 2 cases;
+both focused test targets build; and `git diff --check` passes.
+
+This verifies three disconnected straight cutter components at one scale and
+layout only. It does not establish native Trim-action behavior, more complex
+component curves, closed disconnected cutters, component-boundary variants,
+five-lane persistence, visible GUI, cross-platform behavior, or external-CAD
+acceptance; those remain open.
