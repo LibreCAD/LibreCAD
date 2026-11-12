@@ -3296,11 +3296,13 @@ TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
           "[lc-offsetcurve][worker-client][fit-points][refusal]") {
     auto& rt = runtime();
     OwnedClient owned{rt};
-    std::array<LC_SplinePointsData, 2> profiles;
+    std::array<LC_SplinePointsData, 3> profiles;
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
     profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
+    profiles[2] = LC_SplinePointsData{false, false};
+    profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     qint64 requestId = 1;
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
