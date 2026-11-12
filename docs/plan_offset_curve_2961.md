@@ -5841,9 +5841,10 @@ one case. The worker-kernel GenerateSource/ValidateSourceCache matrix passes
 assertions for the same 48 profile/branch/bounds/side/distance combinations.
 All three targets build and `git diff --check` passes. This closes direct
 geometry, worker generation, and cache-admission/refusal policy only for these
-two ratios, intervals, orientations, branches, distances, and sides. Native
-source replacement, trimming, all five DXF/DWG lanes, independent DWG-reader
-checks, and broader hyperbola interval/scale qualification remain open.
+two ratios, intervals, orientations, branches, distances, and sides. The
+tagged-import and five-lane persistence extension is recorded in section 1008.
+Properties source-action replacement, trimming, independent DWG-reader checks,
+and broader hyperbola interval/scale qualification remain open.
 
 ## 56. W94 Current-Source Cache and Creation/Repeat Qualification
 
@@ -38041,3 +38042,22 @@ profile/transform/direction/file combinations; `librecad_tests` builds and
 for these ten profiles and distances only. Other chord ratios and point
 layouts, additional transforms, visible interactive GUI, and ODA/AutoCAD
 acceptance remain open.
+
+## 1008. Persist Thin Hyperbola Cusp-boundary Imports (2026-11-12)
+
+Test commit `a2084a608` extends the hyperbola curvature-neighborhood import
+matrix with ratio `0.05`, both hyperbola branches, forward and reversed angle
+bounds, both signed sides, and offsets at `0.5`, `1.0`, and `1.5` times the
+vertex curvature radius. Each profile is scaled through `1e-3`, `1`, `1e3`, and
+`1e12` and exercised through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG import
+lanes. Typed-source metadata and the generated spline-cache topology are
+checked after import; eligible single-branch cases also pass native offset
+writer/reimport checks at unit scale.
+
+Validation: the focused Release CMake hostile-file case passes 161,596
+assertions. `librecad_tests` rebuilds and `git diff --check` passes. This
+qualifies tagged import and cache topology for the stated profiles and lanes;
+it does not establish Properties source-action replacement, trimming,
+independent DWG-reader interoperability, visible GUI acceptance, or arbitrary
+hyperbola ratios, parameter intervals, translations, and scales. Those remain
+open in the geometry-variant and final acceptance gates.
