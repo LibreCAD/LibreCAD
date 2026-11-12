@@ -2444,6 +2444,8 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         if (addThirdSpan) source->addVertex({0, 2});
         source->endPolyline();
         f.graphic.addEntity(source);
+        const bool belowFiveOutputCap = sourceBulge == .5 && addThirdSpan && !trimLineSpan && !polylineFirst;
+        if (belowFiveOutputCap) f.action->options.maxOutputEntities = 4;
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
         UpdateSourceProbe update(&f.context);
@@ -2493,6 +2495,19 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
+        if (belowFiveOutputCap) {
+            CHECK(f.action->m_preview->isEmpty());
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+            const auto count = f.graphic.count();
+            f.action->click(polylineFirst ? cutterPick : nativePick);
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.count() == count);
+            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+            REQUIRE_FALSE(f.context.messages.isEmpty());
+            CHECK(f.context.messages.back().contains("nothing changed"));
+            continue;
+        }
         CHECK_FALSE(f.action->m_preview->isEmpty());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
