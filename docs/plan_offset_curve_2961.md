@@ -37625,3 +37625,16 @@ independently reads all 16 generated DWGs. `git diff --check` passes.
 This validates those repeated-point placements and lanes only. Closed-spline
 repeated-seam geometry, other repetition patterns, near-duplicates, visible
 GUI, and ODA/AutoCAD acceptance remain open.
+
+## 987. Verify Closed Fit-point Seam Normalization (2026-11-11)
+
+Test commit `c447f000a` verifies a closed fit-point list that repeats its
+initial point at the end derives the same control net as the equivalent list
+without that redundant seam point. Both offset sides are then independently
+checked against their source geometry and must produce successful direct
+branches.
+
+The focused closed-seam oracle passes 6,583 assertions. This is direct
+geometry evidence only; closed repeated-seam worker/cache/persistence lanes,
+other repeated closed layouts, visible GUI, and ODA/AutoCAD acceptance remain
+open.
