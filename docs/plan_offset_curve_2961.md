@@ -267,8 +267,8 @@ Slice 4's transformed conic-frame cross-check is recorded in section 1031:
 genuinely curved disconnected cache branches and the eccentric ellipse are
 translated and rotated together, then exercised through direct and worker
 paths. The same geometry is also tested at scales from `1e-12` through `1e12`.
-This qualifies these rigid transforms, not arbitrary transforms or the full
-source-family matrix.
+This qualifies these rigid transforms and scale representatives, not arbitrary
+transforms or the full source-family matrix.
 
 **Implementation slices:**
 
