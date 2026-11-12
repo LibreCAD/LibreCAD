@@ -38918,3 +38918,22 @@ target rebuilds; and `git diff --check` passes. This qualifies one bounded
 circular-arc profile at action level only. Five-lane persistence, other arc
 domains/directions, other Trim Two source families, visible GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1049. Persist Typed Arc Trim Two Output Across Five File Lanes (2026-11-12)
+
+Test commit `49ed59b66` extends section 1048's worker-created bounded-arc Trim
+Two result through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, in both operand
+pick orders. LibreCAD reopens each drawing and compares the full line/arc/
+spline geometry inventory with roundoff tolerance, checks the original arc's
+center, radius, angular bounds, and direction, and rejects editable-offset
+residue. When LibreDWG is available, both DWGs must parse as minJSON and
+contain ARC, LINE, and SPLINE entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused arc
+Trim Two case passes 814 assertions across both pick orders and all five
+lanes; `[trim-action]` passes 24,464 assertions / 77 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the test target rebuilds; and
+`git diff --check` passes. This closes persistence and independent structural
+parsing for one bounded-arc fixture only. Other arc domains/directions,
+remaining Trim Two families, visible GUI, cross-platform, and external-CAD
+acceptance remain open.
