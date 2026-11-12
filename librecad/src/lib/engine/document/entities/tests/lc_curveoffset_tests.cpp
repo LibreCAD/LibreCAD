@@ -4333,6 +4333,50 @@ TEST_CASE("Hyperbola offset normals hold across eccentricity, branch, and revers
     }
 }
 
+TEST_CASE("Thin bounded hyperbola offsets retain exact geometry at the vertex curvature boundary",
+          "[curve-offset][direct][hyperbola][oracle][cusp][variants]") {
+    for (const double ratio : {0.05, 0.2}) {
+        const double semiMajor = 10.0;
+        const double vertexRadius = semiMajor * ratio * ratio;
+        for (const bool oppositeBranch : {false, true}) {
+            for (const bool reverseBounds : {false, true}) {
+                const LC_HyperbolaData data{
+                    RS_Vector{23.0, -17.0},
+                    RS_Vector{semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
+                    ratio,
+                    reverseBounds ? 0.4 : -0.4,
+                    reverseBounds ? -0.4 : 0.4,
+                    oppositeBranch};
+                const LC_Hyperbola source{nullptr, data};
+                REQUIRE(source.isValid());
+                CAPTURE(ratio, oppositeBranch, reverseBounds, vertexRadius);
+
+                for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                       LC_CurveOffsetSide::Right}) {
+                    for (const double fraction : {0.5, 1.0, 1.5}) {
+                        const double distance = fraction * vertexRadius;
+                        CAPTURE(side, fraction, distance);
+                        const auto options = LC_CurveOffset::makeDirectOptions(
+                            source, distance);
+                        const auto result = LC_CurveOffset::buildDirectBranches(
+                            source,
+                            LC_CurveOffset::makeSideRequest(side, distance),
+                            options,
+                            LC_CurveOffset::makeDirectSourceBudget());
+                        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                        REQUIRE_FALSE(result.branches.empty());
+                        const double cuspJoinTolerance = fraction == 1.0
+                            ? options.tolerance.nodeMerge : 0.0;
+                        CHECK(maxDeviation(result, hyperbolaEvaluator(data),
+                                           cuspJoinTolerance) <=
+                              options.tolerance.requestedGeometry);
+                    }
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("A hyperbola whose ends run backwards is offset all the same", "[curve-offset][hyperbola]") {
     // grip edits, DXF imports and reversing a hyperbola all leave angle1 > angle2
     const LC_HyperbolaData forwards{RS_Vector{5.0, -3.0}, RS_Vector{4.0, 2.0}, 0.6, -1.2, 1.5, false};
