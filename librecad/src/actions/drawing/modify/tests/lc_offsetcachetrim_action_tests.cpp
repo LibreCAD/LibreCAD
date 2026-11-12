@@ -1811,6 +1811,49 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][transform]") {
     constexpr double angle = .37;
     const double cosine = std::cos(angle), sine = std::sin(angle);
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+    const auto close = [](double a, double b) {
+        return std::abs(a - b) <= 2e-9 * std::max({1.0, std::abs(a), std::abs(b)});
+    };
+    const auto closeVector = [&](const RS_Vector& a, const RS_Vector& b) {
+        return close(a.x, b.x) && close(a.y, b.y) && close(a.z, b.z);
+    };
+    const auto sameGeometry = [&](const RS_Entity& expected, const RS_Entity& actual) {
+        if (expected.rtti() != actual.rtti()) return false;
+        if (const auto* a = dynamic_cast<const RS_Line*>(&expected)) {
+            const auto* b = dynamic_cast<const RS_Line*>(&actual);
+            if (!b) return false;
+            const auto& x = a->getData();
+            const auto& y = b->getData();
+            return (closeVector(x.startpoint, y.startpoint) && closeVector(x.endpoint, y.endpoint)) ||
+                (closeVector(x.startpoint, y.endpoint) && closeVector(x.endpoint, y.startpoint));
+        }
+        if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {
+            const auto* b = dynamic_cast<const RS_Spline*>(&actual);
+            if (!b) return false;
+            const auto& x = a->getData();
+            const auto& y = b->getData();
+            if (x.degree != y.degree || x.m_closedFlag != y.m_closedFlag ||
+                x.m_periodicFlag != y.m_periodicFlag || x.controlPoints.size() != y.controlPoints.size() ||
+                x.knotslist.size() != y.knotslist.size() || x.weights.size() != y.weights.size()) return false;
+            for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
+                if (!closeVector(x.controlPoints[i], y.controlPoints[i])) return false;
+            for (std::size_t i = 0; i < x.knotslist.size(); ++i)
+                if (!close(x.knotslist[i], y.knotslist[i])) return false;
+            for (std::size_t i = 0; i < x.weights.size(); ++i)
+                if (!close(x.weights[i], y.weights[i])) return false;
+            return true;
+        }
+        return false;
+    };
+    std::size_t fileIndex = 0;
     for (const double scale : {.1, 1.0, 10.0})
     for (const unsigned cutterKind : {0u, 1u, 2u})
     for (const bool parabolaFirst : {false, true}) {
@@ -1915,6 +1958,59 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         CHECK(native->isDeleted());
         CHECK(cutter->isDeleted());
         for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+
+        if (scale == 1.0) {
+            std::vector<const RS_Entity*> expected;
+            for (const auto* fragment : fragments)
+                if (fragment->rtti() == RS2::EntityLine || fragment->rtti() == RS2::EntitySpline)
+                    expected.push_back(fragment);
+            REQUIRE_FALSE(expected.empty());
+            for (const auto format : formats) {
+                const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+                const auto file = std::filesystem::path(directory.filePath(
+                    QStringLiteral("transformed-cusp-trim-%1-%2-%3")
+                        .arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
+                    (dwg ? ".dwg" : ".dxf")).toStdString());
+                REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+#ifdef DWGSUPPORT
+                if (dwg && !libreDwgReader.isEmpty()) {
+                    QProcess reader;
+                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+                    REQUIRE(reader.waitForStarted());
+                    REQUIRE(reader.waitForFinished(30000));
+                    INFO(reader.readAllStandardError().toStdString());
+                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                    REQUIRE(reader.exitCode() == 0);
+                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                    REQUIRE(document.isObject());
+                    CHECK_FALSE(document.object().value("OBJECTS").toArray().isEmpty());
+                }
+#endif
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, file, format));
+                const auto reopenedEntities = live(reopened);
+                CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
+                    return entity->rtti() == RS2::EntityOffsetCurve;
+                }));
+                std::vector<const RS_Entity*> actual;
+                for (const auto* entity : reopenedEntities)
+                    if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
+                        actual.push_back(entity);
+                CAPTURE(cutterKind, parabolaFirst, format);
+                REQUIRE(actual.size() == expected.size());
+                std::vector<bool> consumed(actual.size(), false);
+                for (const auto* sourceEntity : expected) {
+                    bool found = false;
+                    for (std::size_t i = 0; i < actual.size(); ++i) {
+                        if (consumed[i] || !sameGeometry(*sourceEntity, *actual[i])) continue;
+                        consumed[i] = true;
+                        found = true;
+                        break;
+                    }
+                    CHECK(found);
+                }
+            }
+        }
     }
 }
 
