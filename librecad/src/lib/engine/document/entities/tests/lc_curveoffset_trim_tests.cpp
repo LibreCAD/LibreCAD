@@ -416,6 +416,48 @@ TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
     }
 }
 
+TEST_CASE("Near-coincident distinct fit points remain distinct through trimming",
+          "[curve-offset][trim][spline-points][fit-points][near-coincident][oracle]") {
+    constexpr double gap = 1e-4;
+    const std::array<std::vector<RS_Vector>, 2> profiles{{
+        {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}},
+        {{3, 1}, {2, 0}, {1 + gap, 1 + gap}, {1, 1}, {0, 0}}
+    }};
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        LC_SplinePointsData data{false, false};
+        data.splinePoints = profiles[profileIndex];
+        LC_SplinePoints source{nullptr, data};
+        CAPTURE(profileIndex);
+        REQUIRE(source.getData().splinePoints.size() == profiles[profileIndex].size());
+        REQUIRE(source.getData().splinePoints[1].distanceTo(source.getData().splinePoints[2]) > 0.0);
+        REQUIRE(source.getData().controlPoints.size() >= 3);
+        CHECK(std::all_of(source.getData().controlPoints.begin(), source.getData().controlPoints.end(),
+                          [](const RS_Vector& point) {
+                              return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+                          }));
+
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.02, 0.05}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance,
+                                              -1.0, sourceDistance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
+        }
+    }
+}
+
 TEST_CASE("All-coincident fit points fail closed for trimming",
           "[curve-offset][trim][spline-points][fit-points][stationary][refusal]") {
     const RS_Spline validReference = unitParabola();

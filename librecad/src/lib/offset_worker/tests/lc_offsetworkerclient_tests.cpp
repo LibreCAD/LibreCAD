@@ -3214,7 +3214,7 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
-    std::array<LC_SplinePointsData, 5> profiles;
+    std::array<LC_SplinePointsData, 6> profiles;
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3231,12 +3231,17 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     }
     profiles[4] = LC_SplinePointsData{true, false};
     profiles[4].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, 0}};
+    profiles[5] = LC_SplinePointsData{false, false};
+    profiles[5].splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
     for (auto& profile : profiles) profile.fitTolerance = 1e-8;
     qint64 requestId = 1;
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         const LC_OffsetSourceGeometry source{profiles[profileIndex]};
-        for (const double signedDistance : {0.2, -0.2, 0.5, -0.5}) {
+        const std::array<double, 4> signedDistances = profileIndex == 5
+            ? std::array<double, 4>{0.02, -0.02, 0.05, -0.05}
+            : std::array<double, 4>{0.2, -0.2, 0.5, -0.5};
+        for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
             Receipts generatedReceipts;
@@ -3338,7 +3343,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    std::vector<LC_SplinePointsData> profiles(12);
+    std::vector<LC_SplinePointsData> profiles(13);
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3358,6 +3363,8 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     std::reverse(profiles[9].splinePoints.begin(), profiles[9].splinePoints.end());
     profiles[10] = profiles[8];
     profiles[11] = profiles[9];
+    profiles[12] = LC_SplinePointsData{false, false};
+    profiles[12].splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
     const double angle = 37.0 * std::acos(-1.0) / 180.0;
     const double cosine = std::cos(angle);
     const double sine = std::sin(angle);
@@ -3399,7 +3406,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         const std::array<double, 4> distances{-.5, -.2, .2, .5};
         const double distanceScale = profileIndex == 6 || profileIndex == 7 ||
                                      profileIndex == 10 || profileIndex == 11
-                                         ? 1e-3 : 1.0;
+                                         ? 1e-3 : profileIndex == 12 ? 0.1 : 1.0;
         for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
             const double signedDistance = distances[distanceIndex] * distanceScale;
             CAPTURE(distanceIndex, signedDistance);
