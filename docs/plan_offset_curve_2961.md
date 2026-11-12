@@ -37193,3 +37193,24 @@ test case; `git diff --check` passes. The result strengthens translated output
 correctness for the two repeated-neighbor profiles and four signed distances.
 It does not expand the profile matrix, establish a continuous error bound, or
 close file round-trip, visible-GUI, and external-CAD gates.
+
+## 966. Persist Repeated Fit-point Offset Branches (2026-11-11)
+
+Test commit `3a846b182` adds a repeated-adjacent-fit-point offset fixture and
+round-trips its source plus all three validated/materialized ordinary spline
+branches through five application file lanes: R14 DXF, R2000 DXF, R2000 DWG,
+R2007 DWG, and R2018 DWG. Reopened output must retain branch count, degree,
+knots, weights, control-point count and coordinates, and must not acquire fit
+points. The focused five-lane case passes 1,170 assertions; `git diff --check`
+passes.
+
+An attempted extra nearest-distance check through
+`LC_SplinePoints::getDistanceToPoint()` was discarded: that interactive
+nearest-point routine returned deviations up to approximately `7e-3` on this
+repeated-neighbor profile, far above its approximately `4e-6` offset tolerance.
+This is unsuitable as the file-lane oracle; section 962's independent
+analytic-normal test remains the geometry-accuracy evidence, while this slice
+asserts exact persisted representation. The file test exercises the direct
+offset/materialization path, not process-isolated worker execution. Translated
+file fixtures, other repeated-point arrangements, worker-generated output
+file lanes, visible GUI behavior, and external-CAD acceptance remain open.
