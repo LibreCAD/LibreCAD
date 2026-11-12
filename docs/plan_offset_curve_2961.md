@@ -40353,11 +40353,22 @@ case continues through preview, commit, undo/redo, five DXF/DWG persistence
 lanes, and LibreDWG parsing.
 
 On macOS arm64 CMake Release with LibreDWG 0.14, the focused ellipse Trim Two
-case passes 5,164 assertions / 1 case across six profiles and both pick orders;
+case passes 5,221 assertions / 1 case across six profiles and both pick orders;
 the full `[trim-action]` suite passes 126,461 assertions / 87 cases; and
-`git diff --check` passes. The test intentionally accepts either successful
-trimming or safe atomic refusal for each order, so these receipts do not prove
-that the ambiguous pick is resolved or establish which order succeeds. A
-bounded, unambiguous pick/interval proof remains open, as do broader ellipse
-ratios, sweeps, side/distance and precision coverage, GUI, cross-platform, and
-ODA/AutoCAD acceptance.
+`git diff --check` passes. The near-cusp action currently refuses atomically
+for both operand orders at the tested 25% native-pick location.
+
+A one-off in-process diagnostic (not a committed regression test) scanned 19
+native-pick fractions from 0.05 through 0.95 on this one near-cusp cache; each
+returned `AmbiguousPick`. The refusal was traced to the strict stationary
+projection query returning `LC_IntersectionStatus::AmbiguousTopology`, which
+the cache-trim layer maps to `AmbiguousPick`; it is not the cutter-root
+interval-selection branch. The next implementation task is to make stationary
+distance-root isolation handle this valid degree-1/3 cache without accepting
+uncertified minima. Add direct-kernel coverage for the pick-fraction sweep,
+genuine equidistant ties, repeated/tangent stationary roots, and work-budget
+exhaustion; require safe refusal for unresolved or tied candidates. Do not
+weaken the ambiguity policy or infer near-cusp trimming support from the
+current action pass. Broader ellipse ratios, sweeps, side/distance and
+precision coverage, GUI, cross-platform, and ODA/AutoCAD acceptance also
+remain open.
