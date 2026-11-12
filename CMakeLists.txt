@@ -1027,6 +1027,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/lc_graphicvariables.cpp
      librecad/src/lib/engine/document/lc_graphicvariables.h
      librecad/src/lib/engine/document/lc_trackedlistener.h
+     librecad/src/lib/engine/document/linetypes/lc_linfile.cpp
+     librecad/src/lib/engine/document/linetypes/lc_linfile.h
      librecad/src/lib/engine/document/linetypes/lc_linetype.cpp
      librecad/src/lib/engine/document/linetypes/lc_linetype.h
      librecad/src/lib/engine/document/linetypes/lc_linetypelist.cpp
@@ -2693,6 +2695,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/blocks/tests/lc_blocklist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_wcs_tests.cpp
+        librecad/src/lib/engine/document/linetypes/tests/lc_linfile_tests.cpp
         librecad/src/lib/engine/document/linetypes/tests/lc_linetypelist_tests.cpp
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
@@ -3333,6 +3336,7 @@ if (BUILD_TESTS)
     )
 
     set(LIBRECAD_DXF_FAST_TEST_SOURCES
+        librecad/src/lib/engine/document/linetypes/tests/lc_linfile_tests.cpp
         librecad/src/lib/engine/document/linetypes/tests/lc_linetypelist_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp

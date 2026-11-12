@@ -41,6 +41,21 @@ struct LC_LineType {
     Origin origin = Origin::Imported;
     bool hasImportedRecord = false; // an archived DRW_LType backs this entry
 
+    /// Why an application may not give a line type a name.
+    enum class NameCheck : unsigned char {
+        Ok,
+        Empty,
+        TooLong,
+        ControlCharacter,
+        ReservedCharacter,
+    };
+    /// Checks a name a dialog or a line type file gives a line type: something
+    /// left after trimming, at most 255 characters, no control character
+    /// (QChar::Other_Control: C0, DEL and C1) and none of < > / \ " : ; ? * | , = `.
+    /// A name read from a drawing is not checked: there the file is the authority.
+    static NameCheck checkName(const QString& name);
+    static bool isValidName(const QString& name);
+
     /// what two spellings of one line type share: trimmed, NFC, ASCII upper case
     QString key() const;
 };
