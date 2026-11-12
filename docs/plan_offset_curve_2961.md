@@ -37694,7 +37694,10 @@ Selector presence alone is not evidence of geometry support. The clean qmake6
 Qt 6.12.0 arm64 application build completed, and a subsequent incremental
 `make -j6` completed with exit status 0. `git diff --check` passes. This build
 does not close the focused picker test rerun, per-variant geometry matrix, or
-visible-GUI workflow gates.
+visible-GUI workflow gates. On PR source head `15fcb3022`, the focused
+`[gui][dialog][offsetcurve][source]` CMake Release offscreen rerun passes
+14,831 assertions across 43 cases. This reconfirms the nine-family picker
+contract at that source head, but is not visible-GUI acceptance.
 
 ## 991. Qualify a Near-coincident Distinct Fit-point Chord (2026-11-11)
 
