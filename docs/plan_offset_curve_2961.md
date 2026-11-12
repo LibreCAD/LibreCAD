@@ -40176,3 +40176,25 @@ profile/pick-order combinations; full `[trim-action]` passes 98,999 assertions
 ellipse at ratio `0.9`, not the full axis-ratio, sweep, cusp-threshold,
 precision, or inward-side matrix. Visible Properties interaction,
 cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1108. Qualify Forward and Reversed Seam-crossing Arc Trims (2026-11-12)
+
+Test commit `9e9ab0a42` extends the worker-created typed-arc Trim Two action
+matrix with two short seam-crossing sources: a forward arc centered at `(3,
+-4)`, radius `3.2`, spanning `2*pi - 0.55` to `0.55`; and a reversed arc
+centered at `(-5, 3)`, radius `2.8`, spanning `0.4` to `2*pi - 0.4`. The
+existing ordinary bounded arc remains as the control. Each profile runs in
+both pick orders through preview/commit, undo/redo, five DXF/DWG
+save/reopen lanes, and LibreDWG checks.
+
+The file-format round-trip oracle compares arc center, radius, unordered
+endpoints, midpoint, and length instead of raw angle/reversal fields. This is
+necessary because readers may canonicalize a reversed ARC while preserving
+its bounded geometric locus.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused arc
+Trim Two case passes 2,336 assertions / 1 case across six profile/pick-order
+combinations; full `[trim-action]` passes 100,677 assertions / 87 cases; and
+`git diff --check` passes. These profiles do not close other arc sweep/radius,
+distance, precision, or near-zero-boundary cases. Visible Properties
+interaction, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
