@@ -9334,23 +9334,24 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         profile({{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}});
     const LC_SplinePointsData tripleInteriorRepeat =
         profile({{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}});
-    const auto rotatedTranslated = [](LC_SplinePointsData data) {
+    const auto rotatedTranslated = [](LC_SplinePointsData data, const double scale = 1.0) {
         const double angle = 37.0 * std::acos(-1.0) / 180.0;
         const double cosine = std::cos(angle);
         const double sine = std::sin(angle);
         for (RS_Vector& point : data.splinePoints) {
-            point = {1e6 + point.x * cosine - point.y * sine,
-                     -2e6 + point.x * sine + point.y * cosine};
+            point = {1e6 + scale * (point.x * cosine - point.y * sine),
+                     -2e6 + scale * (point.x * sine + point.y * cosine)};
         }
         return data;
     };
-    const std::array<std::pair<LC_SplinePointsData, double>, 10> profiles{{
+    const std::array<std::pair<LC_SplinePointsData, double>, 11> profiles{{
         {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
         {twoInteriorRepeats, 1.0}, {spacedInteriorRepeats, 1.0},
         {reversedSpacedRepeats, 1.0},
         {leadingRepeat, 1.0}, {trailingRepeat, 1.0}, {tripleInteriorRepeat, 1.0},
         {rotatedTranslated(adjacentRepeat), 1.0},
-        {rotatedTranslated(separatedRepeats), 1.0}
+        {rotatedTranslated(separatedRepeats), 1.0},
+        {rotatedTranslated(spacedInteriorRepeats, 1e-3), 1e-3}
     }};
     const auto nearestDistance = [](const RS_Spline& spline, const RS_Vector& point) {
         double start = 0.0;

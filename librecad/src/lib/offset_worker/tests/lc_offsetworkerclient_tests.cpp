@@ -3336,7 +3336,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    std::vector<LC_SplinePointsData> profiles(6);
+    std::vector<LC_SplinePointsData> profiles(7);
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3348,11 +3348,16 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     profiles[4] = profiles[3];
     std::reverse(profiles[4].splinePoints.begin(), profiles[4].splinePoints.end());
     profiles[5] = profiles[0];
+    profiles[6] = profiles[3];
     const double angle = 37.0 * std::acos(-1.0) / 180.0;
     const double cosine = std::cos(angle);
     const double sine = std::sin(angle);
     for (RS_Vector& point : profiles[5].splinePoints) {
         point = {1e6 + point.x * cosine - point.y * sine, -2e6 + point.x * sine + point.y * cosine};
+    }
+    for (RS_Vector& point : profiles[6].splinePoints) {
+        point = {1e6 + 1e-3 * (point.x * cosine - point.y * sine),
+                 -2e6 + 1e-3 * (point.x * sine + point.y * cosine)};
     }
 
     struct Lane {
@@ -3373,8 +3378,9 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         CAPTURE(profileIndex);
         const LC_SplinePointsData& sourceData = profiles[profileIndex];
         const std::array<double, 4> distances{-.5, -.2, .2, .5};
+        const double distanceScale = profileIndex == 6 ? 1e-3 : 1.0;
         for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
-            const double signedDistance = distances[distanceIndex];
+            const double signedDistance = distances[distanceIndex] * distanceScale;
             CAPTURE(distanceIndex, signedDistance);
             const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
             const qint64 requestId = static_cast<qint64>(profileIndex * distances.size() + distanceIndex + 1);
