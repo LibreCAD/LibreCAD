@@ -1510,6 +1510,50 @@ TEST_CASE("Conic-only trim isolates curved cubic branches against an ellipse", t
     CHECK(cutter.getData().angle2 == cutterBefore.angle2);
 }
 
+TEST_CASE("Conic-only trim clips curved cubic contacts to an elliptic arc", tags) {
+    RS_SplineData source{3, false};
+    source.controlPoints = {
+        {-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+        {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}
+    };
+    source.weights.assign(source.controlPoints.size(), 1);
+    source.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const auto before = source;
+
+    for (const bool reverse : {false, true}) {
+        CAPTURE(reverse);
+        const double start = reverse ? pi : 0;
+        const double finish = reverse ? 0 : pi;
+        RS_Ellipse arc{nullptr, {{0, 0}, {2, 0}, .5, start, finish, reverse}};
+        const auto arcBefore = arc.getData();
+
+        const auto result = Trim::prepareConic(source, arc, {{.1, .9}});
+        CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+            result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+            result.work.intersections.generatedItems);
+        REQUIRE(result.refusal == Trim::Refusal::None);
+        REQUIRE(result.roots.size() == 2);
+        CHECK(result.roots[0].target.rawSpan == 0); CHECK(result.roots[1].target.rawSpan == 0);
+        REQUIRE(result.conicFragments.size() == 2);
+        const auto retained = [&](double angle) {
+            unsigned count = 0;
+            for (const auto& fragment : result.conicFragments)
+                count += unsigned(angularMember(fragment.data, angle));
+            return count;
+        };
+        CHECK(retained(.1) == 1);
+        CHECK(retained(1.5) == 0);
+        CHECK(retained(3.1) == 1);
+        equalData(source, before);
+        CHECK(arc.getData().center == arcBefore.center);
+        CHECK(arc.getData().majorP == arcBefore.majorP);
+        CHECK(arc.getData().ratio == arcBefore.ratio);
+        CHECK(arc.getData().angle1 == arcBefore.angle1);
+        CHECK(arc.getData().angle2 == arcBefore.angle2);
+        CHECK(arc.getData().reversed == arcBefore.reversed);
+    }
+}
+
 TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without singleton proofs", tags) {
     RS_SplineData source{1, false};
     source.controlPoints = {{-6, 4}, {6, 4}, {4, 7}, {-1, -8}};

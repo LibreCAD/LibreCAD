@@ -10184,6 +10184,30 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(curvedEllipseRoundTripped.roots[1].target.rawSpan == 0);
     CHECK(curvedEllipseRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(curvedEllipseRoundTripped.roots[3].target.rawSpan == 1);
+
+    for (const bool reverse : {false, true}) {
+        const double start = reverse ? 3.14159265358979323846 : 0;
+        const double finish = reverse ? 0 : 3.14159265358979323846;
+        const req::Request curvedEllipseArcInput{token,
+            req::TrimConic{curvedEllipseCache,
+                RS_EllipseData{{0, 0}, {2, 0}, .5, start, finish, reverse}, {{.1, .9}}, {}, {}}};
+        const auto curvedEllipseArcReply = LC_OffsetWorkerKernel::run(curvedEllipseArcInput);
+        const auto& curvedEllipseArcOutput = trimmed(curvedEllipseArcReply, 3);
+        REQUIRE(curvedEllipseArcOutput.refusal == trim::Refusal::None);
+        REQUIRE(curvedEllipseArcOutput.conicFragments.size() == 2);
+        REQUIRE(curvedEllipseArcOutput.roots.size() == 2);
+        CHECK(curvedEllipseArcOutput.roots[0].target.rawSpan == 0);
+        CHECK(curvedEllipseArcOutput.roots[1].target.rawSpan == 0);
+        const auto curvedEllipseArcEncoded = result::encode(curvedEllipseArcReply, curvedEllipseArcInput);
+        REQUIRE(curvedEllipseArcEncoded);
+        const auto curvedEllipseArcDecoded = result::decode(*curvedEllipseArcEncoded, curvedEllipseArcInput);
+        REQUIRE(curvedEllipseArcDecoded);
+        const auto& curvedEllipseArcRoundTripped = std::get<trim::Result>(curvedEllipseArcDecoded->result);
+        REQUIRE(curvedEllipseArcRoundTripped.conicFragments.size() == 2);
+        REQUIRE(curvedEllipseArcRoundTripped.roots.size() == 2);
+        CHECK(curvedEllipseArcRoundTripped.roots[0].target.rawSpan == 0);
+        CHECK(curvedEllipseArcRoundTripped.roots[1].target.rawSpan == 0);
+    }
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",
