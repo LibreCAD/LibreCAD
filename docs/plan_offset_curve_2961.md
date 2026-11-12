@@ -37607,3 +37607,21 @@ This fixes exact consecutive duplicates for the covered open and closed
 normalization paths; it does not qualify near-duplicate points, arbitrary
 repeated-point arrangements, every closed-spline topology, or ODA/AutoCAD and
 visible-GUI acceptance. Those matrix and delivery gates remain open.
+
+## 986. Extend Repeated Fit-point Placement Coverage (2026-11-11)
+
+Test commit `575e04881` extends the normalized-fit-point checks from interior
+repeats to leading, trailing, and triple-interior repeated neighbors. The
+direct oracle checks both traversal directions where paired fixtures exist,
+both offset sides, and distances `0.2` and `0.5`. The process-backed
+persistence matrix carries the leading/trailing cases alongside the forward
+and reversed separated-repeat source through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG.
+
+The focused exact-normal trim oracle passes 759 assertions. The persistence
+case passes 44,821 assertions across 80 save/reopens; LibreDWG 0.14
+independently reads all 16 generated DWGs. `git diff --check` passes.
+
+This validates those repeated-point placements and lanes only. Closed-spline
+repeated-seam geometry, other repetition patterns, near-duplicates, visible
+GUI, and ODA/AutoCAD acceptance remain open.
