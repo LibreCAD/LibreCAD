@@ -1467,6 +1467,119 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
         CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
             return entity->rtti() == RS2::EntityLine;
         }));
+        const RS_ArcData sourceBefore = source->getData();
+        QTemporaryDir directory;
+        REQUIRE(directory.isValid());
+        const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+            RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+        QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+        const auto close = [](double a, double b) {
+            return std::abs(a - b) <= 2e-10 * std::max({1.0, std::abs(a), std::abs(b)});
+        };
+        const auto closeVector = [&](const RS_Vector& a, const RS_Vector& b) {
+            return close(a.x, b.x) && close(a.y, b.y) && close(a.z, b.z);
+        };
+        const auto sameGeometry = [&](const RS_Entity& expected, const RS_Entity& actual) {
+            if (expected.rtti() != actual.rtti()) return false;
+            if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Spline*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                if (x.degree != y.degree || x.m_closedFlag != y.m_closedFlag ||
+                    x.m_periodicFlag != y.m_periodicFlag || x.controlPoints.size() != y.controlPoints.size() ||
+                    x.knotslist.size() != y.knotslist.size() || x.weights.size() != y.weights.size()) return false;
+                for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
+                    if (!closeVector(x.controlPoints[i], y.controlPoints[i])) return false;
+                for (std::size_t i = 0; i < x.knotslist.size(); ++i)
+                    if (!close(x.knotslist[i], y.knotslist[i])) return false;
+                for (std::size_t i = 0; i < x.weights.size(); ++i)
+                    if (!close(x.weights[i], y.weights[i])) return false;
+                return true;
+            }
+            if (const auto* a = dynamic_cast<const RS_Line*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Line*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                return (closeVector(x.startpoint, y.startpoint) && closeVector(x.endpoint, y.endpoint)) ||
+                    (closeVector(x.startpoint, y.endpoint) && closeVector(x.endpoint, y.startpoint));
+            }
+            if (const auto* a = dynamic_cast<const RS_Arc*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Arc*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                return closeVector(x.center, y.center) && close(x.radius, y.radius) &&
+                    close(x.angle1, y.angle1) && close(x.angle2, y.angle2) && x.reversed == y.reversed;
+            }
+            return false;
+        };
+        for (std::size_t i = 0; i < formats.size(); ++i) {
+            const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("typed-arc-trim-two-%1").arg(i) + (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+#ifdef DWGSUPPORT
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                unsigned splines = 0, lines = 0, arcs = 0;
+                for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+                    const QString entity = value.toObject().value("entity").toString();
+                    splines += entity == QLatin1String("SPLINE");
+                    lines += entity == QLatin1String("LINE");
+                    arcs += entity == QLatin1String("ARC");
+                }
+                CHECK(splines > 0);
+                CHECK(lines > 0);
+                CHECK(arcs > 0);
+            }
+#endif
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+            const auto expectedEntities = live(f.graphic);
+            const auto reopenedEntities = live(reopened);
+            REQUIRE(reopenedEntities.size() == expectedEntities.size());
+            CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
+                return entity->rtti() == RS2::EntityOffsetCurve;
+            }));
+            std::vector<bool> consumed(reopenedEntities.size(), false);
+            for (const auto* expected : expectedEntities) {
+                bool found = false;
+                for (std::size_t j = 0; j < reopenedEntities.size(); ++j) {
+                    if (consumed[j] || !sameGeometry(*expected, *reopenedEntities[j])) continue;
+                    consumed[j] = true;
+                    found = true;
+                    break;
+                }
+                CHECK(found);
+            }
+            unsigned reopenedArcs = 0;
+            for (const auto* entity : reopenedEntities) {
+                if (entity->rtti() != RS2::EntityArc) continue;
+                ++reopenedArcs;
+                const auto* loadedArc = dynamic_cast<const RS_Arc*>(entity);
+                REQUIRE(loadedArc);
+                CHECK(closeVector(loadedArc->getData().center, sourceBefore.center));
+                CHECK(close(loadedArc->getData().radius, sourceBefore.radius));
+                CHECK(close(loadedArc->getData().angle1, sourceBefore.angle1));
+                CHECK(close(loadedArc->getData().angle2, sourceBefore.angle2));
+                CHECK(loadedArc->getData().reversed == sourceBefore.reversed);
+            }
+            CAPTURE(formats[i]);
+            CHECK(reopenedArcs == 1);
+        }
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
