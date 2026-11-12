@@ -3344,21 +3344,18 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     const double cosine = std::cos(angle);
     const double sine = std::sin(angle);
     for (RS_Vector& point : profiles[2].splinePoints) {
-        point = {1e6 + point.x * cosine - point.y * sine,
-                 -2e6 + point.x * sine + point.y * cosine};
+        point = {1e6 + point.x * cosine - point.y * sine, -2e6 + point.x * sine + point.y * cosine};
     }
 
     struct Lane {
         RS2::FormatType format;
         const char* extension;
     };
-    const std::array<Lane, 5> lanes{{
-        {RS2::FormatDXFRW14, "r14.dxf"},
-        {RS2::FormatDXFRW2000, "r2000.dxf"},
-        {RS2::FormatDWG, "r2000.dwg"},
-        {RS2::FormatDWG2007, "r2007.dwg"},
-        {RS2::FormatDWG2018, "r2018.dwg"}
-    }};
+    const std::array<Lane, 5> lanes{{{RS2::FormatDXFRW14, "r14.dxf"},
+                                     {RS2::FormatDXFRW2000, "r2000.dxf"},
+                                     {RS2::FormatDWG, "r2000.dwg"},
+                                     {RS2::FormatDWG2007, "r2007.dwg"},
+                                     {RS2::FormatDWG2018, "r2018.dwg"}}};
 #ifdef DWGSUPPORT
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
     if (libreDwgReader.isEmpty())
@@ -3369,120 +3366,112 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         const LC_SplinePointsData& sourceData = profiles[profileIndex];
         const std::array<double, 4> distances{-.5, -.2, .2, .5};
         for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
-        const double signedDistance = distances[distanceIndex];
-        CAPTURE(distanceIndex, signedDistance);
-        const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
-        const qint64 requestId = static_cast<qint64>(
-            profileIndex * distances.size() + distanceIndex + 1);
-        Receipts receipts;
-        REQUIRE(owned.get().submit(
-            {token(requestId), Req::GenerateSource{definition, {}}},
-            Client::Mode::Commit, receipts.into(0)));
-        rt.until([&] { return receipts.calls[0] != 0; });
-        const auto& generated = completed(receipts.at(0), requestId, 7);
-        const auto& result = std::get<Reply::Native>(generated.reply().result);
-        REQUIRE(result.engineStatus);
-        CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        RS_SplineData expected;
-        REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, expected));
+            const double signedDistance = distances[distanceIndex];
+            CAPTURE(distanceIndex, signedDistance);
+            const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+            const qint64 requestId = static_cast<qint64>(profileIndex * distances.size() + distanceIndex + 1);
+            Receipts receipts;
+            REQUIRE(owned.get().submit({token(requestId), Req::GenerateSource{definition, {}}}, Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+            const auto& generated = completed(receipts.at(0), requestId, 7);
+            const auto& result = std::get<Reply::Native>(generated.reply().result);
+            REQUIRE(result.engineStatus);
+            CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            RS_SplineData expected;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, expected));
 
-        RS_Graphic graphic;
-        graphic.initForNewDocument();
-        auto* sourceLayer = new RS_Layer("Fit source");
-        auto* offsetLayer = new RS_Layer("Offset");
-        graphic.addLayer(sourceLayer);
-        graphic.addLayer(offsetLayer);
-        auto* sourceEntity = new LC_SplinePoints(&graphic, sourceData);
-        graphic.addEntity(sourceEntity);
-        sourceEntity->setLayer(sourceLayer);
-        auto* offsetEntity = new RS_Spline(&graphic, expected);
-        graphic.addEntity(offsetEntity);
-        offsetEntity->setLayer(offsetLayer);
+            RS_Graphic graphic;
+            graphic.initForNewDocument();
+            auto* sourceLayer = new RS_Layer("Fit source");
+            auto* offsetLayer = new RS_Layer("Offset");
+            graphic.addLayer(sourceLayer);
+            graphic.addLayer(offsetLayer);
+            auto* sourceEntity = new LC_SplinePoints(&graphic, sourceData);
+            graphic.addEntity(sourceEntity);
+            sourceEntity->setLayer(sourceLayer);
+            auto* offsetEntity = new RS_Spline(&graphic, expected);
+            graphic.addEntity(offsetEntity);
+            offsetEntity->setLayer(offsetLayer);
 
-    for (const Lane& lane : lanes) {
+            for (const Lane& lane : lanes) {
 #ifndef DWGSUPPORT
-        if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 ||
-            lane.format == RS2::FormatDWG2018) continue;
+                if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 || lane.format == RS2::FormatDWG2018)
+                    continue;
 #endif
-        CAPTURE(lane.extension);
-        const auto path = directory.file(std::to_string(profileIndex) + "-" +
-            std::to_string(distanceIndex) + "-" + lane.extension);
-        REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                CAPTURE(lane.extension);
+                const auto path = directory.file(std::to_string(profileIndex) + "-" + std::to_string(distanceIndex) + "-" + lane.extension);
+                REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
 #ifdef DWGSUPPORT
-        if (!libreDwgReader.isEmpty() &&
-            (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 ||
-             lane.format == RS2::FormatDWG2018)) {
-            QProcess reader;
-            reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
-            REQUIRE(reader.waitForStarted());
-            REQUIRE(reader.waitForFinished(30000));
-            INFO(reader.readAllStandardError().toStdString());
-            REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-            REQUIRE(reader.exitCode() == 0);
-            const QByteArray output = reader.readAllStandardOutput();
-            REQUIRE_FALSE(output.isEmpty());
-            QJsonParseError parseError;
-            const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
-            REQUIRE(parseError.error == QJsonParseError::NoError);
-            REQUIRE(document.isObject());
-            bool foundExpectedSpline = false;
-            for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
-                const QJsonObject object = value.toObject();
-                if (object.value("entity").toString() != "SPLINE" ||
-                    object.value("degree").toInt() != expected.degree)
-                    continue;
-                const QJsonArray knots = object.value("knots").toArray();
-                const QJsonArray controls = object.value("ctrl_pts").toArray();
-                if (knots.size() != static_cast<qsizetype>(expected.knotslist.size()) ||
-                    controls.size() != static_cast<qsizetype>(expected.controlPoints.size()))
-                    continue;
-                bool sameGeometry = true;
-                for (qsizetype i = 0; i < knots.size() && sameGeometry; ++i) {
-                    sameGeometry = std::abs(knots[i].toDouble() -
-                        expected.knotslist[static_cast<std::size_t>(i)]) <= 1e-11;
+                if (!libreDwgReader.isEmpty() &&
+                    (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 || lane.format == RS2::FormatDWG2018)) {
+                    QProcess reader;
+                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+                    REQUIRE(reader.waitForStarted());
+                    REQUIRE(reader.waitForFinished(30000));
+                    INFO(reader.readAllStandardError().toStdString());
+                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                    REQUIRE(reader.exitCode() == 0);
+                    const QByteArray output = reader.readAllStandardOutput();
+                    REQUIRE_FALSE(output.isEmpty());
+                    QJsonParseError parseError;
+                    const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
+                    REQUIRE(parseError.error == QJsonParseError::NoError);
+                    REQUIRE(document.isObject());
+                    bool foundExpectedSpline = false;
+                    for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+                        const QJsonObject object = value.toObject();
+                        if (object.value("entity").toString() != "SPLINE" || object.value("degree").toInt() != expected.degree)
+                            continue;
+                        const QJsonArray knots = object.value("knots").toArray();
+                        const QJsonArray controls = object.value("ctrl_pts").toArray();
+                        if (knots.size() != static_cast<qsizetype>(expected.knotslist.size()) ||
+                            controls.size() != static_cast<qsizetype>(expected.controlPoints.size()))
+                            continue;
+                        bool sameGeometry = true;
+                        for (qsizetype i = 0; i < knots.size() && sameGeometry; ++i) {
+                            sameGeometry = std::abs(knots[i].toDouble() - expected.knotslist[static_cast<std::size_t>(i)]) <= 1e-11;
+                        }
+                        for (qsizetype i = 0; i < controls.size() && sameGeometry; ++i) {
+                            const auto index = static_cast<std::size_t>(i);
+                            const QJsonObject point = controls[i].toObject();
+                            const RS_Vector& wanted = expected.controlPoints[index];
+                            const double weight = expected.weights.empty() ? 1.0 : expected.weights[index];
+                            sameGeometry = std::abs(point.value("x").toDouble() - wanted.x) <= 1e-10 &&
+                                std::abs(point.value("y").toDouble() - wanted.y) <= 1e-10 &&
+                                std::abs(point.value("z").toDouble() - wanted.z) <= 1e-10 &&
+                                std::abs(point.value("w").toDouble(1.0) - weight) <= 1e-10;
+                        }
+                        foundExpectedSpline = foundExpectedSpline || sameGeometry;
+                    }
+                    CHECK(foundExpectedSpline);
                 }
-                for (qsizetype i = 0; i < controls.size() && sameGeometry; ++i) {
-                    const auto index = static_cast<std::size_t>(i);
-                    const QJsonObject point = controls[i].toObject();
-                    const RS_Vector& wanted = expected.controlPoints[index];
-                    const double weight = expected.weights.empty() ? 1.0 : expected.weights[index];
-                    sameGeometry = std::abs(point.value("x").toDouble() - wanted.x) <= 1e-10 &&
-                        std::abs(point.value("y").toDouble() - wanted.y) <= 1e-10 &&
-                        std::abs(point.value("z").toDouble() - wanted.z) <= 1e-10 &&
-                        std::abs(point.value("w").toDouble(1.0) - weight) <= 1e-10;
-                }
-                foundExpectedSpline = foundExpectedSpline || sameGeometry;
-            }
-            CHECK(foundExpectedSpline);
-        }
 #endif
-        RS_Graphic reloaded;
-        REQUIRE(lc::test::importDrawing(reloaded, path, lane.format));
-        std::vector<RS_Spline*> offsets;
-        for (RS_Entity* entity : reloaded) {
-            if (!entity->getLayer() || entity->getLayer()->getName() != "Offset") continue;
-            auto* spline = dynamic_cast<RS_Spline*>(entity);
-            REQUIRE(spline);
-            offsets.push_back(spline);
+                RS_Graphic reloaded;
+                REQUIRE(lc::test::importDrawing(reloaded, path, lane.format));
+                std::vector<RS_Spline*> offsets;
+                for (RS_Entity* entity : reloaded) {
+                    if (!entity->getLayer() || entity->getLayer()->getName() != "Offset")
+                        continue;
+                    auto* spline = dynamic_cast<RS_Spline*>(entity);
+                    REQUIRE(spline);
+                    offsets.push_back(spline);
+                }
+                REQUIRE(offsets.size() == 1);
+                const RS_SplineData& actual = offsets.front()->getData();
+                CHECK(actual.degree == expected.degree);
+                CHECK(actual.knotslist == expected.knotslist);
+                CHECK(actual.weights == expected.weights);
+                REQUIRE(actual.controlPoints.size() == expected.controlPoints.size());
+                for (std::size_t i = 0; i < expected.controlPoints.size(); ++i)
+                    CHECK(actual.controlPoints[i].distanceTo(expected.controlPoints[i]) < 1e-10);
+                CHECK(actual.fitPoints.empty());
+            }
         }
-        REQUIRE(offsets.size() == 1);
-        const RS_SplineData& actual = offsets.front()->getData();
-        CHECK(actual.degree == expected.degree);
-        CHECK(actual.knotslist == expected.knotslist);
-        CHECK(actual.weights == expected.weights);
-        REQUIRE(actual.controlPoints.size() == expected.controlPoints.size());
-        for (std::size_t i = 0; i < expected.controlPoints.size(); ++i)
-            CHECK(actual.controlPoints[i].distanceTo(expected.controlPoints[i]) < 1e-10);
-        CHECK(actual.fitPoints.empty());
-    }
-    }
     }
 }
 
-TEST_CASE("Worker typed-source edit replaces cache and definition atomically",
-          "[lc-offsetcurve][worker-client][typed-source-edit]") {
+TEST_CASE("Worker typed-source edit replaces cache and definition atomically", "[lc-offsetcurve][worker-client][typed-source-edit]") {
     auto& rt = runtime();
     OwnedClient owned{rt};
     RS_EntityContainer owner;
