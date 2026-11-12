@@ -39677,3 +39677,22 @@ five-lane persistence for the tested asymmetric control net and similarity
 matrix. It does not qualify Trim Two on this cusp profile, other asymmetric
 parabolas, continuous cusp-distance ranges, visible-GUI, cross-platform, or
 external-CAD acceptance.
+
+## 1085. Exercise Trim Two on the Asymmetric Parabola Cusp (2026-11-12)
+
+Test commit `f36d9bb0c` takes the asymmetric profile from section 1083 through
+native Trim Two with a transverse line cutter at the exact radius (`-2.25`)
+and 2% beyond (`-2.295`), in both operand pick orders. Direct generation
+returns two branches at both distances. At the exact cusp, the strict cache
+kernel and action produce a preview, commit matching geometry, and undo/redo
+restore the inputs and fragments. Beyond the cusp, the strict kernel returns
+`LimitExceeded`; the action produces no preview and attempted commit leaves
+both operands, entity count, and undo epoch unchanged.
+
+Validation on macOS arm64 CMake Release: the focused action case passes 1,152
+assertions / 1 case; `[trim-action]` passes 49,490 assertions across 83 cases;
+the target builds; and `git diff --check` passes. This qualifies one exact-
+cusp asymmetric construction; the beyond-cusp status is a verified safe
+refusal, not successful trimming. Trim-output persistence, other asymmetric
+control nets and distances, visible-GUI, cross-platform, and external-CAD
+acceptance remain open.
