@@ -724,9 +724,12 @@ TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset"
           RS_Spline::geometryFingerprint(updated->getData()));
 }
 
-TEST_CASE("I trimmed typed parabola and hyperbola offsets demote atomically to plain fragments",
-          "[lc-offsetcurve][trim-action][typed-source][parabola][hyperbola][cusp]") {
-    const auto kind = GENERATE(SourceKind::Parabola, SourceKind::BoundedHyperbola);
+TEST_CASE("I trimmed every typed source family to plain fragments",
+          "[lc-offsetcurve][trim-action][typed-source][all-source-kinds]") {
+    const auto kind = GENERATE(SourceKind::Line, SourceKind::Arc, SourceKind::Circle,
+        SourceKind::Ellipse, SourceKind::Spline, SourceKind::SplinePoints,
+        SourceKind::Parabola, SourceKind::BoundedHyperbola, SourceKind::Polyline);
+    CAPTURE(kind);
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -769,22 +772,37 @@ TEST_CASE("I trimmed typed parabola and hyperbola offsets demote atomically to p
     lc::test::awaitUpdate(*updateAction);
     REQUIRE(updateAction->lastReport().updated == 1);
     auto* nativeCurve = onlyNative(graphic);
-    REQUIRE(nativeCurve->hasGeneralizedSourceDefinition());
-    REQUIRE(nativeCurve->sourceDefinition());
-    CHECK(nativeCurve->sourceDefinition()->source.kind() == kind);
+    if (kind == SourceKind::Ellipse) {
+        REQUIRE(nativeCurve->hasEditableDefinition());
+        CHECK_FALSE(nativeCurve->hasGeneralizedSourceDefinition());
+    }
+    else {
+        REQUIRE(nativeCurve->hasGeneralizedSourceDefinition());
+        REQUIRE(nativeCurve->sourceDefinition());
+        CHECK(nativeCurve->sourceDefinition()->source.kind() == kind);
+    }
     REQUIRE(graphic.removeEntity(source));
 
     double parameterStart = 0.0;
     double parameterEnd = 0.0;
     REQUIRE(nativeCurve->getParameterDomain(parameterStart, parameterEnd));
     LC_CurveJet jet;
-    const double cutFraction = kind == SourceKind::Parabola ? .5 : .75;
-    const double targetFraction = kind == SourceKind::Parabola ? .9 : .1;
+    const double cutFraction = kind == SourceKind::BoundedHyperbola ? .75 :
+        kind == SourceKind::Polyline ? .8 : .5;
+    const double targetFraction = kind == SourceKind::Parabola ? .9 :
+        .1;
     const double cutParameter = parameterStart + cutFraction * (parameterEnd - parameterStart);
     REQUIRE(nativeCurve->tryEvaluateJet(cutParameter, LC_CurveEvaluationSide::Interior, jet));
     RS_Vector cutterDirection{-jet.first.y, jet.first.x};
     REQUIRE(cutterDirection.magnitude() > 0.0);
-    cutterDirection = cutterDirection / cutterDirection.magnitude() * .5;
+    cutterDirection = cutterDirection / cutterDirection.magnitude();
+    if (kind == SourceKind::Circle || kind == SourceKind::Ellipse) {
+        RS_Vector tangent = jet.first / jet.first.magnitude();
+        cutterDirection += tangent;
+        REQUIRE(cutterDirection.magnitude() > 0.0);
+        cutterDirection = cutterDirection / cutterDirection.magnitude() * 12.0;
+    }
+    else cutterDirection *= .5;
     auto* cutter = new RS_Line(&graphic, jet.point - cutterDirection, jet.point + cutterDirection);
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
@@ -821,11 +839,12 @@ TEST_CASE("I trimmed typed parabola and hyperbola offsets demote atomically to p
     CHECK_FALSE(trimmed.m_closedFlag);
     REQUIRE(graphic.undo());
     CHECK_FALSE(nativeCurve->isDeleted());
-    CHECK(nativeCurve->hasGeneralizedSourceDefinition());
+    if (kind == SourceKind::Ellipse) CHECK(nativeCurve->hasEditableDefinition());
+    else CHECK(nativeCurve->hasGeneralizedSourceDefinition());
     REQUIRE(graphic.redo());
     CHECK(nativeCurve->isDeleted());
     REQUIRE(fragments.size() == 1);
-    const auto output = std::filesystem::path(directory.filePath("trimmed-hyperbola.dxf").toStdString());
+    const auto output = std::filesystem::path(directory.filePath("trimmed-source.dxf").toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, RS2::FormatDXFRW2018));
     RS_Graphic reopened;
     REQUIRE(lc::test::importDrawing(reopened, output, RS2::FormatDXFRW2018));
