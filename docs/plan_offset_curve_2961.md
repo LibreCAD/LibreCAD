@@ -40276,3 +40276,21 @@ and `git diff --check` passes. This covers the tested radii and `1e-8` gap,
 not smaller representable gaps, other radii, or a continuous sweep/precision
 boundary. Visible Properties interaction, cross-platform behavior, and
 ODA/AutoCAD acceptance remain open.
+
+## 1113. Qualify Inward Near-full Arc Trims (2026-11-12)
+
+Test commit `9b3ac241a` adds inward-side action cases for the forward and
+reversed typed arcs with a `1e-8`-radian full-sweep gap. The seed editable
+offset uses distance `0.25` with `towardCentre=true`; after asynchronous arc
+source replacement, the test requires both the distance and side flag to be
+preserved. Both profiles run in both operand-pick orders through preview,
+commit, undo/redo, five DXF/DWG save/reopen lanes, LibreDWG parsing, and the
+existing geometric fragment comparison.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused arc
+Trim Two case passes 6,979 assertions / 1 case across eighteen
+profile/pick-order combinations; full `[trim-action]` passes 105,518
+assertions / 87 cases; and `git diff --check` passes. This adds inward
+Trim Two evidence for the two tested tight-gap profiles only, not all arc
+radii, sweeps, distances, or tolerance boundaries. Visible Properties
+interaction, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
