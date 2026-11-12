@@ -1959,56 +1959,54 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         CHECK(cutter->isDeleted());
         for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
 
-        if (scale == 1.0) {
-            std::vector<const RS_Entity*> expected;
-            for (const auto* fragment : fragments)
-                if (fragment->rtti() == RS2::EntityLine || fragment->rtti() == RS2::EntitySpline)
-                    expected.push_back(fragment);
-            REQUIRE_FALSE(expected.empty());
-            for (const auto format : formats) {
-                const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-                const auto file = std::filesystem::path(directory.filePath(
-                    QStringLiteral("transformed-cusp-trim-%1-%2-%3")
-                        .arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
-                    (dwg ? ".dwg" : ".dxf")).toStdString());
-                REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+        std::vector<const RS_Entity*> expected;
+        for (const auto* fragment : fragments)
+            if (fragment->rtti() == RS2::EntityLine || fragment->rtti() == RS2::EntitySpline)
+                expected.push_back(fragment);
+        REQUIRE_FALSE(expected.empty());
+        for (const auto format : formats) {
+            const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4")
+                    .arg(scale).arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
-                if (dwg && !libreDwgReader.isEmpty()) {
-                    QProcess reader;
-                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
-                    REQUIRE(reader.waitForStarted());
-                    REQUIRE(reader.waitForFinished(30000));
-                    INFO(reader.readAllStandardError().toStdString());
-                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-                    REQUIRE(reader.exitCode() == 0);
-                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
-                    REQUIRE(document.isObject());
-                    CHECK_FALSE(document.object().value("OBJECTS").toArray().isEmpty());
-                }
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                CHECK_FALSE(document.object().value("OBJECTS").toArray().isEmpty());
+            }
 #endif
-                RS_Graphic reopened;
-                REQUIRE(lc::test::importDrawing(reopened, file, format));
-                const auto reopenedEntities = live(reopened);
-                CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
-                    return entity->rtti() == RS2::EntityOffsetCurve;
-                }));
-                std::vector<const RS_Entity*> actual;
-                for (const auto* entity : reopenedEntities)
-                    if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
-                        actual.push_back(entity);
-                CAPTURE(cutterKind, parabolaFirst, format);
-                REQUIRE(actual.size() == expected.size());
-                std::vector<bool> consumed(actual.size(), false);
-                for (const auto* sourceEntity : expected) {
-                    bool found = false;
-                    for (std::size_t i = 0; i < actual.size(); ++i) {
-                        if (consumed[i] || !sameGeometry(*sourceEntity, *actual[i])) continue;
-                        consumed[i] = true;
-                        found = true;
-                        break;
-                    }
-                    CHECK(found);
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, format));
+            const auto reopenedEntities = live(reopened);
+            CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
+                return entity->rtti() == RS2::EntityOffsetCurve;
+            }));
+            std::vector<const RS_Entity*> actual;
+            for (const auto* entity : reopenedEntities)
+                if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
+                    actual.push_back(entity);
+            CAPTURE(scale, cutterKind, parabolaFirst, format);
+            REQUIRE(actual.size() == expected.size());
+            std::vector<bool> consumed(actual.size(), false);
+            for (const auto* sourceEntity : expected) {
+                bool found = false;
+                for (std::size_t i = 0; i < actual.size(); ++i) {
+                    if (consumed[i] || !sameGeometry(*sourceEntity, *actual[i])) continue;
+                    consumed[i] = true;
+                    found = true;
+                    break;
                 }
+                CHECK(found);
             }
         }
     }
