@@ -40333,3 +40333,23 @@ CMake Release with LibreDWG 0.14: the focused ellipse Trim Two case passes
 passes. This qualifies one reversed elliptic-arc profile, not general sweep,
 ratio, side, or precision boundaries. Visible Properties interaction,
 cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1116. Record the Near-cusp Ellipse Trim Refusal Boundary (2026-11-12)
+
+Test commit `a20ef7dd5` adds an inward, rotated full ellipse at the near-cusp
+distance: semi-major length `3`, ratio `0.1`, rotation `1.17`, and inward
+distance `0.0135` (45% of the minimum curvature radius `0.03`). It attempts
+Trim Two in both operand orders. If the action cannot resolve a preview or
+commit, the regression requires no deletion, no undo-epoch change, preservation
+of the editable definition/cache fingerprint, and an explicit no-change
+diagnostic. The near-cusp case is allowed to proceed through persistence if a
+future implementation resolves it successfully.
+
+On macOS arm64 CMake Release with LibreDWG 0.14, the focused ellipse Trim Two
+case passes 4,424 assertions / 1 case across six profiles and both pick orders;
+the full `[trim-action]` suite passes 112,828 assertions / 87 cases; and
+`git diff --check` passes. The current profile records an `AmbiguousPick`
+refusal for the cutter-first path, not successful near-cusp trimming. Resolving
+that refusal with a bounded, unambiguous pick/interval proof remains open, as
+do broader ellipse ratios, sweeps, side/distance and precision coverage, GUI,
+cross-platform, and ODA/AutoCAD acceptance.
