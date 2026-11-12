@@ -38561,10 +38561,15 @@ beyond the existing two-branch fixtures; it does not qualify more complex
 component geometry, cache admission, action publication, persistence, or
 visible GUI behavior.
 
+Follow-up commit `11190b01d` strengthens the oracle: for the horizontal and
+vertical spans, both local-parameter enclosures and world-space root bounds
+must contain independently calculated circle intersections. This replaces
+tautological interval-order checks with analytic location evidence.
+
 Validation on the active macOS arm64 CMake Release worktree: the complete
 `librecad_tests` target rebuilt successfully, and
 `librecad_tests '[lc-offsetcurve][trim-kernel]' --reporter compact` passes
-40,989 assertions / 69 cases. The corresponding worker-kernel source contains
+40,995 assertions / 69 cases. The corresponding worker-kernel source contains
 a matching four-component transport fixture. Building and running
 `librecad_offset_worker_kernel_tests '[lc-offsetcurve][worker-kernel][trim]'
 --reporter compact` passes 332 assertions / 2 cases, including 278 assertions
