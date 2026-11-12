@@ -1000,3 +1000,82 @@ TEST_CASE("I persist closed mixed-bulge polyline source updates and refuse uncer
     REQUIRE_FALSE(context.messages.isEmpty());
     CHECK(context.messages.back().contains("nothing changed"));
 }
+TEST_CASE("I refuse closed convex polyline trims atomically when intersections are uncertain",
+          "[lc-offsetcurve][polyline][closed][trim-action][trim-refusal]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic);
+    auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
+    sourceOwner->addVertex({0, 0});
+    sourceOwner->addVertex({10, 0});
+    sourceOwner->addVertex({10, 10});
+    sourceOwner->addVertex({0, 10});
+    sourceOwner->setClosed(true);
+    sourceOwner->endPolyline();
+    sourceOwner->setLayer(graphic.findLayer("0"));
+    auto* source = sourceOwner.get();
+    graphic.addEntity(source);
+    sourceOwner.release();
+    graphic.select(QList<RS_Entity*>{target}, true);
+
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::Polyline);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, {5, 0}, false);
+    mouse(*update, view, {5, 0}, true);
+    lc::test::awaitUpdate(*updateAction);
+    REQUIRE(updateAction->lastReport().updated == 1);
+    auto* replacement = onlyNative(graphic);
+    REQUIRE(replacement->sourceDefinition());
+    REQUIRE(graphic.removeEntity(source));
+
+    double parameterStart = 0.0;
+    double parameterEnd = 0.0;
+    REQUIRE(replacement->getParameterDomain(parameterStart, parameterEnd));
+    const RS_Vector targetPick = replacement->getPointAt(
+        parameterStart + .7 * (parameterEnd - parameterStart));
+    REQUIRE(targetPick.valid);
+    auto* cutter = new RS_Line(&graphic, {5, -20}, {5, 20});
+    cutter->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(cutter);
+    const auto cacheBefore = RS_Spline::geometryFingerprint(replacement->getData());
+    const auto sourceBefore = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+        *replacement->sourceDefinition());
+    REQUIRE(sourceBefore);
+    const auto undoEpochBefore = graphic.undoStateEpoch();
+
+    TrimActionProbe trim(&context);
+    trim.init(0);
+    mouse(trim, view, {5, 20}, true);
+    mouse(trim, view, targetPick, true);
+    QElapsedTimer trimWait;
+    trimWait.start();
+    while (trim.pending() && trimWait.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    for (const auto& message : context.messages) UNSCOPED_INFO(message.toStdString());
+    CHECK_FALSE(replacement->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(onlyNative(graphic) == replacement);
+    CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == cacheBefore);
+    REQUIRE(replacement->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*replacement->sourceDefinition()) ==
+          sourceBefore);
+    CHECK(graphic.undoStateEpoch() == undoEpochBefore);
+    REQUIRE_FALSE(context.messages.isEmpty());
+    CHECK(context.messages.back().contains("nothing changed"));
+}
