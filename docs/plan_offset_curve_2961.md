@@ -37009,21 +37009,6 @@ fit-point profiles and distances. It remains parser/geometry-data validation,
 not ODA/AutoCAD acceptance or a visual rendering check; other source families
 and variants still require their own end-to-end evidence.
 
-## 958. Revalidate the Nine-family Source Picker (2026-11-11)
-
-On the current PR worktree, the CMake Release target
-`librecad_offset_properties_dialog_tests` builds successfully. Because this SSH
-session has no macOS screen, its `[source]` selection was run with
-`QT_QPA_PLATFORM=offscreen`; all 43 cases pass with 14,827 assertions. This
-includes changing the family filter during replacement, preserving the
-highlighted/current source across filters, and replacing each of the nine
-modeled source kinds with a typed definition. A non-offscreen attempt aborts
-before assertions with `Cannot create window: no screens available`.
-
-This reconfirms headless source-picker behavior only. It does not verify visible
-interaction, actual canvas indication, or the end-to-end geometry/worker/cache
-and file capability of every variant; those remain separate plan gates.
-
 ## 957. Refuse Singular Fit-point Trims in the Worker (2026-11-11)
 
 Test commit `95b278a8b` carries the leading duplicate, trailing duplicate, and
@@ -37042,3 +37027,36 @@ publication. This status distinction is recorded rather than hidden and
 remains a possible contract-normalization follow-up. This closes worker
 refusal/publication evidence only: no new valid geometry is added, and the
 other fit-point layouts, visible GUI, and external CAD remain open.
+
+## 958. Revalidate the Nine-family Source Picker (2026-11-11)
+
+On the current PR worktree, the CMake Release target
+`librecad_offset_properties_dialog_tests` builds successfully. Because this SSH
+session has no macOS screen, its `[source]` selection was run with
+`QT_QPA_PLATFORM=offscreen`; all 43 cases pass with 14,827 assertions. This
+includes changing the family filter during replacement, preserving the
+highlighted/current source across filters, and replacing each of the nine
+modeled source kinds with a typed definition. A non-offscreen attempt aborts
+before assertions with `Cannot create window: no screens available`.
+
+This reconfirms headless source-picker behavior only. It does not verify visible
+interaction, actual canvas indication, or the end-to-end geometry/worker/cache
+and file capability of every variant; those remain separate plan gates.
+
+## 959. Admit Repeated Fit-point Sources Through the Typed Cache (2026-11-11)
+
+Test commit `c48f94eca` exercises a fit-point source with an interior repeated
+neighbor through real-worker `GenerateSource` and operation-8
+`ValidateSourceCache` at signed distances `+0.2`, `-0.2`, `+0.5`, and `-0.5`.
+Each generated ordinary result combines into the exact editable cache, retains
+the typed `SplinePoints` source definition, and is admitted by operation 8;
+altering the cache makes validation refuse with `NotCacheRepresentable` on
+each run. The focused case passes 6,420 assertions, `[fit-points]` passes
+10,649 assertions across three cases, and the full `offset_worker_client`
+CTest passes in 277.01 seconds. `git diff --check` passes.
+
+This closes typed cache admission for this repeated-neighbor profile and the
+listed signed distances. It does not add an independent exact-normal oracle for
+these direct-generation outputs, cover other repeated fit-point layouts, or
+close persistence, visible-GUI, and external-CAD acceptance for the generated
+editable source.
