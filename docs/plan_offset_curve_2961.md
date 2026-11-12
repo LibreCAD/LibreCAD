@@ -39289,3 +39289,24 @@ exploratory fixture was removed rather than counted as a product failure or
 passing result. Non-origin-center interaction, other scales, rotated global
 frames, inward directions, and external ODA/AutoCAD validation remain open; no
 broad numerical scale guarantee is implied.
+
+## 1067. Exercise a Three-span Polyline Cache Through Trim Two (2026-11-12)
+
+Test commit `64e2bb5a4` extends the mixed-bulge polyline action matrix with a
+three-primitive source: a semicircular bulge followed by two line spans. The
+worker-created native cache must expose at least three spans. The action trims
+both an arc span and the final line span, in both operand pick orders, through
+preview, commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen. LibreDWG parses the DWG lanes when available.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+polyline action case passes 4,678 assertions; `[trim-action]` passes 31,081
+assertions across 79 cases; the target builds; and `git diff --check` passes.
+
+This qualifies one three-span semicircular-bulge-plus-two-lines profile. An
+exploratory third-span variant using the non-semicircular `0.5` bulge refused
+preview and was excluded rather than treated as support. Continue by
+diagnosing that non-semicircular three-span refusal in the certified
+component/root path, retaining conservative proof rules; closed and other
+multi-component layouts, broader bulge profiles, visible GUI, cross-platform
+and external-CAD acceptance remain open.
