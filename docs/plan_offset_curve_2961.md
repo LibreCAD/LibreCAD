@@ -38861,3 +38861,23 @@ five lanes; `[trim-action]` passes 22,872 assertions / 75 cases with
 for one smooth typed-parabola fixture only. Other parabola profiles, other
 Trim Two families, visible desktop interaction, cross-platform runs, and
 ODA/AutoCAD acceptance remain open.
+
+## 1046. Exercise Typed Line Trim Two Through the Worker and Action (2026-11-12)
+
+Test commit `34894be0e` adds a worker-created typed-line counterpart to the
+hyperbola and parabola Trim Two action cases. Update-from-Source replaces an
+editable offset with an offset generated from a finite line; the real
+asynchronous Trim Two action then uses a transverse finite-line cutter in
+both operand pick orders. The test verifies nonempty preview with no source,
+cutter, or undo-epoch mutation; commit demotes the native cache and cutter to
+ordinary spline/line fragments; undo restores the editable typed-line offset
+and operands; redo restores the fragments. A short line profile is used to
+keep this bounded solver fixture within its configured work limits.
+
+Validation on macOS arm64 CMake Release: the focused line Trim Two case passes
+634 assertions across both pick orders; `[trim-action]` passes 23,452
+assertions / 76 cases with LibreDWG available through `DWGREAD`; the test
+target rebuilds; and `git diff --check` passes. This is action integration
+evidence for one finite typed-line profile. Five-lane persistence, other line
+variants, other Trim Two source families, visible GUI, cross-platform, and
+external-CAD acceptance remain open.
