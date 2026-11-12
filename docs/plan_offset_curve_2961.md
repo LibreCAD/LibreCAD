@@ -39017,3 +39017,23 @@ assertions / 79 cases with LibreDWG available; the test target rebuilds; and
 profile and finite line cutter only. Five-lane persistence, other ellipse
 profiles/domains, remaining Trim Two source families, visible GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1054. Persist Ellipse Trim Two Output Across Five File Lanes (2026-11-12)
+
+Test commit `58db9c2c1` extends section 1053's ellipse-source Trim Two case
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, in both operand pick
+orders. LibreCAD reopens each file and compares the full entity inventory,
+spline controls/knots/weights, orientation-independent line endpoints, and the
+original ellipse's center, major axis, ratio, parameter angles, direction, and
+arc/full-ellipse state. It also rejects editable-offset residue. When
+LibreDWG is available, both DWG files must parse as minJSON and contain
+ELLIPSE, LINE, and SPLINE entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+ellipse Trim Two test passes 840 assertions across both pick orders and all
+five lanes; `[trim-action]` passes 26,222 assertions / 79 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the test target rebuilds; and
+`git diff --check` passes. This closes persistence and independent structural
+decoding for one full-ellipse profile and finite cutter only. Other ellipse
+profiles/domains, remaining Trim Two source families, visible GUI,
+cross-platform, and external-CAD acceptance remain open.
