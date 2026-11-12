@@ -36957,9 +36957,10 @@ acceptance, and publication while preserving the input source. The focused
 case passes 4,051 assertions; full `offset_worker_client` CTest passes in
 273.56 seconds. `git diff --check` passes.
 
-This closes worker preparation for this profile only. Its five-lane trimmed
-output persistence remains open, as do other repeated-point layouts, visible
-GUI behavior, and external-CAD acceptance.
+At this checkpoint, worker preparation was closed for this profile while its
+five-lane trimmed output persistence remained open. Section 983 closes that
+persistence row for the recorded profile and settings; other repeated-point
+layouts, visible GUI behavior, and external-CAD acceptance remain open.
 
 ## 954. Reconcile the Current Source-picker Request (2026-11-11)
 
@@ -37531,3 +37532,24 @@ across six cases in the CMake Release offscreen run. `git diff --check` passes.
 This verifies the headless selector and stale-publication transitions only;
 live canvas highlight behavior during worker preparation and visible-GUI
 acceptance remain open.
+
+## 983. Persist Trimmed Separated-repeat Fit-point Output (2026-11-11)
+
+Test commit `576640fc9` closes the previously open persistence row from
+sections 952-953 for the separated repeated-fit-point profile
+`(0,0),(1,1),(1,1),(2,0),(3,1),(3,1),(4,0)`. The real worker trim path is
+exercised on both pick sides at distances `0.2` and `0.5`; generated branches
+are saved and reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Reopened entities are compared by type, degree, knots, weights, and control
+points. LibreDWG 0.14 parses each generated R2000 and R2018 DWG and matches
+every expected SPLINE to a distinct parsed object, including weighted control
+coordinates.
+
+The focused persistence case passes 19,613 assertions across 20 save/reopens
+and eight independent DWG reads. The complete `[fit-points][trim]` worker-client
+selection passes 24,888 assertions across three cases. `git diff --check`
+passes.
+
+This closes only the recorded separated-repeat source, sides, distances, and
+five internal format lanes. It is not ODA/AutoCAD acceptance, visible-GUI
+evidence, or proof for other fit-point trim layouts and output topology.
