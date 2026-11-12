@@ -39745,3 +39745,34 @@ orders; the test target builds; and `git diff --check` passes. This closes
 exact-cusp output persistence for one asymmetric profile and transverse line
 cutter. Other cutters, beyond-cusp successful trimming, other asymmetric
 profiles, visible-GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1087. Isolate Cusp Branches for Beyond-cusp Trim Two (2026-11-12)
+
+Implementation commit `28c655a70` teaches cache component discovery to treat
+an internal full-multiplicity knot as a separate cusp branch only when the
+adjacent spans share an endpoint and both endpoint Bezier handles collapse to
+that endpoint. Ordinary multiplicity-`degree` spline joins remain one connected
+component, and noncoincident full breaks retain their existing behavior. This
+lets strict intersection preparation operate on the picked cusp branch instead
+of classifying the entire self-touching composite cache as one corner; the
+other branches remain untouched components. No proof-depth or tolerance limit
+was weakened.
+
+The symmetric `y = x^2` cusp cache now trims at exact stall (`0.5`) and 2%
+beyond (`0.51`) in both operand pick orders, with preview/commit and undo/redo.
+The asymmetric `(-1,0),(0,1),(2,0)` cache likewise trims at its exact
+negative-side cusp (`-2.25`) and 2% beyond (`-2.295`). Its regression verifies
+that every span after the full-multiplicity cusp boundary is retained whole
+when the first branch is picked, then round-trips both distances and pick
+orders through R12 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Reopened
+geometry inventories must match committed ordinary geometry and contain no
+native offset; LibreDWG 0.14 parses both DWG versions.
+
+Validation on macOS arm64 CMake Release: the two focused cusp action cases pass
+2,943 assertions; the complete `[trim-action]` suite passes 50,891 assertions
+across 83 cases; all 20 asymmetric cusp trim round trips pass; the target
+builds; and `git diff --check` passes. This supersedes the beyond-cusp safe
+refusals recorded in sections 1080 and 1085-1086 for these exact two parabola
+profiles, distances, and transverse line cutters. Other cusp roots/control
+nets, cutter families, wider distance/transform matrices, visible GUI,
+cross-platform builds, and external-CAD acceptance remain open.
