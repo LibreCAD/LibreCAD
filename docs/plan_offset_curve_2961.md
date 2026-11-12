@@ -40031,6 +40031,19 @@ publication. This gate is separate from Slice 4's family/variant generation,
 worker/cache, Trim, and DXF/DWG support; selector coverage must not be reported
 as universal geometry support.
 
+The visible workflow must make the current source explicit when Properties
+opens: identify/select the existing source curve in the drawing and retain its
+highlight while candidate picking is active. The candidate-type control must
+remain usable during that pick operation; changing it immediately changes the
+accepted candidate family without changing the committed source, cached
+geometry, or source identity. A valid cross-family candidate may replace the
+source only after asynchronous preparation succeeds. Cancel, invalid picks, or
+preparation failure must restore the current-source indication and leave the
+offset unchanged. Exercise repeated changes among line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline, including
+transitions to and from the distinct parabola type. Section 1098 covers the
+headless selector/filter/state portion, not this visible Properties workflow.
+
 ## 1101. Qualify Both Bounded Hyperbola Branches Through Trim Two (2026-11-12)
 
 Implementation commit `65e10cd70` extends the worker-created bounded-hyperbola
@@ -40100,3 +40113,21 @@ passes 98,671 assertions / 87 cases; and `git diff --check` passes. The second
 profile adds one rotated, translated, eccentric asymmetric interval; it does
 not close the hyperbola eccentricity/interval matrix, visible GUI,
 cross-platform, or ODA/AutoCAD acceptance gates.
+
+## 1104. Qualify a Rotated Partial Ellipse Through Trim Two (2026-11-12)
+
+Test commit `b04f09803` expands the worker-created typed-ellipse Trim Two
+regression with a second source profile: center `(5, -4)`, major-axis length
+`3` rotated by `0.41` radians, ratio `0.5`, and parameter bounds `[-0.8, 1.1]`.
+The original centered full ellipse with ratio `0.7` remains as the control.
+Both profiles run in both operand-pick orders and retain the existing
+worker-backed source replacement, preview/commit, undo/redo, five-format
+save/reopen, and LibreDWG checks.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused ellipse
+Trim Two case passes 1,694 assertions / 1 case across the four
+profile/pick-order combinations and five persistence lanes per combination;
+the full `[trim-action]` selector passes 99,230 assertions / 87 cases; and
+`git diff --check` passes. This adds one rotated, translated, eccentric partial
+arc profile, not a complete ellipse axis-ratio, sweep, or near-cusp matrix.
+Visible GUI, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
