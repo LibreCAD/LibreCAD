@@ -48,27 +48,31 @@ Do not introduce a second type selector or a parabola-only picker.
 **Latest user clarification and disposition (2026-11-12):** While specifying a
 replacement source in the existing Properties source widget, the user can
 change the requested source type in place, inspect the immediately refreshed
-candidate list, and change type again without leaving the workflow. “All
-supported types” means the nine current
+candidate list, and change type again without leaving the replacement
+workflow. “All supported types” means the nine current
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
 distinct typed choice, not a spline-points alias. Changing the filter must not
 mutate the committed source, cache, identity, or highlight; choosing a
 candidate starts asynchronous preparation, and only successful validation
-publishes the replacement. This picker contract is implemented and covered by
-headless tests; no second selector, canvas-picking mode, or parabola-only UI
-slice is required. A family appearing in the selector does not prove all its
-geometry variants pass generation, worker/cache validation, trimming, or
-persistence. Do not extend the picker to unrelated drawable entities.
+publishes the replacement and updates the displayed source type to the
+candidate's actual supported family. A rejected or stale candidate must leave
+the previous source, cache, identity, and highlight unchanged. This picker
+contract is implemented and covered by headless tests; no second selector,
+canvas-picking mode, or parabola-only UI slice is required. A family appearing
+in the selector does not prove all its geometry variants pass generation,
+worker/cache validation, trimming, or persistence. Do not extend the picker to
+unrelated drawable entities.
 
 **Acceptance sequence:** in the Properties source widget, start replacement,
 change the family at least twice before choosing, verify each change refreshes
-eligible candidates, then choose an entity of the final family and verify the
-replacement is published only after successful preparation. Exercise all nine
-families and verify parabola remains distinct from spline-points. Existing
-headless tests satisfy this widget-level sequence; visible interaction remains
-in Slice 5, and per-variant generation/worker/cache/Trim/DXF/DWG coverage remains
-in Slice 4. Do not reopen picker implementation solely to repeat this request.
+eligible candidates, then choose an entity of the final family. Verify the
+displayed type follows that candidate only after successful preparation and
+publication. Exercise all nine families and verify parabola remains distinct
+from spline-points. Existing headless tests satisfy this widget-level
+sequence; visible interaction remains in Slice 5, and per-variant
+generation/worker/cache/Trim/DXF/DWG coverage remains in Slice 4. Do not reopen
+picker implementation solely to repeat this request.
 
 Automated picker evidence: the focused headless source-picker suite passes
 14,831 assertions / 43 cases (`librecad_tests
@@ -39303,10 +39307,24 @@ Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
 polyline action case passes 4,678 assertions; `[trim-action]` passes 31,081
 assertions across 79 cases; the target builds; and `git diff --check` passes.
 
-This qualifies one three-span semicircular-bulge-plus-two-lines profile. An
-exploratory third-span variant using the non-semicircular `0.5` bulge refused
-preview and was excluded rather than treated as support. Continue by
-diagnosing that non-semicircular three-span refusal in the certified
-component/root path, retaining conservative proof rules; closed and other
-multi-component layouts, broader bulge profiles, visible GUI, cross-platform
-and external-CAD acceptance remain open.
+This qualifies one three-span semicircular-bulge-plus-two-lines profile. The
+non-semicircular `0.5` third-span variant has now been diagnosed: direct cache
+preparation succeeds, and the paired worker returns four retained cache
+fragments plus one retained line fragment. Atomic result consumption correctly
+returns `LimitExceeded` because `trimStoredCacheImpl` caps the whole operation
+at four output entities and native preview staging also has a four-owner
+array. This is not a certified-root/component failure, and the refusal leaves
+the operation unpublished. Do not weaken intersection proof or bypass the
+combined-output cap in a test.
+
+Remaining implementation slice: decide and implement an explicitly bounded
+multi-output limit for paired Trim, then propagate that same admitted ceiling
+through request/result validation, `LC_StoredCacheTrimOptions`, batch staging,
+native preview ownership, commit/undo publication, and failure cleanup. Keep
+all outputs owned until both sides and every output/display admission pass;
+test five outputs and the exact ceiling, both pick orders, preview immutability,
+commit/undo/redo, and refusal one above the ceiling with no partial entities or
+metadata mutation. Preserve worker payload and display-entity caps separately
+from the number of top-level result entities. Closed and other multi-component
+layouts, broader bulge profiles, visible GUI, cross-platform and external-CAD
+acceptance remain open.
