@@ -37009,6 +37009,21 @@ fit-point profiles and distances. It remains parser/geometry-data validation,
 not ODA/AutoCAD acceptance or a visual rendering check; other source families
 and variants still require their own end-to-end evidence.
 
+## 958. Revalidate the Nine-family Source Picker (2026-11-11)
+
+On the current PR worktree, the CMake Release target
+`librecad_offset_properties_dialog_tests` builds successfully. Because this SSH
+session has no macOS screen, its `[source]` selection was run with
+`QT_QPA_PLATFORM=offscreen`; all 43 cases pass with 14,827 assertions. This
+includes changing the family filter during replacement, preserving the
+highlighted/current source across filters, and replacing each of the nine
+modeled source kinds with a typed definition. A non-offscreen attempt aborts
+before assertions with `Cannot create window: no screens available`.
+
+This reconfirms headless source-picker behavior only. It does not verify visible
+interaction, actual canvas indication, or the end-to-end geometry/worker/cache
+and file capability of every variant; those remain separate plan gates.
+
 ## 957. Refuse Singular Fit-point Trims in the Worker (2026-11-11)
 
 Test commit `95b278a8b` carries the leading duplicate, trailing duplicate, and
