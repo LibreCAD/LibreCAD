@@ -1503,47 +1503,119 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
         if (conicPick && !input.conic) fail(Refusal::UnsupportedCutter);
         c.items(input.source->size());
         const auto parts = components(*input.source);
-        if (parts.size() > 1) {
+        if (parts.size() > 1 && emitCache) {
             result = prepareComponents(c, input, parts, cutter, pick, conicPick, emitCache);
             result.work = c.work;
             if (onExit) *onExit = result.work;
             return result;
         }
-        c.items(1);
-        auto provider = std::make_unique<Curves>(input.frame, input.source, input.cutter, input.conic,
-                                               input.closed, input.cutterClosed, c.cancellation);
-        const auto* view = provider.get(); // Owned by the session throughout root preparation.
-        auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
-        auto contacts = roots(c, input, *view, *session);
-        for (std::size_t k = 0; k < contacts.size(); ++k) contacts[k].provenanceId = k;
-        result.rootCount = contacts.size();
-        if (contacts.empty()) { fail(Refusal::NoUsableRoots); }
         Range removed;
         std::vector<Fragment> fragments;
-        if (emitCache) {
-            const auto projected = closest(c, input, pick);
-            const auto ranges = retain(c, double(input.source->size()), input.closed, contacts, projected.parameter, removed);
-            fragments = assemble(c, input, contacts, ranges);
-        }
         std::vector<Result::ConicFragment> conics;
-        if (conicPick) {
-            const auto ordered = conicContacts(c, input, contacts, *session);
+        std::vector<RootProvenance> provenance;
+        if (conicPick && !emitCache && parts.size() > 1) {
+            std::vector<Root> ordered;
+            for (const auto& part : parts) {
+                c.check();
+                const auto count = part.end - part.begin;
+                c.items(count);
+                Input local = input;
+                local.source = std::make_shared<const Spans>(input.source->begin() + part.begin,
+                                                              input.source->begin() + part.end);
+                local.closed = part.closed;
+                c.items(1);
+                auto provider = std::make_unique<Curves>(local.frame, local.source, local.cutter,
+                    local.conic, local.closed, local.cutterClosed, c.cancellation);
+                const auto* view = provider.get();
+                auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
+                auto contacts = roots(c, local, *view, *session);
+                c.items(contacts.size());
+                for (auto& root : contacts) {
+                    root.provenanceId = provenance.size();
+                    I x, y;
+                    if (!local.frame.pointToWorld(root.snapshot.imageX, root.snapshot.imageY, x, y))
+                        fail(Refusal::Arithmetic);
+                    auto targetLocation = location(root.parameter, count);
+                    shift(targetLocation, part.begin);
+                    auto isolation = root.snapshot.event.isolation;
+                    auto proofDomain = root.snapshot.event.proofDomain;
+                    const auto cutterOffset = input.source->size() - count;
+                    shift(isolation, part.begin, cutterOffset);
+                    shift(proofDomain, part.begin, cutterOffset);
+                    provenance.push_back({root.provenanceId, targetLocation, isolation, proofDomain,
+                        root.snapshot.event.proof, x, y});
+                }
+                auto partOrdered = conicContacts(c, local, contacts, *session);
+                c.items(partOrdered.size());
+                ordered.insert(ordered.end(), partOrdered.begin(), partOrdered.end());
+                if (!session->hasValidProofs()) fail(Refusal::AmbiguousRoots);
+                result.rootCount += contacts.size();
+            }
+            if (!result.rootCount) fail(Refusal::NoUsableRoots);
+            for (std::size_t i = 1; i < ordered.size(); ++i) {
+                std::size_t j = i;
+                while (j) {
+                    c.compare();
+                    if (!(ordered[j].parameter.lo() < ordered[j - 1].parameter.lo())) break;
+                    std::swap(ordered[j], ordered[j - 1]); --j;
+                }
+            }
+            std::size_t unique = 0;
+            for (std::size_t i = 0; i < ordered.size(); ++i) {
+                if (unique) {
+                    c.compare();
+                    const auto& previous = ordered[unique - 1].parameter;
+                    const auto& current = ordered[i].parameter;
+                    if (!(previous.hi() < current.lo())) {
+                        if (singleton(previous) && singleton(current) && previous.lo() == current.lo()) continue;
+                        fail(Refusal::AmbiguousRoots);
+                    }
+                }
+                if (unique != i) ordered[unique] = std::move(ordered[i]);
+                ++unique;
+            }
+            ordered.resize(unique);
             const auto projected = closestConic(c, input, *conicPick);
             Range conicRemoved;
             const auto ranges = retain(c, input.conic->unit.parameterEnd(), input.cutterClosed, ordered, projected, conicRemoved);
             conics = assembleConic(c, input, ordered, ranges);
-        }
-        c.items(contacts.size());
-        std::vector<RootProvenance> provenance; provenance.reserve(contacts.size());
-        for (std::size_t k = 0; k < contacts.size(); ++k) {
-            c.check(); const auto& root = contacts[k];
-            I x, y;
-            if (!input.frame.pointToWorld(root.snapshot.imageX, root.snapshot.imageY, x, y)) { fail(Refusal::Arithmetic); }
-            provenance.push_back({k, location(root.parameter, input.source->size()), root.snapshot.event.isolation,
-                root.snapshot.event.proofDomain, root.snapshot.event.proof, x, y});
+        } else {
+            c.items(1);
+            auto provider = std::make_unique<Curves>(input.frame, input.source, input.cutter, input.conic,
+                input.closed, input.cutterClosed, c.cancellation);
+            const auto* view = provider.get(); // Owned by the session throughout root preparation.
+            auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
+            auto contacts = roots(c, input, *view, *session);
+            for (std::size_t k = 0; k < contacts.size(); ++k) contacts[k].provenanceId = k;
+            result.rootCount = contacts.size();
+            if (contacts.empty()) { fail(Refusal::NoUsableRoots); }
+            if (emitCache) {
+                const auto projected = closest(c, input, pick);
+                const auto ranges = retain(c, double(input.source->size()), input.closed, contacts,
+                    projected.parameter, removed);
+                fragments = assemble(c, input, contacts, ranges);
+            }
+            if (conicPick) {
+                auto ordered = conicContacts(c, input, contacts, *session);
+                const auto projected = closestConic(c, input, *conicPick);
+                Range conicRemoved;
+                const auto ranges = retain(c, input.conic->unit.parameterEnd(), input.cutterClosed,
+                    ordered, projected, conicRemoved);
+                conics = assembleConic(c, input, ordered, ranges);
+            }
+            c.items(contacts.size()); provenance.reserve(contacts.size());
+            for (std::size_t k = 0; k < contacts.size(); ++k) {
+                c.check(); const auto& root = contacts[k];
+                I x, y;
+                if (!input.frame.pointToWorld(root.snapshot.imageX, root.snapshot.imageY, x, y))
+                    fail(Refusal::Arithmetic);
+                provenance.push_back({k, location(root.parameter, input.source->size()),
+                    root.snapshot.event.isolation, root.snapshot.event.proofDomain,
+                    root.snapshot.event.proof, x, y});
+            }
+            if (!session->hasValidProofs()) { fail(Refusal::AmbiguousRoots); }
         }
         c.check();
-        if (!session->hasValidProofs()) { fail(Refusal::AmbiguousRoots); }
         if (emitCache) result.removed = RemovedInterval{location(removed.from.parameter, input.source->size()),
             location(removed.to.parameter, input.source->size()), removed.wrap};
         result.conicFragments = std::move(conics);

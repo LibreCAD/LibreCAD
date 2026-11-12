@@ -1373,6 +1373,34 @@ TEST_CASE("Conic only preparation has no polynomial output and preserves the rea
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
 }
 
+TEST_CASE("Conic-only trim combines contacts from disconnected cache components", tags) {
+    RS_SplineData source{1, false};
+    source.controlPoints = {{-3, .5}, {3, .5}, {0, -1}, {0, 1}, {-3, 1}, {3, 1}, {-3, 5}, {3, 5}};
+    source.weights = {1, 1, 1, 1, 1, 1, 1, 1};
+    source.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    const auto before = source;
+    RS_Circle cutter{nullptr, {{0, 0}, 2}};
+
+    const auto result = Trim::prepareConic(source, cutter, {{0, 2}});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+        result.work.rootRecords, result.work.kernelComparisons,
+        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+        result.work.intersections.generatedItems, result.work.intersections.orderingComparisons,
+        result.work.intersections.deepestPreparation, result.work.intersections.deepestPairRefinement,
+        result.work.intersections.deepestOrderingRefinement, result.work.intersections.deepestRootRefinement,
+        result.work.intersections.validationSegmentVisits, result.work.intersections.validationNextCalls);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
+    REQUIRE(result.roots.size() == 4);
+    CHECK(result.roots[0].target.rawSpan == 0); CHECK(result.roots[1].target.rawSpan == 0);
+    CHECK(result.roots[2].target.rawSpan == 2); CHECK(result.roots[3].target.rawSpan == 2);
+    REQUIRE(result.conicFragments.size() == 1);
+    CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+    CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+    equalData(source, before);
+    CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
+}
+
 TEST_CASE("Conic endpoint certificates use the actual whole frame chart and refuse symmetric closest ties", tags) {
     const auto source = cache({{-6, .5}, {6, .5}}); const auto before = source;
     for (bool reverse : {false, true}) {

@@ -58,95 +58,27 @@ distinct parabola kind. A family appearing in the selector is UI coverage
 only, not proof that all of its geometry variants pass generation,
 worker/cache validation, or persistence.
 
-**Parabola/source-type clarification (2026-11-11):** When selecting a new
-source, the user must be able to change the source-family filter in the same
-Properties-widget workflow; the supported choices include a first-class
-parabola entry. The type control filters eligible drawing entities and does
-not convert the existing source or commit a replacement. Keep the current
-source and its indication until the selected candidate has passed preparation.
-This behavior is covered by the existing nine-kind picker contract, so no
-additional picker or parabola-only implementation slice is needed. Continue
-tracking parabola generation, trimming, worker/cache behavior, and DXF/DWG
-round-trip by geometry variant in Slice 4; keep visible interaction in Slice
-5. Do not mark those broader gates complete from picker tests.
+**Current disposition (reconfirmed 2026-11-12):** The request to change source
+type while choosing a replacement and expose all supported types is complete
+at the picker-contract level; it does not require another UI implementation
+slice. “All supported types” is exactly the nine current
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+distinct typed choice, not a spline-points alias. The selector stays active
+while browsing candidates, each family change refreshes the candidate list,
+and the existing source/cache/identity/highlight remains unchanged until a
+candidate passes asynchronous preparation. Do not add another selector or
+extend the list to unrelated drawable entities.
 
-**Plan update for the repeated source-widget request (2026-11-11):** Treat
-“change source curve type when selecting a new one” as repeated, in-workflow
-family switching before candidate acceptance, not as changing the stored
-source's type in place. On every type change, refresh the candidate list from
-the canonical `SupportedKinds` inventory; keep the prior typed source, cache,
-identity and current-source indication unchanged until a candidate passes
-asynchronous validation. The source-picker acceptance gate combines `Native
-source picker changes family and replaces the source with a typed curve`,
-`Native source picker preserves highlighted source across family filters`,
-`Native source picker replaces every modeled source family without filter
-side effects`, and the inventory assertion. These cover all nine kinds,
-including parabola as distinct from spline-points. The explicit parabola
-replacement request is covered by the existing nine-kind matrix; there is no
-separate parabola-only UI path to add. The latest focused headless picker
-validation is section 958 (14,827 assertions / 43 cases), with action-level
-selector/replacement checks in section 960. Rerun those suites for picker
-changes. Do not expand the UI inventory beyond modeled offset-source kinds or
-claim every geometry variant is supported based on picker visibility; variant
-generation and persistence remain governed by slice 4 and the capability
-matrix.
-
-**Current disposition (2026-11-11):** The reiterated request to switch source
-family while replacing a curve, cover every supported kind, and include
-parabola adds no new picker phase. The source-type selector remains usable
-while browsing replacement candidates; switching filters the list only; and
-the existing source remains indicated until a replacement is validated and
-published. The nine-kind transition tests and distinct parabola identity test
-are the automated picker acceptance criteria. Visible-GUI confirmation remains
-open. Missing geometry variants stay in slice 4 rather than being implied by
-selector availability.
-
-**Current disposition (2026-11-12):** The repeated request to change the source
-curve type during replacement and expand the choices to all supported types is
-already satisfied at the Properties-widget contract level. Keep the selector
-usable before candidate selection, refresh the eligible-entity list on each
-family change, and preserve the current source/cache/highlight until the new
-candidate passes asynchronous preparation. The inventory is the nine kinds
-listed above, with parabola distinct from spline-points; do not add a duplicate
-selector or promise support for unrelated drawable entities. No new UI
-implementation slice is opened by this clarification. Continue Slice 4 for
-unqualified family variants through generation, worker/cache, trimming and
-applicable DXF/DWG persistence, and Slice 5 for visible interaction and
-delivery acceptance. Picker availability alone does not close those gates.
-The focused headless source-picker rerun on the current code passes 14,831
-assertions across 43 cases (`librecad_tests
-'[gui][dialog][offsetcurve][source]'`); it is automated evidence, not visible
-GUI acceptance. The latest request is therefore recorded as a reconfirmation,
-not an unimplemented picker change. The same audit found that Trim admitted only
-ellipse-backed editable definitions despite the general-source update action
-accepting typed hyperbolas; see section 1013 for the targeted repair and test.
-
-**Latest source-widget acceptance (2026-11-12):** While replacing an offset's
-source, the user can change the source-type filter at any time before choosing
-the replacement; each change refreshes the candidate list and does not mutate
-the existing source. Include every kind in the current offset-source inventory:
-line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline. Parabola is a distinct typed choice, not an alias for
-spline-points. Keep the existing-source indication until asynchronous candidate
-preparation succeeds. This is the already implemented picker contract, so it
-does not create a new UI slice. “All supported types” means all nine modeled
-offset-source kinds, not every drawable entity and not every geometry variant
-within those kinds. Slice 4 still owns variant-level generation, worker/cache,
-Trim, and DXF/DWG evidence; Slice 5 still owns visible interaction and delivery
-validation. The headless picker suite cited above is necessary regression
-evidence but does not replace the visible-GUI gate.
-
-**Scope reconfirmed (2026-11-11):** “Expand source curve support to all
-supported types” means keep replacement available across the complete current
-`SupportedKinds` inventory, not add a parabola-only path, freeze the selector
-to the existing source family, or promise support for every drawable LibreCAD
-entity. Before choosing a replacement, users must be able to switch among
-line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline and see the candidate list refresh. The current typed source and
-its indication remain intact until a candidate has passed worker validation.
-This reiteration does not reopen the already-tested picker implementation;
-per-variant geometry, worker/cache, and persistence gaps remain explicit Slice
-4 work, and visible-GUI confirmation remains a Slice 5 gate.
+Automated picker evidence: the focused headless source-picker suite passes
+14,831 assertions / 43 cases (`librecad_tests
+'[gui][dialog][offsetcurve][source]'`), including the all-family transition
+contract. This is not visible-GUI acceptance and does not establish that every
+geometry variant of those families works. Slice 4 remains responsible for
+variant-level generation, worker/cache, trimming and applicable DXF/DWG
+persistence; Slice 5 remains responsible for visible interaction and delivery
+validation. Picker availability alone closes neither gate. The prior audit's
+typed-source Trim admission correction is recorded in section 1013.
 
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
@@ -321,7 +253,7 @@ following slices in order, preserving the detailed safety requirements below:
 | 1. Inventory and selector | The UI contract and directed family transitions are implemented: while browsing replacements, the type selector remains usable for repeated family changes before choosing a candidate and filters across all nine `SupportedKinds`, with parabola distinct from spline-points. Switching family does not mutate the committed source/cache; both controls become disabled only after choosing a candidate and while its worker preparation is active. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 1013's latest focused headless source-picker suite passes 14,831 assertions / 43 cases, and section 960 records the action-level contract. Section 982 explicitly asserts both selectors disable during preparation and re-enable after stale-input refusal (915 assertions / 6 stale-source cases). Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Automated lifecycle and identity handling is qualified for resolved, initially missing/ambiguous, duplicate, hidden, locked, moved, deleted, and replaced sources. Temporary highlighting remains separate from persistent selection. Physical stale-peer UI and scale limits beyond the recorded stress case are Delivery/acceptance work, not an unimplemented code path. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][highlight]` passes 348 assertions / 20 cases; the incremental subset passes 83 / 6; the 1,024-candidate x 256-control-point benchmark passes 26 / 1, with reported type-filter refresh 2.89521 ms and highlight validation 81.4885 ms. The tests preserve unrelated selection and overlays and cover lifecycle/revision changes. Broader workload sizes and physical stale-peer interaction remain open under Slice 5. |
 | 3. Atomic replacement | The automated ordered-family-pair and stale-publication contract is qualified: every modeled source kind can be replaced by every destination kind through worker preparation; chosen entities are revalidated at publication, and stale/deleted/changed inputs or context swaps do not mutate the prior curve/cache. Family geometry variants remain Slice 4. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][typed]` passes 9,683 assertions / 4 cases, including all ordered family pairs; `[gui][dialog][offsetcurve][source][stale][async]` passes 886 / 5. The tests cover changed/deleted candidates, viewport/document swaps, late replies after target rebinding, and preservation on refusal. Visible physical interaction and cross-platform delivery remain Slice 5. |
-| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify its eligible geometry variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming while retaining its distinct type. Representative open-source Trim passes for each of the nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and simple convex square sources previously refused because their generated caches are discontinuous (sections 1017-1019). The picked-component path now trims only the component nearest the pick and preserves all others as ordinary spline fragments (section 1020). Follow-up section 1021 fixes preflight so valid full-multiplicity cubic breaks reach layout inspection and verifies cubic components through direct and worker protocol paths. These do not close the family-by-variant requirement. Multi-component caches used only as a conic boundary without a cache pick remain explicitly unsupported. For unsupported or malformed variants, require an explicit atomic refusal rather than silent candidate loss or partial replacement. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates one closed convex line-polyline and one closed mixed-bulge polyline through asynchronous Trim, undo/redo, and five file lanes. Section 1021 adds a degree-3 two-branch cache with a full-multiplicity knot break and tests either picked branch plus worker request/reply round-trip. Extend successful per-component coverage to other disconnected cache origins/topologies and conic-boundary behavior; include cross-family replacement into each family and verify that the prior source/cache survives refusal. Uncovered variants remain open; picker visibility is not acceptance evidence. |
+| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts (section 1022). These qualify specific layouts, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies conic-boundary Trim over intersecting, crossing, and nonintersecting disconnected components through direct and worker result transport. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 Existing picker and parabola tests are useful regression evidence, not a
@@ -38367,3 +38299,33 @@ plugin build is recorded in section 1020. This qualifies one degree-3
 full-multiplicity layout, not arbitrary discontinuous NURBS, repeated-knot
 topologies, alternate cache origins, or conic-boundary Trim. Visible GUI and
 ODA/AutoCAD validation remain open.
+
+## 1022. Trim Conic Boundaries Across Disconnected Cache Components (2026-11-12)
+
+Conic-only Trim now processes each disconnected cache component in its own
+certified intersection session while sharing the caller's bounded work
+context. It combines and orders the conic contacts, preserves source-span and
+proof-domain provenance, and trims the conic once using the union of those
+contacts. Cache/cache intersections are excluded from this query, so crossing
+cache branches that do not touch the conic cannot affect its topology. Exact
+duplicate singleton conic contacts are merged; overlapping non-identical
+contact certificates refuse atomically. The input cache remains read-only and
+the conic-only result carries no polynomial cache fragments.
+
+The direct regression uses four disconnected linear components: two cross the
+circle, one crosses another cache component but not the circle, and one misses
+the circle. It checks all four conic roots map to the two intersecting source
+spans, verifies the retained conic arc by angular membership, and proves the
+input is unchanged. A worker request/result encode/decode case carries the same
+multi-component provenance.
+
+Validation on macOS arm64 CMake Release: the focused direct case passes 56
+assertions; worker component-aware Trim passes 42 assertions / 1 case; the full
+Trim kernel suite passes 39,978 assertions / 58 cases; worker Trim passes 96
+assertions / 2 cases; and the Trim action suite passes 17,907 assertions / 68
+cases. The qmake6 recursive application/worker/plugin build completes. The full
+worker-kernel run is not green: its repeated fit-point cache-admission test has
+12 assertion failures; the Trim selector passes. This qualifies linear
+disconnected components for conic-boundary Trim, not arbitrary discontinuous
+rational layouts, duplicate-root families, every cache origin, or
+visible/external-CAD acceptance.

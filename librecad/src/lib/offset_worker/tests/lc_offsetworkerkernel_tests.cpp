@@ -9992,6 +9992,30 @@ TEST_CASE("offset worker transports component-aware trim results",
     REQUIRE(cubicRoundTripped.fragments.size() == 2);
     CHECK(cubicRoundTripped.fragments.front().sourceSections.front().rawSpan == 1);
     CHECK(cubicRoundTripped.fragments.back().sourceSections.front().rawSpan == 0);
+
+    RS_SplineData conicCache{1, false};
+    conicCache.controlPoints = {{-3, .5}, {3, .5}, {0, -1}, {0, 1}, {-3, 1}, {3, 1}, {-3, 5}, {3, 5}};
+    conicCache.weights = {1, 1, 1, 1, 1, 1, 1, 1};
+    conicCache.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    const req::Request conicInput{token,
+        req::TrimConic{conicCache, RS_CircleData{{0, 0}, 2}, {{0, 2}}, {}, {}}};
+    const auto conicReply = LC_OffsetWorkerKernel::run(conicInput);
+    const auto& conicOutput = trimmed(conicReply, 3);
+    REQUIRE(conicOutput.refusal == trim::Refusal::None);
+    CHECK(conicOutput.fragments.empty()); REQUIRE(conicOutput.conicFragments.size() == 1);
+    REQUIRE(conicOutput.roots.size() == 4);
+    CHECK(conicOutput.roots[0].target.rawSpan == 0);
+    CHECK(conicOutput.roots[1].target.rawSpan == 0);
+    CHECK(conicOutput.roots[2].target.rawSpan == 2);
+    CHECK(conicOutput.roots[3].target.rawSpan == 2);
+    const auto conicEncoded = result::encode(conicReply, conicInput);
+    REQUIRE(conicEncoded);
+    const auto conicDecoded = result::decode(*conicEncoded, conicInput);
+    REQUIRE(conicDecoded);
+    const auto& conicRoundTripped = std::get<trim::Result>(conicDecoded->result);
+    CHECK(conicRoundTripped.fragments.empty());
+    REQUIRE(conicRoundTripped.conicFragments.size() == 1);
+    REQUIRE(conicRoundTripped.roots.size() == 4);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",
