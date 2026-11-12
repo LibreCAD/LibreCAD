@@ -39863,3 +39863,23 @@ acceptance of repeated type changes and cross-family replacement, including
 parabola, with the old-source highlight retained until successful acceptance.
 This UI check does not establish geometry-generation, Trim, persistence,
 cross-platform, or external-CAD completeness for all source variants.
+
+## 1092. Persist Similarity-transformed Cusp Trim Outputs (2026-11-12)
+
+Test commit `9eb7b927e` extends section 1090's rotated and translated
+beyond-cusp parabola case with save/reopen checks at unit scale. For each of
+the line, full-circle, and 270-degree bounded-arc cutters, and both operand
+pick orders, the committed fragments are round-tripped through R12 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Reopened line/spline inventories must match the
+trimmed fragments within scale-aware tolerances and contain no editable offset
+entity. `dwgread -O minJSON` independently parses every emitted DWG when the
+tool is available.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+`[transform]` run passes 5,553 assertions across two cases and all 30
+transformed save/reopen files; the full `[trim-action]` suite passes 58,482
+assertions across 84 cases; and `git diff --check` passes. Persistence is
+currently qualified only at unit scale for this symmetric parabola profile;
+the `0.1` and `10` transformed action cases are not yet round-tripped.
+Additional transforms, cusp profiles, cutter families, visible-GUI,
+cross-platform, and external-CAD acceptance remain open.
