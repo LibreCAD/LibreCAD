@@ -3371,6 +3371,75 @@ TEST_CASE("Fit-point conditioning survives worker generation and cache admission
     }
 }
 
+TEST_CASE("Worker cache admission preserves near-coincident chord placement variants",
+          "[lc-offsetcurve][worker-client][fit-points][conditioning][placement][cache-admission]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    const double openGap = 2e-4;
+    const double closedGap = 2e-3;
+    std::array<LC_SplinePointsData, 8> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {openGap, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {1 + openGap, 1 + openGap}, {2, 0}, {3, 1}};
+    profiles[2] = LC_SplinePointsData{false, false};
+    profiles[2].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3 + openGap, 1}};
+    profiles[3] = profiles[1];
+    profiles[4] = LC_SplinePointsData{true, false};
+    profiles[4].splinePoints = {{0, 0}, {closedGap, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[5] = LC_SplinePointsData{true, false};
+    profiles[5].splinePoints = {{0, 0}, {10, 0}, {10 + closedGap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[6] = LC_SplinePointsData{true, false};
+    profiles[6].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {13 + closedGap, 8}, {4, 13}, {-3, 8}};
+    profiles[7] = LC_SplinePointsData{true, false};
+    profiles[7].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, closedGap}};
+    for (auto& profile : profiles) profile.fitTolerance = 1e-8;
+    std::reverse(profiles[3].splinePoints.begin(), profiles[3].splinePoints.end());
+
+    qint64 requestId = 1;
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        const LC_OffsetSourceGeometry source{profiles[profileIndex]};
+        REQUIRE(source.isWellFormed());
+        const double distance = 10.0 * (profileIndex < 4 ? openGap : closedGap);
+        for (const double signedDistance : {distance, -distance}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            Receipts generatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId), Req::GenerateSource{definition, {}}}, Client::Mode::Commit,
+                generatedReceipts.into(0)));
+            rt.until([&] { return generatedReceipts.calls[0] != 0; });
+            const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+            const auto& result = std::get<Reply::Native>(generated.reply().result);
+            REQUIRE(result.engineStatus);
+            CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(result.ordinary.empty());
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+
+            const Req::ValidateSourceCache validation{cache, definition, {}};
+            Receipts validatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId + 1), validation}, Client::Mode::Commit,
+                validatedReceipts.into(0)));
+            rt.until([&] { return validatedReceipts.calls[0] != 0; });
+            const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+            const auto admitted = validated.nativeValidatedSource(attributes);
+            REQUIRE(admitted);
+            REQUIRE(admitted->sourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*admitted->sourceDefinition()) ==
+                  Req::Values::encodeSourceDefinition(definition));
+            exactCache(admitted->getData(), cache);
+            requestId += 2;
+        }
+    }
+    CHECK(owned.get().healthyAndIdle());
+}
+
 TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
           "[lc-offsetcurve][worker-client][fit-points][refusal]") {
     auto& rt = runtime();
