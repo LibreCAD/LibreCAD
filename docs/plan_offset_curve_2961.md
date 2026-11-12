@@ -39155,3 +39155,29 @@ boundaries, other bulge arrangements, visible GUI, cross-platform, and
 external-CAD acceptance remain open. The kernel/action regression is complete
 for the profiles and operations above; this roadmap checkpoint is committed
 separately from the implementation slice.
+
+## 1061. Certify Exact-knot Circle Trim Two Ownership (2026-11-12)
+
+Test commit `f8516041c` closes the exact shared-span ownership case for one
+worker-created typed circle cache. A finite line starts at a stored cache knot
+and crosses the closed cache again at an interior parameter; both points are
+transverse. The kernel is exercised in both operand directions and must report
+one `AnalyticEndpoint` root at the exact integer cache parameter and one
+`IntervalUniqueTransverse` interior root. This avoids treating a merely
+nearby rounded contact as an exact shared knot.
+
+The action regression checks direct preparation for both operands, nonempty
+preview without entity or undo-epoch mutation, commit to ordinary fragments,
+and undo/redo. Validation on macOS arm64 CMake Release with LibreDWG 0.14: the
+focused exact-knot action case passes 375 assertions; `[trim-action]` passes
+35,119 assertions across 82 cases; `[lc-offsetcurve][trim-kernel]` passes
+41,202 assertions across 70 cases; the test target rebuilds; and
+`git diff --check` passes.
+
+This resolves exact-knot ownership for the recorded single-knot-plus-interior
+crossing fixture, not all exact-knot arrangements. A symmetric construction
+whose second contact misses the opposite stored knot by roughly `4.4e-15`
+still exhausts the certified refinement depth and remains a conservative
+refusal; do not snap it, merge by proximity, or widen the proof tolerance.
+Other knot multiplicities, multiple exact-knot contacts, visible GUI,
+cross-platform, and external-CAD acceptance remain open.
