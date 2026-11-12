@@ -37045,18 +37045,19 @@ and file capability of every variant; those remain separate plan gates.
 
 ## 959. Admit Repeated Fit-point Sources Through the Typed Cache (2026-11-11)
 
-Test commit `c48f94eca` exercises a fit-point source with an interior repeated
-neighbor through real-worker `GenerateSource` and operation-8
-`ValidateSourceCache` at signed distances `+0.2`, `-0.2`, `+0.5`, and `-0.5`.
-Each generated ordinary result combines into the exact editable cache, retains
-the typed `SplinePoints` source definition, and is admitted by operation 8;
+Test commits `c48f94eca` and `415ead14f` exercise two fit-point layouts through
+real-worker `GenerateSource` and operation-8 `ValidateSourceCache`: an interior
+adjacent repeat and the separated-repeat profile from sections 952-955. Each
+is tested at signed distances `+0.2`, `-0.2`, `+0.5`, and `-0.5`. Every
+generated ordinary result combines into the exact editable cache, retains the
+typed `SplinePoints` source definition, and is admitted by operation 8;
 altering the cache makes validation refuse with `NotCacheRepresentable` on
-each run. The focused case passes 6,420 assertions, `[fit-points]` passes
-10,649 assertions across three cases, and the full `offset_worker_client`
-CTest passes in 277.01 seconds. `git diff --check` passes.
+each run. The focused case passes 15,406 assertions; `[fit-points]` passes
+19,619 assertions across three cases; the full `offset_worker_client` CTest
+passes in 276.73 seconds. `git diff --check` passes.
 
-This closes typed cache admission for this repeated-neighbor profile and the
-listed signed distances. It does not add an independent exact-normal oracle for
-these direct-generation outputs, cover other repeated fit-point layouts, or
-close persistence, visible-GUI, and external-CAD acceptance for the generated
+This closes typed-cache admission for these two repeated-neighbor profiles and
+the listed signed distances. It does not add an independent exact-normal
+oracle for these direct-generation outputs, cover other repeated fit-point
+layouts, or close visible-GUI and external-CAD acceptance for the generated
 editable source.
