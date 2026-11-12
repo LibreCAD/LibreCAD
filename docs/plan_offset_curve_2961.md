@@ -38656,3 +38656,25 @@ for both DWG targets. This is independent LibreDWG structural/geometry evidence
 for these scopes, not ODA/AutoCAD or visible-GUI acceptance. The broader source
 variant, app-version, deployed-package, and family-by-variant gates remain
 open.
+
+## 1036. Reconcile Source-family Switching Request (2026-11-12)
+
+The latest request reiterates that the source-curve control must allow the
+candidate family to change while the user is choosing a replacement, and that
+the chooser must include every supported offset-source family. This is already
+the picker contract recorded in sections 984 and 990: line, arc, circle,
+ellipse, spline, spline-points, distinct parabola, bounded hyperbola, and
+polyline. Family changes refresh the candidate list without committing a
+replacement; the prior source, cache, identity, and current-source indication
+remain intact until asynchronous preparation succeeds. Parabola remains a
+distinct family rather than being folded into spline-points.
+
+No additional picker or parabola-only UI implementation is opened by this
+reiteration. The existing nine-family inventory, transition, highlight
+preservation, and stale-preparation tests remain the picker-level acceptance
+criteria. This does not prove that every concrete source variant generates,
+trims, survives worker/cache admission, or round-trips through DXF/DWG; those
+remain Slice 4's per-family variant matrix. Visible replacement-flow
+confirmation remains a separate Slice 5 gate, as do deployed-package and
+external-CAD checks. Picker availability must not be reported as complete
+geometry or end-to-end support.
