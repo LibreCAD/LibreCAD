@@ -1812,9 +1812,9 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
     constexpr double angle = .37;
     const double cosine = std::cos(angle), sine = std::sin(angle);
     for (const double scale : {.1, 1.0, 10.0})
-    for (const bool circularCutter : {false, true})
+    for (const unsigned cutterKind : {0u, 1u, 2u})
     for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(scale, circularCutter, parabolaFirst);
+        CAPTURE(scale, cutterKind, parabolaFirst);
         const double distance = .51 * scale;
         const RS_Vector translation{2 * scale, -scale};
         const auto mapPoint = [&](RS_Vector point) {
@@ -1871,17 +1871,25 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         const RS_Vector cutterStart = intersection - normal * cutterRadius;
         const RS_Vector cutterEnd = intersection + normal * cutterRadius;
         const auto nativePick = native->getPointAt(parameter + spanWidth * .1);
-        RS_Entity* cutter = circularCutter
+        const double tangentAngle = std::atan2(tangent.y, tangent.x);
+        const double arcStart = RS_Math::correctAngle(tangentAngle - M_PI_4);
+        const double arcEnd = RS_Math::correctAngle(arcStart + 1.5 * M_PI);
+        RS_Entity* cutter = cutterKind == 1
             ? static_cast<RS_Entity*>(new RS_Circle(&f.graphic, RS_CircleData{intersection, cutterRadius}))
-            : static_cast<RS_Entity*>(new RS_Line(&f.graphic, RS_LineData{cutterStart, cutterEnd}));
+            : cutterKind == 2
+                ? static_cast<RS_Entity*>(new RS_Arc(&f.graphic,
+                    RS_ArcData{intersection, cutterRadius, arcStart, arcEnd, false}))
+                : static_cast<RS_Entity*>(new RS_Line(&f.graphic, RS_LineData{cutterStart, cutterEnd}));
         f.graphic.addEntity(cutter);
-        const auto cutterPick = circularCutter
-            ? intersection + RS_Vector{cutterRadius, 0}
-            : intersection + (cutterEnd - cutterStart) * .25;
+        const double cutterPickAngle = cutterKind == 2 ? tangentAngle + M_PI_2 : 0.0;
+        const auto cutterPick = cutterKind == 0
+            ? intersection + (cutterEnd - cutterStart) * .25
+            : intersection + RS_Vector{cutterRadius * std::cos(cutterPickAngle),
+                                       cutterRadius * std::sin(cutterPickAngle)};
         const auto prepared = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
             LC_OffsetCacheTrim::Pick{nativePick});
         REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
-        if (circularCutter) CHECK(prepared.rootCount == 2);
+        if (cutterKind != 0) CHECK(prepared.rootCount == 2);
 
         const auto nativeBefore = trimGeometry(*native);
         const auto cutterBefore = trimGeometry(*cutter);
