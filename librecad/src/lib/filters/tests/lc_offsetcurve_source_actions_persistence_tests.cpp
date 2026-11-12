@@ -863,3 +863,140 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
           RS_Spline::geometryFingerprint(trimmed));
     if (dwg && !libreDwgReader.isEmpty()) checkLibreDwgSpline(libreDwgReader, output, trimmed);
 }
+
+TEST_CASE("I persist closed mixed-bulge polyline source updates and refuse uncertain trims atomically",
+          "[lc-offsetcurve][source-action][polyline][closed][persistence][trim-action][trim-refusal]") {
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    CAPTURE(static_cast<int>(format));
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic);
+    const auto originalCache = RS_Spline::geometryFingerprint(target->getData());
+    const auto originalDefinition = target->definition();
+
+    auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
+    sourceOwner->addVertex({0, 0}, .2);
+    sourceOwner->addVertex({8, 0}, -.2);
+    sourceOwner->addVertex({8, 6});
+    sourceOwner->addVertex({0, 6});
+    sourceOwner->setClosed(true);
+    sourceOwner->endPolyline();
+    sourceOwner->setLayer(graphic.findLayer("0"));
+    auto* source = sourceOwner.get();
+    graphic.addEntity(source);
+    sourceOwner.release();
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(expectedSource);
+    const auto expectedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedSource);
+    REQUIRE(expectedEncoding);
+    graphic.select(QList<RS_Entity*>{target}, true);
+
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::Polyline);
+    double sourceDistance = 0.0;
+    const RS_Vector sourcePick = source->getNearestPointOnEntity({4, .8}, true, &sourceDistance);
+    REQUIRE(sourcePick.valid);
+    CHECK(sourceDistance >= 0.0);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*updateAction);
+
+    REQUIRE(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
+    REQUIRE(target->isDeleted());
+    auto* replacement = onlyNative(graphic);
+    REQUIRE(replacement->hasGeneralizedSourceDefinition());
+    REQUIRE(replacement->sourceDefinition());
+    CHECK(replacement->sourceDefinition()->source.kind() == SourceKind::Polyline);
+    const auto& polyline = std::get<LC_OffsetPolylineData>(replacement->sourceDefinition()->source.value);
+    CHECK(polyline.closed);
+    REQUIRE(polyline.segments.size() == 4);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(replacement->sourceDefinition()->source) ==
+          expectedEncoding);
+
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(target->isDeleted());
+    CHECK(onlyNative(graphic) == target);
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == originalCache);
+    basisEquals(target->definition().basis, originalDefinition.basis);
+    REQUIRE(graphic.redo());
+    CHECK(target->isDeleted());
+    CHECK(onlyNative(graphic) == replacement);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("closed-polyline-%1.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    auto* reopenedCurve = onlyNative(reopened);
+    REQUIRE(reopenedCurve->hasGeneralizedSourceDefinition());
+    REQUIRE(reopenedCurve->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(reopenedCurve->sourceDefinition()->source) ==
+          expectedEncoding);
+    CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
+          RS_Spline::geometryFingerprint(replacement->getData()));
+    if (dwg && !libreDwgReader.isEmpty()) checkLibreDwgSpline(libreDwgReader, output, reopenedCurve->getData());
+
+    REQUIRE(graphic.removeEntity(source));
+    double parameterStart = 0.0;
+    double parameterEnd = 0.0;
+    REQUIRE(replacement->getParameterDomain(parameterStart, parameterEnd));
+    LC_CurveJet jet;
+    REQUIRE(replacement->tryEvaluateJet(parameterStart + .2 * (parameterEnd - parameterStart),
+        LC_CurveEvaluationSide::Interior, jet));
+    RS_Vector cutterDirection{-jet.first.y, jet.first.x};
+    REQUIRE(cutterDirection.magnitude() > 0.0);
+    cutterDirection = cutterDirection / cutterDirection.magnitude() * 12.0;
+    auto* cutter = new RS_Line(&graphic, jet.point - cutterDirection, jet.point + cutterDirection);
+    cutter->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(cutter);
+    const RS_Vector trimPick = replacement->getPointAt(
+        parameterStart + .7 * (parameterEnd - parameterStart));
+    REQUIRE(trimPick.valid);
+    TrimActionProbe trim(&context);
+    trim.init(0);
+    const auto preTrimCache = RS_Spline::geometryFingerprint(replacement->getData());
+    const auto preTrimSource = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+        *replacement->sourceDefinition());
+    REQUIRE(preTrimSource);
+    const auto preTrimUndoEpoch = graphic.undoStateEpoch();
+    mouse(trim, view, jet.point + cutterDirection * .75, true);
+    mouse(trim, view, trimPick, true);
+    QElapsedTimer trimWait;
+    trimWait.start();
+    while (trim.pending() && trimWait.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    for (const auto& message : context.messages) UNSCOPED_INFO(message.toStdString());
+    CHECK_FALSE(replacement->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(onlyNative(graphic) == replacement);
+    CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == preTrimCache);
+    REQUIRE(replacement->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*replacement->sourceDefinition()) ==
+          preTrimSource);
+    CHECK(graphic.undoStateEpoch() == preTrimUndoEpoch);
+    REQUIRE_FALSE(context.messages.isEmpty());
+    CHECK(context.messages.back().contains("nothing changed"));
+}
