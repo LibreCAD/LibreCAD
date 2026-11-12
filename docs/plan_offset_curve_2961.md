@@ -37845,3 +37845,21 @@ for the recorded six admitted profiles and distances. Refused transformed
 profiles are still covered only at source/direct admission, not as serialized
 worker requests; file persistence, replacement GUI, other transformations and
 point distributions, visible GUI, and external-CAD acceptance remain open.
+
+## 998. Persist Transformed Fit-point Trim Results Across File Lanes (2026-11-12)
+
+Test commit `d8a844143` adds the six admitted transformed boundary profiles
+from section 997 to the worker Produce/trim and product-writer round-trip
+matrix. Open and closed profiles are tested at all three recorded scales and
+placements, including the reflected large-origin cases. Pick displacement is
+scaled with the source, and output is checked after save/reopen through R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG for both sides and both established
+distances. The test also invokes the installed LibreDWG reader for the
+generated DWGs.
+
+Validation: `[fit-points][trim][persistence]` passes 131,013 assertions in 1
+case across 280 save/reopens; the CMake worker-client target rebuilds and
+`git diff --check` passes. This closes only those transformed fit-point
+profiles, trim picks, scales, and file lanes. It does not qualify arbitrary
+point layouts or transformations, source/cache promotion on every lane,
+visible-GUI interaction, or ODA/AutoCAD acceptance.
