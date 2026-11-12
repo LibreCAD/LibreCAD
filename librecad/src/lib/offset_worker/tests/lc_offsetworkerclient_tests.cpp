@@ -4387,11 +4387,32 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     closedNearCoincident.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
     LC_SplinePointsData openNearCoincident{false, false};
     openNearCoincident.splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
-    std::array<LC_SplinePointsData, 8> sourceProfiles{{sourceData, sourceData,
+    std::array<LC_SplinePointsData, 14> sourceProfiles{{sourceData, sourceData,
                                                       leadingRepeated, trailingRepeated,
                                                       closedRepeated, closedInteriorRepeated,
                                                       closedNearCoincident, openNearCoincident}};
     std::reverse(sourceProfiles[1].splinePoints.begin(), sourceProfiles[1].splinePoints.end());
+    const std::array<double, 3> conditioningScales{{1e-4, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> conditioningOrigins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    for (std::size_t transformIndex = 0; transformIndex < conditioningScales.size(); ++transformIndex) {
+        const double scale = conditioningScales[transformIndex];
+        const RS_Vector origin = conditioningOrigins[transformIndex] * scale;
+        const bool reflected = transformIndex == 2;
+        LC_SplinePointsData openBoundary{false, false};
+        openBoundary.fitTolerance = 1e-8 * scale;
+        openBoundary.splinePoints = {{0, 0}, {1, 1}, {1.000051, 1.000051}, {2, 0}, {3, 1}};
+        LC_SplinePointsData closedBoundary{true, false};
+        closedBoundary.fitTolerance = 1e-8 * scale;
+        closedBoundary.splinePoints = {{0, 0}, {10, 0}, {10.00051, 0}, {13, 8}, {4, 13}, {-3, 8}};
+        for (LC_SplinePointsData* profile : {&openBoundary, &closedBoundary}) {
+            for (RS_Vector& point : profile->splinePoints) {
+                point.x = origin.x + scale * point.x;
+                point.y = origin.y + scale * (reflected ? -point.y : point.y);
+            }
+        }
+        sourceProfiles[8 + transformIndex * 2] = openBoundary;
+        sourceProfiles[9 + transformIndex * 2] = closedBoundary;
+    }
     const std::array<double, 2> distances{{0.2, 0.5}};
     const std::array<double, 2> sides{{1.0, -1.0}};
     struct Lane {
@@ -4417,13 +4438,19 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
         REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, sourceJet));
         REQUIRE(sourceJet.first.magnitude() > 0.0);
         const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(), sourceJet.first.x / sourceJet.first.magnitude()};
-        const double distanceScale = profileIndex == 7 ? 0.1 : 1.0;
+        const double distanceScale = profileIndex == 7 ? 0.1
+            : profileIndex >= 8 ? conditioningScales[(profileIndex - 8) / 2] *
+                                     ((profileIndex % 2 == 0) ? 0.1 : 1.0)
+                                : 1.0;
+        const double pickScale = profileIndex >= 8
+            ? conditioningScales[(profileIndex - 8) / 2]
+            : 1.0;
         for (const double distance : distances) {
             for (const double side : sides) {
                 const double actualDistance = distance * distanceScale;
                 CAPTURE(distance, actualDistance, side);
                 RS_OffsetData offset;
-                offset.coord = sourceJet.point + leftNormal * (side * 8.0);
+                offset.coord = sourceJet.point + leftNormal * (side * 8.0 * pickScale);
                 offset.distance = actualDistance;
                 offset.number = 1;
                 offset.multipleCopies = true;
