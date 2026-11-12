@@ -37651,3 +37651,17 @@ The expanded persistence case passes 53,263 assertions across 100
 save/reopens; LibreDWG 0.14 parses all 20 generated DWGs. This qualifies the
 recorded closed source and trim choices, not editable-source cache admission,
 other closed repeated-point layouts, visible GUI, or ODA/AutoCAD acceptance.
+
+## 989. Admit Closed Repeated-seam Sources to Typed Worker Cache (2026-11-11)
+
+Test commit `2c62131b0` adds the same closed repeated-seam fit-point source to
+the operation-7 typed source-generation and operation-8 cache-validation
+matrix. For signed distances `+0.2`, `-0.2`, `+0.5`, and `-0.5`, the worker
+must generate complete ordinary output, produce a source definition equal to
+the request, admit an exact canonical cache, and reject a deliberately altered
+cache.
+
+The focused real-helper cache-admission test passes 27,388 assertions. This
+closes the recorded closed repeated-seam source for generation and cache
+admission only; additional closed layouts, file persistence of editable source
+metadata, visible GUI, and ODA/AutoCAD acceptance remain open.
