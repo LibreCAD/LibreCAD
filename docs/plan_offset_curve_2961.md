@@ -37665,3 +37665,33 @@ The focused real-helper cache-admission test passes 27,388 assertions. This
 closes the recorded closed repeated-seam source for generation and cache
 admission only; additional closed layouts, file persistence of editable source
 metadata, visible GUI, and ODA/AutoCAD acceptance remain open.
+
+## 990. Reconfirm Type Switching in the Source Replacement Widget (2026-11-11)
+
+The latest request clarifies that a user replacing an offset source must be
+able to change the source-curve type during candidate selection, and that the
+picker must cover all supported offset-source types. This is the existing
+nine-kind contract, not a request to expose every drawable entity or add a
+second picker. The selector inventory is line, arc, circle, ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, and polyline.
+
+Acceptance sequence: enter source replacement; switch among modeled kinds
+without leaving the workflow; verify each switch refreshes eligible candidates;
+choose a candidate; preserve the committed typed source, cache, identity, and
+current-source indication until asynchronous validation succeeds; then publish
+the replacement atomically. On refusal, retain the prior source and re-enable
+both controls. Parabola must remain distinct from its spline-points base class.
+Do not permit type switching while preparation is active unless cancellation
+and stale-reply supersession are implemented and tested.
+
+Picker implementation is already covered by the nine-kind inventory,
+transition, highlight-preservation, and stale-preparation tests recorded in
+sections 958, 960, and 982. No new UI implementation slice is opened. The
+remaining work is to rerun those focused tests after relevant changes, complete
+the per-family concrete-variant generation/trim/worker/cache/persistence
+matrix in Slice 4, and perform the visible replacement workflow in Slice 5.
+Selector presence alone is not evidence of geometry support. The clean qmake6
+Qt 6.12.0 arm64 application build completed, and a subsequent incremental
+`make -j6` completed with exit status 0. `git diff --check` passes. This build
+does not close the focused picker test rerun, per-variant geometry matrix, or
+visible-GUI workflow gates.
