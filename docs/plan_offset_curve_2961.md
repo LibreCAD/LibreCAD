@@ -40131,3 +40131,15 @@ the full `[trim-action]` selector passes 99,230 assertions / 87 cases; and
 `git diff --check` passes. This adds one rotated, translated, eccentric partial
 arc profile, not a complete ellipse axis-ratio, sweep, or near-cusp matrix.
 Visible GUI, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1105. Revalidate qmake6 at the Updated PR Head (2026-11-12)
+
+At PR worktree HEAD `dc13fd89069e9cfde9760399f9a71b4b9f90a314`, the existing
+macOS arm64 qmake6 Release build in `/private/tmp/offset2961-qmake6-current`
+completed the recursive `make -j6` successfully. The build directory was
+configured previously and this was an incremental build; it is not evidence of
+a clean qmake regeneration, a qmake-built test suite, or another-platform
+build. The focused ellipse Trim Two and full `[trim-action]` CMake Release
+receipts are in section 1104. Visible Properties interaction, clean/reproducible
+qmake setup, cross-platform delivery, and external ODA/AutoCAD acceptance
+remain open.
