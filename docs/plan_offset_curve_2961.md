@@ -37955,3 +37955,18 @@ Validation: `[conditioning][placement]` passes 72 assertions in 1 case;
 geometry for these eight layouts and distances only; worker/cache execution,
 file persistence, other chord ratios and point arrangements, GUI, and
 ODA/AutoCAD acceptance remain open.
+
+## 1004. Admit Varied Fit-point Chord Placements Through the Worker (2026-11-12)
+
+Test commit `3fb5f624f` carries the eight profiles from section 1003 through
+real worker operation 7 and operation 8. Leading, interior, trailing,
+reversed, and closed-seam short chords are each generated on both signed
+distances. Every request must return complete ordinary geometry, combine into
+a canonical cache, preserve the exact typed source definition, and pass
+operation-8 cache validation.
+
+Validation: `[conditioning][placement]` passes 6,961 assertions in 1 case;
+the worker-client CMake target rebuilds successfully and `git diff --check`
+passes. This closes worker/cache handling for these eight profiles and
+distances only. File persistence, broader ratios/topologies, visible GUI, and
+ODA/AutoCAD acceptance remain open.
