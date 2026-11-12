@@ -37695,3 +37695,24 @@ Qt 6.12.0 arm64 application build completed, and a subsequent incremental
 `make -j6` completed with exit status 0. `git diff --check` passes. This build
 does not close the focused picker test rerun, per-variant geometry matrix, or
 visible-GUI workflow gates.
+
+## 991. Qualify a Near-coincident Distinct Fit-point Chord (2026-11-11)
+
+Test commit `4e4a85f5a` adds a source with distinct fit points separated by
+`1e-4`, in both traversal directions. It asserts the defining points remain
+distinct, the derived control net is finite, and direct trimmed output stays
+within the independent requested-normal distance oracle for both sides at
+distances `0.02` and `0.05`. The same profile is added to real worker source
+generation and operation-8 exact-cache admission, then to worker trim output
+saved and reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. LibreDWG
+0.14 is installed and the persistence test independently reads generated DWG
+files.
+
+Validation: focused direct case passes 40 assertions; typed worker cache
+admission passes 31,260 assertions; the fit-point persistence selection passes
+123,455 assertions across two test cases. `git diff --check` passes. This is a
+test-only qualification: no points are tolerance-coalesced, and no production
+algorithm change was needed for this fixture. It does not establish a minimum
+safe chord ratio, arbitrary near-duplicate conditioning, all transforms or
+scales, other fit-point topologies, visible-GUI behavior, or ODA/AutoCAD
+acceptance; those remain open in the family/variant matrix and delivery gates.
