@@ -10224,6 +10224,46 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(transformedRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(transformedRoundTripped.roots[3].target.rawSpan == 1);
 
+    for (const double scale : {1e-6, 1e6}) {
+        const auto scalePoint = [&](RS_Vector p) {
+            return RS_Vector{scale * (cosine * p.x - sine * p.y),
+                             scale * (sine * p.x + cosine * p.y)};
+        };
+        RS_SplineData scaledCache{3, false};
+        for (const RS_Vector point : std::array<RS_Vector, 8>{
+                RS_Vector{-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+                {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}}) {
+            scaledCache.controlPoints.push_back(scalePoint(point));
+        }
+        scaledCache.weights.assign(scaledCache.controlPoints.size(), 1.0);
+        scaledCache.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+        const RS_EllipseData scaledEllipse{{0, 0}, {2 * scale * cosine, 2 * scale * sine},
+                                           .5, 0, 0, false};
+        const RS_Vector scaledPick{-scale * .5 * sine, scale * .5 * cosine};
+        const req::Request scaledInput{token,
+            req::TrimConic{scaledCache, scaledEllipse, {scaledPick}, {}, {}}};
+        const auto scaledReply = LC_OffsetWorkerKernel::run(scaledInput);
+        const auto& scaledOutput = trimmed(scaledReply, 3);
+        REQUIRE(scaledOutput.refusal == trim::Refusal::None);
+        REQUIRE(scaledOutput.conicFragments.size() == 1);
+        REQUIRE(scaledOutput.roots.size() == 4);
+        CHECK(scaledOutput.roots[0].target.rawSpan == 0);
+        CHECK(scaledOutput.roots[1].target.rawSpan == 0);
+        CHECK(scaledOutput.roots[2].target.rawSpan == 1);
+        CHECK(scaledOutput.roots[3].target.rawSpan == 1);
+        const auto scaledEncoded = result::encode(scaledReply, scaledInput);
+        REQUIRE(scaledEncoded);
+        const auto scaledDecoded = result::decode(*scaledEncoded, scaledInput);
+        REQUIRE(scaledDecoded);
+        const auto& scaledRoundTripped = std::get<trim::Result>(scaledDecoded->result);
+        REQUIRE(scaledRoundTripped.conicFragments.size() == 1);
+        REQUIRE(scaledRoundTripped.roots.size() == 4);
+        CHECK(scaledRoundTripped.roots[0].target.rawSpan == 0);
+        CHECK(scaledRoundTripped.roots[1].target.rawSpan == 0);
+        CHECK(scaledRoundTripped.roots[2].target.rawSpan == 1);
+        CHECK(scaledRoundTripped.roots[3].target.rawSpan == 1);
+    }
+
     for (const bool reverse : {false, true}) {
         const double start = reverse ? 3.14159265358979323846 : 0;
         const double finish = reverse ? 0 : 3.14159265358979323846;

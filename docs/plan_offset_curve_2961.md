@@ -38501,17 +38501,20 @@ acceptance remain open.
 
 ## 1031. Trim Curved Components in a Translated Rotated Conic Frame (2026-11-12)
 
-The genuinely curved upper/lower cubic cache and half-ratio ellipse are now
+The genuinely curved upper/lower cubic cache and half-ratio ellipse are
 translated to `(1e9,-2e9)` and rotated by 0.37 radians as one rigid frame. The
 pick is transformed with the geometry. Direct conic-boundary Trim still finds
 four contacts, two per original disconnected span, retains the expected lower
-elliptic arc, and leaves both inputs unchanged. Worker computation and
-result-codec round-trip preserve the same contact count and source-span
-identities. This exercises the frame normalization and world-coordinate
-transport at large coordinates, beyond the origin-aligned fixtures.
+elliptic arc, and leaves both inputs unchanged. An origin-centered counterpart
+tests the same rotated geometry at uniform scales `1e-6` and `1e6`. Worker
+computation and result-codec round-trip preserve contact counts and span
+identities for the translated and both scaled requests. This exercises frame
+normalization and world-coordinate transport at large coordinates and six
+orders below/above unit scale, beyond origin-aligned unit-scale fixtures.
 
-Validation on macOS arm64 CMake Release: the focused direct case passes 57
-assertions; the full Trim kernel suite passes 40,703 assertions / 67 cases;
-the worker transport case passes 206 assertions and the worker Trim selector
-passes 260 assertions / 2 cases. Tiny/huge scales, arbitrary rotations,
-persistence, visible GUI, and external ODA/AutoCAD remain open.
+Validation on macOS arm64 CMake Release: the transformed direct case passes 57
+assertions and the scale sweep passes 110; the full Trim kernel suite passes
+40,813 assertions / 68 cases; the worker transport case passes 242 assertions
+and the worker Trim selector passes 296 assertions / 2 cases. More extreme
+scales, arbitrary rotations, persistence, visible GUI, and external ODA/AutoCAD
+remain open.

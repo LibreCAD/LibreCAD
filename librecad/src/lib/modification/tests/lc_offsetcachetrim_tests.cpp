@@ -1597,6 +1597,48 @@ TEST_CASE("Conic-only trim preserves curved contacts in a translated rotated fra
     CHECK(ellipse.getData().angle2 == ellipseBefore.angle2);
 }
 
+TEST_CASE("Conic-only trim scales curved disconnected geometry across magnitudes", tags) {
+    const double rotation = .37, cosine = std::cos(rotation), sine = std::sin(rotation);
+    for (const double scale : {1e-6, 1e6}) {
+        CAPTURE(scale);
+        const auto transform = [&](RS_Vector p) {
+            return RS_Vector{scale * (cosine * p.x - sine * p.y),
+                             scale * (sine * p.x + cosine * p.y)};
+        };
+        RS_SplineData source{3, false};
+        for (const RS_Vector point : std::array<RS_Vector, 8>{
+                RS_Vector{-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+                {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}}) {
+            source.controlPoints.push_back(transform(point));
+        }
+        source.weights.assign(source.controlPoints.size(), 1);
+        source.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+        const auto before = source;
+        RS_Ellipse ellipse{nullptr, {{0, 0}, {2 * scale * cosine, 2 * scale * sine}, .5, 0, 0, false}};
+        const RS_Vector pick{-scale * .5 * sine, scale * .5 * cosine};
+
+        const auto result = Trim::prepareConic(source, ellipse, {pick});
+        CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+            result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+            result.work.intersections.generatedItems);
+        REQUIRE(result.refusal == Trim::Refusal::None);
+        REQUIRE(result.roots.size() == 4);
+        std::array<unsigned, 2> rootsBySpan{};
+        for (const auto& root : result.roots) {
+            REQUIRE(root.target.rawSpan < rootsBySpan.size());
+            ++rootsBySpan[root.target.rawSpan];
+        }
+        CHECK(rootsBySpan == std::array<unsigned, 2>{2, 2});
+        REQUIRE(result.conicFragments.size() == 1);
+        CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+        CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+        equalData(source, before);
+        CHECK(ellipse.getData().center == RS_Vector(0, 0));
+        CHECK(ellipse.getData().majorP == RS_Vector(2 * scale * cosine, 2 * scale * sine));
+        CHECK(ellipse.getData().ratio == .5);
+    }
+}
+
 TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without singleton proofs", tags) {
     RS_SplineData source{1, false};
     source.controlPoints = {{-6, 4}, {6, 4}, {4, 7}, {-1, -8}};
