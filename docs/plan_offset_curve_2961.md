@@ -39471,3 +39471,23 @@ adds one rotated/translated symmetric parabola construction at three uniform
 scales. General affine transforms, other focus/vertex layouts, inward or
 near-singular offsets, other cutter constructions, visible GUI,
 cross-platform behavior, and external CAD acceptance remain open.
+
+## 1075. Exercise a Second Typed-parabola Trim Construction (2026-11-12)
+
+Test commit `c9937ba97` adds an asymmetric quadratic control net alongside the
+existing symmetric bowl in the typed-parabola Trim Two matrix. Both
+constructions run at scales `0.1`, `1`, and `10`, in identity and rotated/
+translated placements, and in both operand pick orders. Each combination
+checks the worker-created source, preview/commit parity, undo/redo, and R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen; LibreDWG independently
+parses both DWGs.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+parabola Trim Two case passes 6,395 assertions / 1 case across 24
+profile/scale/transform/order combinations; `[trim-action]` passes 39,687
+assertions across 81 cases; the test target builds; and `git diff --check`
+passes. This qualifies two quadratic control nets under similarity transforms
+and one derived circle-cutter construction. It does not establish arbitrary
+parabola control nets, focus/vertex/tangent degeneracies, extreme affine
+conditioning, inward/cusp boundaries, other cutter families, visible GUI,
+cross-platform behavior, or external CAD acceptance.
