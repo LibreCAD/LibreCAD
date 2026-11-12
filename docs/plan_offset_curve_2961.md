@@ -113,6 +113,10 @@ implementation slice is opened by this clarification. Continue Slice 4 for
 unqualified family variants through generation, worker/cache, trimming and
 applicable DXF/DWG persistence, and Slice 5 for visible interaction and
 delivery acceptance. Picker availability alone does not close those gates.
+The focused headless source-picker rerun on code revision `150616aa5` passes
+14,831 assertions across 43 cases (`librecad_tests
+'[gui][dialog][offsetcurve][source]'`); it is automated evidence, not visible
+GUI acceptance.
 
 **Scope reconfirmed (2026-11-11):** “Expand source curve support to all
 supported types” means keep replacement available across the complete current
