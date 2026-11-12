@@ -3047,15 +3047,21 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
 
 TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]") {
+    constexpr double rotation = .41;
+    for (const unsigned profile : {0u, 1u})
     for (const bool ellipseFirst : {false, true}) {
-        CAPTURE(ellipseFirst);
+        CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .25, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        auto* source = new RS_Ellipse(&f.graphic, RS_EllipseData{{0, 0}, {3, 0}, .7, 0, 0, false});
+        const RS_EllipseData sourceData = profile == 0
+            ? RS_EllipseData{{0, 0}, {3, 0}, .7, 0, 0, false}
+            : RS_EllipseData{{5, -4}, {3 * std::cos(rotation), 3 * std::sin(rotation)},
+                             .5, -.8, 1.1, false, true};
+        auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -3180,7 +3186,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         for (std::size_t i = 0; i < formats.size(); ++i) {
             const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("typed-ellipse-trim-two-%1").arg(i) + (dwg ? ".dwg" : ".dxf")).toStdString());
+                QStringLiteral("typed-ellipse-trim-two-%1-%2").arg(profile).arg(i) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
 #ifdef DWGSUPPORT
             if (dwg && !libreDwgReader.isEmpty()) {
