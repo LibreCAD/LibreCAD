@@ -39510,3 +39510,23 @@ passes. This verifies both signs at the tested moderate distance ratio
 (`0.05 * scale`) for these two profiles. Near-cusp/inward limits, distances
 that trigger branch changes or refusal, other cutter constructions, visible
 GUI, cross-platform runs, and external CAD acceptance remain open.
+
+## 1077. Trim a Typed Parabola Near Its Vertex-curvature Cusp (2026-11-12)
+
+Test commit `6c1bd7fa6` adds one near-cusp case for the symmetric parabola
+whose control net defines `y = x^2`: its vertex curvature radius is `0.5`,
+and the tested positive left-normal offset is `0.45` (90% of that radius).
+The opposite signed side at the same magnitude is also exercised. Both signs
+run through worker source update, Trim Two in both pick orders, preview and
+commit, undo/redo, all five DXF/DWG lanes, reopened geometry matching, and
+LibreDWG parsing. The broader profile/scale/transform/sign matrix remains at
+the ordinary `0.05 * scale` distance; the near-cusp case is deliberately
+limited to the untransformed unit-scale symmetric profile.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+parabola Trim Two case passes 13,964 assertions / 1 case; `[trim-action]`
+passes 47,252 assertions across 81 cases; the target builds; and `git diff
+--check` passes. This proves admission and round-trip behavior at this one
+90%-of-vertex-radius distance, not the exact cusp distance, beyond-cusp branch
+topology, refusal policy, other profiles' local curvature limits, or
+cross-platform/visible-GUI/external-CAD behavior.
