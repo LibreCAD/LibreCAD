@@ -71,8 +71,8 @@ LC_OffsetSourceGeometry sourceGeometry(SourceKind kind) {
     case SourceKind::BoundedHyperbola:
         return LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .5, -.4, .4}};
     case SourceKind::Polyline:
-        return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{-4, 0}, {4, 0}, false,
-            {RS_LineData{{-4, 0}, {0, 2}}, RS_LineData{{0, 2}, {4, 0}}}}};
+        return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, std::acos(-1.0), 0, false}, RS_LineData{{2, 0}, {2, 2}}}}};
     case SourceKind::Invalid: break;
     }
     return LC_OffsetSourceGeometry{RS_LineData{}};
@@ -82,7 +82,7 @@ RS_Vector sourcePickPoint(SourceKind kind) {
     switch (kind) {
     case SourceKind::Line:
         return {0, 0};
-    case SourceKind::Polyline: return {0, 2};
+    case SourceKind::Polyline: return {1, 1};
     case SourceKind::Arc: return {4 * std::cos(.2), 4 * std::sin(.2)};
     case SourceKind::Circle:
     case SourceKind::Ellipse: return {4, 0};
@@ -794,9 +794,9 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     REQUIRE(nativeCurve->getParameterDomain(parameterStart, parameterEnd));
     LC_CurveJet jet;
     const double cutFraction = kind == SourceKind::BoundedHyperbola ? .75 :
-        kind == SourceKind::Polyline ? .8 : .5;
+        kind == SourceKind::Polyline ? .68 : .5;
     const double targetFraction = kind == SourceKind::Parabola ? .9 :
-        .1;
+        kind == SourceKind::Polyline ? .15 : .1;
     const double cutParameter = parameterStart + cutFraction * (parameterEnd - parameterStart);
     REQUIRE(nativeCurve->tryEvaluateJet(cutParameter, LC_CurveEvaluationSide::Interior, jet));
     RS_Vector cutterDirection{-jet.first.y, jet.first.x};
