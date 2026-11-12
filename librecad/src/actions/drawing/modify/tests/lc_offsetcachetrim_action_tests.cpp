@@ -1734,6 +1734,130 @@ TEST_CASE("T Trim Two trims exact-stall and safely refuses unresolved multi-bran
     }
 }
 
+TEST_CASE("T Trim Two trims exact and safely refuses beyond-cusp asymmetric branches",
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][asymmetric][trim-two]") {
+    for (const double ratio : {1.0, 1.02})
+    for (const bool parabolaFirst : {false, true}) {
+        CAPTURE(ratio, parabolaFirst);
+        const double distance = -2.25 * ratio;
+        Drawing<true> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {10, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, std::abs(distance), true);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        const LC_ParabolaData sourceData{{RS_Vector{-1, 0}, RS_Vector{0, 1}, RS_Vector{2, 0}}};
+        auto* parabola = new LC_Parabola(&f.graphic, sourceData);
+        f.graphic.addEntity(parabola);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
+        update.use(parabola);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->signedDistance == distance);
+        const auto direct = LC_CurveOffset::buildDirectBranches(*parabola,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, std::abs(distance)),
+            LC_CurveOffset::makeDirectOptions(*parabola, std::abs(distance), 1e-4),
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(direct.branches.size() == 2);
+
+        const auto breaks = native->getBreakParameters();
+        REQUIRE(breaks.size() >= 2);
+        const double spanWidth = breaks[1] - breaks[0];
+        REQUIRE(spanWidth > 0);
+        const double parameter = breaks[0] + spanWidth * .5;
+        const double step = std::max(1e-8, spanWidth * 1e-4);
+        RS_Vector tangent = native->getPointAt(parameter + step) - native->getPointAt(parameter - step);
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        const RS_Vector normal{-tangent.y, tangent.x};
+        const auto intersection = native->getPointAt(parameter);
+        constexpr double cutterHalfLength = .01;
+        const RS_Vector cutterStart = intersection - normal * cutterHalfLength;
+        const RS_Vector cutterEnd = intersection + normal * cutterHalfLength;
+        const auto nativePick = native->getPointAt(parameter + spanWidth * .1);
+        auto* cutter = new RS_Line(&f.graphic, RS_LineData{cutterStart, cutterEnd});
+        f.graphic.addEntity(cutter);
+        const auto cutterPick = intersection + (cutterEnd - cutterStart) * .25;
+        const auto kernelTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
+            LC_OffsetCacheTrim::Pick{nativePick});
+        if (ratio > 1.0) {
+            CHECK(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+            const auto nativeBefore = trimGeometry(*native);
+            const auto cutterBefore = trimGeometry(*cutter);
+            const auto entityCount = live(f.graphic).size();
+            const auto undoEpoch = f.graphic.undoStateEpoch();
+            f.action->click(parabolaFirst ? nativePick : cutterPick);
+            REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+            f.action->hover(parabolaFirst ? cutterPick : nativePick);
+            f.action->waitForTrim();
+            CHECK(trimPreview(*f.action->m_preview).empty());
+            f.action->click(parabolaFirst ? cutterPick : nativePick);
+            f.action->waitForTrim();
+            CHECK_FALSE(native->isDeleted());
+            CHECK_FALSE(cutter->isDeleted());
+            CHECK(trimGeometry(*native) == nativeBefore);
+            CHECK(trimGeometry(*cutter) == cutterBefore);
+            CHECK(live(f.graphic).size() == entityCount);
+            CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+            REQUIRE_FALSE(f.context.messages.empty());
+            CHECK(f.context.messages.back().contains("nothing changed"));
+            continue;
+        }
+        REQUIRE(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+        CHECK_FALSE(kernelTrim.fragments.empty());
+
+        const auto nativeBefore = trimGeometry(*native);
+        const auto cutterBefore = trimGeometry(*cutter);
+        f.action->click(parabolaFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        f.action->hover(parabolaFirst ? cutterPick : nativePick);
+        f.action->waitForTrim();
+        const auto preview = trimPreview(*f.action->m_preview);
+        REQUIRE_FALSE(preview.empty());
+        f.action->click(parabolaFirst ? cutterPick : nativePick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(cutter->isDeleted());
+        std::vector<RS_Entity*> fragments;
+        std::vector<std::string> committed;
+        for (auto* entity : live(f.graphic)) {
+            if (entity == parabola) continue;
+            fragments.push_back(entity);
+            if (entity->rtti() == RS2::EntitySpline || entity->rtti() == RS2::EntityArc ||
+                entity->rtti() == RS2::EntityEllipse)
+                committed.push_back(trimGeometry(*entity));
+        }
+        auto expectedPreview = preview;
+        std::sort(committed.begin(), committed.end());
+        std::sort(expectedPreview.begin(), expectedPreview.end());
+        CHECK(committed == expectedPreview);
+        CHECK(fragments.size() >= direct.branches.size());
+
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
+        for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(cutter->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
 TEST_CASE("T Trim Two action trims a worker-created typed line offset against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][line][trim-two]") {
     for (const bool lineFirst : {false, true}) {
