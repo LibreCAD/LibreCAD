@@ -39845,3 +39845,21 @@ passes 5,110 assertions / 1 case; the complete `[trim-action]` suite passes
 transformed action coverage only; it does not add persistence round trips for
 the transformed Trim outputs. Other transforms, scales, cusp profiles,
 cutters, visible GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1091. Reconcile the Source-curve Replacement Widget Request (2026-11-12)
+
+The source-curve widget must let the user change the candidate type while
+choosing a replacement, accept every supported source family, and update its
+displayed type to match the selected candidate. The supported set is line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline; parabola remains a distinct type. Keep the current source selected
+and highlighted until worker preparation succeeds, and leave it unchanged on
+stale or rejected preparation.
+
+This behavior and its headless state-transition tests are already implemented,
+as recorded in sections 1051, 1063, and 1071. No second widget or
+parabola-specific selector is needed. The remaining plan item is visible GUI
+acceptance of repeated type changes and cross-family replacement, including
+parabola, with the old-source highlight retained until successful acceptance.
+This UI check does not establish geometry-generation, Trim, persistence,
+cross-platform, or external-CAD completeness for all source variants.
