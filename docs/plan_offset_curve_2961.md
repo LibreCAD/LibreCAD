@@ -38546,7 +38546,9 @@ Validation on the active macOS arm64 CMake Release worktree: the complete
 `librecad_tests` target rebuilt successfully, and
 `librecad_tests '[lc-offsetcurve][trim-kernel]' --reporter compact` passes
 40,989 assertions / 69 cases. The corresponding worker-kernel source contains
-a four-component transport fixture, but that test is not registered in this
-build's `librecad_tests` target; no new worker or codec pass is claimed here.
-The code commit is pushed to PR #3193. Remaining broad family/variant,
-persistence, visible-GUI, cross-platform, and external-CAD gates remain open.
+a matching four-component transport fixture. Building and running
+`librecad_offset_worker_kernel_tests '[lc-offsetcurve][worker-kernel][trim]'
+--reporter compact` passes 332 assertions / 2 cases, including 278 assertions
+for the matching multi-component transport case. The code commit is pushed to
+PR #3193. Remaining broad family/variant, persistence, visible-GUI,
+cross-platform, and external-CAD gates remain open.
