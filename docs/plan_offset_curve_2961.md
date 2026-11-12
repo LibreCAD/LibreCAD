@@ -39902,3 +39902,23 @@ persistence scope. The evidence remains limited to the tested symmetric
 parabola, one rotation/translation, three uniform scales, and three cutter
 families. Other cusp profiles/transforms, visible-GUI, cross-platform, and
 external-CAD acceptance remain open.
+
+## 1094. Persist Symmetric and Asymmetric Cusps Under Similarity Transforms (2026-11-12)
+
+Test commit `4f54c53d5` adds the asymmetric control net from section 1083 to
+the transformed Trim Two matrix. Both the symmetric positive-side profile
+(`0.51 * scale`, three branches) and asymmetric negative-side profile
+(`-2.295 * scale`, two branches) are exercised at uniform scales `0.1`, `1`,
+and `10`, under the same rotation and scale-relative translation. Each profile
+is trimmed against line, circle, and bounded-arc cutters in both pick orders,
+then round-tripped through all five DXF/DWG lanes: 180 files total. Reopened
+line/spline fragments are geometrically matched, offset entities are
+forbidden, and LibreDWG parses every generated DWG.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+`[transform]` run passes 12,228 assertions across two cases; the complete
+`[trim-action]` suite passes 70,041 assertions across 84 cases; and
+`git diff --check` passes. This supersedes the symmetric-only profile scope in
+sections 1090 and 1093 and extends section 1093's full-scale persistence matrix
+to one asymmetric profile. Other cusp control nets, transformed frames,
+visible-GUI, cross-platform, and external-CAD acceptance remain open.
