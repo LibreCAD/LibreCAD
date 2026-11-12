@@ -1830,6 +1830,7 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
     struct Profile {
         LC_HyperbolaData data;
         double distance;
+        double scale = 1.0;
     };
     std::vector<Profile> profiles{{LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}, 1.0},
                                   {LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}, 4.0}};
@@ -1843,6 +1844,21 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
                 for (const double fraction : {.5, 1.0, 1.5})
                     profiles.push_back({data, fraction * vertexRadius});
             }
+        }
+    }
+    const std::array<double, 3> transformedScales{{1e-3, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> transformedOrigins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    for (std::size_t transformIndex = 0; transformIndex < transformedScales.size(); ++transformIndex) {
+        const double scale = transformedScales[transformIndex];
+        const RS_Vector origin = transformedOrigins[transformIndex] * scale;
+        for (const double ratio : {.05, .2}) {
+            constexpr double semiMajor = 10.0;
+            const double vertexRadius = semiMajor * scale * ratio * ratio;
+            const LC_HyperbolaData data{origin,
+                {semiMajor * scale * std::cos(.37), semiMajor * scale * std::sin(.37)},
+                ratio, -.4, .4, false};
+            for (const double fraction : {.5, 1.0, 1.5})
+                profiles.push_back({data, fraction * vertexRadius, scale});
         }
     }
     struct FileLane {
@@ -1868,7 +1884,7 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
         REQUIRE(source.isValid());
         for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
             const double distance = profile.distance;
-            CAPTURE(profileIndex, profile.data.ratio, profile.data.reversed,
+            CAPTURE(profileIndex, profile.scale, profile.data.ratio, profile.data.reversed,
                     profile.data.angle1, profile.data.angle2, side, distance);
             auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
             const auto generated = LC_CurveOffset::createEntities(
@@ -1917,7 +1933,12 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
                         const RS_Vector after = actual[splineIndex]->getPointAt(t);
                         REQUIRE(before.valid);
                         REQUIRE(after.valid);
-                        CHECK(before.distanceTo(after) < 1e-8);
+                        const double coordinateScale = std::max({1.0, std::abs(before.x), std::abs(before.y),
+                                                                 std::abs(after.x), std::abs(after.y)});
+                        const double roundTripTolerance = std::max(
+                            1e-8 * profile.scale,
+                            64.0 * std::numeric_limits<double>::epsilon() * coordinateScale);
+                        CHECK(before.distanceTo(after) < roundTripTolerance);
                     }
                 }
 #ifdef DWGSUPPORT
