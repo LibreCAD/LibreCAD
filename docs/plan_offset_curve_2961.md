@@ -47,9 +47,12 @@ Do not introduce a second type selector or a parabola-only picker.
 
 **Latest user clarification and disposition (2026-11-12):** While specifying a
 replacement source in the existing Properties source widget, the user can
-change the requested source type in place, inspect the immediately refreshed
-candidate list, and change type again without leaving the replacement
-workflow. “All supported types” means the nine current
+change the requested source type in place, including while canvas candidate
+selection is active, inspect the immediately refreshed candidate list, and
+change type again without leaving or cancelling the replacement workflow.
+Changing the filter must not end canvas-pick mode or commit a candidate;
+choosing a candidate remains a separate action. “All supported types” means
+the nine current
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
 distinct typed choice, not a spline-points alias. Changing the filter must not
@@ -84,9 +87,11 @@ selector request.
 
 1. Derive the selector entries and candidate matching from the canonical
    `LC_OffsetSourceGeometry::SupportedKinds`; avoid a parallel UI inventory.
-2. In a single replacement workflow, change the selector repeatedly before
-   picking. Assert that candidate results change immediately and contain only
-   eligible entities of the chosen kind, including a distinct parabola choice.
+2. In a single replacement workflow, enter canvas-pick mode, then change the
+   selector repeatedly without leaving that mode. Assert that candidate
+   results change immediately and contain only eligible entities of the chosen
+   kind, including a distinct parabola choice; the filter change itself must
+   neither commit a candidate nor mutate the target.
 3. Snapshot the target's source definition, geometry/cache fingerprint,
    identity, selection, and temporary indication. Assert that type changes and
    candidate browsing do not mutate that snapshot.
@@ -40338,18 +40343,21 @@ cross-platform behavior, and ODA/AutoCAD acceptance remain open.
 
 Test commit `a20ef7dd5` adds an inward, rotated full ellipse at the near-cusp
 distance: semi-major length `3`, ratio `0.1`, rotation `1.17`, and inward
-distance `0.0135` (45% of the minimum curvature radius `0.03`). It attempts
-Trim Two in both operand orders. If the action cannot resolve a preview or
-commit, the regression requires no deletion, no undo-epoch change, preservation
-of the editable definition/cache fingerprint, and an explicit no-change
-diagnostic. The near-cusp case is allowed to proceed through persistence if a
-future implementation resolves it successfully.
+distance `0.0135` (45% of the minimum curvature radius `0.03`). Follow-up test
+commit `13b0a87c5` moves the native pick from 10% to 25% of the cached domain
+for this profile, probing a more interior pick while retaining both Trim Two
+operand orders. If preview or commit cannot resolve, the regression requires
+no deletion, no undo-epoch change, preservation of the editable
+definition/cache fingerprint, and an explicit no-change diagnostic. A resolved
+case continues through preview, commit, undo/redo, five DXF/DWG persistence
+lanes, and LibreDWG parsing.
 
 On macOS arm64 CMake Release with LibreDWG 0.14, the focused ellipse Trim Two
-case passes 4,424 assertions / 1 case across six profiles and both pick orders;
-the full `[trim-action]` suite passes 112,828 assertions / 87 cases; and
-`git diff --check` passes. The current profile records an `AmbiguousPick`
-refusal for the cutter-first path, not successful near-cusp trimming. Resolving
-that refusal with a bounded, unambiguous pick/interval proof remains open, as
-do broader ellipse ratios, sweeps, side/distance and precision coverage, GUI,
-cross-platform, and ODA/AutoCAD acceptance.
+case passes 5,164 assertions / 1 case across six profiles and both pick orders;
+the full `[trim-action]` suite passes 126,461 assertions / 87 cases; and
+`git diff --check` passes. The test intentionally accepts either successful
+trimming or safe atomic refusal for each order, so these receipts do not prove
+that the ambiguous pick is resolved or establish which order succeeds. A
+bounded, unambiguous pick/interval proof remains open, as do broader ellipse
+ratios, sweeps, side/distance and precision coverage, GUI, cross-platform, and
+ODA/AutoCAD acceptance.
