@@ -39760,6 +39760,10 @@ was weakened.
 
 The symmetric `y = x^2` cusp cache now trims at exact stall (`0.5`) and 2%
 beyond (`0.51`) in both operand pick orders, with preview/commit and undo/redo.
+Commit `d53266440` adds five-lane output round trips for those same four
+cases. Reopened line/spline geometry inventories must match the committed
+output within bounded numeric tolerances and must not contain an editable
+offset entity. LibreDWG 0.14 parses each emitted DWG.
 The asymmetric `(-1,0),(0,1),(2,0)` cache likewise trims at its exact
 negative-side cusp (`-2.25`) and 2% beyond (`-2.295`). Its regression verifies
 that every span after the full-multiplicity cusp boundary is retained whole
@@ -39768,9 +39772,11 @@ orders through R12 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Reopened
 geometry inventories must match committed ordinary geometry and contain no
 native offset; LibreDWG 0.14 parses both DWG versions.
 
-Validation on macOS arm64 CMake Release: the two focused cusp action cases pass
-2,943 assertions; the complete `[trim-action]` suite passes 50,891 assertions
-across 83 cases; all 20 asymmetric cusp trim round trips pass; the target
+Validation on macOS arm64 CMake Release: the symmetric focused case passes
+1,564 assertions / 1 case, and the asymmetric focused case passes 1,777 / 1;
+the complete `[trim-action]` suite passes 51,528 assertions across 83 cases.
+All 40 symmetric and asymmetric cusp trim round trips pass; LibreDWG parses
+both DWG versions for each profile/distance/pick-order combination; the target
 builds; and `git diff --check` passes. This supersedes the beyond-cusp safe
 refusals recorded in sections 1080 and 1085-1086 for these exact two parabola
 profiles, distances, and transverse line cutters. Other cusp roots/control
