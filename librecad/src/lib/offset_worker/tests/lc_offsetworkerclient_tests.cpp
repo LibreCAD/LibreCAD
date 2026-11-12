@@ -4456,7 +4456,7 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     closedNearCoincident.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
     LC_SplinePointsData openNearCoincident{false, false};
     openNearCoincident.splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
-    std::array<LC_SplinePointsData, 14> sourceProfiles{{sourceData, sourceData,
+    std::array<LC_SplinePointsData, 22> sourceProfiles{{sourceData, sourceData,
                                                       leadingRepeated, trailingRepeated,
                                                       closedRepeated, closedInteriorRepeated,
                                                       closedNearCoincident, openNearCoincident}};
@@ -4482,6 +4482,26 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
         sourceProfiles[8 + transformIndex * 2] = openBoundary;
         sourceProfiles[9 + transformIndex * 2] = closedBoundary;
     }
+    const double openPlacementGap = 2e-4;
+    const double closedPlacementGap = 2e-3;
+    sourceProfiles[14] = LC_SplinePointsData{false, false};
+    sourceProfiles[14].splinePoints = {{0, 0}, {openPlacementGap, 0}, {1, 1}, {2, 0}, {3, 1}};
+    sourceProfiles[15] = LC_SplinePointsData{false, false};
+    sourceProfiles[15].splinePoints = {{0, 0}, {1, 1}, {1 + openPlacementGap, 1 + openPlacementGap}, {2, 0}, {3, 1}};
+    sourceProfiles[16] = LC_SplinePointsData{false, false};
+    sourceProfiles[16].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3 + openPlacementGap, 1}};
+    sourceProfiles[17] = sourceProfiles[15];
+    std::reverse(sourceProfiles[17].splinePoints.begin(), sourceProfiles[17].splinePoints.end());
+    sourceProfiles[18] = LC_SplinePointsData{true, false};
+    sourceProfiles[18].splinePoints = {{0, 0}, {closedPlacementGap, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    sourceProfiles[19] = LC_SplinePointsData{true, false};
+    sourceProfiles[19].splinePoints = {{0, 0}, {10, 0}, {10 + closedPlacementGap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    sourceProfiles[20] = LC_SplinePointsData{true, false};
+    sourceProfiles[20].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {13 + closedPlacementGap, 8}, {4, 13}, {-3, 8}};
+    sourceProfiles[21] = LC_SplinePointsData{true, false};
+    sourceProfiles[21].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, closedPlacementGap}};
+    for (std::size_t profileIndex = 14; profileIndex < sourceProfiles.size(); ++profileIndex)
+        sourceProfiles[profileIndex].fitTolerance = 1e-8;
     const std::array<double, 2> distances{{0.2, 0.5}};
     const std::array<double, 2> sides{{1.0, -1.0}};
     struct Lane {
@@ -4508,10 +4528,11 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
         REQUIRE(sourceJet.first.magnitude() > 0.0);
         const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(), sourceJet.first.x / sourceJet.first.magnitude()};
         const double distanceScale = profileIndex == 7 ? 0.1
+            : profileIndex >= 14 ? ((profileIndex % 2 == 0) ? 0.01 : 0.1)
             : profileIndex >= 8 ? conditioningScales[(profileIndex - 8) / 2] *
                                      ((profileIndex % 2 == 0) ? 0.1 : 1.0)
                                 : 1.0;
-        const double pickScale = profileIndex >= 8
+        const double pickScale = profileIndex >= 8 && profileIndex < 14
             ? conditioningScales[(profileIndex - 8) / 2]
             : 1.0;
         for (const double distance : distances) {
