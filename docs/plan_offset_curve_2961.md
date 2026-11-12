@@ -38940,6 +38940,17 @@ persistence, exact-knot closed-circle contacts, other circle scales/directions,
 remaining Trim Two families, visible GUI, cross-platform, and external-CAD
 acceptance remain open.
 
+Exact-knot investigation on the current CMake Release tree confirms this is
+not closed by the interior fixture. Replacing the cut parameter temporarily
+with the half-domain knot makes preview empty and commit report uncertain
+intersections. A second temporary fixture put a vertical finite cutter through
+a stored circle-cache endpoint: preview appeared, but commit refused with
+`NoUsableRoots`. These were diagnostic-only test edits and have been removed;
+the checked-in regression remains unchanged and passes 785 assertions / 1
+case. The next slice must establish preview/commit parity and certified
+ownership for shared-span contacts using exact endpoint evidence. Do not merge
+roots by parameter proximity, rounded midpoint, or interval overlap.
+
 ## 1051. Reconfirm Source Type Follows the Chosen Replacement (2026-11-12)
 
 The source-curve widget must let the user change the candidate-family filter
