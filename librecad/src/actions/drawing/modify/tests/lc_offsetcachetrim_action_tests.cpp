@@ -2448,12 +2448,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u})
     for (const bool arcFirst : {false, true}) {
         CAPTURE(profile, arcFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .25, false);
+        const double offsetDistance = .25;
+        const bool towardCentre = profile >= 7;
+        auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
@@ -2469,7 +2471,11 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
                             ? RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-4, 1e-4, true}
                             : profile == 5
                                 ? RS_ArcData{{3, -4}, 4.0, 1e-8, 2.0 * M_PI - 1e-8, false}
-                                : RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-8, 1e-8, true};
+                                : profile == 6
+                                    ? RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-8, 1e-8, true}
+                                    : profile == 7
+                                        ? RS_ArcData{{3, -4}, 4.0, 1e-8, 2.0 * M_PI - 1e-8, false}
+                                        : RS_ArcData{{-3, 4}, 4.3, 2.0 * M_PI - 1e-8, 1e-8, true};
         REQUIRE(sourceData.isValid());
         auto* source = new RS_Arc(&f.graphic, sourceData);
         f.graphic.addEntity(source);
@@ -2491,6 +2497,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
         REQUIRE(native);
         REQUIRE(native->sourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Arc);
+        CHECK(native->definition().distance == offsetDistance);
+        CHECK(native->definition().towardCentre == towardCentre);
 
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
