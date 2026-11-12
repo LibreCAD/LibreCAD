@@ -39491,3 +39491,22 @@ and one derived circle-cutter construction. It does not establish arbitrary
 parabola control nets, focus/vertex/tangent degeneracies, extreme affine
 conditioning, inward/cusp boundaries, other cutter families, visible GUI,
 cross-platform behavior, or external CAD acceptance.
+
+## 1076. Qualify Both Signed Typed-parabola Trim Sides (2026-11-12)
+
+Test commit `ea2abd512` adds both signed offset sides to the typed-parabola
+Trim Two matrix, across the two control nets, scales `0.1`, `1`, and `10`,
+identity/rotated-translated placements, and both operand pick orders. The
+regression asserts that Update-from-Source transfers the exact expected
+positive or negative signed distance into the typed source definition. Both
+sides then exercise preview/commit, undo/redo, five DXF/DWG lanes, reopened
+geometry matching, and independent LibreDWG parsing of both DWG versions.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+parabola Trim Two case passes 12,900 assertions / 1 case across 48
+profile/scale/transform/side/order combinations; `[trim-action]` passes
+46,201 assertions across 81 cases; the target builds; and `git diff --check`
+passes. This verifies both signs at the tested moderate distance ratio
+(`0.05 * scale`) for these two profiles. Near-cusp/inward limits, distances
+that trigger branch changes or refusal, other cutter constructions, visible
+GUI, cross-platform runs, and external CAD acceptance remain open.
