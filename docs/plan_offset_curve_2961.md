@@ -38953,24 +38953,28 @@ roots by parameter proximity, rounded midpoint, or interval overlap.
 
 ## 1051. Reconfirm Source Type Follows the Chosen Replacement (2026-11-12)
 
-The source-curve widget must let the user change the candidate-family filter
-while choosing a replacement, and selecting a candidate must make the widget's
-source type reflect that candidate's actual family. This applies to the full
-supported inventory: line, arc, circle, ellipse, spline, spline-points,
+The source-curve widget has two distinct type states during replacement:
+`Source type` is the candidate-family filter, and selecting a candidate makes
+the replacement's displayed type follow that candidate's actual geometry. The
+filter remains changeable throughout candidate browsing. This applies to the
+full supported inventory: line, arc, circle, ellipse, spline, spline-points,
 parabola, bounded hyperbola, and polyline. Parabola is a distinct supported
-type, not a spline-points alias. The current source remains visibly highlighted
-and its identity/cache/definition remain unchanged until worker preparation
+type, not a spline-points alias. Changing the filter or browsing candidates
+must not mutate the committed source. Its identity/cache/definition remain
+unchanged and the current source remains highlighted until worker preparation
 succeeds; stale preparation must leave it untouched.
 
 This restates and makes explicit the picker-level contract in sections 1036
 and 1040; it does not open a second widget or duplicate picker implementation.
-Headless picker/state-transition coverage is recorded as implemented there.
-Visible GUI validation remains open: change the family filter, choose a
-candidate from a different family (including parabola), confirm the displayed
-type follows the candidate, and verify the old source stays highlighted until
-the prepared replacement is accepted. This UI gate is separate from concrete
-geometry generation, worker/cache, Trim, and DXF/DWG persistence coverage for
-each source variant, which remains tracked independently.
+Status: the picker/filter and state-transition contract is implemented and
+covered headlessly, including family changes refreshing candidates without
+replacing the current source. The remaining GUI acceptance check is to switch
+families repeatedly, select a different-family candidate (including
+parabola), confirm the displayed type follows the candidate, and verify the
+old source remains highlighted until the prepared replacement is accepted.
+Do not count this UI check as evidence for concrete geometry generation,
+worker/cache, Trim, or DXF/DWG persistence for every source variant; those
+remain independent coverage gates.
 
 ## 1052. Persist Typed Circle Trim Two Output Across Five File Lanes (2026-11-12)
 
@@ -39124,3 +39128,30 @@ orders, and all five lanes; `[trim-action]` passes 34,011 assertions / 81
 cases; `librecad_tests` rebuilds; and `git diff --check` passes. Closed and
 multi-component polyline layouts, other bulge arrangements, visible GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1060. Trim Non-semicircular Mixed-bulge Polyline Cache Components (2026-11-12)
+
+Implementation commit `8b47f2147` extends section 1059 beyond the semicircle
+fixture. A non-semicircular bulge (`0.5`) produces a disconnected multi-span
+cache; Trim Two previously refused that cache as a cutter. The trim kernel now
+isolates roots separately against each disconnected cutter component, remaps
+certified cutter parameters to the original cache span coordinates, and
+conservatively refuses overlapping or unordered root enclosures. Reconstructed
+component splines preserve full-multiplicity knot boundaries instead of
+accidentally joining geometrically coincident but topologically separate spans.
+
+The action regression runs both bulge profiles (`1.0` and `0.5`), trims once
+inside each source-cache primitive (arc and line), and exercises both pick
+orders through preview, commit, undo/redo, all five DXF/DWG save/reopen lanes,
+geometry checks, and LibreDWG minJSON validation when available. On macOS arm64
+CMake Release with LibreDWG 0.14, the focused polyline Trim Two case passes
+3,684 assertions in one case; `[trim-action]` passes 35,671 assertions across
+81 cases; `[lc-offsetcurve][trim-kernel]` passes 40,995 assertions across 69
+cases; `librecad_tests` rebuilds; and `git diff --check` passes.
+
+This qualifies the two recorded open arc-plus-line profiles only. Closed
+disconnected cutters, more than two cache components, non-coincident component
+boundaries, other bulge arrangements, visible GUI, cross-platform, and
+external-CAD acceptance remain open. The kernel/action regression is complete
+for the profiles and operations above; this roadmap checkpoint is committed
+separately from the implementation slice.
