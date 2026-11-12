@@ -35,6 +35,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_graphicviewport.h"
 #include "lc_offsetcurve.h"
+#include "lc_offsetcachetrim.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurvexdata.h"
 #include "lc_action_offsetcurve_updatesource.h"
@@ -1792,6 +1793,95 @@ TEST_CASE("T Trim Two action trims a worker-created typed circle offset against 
         CHECK(cutter->isDeleted());
         for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
     }
+}
+
+TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created closed circle cache",
+          "[gui][lc-offsetcurve][trim-action][typed-source][circle][trim-two][exact-knot]") {
+    Drawing<true> f;
+    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    auto initial = LC_OffsetCurve::create(seed, .25, false);
+    REQUIRE(initial);
+    auto* previous = initial.entity.release();
+    f.graphic.addEntity(previous);
+    auto* source = new RS_Circle(&f.graphic, RS_CircleData{{0, 0}, 2});
+    f.graphic.addEntity(source);
+    f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+    UpdateSourceProbe update(&f.context);
+    update.init(0);
+    update.setSourceKind(LC_OffsetSourceGeometry::Kind::Circle);
+    update.use(source);
+    lc::test::awaitUpdate(update);
+    REQUIRE(update.lastReport().updated == 1);
+    LC_OffsetCurve* native = nullptr;
+    for (auto* entity : live(f.graphic))
+        if (entity->rtti() == RS2::EntityOffsetCurve) native = dynamic_cast<LC_OffsetCurve*>(entity);
+    REQUIRE(native);
+    const auto breaks = native->getBreakParameters();
+    REQUIRE(breaks.size() >= 5);
+    const auto& cache = native->getData();
+    REQUIRE(cache.degree == 3);
+    const RS_Vector firstKnot = cache.controlPoints[cache.degree];
+    const RS_Vector lineEnd{-2 * firstKnot.x, 2 * firstKnot.y};
+    auto* cutter = new RS_Line(&f.graphic, firstKnot, lineEnd);
+    f.graphic.addEntity(cutter);
+    const auto pick = native->getPointAt((breaks[2] + breaks[3]) * .5);
+    const auto result = LC_OffsetCacheTrim::prepare(native->getData(), *cutter, {pick});
+    INFO("refusal=" << int(result.refusal) << ", roots=" << result.rootCount
+         << ", pairs=" << result.work.intersections.totalBoxPairs
+         << ", leaves=" << result.work.intersections.generatedLeaves
+         << ", items=" << result.work.intersections.generatedItems
+         << ", depth=" << result.work.intersections.deepestPairRefinement
+         << ", kernelItems=" << result.work.kernelItems
+         << ", comparisons=" << result.work.kernelComparisons);
+    CHECK(result.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(result.rootCount == 2);
+    CHECK(result.fragments.size() == 1);
+    REQUIRE(result.roots.size() == 2);
+    bool exactKnot = false;
+    bool interiorCrossing = false;
+    for (const auto& root : result.roots) {
+        const double sourceParameter = double(root.target.rawSpan) + root.target.localParameter.lo();
+        exactKnot |= root.proof == LC_IntersectionProof::AnalyticEndpoint &&
+                     sourceParameter == std::round(sourceParameter);
+        interiorCrossing |= root.proof == LC_IntersectionProof::IntervalUniqueTransverse &&
+                            std::abs(sourceParameter - std::round(sourceParameter)) > .1;
+    }
+    CHECK(exactKnot);
+    CHECK(interiorCrossing);
+
+    RS_SplineData lineData{1, false};
+    lineData.controlPoints = {firstKnot, lineEnd};
+    lineData.knotslist = {0, 0, 1, 1};
+    lineData.weights = {1, 1};
+    const RS_Vector cutterPick = (firstKnot + lineEnd) * .5;
+    const auto lineResult = LC_OffsetCacheTrim::prepare(lineData, *native, {cutterPick});
+    INFO("line refusal=" << int(lineResult.refusal) << ", roots=" << lineResult.rootCount);
+    REQUIRE(lineResult.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(lineResult.rootCount == 2);
+
+    const auto nativePick = native->getPointAt((breaks[2] + breaks[3]) * .5);
+    f.action->click(nativePick);
+    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+    f.action->hover(cutterPick);
+    CHECK_FALSE(f.action->m_preview->isEmpty());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+    f.action->click(cutterPick);
+    REQUIRE(native->isDeleted());
+    REQUIRE(cutter->isDeleted());
+    const auto committed = live(f.graphic);
+    CHECK(std::any_of(committed.begin(), committed.end(), [](const RS_Entity* entity) {
+        return entity->rtti() == RS2::EntitySpline;
+    }));
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    REQUIRE(f.graphic.redo());
+    CHECK(native->isDeleted());
+    CHECK(cutter->isDeleted());
 }
 
 TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",

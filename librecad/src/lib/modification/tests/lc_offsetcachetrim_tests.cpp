@@ -290,6 +290,34 @@ TEST_CASE("Closed seam identity accepts the same proved nondyadic line occurrenc
     }
 }
 
+TEST_CASE("Cache trim accepts one crossing shared-span knot contact", tags) {
+    const auto data = cache({{0, -1}, {1, 0}, {2, 1}});
+    RS_Line cutter{nullptr, {-1, 0}, {3, 0}};
+    for (const RS_Vector pick : {RS_Vector{.5, -.5}, RS_Vector{1.5, .5}}) {
+        const auto result = Trim::prepare(data, cutter, {pick});
+        INFO("refusal=" << int(result.refusal) << ", roots=" << result.rootCount);
+        REQUIRE(result.refusal == Trim::Refusal::None);
+        REQUIRE(result.rootCount == 1);
+        REQUIRE(result.fragments.size() == 1);
+        geometry(data, result);
+        const auto& fragment = result.fragments.front();
+        CHECK(fragment.sourceSections.size() == 1);
+        CHECK(label(fragment.start, Trim::EndLabel::CutterRoot) !=
+              label(fragment.end, Trim::EndLabel::CutterRoot));
+        near(label(fragment.start, Trim::EndLabel::CutterRoot)
+            ? fragment.data.controlPoints.front() : fragment.data.controlPoints.back(), {1, 0}, 0);
+    }
+
+    RS_Spline splineCutter{nullptr, data};
+    const auto lineTarget = cache({{-1, 0}, {3, 0}});
+    const auto reverse = Trim::prepare(lineTarget, splineCutter, {{2, 0}});
+    INFO("reverse refusal=" << int(reverse.refusal) << ", roots=" << reverse.rootCount);
+    REQUIRE(reverse.refusal == Trim::Refusal::None);
+    REQUIRE(reverse.rootCount == 1);
+    REQUIRE(reverse.fragments.size() == 1);
+    geometry(lineTarget, reverse);
+}
+
 TEST_CASE("Closed seam nondyadic endpoint identity does not turn a touching corner into a crossing", tags) {
     for (bool reverse : {false, true}) for (bool cutterReverse : {false, true}) {
         CAPTURE(reverse, cutterReverse);
