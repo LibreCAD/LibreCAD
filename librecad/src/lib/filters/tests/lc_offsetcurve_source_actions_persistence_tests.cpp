@@ -609,6 +609,7 @@ TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset"
     const bool reverseBounds = GENERATE(false, true);
     const bool towardCentre = GENERATE(false, true);
     const double fraction = GENERATE(.5, 1.0, 1.5);
+    const std::size_t transformIndex = GENERATE(std::size_t{0}, std::size_t{1}, std::size_t{2});
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
         RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -622,15 +623,22 @@ TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset"
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    const std::array<double, 3> scales{{1e-3, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> origins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    const double scale = scales[transformIndex];
+    const RS_Vector origin = origins[transformIndex] * scale;
+    const double zoom = 30.0 / scale;
+    view.getViewPort()->setOffsetAndFactor(qRound(200.0 - origin.x * zoom),
+                                          qRound(200.0 - origin.y * zoom), zoom);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
     constexpr double semiMajor = 10.0;
     constexpr double axisAngle = .37;
-    const double vertexRadius = semiMajor * ratio * ratio;
+    const double vertexRadius = semiMajor * scale * ratio * ratio;
     const double distance = fraction * vertexRadius;
-    const LC_HyperbolaData data{{13, -7}, {semiMajor * std::cos(axisAngle), semiMajor * std::sin(axisAngle)},
+    const LC_HyperbolaData data{origin,
+        {semiMajor * scale * std::cos(axisAngle), semiMajor * scale * std::sin(axisAngle)},
         ratio, reverseBounds ? .4 : -.4, reverseBounds ? -.4 : .4, oppositeBranch};
     LC_Hyperbola hyperbola(nullptr, data);
     REQUIRE(hyperbola.isValid());
@@ -664,7 +672,8 @@ TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset"
     auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
     REQUIRE(updateAction);
     updateAction->setSourceKind(SourceKind::BoundedHyperbola);
-    CAPTURE(ratio, oppositeBranch, reverseBounds, towardCentre, fraction, format, vertexRadius, distance, pick.x, pick.y);
+    CAPTURE(ratio, oppositeBranch, reverseBounds, towardCentre, fraction, format, transformIndex,
+            scale, origin.x, origin.y, vertexRadius, distance, pick.x, pick.y);
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
     mouse(*update, view, pick, true);
     lc::test::awaitUpdate(*updateAction);
