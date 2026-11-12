@@ -37293,7 +37293,9 @@ client verifies the same atomic refusal for both profiles at `-0.5`, `-0.2`,
 `+0.2`, and `+0.5`, with `changed == false` and no representable cache. The
 focused client refusal test passes 1,362 assertions. The full fit-point kernel
 selection passes 21,935 assertions across seven cases; `git diff --check`
-passes.
+passes. The full `[lc-offsetcurve][worker-client][fit-points]` selection,
+including the new refusal matrix and 60 file-lane round-trips, passes 60,854
+assertions across five cases.
 
 These are explicit unsupported boundaries, not newly supported geometry. They
 do not imply all endpoint or repeated-point layouts are invalid: sections
