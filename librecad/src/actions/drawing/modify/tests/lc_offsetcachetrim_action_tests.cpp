@@ -831,6 +831,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         const RS_Vector circlePick = circleCenter + normal * circleRadius;
         const auto nativeBefore = trimGeometry(*native);
         const auto circleBefore = trimGeometry(*circle);
+        const LC_HyperbolaData sourceBefore = hyperbola->getData();
 
         const RS_Vector firstPick = hyperbolaFirst ? nativePick : circlePick;
         const RS_Vector secondPick = hyperbolaFirst ? circlePick : nativePick;
@@ -863,6 +864,93 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
             return entity->rtti() == RS2::EntityArc;
         }));
+
+        QTemporaryDir directory;
+        REQUIRE(directory.isValid());
+        const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+            RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+        const auto close = [](double a, double b) {
+            return std::abs(a - b) <= 2e-10 * std::max({1.0, std::abs(a), std::abs(b)});
+        };
+        const auto closeVector = [&](const RS_Vector& a, const RS_Vector& b) {
+            return close(a.x, b.x) && close(a.y, b.y) && close(a.z, b.z);
+        };
+        const auto sameGeometry = [&](const RS_Entity& expected, const RS_Entity& actual) {
+            if (expected.rtti() != actual.rtti()) return false;
+            if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Spline*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                if (x.degree != y.degree || x.m_closedFlag != y.m_closedFlag ||
+                    x.m_periodicFlag != y.m_periodicFlag || x.controlPoints.size() != y.controlPoints.size() ||
+                    x.knotslist.size() != y.knotslist.size() || x.weights.size() != y.weights.size()) return false;
+                for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
+                    if (!closeVector(x.controlPoints[i], y.controlPoints[i])) return false;
+                for (std::size_t i = 0; i < x.knotslist.size(); ++i)
+                    if (!close(x.knotslist[i], y.knotslist[i])) return false;
+                for (std::size_t i = 0; i < x.weights.size(); ++i)
+                    if (!close(x.weights[i], y.weights[i])) return false;
+                return true;
+            }
+            if (const auto* a = dynamic_cast<const RS_Arc*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Arc*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                return closeVector(x.center, y.center) && close(x.radius, y.radius) &&
+                    close(x.angle1, y.angle1) && close(x.angle2, y.angle2) && x.reversed == y.reversed;
+            }
+            if (const auto* a = dynamic_cast<const LC_Hyperbola*>(&expected)) {
+                const auto* b = dynamic_cast<const LC_Hyperbola*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                return closeVector(x.center, y.center) && closeVector(x.majorP, y.majorP) &&
+                    close(x.ratio, y.ratio) && close(x.angle1, y.angle1) &&
+                    close(x.angle2, y.angle2) && x.reversed == y.reversed;
+            }
+            return false;
+        };
+        for (std::size_t i = 0; i < formats.size(); ++i) {
+            const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("typed-hyperbola-trim-two-%1").arg(i) + (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+            auto reopenedEntities = live(reopened);
+            unsigned reopenedHyperbolas = 0;
+            for (auto* entity : reopenedEntities) {
+                CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+                if (entity->rtti() != RS2::EntityHyperbola) continue;
+                ++reopenedHyperbolas;
+                const auto* reopenedHyperbola = dynamic_cast<const LC_Hyperbola*>(entity);
+                REQUIRE(reopenedHyperbola);
+                const auto& data = reopenedHyperbola->getData();
+                CHECK(data.center == sourceBefore.center);
+                CHECK(data.majorP == sourceBefore.majorP);
+                CHECK(data.ratio == sourceBefore.ratio);
+                CHECK(data.angle1 == sourceBefore.angle1);
+                CHECK(data.angle2 == sourceBefore.angle2);
+                CHECK(data.reversed == sourceBefore.reversed);
+            }
+            CAPTURE(formats[i]);
+            CHECK(reopenedHyperbolas == 1);
+            const auto expectedEntities = live(f.graphic);
+            REQUIRE(reopenedEntities.size() == expectedEntities.size());
+            std::vector<bool> consumed(reopenedEntities.size(), false);
+            for (const auto* expected : expectedEntities) {
+                bool found = false;
+                for (std::size_t j = 0; j < reopenedEntities.size(); ++j) {
+                    if (consumed[j] || !sameGeometry(*expected, *reopenedEntities[j])) continue;
+                    consumed[j] = true;
+                    found = true;
+                    break;
+                }
+                CHECK(found);
+            }
+        }
 
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
