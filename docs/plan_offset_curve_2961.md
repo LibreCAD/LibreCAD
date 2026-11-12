@@ -40011,3 +40011,22 @@ or another-platform result. Shell startup still warns that
 build. CMake action and source-picker suites are recorded in sections 1097
 and 1098. Clean/reproducible qmake setup, visible desktop acceptance,
 cross-platform delivery, and external-CAD validation remain open.
+
+## 1100. Reconcile the Repeated All-types Source-widget Request (2026-11-12)
+
+The request to change the replacement source type in the Properties widget and
+support all source types is covered by the existing picker contract, not a new
+UI scope. Section 1098 verifies repeated type changes and matching candidate
+filtering for every current `LC_OffsetSourceGeometry::SupportedKinds` entry:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline. Parabola remains distinct from spline-points. The committed
+source/cache/identity and source indication remain unchanged while browsing;
+replacement publication follows successful asynchronous preparation.
+
+No additional selector or picker implementation is required based on the
+current headless evidence. The remaining source-widget acceptance is a visible
+Properties workflow confirming repeated family changes, cross-family
+replacement, and preservation of the old-source highlight until successful
+publication. This gate is separate from Slice 4's family/variant generation,
+worker/cache, Trim, and DXF/DWG support; selector coverage must not be reported
+as universal geometry support.
