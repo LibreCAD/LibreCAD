@@ -39037,3 +39037,23 @@ five lanes; `[trim-action]` passes 26,222 assertions / 79 cases with
 decoding for one full-ellipse profile and finite cutter only. Other ellipse
 profiles/domains, remaining Trim Two source families, visible GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1055. Exercise Rational Spline and Spline-points Trim Two (2026-11-12)
+
+Test commit `b4747c7b3` adds one worker-created Trim Two action case covering
+both a positive-rational quadratic `RS_Spline` and a control-point
+`LC_SplinePoints` source, each in both operand pick orders. Update-from-Source
+must create a generalized typed definition of the requested distinct family.
+A finite transverse line cuts an interior point of the first cache span. The
+test verifies nonempty asynchronous preview without operand or undo-epoch
+mutation, ordinary spline/line fragments after commit, typed source-family
+restoration on undo, and redo.
+
+Validation on macOS arm64 CMake Release: the focused spline/spline-points
+Trim Two case passes 1,283 assertions across both source kinds and both pick
+orders; `[trim-action]` passes 27,426 assertions / 80 cases with LibreDWG
+available; the test target rebuilds; and `git diff --check` passes. This is
+action-level evidence for these two source layouts and one transverse line
+fixture only. Five-lane persistence, other spline knot/weight and fit-point
+layouts, polyline Trim Two, visible GUI, cross-platform, and external-CAD
+acceptance remain open.
