@@ -37901,3 +37901,23 @@ across 4 cases. CMake rebuilds `librecad_tests` successfully and
 this one translated/reflected near-boundary profile only; the other scales,
 origins, closed profiles, other fit-point layouts, visible GUI, and external
 ODA/AutoCAD acceptance remain open.
+
+## 1001. Complete the Transformed Fit-point Native Persistence Grid (2026-11-12)
+
+Test commit `c0a3e7678` expands the single editable-source case in section 1000
+to the full six-profile similarity grid: open and closed admitted boundary
+fit-point splines at scales `1e-4`, `1`, and `1e4`, with the recorded origins
+and reflected large-origin placement. The test updates a native offset from
+each source through the Properties action, then saves and reopens the editable
+source/cache through all five R14/R2000/R2018 DXF/DWG lanes. It verifies the
+typed `SplinePoints` definition, signed distance, source encoding, cache
+fingerprint, pen, and consistency after reopening; the DWGs are also parsed by
+LibreDWG.
+
+Validation: `[fit-points][conditioning]` passes 4,674 assertions across the
+30 format/profile combinations. The nine-family `[typed][matrix]` regression
+passes 13,620 assertions across 4 cases; the CMake test target and
+`git diff --check` pass. This closes native source/cache persistence for these
+six exact profiles and five file lanes, not arbitrary point layouts,
+nonuniform transformations, all distances, visible GUI, or ODA/AutoCAD
+acceptance; those remain open.
