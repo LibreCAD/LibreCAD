@@ -37470,3 +37470,23 @@ geometry-checked. `git diff --check` passes.
 This qualifies only the recorded revisit profile and distances. It is not a
 continuous Hausdorff certificate, a general self-intersection/topology proof,
 or visible-GUI and ODA/AutoCAD acceptance; those gates remain open.
+
+## 980. Qualify Reversed Non-adjacent Fit-point Revisits (2026-11-11)
+
+Test commit `56fbb66fc` adds the reverse traversal of the section 979
+self-crossing/revisited-location profile. The independent oracle localizes
+expected source geometry to the worker's first fit point, verifies analytic
+normals and bounded corner arcs, and checks the actual worker-returned splines
+for all four signed distances.
+
+The focused exact-normal case passes 81,825 assertions. The full fit-point
+kernel selection passes 82,082 assertions across seven cases, and the
+process-backed fit-point client selection passes 119,109 assertions across
+five cases. The ten-profile persistence case passes 74,960 assertions and
+covers 200 DXF/DWG save-reopens across five format lanes and four distances.
+LibreDWG 0.14 independently parses and geometry-checks all 120 generated
+DWGs. `git diff --check` passes.
+
+This qualifies only both traversal directions of this one repeated-location
+profile. Arbitrary self-intersections and repeated-point layouts, continuous
+Hausdorff proof, visible GUI, and ODA/AutoCAD acceptance remain open.
