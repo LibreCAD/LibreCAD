@@ -36951,3 +36951,45 @@ case passes 4,051 assertions; full `offset_worker_client` CTest passes in
 This closes worker preparation for this profile only. Its five-lane trimmed
 output persistence remains open, as do other repeated-point layouts, visible
 GUI behavior, and external-CAD acceptance.
+
+## 954. Reconcile the Current Source-picker Request (2026-11-11)
+
+The latest request again requires that the offset Properties source widget let
+the user change source-curve type while choosing a replacement, and that
+replacement/source support cover every currently modeled kind, including
+parabola. This is already the implemented picker contract: the family selector
+remains available while browsing candidates, filters the candidate list across
+all nine `LC_OffsetSourceGeometry::SupportedKinds`, and replacement captures
+the selected entity as its actual typed source. Parabola remains a distinct
+kind from spline-points. Existing regressions cover family changes, typed
+replacement for each kind, and retaining the existing source indication while
+filters change. No second selector or parabola-only UI path is needed.
+
+Do not mark “all supported types” complete from picker coverage alone. Continue
+the family-by-variant end-to-end matrix in sections 260-265: qualify eligible
+geometry and failure cases through direct construction, trimming, worker/cache,
+DXF/DWG persistence, and visible LibreCAD workflows. Keep unsupported or
+unqualified variants explicitly open, and update this roadmap after each
+implementation/test commit as required by the delivery contract. Current
+repeated-fit-point persistence work in section 950 is separate from this UI
+reconciliation and does not close those broader gates.
+
+## 955. Persist Separated Repeated Fit-point Trims (2026-11-11)
+
+Test commit `e3dafba11` adds the separated repeated-neighbor profile from
+sections 952-953 to the five-lane trimmed-output matrix. For both sides at
+distances `0.2` and `0.5`, it preserves the actual mixed output representation
+(a line plus a spline on the right side where produced) across R2004 DXF/DWG,
+R2013 DXF, and R2018 DXF/DWG. Reopened local geometry is checked by native
+type: spline samples, line endpoints, and polyline vertices/segments where
+applicable. LibreDWG 0.14 independently reads all 40 R2018 DWGs and confirms
+expected SPLINE and LINE entity counts plus spline degree/control points.
+The focused persistence selection passes 33,229 assertions in one case; the
+combined `[lc-offsetcurve][persistence][trim]` selection passes 46,676
+assertions in three cases. `git diff --check` passes.
+
+This closes five-lane materialized-output evidence for the separated-repeat
+profile and the existing repeated-neighbor variants in this matrix. It does
+not preserve editable typed-source metadata, validate line geometry with the
+external reader, qualify other repeated-point layouts, or close visible-GUI
+and ODA/AutoCAD acceptance.
