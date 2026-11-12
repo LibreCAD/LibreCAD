@@ -37970,3 +37970,19 @@ the worker-client CMake target rebuilds successfully and `git diff --check`
 passes. This closes worker/cache handling for these eight profiles and
 distances only. File persistence, broader ratios/topologies, visible GUI, and
 ODA/AutoCAD acceptance remain open.
+
+## 1005. Persist Varied Fit-point Chord Placements Through Worker Trimming (2026-11-12)
+
+Test commit `9222ea74a` extends section 1004's leading, interior, trailing,
+reversed, and closed-seam near-coincident profiles through worker Produce and
+trim, then saves and reopens output through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Both trim-pick sides and both proportional distances are exercised;
+the independent LibreDWG reader parses generated DWGs.
+
+Validation: `[fit-points][trim][persistence]` passes 177,959 assertions in 1
+case across 440 save/reopens, including 176 independent DWG reads when
+`dwgread` is available. The worker-client CMake target rebuilds and
+`git diff --check` passes. This closes only these eight short-chord positions,
+profiles, sides, distances, and format lanes. Other point distributions,
+ratios, transformations, editable-source GUI behavior, and ODA/AutoCAD
+acceptance remain open.
