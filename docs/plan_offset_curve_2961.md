@@ -680,11 +680,30 @@ and keep direct, worker/cache, and five-lane persistence evidence separate.
 
 The picker requirement itself is **complete**. Remaining implementation is
 steps 1-6 above, driven by the variant gaps recorded in the chronological
-entries; in particular, recent periodic high-weight tests preserve a
-fail-closed positive-side refusal and do not justify treating all periodic
-splines as supported. W563cq normalizes active rational weights while forming
-certified jet bounds; its enclosure and worker regressions pass, but the
-cusp-rich positive-side periodic offsets still refuse and W563cg remains open.
+entries; periodic rational splines remain a per-profile support question, not
+a blanket family claim. W563cq normalizes active rational weights while
+forming certified jet bounds. Later W563eg/W563eh evidence supersedes the
+older broad positive-side refusal statement: one gradual high-ratio periodic
+profile succeeds only with a recorded, in-tolerance tiny-reversal collapse;
+the alternating high-ratio profile and other unresolved layouts remain
+fail-closed. Candidate completeness, seam/repeated-knot ownership, and
+tangent/even-root coverage remain open under W563cg/W563eh.
+
+## 1033. Reconcile Periodic Rational Support Summary (2026-11-12)
+
+Corrected the current roadmap summary to reflect later W563eg/W563eh receipts:
+the recorded gradual high-ratio periodic profile succeeds only with its
+verified tiny-reversal collapse, while the alternating profile and unresolved
+profiles remain fail-closed. The earlier blanket statement that cusp-rich
+positive-side periodic offsets still refuse was stale. No support boundary or
+production code changed; candidate completeness, seam/repeated-knot ownership,
+and tangent/even-root coverage remain open.
+
+Validation: `git diff --check` and
+`node --test scripts/offset-curve-validation/test-refusal-inventory.js` pass
+(94 tests, zero failures/skips; 93 unique executable obligations and no
+pending declarations). This is a roadmap-consistency check, not new geometric
+qualification.
 W563cr adds validated multi-branch ordinary line/cubic cache canonicalization
 and generic cache-layout/grip support for full-multiplicity boundaries; this
 closes that narrow representation gap, not unresolved periodic positive-side
