@@ -3336,18 +3336,20 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    std::array<LC_SplinePointsData, 4> profiles;
+    std::vector<LC_SplinePointsData> profiles(5);
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
     profiles[1].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}};
     profiles[2] = LC_SplinePointsData{false, false};
     profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {2, 0}, {3, 1}};
-    profiles[3] = profiles[0];
+    profiles[3] = LC_SplinePointsData{false, false};
+    profiles[3].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 2}, {4, 0}, {4, 0}, {5, 1}};
+    profiles[4] = profiles[0];
     const double angle = 37.0 * std::acos(-1.0) / 180.0;
     const double cosine = std::cos(angle);
     const double sine = std::sin(angle);
-    for (RS_Vector& point : profiles[3].splinePoints) {
+    for (RS_Vector& point : profiles[4].splinePoints) {
         point = {1e6 + point.x * cosine - point.y * sine, -2e6 + point.x * sine + point.y * cosine};
     }
 
