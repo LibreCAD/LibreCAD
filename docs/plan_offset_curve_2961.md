@@ -37986,3 +37986,20 @@ case across 440 save/reopens, including 176 independent DWG reads when
 profiles, sides, distances, and format lanes. Other point distributions,
 ratios, transformations, editable-source GUI behavior, and ODA/AutoCAD
 acceptance remain open.
+
+## 1006. Persist Fit-point Chord Placements as Native Editable Sources (2026-11-12)
+
+Test commit `4583368d5` carries the eight positional profiles from sections
+1003-1005, plus the open and closed conditioning-boundary profiles, through
+the Properties “Update from Source” action. The matrix combines all ten
+profiles with three scales/origins, both signed directions, and five R14,
+R2000, and R2018 DXF/DWG lanes. Each reopen must retain the typed
+`SplinePoints` source definition, signed distance, canonical cache fingerprint,
+pen, and consistency; DWG files are independently read with LibreDWG.
+
+Validation: `[fit-points][conditioning]` passes 35,346 assertions across 300
+profile/transform/direction/file combinations; `librecad_tests` builds and
+`git diff --check` passes. This closes the native editable-source/cache lane
+for these ten profiles and distances only. Other chord ratios and point
+layouts, additional transforms, visible interactive GUI, and ODA/AutoCAD
+acceptance remain open.
