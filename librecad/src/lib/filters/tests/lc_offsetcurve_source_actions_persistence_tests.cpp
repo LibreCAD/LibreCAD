@@ -729,7 +729,13 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     const auto kind = GENERATE(SourceKind::Line, SourceKind::Arc, SourceKind::Circle,
         SourceKind::Ellipse, SourceKind::Spline, SourceKind::SplinePoints,
         SourceKind::Parabola, SourceKind::BoundedHyperbola, SourceKind::Polyline);
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
     CAPTURE(kind);
+    CAPTURE(static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -844,14 +850,16 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     REQUIRE(graphic.redo());
     CHECK(nativeCurve->isDeleted());
     REQUIRE(fragments.size() == 1);
-    const auto output = std::filesystem::path(directory.filePath("trimmed-source.dxf").toStdString());
-    REQUIRE(lc::test::exportDrawing(graphic, output, RS2::FormatDXFRW2018));
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("trimmed-source-%1.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
     RS_Graphic reopened;
-    REQUIRE(lc::test::importDrawing(reopened, output, RS2::FormatDXFRW2018));
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
     std::vector<const RS_Spline*> reopenedFragments;
     for (const auto* entity : reopened)
         if (const auto* spline = dynamic_cast<const RS_Spline*>(entity)) reopenedFragments.push_back(spline);
     REQUIRE(reopenedFragments.size() == 1);
     CHECK(RS_Spline::geometryFingerprint(reopenedFragments.front()->getData()) ==
           RS_Spline::geometryFingerprint(trimmed));
+    if (dwg && !libreDwgReader.isEmpty()) checkLibreDwgSpline(libreDwgReader, output, trimmed);
 }
