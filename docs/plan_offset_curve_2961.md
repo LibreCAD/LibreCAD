@@ -37082,3 +37082,27 @@ every curve variant is eligible for every offset operation. Keep the separate
 family-by-variant geometry, trim, worker/cache, DXF/DWG, and visible-GUI gates
 open until each has direct evidence. Visible interaction remains unverified in
 the current SSH session; do not infer it from offscreen Qt tests.
+
+## 961. Keep the Repeated Fit-point Worker Geometry Oracle Open (2026-11-11)
+
+Section 959 explicitly leaves independent exact-normal verification of worker-
+generated repeated-fit-point caches open. An exploratory probe compared source
+normal points with the generated `RS_Spline` through `getDistanceToPoint`, but
+that query follows the spline's container-backed display/hit-test geometry; it
+reported a maximum deviation around `2.5e-3` against a requested geometry
+tolerance around `6.4e-6`. Uniform sampling of the output also introduced
+sampling error and failed more broadly. Neither result establishes a kernel
+geometry defect or a passing accuracy bound, so the experimental assertions
+were discarded and no tolerance was relaxed.
+
+For the next oracle slice, evaluate the generated cache from its NURBS
+definition and find the closest point to each exact source-normal sample with
+a bounded parameter-space minimizer (partition by nonzero knot spans; include
+endpoints and stationary-distance roots). Alternatively use a separately
+verified interval-distance routine with an error bound tighter than the
+requested tolerance. First cross-check that minimizer against analytically
+known line/circle cases, then apply it to the two recorded repeated-neighbor
+profiles at both signed distances. Keep the independent direct-trim oracle and
+the worker/cache admission test as separate evidence; do not use display
+polylines, a relaxed threshold, or implementation-produced geometry as its own
+oracle. This remains an open validation task, not a product bug finding.
