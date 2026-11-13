@@ -42592,3 +42592,18 @@ spline Trim Two matrix passes 25,940 assertions / 1 case. The test target was
 rebuilt after the changes, and `git diff --check` passes. Other open-fit
 layouts/tolerances, visible GUI, cross-platform runtime, and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1232. Re-run the Registered CTest Suite After High-count Fit-point Coverage (2026-11-13)
+
+After sections 1227-1231, the complete registered suite was rerun from the
+current macOS arm64 CMake Release build with
+`ctest --output-on-failure -j6`. All 28 tests pass in 597.82 seconds. The slow
+worker-kernel and worker-client cases pass in 220.67 and 358.73 seconds;
+worker fault, process, ordinary-process, and geometry-timeout tests also pass.
+This confirms registered integration coverage after the added closed 32-,
+64-, 128-, and 256-point profiles and open 256-point profile. An earlier
+mistyped Catch2 `-c` invocation selected a section rather than a test case and
+ran the full binary with an unrelated combined-suite failure; the exact
+parabola/hyperbola case passes alone, and the registered CTest suite passes.
+The successful suite is the authoritative broad result for this build, not
+cross-platform runtime, visible-GUI, or independent ODA/AutoCAD acceptance.
