@@ -325,11 +325,12 @@ count three); closed cut/control-file representation is checked by geometry
 rather than internal storage equality. These fixtures do not close other
 fit-point counts, tolerances, or transformations.
 
-Section 1178 adds one rotated, translated, asymmetric bounded-hyperbola
-profile with ratio `0.6` to the direct oracle and worker-backed Trim Two
-round-trip matrix. A more eccentric ratio-`0.4` variant passed direct geometry
-but did not produce a Trim Two preview in one action configuration, so it is
-not counted as end-to-end supported.
+Section 1178 adds rotated, translated, asymmetric bounded-hyperbola profiles
+at ratios `0.6` and `0.4` to the direct oracle and worker-backed Trim Two
+round-trip matrix. The ratio-`0.4` profile passes when the semi-major axis is
+large enough that the fixed action offset stays below the vertex curvature
+radius; a smaller post-cusp candidate still yields no Trim Two preview and is
+not counted as supported.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41499,22 +41500,22 @@ This qualifies only the stated combined profile, transformation, and
 tolerance. Other fit counts/layouts and transforms, visible GUI,
 cross-platform behavior, and independent ODA/AutoCAD acceptance remain open.
 
-## 1178. Add an Asymmetric Bounded Hyperbola Trim Profile (2026-11-13)
+## 1178. Add Asymmetric Bounded Hyperbola Trim Profiles (2026-11-13)
 
-Test commit `e923dc37b` adds a third worker-created bounded-hyperbola profile:
-center `(-2,6)`, major-axis length `3.5`, rotation `-0.58` radians, ratio
-`0.6`, and asymmetric bounds `[-1.1,0.9]`. The direct normal oracle checks
-both offset sides across normalized distances `5%` and `20%` of vertex
-curvature radius. The action exercises both branches and operand-pick orders,
-Trim Two preview/commit, undo/redo, R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG;
-the DWG lanes are independently decoded by LibreDWG when available.
+Test commit `e923dc37b` adds a translated/rotated profile at ratio `0.6`,
+major-axis length `3.5`, and asymmetric bounds `[-1.1,0.9]`. Follow-up commit
+`d39e8f9f4` adds a ratio-`0.4` profile with major-axis length `8`, rotation
+`0.23` radians, center `(9,-7)`, and the same asymmetric bounds. In both cases
+the direct normal oracle checks both sides at `5%` and `20%` of vertex
+curvature radius; action tests cover both branches and pick orders, Trim Two,
+undo/redo, five DXF/DWG lanes, and independent LibreDWG decoding.
 
 On macOS arm64 CMake Release, the focused direct hyperbola-variant selection
-passes 91,177 assertions / 2 cases; the focused worker Trim Two action passes
-3,761 assertions / 1 case with LibreDWG enabled. The incremental recursive
-qmake6 application/worker/plugin build exits 0 and `git diff --check` passes.
-A ratio-`0.4` candidate was deliberately excluded from end-to-end claims after
-one action configuration yielded an empty preview, despite passing the direct
-oracle. This receipt qualifies only the stated ratio, interval, transform, and
-Trim Two fixture; the full hyperbola interval/eccentricity matrix, visible
-GUI, cross-platform, and ODA/AutoCAD acceptance remain open.
+passes 94,807 assertions / 2 cases, and the focused action case passes 5,038
+assertions / 1 case with LibreDWG enabled. The recursive qmake6
+application/worker/plugin build exits 0 and `git diff --check` passes. An
+otherwise similar ratio-`0.4`, major-axis-`3.5` profile remains outside the
+support claim: its fixed action offset exceeds the vertex curvature radius and
+one branch/pick-order produces an empty preview. This qualifies only the two
+stated sub-cusp geometries; the wider hyperbola interval/eccentricity matrix,
+visible GUI, cross-platform, and ODA/AutoCAD acceptance remain open.
