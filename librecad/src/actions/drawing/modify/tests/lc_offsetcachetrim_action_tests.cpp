@@ -4127,7 +4127,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment polyline sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
     for (const unsigned segmentCount : {0u, 256u})
-    for (const unsigned profileKind : {0u, 1u, 2u})
+    for (const unsigned profileKind : {0u, 1u, 2u, 3u})
     for (const double sourceBulge : {1.0, .5})
         for (const bool addThirdSpan : {false, true})
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
@@ -4147,6 +4147,7 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
                 double y = 0.02 * x;
                 if (profileKind == 1 && x > 6.4) y += 0.1 * (x - 6.4);
                 if (profileKind == 2) y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
+                if (profileKind == 3) y = 0.001 * x * x;
                 source->addVertex({x, y});
             }
         }
@@ -4210,11 +4211,24 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(breaks[span] + (breaks[span + 1] - breaks[span]) * .9);
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
+        if (profileKind == 3) {
+            const auto curveByLine = LC_OffsetCacheTrim::prepare(native->getData(), *cutter, {nativePick});
+            RS_SplineData lineCache{1, false};
+            lineCache.controlPoints = {cutter->getStartpoint(), cutter->getEndpoint()};
+            lineCache.knotslist = {0, 0, 1, 1}; lineCache.weights = {1, 1};
+            const auto lineByCurve = LC_OffsetCacheTrim::prepare(lineCache, *native, {cutterPick});
+            CAPTURE(static_cast<int>(curveByLine.refusal), curveByLine.rootCount,
+                    static_cast<int>(lineByCurve.refusal), lineByCurve.rootCount,
+                    lineByCurve.work.intersections.totalBoxPairs,
+                    lineByCurve.work.intersections.generatedLeaves);
+            CHECK(curveByLine.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+            CHECK(lineByCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
+        }
         f.action->click(polylineFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
-        if (profileKind == 2) {
+        if (profileKind == 2 || profileKind == 3) {
             CHECK(f.action->m_preview->isEmpty());
             CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
             CHECK_FALSE(source->isDeleted());
