@@ -30427,6 +30427,13 @@ these rows do not imply every parameter/domain is supported):
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing; sections 1101 and 1103 cover two distinct bounded profiles on both branches through worker-backed Trim Two, undo/redo, five-file round trips, and LibreDWG structural reads | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; all 11 recorded open/closed linear, mixed-bulge, major/minor and unequal-major profiles pass both worker sides over scales `1e-3`, `1`, `1e3`, `1e4`, translation ratios `1e4` and `1e6`, normalized distances `+/-0.1` and `+/-0.25`, cache admission/refusal, and five staged DXF/DWG lanes; closed mixed-bulge and major/minor bulge oracles remain covered | Other open sweep/scale boundaries, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
 
+**Spline-points distance clarification:** The shared worker matrix uses nominal
+distances `0.2` and `0.5` and applies a profile-specific multiplier. For the
+self-crossing fit-point records, the base bow-tie and the five-point star use
+actual magnitudes `0.002` and `0.005`; the transformed/reversed bow-tie uses
+`0.02` and `0.05`. These actual values supersede the shorthand in the matrix
+row and sections 1204-1205.
+
 This closes the immediate worker/persistence gap for the two newly discovered
 accepted layouts; it does not complete step 3 or prove arbitrary legal source
 geometry. Continue by selecting the least-qualified family/row, adding an
@@ -42049,7 +42056,7 @@ Test commit `0b1e419b5` adds a closed four-fit-point bow-tie profile. A direct
 Trim-mode test first confirms a proper crossing in sampled source chords, then
 checks that both signed offsets produce two separate branches with an
 independent distance-to-source oracle. The worker-client matrix also adds this
-source at distances `+/-0.2` and `+/-0.5`; it validates the generated cache,
+source at actual signed distances `+/-0.002` and `+/-0.005`; it validates the generated cache,
 round-trips the resulting offset splines through R14 DXF, R2000 DXF/DWG, and
 R2018 DXF/DWG, and checks DWG spline geometry with LibreDWG when available.
 This does not claim that the worker's file-lane case performs Trim Two, nor
@@ -42071,8 +42078,10 @@ translation `(-18, 27)`, y reflection, and reversed fit-point order. Both the
 original and transformed source are confirmed to self-cross by sampled-chord
 intersection checks. Direct Trim-mode oracles require two branches on both
 signed sides, with independent distance-to-source validation. The worker
-matrix carries both profiles through cache validation and generated-offset
-round trips in all five DXF/DWG lanes; LibreDWG inspects the DWGs. It still
+matrix carries the base profile at signed distances `+/-0.002` and
+`+/-0.005`, and the transformed profile at `+/-0.02` and `+/-0.05`, through
+cache validation and generated-offset round trips in all five DXF/DWG lanes;
+LibreDWG inspects the DWGs. It still
 does not exercise worker Trim Two or establish support for arbitrary
 self-crossing topology.
 
@@ -42100,3 +42109,22 @@ This is not clean qmake/test-target, visible-GUI, cross-platform, or external
 CAD acceptance. CI for the then-current PR head was still running, and exact
 head CI plus the remaining family matrix and visible/external gates remain
 open.
+
+## 1207. Qualify a Multi-crossing Closed Fit-point Star (2026-11-13)
+
+Test commit `840be2617` adds a closed five-fit-point star ordered from the
+vertices of a regular pentagon as `[0, 2, 4, 1, 3]`, with radius `8`. The
+sampled-chord check confirms the source has proper self-crossings. Direct
+Trim-mode results on both signed sides are checked against an independent
+distance-to-source oracle and require multiple branches. The worker-client
+matrix carries the same source through offset cache validation and generated
+offset round trips in all five DXF/DWG lanes, including LibreDWG spline
+inspection. It does not claim Trim Two worker support or arbitrary star/polygon
+topology.
+
+On macOS arm64 CMake Release, the direct self-intersection oracle passes 1,578
+assertions / 1 case. The focused worker/persistence matrix passes 211,747
+assertions / 1 case; for this profile the actual signed distances are
+`+/-0.002` and `+/-0.005`. `git diff --check` passes. Other crossing layouts,
+ambiguous stationary loops, visible GUI, cross-platform runtime, and
+independent ODA/AutoCAD acceptance remain open.
