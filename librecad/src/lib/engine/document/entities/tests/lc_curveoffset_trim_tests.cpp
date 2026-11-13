@@ -719,7 +719,7 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
 
 TEST_CASE("Three-point closed fit splines trim to the requested signed distance",
           "[curve-offset][trim][spline-points][fit-points][closed][three-point][oracle]") {
-    std::array<LC_SplinePointsData, 4> profiles;
+    std::array<LC_SplinePointsData, 5> profiles;
     profiles[0] = LC_SplinePointsData{true, false};
     profiles[0].splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
     profiles[1] = profiles[0];
@@ -743,6 +743,14 @@ TEST_CASE("Three-point closed fit splines trim to the requested signed distance"
         const double radius = 4.2 + 0.25 * std::cos(4.0 * angle) - 0.12 * std::sin(3.0 * angle);
         profiles[3].splinePoints.emplace_back(radius * std::cos(angle),
                                               0.9 * radius * std::sin(angle));
+    }
+    profiles[4] = LC_SplinePointsData{true, false};
+    profiles[4].fitTolerance = 3e-4;
+    for (unsigned i = 0; i < 14; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 14.0;
+        const double radius = 4.1 + 0.22 * std::cos(5.0 * angle) + 0.09 * std::sin(3.0 * angle);
+        profiles[4].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.88 * radius * std::sin(angle));
     }
 
     for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
