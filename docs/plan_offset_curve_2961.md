@@ -41919,3 +41919,22 @@ matrix passes 14,415 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread
 stated profile only; repeated interior points, near-coincident distinct
 chords, and other fit-point layouts remain separate variants, as do visible
 GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance.
+
+## 1198. Carry a Repeated Interior Fit Point Through Trim Two (2026-11-13)
+
+Test commit `171ed686a` adds a 12-point closed fit source with one repeated
+interior neighbor to the direct-oracle and worker-created Trim Two matrices.
+The duplicate fit-point record remains present in source data while the
+derived closed curve has the same 12-segment locus as the unique-neighbor
+profile. The direct oracle checks both sides and seam continuity. The action
+case covers preview/commit in both pick orders, undo/redo, and all five R14,
+R2000, and R2018 DXF/DWG save/reopen lanes using sampled geometry comparison.
+
+On macOS arm64 CMake Release, the closed-fit-point exact-offset oracle passes
+74,957 assertions / 1 case. The complete typed spline/fit-point Trim Two
+matrix passes 15,150 assertions / 1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; `git diff --check` passes. This qualifies
+one repeated-interior layout only; other repeat distributions, near-coincident
+distinct points, and broader fit-point counts/tolerances remain open in Slice
+4, as do visible GUI, cross-platform runtime, and independent ODA/AutoCAD
+acceptance.
