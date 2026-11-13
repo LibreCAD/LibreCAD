@@ -225,22 +225,26 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     // vertex: y=c + bx + ax^2=c-b^2/(4a) + a(x+b/(2a))^2, {-b/(2a), c-b^2/(4a)}
     // a=1/(4h), h = 0.25/a
 
-    auto f1 = [&a, &b, &da](double x) {
-        return RS_Vector{1., 2.*a*x +b}.rotate(da);
-    };
-    std::array<RS_Vector, 2> tangents = {{f1(rotated.front().x), f1(rotated.back().x)}};
     const auto toWorld = [&rCenter, coordinateScale, da](const RS_Vector& point) {
         RS_Vector world = point;
         world.rotate(da);
         return world * coordinateScale + rCenter;
     };
 
-    auto ret = LC_ParabolaData::FromEndPointsTangents(
-        {toWorld(rotated.front()), toWorld(rotated.back())},
-        tangents
-    );
-
-    return ret;
+    const double firstX = rotated.front().x;
+    const double lastX = rotated.back().x;
+    const auto parabolaY = [a, b, c](const double x) { return c + x * (b + a * x); };
+    const double firstY = parabolaY(firstX);
+    const double middleX = (firstX + lastX) * 0.5;
+    // A quadratic Bezier's start derivative is twice the endpoint-to-control
+    // vector. For y=a*x^2+b*x+c and a linear x(t), this yields the exact
+    // control point directly, avoiding an ill-conditioned world-space line
+    // intersection for large or translated inputs.
+    const double middleY = firstY +
+        0.5 * (2.0 * a * firstX + b) * (lastX - firstX);
+    const double lastY = parabolaY(lastX);
+    return LC_ParabolaData{{toWorld({firstX, firstY}), toWorld({middleX, middleY}),
+                            toWorld({lastX, lastY})}};
 }
 
 }
