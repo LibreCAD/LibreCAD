@@ -30435,6 +30435,10 @@ bow-tie uses `0.02` and `0.05`. The five-point star is separately overridden
 to use actual magnitudes `0.2` and `0.5`. These actual values supersede the
 shorthand in the matrix row and sections 1204-1205.
 
+The worker-backed native Trim Two action is additionally covered for the
+bow-tie and star profiles in section 1213; the generated-offset file-lane test
+and the action-level Trim Two test are separate obligations.
+
 The star with one repeated adjacent fit point is separately covered by section
 1210: it retains six input fit-point records but derives five curve segments,
 and the direct Trim plus worker/file-lane checks pass at signed distances
@@ -42216,3 +42220,25 @@ assertions / 1 case, and the focused worker/persistence case passes 266,043
 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
 `git diff --check` passes. The broader geometry, GUI, cross-platform, and
 independent-CAD gates are unchanged.
+
+## 1213. Exercise Crossing Fit-point Profiles Through Worker-backed Trim Two (2026-11-13)
+
+Test commit `9363bdb71` extends the typed spline/spline-points Trim Two action
+matrix with three closed crossing profiles: the four-point bow-tie, the
+five-point star with one repeated adjacent fit point, and the transformed,
+reflected, reversed star. Each profile runs in both operand-pick orders after
+Update from Source prepares its native cache through the real worker. The test
+searches every cache break interval and accepts a cutter only when
+`LC_OffsetCacheTrim::prepare` certifies the cut. Certified cases follow preview,
+commit, undo/redo, and the existing five DXF/DWG lanes. If only ambiguous roots
+are found, the real action must leave its preview empty and preserve both
+entities and undo state; the bow-tie exercises this `AmbiguousRoots` refusal
+in both pick orders.
+
+On macOS arm64 CMake Release with `QT_QPA_PLATFORM=offscreen` and
+`DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+`[trim-action][typed-source][trim-two]` selection passes 101,715 assertions /
+11 cases. `git diff --check` passes. This qualifies these three profiles and
+the tested certified/refusal paths only; arbitrary crossing topologies,
+ambiguous stationary loops, visible GUI, cross-platform runtime, and
+independent ODA/AutoCAD acceptance remain open.
