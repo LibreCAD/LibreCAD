@@ -295,11 +295,17 @@ following slices in order, preserving the detailed safety requirements below:
 | 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts for tested circles, ellipses, circular arcs and elliptic arcs in both traversal directions (sections 1022-1030). Exact duplicate singleton contacts can be merged; overlapping non-singleton certificates whose equality is unproved refuse atomically (section 1024). Section 1033 qualifies async action preview/commit, peer isolation, and undo/redo for both real producer-generated native components in both cache directions. Section 1034 qualifies save, low-level inspection, reopen, and second-save/reopen for those outputs in every native-capable DXF/DWG target (R12 is intentionally excluded). Sections 1117-1122 qualify selected rotated inward near/exact/post-cusp ellipse Trim Two profiles through worker action and five file lanes, at three axis ratios. These qualify specific layouts and versions, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies linear circle-boundary Trim across disconnected components. Section 1023 verifies disconnected degree-3 circle-boundary branches with linear loci. Section 1024 verifies safe atomic refusal when disconnected components produce overlapping non-singleton conic-contact certificates. Section 1025 verifies disconnected ellipse-boundary contacts through direct and worker result transport. Section 1026 verifies circular-arc domain preservation in both traversal directions. Section 1027 verifies elliptic-arc domains and worker transport in both traversal directions. Section 1028 verifies genuinely curved cubic circle-boundary branches. Section 1029 verifies genuinely curved cubic branches against an eccentric ellipse through direct and worker paths. Section 1030 verifies curved cubic branches clipped to a bounded elliptic arc in both directions. Section 1033 verifies both components from the trimmed-ellipse producer through the native action path. Section 1034 verifies their native metadata across all native-capable DXF/DWG round-trip lanes. Sections 1117-1122 verify selected near/exact/post-cusp full-ellipse profiles at three axis ratios in Trim Two and file lanes. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
-Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122 qualify
-twelve near-cusp/exact-cusp/post-cusp ellipse cache profiles, 19 sampled
-native-pick fractions on each, and both action pick orders for one fixed line
-cutter. Ratios `0.1` and `0.2` each have tested 25%, 45%, 75%, 100%, and 105%
-of minimum curvature radius; ratios `0.025` and `0.05` have a tested 45%
+The older Slice 4 evidence summary in the table is superseded by sections
+1122-1123 for the current ellipse cusp-distance matrix and its explicit
+fail-closed exact-cusp boundary.
+
+Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1123
+qualify fifteen successful near-cusp/exact-cusp/post-cusp ellipse cache
+profiles, 19 sampled native-pick fractions on each, and both action pick
+orders for one fixed line cutter. Ratios `0.1` and `0.2` each have tested 25%,
+45%, 75%, 100%, and 105% of minimum curvature radius; ratio `0.3` has tested
+25%, 45%, and 75%, while its exact-cusp case atomically refuses at the
+bounded cache-validation limit. Ratios `0.025` and `0.05` have a tested 45%
 profile. General cusp/post-cusp topology, other cutters, and broader ellipse
 ratio/distance coverage remain open.
 
@@ -40506,3 +40512,22 @@ expands the finite distance matrix to ratio `0.2`; it does not establish
 continuous distance intervals, general post-cusp topology, other cutter
 families, arbitrary ellipse transforms, visible GUI, cross-platform, or
 external-CAD acceptance.
+
+## 1123. Qualify a Broader Ellipse Ratio and Exact-cusp Refusal (2026-11-12)
+
+Test commit `14154278d` adds three worker-created inward full-ellipse Trim Two
+profiles at axis ratio `0.3`: distances `0.0675`, `0.1215`, and `0.2025`, or
+25%, 45%, and 75% of the minimum curvature radius `0.27`. Each successful
+profile is sampled at 19 normalized native-pick fractions and exercised in
+both action pick orders through preview/commit, undo/redo, and five DXF/DWG
+save/reopen lanes with LibreDWG parsing.
+
+The same fixture explicitly checks the exact-cusp distance `0.27`. The worker
+producer completes, but canonical cache validation reaches its bounded limit;
+Update from Source must refuse, report that reason, and leave the selected
+offset and candidate source undeleted with the old distance intact. This is
+intentional fail-closed evidence, not successful exact-cusp support. After
+rebuilding the macOS arm64 CMake Release `librecad_tests` target, the focused
+ellipse Trim Two case passes 17,110 assertions / 1 case; `git diff --check`
+passes. Ratio `0.3` at 105% post-cusp, other cutters, other ratios, and
+continuous parameter ranges remain unqualified.
