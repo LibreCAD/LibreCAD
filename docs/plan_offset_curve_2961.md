@@ -317,6 +317,15 @@ The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
 fail-closed cache-validation and pick-query boundaries.
 
+Sections 1201-1202 extend the closed fit-point spline evidence. Section 1201
+adds independent direct-normal checks for the admission-boundary and larger
+near-coincident chords, including a transformed/reflected/reversed profile.
+Section 1202 carries a unique closed fit-point profile and the `5.1e-4`
+near-coincident profile through actual Properties replacement, worker/cache
+admission, native Trim, undo/redo, and all five R14/R2000/R2018 DXF/DWG
+save/reopen lanes. This is two additional bounded layouts, not general
+fit-point topology or a completion of Slice 4.
+
 Sections 1170-1171 qualify nominal and similarity-transformed six-fit-point
 closed SplinePoints sources through direct normals, worker-backed Trim Two,
 and five DXF/DWG lanes. Section 1172 adds an eight-fit-point closed profile
@@ -41993,3 +42002,23 @@ thereby qualified through worker/cache, Trim Two, or persistence. Other chord
 spacings, fit-point distributions, and wider transform/scale combinations
 remain open in Slice 4, as do visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance.
+
+## 1202. Carry Closed Fit-point Variants Through Native Trim and File Lanes (2026-11-13)
+
+Test commit `cad670eec` extends the typed-source-family replacement/Trim action
+matrix with two closed `LC_SplinePoints` fit-point sources: a five-point
+profile with unique neighbors and a six-point profile whose distinct
+near-coincident chord is `5.1e-4`, at the validated closed-source admission
+boundary. Both are selected through Update from Source, prepared by the real
+worker, and required to produce a validated native cache. A cutter is checked
+against the cache-trim kernel before the real Modify Trim action commits; the
+test then verifies conversion to plain spline fragments, undo/redo, and
+save/reopen through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+
+On macOS arm64 CMake Release, the focused all-family Trim action test passes
+3,881 assertions / 1 case. `git diff --check` passes. This closes worker,
+cache, Trim, undo/redo, and internal round-trip evidence for the two stated
+closed fit-point layouts only. It does not qualify their similarity transforms
+through these full action/file lanes, other fit-point counts or chord
+spacings, visible GUI interaction, cross-platform builds, or independent
+ODA/AutoCAD acceptance.
