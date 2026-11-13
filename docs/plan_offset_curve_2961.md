@@ -40807,3 +40807,20 @@ case passes 2,250 assertions / 1 case, and `git diff --check` passes. This
 qualifies one two-span rational cubic topology only. Other knot multiplicities,
 periodic/closed rational layouts, spline-points variants, visible GUI,
 cross-platform and independent-CAD acceptance remain open.
+
+## 1140. Qualify Repeated-knot Rational Spline Trim Two (2026-11-12)
+
+Test commit `16b14ef2f` adds a degree-3 rational spline with six control
+points and an internal knot of multiplicity two at `0.45`, alongside the
+single-span rational quadratic, simple-knot two-span rational cubic, and
+spline-points profiles. The C1 repeated-knot spline runs both Trim Two operand
+orders through worker source update, preview/commit, undo/redo, and all five
+DXF/DWG save/reopen lanes. Reopened spline geometry is checked across degree,
+flags, controls, knots, and weights, and LibreDWG parses the DWG lanes.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 2,999 assertions / 1 case; `git diff --check` passes. This
+qualifies one C1 two-span rational cubic topology. Higher knot multiplicities,
+periodic/closed rational layouts, other spline-points variants, visible GUI,
+cross-platform, and independent-CAD acceptance remain open.
