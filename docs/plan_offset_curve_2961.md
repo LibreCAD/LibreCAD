@@ -42202,3 +42202,17 @@ assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
 `git diff --check` passes. Other crossing layouts and conditioning limits,
 ambiguous stationary loops, visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1212. Make Repeated-point Fixture Insertion Alias-safe (2026-11-13)
+
+Test commit `55456b7c6` copies the repeated star fit point to a standalone
+`RS_Vector` before inserting it into the same `std::vector`. This removes any
+reliance on a container implementation preserving a reference to an element
+across a potentially reallocating insertion; it changes no geometry
+expectation or coverage scope.
+
+On macOS arm64 CMake Release, the direct self-intersection oracle passes 2,630
+assertions / 1 case, and the focused worker/persistence case passes 266,043
+assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
+`git diff --check` passes. The broader geometry, GUI, cross-platform, and
+independent-CAD gates are unchanged.
