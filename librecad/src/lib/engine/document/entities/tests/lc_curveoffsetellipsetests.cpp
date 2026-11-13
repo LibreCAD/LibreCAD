@@ -549,6 +549,18 @@ TEST_CASE("Elliptic arcs are judged on their own sweep", "[curve-offset][ellipse
         CHECK(none.status == LC_CurveOffsetStatus::Ok);
         CHECK(none.chains.empty());
     }
+    SECTION("a thin partial arc near its inward cusp in either traversal direction") {
+        constexpr double distance = 0.03;
+        const double rotation = 0.37;
+        const RS_Vector major{3.0 * std::cos(rotation), 3.0 * std::sin(rotation)};
+        for (const bool reversed : {false, true}) {
+            const RS_Ellipse arc{nullptr, RS_EllipseData{{4.0, -3.0}, major, 0.2,
+                                                        -0.45, 0.75, reversed}};
+            const LC_CurveOffsetSide side = reversed ? kRight : kLeft;
+            CAPTURE(reversed, side);
+            checkOffset(offsetOf(arc, side, distance), curveOf(arc), distance, {false});
+        }
+    }
     SECTION("0.4 to 2.7 rad: untrimmed at 1.5, trimmed at its start only at 2.2") {
         const RS_Ellipse arc = ellipse(5.0, 0.4, 0.4, 2.7);
         const Offset untrimmed = offsetOf(arc, kLeft, 1.5);
