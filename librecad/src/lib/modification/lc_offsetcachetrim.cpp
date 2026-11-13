@@ -178,6 +178,79 @@ bool rawBound(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame,
     return finite(x) && finite(y) && finite(dx) && finite(dy);
 }
 
+I cacheCutRootError(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame,
+                    const I& rootParameter, const double cutParameter) {
+    I u = intersect(rootParameter, I::hull(0, 1));
+    if (!finite(u) || !std::isfinite(cutParameter) || !u.contains(cutParameter)) { return {}; }
+    Net derivative; std::size_t degree = 0;
+    if (!Geo::boundCacheDerivativeControls(span, frame, u.lo(), u.hi(), derivative, degree)) { return {}; }
+    const I dx = hullNet(derivative, degree, true), dy = hullNet(derivative, degree, false);
+    if (!finite(dx) || !finite(dy)) { return {}; }
+    const double delta = std::max(std::abs(cutParameter - u.lo()), std::abs(u.hi() - cutParameter));
+    const double speedX = std::max(std::abs(dx.lo()), std::abs(dx.hi()));
+    const double speedY = std::max(std::abs(dy.lo()), std::abs(dy.hi()));
+    const I x = I::point(speedX) * I::point(delta);
+    const I y = I::point(speedY) * I::point(delta);
+    if (!finite(x) || !finite(y)) { return {}; }
+    std::array<std::array<Q, 2>, 4> point;
+    for (std::size_t i = 0; i <= span.degree; ++i) {
+        point[i] = {Q(span.controls[i].x), Q(span.controls[i].y)};
+    }
+    const Q t{cutParameter}, oneMinus = Q{1} - t;
+    for (std::size_t level = span.degree; level > 0; --level) {
+        for (std::size_t i = 0; i < level; ++i) {
+            point[i] = {oneMinus * point[i][0] + t * point[i + 1][0],
+                        oneMinus * point[i][1] + t * point[i + 1][1]};
+        }
+    }
+    const double roundedX = point[0][0].convert_to<double>();
+    const double roundedY = point[0][1].convert_to<double>();
+    if (!std::isfinite(roundedX) || !std::isfinite(roundedY)) { return {}; }
+    const auto ulp = [](const double value) {
+        const double lower = std::nextafter(value, -INFINITY);
+        const double upper = std::nextafter(value, INFINITY);
+        return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
+    };
+    const I scale = I::point(frame.scale());
+    const I roundingX = I::point(4) * I::point(ulp(roundedX)) / scale;
+    const I roundingY = I::point(4) * I::point(ulp(roundedY)) / scale;
+    if (!finite(roundingX) || !finite(roundingY)) { return {}; }
+    const I error = sqrt(sqr(x + roundingX) + sqr(y + roundingY));
+    return finite(error) ? error : I{};
+}
+
+I contractCacheRootAgainstLine(const Geo::CacheSpan& source, const Geo::CacheSpan& line,
+                               const Geo::ReferenceFrame& frame, const I& parameter) {
+    if (line.degree != 1 || !finite(parameter) || parameter.lo() < 0 || parameter.hi() > 1) { return {}; }
+    std::array<std::array<Q, 2>, 4> point;
+    for (std::size_t i = 0; i <= source.degree; ++i) {
+        point[i] = {Q(source.controls[i].x), Q(source.controls[i].y)};
+    }
+    const double middle = mid(parameter);
+    const Q middleExact{middle}, oneMinus = Q{1} - middleExact;
+    for (std::size_t level = source.degree; level > 0; --level) {
+        for (std::size_t i = 0; i < level; ++i) {
+            point[i] = {oneMinus * point[i][0] + middleExact * point[i + 1][0],
+                        oneMinus * point[i][1] + middleExact * point[i + 1][1]};
+        }
+    }
+    const Q lineXExact = Q(line.controls[1].x) - Q(line.controls[0].x);
+    const Q lineYExact = Q(line.controls[1].y) - Q(line.controls[0].y);
+    const I lineX = enclose(lineXExact), lineY = enclose(lineYExact);
+    const I value = enclose(-lineYExact * (point[0][0] - Q(line.controls[0].x)) +
+                            lineXExact * (point[0][1] - Q(line.controls[0].y)));
+    if (!finite(lineX) || !finite(lineY) || !finite(value)) { return {}; }
+    Net derivative; std::size_t degree = 0;
+    if (!Geo::boundCacheDerivativeControls(source, frame, parameter.lo(), parameter.hi(), derivative, degree)) { return {}; }
+    const I scale = I::point(frame.scale());
+    const I dx = hullNet(derivative, degree, true) * scale;
+    const I dy = hullNet(derivative, degree, false) * scale;
+    const I projectedDerivative = -lineY * dx + lineX * dy;
+    if (!finite(projectedDerivative) || !projectedDerivative.excludesZero()) { return {}; }
+    const I newton = I::point(middle) - value / projectedDerivative;
+    return finite(newton) ? intersect(parameter, newton) : I{};
+}
+
 using Axis = std::array<double, 2>;
 I project(const Geo::CacheBezierPoint& p, const Axis& a) {
     if (singleton(p.x) && p.x.lo() == 0 && singleton(p.y) && p.y.lo() == 0) { return I::point(0); }
@@ -939,6 +1012,7 @@ struct Root {
     I parameter;
     double cut = 0;
     std::size_t provenanceId = 0;
+    bool lineContracted = false;
 };
 
 std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
@@ -953,6 +1027,8 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
             (snapshot->event.proof != LC_IntersectionProof::IntervalUniqueTransverse &&
              snapshot->event.proof != LC_IntersectionProof::AnalyticEndpoint)) { fail(Refusal::TangencyOrOverlap); }
         auto t = snapshot->event.isolation.parameterA;
+        bool lineContracted = false;
+        bool scalarContracted = false;
         for (unsigned round = 0;; ++round) {
             const auto id = snapshot->event.isolation.segmentA;
             if (id >= input.source->size()) { fail(Refusal::AmbiguousRoots); }
@@ -960,13 +1036,58 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
             const auto local = location(intersect(t, domain), input.source->size());
             if (local.rawSpan != id && !(singleton(t) && t.lo() == double(id + 1))) { fail(Refusal::AmbiguousRoots); }
             const auto u = intersect(t - I::point(double(id)), I::hull(0, 1));
-            I x, y, dx, dy;
-            if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), x, y, dx, dy)) { fail(Refusal::Arithmetic); }
             const auto error = arithmeticAllowance((*input.source)[id], input.frame);
-            if (singleton(t) || (x.width() <= error && y.width() <= error)) { break; }
+            const auto cutterId = snapshot->event.isolation.segmentB;
+            const double localMiddle = mid(u), globalMiddle = double(id) + localMiddle;
+            const auto ulp = [](const double value) {
+                const double lower = std::nextafter(value, -INFINITY);
+                const double upper = std::nextafter(value, INFINITY);
+                return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
+            };
+            const bool globalParameterLosesLocalPrecision = std::isfinite(globalMiddle) &&
+                ulp(globalMiddle) > 128 * ulp(localMiddle);
+            const bool lineCutter = globalParameterLosesLocalPrecision && input.cutter &&
+                cutterId >= input.source->size() &&
+                cutterId - input.source->size() < input.cutter->size() &&
+                (*input.cutter)[cutterId - input.source->size()].degree == 1;
+            if (singleton(t)) { break; }
+            bool lineProgress = false;
+            if (lineCutter) {
+                const double cut = mid(t);
+                const I cutError = cacheCutRootError((*input.source)[id], input.frame, u, cut - double(id));
+                if (round < c.limits.maxDepth) {
+                    const auto& line = (*input.cutter)[cutterId - input.source->size()];
+                    c.items(1);
+                    c.compare();
+                    const I narrowed = contractCacheRootAgainstLine((*input.source)[id], line, input.frame, u);
+                    if (finite(narrowed) && narrowed.width() < u.width()) {
+                        t = global(id, narrowed);
+                        scalarContracted = lineProgress = true;
+                    }
+                }
+                if (lineProgress) { continue; }
+                if (finite(cutError) && cutError.hi() <= error) {
+                    lineContracted = scalarContracted;
+                    break;
+                }
+                if (!lineContracted) {
+                    I x, y, dx, dy;
+                    if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), x, y, dx, dy)) {
+                        fail(Refusal::Arithmetic);
+                    }
+                    if (x.width() <= error && y.width() <= error) { break; }
+                }
+            } else {
+                I x, y, dx, dy;
+                if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), x, y, dx, dy)) { fail(Refusal::Arithmetic); }
+                if (x.width() <= error && y.width() <= error) { break; }
+            }
             if (round == c.limits.maxDepth) { fail(Refusal::AmbiguousRoots); }
-            snapshot = contract(c, session, handle, Refusal::AmbiguousRoots); t = snapshot->event.isolation.parameterA;
+            snapshot = contract(c, session, handle, Refusal::AmbiguousRoots);
+            t = intersect(snapshot->event.isolation.parameterA, t);
+            if (!finite(t)) { fail(Refusal::AmbiguousRoots); }
         }
+        if (scalarContracted && !lineContracted) { t = snapshot->event.isolation.parameterA; }
         // A segment endpoint certificate alone does not prove that a CORNER
         // crosses the cutter. All actual one-sided tangent combinations must
         // agree; a V touching a line is not a trimming boundary.
@@ -993,7 +1114,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
             c.compare();
             if (singleton(t) && singleton(previous.parameter) && t.lo() == previous.parameter.lo()) { duplicate = true; break; }
         }
-        if (!duplicate) { out.push_back({handle, *snapshot, t, cut}); }
+        if (!duplicate) { out.push_back({handle, *snapshot, t, cut, 0, lineContracted}); }
     }
     // Insertion sort is bounded by the shared comparison allowance; never use
     // numeric seed order when actual certified isolations overlap.
@@ -1259,7 +1380,7 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
         out.labels |= unsigned(EndLabel::CutterRoot); out.rootId = boundary.root;
         // Cover root-location uncertainty AND one-rounding subdivision error.
         const auto id = root.snapshot.event.isolation.segmentA;
-        const auto t = root.snapshot.event.isolation.parameterA;
+        const auto t = root.lineContracted ? root.parameter : root.snapshot.event.isolation.parameterA;
         const auto u = intersect(t - I::point(double(id)), I::hull(0, 1));
         I rx, ry, dx, dy;
         const auto& span = (*input.source)[id];
@@ -1276,10 +1397,21 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
             const double next = std::nextafter(value, INFINITY);
             return std::isfinite(next) ? next - value : value - std::nextafter(value, -INFINITY);
         };
-        const double ulpX = ulp(actual.x) / input.frame.scale(), ulpY = ulp(actual.y) / input.frame.scale();
-        if (!std::isfinite(ulpX) || !std::isfinite(ulpY)) { fail(Refusal::Arithmetic); }
-        if (I::hull(x, rx).width() > allowance + 4 * ulpX || I::hull(y, ry).width() > allowance + 4 * ulpY) {
-            fail(Refusal::Arithmetic);
+        if (root.lineContracted) {
+            const I cutError = cacheCutRootError(span, input.frame, u, boundary.cut - double(id));
+            if (!finite(cutError) || cutError.hi() > allowance) {
+                fail(Refusal::Arithmetic);
+            }
+        } else {
+            const auto ulp = [](double value) {
+                const double lower = std::nextafter(value, -INFINITY);
+                const double upper = std::nextafter(value, INFINITY);
+                return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
+            };
+            const double ulpX = ulp(actual.x) / input.frame.scale(), ulpY = ulp(actual.y) / input.frame.scale();
+            if (!std::isfinite(ulpX) || !std::isfinite(ulpY) ||
+                I::hull(x, rx).width() > allowance + 4 * ulpX ||
+                I::hull(y, ry).width() > allowance + 4 * ulpY) { fail(Refusal::Arithmetic); }
         }
         x = I::hull(x, rx); y = I::hull(y, ry);
     }

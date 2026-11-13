@@ -4221,31 +4221,15 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
                     static_cast<int>(lineByCurve.refusal), lineByCurve.rootCount,
                     lineByCurve.work.intersections.totalBoxPairs,
                     lineByCurve.work.intersections.generatedLeaves);
-            CHECK(curveByLine.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+            CHECK(curveByLine.refusal == LC_OffsetCacheTrim::Refusal::None);
+            CHECK(curveByLine.rootCount == 1);
             CHECK(lineByCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
+            CHECK(lineByCurve.rootCount == 1);
         }
         f.action->click(polylineFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
-        if (profileKind == 2 || profileKind == 3) {
-            CHECK(f.action->m_preview->isEmpty());
-            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
-            CHECK_FALSE(source->isDeleted());
-            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
-            const auto count = f.graphic.count();
-            f.action->click(polylineFirst ? cutterPick : nativePick);
-            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
-            CHECK_FALSE(source->isDeleted());
-            CHECK(f.graphic.count() == count);
-            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
-            REQUIRE_FALSE(f.context.messages.isEmpty());
-            const QString refusal = f.context.messages.back();
-            INFO(refusal.toStdString());
-            CHECK(refusal.contains("uncertain, tangent or overlapping intersections"));
-            CHECK(refusal.contains("nothing changed"));
-            continue;
-        }
         if (belowFiveOutputCap) {
             CHECK(f.action->m_preview->isEmpty());
             CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
