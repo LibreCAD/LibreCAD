@@ -41167,3 +41167,15 @@ in section 1156 for this current test source; the dedicated broad persistence
 result is recorded separately in section 1160. This aggregate does not
 establish the whole offset-family matrix, cross-platform execution, visible
 Properties acceptance, or independent ODA/AutoCAD compatibility.
+
+## 1162. Revalidate Active Source-type Switching at the Current PR Source (2026-11-13)
+
+At source code commit `1d245c2d0` (with subsequent PR-head changes limited to
+roadmap documentation), the macOS arm64 CMake Release
+`librecad_tests '[gui][dialog][offsetcurve][source]'` selection passes 14,831
+assertions / 43 cases. It rechecks candidate-filter refresh and repeated
+source-type changes across all nine `LC_OffsetSourceGeometry::SupportedKinds`,
+including parabola as distinct from spline-points. This validates the
+headless selector/state contract only. It does not close visible Properties
+interaction, physical source indication, family-by-variant geometry, or
+cross-platform acceptance.
