@@ -649,8 +649,9 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
                                               starRadius * std::sin(angle));
     }
     profiles[3] = profiles[2];
+    const RS_Vector repeatedStarPoint = profiles[3].splinePoints[1];
     profiles[3].splinePoints.insert(profiles[3].splinePoints.begin() + 2,
-                                    profiles[3].splinePoints[1]);
+                                    repeatedStarPoint);
     profiles[4] = profiles[2];
     for (RS_Vector& point : profiles[4].splinePoints) {
         const double reflectedY = -point.y;

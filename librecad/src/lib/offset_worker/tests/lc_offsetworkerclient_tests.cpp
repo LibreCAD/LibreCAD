@@ -5043,8 +5043,9 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
                                                       8.0 * std::sin(angle));
     }
     sourceProfiles[25] = sourceProfiles[24];
+    const RS_Vector repeatedStarPoint = sourceProfiles[25].splinePoints[1];
     sourceProfiles[25].splinePoints.insert(sourceProfiles[25].splinePoints.begin() + 2,
-                                           sourceProfiles[25].splinePoints[1]);
+                                           repeatedStarPoint);
     sourceProfiles[26] = sourceProfiles[24];
     for (RS_Vector& point : sourceProfiles[26].splinePoints) {
         const double reflectedY = -point.y;
