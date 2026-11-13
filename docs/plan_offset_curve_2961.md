@@ -42326,3 +42326,21 @@ passes 54 assertions / 1 case. The action, five-file-lane, LibreDWG, and
 undo/redo matrix remains as recorded in section 1216. Build and
 `git diff --check` pass. Other distances/conditioning, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+
+## 1218. Carry Multiple Three-point Fit Distances Through Worker Trim Two (2026-11-13)
+
+Test commit `33de0bd29` assigns distinct stored offset distances to the two
+three-point profiles in the worker-backed action matrix: `0.1` for the nominal
+triangle and `0.5` for the reflected/reversed transformed triangle. Each is
+prepared through Update from Source and exercised by Trim Two in both pick
+orders, followed by commit, undo/redo, the five DXF/DWG lanes, sampled reopened
+geometry comparison, and LibreDWG inspection. Together with the direct signed
+distance oracle in section 1217, this checks multiple distances across direct
+geometry and native action/persistence paths; it remains a bounded profile
+matrix, not universal three-point or family support.
+
+On macOS arm64 CMake Release with `QT_QPA_PLATFORM=offscreen` and
+`DWGREAD=/opt/homebrew/bin/dwgread`, the focused typed spline Trim Two test
+passes 23,026 assertions / 1 case. The test target rebuild and
+`git diff --check` pass. Other fit layouts/distances, visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
