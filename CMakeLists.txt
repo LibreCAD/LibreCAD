@@ -3801,6 +3801,9 @@ if (BUILD_TESTS)
             set_tests_properties(offset_worker_${kind} PROPERTIES
                 TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
         endforeach()
+        # The complete kernel matrix is intentionally broad and takes several
+        # minutes in Release; keep CTest's timeout above its full-suite runtime.
+        set_tests_properties(offset_worker_kernel PROPERTIES TIMEOUT 900)
         # The client matrix includes multi-format import/export and independent
         # DWG validation; keep its bounded in-process watchdog below CTest's.
         set_tests_properties(offset_worker_client PROPERTIES TIMEOUT 960
