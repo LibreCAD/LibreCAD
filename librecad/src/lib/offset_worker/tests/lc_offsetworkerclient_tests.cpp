@@ -4455,6 +4455,96 @@ TEST_CASE("From-four-points parabola offsets retain worker caches across file la
     }
 }
 
+TEST_CASE("Four-point parabola reconstruction matrix survives worker cache validation",
+          "[lc-offsetcurve][worker-client][parabola][from-four-points][matrix]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+
+    const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+    const std::array<std::array<double, 4>, 3> layouts{{
+        {{0.0, 0.3, 0.7, 1.0}},
+        {{0.05, 0.2, 0.65, 0.95}},
+        {{0.0, 0.1, 0.4, 1.0}},
+    }};
+    qint64 requestId = 1;
+    for (const double scale : {1e-6, 1.0, 1e6}) {
+        CAPTURE(scale);
+        constexpr double angle = 0.37;
+        const RS_Vector translation{123.0 * scale, -87.0 * scale};
+        const auto transform = [&](const RS_Vector& point) {
+            RS_Vector mapped = point * scale;
+            mapped.rotate(angle);
+            return mapped + translation;
+        };
+        const auto pointAt = [&](const double t) {
+            const double mt = 1.0 - t;
+            return transform(controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) +
+                             controls[2] * (t * t));
+        };
+        const std::array<RS_Vector, 3> independent{{pointAt(0.15), pointAt(0.5), pointAt(0.85)}};
+        const double fitTolerance = scale * 1e-7;
+        for (const auto& layout : layouts) {
+            CAPTURE(layout);
+            std::vector<RS_Vector> samples;
+            for (const double t : layout)
+                samples.push_back(pointAt(t));
+            const auto candidates = LC_ParabolaData::From4Points(samples);
+            const auto candidate = std::find_if(candidates.begin(), candidates.end(),
+                [&](const LC_ParabolaData& value) {
+                    if (!value.isValid())
+                        return false;
+                    const auto matches = [&](const RS_Vector& point) {
+                        return value.fromX(value.findX(point)).distanceTo(point) <= fitTolerance;
+                    };
+                    return std::all_of(samples.begin(), samples.end(), matches) &&
+                           std::all_of(independent.begin(), independent.end(), matches);
+                });
+            REQUIRE(candidate != candidates.end());
+
+            for (const double signedDistance : {5.0 * scale, -5.0 * scale}) {
+                CAPTURE(signedDistance);
+                const LC_OffsetSourceDefinition definition{
+                    LC_OffsetSourceGeometry{*candidate}, signedDistance, 1e-4, false};
+                Receipts generatedReceipts;
+                REQUIRE(owned.get().submit(
+                    {token(requestId), Req::GenerateSource{definition, {}}},
+                    Client::Mode::Commit, generatedReceipts.into(0)));
+                rt.until([&] { return generatedReceipts.calls[0] != 0; });
+                const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+                const auto& result = std::get<Reply::Native>(generated.reply().result);
+                REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+                REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+                RS_SplineData cache;
+                REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+                auto native = generated.nativeSource(attributes);
+                REQUIRE(native);
+                REQUIRE(native->sourceDefinition());
+                CHECK(native->sourceDefinition()->source.kind() ==
+                      LC_OffsetSourceGeometry::Kind::Parabola);
+                exactCache(native->getData(), cache);
+
+                Receipts validatedReceipts;
+                REQUIRE(owned.get().submit(
+                    {token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}},
+                    Client::Mode::Commit, validatedReceipts.into(0)));
+                rt.until([&] { return validatedReceipts.calls[0] != 0; });
+                const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+                auto admitted = validated.nativeValidatedSource(attributes);
+                REQUIRE(admitted);
+                REQUIRE(admitted->sourceDefinition());
+                CHECK(admitted->sourceDefinition()->source.kind() ==
+                      LC_OffsetSourceGeometry::Kind::Parabola);
+                exactCache(admitted->getData(), cache);
+                requestId += 2;
+            }
+        }
+    }
+}
+
 TEST_CASE("Bounded hyperbola trim runs through worker preparation on both sides",
           "[lc-offsetcurve][worker-client][ordered-preparation][hyperbola][trim]") {
     auto& rt = runtime();
