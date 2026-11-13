@@ -42884,30 +42884,37 @@ separate geometry-variant generation, worker/cache, trimming, and applicable
 DXF/DWG checks. A type being selectable is not evidence that every variant of
 that family is supported end to end.
 
-## 1241. Expose Closed High-segment Polyline Trim Topology Gap (2026-11-13)
+## 1241. Qualify Both Sides of a Closed High-segment Polyline (2026-11-13)
 
-A worker-created 256-edge closed regular-polyline source is now covered by a
-Trim Two action regression. The source entity is closed and its native
-`LC_OffsetCurve` retains the typed polyline source definition, but the stored
-cache is not marked closed and has a nonzero seam gap. With a transverse line,
-the full cache-as-cutter query certifies two crossings while the reverse
-picked-target query certifies only one. The worker action therefore produces
-no preview; the original native curve and line remain live, the cache
-fingerprint and undo epoch remain unchanged. This is a real fail-closed
-limitation, not successful closed-polyline Trim support.
+A worker-created 256-edge closed regular-polyline source now has a two-sided
+Trim Two regression. For the outward profile (`towardCentre=true` on the
+ellipse-derived source definition), worker materialization produces a cache
+whose endpoints close exactly, although the ordinary clamped spline's
+`m_closedFlag` remains false. Both cache operand roles certify two roots. The
+action preview is non-mutating, commit succeeds, and undo restores the native
+curve and cutter with the original cache fingerprint.
 
-On the current macOS arm64 CMake Release build, the focused
-`[closed][high-segment]` regression passes 171 assertions / 1 case. The full
-`librecad_offset_trim_tests` target passes 204,031 assertions / 162 cases, and
-`git diff --check` passes. The fixture demonstrates that successful open
-high-segment polyline Trim and closed fit-point spline Trim do not establish
-closed polyline behavior.
+For the inward profile (`towardCentre=false`), the source remains closed and
+typed, but its cache has a nonzero endpoint gap and represents overlapping
+open offset branches. The full cache-as-cutter query certifies two crossings;
+the reverse picked-target query certifies only one. Trim Two correctly gives
+no preview and preserves both live entities, the cache fingerprint, and undo
+epoch. This is safe refusal, not complete inward closed-polyline Trim support.
+The test distinguishes a connected closed cache from separate overlapping
+branches rather than forcing the worker cache combiner to join geometry.
 
-**Next implementation requirement:** trace the `Update from Source` worker
-materialization of a closed polyline and preserve its actual connected/closed
-cache topology (including the seam) without snapping unrelated branches or
-loosening intersection proof rules. Then require two certified contacts in
-both Trim Two operand roles, worker preview/commit/undo in both pick orders,
-atomic refusal for genuinely disconnected or over-limit output, and applicable
-DXF/DWG save/reopen checks. Keep closed/high-segment polyline support open
-until this positive path and its persistence evidence pass.
+On macOS arm64 CMake Release, the focused `[closed][high-segment]` regression
+passes 497 assertions / 1 case. The full `librecad_offset_trim_tests` target
+passes 203,858 assertions / 162 cases, and `git diff --check` passes. This
+qualifies one outward high-segment closed-polyline layout and its inward-side
+refusal; other source layouts and persistence are not implied.
+
+**Next implementation requirement:** trace the inward offset branch topology
+upstream of `LC_OffsetWorkerSourceCache::combine` and determine the intended
+geometry for convex closed-polyline corners. If the intended offset is one
+trimmed closed boundary, implement and validate that geometry in the offset
+engine, without snapping unrelated branches or loosening intersection proofs.
+Then require two certified contacts in both Trim Two operand roles,
+worker preview/commit/undo in both pick orders, correct atomic refusal for
+genuinely disconnected or over-limit results, and applicable DXF/DWG
+save/reopen checks. Keep full closed/high-segment polyline support open.

@@ -4487,26 +4487,30 @@ TEST_CASE("Sinusoidal Trim Two resolves multiple roots across operand roles",
     }
 }
 
-TEST_CASE("Closed high-segment polyline Trim Two refuses disconnected caches atomically",
+TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
+          "overlapping offsets",
           "[lc-offsetcurve][trim-action][polyline][closed][high-segment]") {
+  for (const bool towardCentre : {true, false}) {
+    CAPTURE(towardCentre);
     Drawing<true> f;
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-    auto initial = LC_OffsetCurve::create(seed, .15, false);
+    auto initial = LC_OffsetCurve::create(seed, .15, towardCentre);
     REQUIRE(initial);
-    auto* previous = initial.entity.release();
+    auto *previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
     constexpr unsigned segmentCount = 256;
     constexpr double radius = 10.0;
-    auto* source = new RS_Polyline(&f.graphic);
+    auto *source = new RS_Polyline(&f.graphic);
     for (unsigned i = 0; i < segmentCount; ++i) {
-        const double angle = 2.0 * std::acos(-1.0) * static_cast<double>(i) / segmentCount;
-        source->addVertex({radius * std::cos(angle), radius * std::sin(angle)});
+      const double angle =
+          2.0 * std::acos(-1.0) * static_cast<double>(i) / segmentCount;
+      source->addVertex({radius * std::cos(angle), radius * std::sin(angle)});
     }
     source->setClosed(true);
     source->endPolyline();
     f.graphic.addEntity(source);
-    f.graphic.select(QList<RS_Entity*>{previous}, true);
+    f.graphic.select(QList<RS_Entity *>{previous}, true);
 
     UpdateSourceProbe update(&f.context);
     update.init(0);
@@ -4515,26 +4519,32 @@ TEST_CASE("Closed high-segment polyline Trim Two refuses disconnected caches ato
     lc::test::awaitUpdate(update);
     REQUIRE(update.lastReport().updated == 1);
 
-    LC_OffsetCurve* native = nullptr;
-    for (auto* entity : live(f.graphic)) {
-        if (entity->rtti() != RS2::EntityOffsetCurve) continue;
-        REQUIRE(native == nullptr);
-        native = dynamic_cast<LC_OffsetCurve*>(entity);
+    LC_OffsetCurve *native = nullptr;
+    for (auto *entity : live(f.graphic)) {
+      if (entity->rtti() != RS2::EntityOffsetCurve)
+        continue;
+      REQUIRE(native == nullptr);
+      native = dynamic_cast<LC_OffsetCurve *>(entity);
     }
     REQUIRE(native);
     REQUIRE(native->sourceDefinition());
-    CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    CHECK(native->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Polyline);
     const auto before = RS_Spline::geometryFingerprint(native->getData());
-    const auto& nativeData = native->getData();
+    const auto &nativeData = native->getData();
     REQUIRE_FALSE(nativeData.controlPoints.empty());
     const double cacheEndpointGap = std::hypot(
         nativeData.controlPoints.front().x - nativeData.controlPoints.back().x,
         nativeData.controlPoints.front().y - nativeData.controlPoints.back().y);
     CHECK_FALSE(nativeData.m_closedFlag);
-    CHECK(cacheEndpointGap > 0.0);
+    if (towardCentre)
+      CHECK(cacheEndpointGap == 0.0);
+    else
+      CHECK(cacheEndpointGap > 0.0);
 
     constexpr double lineY = 1.337;
-    auto* line = new RS_Line(&f.graphic, RS_LineData{{-15, lineY}, {15, lineY}});
+    auto *line =
+        new RS_Line(&f.graphic, RS_LineData{{-15, lineY}, {15, lineY}});
     f.graphic.addEntity(line);
     const RS_Vector linePick{14, lineY};
     RS_SplineData lineCache{1, false};
@@ -4542,41 +4552,63 @@ TEST_CASE("Closed high-segment polyline Trim Two refuses disconnected caches ato
     lineCache.knotslist = {0, 0, 1, 1};
     lineCache.weights = {1, 1};
 
-    const auto byLine = LC_OffsetCacheTrim::prepare(lineCache, *native, {linePick});
+    const auto byLine =
+        LC_OffsetCacheTrim::prepare(lineCache, *native, {linePick});
     REQUIRE(byLine.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(byLine.rootCount == 2);
-    const auto& rightRoot = byLine.roots.back().isolation;
-    const double nativeParameter = .5 * (rightRoot.parameterB.lo() + rightRoot.parameterB.hi()) + .001;
+    const auto &rightRoot = byLine.roots.back().isolation;
+    const double nativeParameter =
+        .5 * (rightRoot.parameterB.lo() + rightRoot.parameterB.hi()) + .001;
     const RS_Vector nativePick = native->getPointAt(nativeParameter);
-    const auto byCurve = LC_OffsetCacheTrim::prepare(native->getData(), *line, {nativePick});
+    const auto byCurve =
+        LC_OffsetCacheTrim::prepare(native->getData(), *line, {nativePick});
     CAPTURE(byCurve.rootCount, static_cast<int>(byCurve.refusal),
-            byCurve.work.intersections.totalBoxPairs, byCurve.work.intersections.generatedLeaves,
-            source->isClosed(), source->size(), native->getData().m_closedFlag,
-            native->getData().controlPoints.size(), native->getData().knotslist.size(), cacheEndpointGap);
+            byCurve.work.intersections.totalBoxPairs,
+            byCurve.work.intersections.generatedLeaves, source->isClosed(),
+            source->size(), native->getData().m_closedFlag,
+            native->getData().controlPoints.size(),
+            native->getData().knotslist.size(), cacheEndpointGap);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
     REQUIRE(byCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(byCurve.rootCount == 1);
-    const auto overlaps = [](const LC_Interval& a, const LC_Interval& b) {
-        return a.isValid() && b.isValid() && a.lo() <= b.hi() && b.lo() <= a.hi();
+    REQUIRE(byCurve.rootCount == (towardCentre ? 2u : 1u));
+    const auto overlaps = [](const LC_Interval &a, const LC_Interval &b) {
+      return a.isValid() && b.isValid() && a.lo() <= b.hi() && b.lo() <= a.hi();
     };
-    CHECK(std::any_of(byCurve.roots.begin(), byCurve.roots.end(), [&](const auto& selectedRoot) {
-        return std::any_of(byLine.roots.begin(), byLine.roots.end(), [&](const auto& fullRoot) {
-            return overlaps(selectedRoot.worldX, fullRoot.worldX) &&
-                   overlaps(selectedRoot.worldY, fullRoot.worldY);
-        });
-    }));
+    CHECK(std::any_of(
+        byCurve.roots.begin(), byCurve.roots.end(),
+        [&](const auto &selectedRoot) {
+          return std::any_of(
+              byLine.roots.begin(), byLine.roots.end(),
+              [&](const auto &fullRoot) {
+                return overlaps(selectedRoot.worldX, fullRoot.worldX) &&
+                       overlaps(selectedRoot.worldY, fullRoot.worldY);
+              });
+        }));
 
     f.action->click(linePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
     const auto epoch = f.graphic.undoStateEpoch();
     const auto entityCount = live(f.graphic).size();
     f.action->hover(nativePick);
-    CHECK(f.action->m_preview->isEmpty());
+    if (towardCentre)
+      CHECK_FALSE(f.action->m_preview->isEmpty());
+    else
+      CHECK(f.action->m_preview->isEmpty());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(line->isDeleted());
     CHECK(f.graphic.undoStateEpoch() == epoch);
+    CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
+    if (towardCentre) {
+      f.action->click(nativePick);
+      REQUIRE(native->isDeleted());
+      REQUIRE(line->isDeleted());
+      REQUIRE(f.graphic.undo());
+      CHECK_FALSE(native->isDeleted());
+      CHECK_FALSE(line->isDeleted());
+    }
     CHECK(live(f.graphic).size() == entityCount);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
+  }
 }
 
 TEST_CASE("Dense sinusoidal cache maps component roots and enforces the Trim Two output cap",
