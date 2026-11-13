@@ -1043,6 +1043,59 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
     }
 }
 
+TEST_CASE("T Trim Two refuses a post-cusp hyperbola pair without mutation",
+          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][post-cusp][refusal]") {
+    Drawing<true> f;
+    auto* previous = addNative(f.graphic);
+    auto* hyperbola = new LC_Hyperbola(&f.graphic,
+        LC_HyperbolaData{{-2, 6}, {3.5 * std::cos(-.58), 3.5 * std::sin(-.58)},
+                         .4, -1.1, .9, false});
+    f.graphic.addEntity(hyperbola);
+    f.graphic.select(QList<RS_Entity*>{previous}, true);
+    UpdateSourceProbe update(&f.context);
+    update.init(0);
+    update.setSourceKind(LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+    update.use(hyperbola);
+    lc::test::awaitUpdate(update);
+    REQUIRE(update.lastReport().updated == 1);
+    REQUIRE(previous->isDeleted());
+
+    LC_OffsetCurve* native = nullptr;
+    for (auto* entity : live(f.graphic))
+        if (entity->rtti() == RS2::EntityOffsetCurve)
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+    REQUIRE(native);
+    const std::string nativeBefore = trimGeometry(*native);
+    const auto breaks = native->getBreakParameters();
+    REQUIRE(breaks.size() >= 2);
+    const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+    const RS_Vector intersection = native->getPointAt(parameter);
+    const double step = std::max(1e-7, (breaks[1] - breaks.front()) * 1e-5);
+    RS_Vector tangent = native->getPointAt(parameter + step) - native->getPointAt(parameter - step);
+    REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+    tangent /= tangent.magnitude();
+    const RS_Vector normal{-tangent.y, tangent.x};
+    const RS_Vector circleCenter = intersection + tangent;
+    auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, 1.0});
+    f.graphic.addEntity(circle);
+    const std::string circleBefore = trimGeometry(*circle);
+
+    const RS_Vector circlePick = circleCenter + normal;
+    const RS_Vector nativePick = native->getPointAt(
+        breaks.front() + (breaks[1] - breaks.front()) * .9);
+    f.action->click(circlePick);
+    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+    f.action->hover(nativePick);
+    REQUIRE(f.action->m_preview);
+    CHECK(trimPreview(*f.action->m_preview).empty());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(circle->isDeleted());
+    CHECK(trimGeometry(*native) == nativeBefore);
+    CHECK(trimGeometry(*circle) == circleBefore);
+    CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+}
+
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
     for (const bool nearCusp : {false, true})
