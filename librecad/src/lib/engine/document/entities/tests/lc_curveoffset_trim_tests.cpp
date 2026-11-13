@@ -630,7 +630,7 @@ TEST_CASE("All-coincident fit points fail closed for trimming",
 
 TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branches",
           "[curve-offset][trim][spline-points][fit-points][self-intersection][oracle]") {
-    std::array<LC_SplinePointsData, 4> profiles;
+    std::array<LC_SplinePointsData, 5> profiles;
     profiles[0] = LC_SplinePointsData{true, false};
     profiles[0].splinePoints = {{-5, -3}, {5, 3}, {-5, 3}, {5, -3}};
     profiles[1] = profiles[0];
@@ -651,6 +651,13 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
     profiles[3] = profiles[2];
     profiles[3].splinePoints.insert(profiles[3].splinePoints.begin() + 2,
                                     profiles[3].splinePoints[1]);
+    profiles[4] = profiles[2];
+    for (RS_Vector& point : profiles[4].splinePoints) {
+        const double reflectedY = -point.y;
+        point = {1.0e6 + 1.25 * (point.x * std::cos(0.73) - reflectedY * std::sin(0.73)),
+                 -2.0e6 + 1.25 * (point.x * std::sin(0.73) + reflectedY * std::cos(0.73))};
+    }
+    std::reverse(profiles[4].splinePoints.begin(), profiles[4].splinePoints.end());
 
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);

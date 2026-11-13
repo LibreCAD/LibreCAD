@@ -4982,7 +4982,7 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     closedNearCoincident.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
     LC_SplinePointsData openNearCoincident{false, false};
     openNearCoincident.splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
-    std::array<LC_SplinePointsData, 26> sourceProfiles{{sourceData, sourceData,
+    std::array<LC_SplinePointsData, 27> sourceProfiles{{sourceData, sourceData,
                                                       leadingRepeated, trailingRepeated,
                                                       closedRepeated, closedInteriorRepeated,
                                                       closedNearCoincident, openNearCoincident}};
@@ -5045,6 +5045,13 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     sourceProfiles[25] = sourceProfiles[24];
     sourceProfiles[25].splinePoints.insert(sourceProfiles[25].splinePoints.begin() + 2,
                                            sourceProfiles[25].splinePoints[1]);
+    sourceProfiles[26] = sourceProfiles[24];
+    for (RS_Vector& point : sourceProfiles[26].splinePoints) {
+        const double reflectedY = -point.y;
+        point = {1.0e6 + 1.25 * (point.x * std::cos(0.73) - reflectedY * std::sin(0.73)),
+                 -2.0e6 + 1.25 * (point.x * std::sin(0.73) + reflectedY * std::cos(0.73))};
+    }
+    std::reverse(sourceProfiles[26].splinePoints.begin(), sourceProfiles[26].splinePoints.end());
     for (std::size_t profileIndex = 14; profileIndex < sourceProfiles.size(); ++profileIndex)
         sourceProfiles[profileIndex].fitTolerance = 1e-8;
     const std::array<double, 2> distances{{0.2, 0.5}};
@@ -5073,7 +5080,7 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
         REQUIRE(sourceJet.first.magnitude() > 0.0);
         const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(), sourceJet.first.x / sourceJet.first.magnitude()};
         const double distanceScale = profileIndex == 7 ? 0.1
-            : (profileIndex == 24 || profileIndex == 25) ? 1.0
+            : profileIndex >= 24 && profileIndex <= 26 ? 1.0
             : profileIndex >= 14 ? ((profileIndex % 2 == 0) ? 0.01 : 0.1)
             : profileIndex >= 8 ? conditioningScales[(profileIndex - 8) / 2] *
                                      ((profileIndex % 2 == 0) ? 0.1 : 1.0)
