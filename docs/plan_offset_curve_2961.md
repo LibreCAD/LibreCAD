@@ -41005,3 +41005,20 @@ this exact small translated/rotated `From4Points` source at signed distance
 visible GUI, and independent ODA/AutoCAD acceptance remain open. The broad
 `[parabola]` aggregate interruption recorded in section 1150 is not superseded
 by this focused result.
+
+## 1152. Expand Four-point Parabola Reconstruction Matrix (2026-11-12)
+
+Test commit `0e4d1c2b3` adds direct `From4Points` coverage for three scales
+(`1e-6`, `1`, and `1e6`), three distinct parameter layouts, a rotated and
+scale-proportional translated frame, and both forward and reversed input
+ordering. Every candidate set must contain a valid parabola reproducing the
+four fit samples and three independent points within `1e-7` of the source
+scale. Layouts that include both original endpoints also compare the recovered
+control points (forward or reversed) within `1e-6` of source scale.
+
+On macOS arm64, the CMake Release `librecad_tests` target builds and
+`[parabola][reconstruction]` passes 2,274 assertions across 5 cases;
+`git diff --check` passes. This is direct geometry coverage only. It does not
+extend the worker/cache or file-roundtrip lanes from section 1151 to the new
+scale/layout matrix, nor close visible GUI, broader conditioning boundaries,
+cross-platform, or independent ODA/AutoCAD acceptance.
