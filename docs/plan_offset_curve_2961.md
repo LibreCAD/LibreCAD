@@ -43274,3 +43274,46 @@ rounded fixture and confirms the all-arc circle in that staged-import matrix.
 It does not establish Trim/undo or native document save/reopen for the new
 fixture, nor arbitrary all-arc/polyline topology, visible GUI, cross-platform
 runtime, or independent ODA/AutoCAD acceptance.
+
+## 1251. Admit and Persist an All-arc Circle Through Trim (2026-11-13)
+
+An exact four-quarter-arc circle built as a closed `RS_Polyline` was rejected
+before source replacement. Each bulge-derived arc computes its center
+independently, leaving roundoff-sized differences between centers/radii. The
+bounded arc/arc intersection classifier treated these numerically coincident
+circles as indeterminate, so the closed-polyline topology validator refused
+the otherwise valid source. The classifier now treats center and radius
+differences within its existing scale-relative coordinate tolerance as the
+same circle. The caller still checks `coincidentArcSpansOverlap` first, so
+overlapping coincident spans remain rejected; disjoint arcs on that circle
+contribute no additional intersections.
+
+The closed-polyline Trim action matrix now covers square, equal-radius rounded,
+unequal-radius rounded, and four-quarter-arc circle sources. For each profile,
+it uses the normal source-pick action, validates the source replacement,
+trims one cache component, commits, undoes/redoes, and checks save/reopen
+geometry through AC1014 DXF, AC1015 DXF/DWG, and AC1032 DXF/DWG. This closes
+Trim/undo and native file round-trip for this specific all-arc circle and
+unequal-radius rounded fixture; it does not prove arbitrary all-arc topology.
+
+Validation on macOS arm64 CMake Release at implementation commit
+`1375a0ffb`:
+
+- `librecad_tests 'I trim one closed convex polyline cache component and retain the rest'`:
+  passed 720 assertions / 1 case, covering 20 profile/version combinations.
+- `librecad_offset_worker_kernel_tests 'closed polyline cache promotion or refusal covers line and arc chains on both sides'`:
+  passed 151 assertions / 1 case.
+- `librecad_tests '[gui][dialog][offsetcurve][source]'`: passed 15,116
+  assertions / 44 cases.
+- `librecad_tests '*bulge arc*'`: passed 352 assertions / 5 cases.
+- `librecad_tests '*Polyline source topology validation*,*Offset polyline source snapshots*`:
+  passed 54 assertions / 3 cases.
+- CMake targets `librecad_tests` and `librecad_offset_worker_kernel_tests`
+  built successfully; `git diff --check` passed before the implementation
+  commit.
+
+The acceptance scope is one four-arc circular loop, one unequal-radius
+rounded-rectangle topology, and the named version lanes only. Other all-arc
+loops, broader curved/concave topology and fit-variant matrices, visible GUI
+workflow, non-macOS runtime, and independent ODA/AutoCAD acceptance remain
+open. This section does not close Slice 4 or Slice 5.
