@@ -41638,3 +41638,22 @@ lower-curvature portion; a cutter through the high-curvature region around
 parameter zero still yielded `AmbiguousRoots` in the exploratory probe and is
 not qualified. Other contact positions, ratios, distances, visible GUI,
 cross-platform behavior, and independent ODA/AutoCAD acceptance remain open.
+
+## 1185. Assert Atomic Refusal at an Ambiguous Ellipse Contact (2026-11-13)
+
+Test commit `9fe32932c` adds a fail-closed Trim Two profile using the same
+ratio-`0.2` near-cusp partial ellipse from section 1184, but places the cutter
+at normalized parameter `0.487` near the high-curvature portion. Strict root
+preparation reports `AmbiguousRoots`; the action must show no preview and
+refuse commit in both operand orders. The regression snapshots the native
+cache fingerprint, cutter endpoints, and undo epoch and asserts all remain
+unchanged after refusal.
+
+On macOS arm64 CMake Release with LibreDWG enabled, the isolated refusal case
+passes 535 assertions and the full 38-profile ellipse Trim Two matrix passes
+30,122 assertions / 1 case. The focused `librecad_tests` target builds and
+`git diff --check` passes. This proves atomic refusal for this one uncertified
+high-curvature contact, not successful Trim Two there or a general cusp
+boundary. qmake6 was not rerun because this slice changes only the CMake test
+source; visible GUI, cross-platform behavior, and independent ODA/AutoCAD
+acceptance remain open.
