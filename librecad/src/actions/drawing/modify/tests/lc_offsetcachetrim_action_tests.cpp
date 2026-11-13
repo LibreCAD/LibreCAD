@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u, 22u, 23u, 24u, 25u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u, 22u, 23u, 24u, 25u, 26u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3538,7 +3538,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
                                                  {2, 1.4}, {4, 0}}
                         : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
-                if (profile == 25)
+                if (profile == 25 || profile == 26)
                     data.splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
                 if (profile == 14) {
                     constexpr double twoPi = 6.2831853071795864769;
@@ -3621,6 +3621,16 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         std::reverse(data.splinePoints.begin(), data.splinePoints.end());
                     }
                     data.fitTolerance = 1e-8;
+                }
+                if (profile == 26) {
+                    for (RS_Vector& point : data.splinePoints) {
+                        const double reflectedY = -point.y;
+                        point = {35.0 + 1.5 * (point.x * std::cos(0.63) -
+                                                reflectedY * std::sin(0.63)),
+                                 -21.0 + 1.5 * (point.x * std::sin(0.63) +
+                                                reflectedY * std::cos(0.63))};
+                    }
+                    std::reverse(data.splinePoints.begin(), data.splinePoints.end());
                 }
                 if (profile == 10) data.fitTolerance = 1e-4;
                 if (profile == 15 || profile == 17 || profile == 18 || profile == 19)
