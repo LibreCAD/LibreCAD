@@ -35064,67 +35064,6 @@ suite passed 1,884,517 assertions. These results do not resolve the distinct
 near-node occurrence identity issue in section 840 or establish visible and
 cross-platform acceptance.
 
-## 1164. Carry the 1e-4 Endpoint-tangent Parabola Through Worker and File Lanes (2026-11-13)
-
-Test commit `487ec2360` adds the endpoint-tangent parabola with slopes
-`+/-1e-4` to the same scaled/translated persistence matrix as section 1163.
-The direct oracle already covers this slope with the `1e-6` and `1e-8`
-profiles. The scaled/translated matrix exercises operation-7 generation and
-operation-8 cache admission/refusal on both signed sides and the full set of
-normalized distances, followed by staged import through R14 DXF, R2000
-DXF/DWG, and R2018 DXF/DWG with geometry and typed source metadata checks.
-
-On macOS arm64 CMake Release, the focused
-`scaled translated parabola caches persist through staged DXF and DWG import`
-case passes 4,829,404 assertions / 1 case with LibreDWG enabled; the count
-includes the added `1e-4` variant. This qualifies that endpoint-tangent
-construction over this explicit transform/distance matrix, not arbitrary
-slopes or parabola domains. Visible GUI, cross-platform runtime, and
-ODA/AutoCAD acceptance remain open.
-
-## 1165. Fill Intermediate Near-parallel Parabola Slopes (2026-11-13)
-
-Test commit `a2c3fa8d0` adds endpoint-tangent profiles with slopes `+/-1e-5`
-and `+/-1e-7` to the existing hostile persistence matrix. Together with the
-previously added `+/-1e-4`, `+/-1e-6`, and `+/-1e-8` profiles, this fills all
-integer decades in the direct tangent oracle's tested interval. Each new
-profile traverses both signed offset sides, the matrix's source scales,
-translations and normalized distances, worker operation-7 generation,
-operation-8 cache admission/refusal, and staged R14 DXF, R2000 DXF/DWG, and
-R2018 DXF/DWG import checks.
-
-On macOS arm64 CMake Release, the focused hostile parabola persistence case
-passes 5,688,373 assertions / 1 case with LibreDWG enabled. The direct tangent
-oracle passes 282 assertions / 1 case. This qualifies only the five stated
-slopes and the matrix's constructed geometry; it does not prove continuous
-slope coverage, arbitrary parabola domains, visible-GUI behavior,
-cross-platform runtime, or independent ODA/AutoCAD acceptance.
-
-After this expansion, the full `[parabola]` selection passes 5,730,498
-assertions / 4 cases on the same macOS arm64 CMake Release build, with
-LibreDWG enabled. The run was performed at source commit `a2c3fa8d0`; the
-subsequent `be69e1656` commit changes only this roadmap. This aggregate result
-does not close the remaining family-by-variant matrix or visible GUI,
-cross-platform, and independent-CAD gates.
-
-## 1166. Persist Polyline Profiles at Scale 1e4 (2026-11-13)
-
-Test commit `134c53b2d` extends the existing scaled/translated polyline worker
-and hostile-file matrix from scales `1e-3`, `1`, and `1e3` to include `1e4`.
-All 11 recorded profiles (open arc/line orientations, closed linear and
-arc/bulge forms, major/minor and unequal major bulges) traverse both signed
-offset sides, translation ratios `1e4` and `1e6`, normalized distances
-`+/-0.1` and `+/-0.25`, operation-7 generation, operation-8 cache
-admission/refusal, and staged R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG import.
-
-On macOS arm64 CMake Release, the focused hostile polyline persistence case
-passes 838,911 assertions / 1 case with LibreDWG enabled. The direct open
-arc-line exact-normal oracle passes 20,977 assertions / 1 case, including
-cornering and major-sweep profiles at scale `1e4` translated to `(1e6,-2e6)`.
-This qualifies only the listed topologies and numeric grid; other sweep and
-scale boundaries, broader topology/self-intersection limits, visible GUI,
-cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
-
 ## 855. Refresh Live Source Ambiguity (2026-11-11)
 
 Commit `39060e650` updates an existing source-highlight watch when matching
@@ -41261,3 +41200,64 @@ counts include the new variant. This qualifies this constructed endpoint
 tangent profile over the stated matrix only, not all endpoint tangent slopes
 or parabola domains. Visible GUI, cross-platform runtime, and ODA/AutoCAD
 acceptance remain open.
+
+## 1164. Carry the 1e-4 Endpoint-tangent Parabola Through Worker and File Lanes (2026-11-13)
+
+Test commit `487ec2360` adds the endpoint-tangent parabola with slopes
+`+/-1e-4` to the same scaled/translated persistence matrix as section 1163.
+The direct oracle already covers this slope with the `1e-6` and `1e-8`
+profiles. The scaled/translated matrix exercises operation-7 generation and
+operation-8 cache admission/refusal on both signed sides and the full set of
+normalized distances, followed by staged import through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG with geometry and typed source metadata checks.
+
+On macOS arm64 CMake Release, the focused
+`scaled translated parabola caches persist through staged DXF and DWG import`
+case passes 4,829,404 assertions / 1 case with LibreDWG enabled; the count
+includes the added `1e-4` variant. This qualifies that endpoint-tangent
+construction over this explicit transform/distance matrix, not arbitrary
+slopes or parabola domains. Visible GUI, cross-platform runtime, and
+ODA/AutoCAD acceptance remain open.
+
+## 1165. Fill Intermediate Near-parallel Parabola Slopes (2026-11-13)
+
+Test commit `a2c3fa8d0` adds endpoint-tangent profiles with slopes `+/-1e-5`
+and `+/-1e-7` to the existing hostile persistence matrix. Together with the
+previously added `+/-1e-4`, `+/-1e-6`, and `+/-1e-8` profiles, this fills all
+integer decades in the direct tangent oracle's tested interval. Each new
+profile traverses both signed offset sides, the matrix's source scales,
+translations and normalized distances, worker operation-7 generation,
+operation-8 cache admission/refusal, and staged R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG import checks.
+
+On macOS arm64 CMake Release, the focused hostile parabola persistence case
+passes 5,688,373 assertions / 1 case with LibreDWG enabled. The direct tangent
+oracle passes 282 assertions / 1 case. This qualifies only the five stated
+slopes and the matrix's constructed geometry; it does not prove continuous
+slope coverage, arbitrary parabola domains, visible-GUI behavior,
+cross-platform runtime, or independent ODA/AutoCAD acceptance.
+
+After this expansion, the full `[parabola]` selection passes 5,730,498
+assertions / 4 cases on the same macOS arm64 CMake Release build, with
+LibreDWG enabled. The run was performed at source commit `a2c3fa8d0`; the
+subsequent `be69e1656` commit changes only this roadmap. This aggregate result
+does not close the remaining family-by-variant matrix or visible GUI,
+cross-platform, and independent-CAD gates.
+
+## 1166. Persist Polyline Profiles at Scale 1e4 (2026-11-13)
+
+Test commit `134c53b2d` extends the existing scaled/translated polyline worker
+and hostile-file matrix from scales `1e-3`, `1`, and `1e3` to include `1e4`.
+All 11 recorded profiles (open arc/line orientations, closed linear and
+arc/bulge forms, major/minor and unequal major bulges) traverse both signed
+offset sides, translation ratios `1e4` and `1e6`, normalized distances
+`+/-0.1` and `+/-0.25`, operation-7 generation, operation-8 cache
+admission/refusal, and staged R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG import.
+
+On macOS arm64 CMake Release, the focused hostile polyline persistence case
+passes 838,911 assertions / 1 case with LibreDWG enabled. The direct open
+arc-line exact-normal oracle passes 20,977 assertions / 1 case, including
+cornering and major-sweep profiles at scale `1e4` translated to `(1e6,-2e6)`.
+This qualifies only the listed topologies and numeric grid; other sweep and
+scale boundaries, broader topology/self-intersection limits, visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
