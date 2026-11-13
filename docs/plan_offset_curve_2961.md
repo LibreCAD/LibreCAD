@@ -42909,12 +42909,43 @@ passes 203,858 assertions / 162 cases, and `git diff --check` passes. This
 qualifies one outward high-segment closed-polyline layout and its inward-side
 refusal; other source layouts and persistence are not implied.
 
-**Next implementation requirement:** trace the inward offset branch topology
-upstream of `LC_OffsetWorkerSourceCache::combine` and determine the intended
-geometry for convex closed-polyline corners. If the intended offset is one
-trimmed closed boundary, implement and validate that geometry in the offset
-engine, without snapping unrelated branches or loosening intersection proofs.
-Then require two certified contacts in both Trim Two operand roles,
-worker preview/commit/undo in both pick orders, correct atomic refusal for
-genuinely disconnected or over-limit results, and applicable DXF/DWG
-save/reopen checks. Keep full closed/high-segment polyline support open.
+The geometry target is now specific: for a simple convex closed polyline, the
+inward result is the eroded region boundary. Adjacent shifted straight edges
+must be cut at their certified miter intersection; the overlap portions at the
+original vertex are discarded. This is not endpoint snapping, a round arc, or
+a request for `LC_OffsetWorkerSourceCache::combine` to infer connectivity. A
+probe of the existing programmatic `RegionBoundary` route with a closed square
+and inward distance 1 returns `AmbiguousTopology` (status 11) at the
+RegionBoundary stage. Source-node intersection discovery succeeds, but fragment
+sector classification still refuses before candidate arrangement construction.
+The classifier's former `left - right == 1` check was orientation-dependent;
+it now accepts a single crossing in either direction. The square still refuses,
+so this correction is necessary but not sufficient, and `RegionBoundary` is not
+yet a workaround.
+
+**Next implementation slices:**
+
+1. Complete sector classification for simple closed linear spans in both
+   traversal directions and establish a successful unoffset source-node
+   partition. Then, for convex corners on erosion, use the unique intersection
+   of the two adjacent shifted support
+   lines, require it to lie within the two source-segment projection ranges,
+   and reject parallel, numerically unstable, or over-budget miters. Trim both
+   neighboring offset spans to the same certified point. Keep dilation's
+   corner-circle arcs and concave erosion behavior unchanged.
+2. Carry explicit corner/miter provenance through geometry construction and
+   materialization. Independently verify both adjacent shifted-line residuals,
+   source-segment projection bounds, continuity, orientation, and region
+   classification. Do not relax generic spline correspondence or intersection
+   certification to admit a miter.
+3. Add square and regular high-segment polygon regressions at convex corners,
+   including the closed seam, both operand roles, both pick orders, and
+   worker-backed preview/commit/undo. Retain atomic refusal cases for a
+   collapsed inradius, concave/ambiguous topology, unstable miters, resource
+   limits, and disconnected results. Then run the complete Trim and geometry
+   suites plus applicable DXF/DWG save/reopen checks.
+
+This closes only the exact linear convex-erosion subcase. Curved polyline
+corners, self-intersections, broader fill-rule arrangements, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain separate gates;
+keep full closed/high-segment polyline support open.

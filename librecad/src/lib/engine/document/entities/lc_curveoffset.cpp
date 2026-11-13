@@ -6186,7 +6186,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 !windingNumber(source, c.point - normal * step, right, boxes, options.maxDistanceMapBoxes)) {
                 continue;
             }
-            if (left - right == 1) { // one crossing between them, right to left
+            if (std::abs(left - right) == 1) { // one crossing, in either source orientation
                 fragment.regionOnLeft = included(left, options.fillRule);
                 fragment.boundary = included(left, options.fillRule) != included(right, options.fillRule);
                 decided = true;
