@@ -42707,10 +42707,13 @@ from running a stale parent test executable against the newly rebuilt helper;
 they are superseded by this matched-build run. The direct high-segment oracle
 still passes 74,580 assertions / 1 case, and `git diff --check` passes.
 
-This closes the dense monotone-quadratic fixture and its worker action gate,
-not every dense-curved polyline topology. High-segment non-monotone profiles,
-all remaining supported polyline arrangements, visible GUI acceptance,
-cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+This closes the four exercised 256-segment open-polyline profiles (linear,
+piecewise-kinked, sinusoidal, and monotone quadratic) for the tested single
+transverse line crossing and worker action flow. It does not close every
+dense-curved polyline topology: multi-crossing cutters, closed/high-segment
+chains, self-overlap, and broader bulge/layout combinations remain open, as do
+visible GUI acceptance, cross-platform runtime, and independent ODA/AutoCAD
+acceptance.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 
