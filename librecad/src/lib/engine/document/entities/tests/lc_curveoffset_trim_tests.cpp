@@ -824,6 +824,44 @@ TEST_CASE("Three-point closed fit splines trim to the requested signed distance"
     }
 }
 
+TEST_CASE("High-count open fit splines trim to the requested signed distance",
+          "[curve-offset][trim][spline-points][fit-points][open][oracle]") {
+    LC_SplinePointsData data{false, false};
+    data.fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 256; ++i) {
+        const double t = static_cast<double>(i) / 255.0;
+        const double x = -8.0 + 16.0 * t;
+        const double y = 1.8 * std::sin(0.42 * x) + 0.24 * std::sin(1.1 * x) + 0.04 * x;
+        data.splinePoints.emplace_back(x, y);
+    }
+
+    const LC_SplinePoints source{nullptr, data};
+    REQUIRE_FALSE(source.isClosed());
+    REQUIRE(source.getSegmentCount() == source.getData().controlPoints.size() - 2);
+    REQUIRE(LC_OffsetSourceGeometry::capture(source));
+    const auto sourceDistance = [&source](const RS_Vector& point) {
+        return source.getDistanceToPoint(point);
+    };
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        for (const double distance : {0.1, 0.25, 0.5}) {
+            CAPTURE(distance);
+            auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            options.mode = LC_CurveOffsetMode::Trimmed;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const Checked checked = check(result, curveOf(source), 0.0,
+                                          static_cast<double>(source.getSegmentCount()), distance,
+                                          -1.0, sourceDistance);
+            CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+            CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("Trimming removes a local loop and keeps the offset around it", "[curve-offset][trim]") {
     // Inside y = x^2 at distance 1: the swallowtail between the cusps, and the
     // two stretches from the cusps to the crossing at (0, 1.25), are nearer
