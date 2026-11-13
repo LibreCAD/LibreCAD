@@ -40625,3 +40625,21 @@ separate family-by-variant generation, worker/cache, trimming, and applicable
 DXF/DWG qualification; the nine selector entries do not imply end-to-end
 support for every geometry variant. If `SupportedKinds` changes, update the
 selector inventory and its tests from that canonical list.
+
+## 1129. Sweep Native Picks for Inward Reversed Elliptic-arc Trim (2026-11-12)
+
+Test commit `09501714b` broadens the inward reversed bounded elliptic-arc
+profile from section 1127. Instead of assuming normalized native pick `0.25`
+is accepted, it probes the same 19 fractions from `0.05` through `0.95` used
+by the neighboring ellipse matrix. Every refused pick must return no partial
+fragments; the first certified pick is then used in both Trim Two operand
+orders through preview/commit, undo/redo, and all five DXF/DWG save/reopen
+lanes with LibreDWG parsing. This avoids treating one ambiguous location as
+proof that the bounded inward arc has no usable Trim Two pick.
+
+On macOS arm64 CMake Release, after rebuilding `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 21,451 assertions / 1 case, and `git diff --check` passes. This
+qualifies the tested pick sample set for the one reversed arc interval,
+distance, and cutter only; other arc intervals, distances, cutters, visible
+GUI, cross-platform, and external-CAD acceptance remain open.
