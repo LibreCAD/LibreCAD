@@ -42405,3 +42405,36 @@ typed spline Trim Two matrix passes 25,395 assertions / 1 case. The target
 rebuild and `git diff --check` pass. Other fourteen-point layouts/tolerances,
 general spline topology, visible GUI, cross-platform runtime, and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1222. Qualify a Fifteen-point Closed Fit Spline with Non-default Tolerance (2026-11-13)
+
+Test commit `64452ed1e` adds an irregular fifteen-point closed SplinePoints
+profile with fit tolerance `1e-4`. The independent direct trimmed-offset oracle
+checks distances `0.1`, `0.25`, and `0.5` on both signed sides against source
+distance. The worker-backed Trim Two matrix carries it through Update from
+Source, both pick orders, commit, undo/redo, all five DXF/DWG lanes, sampled
+reopened geometry checks, and LibreDWG parsing. During test development, a
+fixed-array size mismatch caused a fatal test abort and a follow-up widened the
+pre-existing self-crossing fixture loop over an empty element; both fixture
+issues were corrected before commit, then the focused and broad direct suites
+were rerun successfully. This qualifies one fifteen-point layout/tolerance.
+
+On macOS arm64 CMake Release, the direct `[curve-offset][three-point]`
+selection passes 162 assertions / 1 case and the broader
+`[curve-offset][trim][spline-points][fit-points]` selection passes 3,955
+assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+typed spline Trim Two matrix passes 27,274 assertions / 1 case. The test
+target rebuild and `git diff --check` pass. Other fifteen-point layouts,
+general spline topology, visible GUI, cross-platform runtime, and independent
+ODA/AutoCAD acceptance remain open.
+
+## 1223. Record the Current Visible-GUI Acceptance Blocker (2026-11-13)
+
+The headless source-picker and action tests do not satisfy the roadmap's
+visible Properties workflow gate. From this task session, AppleScript process
+enumeration fails with macOS error `-10827`, and `screencapture -x` reports
+that it cannot create an image from the display. Thus there is no inspectable
+or controllable desktop surface in this session; no visible source-selection
+behavior is claimed. Keep the existing visible test-copy acceptance steps
+open and retry only when a desktop-control path is available. The independent
+ODA/AutoCAD and cross-platform gates are unaffected.
