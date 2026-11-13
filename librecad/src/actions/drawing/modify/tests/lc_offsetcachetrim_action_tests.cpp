@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u, 29u, 30u, 31u, 32u})
+    for (unsigned profile = 0; profile <= 33; ++profile)
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3609,6 +3609,18 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                                               0.05 * std::sin(13.0 * angle);
                         data.splinePoints.emplace_back(radius * std::cos(angle),
                                                        0.94 * radius * std::sin(angle));
+                    }
+                }
+                if (profile == 33) {
+                    data.splinePoints.clear();
+                    data.fitTolerance = 1e-4;
+                    constexpr double twoPi = 6.2831853071795864769;
+                    for (unsigned i = 0; i < 128; ++i) {
+                        const double angle = twoPi * static_cast<double>(i) / 128.0;
+                        const double radius = 6.0 + 0.1 * std::cos(5.0 * angle) +
+                                              0.04 * std::sin(9.0 * angle);
+                        data.splinePoints.emplace_back(radius * std::cos(angle),
+                                                       0.96 * radius * std::sin(angle));
                     }
                 }
                 if (profile == 14) {
