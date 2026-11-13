@@ -42463,3 +42463,26 @@ candidate refresh, worker-backed typed replacement across all nine supported
 kinds, and distinct parabola identity on the current source tree. It remains
 headless evidence and does not close the visible Properties workflow,
 cross-platform, or independent ODA/AutoCAD gates.
+
+## 1226. Reconcile the Source-widget Type-switching Requirement (2026-11-13)
+
+The requested source-widget behavior is an in-place type change during
+replacement selection, with candidates for every supported source type. This
+is already implemented: the widget's selector is populated directly from
+`LC_OffsetSourceGeometry::SupportedKinds`, remains available while candidates
+are browsed, refreshes the filter on each selection change, and represents
+parabola separately from spline-points. The nine current kinds are line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. No additional type-specific selector or new implementation slice is
+needed; deriving the choices from `SupportedKinds` keeps future additions in
+sync.
+
+Sections 1192-1193 cover headless all-kind browsing and replacement, including
+repeated switches before accepting a candidate; section 1225 records a fresh
+15,116-assertion / 44-case source-picker run on the current source tree. The
+remaining acceptance gap is visual confirmation in a desktop session that the
+existing source is highlighted, the selector and candidate list remain usable
+through repeated type changes, and only a valid accepted candidate replaces
+the source. Do not report this visible-GUI behavior as verified until that gate
+can run. Cross-platform runtime and independent ODA/AutoCAD validation also
+remain open as tracked elsewhere in the roadmap.
