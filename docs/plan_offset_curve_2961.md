@@ -40390,7 +40390,11 @@ On macOS arm64 CMake Release with LibreDWG 0.14, the focused ellipse Trim Two
 case passes 5,559 assertions / 1 case; the full `[trim-action]` suite passes
 123,829 assertions / 87 cases; `[trim-kernel]` passes 41,281 assertions / 71
 cases; the symmetric closest-tie refusal regression passes 21 assertions / 1
-case; and `git diff --check` passes. This qualifies the one near-cusp profile
-and tested picks only, not the continuous ratio, cusp-distance, precision, or
-other-ellipse matrix. Visible GUI, cross-platform and ODA/AutoCAD acceptance
-remain open.
+case; and `git diff --check` passes. A full CMake Release build completed all
+167 build steps, including the LibreCAD app and configured tools/plugins. The
+existing qmake6 Release build also completed `make -j6` successfully and
+rebuilt the app/worker; this was incremental, not a clean qmake regeneration.
+The shell's missing `/private/tmp/libdxfrw-cargo/env` warning did not fail the
+build. This qualifies the one near-cusp profile and tested picks only, not the
+continuous ratio, cusp-distance, precision, or other-ellipse matrix. Visible
+GUI, cross-platform and ODA/AutoCAD acceptance remain open.
