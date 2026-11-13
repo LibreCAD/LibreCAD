@@ -1116,10 +1116,12 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
 }
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
-    const bool rounded = GENERATE(false, true);
+    const int profile = GENERATE(0, 1, 2, 3);
+    const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    CAPTURE(rounded, static_cast<int>(format));
+    const std::array<const char*, 4> profileNames{{"square", "rounded", "unequal-radii", "all-arc-circle"}};
+    CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1134,8 +1136,9 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
 
     auto* target = native(graphic);
     auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
-    if (rounded) {
-        const double quarterArcBulge = std::tan(M_PI / 8.0);
+    RS_Vector sourcePick{5, 0};
+    double cutterX = 5.0;
+    if (profile == 1) {
         sourceOwner->addVertex({1, 0});
         sourceOwner->addVertex({9, 0}, quarterArcBulge);
         sourceOwner->addVertex({10, 1});
@@ -1144,6 +1147,24 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         sourceOwner->addVertex({1, 10}, quarterArcBulge);
         sourceOwner->addVertex({0, 9});
         sourceOwner->addVertex({0, 1}, quarterArcBulge);
+    } else if (profile == 2) {
+        sourcePick = {7, 0};
+        cutterX = 7.0;
+        sourceOwner->addVertex({1, 0});
+        sourceOwner->addVertex({12, 0}, quarterArcBulge);
+        sourceOwner->addVertex({14, 2});
+        sourceOwner->addVertex({14, 8.25}, quarterArcBulge);
+        sourceOwner->addVertex({13.25, 9});
+        sourceOwner->addVertex({1.5, 9}, quarterArcBulge);
+        sourceOwner->addVertex({0, 7.5});
+        sourceOwner->addVertex({0, 1}, quarterArcBulge);
+    } else if (profile == 3) {
+        sourcePick = {2, 0};
+        cutterX = 0.0;
+        sourceOwner->addVertex({2, 0}, quarterArcBulge);
+        sourceOwner->addVertex({0, 2}, quarterArcBulge);
+        sourceOwner->addVertex({-2, 0}, quarterArcBulge);
+        sourceOwner->addVertex({0, -2}, quarterArcBulge);
     } else {
         sourceOwner->addVertex({0, 0});
         sourceOwner->addVertex({10, 0});
@@ -1166,8 +1187,8 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
     REQUIRE(updateAction);
     updateAction->setSourceKind(SourceKind::Polyline);
-    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, {5, 0}, false);
-    mouse(*update, view, {5, 0}, true);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
     lc::test::awaitUpdate(*updateAction);
     REQUIRE(updateAction->lastReport().updated == 1);
     auto* replacement = onlyNative(graphic);
@@ -1180,7 +1201,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     const RS_Vector targetPick = replacement->getPointAt(
         parameterStart + .7 * (parameterEnd - parameterStart));
     REQUIRE(targetPick.valid);
-    auto* cutter = new RS_Line(&graphic, {5, -20}, {5, 20});
+    auto* cutter = new RS_Line(&graphic, {cutterX, -20}, {cutterX, 20});
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
@@ -1196,7 +1217,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
 
     TrimActionProbe trim(&context);
     trim.init(0);
-    mouse(trim, view, {5, 20}, true);
+    mouse(trim, view, {cutterX, 20}, true);
     mouse(trim, view, targetPick, true);
     QElapsedTimer trimWait;
     trimWait.start();
@@ -1233,7 +1254,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
 
     const auto output = std::filesystem::path(directory.filePath(
         QStringLiteral("closed-polyline-trim-%1-%2.drawing")
-            .arg(rounded ? QStringLiteral("rounded") : QStringLiteral("square"))
+            .arg(QString::fromLatin1(profileNames[static_cast<std::size_t>(profile)]))
             .arg(static_cast<int>(format))).toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, format));
     RS_Graphic reopened;

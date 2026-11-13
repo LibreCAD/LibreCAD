@@ -193,7 +193,10 @@ std::optional<RS_VectorSolutions> arcArcIntersections(const RS_ArcData& lhs,
     if (!std::isfinite(tolerance)) return std::nullopt;
     if (centerDistance <= coordinateTolerance) {
         const double radiusDifference = std::abs(lhs.radius - rhs.radius);
-        if (centerDistance == 0.0 && radiusDifference == 0.0)
+        // The caller has already rejected overlapping coincident arc spans.
+        // Treat roundoff-sized center/radius differences as the same circle;
+        // otherwise valid adjacent bulges from one circle become indeterminate.
+        if (radiusDifference <= coordinateTolerance)
             return RS_VectorSolutions{};
         if (radiusDifference > centerDistance + coordinateTolerance) return RS_VectorSolutions{};
         return std::nullopt;
