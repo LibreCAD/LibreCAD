@@ -318,10 +318,11 @@ and five DXF/DWG lanes. Section 1172 adds an eight-fit-point closed profile
 with fit tolerance `1e-4`; section 1173 adds a four-fit-point closed profile.
 Section 1174 adds an irregular five-fit-point closed profile. All four counts
 use the same direct, worker Trim Two, and five-file-lane checks; section 1175
-adds a seven-fit-point profile. Closed counts four through eight are now
-sampled, but their closed cut/control-file representation is checked by
-geometry rather than internal storage equality. These fixtures do not close
-other fit-point counts, tolerances, or transformations.
+adds a seven-fit-point profile and section 1176 adds a generated nine-point
+periodic profile. Closed counts four through nine are sampled (except count
+three); closed cut/control-file representation is checked by geometry rather
+than internal storage equality. These fixtures do not close other fit-point
+counts, tolerances, or transformations.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41077,6 +41078,23 @@ passes 5,336 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
 specific fit layouts, scales, and signed distances, not all parabola
 conditioning/domain boundaries. Visible Properties GUI, cross-platform, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1176. Qualify a Generated Nine-point Closed Fit Spline (2026-11-13)
+
+Test commit `acdca63fd` adds a nine-point closed `LC_SplinePoints` profile
+generated from uneven radial samples of an ellipse-like periodic curve. It is
+checked by the direct exact-normal oracle and worker-backed Trim Two in both
+operand pick orders, followed by undo/redo and R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG save/reopen. Reopened closed cut/control storage is compared by
+sampled geometry.
+
+On macOS arm64 CMake Release, the focused direct closed-fit selection passes
+40,226 assertions / 4 cases, and the fit-point Trim Two action case passes
+13,343 assertions / 1 case with LibreDWG enabled. The incremental recursive
+qmake6 application/worker/plugin build exits 0 and `git diff --check` passes.
+This qualifies one generated nine-point layout only. Other closed fit counts,
+layouts and tolerances, visible GUI, cross-platform behavior, and independent
+ODA/AutoCAD acceptance remain open.
 
 ## 1174. Qualify an Irregular Five-point Closed Fit Spline (2026-11-13)
 
