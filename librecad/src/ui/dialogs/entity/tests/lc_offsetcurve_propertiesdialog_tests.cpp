@@ -1030,6 +1030,33 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
     REQUIRE(sourceBox);
     REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
 
+    const auto initialCache = RS_Spline::geometryFingerprint(clone->getData());
+    std::optional<QCborArray> initialSource;
+    if (clone->sourceDefinition())
+        initialSource = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition());
+    for (std::size_t i = 0; i < candidates.size(); ++i) {
+        const Kind kind = LC_OffsetSourceGeometry::SupportedKinds[i];
+        CAPTURE("browse-before-select", static_cast<int>(kind));
+        const int kindIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(kindIndex >= 0);
+        typeBox->setCurrentIndex(kindIndex);
+        CHECK(typeBox->isEnabled());
+        CHECK_FALSE(widget.isPreparing());
+
+        std::vector<qulonglong> visibleIds;
+        for (int row = 0; row < sourceBox->count(); ++row) {
+            bool hasId = false;
+            const qulonglong id = sourceBox->itemData(row).toULongLong(&hasId);
+            if (hasId) visibleIds.push_back(id);
+        }
+        REQUIRE(visibleIds.size() == 1);
+        CHECK(visibleIds.front() == candidates[i]->getId());
+        CHECK(RS_Spline::geometryFingerprint(clone->getData()) == initialCache);
+        if (initialSource) CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+                                    *clone->sourceDefinition()) == *initialSource);
+        else CHECK_FALSE(clone->sourceDefinition());
+    }
+
     for (std::size_t i = 0; i < candidates.size(); ++i) {
         const Kind kind = LC_OffsetSourceGeometry::SupportedKinds[i];
         CAPTURE(static_cast<int>(kind));
