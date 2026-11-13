@@ -41956,3 +41956,21 @@ assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`.
 near-coincident scales, transformations, and fit-point topologies remain in
 Slice 4, as do visible GUI, cross-platform runtime, and independent
 ODA/AutoCAD acceptance.
+
+## 1200. Qualify a Transformed Near-coincident Fit Chord (2026-11-13)
+
+Test commit `4cb38d35b` extends section 1199's distinct `0.001` fit-point chord
+with a similarity transform: scale `2.25`, rotation `0.63` radians, and
+translation `(35, -21)`. The direct exact-normal oracle checks both sides
+after transformation. The worker-created source runs through Trim Two in both
+pick orders, preview/commit, undo/redo, and all five R14/R2000/R2018 DXF/DWG
+save/reopen lanes. The chord remains distinct after scaling and is compared by
+its resulting curve geometry, not merged with a repeated point.
+
+On macOS arm64 CMake Release, the nominal and transformed direct oracle case
+passes 6,912 assertions / 1 case. The complete typed spline/fit-point Trim Two
+matrix passes 16,664 assertions / 1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; `git diff --check` passes. This qualifies
+the stated transform only; other near-coincident spacings, transforms, and
+fit-point topologies remain in Slice 4, along with visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance.
