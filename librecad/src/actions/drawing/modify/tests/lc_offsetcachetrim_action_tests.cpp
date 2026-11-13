@@ -3077,7 +3077,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     constexpr double nearCuspRotation = 1.17;
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u,
                                    12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u,
-                                   21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u})
+                                   21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u, 29u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3092,9 +3092,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                                       profile == 19 ? .2025 : profile == 20 ? .27 :
                                       profile == 21 ? .1875 : profile == 22 ? .3375 :
                                       profile == 23 ? .5625 : profile == 25 ? .5 :
-                                      profile == 26 ? .25 : profile == 27 || profile == 28 ? .5 : .054;
+                                      profile == 26 ? .25 :
+                                      profile == 27 || profile == 28 || profile == 29 ? .5 : .054;
         const bool towardCentre = profile == 3 ||
-                                  (profile >= 5 && profile != 25 && profile != 28);
+                                  (profile >= 5 && profile != 25 && profile != 28 && profile != 29);
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
@@ -3116,6 +3117,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                         ? RS_EllipseData{{-4, 6}, {3 * std::cos(reversedArcRotation),
                                                    3 * std::sin(reversedArcRotation)},
                                          .6, .25, 1.6, true, true}
+                    : profile == 29
+                        ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
+                                                   3 * std::sin(nearCuspRotation)},
+                                         .6, -.4, 2.4, true, false}
                     : profile == 25 || profile == 26 || profile == 27 || profile == 28
                         ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
@@ -3163,7 +3168,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
         REQUIRE(native->getBreakParameters().size() >= 2);
-        const double parameter = first + (last - first) * (profile == 27 ? .25 : .487);
+        const double parameter = first + (last - first) *
+                                 (profile == 27 ? .25 : profile == 29 ? .75 : .487);
         const RS_Vector intersection = native->getPointAt(parameter);
         const double step = std::max(1e-7, (last - first) * 1e-5);
         const RS_Vector before = native->getPointAt(parameter - step);
