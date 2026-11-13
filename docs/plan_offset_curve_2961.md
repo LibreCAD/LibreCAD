@@ -41812,3 +41812,20 @@ assertions / 1 case. The complete
 assertions / 44 cases with `QT_QPA_PLATFORM=offscreen`; `git diff --check`
 passes. This is not visible GUI acceptance, cross-platform execution, or
 independent ODA/AutoCAD acceptance. Those gates remain open.
+
+## 1193. Browse All Source Families Before Accepting a Candidate (2026-11-13)
+
+Test commit `2157b98c3` strengthens the all-family Properties matrix from
+section 1192 to match the prescribed interaction order: while no candidate has
+yet been chosen, one widget cycles through all nine source-family filters and
+requires each refreshed candidate list to contain its matching entity. After
+each filter change it checks that the original cache fingerprint and source
+definition are unchanged. Only after this complete browse pass does the test
+select candidates and run the worker-backed replacement sequence. This
+exercises repeated in-place switching, including transitions to and from the
+distinct parabola type, without treating filter changes as a committed edit.
+
+On macOS arm64 CMake Release, the focused case passes 285 assertions / 1 case
+with `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes. The test is still
+headless; physical visible-GUI acceptance, cross-platform runs, and independent
+ODA/AutoCAD acceptance remain open.
