@@ -41022,3 +41022,20 @@ On macOS arm64, the CMake Release `librecad_tests` target builds and
 extend the worker/cache or file-roundtrip lanes from section 1151 to the new
 scale/layout matrix, nor close visible GUI, broader conditioning boundaries,
 cross-platform, or independent ODA/AutoCAD acceptance.
+
+## 1153. Carry Parabola Reconstruction Matrix Through Worker Cache (2026-11-12)
+
+Test commit `2368ebdf3` carries the three scale and three sample-layout
+profiles from section 1152 through worker operation 7 source generation and
+operation 8 source-cache validation, on both signed sides. Each generated
+result is required to remain typed as a parabola and its editable cache must
+match exactly before and after validation.
+
+On macOS arm64, the CMake Release
+`librecad_offset_worker_client_tests` target builds and the focused
+`Four-point parabola reconstruction matrix survives worker cache validation`
+case passes 7,944 assertions / 1 case; `git diff --check` passes. The five
+DXF/DWG persistence lanes remain qualified only for the single small-scale
+profile in section 1151; carrying this full matrix through those lanes,
+visible GUI, broader conditioning limits, cross-platform, and independent-CAD
+acceptance remain open.
