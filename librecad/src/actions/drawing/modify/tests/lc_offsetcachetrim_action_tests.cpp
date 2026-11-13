@@ -3077,7 +3077,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     constexpr double nearCuspRotation = 1.17;
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u,
                                    12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u,
-                                   21u, 22u, 23u})
+                                   21u, 22u, 23u, 24u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3090,7 +3090,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                                       profile == 15 ? .12 : profile == 16 ? .126 :
                                       profile == 17 ? .0675 : profile == 18 ? .1215 :
                                       profile == 19 ? .2025 : profile == 20 ? .27 :
-                                      profile == 21 ? .1875 : profile == 22 ? .3375 : .5625;
+                                      profile == 21 ? .1875 : profile == 22 ? .3375 :
+                                      profile == 23 ? .5625 : .054;
         const bool towardCentre = profile == 3 || profile >= 5;
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
@@ -3115,10 +3116,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                                          .6, .25, 1.6, true, true}
                         : RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
-                                         profile == 6 ? .05 : profile == 7 ? .025 :
+                                         profile == 6 ? .05 : profile == 7 ? .025 : profile == 24 ? .2 :
                                              profile >= 21 ? .5 : profile >= 17 ? .3 :
                                              profile >= 12 ? .2 : .1,
-                                         0, 0, false};
+                                         0, 0, false, profile == 24};
         auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
