@@ -40877,3 +40877,20 @@ case passes 3,733 assertions / 1 case; `git diff --check` passes. This
 qualifies one nonuniform rational closed cubic and its wrapped seam weights.
 Other closed knot layouts, periodic flags/representations, spline variants,
 visible GUI, cross-platform, and independent-CAD acceptance remain open.
+
+## 1145. Qualify Fit-point Spline-points Trim Two (2026-11-12)
+
+Test commit `3c98348f2` adds an `LC_SplinePoints` source defined by fit points
+rather than a control net to the spline-family Trim Two matrix. It exercises
+both operand orders through worker source update, preview/commit, undo/redo,
+and all five DXF/DWG save/reopen lanes, with LibreDWG parsing. Persistence
+comparison follows the representation contract: compare fit-point data when
+the reopened entity remains `LC_SplinePoints`, or compare the resulting
+standard spline geometry when the format promotes it to `RS_Spline`.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 4,511 assertions / 1 case; `git diff --check` passes. This
+qualifies the tested three-point fit layout only. More fit points, constrained
+tangents, fit tolerances, closed fit splines, visible GUI, cross-platform, and
+independent-CAD acceptance remain open.
