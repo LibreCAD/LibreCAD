@@ -42242,3 +42242,28 @@ On macOS arm64 CMake Release with `QT_QPA_PLATFORM=offscreen` and
 the tested certified/refusal paths only; arbitrary crossing topologies,
 ambiguous stationary loops, visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1214. Reaffirm In-place Source-family Switching During Replacement (2026-11-13)
+
+The source-curve widget requirement is to change the requested source type
+inside the existing replacement workflow, without closing Properties or
+starting a new picker. The filter and candidate list must update for every
+`LC_OffsetSourceGeometry::SupportedKinds` entry: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct type, and switching filters is browsing only: it must not replace or
+unhighlight the current source. A replacement is published only after a
+matching candidate passes worker-backed validation; invalid selection retains
+the previous source and highlight.
+
+This is already implemented and covered headlessly; this update adds no
+duplicate UI or code slice. On macOS arm64 CMake Release,
+`QT_QPA_PLATFORM=offscreen librecad_tests
+'[gui][dialog][offsetcurve][source]'` passes 15,116 assertions / 44 cases on
+the current tree. The suite covers in-place filter changes, candidate refresh,
+all nine typed candidates, and parabola identity. That result does not prove
+the visible interaction: the remaining acceptance check is to open an existing
+offset's Properties in a visible desktop session, change the family repeatedly
+while replacement is active, verify the current source remains highlighted
+until a valid candidate is accepted, and verify an invalid candidate leaves it
+unchanged. Cross-platform runtime and independent ODA/AutoCAD acceptance also
+remain open.
