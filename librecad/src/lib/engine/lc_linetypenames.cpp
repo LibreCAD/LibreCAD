@@ -27,6 +27,10 @@
 
 #include "lc_linetypenames.h"
 
+#include <cmath>
+#include <cstddef>
+#include <utility>
+
 /**
  * Converts a line type name (e.g. "CONTINUOUS") into a RS2::LineType
  * object.
@@ -272,6 +276,70 @@ QString LC_LineTypeNames::foldName(const QString &name) {
 }
 
 /**
+ * A group 49 list as alternating runs: one entry per run, in drawing units,
+ * starting with a dash. The painter and the seed comparison share it, so both
+ * read a record the same way.
+ */
+std::vector<double> LC_LineTypeNames::canonicalDashes(const std::vector<double> &raw, double *phaseOffset) {
+  if (phaseOffset != nullptr) {
+    *phaseOffset = 0.0;
+  }
+  if (raw.empty()) {
+    return {};
+  }
+  // Runs of one state. A zero element takes the state the previous one left
+  // open, so the alternation survives DOT-like records.
+  std::vector<std::pair<bool, double>> runs; // dash, length
+  bool nextIsDash = true;
+  for (const double value : raw) {
+    if (!std::isfinite(value)) {
+      return {};
+    }
+    const bool isDash = value > 0.0 || (value == 0.0 && nextIsDash);
+    nextIsDash = !isDash;
+    const double length = std::abs(value);
+    if (!runs.empty() && runs.back().first == isDash) {
+      runs.back().second += length;
+    } else {
+      runs.push_back({isDash, length});
+    }
+  }
+  // The list is cyclic: a run shared by both ends is one run. Retain the
+  // origin's position in that run before merging it.
+  const bool wraps = runs.size() > 1 && runs.front().first == runs.back().first;
+  const bool startsWithDash = runs.front().first;
+  const double leadingRun = runs.front().second;
+  const double trailingRun = runs.back().second;
+  if (wraps) {
+    runs.front().second += runs.back().second;
+    runs.pop_back();
+  }
+  // No dash or no gap means nothing to draw.
+  if (runs.size() < 2) {
+    return {};
+  }
+  // Rotate to start with a dash; the states alternate, so one step suffices.
+  const std::size_t first = runs.front().first ? 0 : 1;
+  std::vector<double> result;
+  result.reserve(runs.size());
+  double period = 0.0;
+  for (std::size_t i = 0; i < runs.size(); ++i) {
+    const auto &run = runs[(first + i) % runs.size()];
+    result.push_back(run.second);
+    period += run.second;
+  }
+  if (!std::isfinite(period) || period <= 0.0) {
+    return {};
+  }
+  // Keep the DXF pattern's origin when rotation or a repeated end run moved
+  // it inside the canonical pattern's first dash or gap.
+  if (phaseOffset != nullptr) {
+    *phaseOffset = startsWithDash ? (wraps ? trailingRun : 0.0) : period - leadingRun;
+  }
+  return result;
+}
+
+/**
  * The built-in LTYPE records, in the order the DXF writer emits them. The
  * length is the group 40 each record always carried, not the sum of its
  * dashes: the two differ in the last bit for some rows, which a DWG keeps.
@@ -352,6 +420,19 @@ LC_LineTypeNames::builtinMetrics() {
        127.0, {63.5, -12.7, 12.7, -12.7, 12.7, -12.7}},
   };
   return rows;
+}
+
+/**
+ * The metric row of one built-in, or nullptr when the table does not hold it.
+ */
+const LC_LineTypeNames::BuiltinMetric *
+LC_LineTypeNames::builtinMetric(const RS2::LineType type) {
+  for (const BuiltinMetric &row : builtinMetrics()) {
+    if (row.type == type) {
+      return &row;
+    }
+  }
+  return nullptr;
 }
 
 /**

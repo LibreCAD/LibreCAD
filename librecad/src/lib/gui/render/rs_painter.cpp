@@ -28,12 +28,15 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <queue>
 #include <utility>
+#include <vector>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewportrenderer.h"
 #include "lc_linemath.h"
+#include "lc_linetypenames.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -212,64 +215,100 @@ RS_Painter::RS_Painter(QPaintDevice* pd)
 }
 
 QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw, qreal* phaseOffset) {
+    // The engine helper is the one rule; the painter only ports its result.
+    double phase = 0.0;
+    const std::vector<double> dashes = LC_LineTypeNames::canonicalDashes(raw, &phase);
     if (phaseOffset != nullptr)
-        *phaseOffset = 0.0;
-    if (raw.empty())
-        return {};
-    // Runs of one state, in drawing units. A zero element takes the state the
-    // previous one left open, so the alternation survives DOT-like records.
-    std::vector<std::pair<bool, double>> runs; // dash, length
-    bool nextIsDash = true;
-    for (const double value : raw) {
-        if (!std::isfinite(value))
-            return {};
-        const bool isDash = value > 0.0 || (value == 0.0 && nextIsDash);
-        nextIsDash = !isDash;
-        const double length = std::abs(value);
-        if (!runs.empty() && runs.back().first == isDash)
-            runs.back().second += length;
-        else
-            runs.push_back({isDash, length});
-    }
-    // The list is cyclic: a run shared by both ends is one run. Retain the
-    // origin's position in that run before merging it for Qt.
-    const bool wraps = runs.size() > 1 && runs.front().first == runs.back().first;
-    const bool startsWithDash = runs.front().first;
-    const double leadingRun = runs.front().second;
-    const double trailingRun = runs.back().second;
-    if (wraps) {
-        runs.front().second += runs.back().second;
-        runs.pop_back();
-    }
-    // No dash or no gap means nothing Qt can draw.
-    if (runs.size() < 2)
-        return {};
-    // Rotate to start with a dash; the states alternate, so one step suffices.
-    const std::size_t first = runs.front().first ? 0 : 1;
-    double period = 0.0;
-    QVector<qreal> result;
-    result.reserve(static_cast<int>(runs.size()));
-    for (std::size_t i = 0; i < runs.size(); ++i) {
-        const auto& run = runs[(first + i) % runs.size()];
-        result.push_back(run.second);
-        period += run.second;
-    }
-    if (!std::isfinite(period) || period <= 0.0)
-        return {};
-    // Keep the DXF pattern's origin when rotation or a repeated end run moved
-    // it inside the Qt pattern's first dash/gap.
-    if (phaseOffset != nullptr)
-        *phaseOffset = startsWithDash ? (wraps ? trailingRun : 0.0) : period - leadingRun;
-    return result;
+        *phaseOffset = phase;
+    return QVector<qreal>(dashes.begin(), dashes.end());
 }
 
 QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, const double k) {
-    // The single place where the painter scales a table pattern.
     QVector<qreal> pattern = canonical;
     for (qreal& dash : pattern)
         dash *= k;
+    // The fold pairs dash with gap, so an odd list cannot draw.
     if (pattern.size() % 2 != 0)
         return {};
+    // Qt's stroker honours only the first 32 elements. Fold the shortest
+    // dash+gap pairs into their neighbours, keeping the first pair anchored so
+    // the DXF pattern phase does not rotate. A min-heap avoids quadratic scans.
+    constexpr qsizetype qtDashElementLimit = 32;
+    if (pattern.size() > qtDashElementLimit) {
+        struct DashPair {
+            qreal dash;
+            qreal gap;
+            std::size_t previous;
+            std::size_t following;
+            std::size_t revision;
+            bool alive;
+        };
+        struct Candidate {
+            qreal length;
+            std::size_t index;
+            std::size_t revision;
+        };
+        struct CandidateLater {
+            bool operator()(const Candidate& left, const Candidate& right) const {
+                if (left.length != right.length)
+                    return left.length > right.length;
+                return left.index > right.index;
+            }
+        };
+
+        const std::size_t pairCount = static_cast<std::size_t>(pattern.size() / 2);
+        std::vector<DashPair> pairs;
+        pairs.reserve(pairCount);
+        for (std::size_t i = 0; i < pairCount; ++i) {
+            const qsizetype dashIndex = static_cast<qsizetype>(2 * i);
+            pairs.push_back({pattern.at(dashIndex), pattern.at(dashIndex + 1),
+                             (i + pairCount - 1) % pairCount, (i + 1) % pairCount, 0, true});
+        }
+
+        std::priority_queue<Candidate, std::vector<Candidate>, CandidateLater> candidates;
+        auto queueCandidate = [&pairs, &candidates](const std::size_t index) {
+            if (index == 0 || !pairs[index].alive)
+                return;
+            const DashPair& pair = pairs[index];
+            candidates.push({pair.dash + pair.gap, index, pair.revision});
+        };
+        for (std::size_t i = 1; i < pairCount; ++i)
+            queueCandidate(i);
+
+        const std::size_t targetPairCount = static_cast<std::size_t>(qtDashElementLimit / 2);
+        std::size_t remaining = pairCount;
+        while (remaining > targetPairCount) {
+            const Candidate candidate = candidates.top();
+            candidates.pop();
+            DashPair& removed = pairs[candidate.index];
+            if (!removed.alive || removed.revision != candidate.revision)
+                continue;
+
+            const std::size_t previous = removed.previous;
+            const std::size_t following = removed.following;
+            pairs[previous].dash += removed.dash;
+            pairs[following].gap += removed.gap;
+            pairs[previous].following = following;
+            pairs[following].previous = previous;
+            removed.alive = false;
+            --remaining;
+
+            ++pairs[previous].revision;
+            ++pairs[following].revision;
+            queueCandidate(previous);
+            queueCandidate(following);
+        }
+
+        QVector<qreal> folded;
+        folded.reserve(static_cast<int>(qtDashElementLimit));
+        std::size_t index = 0;
+        do {
+            folded.push_back(pairs[index].dash);
+            folded.push_back(pairs[index].gap);
+            index = pairs[index].following;
+        } while (index != 0);
+        pattern.swap(folded);
+    }
     // QPen requires strictly positive dash and gap lengths. A zero group 49
     // element is a dot; with the pen cap it becomes a point at this tiny length.
     const qreal dotLength = std::numeric_limits<qreal>::epsilon();
@@ -280,6 +319,12 @@ QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, con
             return {};
     }
     return pattern;
+}
+
+bool RS_Painter::periodFitsQt(const double periodPx, const double diagonalPx) {
+    // Qt's stroker honours the first 32 dash elements only, and its repetition
+    // limit of 10000 periods across the view turns a line solid.
+    return periodPx >= std::max(3.0, diagonalPx / 10000.0);
 }
 
 /**
@@ -1688,17 +1733,46 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
             || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
             QVector<qreal> dashPattern = tablePattern != nullptr
                 ? dashPatternForQt(*tablePattern, k) : rsToQDashPattern(lineType, k);
+            if (tablePattern != nullptr && !dashPattern.isEmpty()) {
+                // The period in device pixels: Qt multiplies each dash by the
+                // pen width, which k divides out again.
+                double period = 0.0;
+                for (const qreal dash : dashPattern)
+                    period += dash;
+                period *= screenWidth > 0.0 ? screenWidth : 1.0;
+                double diagonal = 0.0;
+                // The view diagonal is a conservative proxy for the device length
+                // Qt strokes; a longer entity may still exceed the repetition limit.
+                if (m_viewport != nullptr
+                    && m_wcsBoundingRect.width() > 0.0 && m_wcsBoundingRect.height() > 0.0)
+                    diagonal = std::hypot(toGuiDX(m_wcsBoundingRect.width()),
+                                          toGuiDY(m_wcsBoundingRect.height()));
+                // A cosmetic pen's period is in device pixels, so is its diagonal.
+                if (m_viewport != nullptr && screenWidth == 0.0)
+                    diagonal *= getDevicePixelRatio();
+                // A pattern Qt cannot draw at this zoom falls back to solid, as
+                // an empty pattern does.
+                if (!periodFitsQt(period, diagonal))
+                    dashPattern.clear();
+            }
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
             }
             else {
                 m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
-                m_lastDashValid = true;
-                m_lastDashLineTypeId = lineTypeId;
-                m_lastDashLineType = lineType;
-                m_lastDashScreenWidth = screenWidth;
-                m_lastDashDeviceScale = deviceScale;
             }
+            // A rejected or empty pattern validates the memo too, so the next
+            // install of this key rebuilds nothing.
+            m_lastDashValid = true;
+            m_lastDashLineTypeId = lineTypeId;
+            m_lastDashLineType = lineType;
+            m_lastDashScreenWidth = screenWidth;
+            m_lastDashDeviceScale = deviceScale;
+            m_lastDashSolid = dashPattern.isEmpty();
+        }
+        else if (m_lastDashSolid) {
+            // The memo holds a rejected pattern: reuse the solid fallback.
+            style = Qt::SolidLine;
         }
         if (style == Qt::CustomDashLine) {
             m_lastUsedPen.setDashOffset((pen.dashOffset() + tablePhaseOffset) * k);
@@ -1706,7 +1780,9 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     }
     if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {
         m_lastUsedPen.setStyle(style); // drops any dash pattern
-        m_lastDashValid = false;
+        // A forced-solid memo is a verdict, not a stale pattern.
+        if (!m_lastDashSolid)
+            m_lastDashValid = false;
     }
     if (m_lastUsedPen.color() != pColor) {
         m_lastUsedPen.setColor(pColor);

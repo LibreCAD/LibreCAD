@@ -43,6 +43,11 @@ namespace LC_LineTypeNames {
     QString lineTypeToName(RS2::LineType lineType);
     QString foldName(const QString& name);
 
+    /// A group 49 list as drawing units: same-sign runs merged cyclically,
+    /// positive dashes and gaps, starting with a dash; empty when it cannot draw.
+    /// Through phaseOffset, the offset from this pattern's origin to the DXF origin.
+    std::vector<double> canonicalDashes(const std::vector<double>& raw, double* phaseOffset = nullptr);
+
     struct BuiltinMetric {
         RS2::LineType type;
         const char* description;     // DXF 3
@@ -50,6 +55,8 @@ namespace LC_LineTypeNames {
         std::vector<double> pattern; // DXF 49
     };
     const std::vector<BuiltinMetric>& builtinMetrics();
+    /// The row of one built-in, or nullptr when the table does not hold it.
+    const BuiltinMetric* builtinMetric(RS2::LineType type);
     // QString lineTypeToDescription(RS2::LineType lineType);
 }
 

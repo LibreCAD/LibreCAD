@@ -173,14 +173,21 @@ void checkDashPattern(const QVector<qreal>& actual, const QVector<qreal>& expect
 
 // The painter's scale from drawing units to QPen dash units, read back from an
 // unnamed DashLine pen so no case hard-codes the viewport's factor.
-double painterDashScale(RS_Painter& painter, LineTypeViewRenderer& renderer) {
+double painterDashScale(RS_Painter& painter,
+                        const std::function<void(RS_Entity*)>& setPenFor) {
     RS_Line reference{RS_Vector{0., 0.}, RS_Vector{1., 0.}};
     reference.setPen(lineTypePen(RS2::DashLine));
-    renderer.setPenForEntity(&painter, &reference, false);
+    setPenFor(&reference);
     const QPen installed = painter.pen();
     REQUIRE_FALSE(installed.dashPattern().isEmpty());
     return installed.dashPattern().front()
         / std::abs(RS_LineTypePattern::getPattern(RS2::DashLine)->pattern.at(0));
+}
+
+double painterDashScale(RS_Painter& painter, LineTypeViewRenderer& renderer) {
+    return painterDashScale(painter, [&painter, &renderer](RS_Entity* e) {
+        renderer.setPenForEntity(&painter, e, false);
+    });
 }
 
 struct InstalledPen {
@@ -761,7 +768,7 @@ TEST_CASE("A selected entity keeps the selection dashes whatever its name",
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {10., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
 
     LC_GraphicViewport viewport;
     viewport.setSize(640, 480);
@@ -786,7 +793,7 @@ TEST_CASE("A selected entity keeps the selection dashes whatever its name",
     painter.updateDashOffset(&reference);
 
     RS_Line line{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
-    line.setPen(namedPen("DASHEDM"));
+    line.setPen(namedPen("VENDOR_TAB"));
     line.setFlag(RS2::FlagSelected);
     renderer.setPenForEntity(&painter, &line, false);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
@@ -823,14 +830,67 @@ TEST_CASE("Group 49 dash lists are canonicalised", "[gui][pen][linetype][dash]")
         CHECK(dash > 0.0);
 }
 
+TEST_CASE("A dash list longer than Qt honours keeps its period",
+          "[gui][pen][linetype][dash]") {
+    QVector<qreal> forty;
+    for (int i = 0; i < 40; ++i) {
+        forty.push_back(static_cast<qreal>((i % 4) + 1));
+    }
+    qreal inputSum = 0.;
+    for (const qreal value : forty) {
+        inputSum += value;
+    }
+    const QVector<qreal> folded = RS_Painter::dashPatternForQt(forty, 1.0);
+    CHECK(folded.size() <= 32);
+    CHECK(folded.size() % 2 == 0);
+    qreal foldedSum = 0.;
+    for (const qreal value : folded) {
+        CHECK(value >= 0.);
+        foldedSum += value;
+    }
+    CHECK(foldedSum == Catch::Approx(inputSum));
+
+    // A list Qt already honours is returned unchanged.
+    QVector<qreal> thirtyTwo;
+    for (int i = 0; i < 32; ++i) {
+        thirtyTwo.push_back(i % 2 == 0 ? 3. : 7.);
+    }
+    CHECK(RS_Painter::dashPatternForQt(thirtyTwo, 1.0) == thirtyTwo);
+
+    // One pair above the limit folds exactly once.
+    QVector<qreal> thirtyFour;
+    for (int i = 0; i < 34; ++i) {
+        thirtyFour.push_back(i % 2 == 0 ? 1.5 : 2.5);
+    }
+    qreal thirtyFourSum = 0.;
+    for (const qreal value : thirtyFour) {
+        thirtyFourSum += value;
+    }
+    const QVector<qreal> once = RS_Painter::dashPatternForQt(thirtyFour, 1.0);
+    CHECK(once.size() == 32);
+    qreal onceSum = 0.;
+    for (const qreal value : once) {
+        onceSum += value;
+    }
+    CHECK(onceSum == Catch::Approx(thirtyFourSum));
+}
+
+TEST_CASE("The period floor accepts and rejects at its boundary",
+          "[gui][pen][linetype][dash]") {
+    CHECK_FALSE(RS_Painter::periodFitsQt(2.9, 0.0));
+    CHECK(RS_Painter::periodFitsQt(3.0, 0.0));
+    CHECK_FALSE(RS_Painter::periodFitsQt(3.5, 40000.0));
+    CHECK(RS_Painter::periodFitsQt(4.0, 40000.0));
+}
+
 TEST_CASE("A named line draws its table dashes", "[gui][pen][linetype]") {
     (void)lc::test::application();
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {10., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
 
-    const InstalledPen installed = installInView(graphic, namedPen("DASHEDM"));
+    const InstalledPen installed = installInView(graphic, namedPen("VENDOR_TAB"));
     CHECK(installed.style == Qt::CustomDashLine);
     CHECK(installed.hasDashes);
     checkDashPattern(installed.dashPattern,
@@ -852,13 +912,128 @@ TEST_CASE("A table pattern starting with a gap keeps its phase", "[gui][pen][lin
     CHECK(installed.dashOffset == Catch::Approx(20. * installed.scale));
 }
 
+TEST_CASE("A tiny table pattern draws solid", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "TINY", {0.001, -0.001});
+
+    const InstalledPen installed = installInView(graphic, namedPen("TINY"));
+    CHECK(installed.style == Qt::SolidLine);
+    CHECK_FALSE(installed.hasDashes);
+    CHECK(installed.dashPattern.isEmpty());
+
+    // At factor 4000 the same entry has an 8 px period, above the 3 px floor.
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    viewport.setOffsetAndFactor(0, 0, 4000.0);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+    painter.setPen(namedPen("TINY"));
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK(painter.penHasDashPattern());
+    checkDashPattern(painter.pen().dashPattern(), {4., 4.});
+}
+
+TEST_CASE("A new view rectangle rebuilds a table pattern", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "MIDDASH", {2., -2.});
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+
+    const RS_Pen pen = namedPen("MIDDASH");
+    painter.setPen(pen);
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK(painter.penHasDashPattern());
+
+    // The 800000 px diagonal puts the floor at 80 px, far above the 4 px period.
+    painter.setWorldBoundingRect(
+        LC_Rect{RS_Vector{0., 0.}, RS_Vector{640000., 480000.}});
+    painter.setPen(pen);
+    CHECK(painter.pen().style() == Qt::SolidLine);
+    CHECK_FALSE(painter.penHasDashPattern());
+
+    // A zero-area rectangle means "no view rectangle" for the floor.
+    painter.setWorldBoundingRect(
+        LC_Rect{RS_Vector{0., 0.}, RS_Vector{0., 0.}});
+    painter.setPen(pen);
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK(painter.penHasDashPattern());
+}
+
+TEST_CASE("A long table pattern draws the same with and without lineweight",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    std::vector<double> raw;
+    for (int i = 0; i < 40; ++i) {
+        raw.push_back(i % 2 == 0 ? 2. : -2.);
+    }
+    addLineType(graphic, "LONGDASH", raw);
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+
+    RS_Pen cosmetic = namedPen("LONGDASH");
+    cosmetic.setScreenWidth(0.0);
+    painter.setPen(cosmetic);
+    REQUIRE(painter.pen().style() == Qt::CustomDashLine);
+    const QVector<qreal> cosmeticPattern = painter.pen().dashPattern();
+
+    RS_Pen weighted = namedPen("LONGDASH");
+    weighted.setScreenWidth(3.0);
+    painter.setPen(weighted);
+    REQUIRE(painter.pen().style() == Qt::CustomDashLine);
+    const QVector<qreal> strokerPattern = painter.pen().dashPattern();
+
+    CHECK(cosmeticPattern.size() == strokerPattern.size());
+    CHECK(cosmeticPattern.size() <= 32);
+    CHECK(cosmeticPattern.size() % 2 == 0);
+    qreal cosmeticPeriod = 0.;
+    qreal strokerPeriod = 0.;
+    for (const qreal value : cosmeticPattern) {
+        cosmeticPeriod += value;
+    }
+    for (const qreal value : strokerPattern) {
+        strokerPeriod += value;
+    }
+    REQUIRE(cosmeticPeriod > 0.);
+    REQUIRE(strokerPeriod > 0.);
+    // The pen width cancels out of the pattern, so each element is the same
+    // fraction of the period at any width.
+    for (qsizetype i = 0; i < cosmeticPattern.size(); ++i) {
+        CHECK(cosmeticPattern.at(i) / cosmeticPeriod
+              == Catch::Approx(strokerPattern.at(i) / strokerPeriod));
+    }
+}
+
 TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linetype]") {
     (void)lc::test::application();
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {10., -5.});
-    addLineType(graphic, "POINTLINE", {20., -5., 0., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
+    addLineType(graphic, "VENDOR_DASHDOT", {20., -5., 0., -5.});
 
     LC_GraphicViewport viewport;
     viewport.setSize(640, 480);
@@ -870,7 +1045,7 @@ TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linety
     const double k = painterDashScale(painter, renderer);
 
     RS_Line first{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
-    first.setPen(namedPen("DASHEDM"));
+    first.setPen(namedPen("VENDOR_TAB"));
     REQUIRE(first.getPen().getLineType() == RS2::SolidLine);
     renderer.setPenForEntity(&painter, &first, false);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
@@ -878,7 +1053,7 @@ TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linety
     checkDashPattern(firstPattern, {10. * k, 5. * k});
 
     RS_Line second{RS_Vector{0., 10.}, RS_Vector{10., 10.}};
-    second.setPen(namedPen("POINTLINE"));
+    second.setPen(namedPen("VENDOR_DASHDOT"));
     REQUIRE(second.getPen().getLineType() == RS2::SolidLine);
     renderer.setPenForEntity(&painter, &second, false);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
@@ -917,17 +1092,17 @@ TEST_CASE("A vendor name on a layer draws the layer's pattern", "[gui][pen][line
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {10., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
 
     auto* layer = new RS_Layer("Vendor");
-    layer->setPen(namedPen("DASHEDM"));
+    layer->setPen(namedPen("VENDOR_TAB"));
     graphic.addLayer(layer);
 
     auto* line = new RS_Line(&graphic, RS_Vector{0., 0.}, RS_Vector{10., 0.});
     line->setPen(RS_Pen{});
     line->setLayer(layer);
     graphic.addEntity(line);
-    REQUIRE(line->getPenResolved().getLineTypeName() == "DASHEDM");
+    REQUIRE(line->getPenResolved().getLineTypeName() == "VENDOR_TAB");
 
     LC_GraphicViewport viewport;
     viewport.setSize(640, 480);
@@ -949,17 +1124,17 @@ TEST_CASE("The global linetype scale scales a named pattern", "[gui][pen][linety
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {10., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
 
     SECTION("$LTSCALE scales it") {
         graphic.addVariable("$LTSCALE", 2.0, DXF_FORMAT_GC_LTScale);
-        const InstalledPen installed = installInView(graphic, namedPen("DASHEDM"));
+        const InstalledPen installed = installInView(graphic, namedPen("VENDOR_TAB"));
         checkDashPattern(installed.dashPattern,
                          {20. * installed.scale, 10. * installed.scale});
     }
     SECTION("$DIMSCALE does not") {
         graphic.addVariable("$DIMSCALE", 2.0, DXF_FORMAT_GC_DimScale);
-        const InstalledPen installed = installInView(graphic, namedPen("DASHEDM"));
+        const InstalledPen installed = installInView(graphic, namedPen("VENDOR_TAB"));
         checkDashPattern(installed.dashPattern,
                          {10. * installed.scale, 5. * installed.scale});
     }
@@ -980,8 +1155,7 @@ TEST_CASE("An unnamed built-in keeps its screen pattern", "[gui][pen][linetype]"
     checkDashPattern(installed.dashPattern, screenPattern(RS2::DashDotLine, installed.scale));
 }
 
-TEST_CASE("A built-in name the file redefines keeps the screen pattern for now",
-          "[gui][pen][linetype]") {
+TEST_CASE("A built-in the file redefines draws the file's dashes", "[gui][pen][linetype]") {
     (void)lc::test::application();
 
     RS_Graphic graphic;
@@ -990,7 +1164,158 @@ TEST_CASE("A built-in name the file redefines keeps the screen pattern for now",
 
     const InstalledPen installed = installInView(graphic, namedPen("HIDDEN"));
     REQUIRE(installed.style == Qt::CustomDashLine);
+    checkDashPattern(installed.dashPattern,
+                     {64. * installed.scale, 32. * installed.scale});
+}
+
+TEST_CASE("A built-in the file agrees with keeps the screen pattern", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "DASHED", {12.7, -6.35});
+
+    const InstalledPen installed = installInView(graphic, namedPen("DASHED"));
+    REQUIRE(installed.style == Qt::CustomDashLine);
+    checkDashPattern(installed.dashPattern, screenPattern(RS2::DashLine, installed.scale));
+}
+
+TEST_CASE("An unnamed built-in is unchanged by a redefinition", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "HIDDEN", {64., -32.});
+
+    const InstalledPen installed = installInView(graphic, lineTypePen(RS2::HiddenLine));
+    REQUIRE(installed.style == Qt::CustomDashLine);
     checkDashPattern(installed.dashPattern, screenPattern(RS2::HiddenLine, installed.scale));
+}
+
+TEST_CASE("A named and an unnamed pen of one line type do not share a pattern",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "HIDDEN", {64., -32.});
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+
+    RS_Line named{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
+    named.setPen(namedPen("HIDDEN"));
+    RS_Line unnamed{RS_Vector{0., 10.}, RS_Vector{10., 10.}};
+    unnamed.setPen(lineTypePen(RS2::HiddenLine));
+
+    std::unique_ptr<LC_GraphicViewportRenderer> renderer;
+    std::function<void(RS_Entity*)> setPenFor;
+    SECTION("drawing") {
+        viewport.setDocument(&graphic);
+        auto view = std::make_unique<LineTypeViewRenderer>(&viewport, &image);
+        view->setupPainter(&painter);
+        setPenFor = [&painter, view = view.get()](RS_Entity* e) {
+            view->setPenForEntity(&painter, e, false);
+        };
+        renderer = std::move(view);
+    }
+    SECTION("print preview") {
+        viewport.setDocument(&graphic);
+        auto preview = std::make_unique<LineTypePreviewRenderer>(&viewport, &image);
+        preview->setupPainter(&painter);
+        setPenFor = [&painter, preview = preview.get()](RS_Entity* e) {
+            preview->setPenForPrintingEntity(&painter, e);
+        };
+        renderer = std::move(preview);
+    }
+    SECTION("print and image export") {
+        viewport.setDocument(&graphic);
+        auto print = std::make_unique<LineTypePrintRenderer>(&viewport, &painter);
+        print->setupPainter(&painter);
+        setPenFor = [&painter, print = print.get()](RS_Entity* e) {
+            print->setPenForPrintingEntity(&painter, e);
+        };
+        renderer = std::move(print);
+    }
+
+    const double k = painterDashScale(painter, setPenFor);
+
+    setPenFor(&named);
+    checkDashPattern(painter.pen().dashPattern(), {64. * k, 32. * k});
+
+    setPenFor(&unnamed);
+    checkDashPattern(painter.pen().dashPattern(), screenPattern(RS2::HiddenLine, k));
+
+    setPenFor(&named);
+    checkDashPattern(painter.pen().dashPattern(), {64. * k, 32. * k});
+}
+
+TEST_CASE("An alias the file redefines draws the file's dashes", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "ACAD_ISO02W100", {5., -5.});
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+    const double k = painterDashScale(painter, renderer);
+
+    RS_Line named{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
+    named.setPen(namedPen("ACAD_ISO02W100"));
+    renderer.setPenForEntity(&painter, &named, false);
+    checkDashPattern(painter.pen().dashPattern(), {5. * k, 5. * k});
+
+    RS_Line unnamed{RS_Vector{0., 10.}, RS_Vector{10., 10.}};
+    unnamed.setPen(lineTypePen(RS2::DashLine));
+    renderer.setPenForEntity(&painter, &unnamed, false);
+    checkDashPattern(painter.pen().dashPattern(), screenPattern(RS2::DashLine, k));
+}
+
+TEST_CASE("A name-only record keeps the screen pattern", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "HIDDEN", {});
+
+    // add() fills a name-only built-in from its seed, so the record agrees with it.
+    const InstalledPen installed = installInView(graphic, namedPen("HIDDEN"));
+    REQUIRE(installed.style == Qt::CustomDashLine);
+    checkDashPattern(installed.dashPattern, screenPattern(RS2::HiddenLine, installed.scale));
+}
+
+TEST_CASE("A BYLAYER record with dashes is ignored", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "BYLAYER", {5., -5.});
+
+    const InstalledPen installed = installInView(graphic, namedPen("BYLAYER"));
+    CHECK(installed.style != Qt::CustomDashLine);
+    CHECK_FALSE(installed.hasDashes);
+    CHECK(installed.dashPattern.isEmpty());
+}
+
+TEST_CASE("A continuous record with dashes is ignored", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "CONTINUOUS", {5., -5.});
+
+    const InstalledPen installed = installInView(graphic, namedPen("CONTINUOUS"));
+    CHECK(installed.style == Qt::SolidLine);
+    CHECK_FALSE(installed.hasDashes);
+    CHECK(installed.dashPattern.isEmpty());
 }
 
 TEST_CASE("A known alias keeps the screen pattern", "[gui][pen][linetype]") {
@@ -1021,17 +1346,17 @@ TEST_CASE("A table entry added after a pass is seen on the next pass",
     renderer.setupPainter(&painter);
 
     RS_Line before{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
-    before.setPen(namedPen("DASHEDM"));
+    before.setPen(namedPen("VENDOR_TAB"));
     renderer.setPenForEntity(&painter, &before, false);
     CHECK(painter.pen().style() == Qt::SolidLine);
     CHECK_FALSE(painter.penHasDashPattern());
 
-    addLineType(graphic, "DASHEDM", {10., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
 
     // Other colours only step past the renderer's pen cache, which this case
     // is not about: the resolver cache still holds the first pass's table.
     RS_Line stale{RS_Vector{0., 10.}, RS_Vector{10., 10.}};
-    stale.setPen(namedPen("DASHEDM", Qt::red));
+    stale.setPen(namedPen("VENDOR_TAB", Qt::red));
     renderer.setPenForEntity(&painter, &stale, false);
     CHECK(painter.pen().style() == Qt::SolidLine);
     CHECK_FALSE(painter.penHasDashPattern());
@@ -1039,7 +1364,7 @@ TEST_CASE("A table entry added after a pass is seen on the next pass",
     renderer.setupPainter(&painter);
 
     RS_Line after{RS_Vector{0., 20.}, RS_Vector{10., 20.}};
-    after.setPen(namedPen("DASHEDM", Qt::blue));
+    after.setPen(namedPen("VENDOR_TAB", Qt::blue));
     renderer.setPenForEntity(&painter, &after, false);
     CHECK(painter.pen().style() == Qt::CustomDashLine);
     CHECK(painter.penHasDashPattern());
@@ -1051,7 +1376,7 @@ TEST_CASE("A pattern changed between passes is drawn on the next pass",
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {10., -5.});
+    addLineType(graphic, "VENDOR_TAB", {10., -5.});
 
     LC_GraphicViewport viewport;
     viewport.setSize(640, 480);
@@ -1063,7 +1388,7 @@ TEST_CASE("A pattern changed between passes is drawn on the next pass",
     const double k = painterDashScale(painter, renderer);
 
     RS_Line line{RS_Vector{0., 0.}, RS_Vector{10., 0.}};
-    line.setPen(namedPen("DASHEDM"));
+    line.setPen(namedPen("VENDOR_TAB"));
     renderer.setPenForEntity(&painter, &line, false);
     REQUIRE(painter.pen().style() == Qt::CustomDashLine);
     checkDashPattern(painter.pen().dashPattern(), {10. * k, 5. * k});
@@ -1071,7 +1396,7 @@ TEST_CASE("A pattern changed between passes is drawn on the next pass",
     // pen cache on the next pass.
     painter.updateDashOffset(&line);
 
-    LC_LineType* entry = graphic.findLineType("DASHEDM");
+    LC_LineType* entry = graphic.findLineType("VENDOR_TAB");
     REQUIRE(entry != nullptr);
     entry->pattern = {20., -5.};
 
@@ -1087,7 +1412,7 @@ TEST_CASE("A painter without a renderer draws a named line solid",
 
     QImage image(640, 480, QImage::Format_RGB32);
     RS_Painter painter(&image);
-    painter.setPen(namedPen("DASHEDM"));
+    painter.setPen(namedPen("VENDOR_TAB"));
     CHECK(painter.pen().style() == Qt::SolidLine);
     CHECK_FALSE(painter.penHasDashPattern());
 }
@@ -1252,12 +1577,12 @@ TEST_CASE("Contiguous segments of a named-line-type polyline keep one dash phase
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
-    addLineType(graphic, "DASHEDM", {12., -6.});
+    addLineType(graphic, "VENDOR_TAB", {12., -6.});
 
     RS_Polyline polyline = twoSegments(RS2::SolidLine);
-    polyline.setPen(namedPen("DASHEDM"));
+    polyline.setPen(namedPen("VENDOR_TAB"));
     RS_Line line{RS_Vector{0., 0.}, RS_Vector{20., 0.}};
-    line.setPen(namedPen("DASHEDM"));
+    line.setPen(namedPen("VENDOR_TAB"));
 
     const QImage lineImage = renderEntityImage(line, &graphic);
     const QImage polylineImage = renderEntityImage(polyline, &graphic);

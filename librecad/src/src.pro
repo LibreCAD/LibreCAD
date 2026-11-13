@@ -601,6 +601,7 @@ HEADERS += \
     lib/engine/document/layers/rs_layer.h \
     lib/engine/document/layers/rs_layerlist.h \
     lib/engine/document/layers/rs_layerlistlistener.h \
+    lib/engine/document/linetypes/lc_linfile.h \
     lib/engine/document/linetypes/lc_linetype.h \
     lib/engine/document/linetypes/lc_linetypelist.h \
     lib/engine/document/entities/rs_leader.h \
@@ -1325,6 +1326,7 @@ SOURCES += \
     lib/engine/document/entities/lc_wipeout.cpp \
     lib/engine/document/layers/rs_layer.cpp \
     lib/engine/document/layers/rs_layerlist.cpp \
+    lib/engine/document/linetypes/lc_linfile.cpp \
     lib/engine/document/linetypes/lc_linetype.cpp \
     lib/engine/document/linetypes/lc_linetypelist.cpp \
     lib/engine/document/entities/rs_leader.cpp \

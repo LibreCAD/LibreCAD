@@ -28,6 +28,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_linetype.h"
+#include "lc_linetypelist.h"
 #include "lc_linetypenames.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
@@ -209,25 +210,40 @@ void LC_GraphicViewportRenderer::updateUnitFactors(const RS_Graphic *g) {
 void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     // The line type table is read once per pass; every paint path starts here.
     m_dashByFold.clear();
+    m_dashByEnum.clear();
     m_dashCacheBuilt = false;
-    painter->invalidateDashPattern();
     painter->setRenderer(this);
     painter->setViewPort(m_viewport);
     painter->updatePointsScreenSize(m_pdsize);
     painter->setPointsMode(m_pdmode);
+    // A new view rectangle invalidates the dash memo.
     painter->setWorldBoundingRect(m_renderBoundingClipRect);
 }
 
 const QVector<qreal>* LC_GraphicViewportRenderer::resolveDashPattern(const RS_Pen& pen, qreal* phaseOffset) {
+    // An unnamed pen paints as its enum says, whatever the table holds.
+    if (!pen.hasLineTypeName())
+        return nullptr;
     if (!m_dashCacheBuilt)
         buildDashPatternCache();
-    // No entry is ever added after the build, so the address stays valid.
-    const auto it = m_dashByFold.constFind(pen.getLineTypeFoldId());
-    if (it == m_dashByFold.cend())
+    // No entry is ever added after the build, so the addresses stay valid.
+    const DashPattern* found = nullptr;
+    const std::uint16_t foldId = pen.getLineTypeFoldId();
+    if (foldId != 0) {
+        const auto it = m_dashByFold.constFind(foldId);
+        if (it != m_dashByFold.cend())
+            found = &it.value();
+    }
+    else {
+        const auto it = m_dashByEnum.constFind(static_cast<int>(pen.getLineType()));
+        if (it != m_dashByEnum.cend())
+            found = &it.value();
+    }
+    if (found == nullptr)
         return nullptr;
     if (phaseOffset != nullptr)
-        *phaseOffset = it->phaseOffset;
-    return &it->dashes;
+        *phaseOffset = found->phaseOffset;
+    return &found->dashes;
 }
 
 void LC_GraphicViewportRenderer::buildDashPatternCache() {
@@ -244,14 +260,13 @@ void LC_GraphicViewportRenderer::buildDashPatternCache() {
         const LC_LineType* entry = graphic->lineTypeAt(i);
         if (entry == nullptr || entry->pattern.empty())
             continue;
-        // A name LibreCAD knows keeps the shipped screen pattern for now.
-        if (LC_LineTypeNames::isKnownName(entry->key()))
+        const bool known = LC_LineTypeNames::isKnownName(entry->key());
+        // A known name the entry does not redefine keeps the shipped screen pattern.
+        if (known && !LC_LineTypeList::redefinesBuiltIn(*entry))
             continue;
         RS_Pen probe;
         probe.setLineTypeName(entry->name);
         const std::uint16_t foldId = probe.getLineTypeFoldId();
-        if (foldId == 0)
-            continue;
         qreal phaseOffset = 0.0;
         QVector<qreal> pattern = RS_Painter::canonicalDashPattern(entry->pattern, &phaseOffset);
         if (pattern.isEmpty())
@@ -264,9 +279,17 @@ void LC_GraphicViewportRenderer::buildDashPatternCache() {
         phaseOffset *= lineTypeScale;
         if (!valid || !std::isfinite(phaseOffset))
             continue;
-        // The first entry of a fold wins.
-        if (!m_dashByFold.contains(foldId))
+        if (known && foldId == 0) {
+            // The canonical spelling of a built-in: the enum map, which the
+            // painter reads only for a named pen.
+            const int enumKey = static_cast<int>(probe.getLineType());
+            if (!m_dashByEnum.contains(enumKey))
+                m_dashByEnum.insert(enumKey, DashPattern{pattern, phaseOffset});
+        }
+        else if (foldId != 0 && !m_dashByFold.contains(foldId)) {
+            // The first entry of a fold wins.
             m_dashByFold.insert(foldId, DashPattern{pattern, phaseOffset});
+        }
     }
 }
 

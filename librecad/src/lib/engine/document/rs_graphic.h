@@ -195,6 +195,7 @@ public:
     LC_LineType* lineTypeAt(const unsigned i) const {return m_lineTypeList.at(i);}
     LC_LineType* addLineType(LC_LineType* lineType) {return m_lineTypeList.add(lineType);}
     LC_LineType* findLineType(const QString& name) const {return m_lineTypeList.find(name);}
+    const LC_LineTypeList& getLineTypeList() const {return m_lineTypeList;}
     void mergeLineTypes(const RS_Graphic& source) {m_lineTypeList.merge(source.m_lineTypeList);}
     /// every line type name the drawing gives as a string, each once
     std::vector<QString> referencedLineTypeNames() const;
