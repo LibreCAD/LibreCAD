@@ -41900,3 +41900,22 @@ assertions / 1 case; the complete typed spline/fit-point Trim Two matrix passes
 specific transformed profile only; broader closed-fit-point interpolation,
 knot/tangent, topology, and scale variants remain in Slice 4, as do visible
 GUI, cross-platform, and independent ODA/AutoCAD acceptance.
+
+## 1197. Carry a Repeated Closing Fit Point Through Trim Two (2026-11-13)
+
+Test commit `b0638ffa3` extends the 12-point closed fit-point fixture with an
+explicit repeated terminal point equal to the first. The source retains that
+input fit-point record while `LC_SplinePoints` derives the same 12-segment
+closed locus as the unique-point profile. The direct oracle checks both sides
+and seam continuity. The worker-created source then runs through Trim Two in
+both pick orders, undo/redo, and the five R14/R2000/R2018 DXF/DWG
+save/reopen lanes; reopened geometry is checked against the source by sampled
+locus rather than requiring a particular internal storage representation.
+
+On macOS arm64 CMake Release, the complete closed-fit-point exact-offset
+oracle passes 62,233 assertions / 1 case. The typed spline/fit-point Trim Two
+matrix passes 14,415 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`.
+`git diff --check` passes. This qualifies repeated terminal closure for the
+stated profile only; repeated interior points, near-coincident distinct
+chords, and other fit-point layouts remain separate variants, as do visible
+GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance.
