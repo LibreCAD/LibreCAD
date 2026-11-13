@@ -42308,3 +42308,21 @@ matrix passes 20,433 assertions / 1 case. The test target rebuild and
 `git diff --check` pass. Other transformations, fit-point variants, visible
 GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance remain
 open.
+
+## 1217. Vary Signed Distances for Three-point Closed Fit Trims (2026-11-13)
+
+Test commit `38a5f7cc8` expands the direct independent-normal oracle from one
+offset magnitude to `0.1`, `0.25`, and `0.5`, on both signed sides for the
+nominal and reflected/reversed transformed three-point closed profiles from
+sections 1215-1216. Each accepted trimmed branch is checked against the
+source-distance function, including both nearest-kept and worst-missing error
+bounds. This adds direct geometry distance coverage; it does not vary the
+worker-backed Trim Two action's stored offset distance or close the broader
+source-family distance matrix.
+
+On macOS arm64 CMake Release,
+`QT_QPA_PLATFORM=offscreen ./librecad_tests '[curve-offset][three-point]'`
+passes 54 assertions / 1 case. The action, five-file-lane, LibreDWG, and
+undo/redo matrix remains as recorded in section 1216. Build and
+`git diff --check` pass. Other distances/conditioning, visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
