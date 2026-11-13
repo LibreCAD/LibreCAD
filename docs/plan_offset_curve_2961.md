@@ -42718,9 +42718,11 @@ others, whereas the same cache used as cutter is queried in full. The corrected
 acceptance invariant is certified coverage of each crossing in the full query,
 plus correct selected-component semantics for the target, not equality of
 aggregate root/work counters. Section 1238 adds a passing end-to-end
-two-crossing fixture within the output cap. Closed/high-segment chains,
-self-overlap, and broader bulge/layout combinations remain open, as do visible
-GUI acceptance, cross-platform runtime, and independent ODA/AutoCAD acceptance.
+two-crossing fixture within the output cap; section 1239 adds exact dense
+256-segment root-image correspondence and verifies that the output-cap
+refusal is atomic. Closed/high-segment chains, self-overlap, and broader
+bulge/layout combinations remain open, as do visible GUI acceptance,
+cross-platform runtime, and independent ODA/AutoCAD acceptance.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 
@@ -42827,3 +42829,28 @@ Release build, and `git diff --check` passes. This closes the selected
 two-crossing fixture, not the
 broader dense multi-crossing, closed-chain, self-overlap, visible-GUI,
 cross-platform, or independent-CAD acceptance gates.
+
+## 1239. Qualify Dense Two-crossing Root Ownership and Output-cap Refusal (2026-11-13)
+
+The original 256-segment sinusoidal profile is now a permanent regression. A
+horizontal cutter intersects the full native cache twice. When the cache is
+the cutter, the query returns both certified roots; when it is the target, the
+picked connected component returns the one relevant root while retaining
+unselected components. The selected-component root's certified X/Y image must
+overlap one of the full-cache root images. This documents the intentional
+operand-role difference without weakening exhaustive intersection checks.
+
+The target preparation produces more than the fixed 16 Trim Two output-entity
+limit. Synchronous publication preparation must therefore refuse with
+`LimitExceeded`, empty add/delete batches, unchanged undo epoch, live original
+entities, and an unchanged native-cache fingerprint. The bounded 32-segment
+counterpart in section 1238 proves worker preview/commit/undo in both pick
+orders below that cap.
+
+On macOS arm64 CMake Release, `[multi-root][dense]` passes 23 assertions / 1
+case. The full `librecad_offset_trim_tests` target passes 203,321 assertions /
+161 cases on the same build, and `git diff --check` passes. This closes the
+dense two-crossing kernel/accounting question and its fail-closed output-limit
+behavior, not successful worker publication of an over-cap result. Broader
+disconnected layouts, closed/high-segment chains, self-overlap, visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.

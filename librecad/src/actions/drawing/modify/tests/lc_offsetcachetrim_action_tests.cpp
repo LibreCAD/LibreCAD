@@ -4487,6 +4487,76 @@ TEST_CASE("Sinusoidal Trim Two resolves multiple roots across operand roles",
     }
 }
 
+TEST_CASE("Dense sinusoidal cache maps component roots and enforces the Trim Two output cap",
+          "[lc-offsetcurve][trim-action][polyline][multi-root][dense][output-limit]") {
+    Drawing<true> f;
+    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    auto initial = LC_OffsetCurve::create(seed, .15, false);
+    REQUIRE(initial);
+    auto* previous = initial.entity.release(); f.graphic.addEntity(previous);
+    auto* source = new RS_Polyline(&f.graphic);
+    constexpr unsigned sampleSegments = 256;
+    for (unsigned i = 0; i <= sampleSegments; ++i) {
+        const double x = .1 * double(i);
+        source->addVertex({x, .5 * std::sin(.3 * x)});
+    }
+    source->endPolyline(); f.graphic.addEntity(source);
+    f.graphic.select(QList<RS_Entity*>{previous}, true);
+    UpdateSourceProbe update(&f.context);
+    update.init(0); update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline); update.use(source);
+    lc::test::awaitUpdate(update);
+    REQUIRE(update.lastReport().updated == 1);
+    LC_OffsetCurve* native = nullptr;
+    for (auto* entity : live(f.graphic)) {
+        if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+        native = dynamic_cast<LC_OffsetCurve*>(entity);
+        REQUIRE(native);
+    }
+    REQUIRE(native);
+    const auto before = RS_Spline::geometryFingerprint(native->getData());
+    const auto breaks = native->getBreakParameters();
+    REQUIRE(breaks.size() > sampleSegments);
+    const auto middleSpan = (breaks.size() - 2) / 2;
+    const double parameter = breaks[middleSpan] + .43 *
+        (breaks[middleSpan + 1] - breaks[middleSpan]);
+    const double lineY = native->getPointAt(parameter).y;
+    auto* line = new RS_Line(&f.graphic, RS_LineData{{-16, lineY}, {42, lineY}});
+    f.graphic.addEntity(line);
+    const RS_Vector linePick{40, lineY};
+    RS_SplineData lineCache{1, false};
+    lineCache.controlPoints = {{-16, lineY}, {42, lineY}};
+    lineCache.knotslist = {0, 0, 1, 1}; lineCache.weights = {1, 1};
+    const auto byLine = LC_OffsetCacheTrim::prepare(lineCache, *native, {linePick});
+    REQUIRE(byLine.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(byLine.rootCount == 2);
+    const RS_Vector nativePick = native->getPointAt(
+        breaks[middleSpan + 20] + .5 * (breaks[middleSpan + 21] - breaks[middleSpan + 20]));
+    const auto byCurve = LC_OffsetCacheTrim::prepare(native->getData(), *line, {nativePick});
+    CHECK(byCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(byCurve.rootCount == 1);
+    CHECK(byCurve.fragments.size() > LC_StoredCacheTrimOptions::maxOutputEntitiesLimit);
+    const auto& selectedRoot = byCurve.roots.front();
+    CHECK(std::any_of(byLine.roots.begin(), byLine.roots.end(), [&](const auto& fullRoot) {
+        return selectedRoot.worldX.lo() <= fullRoot.worldX.hi() &&
+               fullRoot.worldX.lo() <= selectedRoot.worldX.hi() &&
+               selectedRoot.worldY.lo() <= fullRoot.worldY.hi() &&
+               fullRoot.worldY.lo() <= selectedRoot.worldY.hi();
+    }));
+
+    LC_DocumentModificationBatch batch;
+    const auto epoch = f.graphic.undoStateEpoch();
+    const auto refused = RS_Modification::trimStoredCache(f.graphic, *native, nativePick,
+        *line, linePick, true, batch);
+    CHECK_FALSE(refused.result);
+    REQUIRE(refused.cacheRefusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+    CHECK(batch.entitiesToAdd.isEmpty());
+    CHECK(batch.entitiesToDelete.isEmpty());
+    CHECK(f.graphic.undoStateEpoch() == epoch);
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(line->isDeleted());
+    CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
+}
+
 TEST_CASE("T Trim Two admits exactly sixteen outputs and refuses seventeen atomically",
           "[gui][lc-offsetcurve][trim-action][trim-output-limit][typed-source]") {
     for (const std::size_t farComponents : {1u, 2u}) for (const bool nativeFirst : {false, true}) {
