@@ -3078,7 +3078,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u,
                                    12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u,
                                    21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u, 29u, 30u, 31u,
-                                   32u, 33u})
+                                   32u, 33u, 34u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3129,6 +3129,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                         ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
                                          .6, -.4, 2.4, true, true}
+                    : profile == 34
+                        ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
+                                                   3 * std::sin(nearCuspRotation)},
+                                         .2, -.4, 2.4, true, false}
                     : profile == 31
                         ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
@@ -3182,7 +3186,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         REQUIRE(native->getBreakParameters().size() >= 2);
         const double parameter = first + (last - first) *
                                  ((profile == 27 || profile == 30 || profile == 31 ||
-                                   profile == 32 || profile == 33) ? .25 :
+                                   profile == 32 || profile == 33 || profile == 34) ? .25 :
                                   profile == 29 ? .75 : .487);
         const RS_Vector intersection = native->getPointAt(parameter);
         const double step = std::max(1e-7, (last - first) * 1e-5);
