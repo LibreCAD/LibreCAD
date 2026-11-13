@@ -3497,7 +3497,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         CAPTURE(profile, fitPoints, splinePointsSource, nativeFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .15, false);
+        const double sourceOffset = profile == 25 ? 0.1 : profile == 26 ? 0.5 : 0.15;
+        auto initial = LC_OffsetCurve::create(seed, sourceOffset, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
