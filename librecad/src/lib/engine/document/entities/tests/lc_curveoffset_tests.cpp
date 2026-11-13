@@ -2932,6 +2932,7 @@ TEST_CASE("High-segment open polylines follow exact segment normals",
             double y = 0.02 * x;
             if (profileKind == 1 && x > 6.4) y += 0.1 * (x - 6.4);
             if (profileKind == 2) y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
+            if (profileKind == 3) y = 0.001 * x * x;
             source.addVertex({x, y});
         }
         source.endPolyline();
@@ -2997,6 +2998,7 @@ TEST_CASE("High-segment open polylines follow exact segment normals",
     verifyProfile(0);
     verifyProfile(1);
     verifyProfile(2);
+    verifyProfile(3);
 }
 
 TEST_CASE("Major and minor bulge offsets follow exact segment normals", "[curve-offset][direct][polyline][bulge][major][oracle]") {
