@@ -8464,7 +8464,7 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
     constexpr double tau = 2.0 * M_PI;
-    const std::array<RS_EllipseData, 25> variants{
+    const std::array<RS_EllipseData, 27> variants{
         RS_EllipseData{{2, -3}, {4, 0}, .6, .2, 2.1, false},
         RS_EllipseData{{-1, 2}, {3, 1}, .8, 1.8, .1, true},
         RS_EllipseData{{3, 1}, {2, -1}, 1.4, .3, 2.3, false},
@@ -8489,7 +8489,9 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
         RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, .4, false},
         RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, .4, true},
         RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, M_PI + .2, false},
-        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, M_PI + .2, true}};
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, M_PI + .2, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .01, 0, tau, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .001, 0, tau, false}};
     struct Format {
         Lane lane;
         bool dwg;
@@ -8592,14 +8594,18 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
             const LC_OffsetSourceGeometry translated{translatedData};
             REQUIRE(centered.isWellFormed());
             REQUIRE(translated.isWellFormed());
-            const bool thin = base.ratio == .2;
+            const bool thin = base.ratio <= .2;
             const bool thinFull = thin && base.angle1 == 0.0 &&
                 (base.angle2 == tau || base.angle2 == 0.0);
             std::vector<double> distances;
             if (thinFull) {
-                distances.assign(thinDistances.begin(), thinDistances.end());
+                const double cuspScale = base.majorP.magnitude() * base.ratio * base.ratio / .08;
+                for (const double distance : thinDistances)
+                    distances.push_back(distance * cuspScale);
             } else if (thin) {
-                distances.assign(partialThinDistances.begin(), partialThinDistances.end());
+                const double cuspScale = base.majorP.magnitude() * base.ratio * base.ratio / .08;
+                for (const double distance : partialThinDistances)
+                    distances.push_back(distance * cuspScale);
             } else {
                 distances.assign(ordinaryDistances.begin(), ordinaryDistances.end());
             }
@@ -8819,7 +8825,7 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
 #ifdef DWGSUPPORT
     if (!libreDwgReader.isEmpty()) CHECK(libreDwgCases == 2);
 #endif
-    const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 6 * thinDistances.size() +
+    const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 8 * thinDistances.size() +
         16 * partialThinDistances.size();
     const std::size_t expectedCells = scales.size() * translationRatios.size() * cellsPerRatio;
     CHECK(importedCases + refusedCases == expectedCells);
