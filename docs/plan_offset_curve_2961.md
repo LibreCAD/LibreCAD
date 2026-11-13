@@ -40789,3 +40789,21 @@ ratio-`0.2` partial-arc case. It supersedes section 1135's earlier aggregate
 count of 128,175 assertions. Family/variant coverage beyond these tested
 profiles, visible GUI, cross-platform, clean qmake6, and independent-CAD gates
 remain open.
+
+## 1139. Qualify Two-span Rational Spline Trim Two (2026-11-12)
+
+Test commit `c73461302` extends the spline Trim Two action matrix with a
+degree-3 rational spline using five control points, a simple internal knot at
+`0.45`, and nonuniform control weights. The existing single-span rational
+quadratic and spline-points profiles remain in the same test. Each profile
+runs both operand orders through worker source update, preview/commit,
+undo/redo, and all five DXF/DWG save/reopen lanes; the reopened spline control
+points, knots, weights, degree and flags are compared with the expected
+geometry, with LibreDWG parsing for DWG outputs.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 2,250 assertions / 1 case, and `git diff --check` passes. This
+qualifies one two-span rational cubic topology only. Other knot multiplicities,
+periodic/closed rational layouts, spline-points variants, visible GUI,
+cross-platform and independent-CAD acceptance remain open.
