@@ -41561,3 +41561,20 @@ profile was removed. This adds one direct-oracle geometry point only. Ellipse
 Trim Two coverage for this partial-arc layout, broader sweep/axis-ratio and
 distance matrices, visible GUI, cross-platform behavior, and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1181. Vary Partial Ellipse Eccentricity and Traversal (2026-11-13)
+
+Test commit `2a6d95dd4` expands the direct partial-ellipse oracle case to axis
+ratios `0.1`, `0.2`, and `0.4`. Each uses semimajor axis `3`, the same rotated
+and translated partial-arc domain `[-0.45, 0.75]`, and an inward distance
+equal to one quarter of the minimum curvature radius (`0.25 * 3 * ratio^2`).
+Both traversal directions are checked with the corresponding left/right side.
+
+On macOS arm64 CMake Release, `[curve-offset][ellipse]` passes 1,369,047
+assertions / 57 cases. The focused target build succeeds, the recursive qmake6
+application/worker/plugin build exits 0, and `git diff --check` passes. This
+qualifies only the stated partial-arc domain and sub-cusp distance scaling for
+the three ratios at the direct geometry layer; worker/cache, Trim Two and file
+round-trip lanes for these new profiles remain unqualified, as do wider sweep,
+ratio, and offset-distance matrices and the visible GUI, cross-platform, and
+independent ODA/AutoCAD gates.
