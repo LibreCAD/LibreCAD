@@ -78,11 +78,13 @@ succeeds. After publication, verify the displayed source type and indication
 follow the replacement; on cancellation, refusal, stale input, or worker
 failure, verify they remain with the prior source. Exercise every member of
 the nine-kind `SupportedKinds` inventory and verify parabola remains distinct
-from spline-points. Existing headless tests satisfy the selector/filter and
-typed replacement contracts; visible interaction remains in Slice 5, and
-per-variant generation/worker/cache/Trim/DXF/DWG coverage remains in Slice 4.
-Do not reopen picker implementation solely to repeat the already-covered
-selector request.
+from spline-points. For each family, verify an eligible concrete entity can
+appear as a replacement candidate and be selected; a combo-box entry by itself
+is not family support. Existing headless tests satisfy the selector/filter
+and typed replacement contracts for their fixtures; visible interaction
+remains in Slice 5, and per-variant generation/worker/cache/Trim/DXF/DWG
+coverage remains in Slice 4. Do not reopen picker implementation solely to
+repeat the already-covered selector request.
 
 **Step-by-step verification for future changes:**
 
