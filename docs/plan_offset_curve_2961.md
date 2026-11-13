@@ -316,13 +316,14 @@ Sections 1170-1171 qualify nominal and similarity-transformed six-fit-point
 closed SplinePoints sources through direct normals, worker-backed Trim Two,
 and five DXF/DWG lanes. Section 1172 adds an eight-fit-point closed profile
 with fit tolerance `1e-4`; section 1173 adds a four-fit-point closed profile.
-Section 1174 adds an irregular five-fit-point closed profile. All four counts
+Section 1174 adds an irregular five-fit-point closed profile. All these counts
 use the same direct, worker Trim Two, and five-file-lane checks; section 1175
-adds a seven-fit-point profile and section 1176 adds a generated nine-point
-periodic profile. Closed counts four through nine are sampled (except count
-three); closed cut/control-file representation is checked by geometry rather
-than internal storage equality. These fixtures do not close other fit-point
-counts, tolerances, or transformations.
+adds a seven-fit-point profile, section 1176 a generated nine-point periodic
+profile, and section 1177 a similarity-transformed ten-point profile with
+non-default tolerance. Closed counts four through ten are sampled (except
+count three); closed cut/control-file representation is checked by geometry
+rather than internal storage equality. These fixtures do not close other
+fit-point counts, tolerances, or transformations.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41474,3 +41475,20 @@ qmake6 application/worker/plugin build exits 0 and `git diff --check` passes.
 This qualifies one four-point layout only. Other fit-point layouts,
 transformations and tolerances, visible GUI, cross-platform behavior, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1177. Qualify a Transformed Ten-point Closed Fit Spline (2026-11-13)
+
+Test commit `6a554cbec` adds a generated ten-point closed `LC_SplinePoints`
+profile with similarity transform (scale `1.5`, rotation `0.29` radians,
+translation `(-12,8)`) and fit tolerance `2e-4`. It runs through the direct
+exact-normal oracle, worker-backed Trim Two in both operand pick orders,
+undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. Reopened
+closed cut/control storage is checked against the source by sampled geometry.
+
+On macOS arm64 CMake Release, the focused direct closed-fit selection passes
+43,926 assertions / 4 cases, and the fit-point Trim Two action case passes
+12,460 assertions / 1 case with LibreDWG enabled. The incremental recursive
+qmake6 application/worker/plugin build exits 0 and `git diff --check` passes.
+This qualifies only the stated combined profile, transformation, and
+tolerance. Other fit counts/layouts and transforms, visible GUI,
+cross-platform behavior, and independent ODA/AutoCAD acceptance remain open.
