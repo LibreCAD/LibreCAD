@@ -3075,13 +3075,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     constexpr double inwardRotation = .93;
     constexpr double reversedArcRotation = -.38;
     constexpr double nearCuspRotation = 1.17;
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         const double offsetDistance = profile == 5 ? .0135 : profile == 6 ? .003375 :
-                                      profile == 7 ? .00084375 : .25;
+                                      profile == 7 ? .00084375 : profile == 8 ? .0075 :
+                                      profile == 9 ? .0225 : .25;
         const bool towardCentre = profile == 3 || profile >= 5;
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
@@ -3106,7 +3107,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                                          .6, .25, 1.6, true, true}
                         : RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
-                                         profile == 5 ? .1 : profile == 6 ? .05 : .025,
+                                         profile == 6 ? .05 : profile == 7 ? .025 : .1,
                                          0, 0, false};
         auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
