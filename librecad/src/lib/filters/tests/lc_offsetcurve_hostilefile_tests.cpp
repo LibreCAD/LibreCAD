@@ -11636,7 +11636,7 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
-    constexpr std::array<double, 3> scales{1e-3, 1.0, 1e3};
+    constexpr std::array<double, 4> scales{1e-3, 1.0, 1e3, 1e4};
     constexpr std::array<double, 2> translationRatios{1e4, 1e6};
     constexpr std::array<double, 4> normalizedDistances{-.25, -.1, .1, .25};
 
