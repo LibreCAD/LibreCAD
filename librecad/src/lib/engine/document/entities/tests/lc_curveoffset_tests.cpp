@@ -1945,10 +1945,12 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Closed fit-point splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u}) {
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u}) {
         CAPTURE(profile);
         LC_SplinePointsData data{true, false};
-        data.splinePoints = profile == 6
+        data.splinePoints = profile == 7
+            ? std::vector<RS_Vector>{}
+            : profile == 6
             ? std::vector<RS_Vector>{}
             : profile == 5
             ? std::vector<RS_Vector>{{-4, 0}, {-2.5, 2.4}, {-0.5, 3.1},
@@ -1972,19 +1974,31 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
                                                0.8 * radius * std::sin(angle));
             }
         }
-        if (profile == 1) {
-            constexpr double angle = 0.47;
-            constexpr double scale = 2.0;
+        if (profile == 7) {
+            constexpr double twoPi = 6.2831853071795864769;
+            for (unsigned i = 0; i < 10; ++i) {
+                const double angle = twoPi * static_cast<double>(i) / 10.0;
+                const double radius = 3.0 + 0.35 * std::cos(3.0 * angle);
+                data.splinePoints.emplace_back(radius * std::cos(angle),
+                                               0.75 * radius * std::sin(angle));
+            }
+        }
+        if (profile == 1 || profile == 7) {
+            const double angle = profile == 1 ? 0.47 : 0.29;
+            const double scale = profile == 1 ? 2.0 : 1.5;
+            const double originX = profile == 1 ? 18.0 : -12.0;
+            const double originY = profile == 1 ? -11.0 : 8.0;
             const double cosine = std::cos(angle);
             const double sine = std::sin(angle);
             for (RS_Vector& point : data.splinePoints) {
                 const double x = point.x;
                 const double y = point.y;
-                point = {18.0 + scale * (x * cosine - y * sine),
-                         -11.0 + scale * (x * sine + y * cosine)};
+                point = {originX + scale * (x * cosine - y * sine),
+                         originY + scale * (x * sine + y * cosine)};
             }
         }
         if (profile == 2) data.fitTolerance = 1e-4;
+        if (profile == 7) data.fitTolerance = 2e-4;
         LC_SplinePoints source{nullptr, data};
         REQUIRE(source.isClosed());
         REQUIRE(source.getSegmentCount() == data.splinePoints.size());
