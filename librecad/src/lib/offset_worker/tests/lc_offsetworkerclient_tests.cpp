@@ -1576,7 +1576,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
     thinEllipseFixtures.emplace_back(translatedThinEllipseFixture, 0.1);
     std::vector<std::pair<std::size_t, double>> thinEllipseArcFixtures;
-    const std::array<RS_EllipseData, 9> thinEllipseArcs{{
+    const std::array<RS_EllipseData, 15> thinEllipseArcs{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true},
         {{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false},
@@ -1586,6 +1586,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 2.0 * M_PI - 0.1, 0.1, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.1, 2.0 * M_PI - 0.1, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 2.0 * M_PI - 0.1, 0.1, true},
+        {{4.0, -3.0}, {3.0 * std::cos(.37), 3.0 * std::sin(.37)}, .1, -.45, .75, false},
+        {{4.0, -3.0}, {3.0 * std::cos(.37), 3.0 * std::sin(.37)}, .2, -.45, .75, false},
+        {{4.0, -3.0}, {3.0 * std::cos(.37), 3.0 * std::sin(.37)}, .4, -.45, .75, false},
+        {{4.0, -3.0}, {3.0 * std::cos(.37), 3.0 * std::sin(.37)}, .1, -.45, .75, true},
+        {{4.0, -3.0}, {3.0 * std::cos(.37), 3.0 * std::sin(.37)}, .2, -.45, .75, true},
+        {{4.0, -3.0}, {3.0 * std::cos(.37), 3.0 * std::sin(.37)}, .4, -.45, .75, true},
     }};
     for (const RS_EllipseData& arc : thinEllipseArcs) {
         const std::size_t fixture = sources.size();
