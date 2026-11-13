@@ -41086,3 +41086,20 @@ aggregate incomplete and next isolate the reported hostile-file profile with
 a narrower Catch selector or dedicated test invocation. Do not count the
 interrupted case as passed; visible Properties GUI, cross-platform, and
 independent ODA/AutoCAD acceptance remain open as recorded above.
+
+## 1157. Reconstruct Four-point Fits Directly in the Normalized Frame (2026-11-12)
+
+Implementation commit `7fd251f06` replaces the second, world-space
+endpoint-tangent line intersection in `From4Points` with the exact quadratic
+Bezier control-point formula in the already centered and normalized frame.
+This keeps endpoint/control reconstruction in the same conditioned
+coordinates as the least-squares fit and avoids a separate intersection solve.
+
+After rebuilding the macOS arm64 CMake Release test targets,
+`[parabola][reconstruction]` passes 2,274 assertions / 5 cases, and the
+`[from-four-points]` worker-client selection passes 14,739 assertions / 3
+cases, including both worker/cache matrices and all five DXF/DWG persistence
+lanes. `git diff --check` passes. The broad hostile `[parabola]` aggregate
+receipt in section 1156 predates this fix and remains incomplete; the exact
+isolated large-origin hostile profile still needs a focused run. Cross-platform,
+visible Properties GUI, and independent ODA/AutoCAD acceptance remain open.
