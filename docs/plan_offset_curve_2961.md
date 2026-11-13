@@ -40982,3 +40982,26 @@ as incomplete, not green. Other four-point sample sets, scale/translation
 boundaries, end-to-end qualification of this constructor profile through
 worker/cache and applicable file lanes, visible GUI, and independent-CAD
 acceptance remain open.
+
+## 1151. Qualify Four-point Parabola Worker and File Persistence (2026-11-12)
+
+Test commit `a65b87320` carries the small, `1e-6`-scale, rotated and translated
+parabola recovered by `From4Points` through worker operation 7 generation and
+operation 8 cache validation on both signed offset sides. The candidate is
+selected by matching the four fit samples, three independent curve samples,
+and the expected control geometry. Each validated generalized offset is then
+saved and reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The
+reopened source remains typed as a parabola with matching control points and
+signed distance, and the editable cache fingerprint is preserved. LibreDWG
+0.14 parses the two DWG lanes and finds the cache SPLINE.
+
+On macOS arm64 CMake Release, the focused
+`From-four-points parabola offsets retain worker caches across file lanes`
+case passes twice, once with 1,037 assertions and once with 1,017; the totals
+vary between identical runs in the event-driven helper path, with no test
+failures. The target rebuilds and `git diff --check` passes. This qualifies
+this exact small translated/rotated `From4Points` source at signed distance
+`+/-5e-6`; other sample sets, scales, distances, broad construction limits,
+visible GUI, and independent ODA/AutoCAD acceptance remain open. The broad
+`[parabola]` aggregate interruption recorded in section 1150 is not superseded
+by this focused result.
