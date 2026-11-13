@@ -42380,6 +42380,9 @@ selection passes 108 assertions / 1 case, and the broader
 `[curve-offset][trim][spline-points][fit-points]` suite passes 3,901
 assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
 typed spline Trim Two matrix passes 25,251 assertions / 1 case. The target
-rebuild and `git diff --check` pass. Other fit layouts, general spline
-topology, visible GUI, cross-platform runtime, and independent ODA/AutoCAD
-acceptance remain open.
+rebuild and `git diff --check` pass. The recursive qmake6 product build also
+exits 0 with `make -j6` in `/private/tmp/offset-2961-qmake-current`; it is
+incremental and rebuilds no objects, so it is not a clean qmake6 build or a
+qmake test-target result. Other fit layouts, general spline topology, visible
+GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance remain
+open.
