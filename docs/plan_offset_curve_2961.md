@@ -42666,20 +42666,25 @@ precision. The resulting source-curve image is still wider than Trim's
 an insufficiently localized contact. A bounded subdivision attempt did not
 prove a unique child and was discarded; it must not be treated as a fix.
 
-Next implementation slice: add a kernel-level regression for contracting this
-certified root under disparate source/cutter parameter scales, then evaluate
-an affine-normalized parameter formulation of the Krawczyk operator. The
-normalization must be an exact interval-domain transformation: derivative
-columns, proof domains, contractions, event isolation, and retained-session
-provenance must all map consistently between normalized and public parameters.
-Require strict inclusion/exclusion proofs and bounded work; do not relax the
-Trim arithmetic allowance or accept a floating-point point estimate as a
-certificate. Re-run the existing dense direct oracle and both worker-action
-pick orders; preserve atomic refusal if the transformed operator cannot prove
-the required location accuracy. Add a separate certified dense-curved positive
-Trim fixture when available. Until then, dense monotone-curved Trim Two,
-visible GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance
-remain open.
+The affine-normalized Krawczyk slice is implemented and recorded in section
+1236. It improves a certified transverse intersection's contraction with a
+source parameter near `127.43` against a `[0,1]` cutter, while retaining the
+public parameter intervals and original proof domain. It does not yet close the
+dense monotone-curved Trim case: the worker action continues to refuse it
+atomically, as required by its regression. This is not evidence that the
+strict Trim image-width target has been met.
+
+Next implementation slice: measure the post-normalization root/image snapshots
+for the actual Bezier-cache-by-line fixture, then investigate a rigorous tighter
+local enclosure for the cache span (for example, a validated Taylor form or a
+local affine reparameterization that preserves interval outwardness). Add a
+kernel regression for the measured failure and require the computed image to
+meet Trim's unchanged arithmetic allowance before changing the action's refusal
+expectation. Keep all root isolation, exclusion, work/depth limits, retained
+session provenance and atomicity checks. Add a separate certified dense-curved
+positive Trim fixture when available. Until then, dense monotone-curved Trim
+Two, visible GUI, cross-platform runtime, and independent ODA/AutoCAD
+acceptance remain open.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 
@@ -42698,3 +42703,31 @@ no new family or UI implementation slice. Keep the visible Properties-widget
 acceptance gate open until it is performed and recorded; geometry-variant
 support remains the separate Slice 4 obligation and must not be inferred from
 selector coverage.
+
+## 1236. Normalize Strict Krawczyk Parameter Coordinates (2026-11-13)
+
+The strict Krawczyk operator now maps each requested parameter interval to a
+centered, locally scaled coordinate before forming its interval Jacobian and
+contraction. The midpoint inverse is computed from the same normalized
+Jacobian columns; contracted intervals are mapped outward to the original
+parameter domains before event/snapshot construction. Inclusion is still
+checked against the normalized proof box, while the published proof domain,
+isolation, and retained-session provenance remain in the original coordinates.
+Degenerate point intervals use unit scale. No acceptance tolerances or work
+limits were relaxed.
+
+A kernel regression covers a transverse crossing with a source parameter near
+`127.430125`, a `[0,1]` cutter, a shallow source tangent, a retained interval
+proof, tight image enclosures, and subsequent contraction. On macOS arm64 CMake
+Release, `[parameter-scale]` passes 30 assertions / 1 case and
+`[intersection-strict]` passes 858 assertions / 15 cases. The complete
+`[curve-offset][direct][polyline]` oracle passes 125,135 assertions / 4 cases.
+The complete
+`[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]`
+selection passes 8,617 assertions / 1 case with `DWGREAD` set to LibreDWG; this
+includes the dense curved-polyline atomic refusal in both pick orders. The
+target rebuilt successfully and `git diff --check` passes. The normalized
+operator is therefore covered for the tested scale contrast, but dense curved
+Trim still has no successful proof-level fixture; see the next step in section
+1234. Visible GUI, cross-platform runtime, and independent ODA/AutoCAD
+acceptance remain open.

@@ -1893,12 +1893,38 @@ private:
             result.proofDomain.parameterB = enlarged(requested.parameterB, m_segments[requested.segmentB]);
         }
         const auto& box = result.proofDomain;
+        // Keep the inverse Jacobian and interval residual in local coordinates
+        // so large absolute parameter values do not dominate contraction rounding.
+        const auto normalize = [](const LC_Interval& parameter, double& origin, double& scale,
+                                  LC_Interval& normalized) {
+            origin = centre(parameter);
+            scale = std::max(origin - parameter.lo(), parameter.hi() - origin);
+            if (!(scale > 0.0) || !std::isfinite(scale)) {
+                if (parameter.lo() == parameter.hi()) {
+                    scale = 1.0;
+                } else {
+                    return false;
+                }
+            }
+            normalized = (parameter - LC_Interval::point(origin)) / LC_Interval::point(scale);
+            return finite(normalized);
+        };
+        double originA = 0.0;
+        double originB = 0.0;
+        double scaleA = 0.0;
+        double scaleB = 0.0;
+        LC_Interval normalizedA;
+        LC_Interval normalizedB;
+        if (!normalize(box.parameterA, originA, scaleA, normalizedA) ||
+            !normalize(box.parameterB, originB, scaleB, normalizedB)) {
+            return true;
+        }
         Bounds a;
         Bounds b;
         Bounds pointA;
         Bounds pointB;
-        const double t = centre(box.parameterA);
-        const double u = centre(box.parameterB);
+        const double t = originA;
+        const double u = originB;
         if (!bound(box.segmentA, box.parameterA, a) || !bound(box.segmentB, box.parameterB, b) ||
             !bound(box.segmentA, LC_Interval::point(t), pointA) ||
             !bound(box.segmentB, LC_Interval::point(u), pointB)) {
@@ -1913,15 +1939,19 @@ private:
             pa.z != 0.0 || pb.z != 0.0 || da.z != 0.0 || db.z != 0.0) {
             return fail(LC_IntersectionStatus::InvalidInput);
         }
-        const double sa = std::max(std::abs(da.x), std::abs(da.y));
-        const double sb = std::max(std::abs(db.x), std::abs(db.y));
+        const double dax = da.x * scaleA;
+        const double day = da.y * scaleA;
+        const double dbx = db.x * scaleB;
+        const double dby = db.y * scaleB;
+        const double sa = std::max(std::abs(dax), std::abs(day));
+        const double sb = std::max(std::abs(dbx), std::abs(dby));
         if (!(sa > 0.0) || !(sb > 0.0)) {
             return true;
         }
-        const double ax = da.x / sa;
-        const double ay = da.y / sa;
-        const double bx = db.x / sb;
-        const double by = db.y / sb;
+        const double ax = dax / sa;
+        const double ay = day / sa;
+        const double bx = dbx / sb;
+        const double by = dby / sb;
         const double det = -ax * by + bx * ay;
         if (det == 0.0 || !std::isfinite(det)) {
             return true;
@@ -1936,23 +1966,27 @@ private:
         const auto pt = [](const double value) { return LC_Interval::point(value); };
         const LC_Interval fx = pointA.x - pointB.x;
         const LC_Interval fy = pointA.y - pointB.y;
-        const LC_Interval m00 = pt(1.0) - (pt(r00) * a.dx + pt(r01) * a.dy);
-        const LC_Interval m01 = pt(r00) * b.dx + pt(r01) * b.dy;
-        const LC_Interval m10 = -(pt(r10) * a.dx + pt(r11) * a.dy);
-        const LC_Interval m11 = pt(1.0) + pt(r10) * b.dx + pt(r11) * b.dy;
-        const LC_Interval dt = box.parameterA - pt(t);
-        const LC_Interval du = box.parameterB - pt(u);
-        const LC_Interval kt = pt(t) - (pt(r00) * fx + pt(r01) * fy) + m00 * dt + m01 * du;
-        const LC_Interval ku = pt(u) - (pt(r10) * fx + pt(r11) * fy) + m10 * dt + m11 * du;
+        const LC_Interval jax = a.dx * pt(scaleA);
+        const LC_Interval jay = a.dy * pt(scaleA);
+        const LC_Interval jbx = b.dx * pt(scaleB);
+        const LC_Interval jby = b.dy * pt(scaleB);
+        const LC_Interval m00 = pt(1.0) - (pt(r00) * jax + pt(r01) * jay);
+        const LC_Interval m01 = pt(r00) * jbx + pt(r01) * jby;
+        const LC_Interval m10 = -(pt(r10) * jax + pt(r11) * jay);
+        const LC_Interval m11 = pt(1.0) + pt(r10) * jbx + pt(r11) * jby;
+        const LC_Interval dt = normalizedA;
+        const LC_Interval du = normalizedB;
+        const LC_Interval kt = -(pt(r00) * fx + pt(r01) * fy) + m00 * dt + m01 * du;
+        const LC_Interval ku = -(pt(r10) * fx + pt(r11) * fy) + m10 * dt + m11 * du;
         if (!finite(kt) || !finite(ku)) {
             return true;
         }
-        result.a = intersect(kt, box.parameterA);
-        result.b = intersect(ku, box.parameterB);
+        result.a = intersect(pt(originA) + pt(scaleA) * kt, box.parameterA);
+        result.b = intersect(pt(originB) + pt(scaleB) * ku, box.parameterB);
         if (!result.a.isValid() || !result.b.isValid()) {
             result.kind = Inclusion::Kind::Excluded;
-        } else if (kt.lo() > box.parameterA.lo() && kt.hi() < box.parameterA.hi() &&
-                   ku.lo() > box.parameterB.lo() && ku.hi() < box.parameterB.hi()) {
+        } else if (kt.lo() > normalizedA.lo() && kt.hi() < normalizedA.hi() &&
+                   ku.lo() > normalizedB.lo() && ku.hi() < normalizedB.hi()) {
             // Full-dimensional strict inclusion proves uniqueness and regularity:
             // Rump, Acta Numerica 2010, Theorem 13.3. R consists of exact finite doubles.
             result.kind = Inclusion::Kind::Unique;

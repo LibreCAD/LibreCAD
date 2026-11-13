@@ -1598,6 +1598,51 @@ TEST_CASE("Strict transverse certificates use outward points rather than cancell
     checkWork(ordinary, options);
 }
 
+TEST_CASE("Strict root contraction normalizes disparate parameter scales",
+          "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology][parameter-scale]") {
+    constexpr double rootParameter = 127.430125;
+    constexpr double sourceDx = 1.0 / 256.0;
+    constexpr double sourceDy = 1.0 / 131072.0;
+    CertifiedPolynomials curves{{
+        polynomialLine(0, {-rootParameter * sourceDx, -rootParameter * sourceDy}, {sourceDx, sourceDy},
+                       127.429, 127.431),
+        polynomialLine(1, {-1.0, 0.0}, {2.0, 0.0})}};
+    const auto options = strictOptions();
+    auto query = findCertifiedIntersections(std::make_unique<CertifiedPolynomials>(curves), options);
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(query.session);
+    REQUIRE(query.session->rootCount() == 1);
+    const auto handle = query.session->rootHandle(0);
+    const auto initial = query.session->snapshot(handle);
+    REQUIRE(initial);
+    CHECK(initial->event.proof == LC_IntersectionProof::IntervalUniqueTransverse);
+    CHECK(initial->event.isolation.parameterA.contains(rootParameter));
+    CHECK(initial->event.isolation.parameterB.contains(0.5));
+
+    CHECK(initial->event.isolation.parameterA.width() < 2e-13);
+    CHECK(initial->event.isolation.parameterB.width() < 2e-13);
+    CHECK(initial->imageX.width() < 1e-12);
+    CHECK(initial->imageY.width() < 1e-12);
+    CHECK(initial->imageX.contains(initial->event.point.x));
+    CHECK(initial->imageY.contains(initial->event.point.y));
+
+    const auto fixedPoint = query.session->contract(handle, refineAllowance());
+    REQUIRE(fixedPoint.status == LC_IntersectionStatus::Ok);
+    REQUIRE(fixedPoint.snapshot);
+    const auto& contracted = *fixedPoint.snapshot;
+    checkSameDomain(contracted.event.proofDomain, initial->event.proofDomain);
+    CHECK(contracted.event.isolation.parameterA.contains(rootParameter));
+    CHECK(contracted.event.isolation.parameterB.contains(0.5));
+    CHECK(contracted.event.isolation.parameterA.width() <= initial->event.isolation.parameterA.width());
+    CHECK(contracted.event.isolation.parameterB.width() <= initial->event.isolation.parameterB.width());
+    CHECK((contracted.event.isolation.parameterA.width() < initial->event.isolation.parameterA.width() ||
+           contracted.event.isolation.parameterB.width() < initial->event.isolation.parameterB.width()));
+    CHECK(contracted.imageX.lo() >= initial->imageX.lo());
+    CHECK(contracted.imageX.hi() <= initial->imageX.hi());
+    CHECK(contracted.imageY.lo() >= initial->imageY.lo());
+    CHECK(contracted.imageY.hi() <= initial->imageY.hi());
+}
+
 TEST_CASE("Strict isolation keeps nearby distinct roots below the numerical merge tolerance",
           "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology]") {
     const double lo = 0.5 - 1.0 / 1024.0;
