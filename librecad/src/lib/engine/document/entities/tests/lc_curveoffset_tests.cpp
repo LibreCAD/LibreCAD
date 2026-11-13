@@ -2108,22 +2108,26 @@ TEST_CASE("Closed fit-point spline ignores repeated interior neighbors",
 
 TEST_CASE("Closed fit-point spline preserves a near-coincident distinct chord",
           "[curve-offset][direct][spline-points][closed][fit-points][near-coincident][oracle]") {
-    for (const unsigned profile : {0u, 1u}) {
+    for (const unsigned profile : {0u, 1u, 2u, 3u}) {
         CAPTURE(profile);
         LC_SplinePointsData data{true, false};
-        data.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
-        if (profile == 1) {
-            const double angle = 0.63;
-            constexpr double scale = 2.25;
-            const double cosine = std::cos(angle);
-            const double sine = std::sin(angle);
-            for (RS_Vector& point : data.splinePoints) {
-                const double x = point.x;
-                const double y = point.y;
-                point = {35.0 + scale * (x * cosine - y * sine),
-                         -21.0 + scale * (x * sine + y * cosine)};
-            }
+        const double gap = profile == 2 ? 5.1e-4 : profile == 3 ? 2e-3 : 1e-3;
+        data.splinePoints = {{0, 0}, {10, 0}, {10.0 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+        const double angle = profile == 1 ? 0.63 : profile == 2 ? 0.41 : 0.0;
+        const double scale = profile == 1 ? 2.25 : profile == 2 ? 0.5 : profile == 3 ? 8.0 : 1.0;
+        const RS_Vector origin = profile == 1 ? RS_Vector{35.0, -21.0}
+            : profile == 2 ? RS_Vector{-18.0, 27.0}
+            : profile == 3 ? RS_Vector{120.0, -75.0} : RS_Vector{0.0, 0.0};
+        const double cosine = std::cos(angle);
+        const double sine = std::sin(angle);
+        const bool reflected = profile == 2;
+        for (RS_Vector& point : data.splinePoints) {
+            const double x = point.x;
+            const double y = reflected ? -point.y : point.y;
+            point = {origin.x + scale * (x * cosine - y * sine),
+                     origin.y + scale * (x * sine + y * cosine)};
         }
+        if (profile == 2) std::reverse(data.splinePoints.begin(), data.splinePoints.end());
         LC_SplinePoints source{nullptr, data};
         REQUIRE(source.getData().splinePoints.size() == data.splinePoints.size());
         REQUIRE(source.getData().splinePoints[1].distanceTo(source.getData().splinePoints[2]) > 0.0);
