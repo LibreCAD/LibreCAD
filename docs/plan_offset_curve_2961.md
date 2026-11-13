@@ -41151,3 +41151,16 @@ isolated separately in section 1159. This supersedes the interrupted run in
 section 1156 for this exact broad case; it is not a pass of the entire
 `[parabola]` aggregate or cross-platform execution. Visible Properties
 interaction and independent ODA/AutoCAD acceptance remain open.
+
+## 1161. Re-run the Complete Parabola Regression Aggregate (2026-11-13)
+
+At source commit `d5f1da959`, the macOS arm64 CMake Release
+`librecad_offset_hostilefile_tests -r compact '[parabola]'` selection passes
+4 test cases and 4,056,553 assertions with LibreDWG enabled. This includes the
+large scaled/translated staged DXF/DWG persistence case from section 1160 and
+the focused worker/cache and reconstruction regressions. It supersedes the
+interrupted parabola aggregate in section 1156 for this current test source;
+the dedicated broad persistence result is recorded separately in section
+1160. This aggregate does not establish the whole offset-family matrix,
+cross-platform execution, visible Properties acceptance, or independent
+ODA/AutoCAD compatibility.
