@@ -1945,11 +1945,14 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Six-point closed fit splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    for (const bool transformed : {false, true}) {
-        CAPTURE(transformed);
+    for (const unsigned profile : {0u, 1u, 2u}) {
+        CAPTURE(profile);
         LC_SplinePointsData data{true, false};
-        data.splinePoints = {{-4, 0}, {-2, 3}, {2, 3}, {4, 0}, {2, -3}, {-2, -3}};
-        if (transformed) {
+        data.splinePoints = profile == 2
+            ? std::vector<RS_Vector>{{-5, 0}, {-4, 3}, {-1, 5}, {3, 4},
+                                     {5, 0}, {3, -4}, {-1, -5}, {-4, -3}}
+            : std::vector<RS_Vector>{{-4, 0}, {-2, 3}, {2, 3}, {4, 0}, {2, -3}, {-2, -3}};
+        if (profile == 1) {
             constexpr double angle = 0.47;
             constexpr double scale = 2.0;
             const double cosine = std::cos(angle);
@@ -1961,6 +1964,7 @@ TEST_CASE("Six-point closed fit splines retain exact offset geometry",
                          -11.0 + scale * (x * sine + y * cosine)};
             }
         }
+        if (profile == 2) data.fitTolerance = 1e-4;
         LC_SplinePoints source{nullptr, data};
         REQUIRE(source.isClosed());
         REQUIRE(source.getSegmentCount() == data.splinePoints.size());
