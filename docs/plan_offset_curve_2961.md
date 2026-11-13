@@ -42386,3 +42386,22 @@ incremental and rebuilds no objects, so it is not a clean qmake6 build or a
 qmake test-target result. Other fit layouts, general spline topology, visible
 GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance remain
 open.
+
+## 1221. Qualify a Fourteen-point Closed Fit Spline with Non-default Tolerance (2026-11-13)
+
+Test commit `29426eb92` adds an irregular fourteen-point closed SplinePoints
+profile with fit tolerance `3e-4`. The independent direct trimmed-offset oracle
+checks distances `0.1`, `0.25`, and `0.5` on both signed sides against the
+source-distance function. The worker-backed Trim Two matrix exercises Update
+from Source, both pick orders, commit, undo/redo, all five DXF/DWG lanes,
+sampled reopened-geometry checks, and LibreDWG parsing. This is one bounded
+fourteen-point layout/tolerance combination.
+
+On macOS arm64 CMake Release, the direct `[curve-offset][three-point]`
+selection passes 135 assertions / 1 case; the broader
+`[curve-offset][trim][spline-points][fit-points]` selection passes 3,928
+assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+typed spline Trim Two matrix passes 25,395 assertions / 1 case. The target
+rebuild and `git diff --check` pass. Other fourteen-point layouts/tolerances,
+general spline topology, visible GUI, cross-platform runtime, and independent
+ODA/AutoCAD acceptance remain open.
