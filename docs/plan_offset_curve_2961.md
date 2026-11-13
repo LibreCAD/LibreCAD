@@ -42914,36 +42914,45 @@ inward result is the eroded region boundary. Adjacent shifted straight edges
 must be cut at their certified miter intersection; the overlap portions at the
 original vertex are discarded. This is not endpoint snapping, a round arc, or
 a request for `LC_OffsetWorkerSourceCache::combine` to infer connectivity. A
-probe of the existing programmatic `RegionBoundary` route with a closed square
-and inward distance 1 returns `AmbiguousTopology` (status 11) at the
-RegionBoundary stage. Source-node intersection discovery succeeds, but fragment
-sector classification still refuses before candidate arrangement construction.
-The classifier's former `left - right == 1` check was orientation-dependent;
-it now accepts a single crossing in either direction. The square still refuses,
-so this correction is necessary but not sufficient, and `RegionBoundary` is not
-yet a workaround.
+closed square probe exposed three RegionBoundary prerequisites: source join
+parameters must partition fragments even without self-intersections; winding
+sector sampling must accept either traversal orientation and must actually run
+when its classification-tolerance floor exceeds the original starting step;
+and a closed seam with a real corner must not be merged as a smooth wrapped
+fragment. These are now handled. The programmatic inward RegionBoundary result
+for a square succeeds as one closed cycle with four straight miter edges at
+`(1,1)`, `(9,1)`, `(9,9)`, `(1,9)`, tested in both source orientations with no
+corner-circle arcs.
+
+On macOS arm64 CMake Release, `[region][kink]` passes 24 assertions / 1 case;
+the complete `[curve-offset][region]` selection passes 23,026 assertions / 12
+cases. The existing worker-backed `[closed][high-segment]` Trim case passes
+508 assertions / 1 case, retaining successful outward behavior and atomic
+inward refusal. A direct 256-edge RegionBoundary probe still returns
+`LimitExceeded` during visibility classification at the bounded 1,048,576
+distance-map-box allowance (candidate intersection work is 289,213 box pairs,
+with 4,608 exact offset samples). RegionBoundary is therefore not routed into
+the native worker yet, and no high-segment inward worker success is claimed.
 
 **Next implementation slices:**
 
-1. Complete sector classification for simple closed linear spans in both
-   traversal directions and establish a successful unoffset source-node
-   partition. Then, for convex corners on erosion, use the unique intersection
-   of the two adjacent shifted support
-   lines, require it to lie within the two source-segment projection ranges,
-   and reject parallel, numerically unstable, or over-budget miters. Trim both
-   neighboring offset spans to the same certified point. Keep dilation's
-   corner-circle arcs and concave erosion behavior unchanged.
+1. Reduce the RegionBoundary visibility work for high-segment linear polygons
+   without raising hard limits based only on input count. Preserve uncertainty
+   as an explicit refusal, and prove the 256-edge polygon stays within the
+   fixed work budget.
 2. Carry explicit corner/miter provenance through geometry construction and
    materialization. Independently verify both adjacent shifted-line residuals,
    source-segment projection bounds, continuity, orientation, and region
    classification. Do not relax generic spline correspondence or intersection
    certification to admit a miter.
-3. Add square and regular high-segment polygon regressions at convex corners,
-   including the closed seam, both operand roles, both pick orders, and
-   worker-backed preview/commit/undo. Retain atomic refusal cases for a
-   collapsed inradius, concave/ambiguous topology, unstable miters, resource
-   limits, and disconnected results. Then run the complete Trim and geometry
-   suites plus applicable DXF/DWG save/reopen checks.
+3. Route only validated closed, all-linear polyline sources through the
+   eroded-region path in the native worker. Verify cache materialization and
+   source identity before enabling it. Add regular high-segment polygon tests
+   for both sides, both operand roles, both pick orders, worker preview,
+   commit/undo, and applicable DXF/DWG save/reopen. Retain atomic refusal cases
+   for a collapsed inradius, concave/ambiguous topology, unstable miters,
+   resource limits, and disconnected results. Run the complete Trim and
+   geometry suites.
 
 This closes only the exact linear convex-erosion subcase. Curved polyline
 corners, self-intersections, broader fill-rule arrangements, visible GUI,

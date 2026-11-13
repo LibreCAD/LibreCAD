@@ -6135,7 +6135,11 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         cuts.push_back(x.parameterA);
         cuts.push_back(x.parameterB);
     }
+    // Source joins are region nodes too, even when the source has no
+    // self-intersections to contribute crossing parameters.
+    cuts.insert(cuts.end(), breaks.begin() + 1, breaks.end() - 1);
     std::sort(cuts.begin(), cuts.end());
+    cuts.erase(std::unique(cuts.begin(), cuts.end()), cuts.end());
 
     // 2. source fragments between nodes, as parameter intervals (two when one wraps the seam)
     struct SourceFragment {
@@ -6179,7 +6183,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         }
         const RS_Vector normal = RS_Vector{-c.first.y, c.first.x} / c.first.magnitude();
         bool decided = false;
-        for (double step = 1e-3 * scale.feature; step >= 16.0 * options.tolerance.classification; step /= 8.0) {
+        for (double step = std::max(1e-3 * scale.feature, 128.0 * options.tolerance.classification);
+             step >= 16.0 * options.tolerance.classification; step /= 8.0) {
             int left = 0;
             int right = 0;
             if (!windingNumber(source, c.point + normal * step, left, boxes, options.maxDistanceMapBoxes) ||
@@ -6221,6 +6226,24 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             nodes.push_back(x.point);
         }
     }
+    std::vector<bool> joinCusps;
+    std::vector<SourceJoin> joins;
+    const LC_CurveOffsetStatus joinsStatus =
+        checkJoins(source, magnitude, options, KinkPolicy::Round, joinCusps, joins);
+    if (joinsStatus != LC_CurveOffsetStatus::Ok) {
+        return joinsStatus;
+    }
+    for (const SourceJoin& join : joins) {
+        if (join.kind != SourceJoin::Kind::Kink) {
+            continue;
+        }
+        const bool known = std::any_of(nodes.begin(), nodes.end(), [&](const RS_Vector& node) {
+            return node.distanceTo(join.point) <= options.tolerance.nodeMerge;
+        });
+        if (!known) {
+            nodes.push_back(join.point);
+        }
+    }
 
     // 4. candidates: the boundary fragments' offsets outwards or inwards, and circles about the nodes
     struct Candidate {
@@ -6237,7 +6260,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         }
         // one stretch: a fragment across the seam runs on through it
         std::vector<std::pair<double, double>> stretches = fragment.intervals;
-        if (f == wrapFragment && stretches.size() == 2) {
+        if (f == wrapFragment && stretches.size() == 2 && joins[0].kind == SourceJoin::Kind::Smooth) {
             stretches = {{stretches[0].first, stretches[1].second}};
         }
         for (const auto& [a, b] : stretches) {

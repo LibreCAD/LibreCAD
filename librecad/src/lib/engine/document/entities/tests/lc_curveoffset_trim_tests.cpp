@@ -1333,16 +1333,36 @@ TEST_CASE("A point in a wide corner's wedge takes the corner's outer side", "[cu
     CHECK(side.distance == Approx(std::sqrt(2.0)).epsilon(1e-9));
 }
 
-TEST_CASE("A region still refuses a source with a corner", "[curve-offset][region][kink]") {
-    const RS_Spline square = polylineSpline({{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
-    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(square, 1.0);
-    options.mode = LC_CurveOffsetMode::RegionBoundary;
-    const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
-        square, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 1.0), options,
-        LC_CurveOffset::makeDirectSourceBudget());
-    // it rounds no corner of its own: refused, whichever step finds the corner first
-    CHECK(result.status != LC_CurveOffsetStatus::Ok);
-    CHECK(result.branches.empty());
+TEST_CASE("A convex square shrinks to its mitered region boundary", "[curve-offset][region][kink]") {
+    for (const bool reversed : {false, true}) {
+        CAPTURE(reversed);
+        std::vector<RS_Vector> points{{0, 0}, {10, 0}, {10, 10}, {0, 10}};
+        if (reversed) {
+            std::reverse(points.begin(), points.end());
+        }
+        const RS_Spline square = polylineSpline(points, true);
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(square, 1.0);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            square, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(result.status), static_cast<int>(result.intersectionDiagnostics.stage));
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const LC_OffsetBranch& boundary = result.branches.front();
+        CHECK(boundary.closed);
+        CHECK(boundary.cubicPieces.size() == 4);
+        const std::array<RS_Vector, 4> expected{{{1, 1}, {9, 1}, {9, 9}, {1, 9}}};
+        for (const LC_OffsetCubicPiece& piece : boundary.cubicPieces) {
+            CHECK_FALSE(piece.provenance.arcCentre.valid);
+        }
+        for (const RS_Vector& corner : expected) {
+            CHECK(std::any_of(boundary.cubicPieces.begin(), boundary.cubicPieces.end(), [&](const auto& piece) {
+                return piece.bezier[3].distanceTo(corner) <=
+                       options.tolerance.requestedGeometry + options.tolerance.nodeMerge;
+            }));
+        }
+    }
 }
 
 namespace {
