@@ -40679,3 +40679,21 @@ passes 23,060 assertions / 1 case; `git diff --check` passes. This adds one
 forward-traversal interval and signed distance, not general arc-interval or
 cutter coverage. Other intervals/distances/cutters, visible GUI, cross-
 platform, and independent-CAD acceptance remain open.
+
+## 1132. Qualify a Longer Forward Elliptic-arc Interval (2026-11-12)
+
+Test commit `d4ea26edd` adds a longer forward-traversal interval to the
+elliptic-arc Trim Two matrix: center `(-6, 8)`, semi-major length `3`, ratio
+`0.6`, angular bounds `-0.4..2.4`, and outward distance `0.5`. The first
+tested cutter placement at normalized arc parameter `0.487` produced only
+ambiguous pick refusals; moving the cutter to `0.75` yields certified picks.
+Both operand orders probe 19 source-pick fractions, require refusal to leave
+no fragments, and run through preview/commit, undo/redo, and all five DXF/DWG
+save/reopen lanes with LibreDWG parsing.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 23,974 assertions / 1 case; `git diff --check` passes. This qualifies
+the specified longer interval, outward distance, and `0.75` cutter placement
+only. Other intervals, inward distances, cutters, visible GUI, cross-platform,
+and independent-CAD acceptance remain open.
