@@ -41068,3 +41068,21 @@ including parabola as a distinct kind. This is headless selector and state
 transition evidence only; visible Properties interaction, old-source
 highlight behavior in the desktop, and external-customer acceptance remain
 open.
+
+## 1156. Revisit Broad Parabola Aggregate Without Claiming Completion (2026-11-12)
+
+At PR head `6ac09a72e`, the macOS arm64 CMake Release `[parabola]`
+aggregate reached 23 cases and 3,611,624 assertions before it was stopped
+because the hostile persistence case was still running after several minutes.
+Catch2 reported 22 cases passed and one interrupted; 3,611,623 assertions
+passed, with the SIGINT occurring in
+`scaled translated parabola caches persist through staged DXF and DWG import`
+at `variantIndex=5`, scale `1000`, ratio `1e9`, and normalized distance `-2`.
+No geometry assertion failure was observed, but this is not a green aggregate.
+
+The focused reconstruction matrix, worker/cache matrix, five-lane persistence
+matrix, and source chooser selector all pass independently. Keep the broad
+aggregate incomplete and next isolate the reported hostile-file profile with
+a narrower Catch selector or dedicated test invocation. Do not count the
+interrupted case as passed; visible Properties GUI, cross-platform, and
+independent ODA/AutoCAD acceptance remain open as recorded above.
