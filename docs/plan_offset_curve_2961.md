@@ -43204,3 +43204,39 @@ worker erosion and cache validation. It does not establish general bulge
 layouts, all-arc optimization, self-intersecting/concave fill semantics,
 Trim/file round trips for this exact variant, visible GUI acceptance,
 non-macOS runtime, or independent ODA/AutoCAD acceptance; those remain open.
+
+## 1249. Enable and Qualify Four-arc Circle Erosion (2026-11-13)
+
+The strict-convex mixed-polyline proof previously required at least one line
+segment, leaving even a four-quarter-arc circle on Direct mode. The guard was
+unnecessary: the proof already checks bounded non-adjacent intersections,
+signed area, oriented arc sweeps, and non-reflex tangent joins for every
+segment. Removing that extra restriction allows a simple, strictly convex
+all-arc circle to select RegionBoundary only for inward erosion; its outward
+request remains Direct. No generic convexity or intersection checks were
+weakened.
+
+The all-arc circle is exercised by the complete scale/translation matrix,
+including both signed sides at scales `1e-3`, `1`, and `1e3` and translation
+ratios `1e4` and `1e6`. The worker route test explicitly checks inward versus
+outward mode selection. Existing closed-polyline cache-promotion coverage
+exercises both signed distances and cache admission/refusal for the same
+four-arc circle.
+
+Validation on macOS arm64:
+
+- CMake worker-kernel focused `[translation],[region-boundary]`: passed
+  62,373 assertions / 4 cases.
+- CMake worker-kernel source-cache/polyline selection: passed 61,288
+  assertions / 7 cases.
+- CTest `offset_worker_kernel`: passed in 220.93 seconds.
+- Recursive qmake6 product build: `make -j6` exited 0 and rebuilt the
+  application and worker. The optional cargo-env file notice and unrelated
+  existing warnings remain.
+- `git diff --check`: passed before commit.
+
+This qualifies only the four-quarter-arc circular polyline for worker
+generation/cache processing and scale/translation stability. It does not
+claim arbitrary all-arc loop topology, all-arc Trim or DXF/DWG round trips,
+visible GUI acceptance, non-macOS runtime, or independent ODA/AutoCAD
+acceptance. Those remain open roadmap gates.

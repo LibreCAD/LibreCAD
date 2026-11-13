@@ -71,13 +71,11 @@ inline std::optional<double> strictConvexPolylineOrientation(
     long double twiceArea = 0.0L;
     const RS_Vector origin = data->startpoint;
     bool hasStrictTurn = false;
-    bool hasLine = false;
     for (std::size_t i = 0; i < data->segments.size(); ++i) {
         const auto& definitionSegment = data->segments[i];
         const auto& actualSegment = liveData->segments[i];
         SegmentFrame frame;
         if (const auto* line = std::get_if<RS_LineData>(&definitionSegment)) {
-            hasLine = true;
             const auto* actualLine = std::get_if<RS_LineData>(&actualSegment);
             if (actualLine == nullptr ||
                 (actualLine->startpoint + translation).distanceTo(line->startpoint) > pointSlack ||
@@ -123,7 +121,6 @@ inline std::optional<double> strictConvexPolylineOrientation(
         frames.push_back(frame);
     }
 
-    if (!hasLine) return std::nullopt;
     if (!std::isfinite(static_cast<double>(twiceArea)) || twiceArea == 0.0L) return std::nullopt;
     const double orientation = twiceArea > 0.0L ? 1.0 : -1.0;
     for (std::size_t i = 0; i < frames.size(); ++i) {

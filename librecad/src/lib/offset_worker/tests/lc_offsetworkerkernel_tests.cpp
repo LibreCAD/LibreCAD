@@ -9233,6 +9233,27 @@ TEST_CASE("worker routes only matching simple convex linear erosion through regi
     REQUIRE(clockwiseOutward);
     CHECK(clockwiseOutward->mode == LC_CurveOffsetMode::Direct);
 
+    const LC_OffsetPolylineData allArcCircle{
+        {2, 0}, {2, 0}, true,
+        {RS_ArcData{{0, 0}, 2, 0, M_PI / 2.0, false},
+         RS_ArcData{{0, 0}, 2, M_PI / 2.0, M_PI, false},
+         RS_ArcData{{0, 0}, 2, M_PI, 3.0 * M_PI / 2.0, false},
+         RS_ArcData{{0, 0}, 2, 3.0 * M_PI / 2.0, 2.0 * M_PI, false}}};
+    const LC_OffsetSourceDefinition allArcInward{
+        LC_OffsetSourceGeometry{allArcCircle}, 0.25, 1e-4, false};
+    auto allArcEntity = allArcInward.source.makeEntity();
+    REQUIRE(allArcEntity);
+    const auto allArcInwardOptions =
+        LC_OffsetWorkerTolerance::directOptions(allArcInward, *allArcEntity);
+    REQUIRE(allArcInwardOptions);
+    CHECK(allArcInwardOptions->mode == LC_CurveOffsetMode::RegionBoundary);
+    auto allArcOutward = allArcInward;
+    allArcOutward.signedDistance = -0.25;
+    const auto allArcOutwardOptions =
+        LC_OffsetWorkerTolerance::directOptions(allArcOutward, *allArcEntity);
+    REQUIRE(allArcOutwardOptions);
+    CHECK(allArcOutwardOptions->mode == LC_CurveOffsetMode::Direct);
+
     auto differentEntity = LC_OffsetSourceGeometry{LC_OffsetPolylineData{
         {10, 10}, {10, 10}, true,
         {RS_LineData{{10, 10}, {15, 10}}, RS_LineData{{15, 10}, {15, 15}},
@@ -11238,7 +11259,7 @@ TEST_CASE("polyline worker generation and cache admission survive scale and tran
                         std::size_t bestIndex = translatedSplines.size();
                         for (std::size_t candidate = 0; candidate < translatedSplines.size(); ++candidate) {
                             if (matched[candidate]) continue;
-                            const double error = variant >= 4
+                            const double error = variant >= 3
                                 ? sampledHausdorff(local, translatedSplines[candidate], translation)
                                 : geometryError(local, translatedSplines[candidate], translation);
                             if (error < best) {
