@@ -43317,3 +43317,35 @@ rounded-rectangle topology, and the named version lanes only. Other all-arc
 loops, broader curved/concave topology and fit-variant matrices, visible GUI
 workflow, non-macOS runtime, and independent ODA/AutoCAD acceptance remain
 open. This section does not close Slice 4 or Slice 5.
+
+## 1252. Qualify Clockwise All-arc Trim and Retain the Symmetric Root Limit (2026-11-13)
+
+The all-arc source-action matrix now includes the clockwise traversal of the
+same four-quarter-arc circle, using negative bulges. Source replacement,
+Trim, undo/redo, and five-format save/reopen pass for this winding when the
+vertical cutter is offset from the symmetry axis to `x = 0.25`. This confirms
+that the source admission and tested Trim path are not limited to the
+counter-clockwise traversal.
+
+An attempted exact centerline cutter at `x = 0` still refuses for the
+clockwise-generated cache with bounded `LimitExceeded`: 18 input spans, 204
+total box pairs, 189 generated intersection items, and pair-refinement depth
+48, with no certified roots. The corresponding counter-clockwise profile
+passes at `x = 0`. Do not claim symmetric centerline coverage or raise the
+fixed depth cap to mask this. The remaining implementation task is to make
+root isolation certify the two transverse contacts at this cache's symmetric
+crossings (or produce a justified exact endpoint certificate) while retaining
+the current refusal for genuinely ambiguous/tangent cases. Keep both winding
+and exact-centerline fixtures in the eventual matrix.
+
+Validation on macOS arm64 CMake Release at test commit `8282ce7d3`:
+
+- `librecad_tests 'I trim one closed convex polyline cache component and retain the rest'`:
+  passed 900 assertions / 1 case, covering five profiles (square, rounded,
+  unequal-radius rounded, all-arc CCW, all-arc CW) across five file lanes.
+- `git diff --check` passed before commit.
+
+This qualifies the clockwise circle only with the tested off-axis cutter. The
+exact symmetric intersection remains an open correctness issue; arbitrary
+all-arc loops, visible GUI, non-macOS runtime, and independent ODA/AutoCAD
+acceptance also remain open. This does not close Slice 4 or Slice 5.
