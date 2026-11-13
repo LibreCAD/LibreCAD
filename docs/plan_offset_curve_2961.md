@@ -42289,3 +42289,22 @@ With `DWGREAD=/opt/homebrew/bin/dwgread`,
 assertions / 1 case. The `librecad_tests` target rebuild succeeds and
 `git diff --check` passes. Cross-platform runtime, visible GUI, broader
 fit-point variants, and independent ODA/AutoCAD acceptance remain open.
+
+## 1216. Transform and Reverse the Three-point Closed Fit Profile (2026-11-13)
+
+Test commit `bdbe69592` extends section 1215's three-fit-point closed profile
+with a similarity-transformed, y-reflected, reversed copy (scale `1.5`,
+rotation `0.63` radians, translation `(35,-21)`). The independent direct
+normal-distance oracle checks both signed sides for the nominal and transformed
+profiles. The worker-backed Trim Two matrix carries the transformed source
+through Update from Source and both action pick orders, then validates commit,
+undo/redo, the five DXF/DWG lanes, sampled reopened geometry, and LibreDWG
+parsing. This is one bounded transform, not a general invariance proof.
+
+On macOS arm64 CMake Release, `QT_QPA_PLATFORM=offscreen
+./librecad_tests '[curve-offset][three-point]'` passes 22 assertions / 1 case.
+With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused typed spline Trim Two
+matrix passes 20,433 assertions / 1 case. The test target rebuild and
+`git diff --check` pass. Other transformations, fit-point variants, visible
+GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance remain
+open.
