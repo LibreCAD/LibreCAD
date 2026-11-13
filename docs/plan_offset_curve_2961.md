@@ -40850,3 +40850,13 @@ case passes 3,804 assertions / 1 case; `git diff --check` passes. This
 qualifies the tested closed cubic source only; periodic rational weights,
 other closed knot/control layouts, additional cutters, visible GUI,
 cross-platform and independent-CAD acceptance remain open.
+
+## 1143. Re-run Aggregate Trim-action Tests After Closed-spline Coverage (2026-11-12)
+
+The macOS arm64 CMake Release `[trim-action]` suite passes 133,072 assertions
+across 87 cases with `QT_QPA_PLATFORM=offscreen` and LibreDWG 0.14 provided
+through `DWGREAD`. This run includes the closed cubic spline Trim Two profile
+from section 1142 in addition to the arc and rational-spline matrices. It
+supersedes section 1141's 132,406-assertion count. Other family/variant gaps,
+visible GUI, cross-platform, clean qmake6, and independent-CAD acceptance
+remain open.
