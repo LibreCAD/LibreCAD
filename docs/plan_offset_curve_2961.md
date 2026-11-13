@@ -316,10 +316,11 @@ Sections 1170-1171 qualify nominal and similarity-transformed six-fit-point
 closed SplinePoints sources through direct normals, worker-backed Trim Two,
 and five DXF/DWG lanes. Section 1172 adds an eight-fit-point closed profile
 with fit tolerance `1e-4`; section 1173 adds a four-fit-point closed profile.
-All three counts use the same direct, worker Trim Two, and five-file-lane
-checks. Their closed cut/control-file representation is checked by sampled
-geometry, not by internal storage equality. These fixtures do not close other
-fit-point counts, tolerances, or transformations.
+Section 1174 adds an irregular five-fit-point closed profile. All four counts
+use the same direct, worker Trim Two, and five-file-lane checks. Their closed
+cut/control-file representation is checked by sampled geometry, not by
+internal storage equality. These fixtures do not close other fit-point counts,
+tolerances, or transformations.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41075,6 +41076,22 @@ passes 5,336 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
 specific fit layouts, scales, and signed distances, not all parabola
 conditioning/domain boundaries. Visible Properties GUI, cross-platform, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1174. Qualify an Irregular Five-point Closed Fit Spline (2026-11-13)
+
+Test commit `5a92acb49` adds an irregular five-fit-point closed `LC_SplinePoints`
+profile to the direct exact-normal oracle and worker-backed Trim Two action
+matrix. The action exercises both operand pick orders, undo/redo, and R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. Reopened closed cut/control
+storage is compared with the source by sampled geometry.
+
+On macOS arm64 CMake Release, the focused direct closed-fit selection passes
+33,482 assertions / 4 cases, and the fit-point Trim Two action case passes
+11,693 assertions / 1 case with LibreDWG enabled. The incremental recursive
+qmake6 application/worker/plugin build exits 0 and `git diff --check` passes.
+This qualifies one irregular five-point layout only. Other fit-point layouts,
+transforms and tolerances, visible GUI, cross-platform behavior, and independent
+ODA/AutoCAD acceptance remain open.
 
 ## 1155. Revalidate the Nine-family Source Chooser at Current PR Head (2026-11-12)
 
