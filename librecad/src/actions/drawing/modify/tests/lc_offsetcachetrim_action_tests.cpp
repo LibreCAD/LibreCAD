@@ -3153,6 +3153,17 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         const RS_Vector nativePick = native->getPointAt(
             first + (last - first) * (profile == 5 ? .25 : .1));
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
+        if (profile == 5 && !ellipseFirst) {
+            for (const double fraction : {.05, .1, .15, .2, .25, .3, .35, .4,
+                                          .45, .5, .55, .6, .65, .7, .75, .8,
+                                          .85, .9, .95}) {
+                CAPTURE(fraction);
+                const auto probe = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
+                    {native->getPointAt(first + (last - first) * fraction)});
+                REQUIRE(probe.refusal == LC_OffsetCacheTrim::Refusal::None);
+                CHECK(probe.fragments.size() == 1);
+            }
+        }
         f.action->click(ellipseFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
