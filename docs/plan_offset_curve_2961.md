@@ -40761,3 +40761,20 @@ the selected interval's forward/reversed and inward/outward matrix at one
 distance, with the tested cutter placements only. Other interval, distance,
 and cutter combinations, visible GUI, cross-platform, and independent-CAD
 acceptance remain open.
+
+## 1137. Qualify an Eccentric Forward Elliptic-arc Trim (2026-11-12)
+
+Test commit `8ad139042` adds an inward, forward-traversal partial ellipse arc
+with center `(-6, 8)`, semi-major length `3`, axis ratio `0.2`, angular bounds
+`-0.4..2.4`, and offset distance `0.054` (45% of the minimum-curvature radius
+`0.12`). The cutter is placed at normalized arc parameter `0.25`. Both Trim
+Two operand orders sweep 19 source-pick fractions, require refused probes to
+leave no fragments, and exercise preview/commit, undo/redo, and all five
+DXF/DWG save/reopen lanes with LibreDWG parsing.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 27,977 assertions / 1 case; `git diff --check` passes. This qualifies
+one sub-cusp distance and interval for ratio `0.2`; exact/post-cusp distances,
+other transforms and intervals, other cutters, visible GUI, cross-platform,
+and independent-CAD acceptance remain open.
