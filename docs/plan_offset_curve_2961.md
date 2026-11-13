@@ -42854,3 +42854,60 @@ dense two-crossing kernel/accounting question and its fail-closed output-limit
 behavior, not successful worker publication of an over-cap result. Broader
 disconnected layouts, closed/high-segment chains, self-overlap, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+
+## 1240. Reconcile the Source-type Picker Request (2026-11-13)
+
+The latest request is to let the user change the requested source-curve type
+while selecting a replacement and to offer every currently supported offset
+source type. This matches the existing source-replacement contract; it does
+not expand support to unrelated drawable entities or require a second picker.
+The canonical inventory remains the nine entries in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola must remain
+a distinct typed choice from spline-points.
+
+The implementation and headless selector/candidate matrix are already in
+place. During an active replacement workflow, the type selector remains
+available, changing it refreshes eligible candidates immediately, and a
+candidate only becomes the new source after asynchronous validation succeeds.
+Filtering or failed/stale preparation must leave the current source, cache,
+identity, and source indication unchanged. Existing-source highlighting is
+part of the visible interaction contract. Sections 1192-1193 and 1225-1226
+record headless coverage for the nine families, repeated type changes, typed
+replacement, and parabola identity; this entry does not claim visible desktop
+acceptance.
+
+**Disposition:** no further source-widget implementation slice is required
+unless the canonical inventory or these state-transition tests regress. Keep
+the visible Properties workflow acceptance gate open, and continue Slice 4's
+separate geometry-variant generation, worker/cache, trimming, and applicable
+DXF/DWG checks. A type being selectable is not evidence that every variant of
+that family is supported end to end.
+
+## 1241. Expose Closed High-segment Polyline Trim Topology Gap (2026-11-13)
+
+A worker-created 256-edge closed regular-polyline source is now covered by a
+Trim Two action regression. The source entity is closed and its native
+`LC_OffsetCurve` retains the typed polyline source definition, but the stored
+cache is not marked closed and has a nonzero seam gap. With a transverse line,
+the full cache-as-cutter query certifies two crossings while the reverse
+picked-target query certifies only one. The worker action therefore produces
+no preview; the original native curve and line remain live, the cache
+fingerprint and undo epoch remain unchanged. This is a real fail-closed
+limitation, not successful closed-polyline Trim support.
+
+On the current macOS arm64 CMake Release build, the focused
+`[closed][high-segment]` regression passes 171 assertions / 1 case. The full
+`librecad_offset_trim_tests` target passes 204,031 assertions / 162 cases, and
+`git diff --check` passes. The fixture demonstrates that successful open
+high-segment polyline Trim and closed fit-point spline Trim do not establish
+closed polyline behavior.
+
+**Next implementation requirement:** trace the `Update from Source` worker
+materialization of a closed polyline and preserve its actual connected/closed
+cache topology (including the seam) without snapping unrelated branches or
+loosening intersection proof rules. Then require two certified contacts in
+both Trim Two operand roles, worker preview/commit/undo in both pick orders,
+atomic refusal for genuinely disconnected or over-limit output, and applicable
+DXF/DWG save/reopen checks. Keep closed/high-segment polyline support open
+until this positive path and its persistence evidence pass.
