@@ -30435,6 +30435,11 @@ bow-tie uses `0.02` and `0.05`. The five-point star is separately overridden
 to use actual magnitudes `0.2` and `0.5`. These actual values supersede the
 shorthand in the matrix row and sections 1204-1205.
 
+The star with one repeated adjacent fit point is separately covered by section
+1210: it retains six input fit-point records but derives five curve segments,
+and the direct Trim plus worker/file-lane checks pass at signed distances
+`+/-0.2` and `+/-0.5`.
+
 This closes the immediate worker/persistence gap for the two newly discovered
 accepted layouts; it does not complete step 3 or prove arbitrary legal source
 geometry. Continue by selecting the least-qualified family/row, adding an
@@ -42159,3 +42164,23 @@ worker-client suite passes 3,329,602 assertions / 40 cases with
 These remain macOS/headless/internal-reader results; visible GUI,
 cross-platform runtime, independent ODA/AutoCAD acceptance, and exact-head CI
 remain open.
+
+## 1210. Qualify a Repeated-neighbor Multi-crossing Fit-point Star (2026-11-13)
+
+Test commit `184b764a8` adds the five-point self-crossing star from section
+1207 with one adjacent fit point repeated in its input record. The
+`LC_SplinePoints` constructor coalesces that duplicate, retaining six records
+but deriving five curve segments. Direct Trim on both signed sides is checked
+against the independent distance-to-source oracle and confirms the proper
+crossing. The worker-client case validates both signed offsets at distances
+`0.2` and `0.5`, then compares generated geometry through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG reopen, with LibreDWG inspection of the DWGs. This
+does not establish arbitrary repeat distributions, every stationary join, or
+worker Trim Two for these crossing profiles.
+
+On macOS arm64 CMake Release, the focused direct self-intersection oracle
+passes 2,104 assertions / 1 case. The focused worker/persistence matrix passes
+244,157 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
+`git diff --check` passes. Other repeated-point patterns, crossing layouts,
+ambiguous stationary loops, visible GUI, cross-platform runtime, and
+independent ODA/AutoCAD acceptance remain open.
