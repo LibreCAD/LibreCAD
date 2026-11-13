@@ -40834,3 +40834,19 @@ both rational spline additions from sections 1139-1140. This supersedes
 section 1138's 131,002-assertion aggregate receipt. Remaining family/variant
 gaps, visible GUI, cross-platform, clean qmake6, and independent-CAD acceptance
 remain open.
+
+## 1142. Qualify Closed Cubic Spline Trim Two (2026-11-12)
+
+Test commit `2431f38bf` extends the spline Trim Two source matrix with a
+closed degree-3 spline created through the native closed-spline conversion
+path. The action exercises both pick orders through worker source update,
+preview/commit, undo/redo, and the five DXF/DWG save/reopen lanes. Reopened
+spline fragments are compared by degree, flags, control points, knots, and
+weights, and LibreDWG parses the DWG outputs.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 3,804 assertions / 1 case; `git diff --check` passes. This
+qualifies the tested closed cubic source only; periodic rational weights,
+other closed knot/control layouts, additional cutters, visible GUI,
+cross-platform and independent-CAD acceptance remain open.
