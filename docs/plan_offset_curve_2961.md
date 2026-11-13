@@ -296,7 +296,7 @@ following slices in order, preserving the detailed safety requirements below:
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 The older Slice 4 evidence summary in the table is superseded by sections
-1122-1125 for the current ellipse cusp-distance matrix and its explicit
+1122-1126 for the current ellipse cusp-distance matrix and its explicit
 fail-closed cache-validation and pick-query boundaries.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
@@ -307,9 +307,11 @@ orders for one fixed line cutter. Ratios `0.1` and `0.2` each have tested 25%,
 25%, 45%, and 75%, while its exact-cusp case atomically refuses at the
 bounded cache-validation limit; ratio `0.5` has tested 25%, 45%, and 75%, with
 one bounded midpoint-pick refusal at 75%. Ratios `0.025` and `0.05` have a
-tested 45% profile. One ratio-`0.2` reversed-traversal 45% profile is also
-qualified. General cusp/post-cusp topology, other cutters, and broader ellipse
-ratio/distance coverage remain open.
+tested 45% profile. One ratio-`0.2` reversed-traversal 45% full-ellipse
+profile is also qualified. Section 1126 separately qualifies one reversed
+bounded elliptic arc, not as cusp-distance evidence. General cusp/post-cusp
+topology, other cutters, and broader ellipse ratio/distance coverage remain
+open.
 
 Existing picker and parabola tests are useful regression evidence, not a
 substitute for the remaining matrix or visible acceptance. The chooser has a
@@ -40566,3 +40568,19 @@ focused ellipse Trim Two case passes 21,553 assertions / 1 case, and
 `git diff --check` passes. This qualifies one reversed full-ellipse profile
 only; other sweep/reversal combinations, cusp distances, cutters, cross-platform,
 visible-GUI, and external-CAD acceptance remain open.
+
+## 1126. Qualify Reversed Bounded Elliptic-arc Trim (2026-11-12)
+
+Test commit `3b87e93c5` adds a reversed bounded elliptic arc with center
+`(-6, 8)`, semi-major length `3`, axis ratio `0.6`, and angular bounds
+`0.25..1.6`. Its outward offset distance is `0.5`; this is arc-domain and
+traversal coverage, not near-cusp evidence. The worker-produced cache is
+checked at the action's normalized native pick `0.25`. Both Trim Two operand
+orders run through preview/commit, undo/redo, and all five DXF/DWG
+save/reopen lanes with LibreDWG parsing.
+
+After rebuilding the macOS arm64 CMake Release `librecad_tests` target, the
+focused ellipse Trim Two case passes 20,618 assertions / 1 case, and
+`git diff --check` passes. This qualifies one reversed arc interval, outward
+distance, cutter and pick only; other arc sweeps, inward cases, other cutters,
+cross-platform, visible-GUI and external-CAD acceptance remain open.
