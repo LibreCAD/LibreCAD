@@ -41755,3 +41755,38 @@ Together with section 1189 this closes macOS CMake CTest and qmake6 build
 validation for the current checkout. Visible Properties interaction,
 Windows/Linux, ASan, installed-helper, and independent ODA/AutoCAD acceptance
 remain open.
+
+## 1191. Make Source-type Changes Available Throughout Replacement Picking (2026-11-13)
+
+The source-curve Properties workflow must keep the source-family selector
+available while the user is choosing a replacement candidate. Changing the
+family refreshes the eligible live-entity candidates immediately; it must not
+require closing and reopening Properties or starting a second picker. The
+selector's choices are derived from
+`LC_OffsetSourceGeometry::SupportedKinds`, currently line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct choice, not an alias for spline-points. This is replacement-source
+eligibility, and does not imply that every geometric variant of each family is
+valid for every offset operation.
+
+Keep the current source visibly selected/highlighted while browsing. Browsing
+or changing the requested family must not replace it; publish a new source only
+after a candidate of the selected family has passed asynchronous validation.
+Invalid candidates leave the prior source and highlight intact. The selector
+must permit repeated family changes before acceptance, including transitions
+to and from parabola, and the final accepted entity's type must match the
+currently selected family.
+
+Headless selector/filter/state tests already cover type refresh across all nine
+supported kinds, including parabola, as recorded in section 1162;
+the production implementation is already present. Do not add a duplicate
+selector or a parabola-only implementation slice. The remaining implementation
+step is visible Properties acceptance: launch the current build, open an
+existing offset's Properties, verify the current source is highlighted, switch
+among representative kinds and then across all nine kinds while candidate
+browsing remains active, choose a matching candidate, and confirm that only
+successful validation changes the source. Also reject an invalid candidate and
+confirm the original source/highlight remains. If visible GUI access is
+unavailable, retain this as an explicitly open acceptance gate rather than
+claiming completion. The full CMake CTest and qmake6 build results in sections
+1189-1190 do not substitute for this interaction test.
