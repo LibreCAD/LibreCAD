@@ -41692,3 +41692,27 @@ repeated fit-point matrix from section 1186.
 This direct run does not validate other CTest executables, the overall CTest
 registration/build matrix, qmake6, visible GUI behavior, cross-platform
 delivery, or independent ODA/AutoCAD acceptance; those gates remain open.
+
+## 1188. Reconcile Repeated-fit-point Staging and Normalization Tests (2026-11-13)
+
+Test commit `e0f8b6029` replaces stale refusal-only assertions for leading,
+trailing, and triple-interior consecutive repeats with the actual two-stage
+worker contract. Operation 7 may return complete ordinary geometry and a
+combinable cache while retaining `NotCacheRepresentable` and
+`changed == false`; it grants no editable/native authority. The test then
+submits operation 8 and requires exact source-definition and cache validation
+before native promotion. This reconciles the old section 971 expectation with
+section 985's later explicit consecutive-duplicate normalization. It does not
+change production behavior.
+
+The same commit updates the spline-points edit regression: original repeated
+fit-point metadata remains intact while derived control points match the
+canonical three-point profile. On macOS arm64 CMake Release, the focused
+process-backed case passes 8,195 assertions / 1 case and the focused entity
+case passes 10 / 1. The full worker-client CTest passes in 355.38 seconds and
+the complete hatch CTest passes in 2.73 seconds; together they rerun both
+failures from the earlier broad CTest attempt successfully. The other 25 tests
+in that 27-test attempt had already passed. The full worker-kernel executable
+also passes separately as recorded in section 1187. These CMake results do
+not close qmake6, visible GUI, cross-platform, or independent ODA/AutoCAD
+acceptance.
