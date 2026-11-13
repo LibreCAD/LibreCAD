@@ -3404,10 +3404,11 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u})
     for (const bool nativeFirst : {false, true}) {
-        const bool fitPoints = profile == 2;
-        CAPTURE(profile, fitPoints, nativeFirst);
+        const bool fitPoints = profile == 5;
+        const bool splinePointsSource = profile == 2 || fitPoints;
+        CAPTURE(profile, fitPoints, splinePointsSource, nativeFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -3416,12 +3417,16 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         f.graphic.addEntity(previous);
 
         RS_Entity* source = nullptr;
-        const auto kind = fitPoints ? LC_OffsetSourceGeometry::Kind::SplinePoints :
-                                      LC_OffsetSourceGeometry::Kind::Spline;
-        if (fitPoints) {
+        const auto kind = splinePointsSource ? LC_OffsetSourceGeometry::Kind::SplinePoints :
+                                               LC_OffsetSourceGeometry::Kind::Spline;
+        if (splinePointsSource) {
             LC_SplinePointsData data{false, false};
-            data.useControlPoints = true;
-            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            if (fitPoints) {
+                data.splinePoints = {{-4, 0}, {0, 3}, {4, 0}};
+            } else {
+                data.useControlPoints = true;
+                data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            }
             source = new LC_SplinePoints(&f.graphic, data);
         } else if (profile == 4) {
             RS_Spline closed(nullptr, RS_SplineData{3, false});
@@ -3552,10 +3557,17 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 if (const auto* b = dynamic_cast<const LC_SplinePoints*>(&actual)) {
                     const auto& x = a->getData();
                     const auto& y = b->getData();
-                    if (x.closed != y.closed || x.cut != y.cut ||
-                        x.controlPoints.size() != y.controlPoints.size()) return false;
-                    for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
-                        if (!closeVector(x.controlPoints[i], y.controlPoints[i])) return false;
+                    if (x.closed != y.closed || x.cut != y.cut) return false;
+                    if (x.useControlPoints) {
+                        if (x.controlPoints.size() != y.controlPoints.size()) return false;
+                        for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
+                            if (!closeVector(x.controlPoints[i], y.controlPoints[i])) return false;
+                    } else {
+                        if (x.splinePoints.size() != y.splinePoints.size()) return false;
+                        for (std::size_t i = 0; i < x.splinePoints.size(); ++i)
+                            if (!closeVector(x.splinePoints[i], y.splinePoints[i])) return false;
+                        if (!close(x.fitTolerance, y.fitTolerance)) return false;
+                    }
                     return true;
                 }
                 const auto* b = dynamic_cast<const RS_Spline*>(&actual);
