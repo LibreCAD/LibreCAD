@@ -42364,3 +42364,22 @@ typed spline Trim Two matrix passes 24,340 assertions / 1 case. The test
 target rebuild and `git diff --check` pass. Other eleven-point layouts,
 general spline topology, visible GUI, cross-platform runtime, and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1220. Qualify a Thirteen-point Closed Fit Spline Through Trim Two (2026-11-13)
+
+Test commit `aad211bbc` extends the closed fit-point count matrix with an
+irregular thirteen-point profile. The direct trimmed-offset oracle checks
+distances `0.1`, `0.25`, and `0.5` on both signed sides against source distance.
+The worker-backed Trim Two matrix carries the same profile through Update from
+Source, both pick orders, commit, undo/redo, R14 DXF, R2000 DXF/DWG, R2018
+DXF/DWG, sampled reopened-geometry checks, and LibreDWG inspection. This is
+one thirteen-point layout, not arbitrary fit data at that count.
+
+On macOS arm64 CMake Release, the direct `[curve-offset][three-point]`
+selection passes 108 assertions / 1 case, and the broader
+`[curve-offset][trim][spline-points][fit-points]` suite passes 3,901
+assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+typed spline Trim Two matrix passes 25,251 assertions / 1 case. The target
+rebuild and `git diff --check` pass. Other fit layouts, general spline
+topology, visible GUI, cross-platform runtime, and independent ODA/AutoCAD
+acceptance remain open.
