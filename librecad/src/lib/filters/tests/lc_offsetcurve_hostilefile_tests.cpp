@@ -10766,7 +10766,7 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
 
     // The final two fixtures use nonsingular affine maps with positive then
     // negative determinant; the last also has a tighter vertex radius.
-    const std::array<LC_ParabolaData, 9> variants{
+    const std::array<LC_ParabolaData, 11> variants{
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}},
         LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}},
         LC_ParabolaData{{RS_Vector{3, -7}, RS_Vector{2.3301270189221936, 4.160254037844386},
@@ -10780,7 +10780,13 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
             {RS_Vector{1, 1e-6}, RS_Vector{1, -1e-6}}),
         LC_ParabolaData::FromEndPointsTangents(
             {RS_Vector{0, 0}, RS_Vector{10, 0}},
+            {RS_Vector{1, 1e-5}, RS_Vector{1, -1e-5}}),
+        LC_ParabolaData::FromEndPointsTangents(
+            {RS_Vector{0, 0}, RS_Vector{10, 0}},
             {RS_Vector{1, 1e-4}, RS_Vector{1, -1e-4}}),
+        LC_ParabolaData::FromEndPointsTangents(
+            {RS_Vector{0, 0}, RS_Vector{10, 0}},
+            {RS_Vector{1, 1e-7}, RS_Vector{1, -1e-7}}),
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 50}, RS_Vector{10, 0}}},
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 1e-14}, RS_Vector{10, 0}}}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
