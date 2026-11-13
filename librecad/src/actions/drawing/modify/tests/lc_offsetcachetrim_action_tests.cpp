@@ -3404,7 +3404,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile == 2;
         CAPTURE(profile, fitPoints, nativeFirst);
@@ -3423,6 +3423,16 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             data.useControlPoints = true;
             data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
             source = new LC_SplinePoints(&f.graphic, data);
+        } else if (profile == 4) {
+            RS_Spline closed(nullptr, RS_SplineData{3, false});
+            for (const RS_Vector& point : {RS_Vector{-4, 0}, RS_Vector{-3, 3},
+                    RS_Vector{0, 4}, RS_Vector{3, 3}, RS_Vector{4, 0},
+                    RS_Vector{3, -3}, RS_Vector{0, -4}, RS_Vector{-3, -3}})
+                closed.addControlPoint(point);
+            closed.setClosed(true);
+            RS_SplineData data = closed.getData();
+            data.weights.assign(data.controlPoints.size(), 1.0);
+            source = new RS_Spline(&f.graphic, data);
         } else {
             RS_SplineData data{profile == 1 ? 3 : 2, false};
             if (profile == 1) {
