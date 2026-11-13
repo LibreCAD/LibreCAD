@@ -41103,3 +41103,16 @@ lanes. `git diff --check` passes. The broad hostile `[parabola]` aggregate
 receipt in section 1156 predates this fix and remains incomplete; the exact
 isolated large-origin hostile profile still needs a focused run. Cross-platform,
 visible Properties GUI, and independent ODA/AutoCAD acceptance remain open.
+
+## 1158. Revalidate Recursive qmake6 Build After Parabola Fit Change (2026-11-12)
+
+At PR head `640480db3`, the existing macOS arm64 qmake6 Release build tree
+`/private/tmp/offset3193-qmake6-fresh` completes recursive `make -j6` with
+exit code 0, rebuilding the application and traversing the plugin subprojects.
+This is an updated-source build revalidation, not a fresh configure/build.
+Shell startup printed warnings for the unavailable
+`/private/tmp/libdxfrw-cargo/env`, and the linker warned that a QtSvg framework
+built for macOS 27 was linked while targeting macOS 14.4; neither changed the
+successful build result. qmake6 runtime/plugin loading, cross-platform
+execution, visible Properties GUI, and independent ODA/AutoCAD acceptance
+remain open.
