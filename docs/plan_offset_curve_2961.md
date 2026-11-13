@@ -40860,3 +40860,20 @@ from section 1142 in addition to the arc and rational-spline matrices. It
 supersedes section 1141's 132,406-assertion count. Other family/variant gaps,
 visible GUI, cross-platform, clean qmake6, and independent-CAD acceptance
 remain open.
+
+## 1144. Qualify Wrapped Rational Weights on Closed-spline Trim (2026-11-12)
+
+Test commit `b7b0a9138` replaces section 1142's unit-weight closed cubic
+fixture with a rational closed spline using nonuniform positive weights on the
+unwrapped controls. The native close conversion wraps both controls and their
+seam weights. The existing Trim Two action verifies the source through worker
+update, both pick orders, preview/commit, undo/redo, and five DXF/DWG
+save/reopen lanes; the reopened knot/control/weight data is compared and
+LibreDWG parses the DWG outputs.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 3,733 assertions / 1 case; `git diff --check` passes. This
+qualifies one nonuniform rational closed cubic and its wrapped seam weights.
+Other closed knot layouts, periodic flags/representations, spline variants,
+visible GUI, cross-platform, and independent-CAD acceptance remain open.
