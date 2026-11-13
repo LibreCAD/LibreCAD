@@ -279,6 +279,79 @@ TEST_CASE("LC_Parabola: From4Points is stable for small translated geometry",
   CHECK(reconstructed);
 }
 
+TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
+          "[parabola][reconstruction][matrix]") {
+  const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+  const auto pointAt = [&](const double t) {
+    const double mt = 1.0 - t;
+    return controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) + controls[2] * (t * t);
+  };
+  const std::array<std::array<double, 4>, 3> layouts{{
+      {{0.0, 0.3, 0.7, 1.0}},
+      {{0.05, 0.2, 0.65, 0.95}},
+      {{0.0, 0.1, 0.4, 1.0}},
+  }};
+
+  for (const double scale : {1e-6, 1.0, 1e6}) {
+    CAPTURE(scale);
+    for (const auto& layout : layouts) {
+      CAPTURE(layout);
+      const double angle = 0.37;
+      const RS_Vector translation{123.0 * scale, -87.0 * scale};
+      const auto transform = [&](const RS_Vector& point) {
+        RS_Vector mapped = point * scale;
+        mapped.rotate(angle);
+        return mapped + translation;
+      };
+      std::vector<RS_Vector> samples;
+      for (const double t : layout)
+        samples.push_back(transform(pointAt(t)));
+      const std::array<RS_Vector, 3> independent{{
+          transform(pointAt(0.15)), transform(pointAt(0.5)), transform(pointAt(0.85))}};
+      const double tolerance = scale * 1e-7;
+      const double controlTolerance = scale * 1e-6;
+      std::array<RS_Vector, 3> expectedControls;
+      std::transform(controls.begin(), controls.end(), expectedControls.begin(), transform);
+
+      for (const bool reverseInput : {false, true}) {
+        CAPTURE(reverseInput);
+        auto orderedSamples = samples;
+        if (reverseInput)
+          std::reverse(orderedSamples.begin(), orderedSamples.end());
+        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+        const auto matches = [&](const LC_ParabolaData& candidate) {
+          if (!candidate.isValid())
+            return false;
+          const auto liesOnCandidate = [&](const RS_Vector& point) {
+            return candidate.fromX(candidate.findX(point)).distanceTo(point) <= tolerance;
+          };
+          if (!std::all_of(samples.begin(), samples.end(), liesOnCandidate) ||
+              !std::all_of(independent.begin(), independent.end(), liesOnCandidate))
+            return false;
+          return true;
+        };
+        CHECK(std::any_of(candidates.begin(), candidates.end(), matches));
+        if (layout.front() == 0.0 && layout.back() == 1.0) {
+          const auto controlsMatch = [&](const LC_ParabolaData& candidate) {
+            if (!candidate.isValid())
+              return false;
+            const bool forward = std::equal(candidate.m_controlPoints.begin(), candidate.m_controlPoints.end(),
+                expectedControls.begin(), [controlTolerance](const RS_Vector& actual, const RS_Vector& expected) {
+                return actual.distanceTo(expected) <= controlTolerance;
+                });
+            const bool reverse = std::equal(candidate.m_controlPoints.begin(), candidate.m_controlPoints.end(),
+                expectedControls.rbegin(), [controlTolerance](const RS_Vector& actual, const RS_Vector& expected) {
+                return actual.distanceTo(expected) <= controlTolerance;
+                });
+            return forward || reverse;
+          };
+          CHECK(std::any_of(candidates.begin(), candidates.end(), controlsMatch));
+        }
+      }
+    }
+  }
+}
+
 TEST_CASE("LC_Parabola: getLength matches numerical integration",
           "[parabola][length]") {
   auto p = makeCanonicalParabola(1.0, 1.0);
