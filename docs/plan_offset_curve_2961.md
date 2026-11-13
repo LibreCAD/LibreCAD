@@ -42129,3 +42129,17 @@ assertions / 1 case with actual signed distances `+/-0.2` and `+/-0.5`;
 LibreDWG checks both DWG lanes. `git diff --check` passes. Other crossing layouts,
 ambiguous stationary loops, visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1208. Revalidate the Nine-family Source Picker on the Current Tree (2026-11-13)
+
+The focused headless Properties suite rerun on the current tree covers changing
+the replacement source-type filter in place, immediate candidate-list refresh,
+typed candidate selection across all nine supported source kinds, and the
+distinct parabola identity. This verifies the existing widget contract after
+the fit-point topology additions; it does not add source families or prove
+visible interaction.
+
+On macOS arm64 CMake Release with `QT_QPA_PLATFORM=offscreen`,
+`librecad_tests '[gui][dialog][offsetcurve][source]'` passes 15,116 assertions /
+44 cases. The physical visible Properties workflow, cross-platform runtime,
+independent ODA/AutoCAD acceptance, and exact-head CI remain open.
