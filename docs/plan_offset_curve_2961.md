@@ -312,6 +312,12 @@ The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
 fail-closed cache-validation and pick-query boundaries.
 
+Sections 1170-1171 now also qualify nominal and similarity-transformed
+six-fit-point closed SplinePoints sources through direct normals, worker-backed
+Trim Two, and five DXF/DWG lanes. Their closed cut/control-file representation
+is checked by sampled geometry, not by internal storage equality. These two
+fixtures do not close other fit-point counts, tolerances, or transformations.
+
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
 profiles, 19 sampled native-pick fractions on each, and both action pick
@@ -41355,3 +41361,24 @@ does not close those gates, nor cross-platform or independent ODA/AutoCAD
 acceptance. The merge includes upstream translation-file changes with existing
 trailing whitespace, so repository-wide `git diff --check` reports those
 upstream lines; the roadmap edit itself is clean.
+
+## 1171. Persist a Rotated and Translated Closed Fit-point Spline (2026-11-13)
+
+Test commit `8fb91f173` extends the closed fit-point Trim Two profile with a
+similarity-transformed copy (scale `2`, rotation `0.47` radians, translation
+`(18,-11)`). The direct exact-normal oracle now checks both the nominal and
+transformed six-point closed curves on both sides. Both profiles run through
+worker-backed source update, Trim Two preview/commit in both operand orders,
+undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen checks; the
+transformed closed cut/control representation is compared to the fit source by
+sampled geometry.
+
+On macOS arm64 CMake Release, the focused closed-fit direct selection passes
+23,530 assertions / 4 cases, and the full fit-point Trim Two action case passes
+7,482 assertions / 1 case with LibreDWG enabled. The recursive qmake6
+application/worker/plugin build was rechecked incrementally and exits 0 (no
+application sources required rebuilding after the prior full qmake6 pass in
+section 1170); `git diff --check` passes. This qualifies only the stated
+similarity transform and source profile. Other transformations, closed fit
+counts and tolerances, visible GUI, cross-platform runtime, and independent
+ODA/AutoCAD acceptance remain open.
