@@ -41661,3 +41661,21 @@ behavioral contract was established. The current matrix proves success at
 qmake6 was not rerun because this slice changes only the CMake test source;
 visible GUI, cross-platform behavior, and independent ODA/AutoCAD acceptance
 remain open.
+
+## 1186. Require Exact-normal Tolerance Options for Repeated Fit-point Profiles (2026-11-13)
+
+Test commit `9b7655e53` tightens the repeated fit-point worker-cache matrix:
+profiles 5-7 must produce direct tolerance options for every tested signed
+distance. Previously, an unavailable option could enter the generic expected-
+refusal branch and bypass the geometry/cache checks intended for these newly
+qualified profiles.
+
+On macOS arm64 CMake Release, `librecad_offset_worker_kernel_tests` builds and
+the focused case `repeated fit-point worker caches follow independent exact
+normals` passes 71,950 assertions / 1 case. This verifies option availability
+and the existing exact-normal worker/cache assertions for those profiles; it
+does not expand the fixture matrix or establish untested fit-point layouts.
+`git diff --check` passes. The broader CTest suite still has separate build-
+omission and timeout issues recorded in the active validation log; no full
+CTest pass is claimed here. Visible GUI, cross-platform behavior, and
+independent ODA/AutoCAD acceptance remain open.
