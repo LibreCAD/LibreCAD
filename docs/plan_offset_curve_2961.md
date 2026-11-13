@@ -41578,3 +41578,24 @@ the three ratios at the direct geometry layer; worker/cache, Trim Two and file
 round-trip lanes for these new profiles remain unqualified, as do wider sweep,
 ratio, and offset-distance matrices and the visible GUI, cross-platform, and
 independent ODA/AutoCAD gates.
+
+## 1182. Carry Partial Ellipse Variants Through Worker and File Lanes (2026-11-13)
+
+Test commit `e3ba2f9f5` adds six translated/rotated partial elliptic-arc
+sources to the real-helper family matrix: axis ratios `0.1`, `0.2`, and `0.4`,
+each in forward and reversed traversal, on the same `[-0.45, 0.75]` parameter
+domain as the direct oracle. Each fixture exercises worker generation, native
+cache admission, translated source replacement, Produce, and the five R14,
+R2000, and R2018 DXF/DWG round-trip lanes; LibreDWG inspection is enabled for
+the DWG outputs.
+
+On macOS arm64 CMake Release with `DWGREAD=/opt/homebrew/bin/dwgread`, the
+focused real-helper case passes 2,942,824 assertions / 1 case. The default
+150-second test watchdog expired once after 548,823 assertions; rerunning with
+the supported `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000` override completed
+successfully. The worker-client CMake target builds and `git diff --check`
+passes. This qualifies the stated outward-distance worker/cache/persistence
+fixtures, not inward cusp-adjacent worker geometry, Trim Two for the new arcs,
+other domains/ratios/distances, visible GUI, cross-platform behavior, or
+independent ODA/AutoCAD acceptance. The qmake6 application/worker/plugin build
+was validated in section 1181 before this CMake-only test-source change.
