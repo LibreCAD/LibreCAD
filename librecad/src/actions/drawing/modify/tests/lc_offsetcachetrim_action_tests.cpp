@@ -3425,13 +3425,14 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             source = new LC_SplinePoints(&f.graphic, data);
         } else if (profile == 4) {
             RS_Spline closed(nullptr, RS_SplineData{3, false});
-            for (const RS_Vector& point : {RS_Vector{-4, 0}, RS_Vector{-3, 3},
-                    RS_Vector{0, 4}, RS_Vector{3, 3}, RS_Vector{4, 0},
-                    RS_Vector{3, -3}, RS_Vector{0, -4}, RS_Vector{-3, -3}})
-                closed.addControlPoint(point);
+            const std::array<RS_Vector, 8> controlPoints{{
+                {-4, 0}, {-3, 3}, {0, 4}, {3, 3},
+                {4, 0}, {3, -3}, {0, -4}, {-3, -3}}};
+            const std::array<double, 8> weights{{1, .8, 1.1, .9, 1.2, .85, 1.05, .95}};
+            for (std::size_t i = 0; i < controlPoints.size(); ++i)
+                closed.addControlPoint(controlPoints[i], weights[i]);
             closed.setClosed(true);
             RS_SplineData data = closed.getData();
-            data.weights.assign(data.controlPoints.size(), 1.0);
             source = new RS_Spline(&f.graphic, data);
         } else {
             RS_SplineData data{profile == 1 ? 3 : 2, false};
