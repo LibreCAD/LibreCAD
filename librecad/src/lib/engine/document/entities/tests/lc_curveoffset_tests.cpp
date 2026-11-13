@@ -4381,9 +4381,11 @@ TEST_CASE("A rotated hyperbola with a wide bounded interval follows exact offset
 
 TEST_CASE("Hyperbola offset normals hold across eccentricity, branch, and reversed bounds",
           "[curve-offset][direct][hyperbola][oracle][variants]") {
-    const std::array<LC_HyperbolaData, 2> profiles{{
+    const std::array<LC_HyperbolaData, 3> profiles{{
         LC_HyperbolaData{{350.0, -275.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true},
         LC_HyperbolaData{{-5.0, 9.0}, {6.128355544951824, -5.142300877492315}, 1.5, 1.7, -1.9, false},
+        LC_HyperbolaData{{-2.0, 6.0}, {3.5 * std::cos(-0.58), 3.5 * std::sin(-0.58)},
+                         0.6, -1.1, 0.9, false},
     }};
 
     for (const LC_HyperbolaData& data : profiles) {
