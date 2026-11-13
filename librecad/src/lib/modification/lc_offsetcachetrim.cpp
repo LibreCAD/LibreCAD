@@ -903,7 +903,15 @@ Projection closest(Context& c, const Input& input, const Pick& pick) {
                 if (!rawBound(span, input.frame, t.lo(), t.hi(), x, y, dx, dy)) { fail(Refusal::Arithmetic); }
                 if (x.width() <= arithmeticAllowance(span, input.frame) && y.width() <= arithmeticAllowance(span, input.frame)) { break; }
                 if (round == c.limits.maxDepth) { fail(Refusal::AmbiguousPick); }
-                snapshot = contract(c, *session, handle, Refusal::AmbiguousPick); t = snapshot->event.isolation.parameterA;
+                try {
+                    snapshot = contract(c, *session, handle, Refusal::AmbiguousPick);
+                } catch (const Failure& failure) {
+                    if (failure.reason != Refusal::AmbiguousPick || !session->hasValidProofs()) throw;
+                    // Keep the last issued isolation. The final interval-distance ordering
+                    // must still prove this candidate uniquely closest, or refuse the pick.
+                    break;
+                }
+                t = snapshot->event.isolation.parameterA;
             }
             add(k, t, distance(span, input.frame, pick.worldPoint, t), {});
         }

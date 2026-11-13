@@ -3153,7 +3153,6 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         const RS_Vector nativePick = native->getPointAt(
             first + (last - first) * (profile == 5 ? .25 : .1));
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
-        const auto cacheFingerprint = RS_Spline::geometryFingerprint(native->getData());
         f.action->click(ellipseFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
@@ -3166,15 +3165,6 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
         f.action->click(ellipseFirst ? cutterPick : nativePick);
         INFO(f.context.messages.join('\n').toStdString());
-        if (profile == 5 && !native->isDeleted()) {
-            CHECK_FALSE(cutter->isDeleted());
-            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
-            CHECK(native->hasEditableDefinition());
-            CHECK_FALSE(native->sourceDefinition());
-            CHECK(RS_Spline::geometryFingerprint(native->getData()) == cacheFingerprint);
-            CHECK(f.context.messages.join('\n').contains(QStringLiteral("nothing changed")));
-            continue;
-        }
         REQUIRE(native->isDeleted());
         REQUIRE(cutter->isDeleted());
         std::vector<RS_Entity*> fragments;
