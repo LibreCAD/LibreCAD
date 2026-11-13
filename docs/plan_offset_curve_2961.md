@@ -41599,3 +41599,23 @@ fixtures, not inward cusp-adjacent worker geometry, Trim Two for the new arcs,
 other domains/ratios/distances, visible GUI, cross-platform behavior, or
 independent ODA/AutoCAD acceptance. The qmake6 application/worker/plugin build
 was validated in section 1181 before this CMake-only test-source change.
+
+## 1183. Trim a High-eccentricity Partial Ellipse Arc (2026-11-13)
+
+Test commit `a6f7cd2df` adds a worker-created inward partial ellipse profile
+with semimajor axis `3`, ratio `0.2`, center `(4,-3)`, rotation `0.37`, arc
+domain `[0.8, 1.5]`, and offset distance `0.03`. Unlike the higher-curvature
+partial arc around parameter zero (section 1180), this minor-axis-side arc
+produces certified Trim Two contacts. The test executes both operand pick
+orders, preview and commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG save/reopen lanes.
+
+On macOS arm64 CMake Release with LibreDWG enabled, the isolated profile passes
+819 assertions; the complete ellipse Trim Two matrix passes 29,006 assertions
+/ 1 case. The focused `librecad_tests` target builds and `git diff --check`
+passes. This qualifies one minor-axis-side partial arc and one inward distance
+in the action/persistence layers only. It does not resolve the certified
+`AmbiguousRoots` refusal for the tested high-curvature partial arc, nor qualify
+other partial domains, eccentricities, distances, visible GUI, cross-platform
+behavior, or independent ODA/AutoCAD acceptance. qmake6 was not rerun because
+this slice changes only the CMake-registered test source.
