@@ -41736,3 +41736,22 @@ warnings for English and Norwegian catalogs.
 This closes the current configured macOS CMake registered-test run only. It
 does not establish qmake6, visible GUI, Windows/Linux, ASan, deployed helper,
 or independent ODA/AutoCAD acceptance.
+
+## 1190. Rebuild the Recursive qmake6 Product Targets (2026-11-13)
+
+The existing qmake6 Release configuration in
+`/private/tmp/offset-2961-qmake-current` was rebuilt with `make -j6`. The
+recursive application, native geometry worker, libraries, plugins, and tools
+complete with exit code 0. Both `LibreCAD.app/Contents/MacOS/LibreCAD` and
+`LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` are present and executable.
+
+The shell startup reports that the optional `/private/tmp/libdxfrw-cargo/env`
+file is missing; the configured bundled dependencies are still found. Clang
+also emits existing missing-field-initializer warnings in DWG advanced
+metadata code. No warning is treated as a test failure, and this is a build
+result, not a GUI launch or offset-worker runtime validation.
+
+Together with section 1189 this closes macOS CMake CTest and qmake6 build
+validation for the current checkout. Visible Properties interaction,
+Windows/Linux, ASan, installed-helper, and independent ODA/AutoCAD acceptance
+remain open.
