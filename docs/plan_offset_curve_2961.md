@@ -40917,3 +40917,14 @@ case passes 5,282 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
 `git diff --check` passes. This qualifies one four-point constrained open
 profile, not all fit counts, tolerance values, closed fit splines, other DWG
 versions, visible GUI, cross-platform, or independent-CAD acceptance.
+
+## 1147. Re-run Aggregate Trim-action Regression (2026-11-12)
+
+After section 1146, the first full `[trim-action]` run reported two failures
+among 87 cases / 162,106 assertions: an asymmetric-parabola preview was empty,
+and a shared source-update test wait exceeded its bound. The asymmetric
+parabola case passed alone (6,600 assertions). Re-running the full aggregate
+with `QT_QPA_PLATFORM=offscreen` and LibreDWG through `DWGREAD` passed all 87
+cases / 176,238 assertions. This establishes a clean rerun, not that the
+initial failures were impossible; load-sensitive preview and bounded-wait
+flakiness remain worth monitoring in later full-suite runs.
