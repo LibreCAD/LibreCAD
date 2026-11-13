@@ -43349,3 +43349,18 @@ This qualifies the clockwise circle only with the tested off-axis cutter. The
 exact symmetric intersection remains an open correctness issue; arbitrary
 all-arc loops, visible GUI, non-macOS runtime, and independent ODA/AutoCAD
 acceptance also remain open. This does not close Slice 4 or Slice 5.
+
+## 1253. Revalidate qmake6 After Arc-chain Source Admission (2026-11-13)
+
+The recursive qmake6 Release product build was rerun after the
+`lc_offsetsource.cpp` arc-chain admission change in `1375a0ffb`. It recompiled
+the offset-worker source object and relinked LibreCAD, followed by an
+incremental `make -j6` confirmation with exit status 0. This verifies the
+second supported build system for the implementation slice; it is not a
+cross-platform build result.
+
+The build emitted the existing optional missing
+`/private/tmp/libdxfrw-cargo/env` shell notice, Boost.Geometry unused-parameter
+warnings, and macOS deployment-target warnings for locally installed
+Harfbuzz, FreeType, and QtSvg binaries newer than the configured macOS 14.4
+minimum. These warnings were not introduced or addressed by this slice.
