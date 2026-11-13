@@ -41261,3 +41261,20 @@ cornering and major-sweep profiles at scale `1e4` translated to `(1e6,-2e6)`.
 This qualifies only the listed topologies and numeric grid; other sweep and
 scale boundaries, broader topology/self-intersection limits, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+
+## 1167. Re-run the Source Chooser and Polyline Direct Regressions (2026-11-13)
+
+At code head `134c53b2d` (with plan-only commits afterward), the macOS arm64
+CMake Release command
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+-r compact '[gui][dialog][offsetcurve][source],[curve-offset][direct][polyline]'`
+passes 65,386 assertions / 46 cases. This rechecks the repeated family-filter
+and candidate switching contract together with the full tagged direct
+polyline exact-normal and bulge oracles after the scale-1e4 persistence
+expansion. It remains headless evidence, not visible Properties acceptance.
+
+Attempting to inspect the visible macOS session from this task returned
+`osascript` error `-10827`; process enumeration also reports that `sysmond` is
+unavailable. The rebuilt-app visible workflow and source-indication check
+therefore remain open, along with cross-platform and independent ODA/AutoCAD
+acceptance.
