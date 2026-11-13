@@ -296,19 +296,20 @@ following slices in order, preserving the detailed safety requirements below:
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 The older Slice 4 evidence summary in the table is superseded by sections
-1122-1124 for the current ellipse cusp-distance matrix and its explicit
+1122-1125 for the current ellipse cusp-distance matrix and its explicit
 fail-closed cache-validation and pick-query boundaries.
 
-Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1124
-qualify eighteen successful near-cusp/exact-cusp/post-cusp ellipse cache
+Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
+qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
 profiles, 19 sampled native-pick fractions on each, and both action pick
 orders for one fixed line cutter. Ratios `0.1` and `0.2` each have tested 25%,
 45%, 75%, 100%, and 105% of minimum curvature radius; ratio `0.3` has tested
 25%, 45%, and 75%, while its exact-cusp case atomically refuses at the
 bounded cache-validation limit; ratio `0.5` has tested 25%, 45%, and 75%, with
 one bounded midpoint-pick refusal at 75%. Ratios `0.025` and `0.05` have a
-tested 45% profile. General cusp/post-cusp topology, other cutters, and
-broader ellipse ratio/distance coverage remain open.
+tested 45% profile. One ratio-`0.2` reversed-traversal 45% profile is also
+qualified. General cusp/post-cusp topology, other cutters, and broader ellipse
+ratio/distance coverage remain open.
 
 Existing picker and parabola tests are useful regression evidence, not a
 substitute for the remaining matrix or visible acceptance. The chooser has a
@@ -40550,3 +40551,18 @@ focused ellipse Trim Two case passes 19,687 assertions / 1 case, and
 one fixed line cutter and the stated pick set only. Exact/post-cusp distances,
 other cutter families, arbitrary transforms, continuous ranges, visible GUI,
 cross-platform and external-CAD acceptance remain open.
+
+## 1125. Qualify Reversed Traversal Near an Ellipse Cusp (2026-11-12)
+
+Test commit `abd69cd98` adds a reversed-traversal full ellipse with semi-major
+length `3`, axis ratio `0.2`, rotation `1.17`, and inward distance `0.054`
+(45% of minimum curvature radius `0.12`). The worker-produced cache is sampled
+at 19 native-pick fractions; Trim Two is exercised in both pick orders through
+preview/commit, undo/redo, and all five DXF/DWG save/reopen lanes with
+LibreDWG parsing.
+
+After rebuilding the macOS arm64 CMake Release `librecad_tests` target, the
+focused ellipse Trim Two case passes 21,553 assertions / 1 case, and
+`git diff --check` passes. This qualifies one reversed full-ellipse profile
+only; other sweep/reversal combinations, cusp distances, cutters, cross-platform,
+visible-GUI, and external-CAD acceptance remain open.
