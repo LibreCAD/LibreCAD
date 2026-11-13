@@ -40957,3 +40957,28 @@ distinct from spline-points. It verifies the chooser contract for the current
 headless widget tests; it is not visible-GUI acceptance or proof of every
 family's geometry variants. The visible Properties workflow remains open in
 Slice 5.
+
+## 1150. Normalize Four-point Parabola Reconstruction (2026-11-12)
+
+Implementation commit `26de598c5` removes world-unit dependence from the
+`LC_ParabolaData::From4Points` fit. It centers and uniformly normalizes the
+rotated sample coordinates before least-squares fitting, uses relative
+degeneracy checks, validates finite planar inputs, and transforms reconstructed
+endpoints and tangents back into world coordinates. A regression samples a
+known parabola at four parameters, then scales it by `1e-6`, rotates it by
+`0.37` radians, translates it to `(10,-20)`, and requires a returned candidate
+to reconstruct all four points within `1e-14` world units. This qualifies that
+specific small, translated, rotated `From4Points` input; it does not establish
+the complete parabola offset/worker/cache/persistence matrix.
+
+On macOS arm64, the CMake Release `librecad_tests` target builds and
+`[parabola][reconstruction]` passes 2,244 assertions across 4 cases. The
+recursive qmake6 Release build in `/private/tmp/offset3193-qmake6-fresh`
+completes with `make -j6` (exit 0). `git diff --check` passes. A broader
+`[parabola]` run was intentionally interrupted during the large hostile-file
+and persistence matrix: 7 of 8 selected cases had passed and 1,874,319
+assertions had passed before SIGINT in the remaining case. Treat that aggregate
+as incomplete, not green. Other four-point sample sets, scale/translation
+boundaries, end-to-end qualification of this constructor profile through
+worker/cache and applicable file lanes, visible GUI, and independent-CAD
+acceptance remain open.
