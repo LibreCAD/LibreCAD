@@ -30425,7 +30425,7 @@ these rows do not imply every parameter/domain is supported):
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; one open four-fit-point source with endpoint tangent constraints matches an exact-normal oracle on both signed sides and passes worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; isolated, separated, plateau-plus-separated, leading-endpoint, and trailing-endpoint stationary profiles omit stationary source intervals, preserve exact-normal tolerance on moving spans, and pass both signed worker/cache/Produce paths, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing; a closed interior-stationary profile and a simple convex periodic-seam-stationary profile pass exact-normal checks on both sides plus worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing; adjacent repeated neighbors and separated interior/trailing repeats pass the sampled analytic-normal kernel oracle and typed worker/cache admission at distances `+/-0.2` and `+/-0.5`; adjacent, separated, two-interior-span, and widely-spaced interior repeat profiles, their reversed traversal, and both forward/reversed 37-degree rotated `1e-3`-scale copies at `(1e6,-2e6)`, plus a 37-degree rotated adjacent-repeat profile translated to `(1e6,-2e6)`, pass independent exact-normal/corner-arc checks, process-backed cache generation, five DXF/DWG round-trip lanes, and independent LibreDWG geometry parsing at four signed distances scaled with each fixture; one closed four-fit-point bow-tie and its scale-`0.5`, rotated-`0.41`-rad, translated, reflected, and reversed variant pass direct two-branch Trim distance oracles on both signed sides and worker-generated offset cache/file round trips at distances `+/-0.2` and `+/-0.5`, with LibreDWG inspection; fit-point coordinate localization preserves world output | Other self-crossing/ambiguous topology and repeated-point distributions, tangent combinations, degenerate stationary joins, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; both translated profiles at both signs and both distances pass worker/cache, replacement, and five file lanes; a scale-`1e-2` source at `(1e6,-2e6)` and its 37-degree rotated counterpart pass direct checks at normalized distances `.05/.25` and worker/cache, replacement, Produce, and all five file lanes on both sides at distance `.0005`; reversed control-point traversal passes direct exact-normal checks at `.05` and `.25` and worker/cache, replacement, Produce, and all five lanes on both sides at `.25`; two four-point candidates and the five near-parallel endpoint-tangent profiles with slopes +/-1e-4, +/-1e-5, +/-1e-6, +/-1e-7, and +/-1e-8 pass scaled/translated worker generation, cache admission/refusal, and staged DXF/DWG import; parallel/zero/non-finite tangent refusals | Other source scales/translations, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing; sections 1101 and 1103 cover two distinct bounded profiles on both branches through worker-backed Trim Two, undo/redo, five-file round trips, and LibreDWG structural reads | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
-| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; all 11 recorded open/closed linear, mixed-bulge, major/minor and unequal-major profiles pass both worker sides over scales `1e-3`, `1`, `1e3`, `1e4`, translation ratios `1e4` and `1e6`, normalized distances `+/-0.1` and `+/-0.25`, cache admission/refusal, and five staged DXF/DWG lanes; collinear, single-corner, gently curved, and monotone-quadratic 256-segment open chains pass direct exact-normal checks on both sides; the collinear and single-corner chains pass worker-created Trim Two in both pick orders and all five file lanes; the gently curved chain refuses atomically (section 1233); cutter-first Trim Two refusal is observed for the monotone-quadratic chain, but inverse pick order is unverified (section 1234) | Segment counts/topologies beyond 256, verify both Trim Two pick orders for the dense monotone-curved chain and fix any asymmetry, successful Trim for denser curved chains with certified intersections, materialization near the 16-entity cap, other open sweep/scale boundaries, additional transformed corner scales/origins, boundary picks and wider self-intersection/collapse oracles |
+| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; all 11 recorded open/closed linear, mixed-bulge, major/minor and unequal-major profiles pass both worker sides over scales `1e-3`, `1`, `1e3`, `1e4`, translation ratios `1e4` and `1e6`, normalized distances `+/-0.1` and `+/-0.25`, cache admission/refusal, and five staged DXF/DWG lanes; collinear, single-corner, gently curved, and monotone-quadratic 256-segment open chains pass direct exact-normal checks on both sides; the collinear and single-corner chains pass worker-created Trim Two in both pick orders and all five file lanes; the gently curved chain refuses atomically (section 1233); the monotone-quadratic chain's native-cache-by-line query refuses `AmbiguousRoots`, so Trim Two atomically refuses in both pick orders (section 1234) | Segment counts/topologies beyond 256, improve certification for dense monotone-curved cache intersections where possible, successful Trim for denser curved chains with certified intersections, materialization near the 16-entity cap, other open sweep/scale boundaries, additional transformed corner scales/origins, boundary picks and wider self-intersection/collapse oracles |
 
 **Spline-points distance clarification:** The shared worker matrix uses nominal
 distances `0.2` and `0.5` and applies a profile-specific multiplier. For the
@@ -42631,30 +42631,35 @@ topologies beyond 256, successful Trim for denser curved chains with certified
 intersections, materialization near the 16-entity cap, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
 
-## 1234. Record Dense Monotone-curved Polyline Trim Asymmetry (2026-11-13)
+## 1234. Qualify Dense Monotone-curved Polyline Trim Refusal (2026-11-13)
 
 The direct high-segment oracle now includes a 256-segment monotone quadratic
 profile (`y = 0.001*x*x`); both signed sides at distances `0.02` and `0.05`
 pass the independent per-segment-normal checks. The focused direct test passes
 74,580 assertions / 1 case on macOS arm64 CMake Release.
 
-An exploratory worker-created Trim Two run found a refusal: the
-monotone-quadratic profile refuses in the tested cutter-first order. Catch2's
-fatal assertion stops the enclosing case at that failure, so the inverse pick
-order was not exercised and no order asymmetry is yet proven. A direct
-cache-trim probe for the same native cache, cutter, and native pick returns
-`AmbiguousRoots`, zero roots, 257 generated leaves, and 1,781 box pairs. The
-action reports `uncertain, tangent or overlapping intersections`; no evidence
-supports weakening the strict intersection proof or treating this case as
-successful. The existing action matrix still passes its original collinear,
-sparse-corner, and oscillatory cases; the exploratory profile is not part of
-that committed passing matrix.
+The committed action regression now runs the 256-segment monotone-quadratic
+profile in both pick orders. The independent cache probes show the source
+cache trimmed by the line refuses `AmbiguousRoots` with zero certified roots,
+257 generated leaves, and 1,781 box pairs, while the line cache trimmed by the
+native offset is accepted. Since Trim Two requires both outputs, the real
+worker-backed action refuses in both pick orders and preserves source, cutter,
+drawing count, and undo epoch. The action reports
+`uncertain, tangent or overlapping intersections`. This is a verified
+conservative-certification limitation, not pick-order asymmetry; weakening the
+strict proof would not be justified by this fixture.
 
-Next implementation: run each pick order independently so a failure in one
-cannot mask the other, then isolate whether cutter-first selects a different
-cache target/pick or loses root-domain provenance. Make both pick orders
-produce the same certified result or the same explicit atomic refusal. Add a
-passing regression for the certified transverse case and preserve a failure
-case for genuinely ambiguous roots. Until then, dense monotone-curved Trim Two,
+On macOS arm64 CMake Release, the complete
+`[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]`
+selection passes 8,625 assertions / 1 case with `DWGREAD` set to LibreDWG.
+The direct high-segment oracle passes 74,580 assertions / 1 case. The test
+target rebuild and `git diff --check` pass.
+
+Next implementation: inspect why the certified root query fails for the
+native-cache-by-line pair (including candidate bounds, span ownership, and
+intersection work at the unresolved candidate). Fix the kernel only if a
+complete, bounded root exclusion or isolation proof can be established; keep
+the atomic refusal otherwise. Add a separate certified dense-curved positive
+Trim fixture when available. Until then, dense monotone-curved Trim Two,
 visible GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance
 remain open.
