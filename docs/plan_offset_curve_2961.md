@@ -43087,3 +43087,58 @@ with the still-open curved/concave polyline geometry and remaining family by
 variant gates from Slice 4, followed by visible Properties/Trim and independent
 CAD acceptance. Do not mark the overall roadmap complete from these product
 builds.
+
+## 1246. Qualify Mixed Line/arc Convex Polyline Erosion (2026-11-13)
+
+Implementation commit `eea636807` adds the bounded mixed line/arc convexity
+route, corrects RegionBoundary side selection for clockwise erosion, and adds
+kernel, source-action, Trim, undo/redo, and persistence regressions.
+
+This slice adds worker-backed inward erosion for simple, strictly convex,
+closed polylines with at least one line span and circular-arc spans. The
+eligibility proof is bounded: reject non-simple paths, compare each live line
+or arc to the structured definition in the translated worker frame, compute
+signed area from line and arc integrals, and require each oriented join turn
+and arc sweep to agree with the loop orientation. Only a certified inward
+request selects RegionBoundary; mismatched, reflex/concave, self-intersecting,
+opposite-side, and all-arc inputs stay on the existing Direct path.
+
+The first clockwise worker experiment exposed a side-convention mismatch:
+RegionBoundary treats Left as erosion and Right as dilation independently of
+contour winding, but worker requests normally map signed distance directly to
+Left/Right. The worker now requests Left for the certified erosion mode in
+both windings; the original signed distance remains in the source definition
+and resulting provenance. A sampled 257-point spline oracle verifies the
+rounded rectangle's eroded bounds, and cache validation plus wire
+encode/decode succeed for both orientations. A scale/translation suite also
+exposed precision drift when the optimization admitted a closed all-arc
+circle, so eligibility now requires at least one line. This deliberately
+leaves all-arc loops unoptimized pending separate qualification.
+
+The worker action regression exercises source replacement, closed-cache
+materialization, Trim, commit, undo/redo, and trimmed-geometry persistence for
+both a square and a quarter-circle rounded rectangle. It covers AC1014 DXF,
+AC1015 DXF/DWG, and AC1032 DXF/DWG. A separate staged-import test promotes the
+worker-generated rounded-rectangle cache through those same five lanes and
+checks typed source metadata and geometry fingerprints.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused curved worker case: 611 assertions / 1 case, both windings, both
+  signed sides, sampled output bounds, concave refusal, and source mismatch.
+- Full CTest `offset_worker_kernel`: passed in 220.12 seconds.
+- Translation matrix: 39,040 assertions / 1 case.
+- Rounded and square source-action Trim matrix: 1,060 assertions / 10
+  generated cases across the five DXF/DWG lanes.
+- Rounded-cache staged-import matrix: 593 assertions / 1 case across five
+  DXF/DWG lanes.
+- Full `librecad_offset_trim_tests`: 206,580 assertions / 162 cases passed.
+- Recursive qmake6 product build: `make -j6` exited 0; existing unrelated
+  warnings and the optional missing cargo environment-file notice remain.
+- `git diff --check`: passed before implementation commit `eea636807`.
+
+This closes only the tested rounded-rectangle and square convex erosion cases.
+Other bulge layouts, all-arc loops, larger/more varied curved topologies,
+collapsed or disconnected boundaries, visible GUI acceptance, non-macOS
+runtime, and independent ODA/AutoCAD acceptance remain open. This does not
+close the broader family-by-variant, source-widget, or roadmap goals.
