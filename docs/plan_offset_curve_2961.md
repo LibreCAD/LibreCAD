@@ -40743,3 +40743,21 @@ elliptic-arc Trim Two signed-side, traversal, and interval profiles. This is
 aggregate regression evidence only; it does not close the remaining source
 family/variant matrix, visible GUI, cross-platform, clean qmake6, or
 independent-CAD acceptance gates.
+
+## 1136. Qualify Both Sides of a Reversed Longer Elliptic Arc (2026-11-12)
+
+Test commit `44a01607c` adds both signed sides for the reversed form of the
+long interval from sections 1132-1133: center `(-6, 8)`, semi-major length
+`3`, ratio `0.6`, bounds `-0.4..2.4`, and offset distance `0.5`. Both inward
+and outward fixtures use a cutter at normalized arc parameter `0.25`. For
+both Trim Two operand orders, the tests sweep 19 source-pick fractions,
+require refusal to leave no fragments, and run preview/commit, undo/redo, and
+all five DXF/DWG save/reopen lanes with LibreDWG parsing.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 27,117 assertions / 1 case; `git diff --check` passes. This completes
+the selected interval's forward/reversed and inward/outward matrix at one
+distance, with the tested cutter placements only. Other interval, distance,
+and cutter combinations, visible GUI, cross-platform, and independent-CAD
+acceptance remain open.
