@@ -66,19 +66,19 @@ in the selector does not prove all its geometry variants pass generation,
 worker/cache validation, trimming, or persistence. Do not extend the picker to
 unrelated drawable entities.
 
-**Scope revalidated (2026-11-13):** The follow-up requests to change source
-type while choosing a replacement, cover all supported source types, and
-specifically include parabola do not add a family beyond the existing nine
-`SupportedKinds`. Keep parabola as its own typed choice and preserve the
-in-place filter-change behavior. Once replacement mode is active, the user must
-be able to change the type filter and inspect the refreshed candidate list
-without cancelling or restarting replacement. The filter chooses which
-candidates are shown; the accepted candidate's actual supported type becomes
-the new source type only after asynchronous validation succeeds. The headless
-picker matrix already verifies these selector and state transitions; remaining
-work is the visible workflow gate and Slice 4's concrete-variant
-geometry/worker/cache/Trim/DXF/DWG checks. Do not treat this scope confirmation
-as evidence that either gate has passed.
+**Latest scope confirmation (2026-11-13):** The repeated request to change
+source-curve type while selecting a replacement and support all supported
+types confirms the existing Properties-widget contract; it does not add a
+family beyond the nine `LC_OffsetSourceGeometry::SupportedKinds` entries.
+Keep parabola as a distinct typed choice. While replacement selection is
+active, the user can change the type filter repeatedly and inspect the
+refreshed candidate list without cancelling or restarting. The filter controls
+which eligible entities are offered; the accepted candidate's actual supported
+type becomes the new source type only after asynchronous validation succeeds.
+The headless picker matrix already verifies these selector and state
+transitions. Remaining work is the visible workflow gate and Slice 4's
+concrete-variant geometry/worker/cache/Trim/DXF/DWG checks. Do not treat this
+scope confirmation as evidence that either gate has passed.
 
 **Acceptance sequence:** in the Properties source widget, start replacement
 and, while replacement/candidate selection remains active, keep the type
