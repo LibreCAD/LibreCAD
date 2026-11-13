@@ -42709,18 +42709,18 @@ still passes 74,580 assertions / 1 case, and `git diff --check` passes.
 
 This closes the four exercised 256-segment open-polyline profiles (linear,
 piecewise-kinked, sinusoidal, and monotone quadratic) for the tested single
-transverse line crossing and worker action flow. A follow-up two-crossing
-sinusoidal probe reported one root when the dense cache was the target and two
-when its nominally identical `LC_OffsetCurve` was the cutter; the action safely
-refused without mutation. The corresponding work counters also differed
-(501 versus 320 input spans), so the probe does not yet prove a core
-root-enumeration defect: first compare the actual extracted cache data and
-span/count accounting across operand roles. Then make both root counts and
-certified images agree, and require both worker pick orders to complete
-atomically before claiming multi-crossing support. This diagnostic/reproduction
-is the next implementation gate. Closed/high-segment chains, self-overlap, and
-broader bulge/layout combinations also remain open, as do visible GUI
-acceptance, cross-platform runtime, and independent ODA/AutoCAD acceptance.
+transverse line crossing and worker action flow. A 256-segment two-crossing
+sinusoidal probe produced 48 retained fragments and correctly hit Trim Two's
+fixed 16-output limit; it is not a root-enumeration failure. Root counts can
+also differ by operand role because a discontinuous cache used as the target
+selects and trims only the picked connected component while preserving the
+others, whereas the same cache used as cutter is queried in full. The corrected
+acceptance invariant is certified coverage of each crossing in the full query,
+plus correct selected-component semantics for the target, not equality of
+aggregate root/work counters. Section 1238 adds a passing end-to-end
+two-crossing fixture within the output cap. Closed/high-segment chains,
+self-overlap, and broader bulge/layout combinations remain open, as do visible
+GUI acceptance, cross-platform runtime, and independent ODA/AutoCAD acceptance.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 
@@ -42802,3 +42802,28 @@ pick orders continue to refuse atomically. `git diff --check` passes. This
 proves tighter constant-coordinate handling and narrows the remaining numeric
 gap, but does not complete dense curved Trim or any visible/cross-platform/
 independent-CAD gate.
+
+## 1238. Qualify Two-crossing Sinusoidal Trim Two Within Output Limits (2026-11-13)
+
+The earlier 256-segment sinusoidal probe exceeded the intentionally fixed
+16-output Trim Two limit because trimming its disconnected native cache would
+publish 48 retained fragments. A bounded 32-segment sinusoidal source now
+exercises the same two-crossing topology without changing that product limit.
+The full-cache cutter query certifies both crossings; the target query selects
+the connected component at the native pick and certifies the crossing relevant
+to that component. Their root counts therefore differ by design when the other
+crossing belongs to another retained component.
+
+The regression directly verifies both prepared queries, calls synchronous
+stored-cache preparation and verifies its two-source batch is admitted, then
+drives worker-backed Trim Two in both entity-pick orders. Each order previews
+without mutating the document, commits atomically, and restores both original
+entities through undo. On macOS arm64 CMake Release,
+`[multi-root][sinusoidal]` passes 655 assertions / 1 case, including overlap of
+the selected-component proof image with one full-cache proof image and
+non-mutating synchronous preparation. The rebuilt `librecad_offset_trim_tests` target and
+full target pass 207,165 assertions / 160 cases on the same macOS arm64 CMake
+Release build, and `git diff --check` passes. This closes the selected
+two-crossing fixture, not the
+broader dense multi-crossing, closed-chain, self-overlap, visible-GUI,
+cross-platform, or independent-CAD acceptance gates.

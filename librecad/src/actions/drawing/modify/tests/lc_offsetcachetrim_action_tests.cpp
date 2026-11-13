@@ -4385,6 +4385,108 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
     }
 }
 
+TEST_CASE("Sinusoidal Trim Two resolves multiple roots across operand roles",
+          "[lc-offsetcurve][trim-action][polyline][multi-root][sinusoidal]") {
+    Drawing<true> f;
+    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    auto initial = LC_OffsetCurve::create(seed, .15, false);
+    REQUIRE(initial);
+    auto* previous = initial.entity.release(); f.graphic.addEntity(previous);
+    auto* source = new RS_Polyline(&f.graphic);
+    constexpr unsigned sampleSegments = 32;
+    for (unsigned i = 0; i <= sampleSegments; ++i) {
+        const double x = .8 * double(i);
+        source->addVertex({x, .5 * std::sin(.3 * x)});
+    }
+    source->endPolyline(); f.graphic.addEntity(source);
+    f.graphic.select(QList<RS_Entity*>{previous}, true);
+    UpdateSourceProbe update(&f.context);
+    update.init(0); update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline); update.use(source);
+    lc::test::awaitUpdate(update);
+    REQUIRE(update.lastReport().updated == 1);
+    LC_OffsetCurve* native = nullptr;
+    for (auto* entity : live(f.graphic)) {
+        if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+        native = dynamic_cast<LC_OffsetCurve*>(entity);
+        REQUIRE(native);
+    }
+    REQUIRE(native);
+    const auto spanCount = [](const RS_SplineData& data) {
+        std::size_t count = 0;
+        for (std::size_t i = 0; i < data.knotslist.size();) {
+            const double knot = data.knotslist[i++];
+            while (i < data.knotslist.size() && data.knotslist[i] == knot) ++i;
+            ++count;
+        }
+        return count - 1;
+    };
+    const auto before = RS_Spline::geometryFingerprint(native->getData());
+    const auto breaks = native->getBreakParameters(); REQUIRE(breaks.size() > sampleSegments);
+    constexpr double lineY = -.3;
+    auto* line = new RS_Line(&f.graphic, RS_LineData{{-16, lineY}, {42, lineY}});
+    f.graphic.addEntity(line);
+    const RS_Vector linePick{40, lineY};
+    RS_SplineData lineCache{1, false};
+    lineCache.controlPoints = {{-16, lineY}, {42, lineY}};
+    lineCache.knotslist = {0, 0, 1, 1}; lineCache.weights = {1, 1};
+    const auto byLine = LC_OffsetCacheTrim::prepare(lineCache, *native, {linePick});
+    const auto afterSecond = RS_Spline::geometryFingerprint(native->getData());
+    REQUIRE(byLine.roots.size() == 2);
+    const auto& root = byLine.roots.front().isolation;
+    const double nativeParameter = .5 * (root.parameterB.lo() + root.parameterB.hi()) + .001;
+    const auto nativePick = native->getPointAt(nativeParameter);
+    const auto byCurve = LC_OffsetCacheTrim::prepare(native->getData(), *line, {nativePick});
+    const auto afterFirst = RS_Spline::geometryFingerprint(native->getData());
+    CAPTURE(spanCount(native->getData()), native->getData().controlPoints.size(),
+            native->getData().knotslist.size(), byCurve.work.inputSpans, byLine.work.inputSpans,
+            byCurve.rootCount, byLine.rootCount, static_cast<int>(byCurve.refusal),
+            static_cast<int>(byLine.refusal));
+    CHECK(before == afterFirst);
+    CHECK(before == afterSecond);
+    CHECK(byCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(byLine.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(byLine.rootCount == 2);
+    CHECK(byCurve.rootCount > 0);
+    const auto overlaps = [](const LC_Interval& a, const LC_Interval& b) {
+        return a.isValid() && b.isValid() && a.lo() <= b.hi() && b.lo() <= a.hi();
+    };
+    CHECK(std::any_of(byCurve.roots.begin(), byCurve.roots.end(), [&](const auto& selectedRoot) {
+        return std::any_of(byLine.roots.begin(), byLine.roots.end(), [&](const auto& fullRoot) {
+            return overlaps(selectedRoot.worldX, fullRoot.worldX) &&
+                   overlaps(selectedRoot.worldY, fullRoot.worldY);
+        });
+    }));
+    LC_DocumentModificationBatch directBatch;
+    const auto directEpoch = f.graphic.undoStateEpoch();
+    const auto direct = RS_Modification::trimStoredCache(f.graphic, *native, nativePick,
+        *line, linePick, true, directBatch);
+    REQUIRE(direct.result);
+    CHECK_FALSE(direct.cacheRefusal.has_value());
+    CHECK(directBatch.entitiesToAdd.size() <= 16);
+    CHECK(directBatch.entitiesToDelete.size() == 2);
+    CHECK(f.graphic.undoStateEpoch() == directEpoch);
+    CHECK_FALSE(native->isDeleted()); CHECK_FALSE(line->isDeleted());
+    CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
+    qDeleteAll(directBatch.entitiesToAdd);
+    for (const bool nativeFirst : {false, true}) {
+        CAPTURE(nativeFirst);
+        if (f.action->isFinished()) f.action = std::make_unique<CacheTrim<true>>(&f.context);
+        const auto firstPick = nativeFirst ? nativePick : linePick;
+        const auto secondPick = nativeFirst ? linePick : nativePick;
+        f.action->click(firstPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto epoch = f.graphic.undoStateEpoch();
+        f.action->hover(secondPick);
+        CHECK_FALSE(f.action->m_preview->isEmpty());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(line->isDeleted());
+        CHECK(f.graphic.undoStateEpoch() == epoch);
+        f.action->click(secondPick);
+        REQUIRE(native->isDeleted()); REQUIRE(line->isDeleted());
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(line->isDeleted());
+    }
+}
+
 TEST_CASE("T Trim Two admits exactly sixteen outputs and refuses seventeen atomically",
           "[gui][lc-offsetcurve][trim-action][trim-output-limit][typed-source]") {
     for (const std::size_t farComponents : {1u, 2u}) for (const bool nativeFirst : {false, true}) {
