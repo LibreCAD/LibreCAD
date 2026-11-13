@@ -19794,6 +19794,30 @@ DRW_LType lineTypeToDrw(const std::string &name, const std::string &description,
   return record;
 }
 
+// The table holds the drawing's definition; the archived record stands in
+// for it only while the two agree, so a definition changed in the program
+// is the one saved. A twin spelling is another record, not this entry's.
+const LC_LineType *changedLineTypeDefinition(const RS_Graphic *graphic,
+                                             const DRW_LType &archived) {
+  if (graphic == nullptr)
+    return nullptr;
+  const LC_LineType *entry =
+      graphic->findLineType(QString::fromUtf8(archived.name.c_str()));
+  if (entry == nullptr ||
+      normalizeDwgTableName(entry->name.toStdString()) !=
+          normalizeDwgTableName(archived.name))
+    return nullptr;
+  if (entry->description.toStdString() != archived.desc)
+    return entry;
+  if (entry->pattern.size() != archived.path.size())
+    return entry;
+  for (std::size_t i = 0; i < entry->pattern.size(); ++i) {
+    if (entry->pattern[i] != archived.path[i])
+      return entry;
+  }
+  return nullptr;
+}
+
 } // namespace
 
 void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
@@ -19806,12 +19830,25 @@ void RS_FilterDXFRW::writeLType(const UTF8STRING &lTypeName,
   if (const auto *source =
           m_graphic->dwgAdvancedMetadata().findLineTypeTableEntryByName(
               lTypeName)) {
-    if (source->path.empty() && source->segments.empty() && !ltPath.empty()) {
-      // A record that only names a built-in keeps its identity, not an empty
-      // pattern: copy the table entry part and leave the dashes to the literal.
+    if (source->path.empty() && source->segments.empty()) {
+      if (!ltPath.empty()) {
+        // A record that only names a built-in keeps its identity, not an
+        // empty pattern: copy the table entry part and leave the dashes to
+        // the literal.
+        static_cast<DRW_TableEntry &>(ltype) = *source;
+        if (!source->desc.empty())
+          ltype.desc = source->desc;
+      } else {
+        ltype = *source;
+      }
+    } else if (const LC_LineType *changed =
+                   changedLineTypeDefinition(m_graphic, *source)) {
+      // The table's definition replaced the record's; the record's table
+      // entry part still names the object the file references.
+      ltype = lineTypeToDrw(changed->name.toStdString(),
+                            changed->description.toStdString(),
+                            changed->pattern);
       static_cast<DRW_TableEntry &>(ltype) = *source;
-      if (!source->desc.empty())
-        ltype.desc = source->desc;
     } else {
       ltype = *source;
     }
@@ -19891,6 +19928,15 @@ void RS_FilterDXFRW::writeLTypes() {
         dashed.xrefBlockHandle = ltype.xrefBlockHandle;
         ltype = dashed;
       }
+    } else if (const LC_LineType *changed =
+                   changedLineTypeDefinition(m_graphic, ltype)) {
+      // The table's definition replaced the record's; the record's table
+      // entry part still names the object the file references.
+      DRW_LType rewritten =
+          lineTypeToDrw(changed->name.toStdString(),
+                        changed->description.toStdString(), changed->pattern);
+      static_cast<DRW_TableEntry &>(rewritten) = ltype;
+      ltype = rewritten;
     }
     (void)writeLTypeRecord(ltype);
   }
