@@ -974,6 +974,111 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
     CHECK(line->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Native source picker filters and replaces every supported source family",
+          "[gui][dialog][offsetcurve][source][typed][matrix]") {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    const auto geometryFor = [](const Kind kind) {
+        switch (kind) {
+        case Kind::Line: return LC_OffsetSourceGeometry{RS_LineData{{-4, 0}, {4, 0}}};
+        case Kind::Arc: return LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 4, .2, 1.4, false}};
+        case Kind::Circle: return LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 4}};
+        case Kind::Ellipse: return LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .7, 0, 0, false}};
+        case Kind::Spline: {
+            RS_SplineData data{2, false};
+            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            data.knotslist = {0, 0, 0, 1, 1, 1};
+            data.weights = {1, 1, 1};
+            return LC_OffsetSourceGeometry{data};
+        }
+        case Kind::SplinePoints: {
+            LC_SplinePointsData data{false, false};
+            data.useControlPoints = true;
+            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            return LC_OffsetSourceGeometry{data};
+        }
+        case Kind::Parabola:
+            return LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}}};
+        case Kind::BoundedHyperbola:
+            return LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .5, -.4, .4}};
+        case Kind::Polyline:
+            return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{-4, 0}, {4, 0}, false,
+                {RS_LineData{{-4, 0}, {0, 2}}, RS_LineData{{0, 2}, {4, 0}}}}};
+        case Kind::Invalid: break;
+        }
+        return LC_OffsetSourceGeometry{RS_LineData{}};
+    };
+
+    Fixture f;
+    std::array<RS_Entity*, LC_OffsetSourceGeometry::SupportedKinds.size()> candidates{};
+    for (std::size_t i = 0; i < candidates.size(); ++i) {
+        const auto kind = LC_OffsetSourceGeometry::SupportedKinds[i];
+        auto geometry = geometryFor(kind);
+        REQUIRE(geometry.isWellFormed());
+        auto entity = geometry.makeEntity();
+        REQUIRE(entity);
+        candidates[i] = entity.get();
+        f.graphic.addEntity(entity.release());
+    }
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+
+    for (std::size_t i = 0; i < candidates.size(); ++i) {
+        const Kind kind = LC_OffsetSourceGeometry::SupportedKinds[i];
+        CAPTURE(static_cast<int>(kind));
+        const int kindIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(kindIndex >= 0);
+        typeBox->setCurrentIndex(kindIndex);
+        CHECK(typeBox->isEnabled());
+        CHECK_FALSE(widget.isPreparing());
+
+        std::vector<qulonglong> visibleIds;
+        for (int row = 0; row < sourceBox->count(); ++row) {
+            bool hasId = false;
+            const qulonglong id = sourceBox->itemData(row).toULongLong(&hasId);
+            if (hasId) visibleIds.push_back(id);
+        }
+        REQUIRE(visibleIds.size() == 1);
+        CHECK(visibleIds.front() == candidates[i]->getId());
+
+        std::optional<QCborArray> sourceBefore;
+        if (clone->sourceDefinition())
+            sourceBefore = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition());
+        const auto cacheBefore = RS_Spline::geometryFingerprint(clone->getData());
+        sourceBox->setCurrentIndex(sourceBox->findData(QVariant::fromValue<qulonglong>(candidates[i]->getId())));
+        REQUIRE(widget.isPreparing());
+        CHECK_FALSE(typeBox->isEnabled());
+        CHECK_FALSE(sourceBox->isEnabled());
+        CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
+        if (sourceBefore) CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+                                    *clone->sourceDefinition()) == *sourceBefore);
+        else CHECK_FALSE(clone->sourceDefinition());
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        REQUIRE(*widget.lastEditResult());
+        if (kind == Kind::Ellipse) {
+            CHECK_FALSE(clone->sourceDefinition());
+            const auto expected = geometryFor(kind);
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                      LC_OffsetSourceGeometry{clone->definition().basis}) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(expected));
+        } else {
+            REQUIRE(clone->sourceDefinition());
+            CHECK(clone->sourceDefinition()->source.kind() == kind);
+        }
+        CHECK(RS_Spline::geometryFingerprint(clone->getData()) != cacheBefore);
+        CHECK(typeBox->isEnabled());
+        CHECK(sourceBox->isEnabled());
+    }
+}
+
 TEST_CASE("Native source picker retains the picked identity for duplicate geometry",
           "[gui][dialog][offsetcurve][source][identity]") {
     Fixture f;
