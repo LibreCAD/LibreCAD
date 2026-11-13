@@ -3404,9 +3404,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u})
     for (const bool nativeFirst : {false, true}) {
-        const bool fitPoints = profile == 5;
+        const bool fitPoints = profile == 5 || profile == 6;
         const bool splinePointsSource = profile == 2 || fitPoints;
         CAPTURE(profile, fitPoints, splinePointsSource, nativeFirst);
         Drawing<true> f;
@@ -3422,12 +3422,28 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         if (splinePointsSource) {
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
-                data.splinePoints = {{-4, 0}, {0, 3}, {4, 0}};
+                data.splinePoints = profile == 6
+                    ? std::vector<RS_Vector>{{-4, 0}, {-1, 2}, {2, 3}, {4, 0}}
+                    : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
             } else {
                 data.useControlPoints = true;
                 data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
             }
             source = new LC_SplinePoints(&f.graphic, data);
+            if (profile == 6) {
+                auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
+                REQUIRE(fitted);
+                LC_CurveJet startJet;
+                LC_CurveJet endJet;
+                REQUIRE(fitted->tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+                REQUIRE(fitted->tryEvaluateJet(static_cast<double>(fitted->getSegmentCount()),
+                    LC_CurveEvaluationSide::Left, endJet));
+                auto& fittedData = fitted->getData();
+                fittedData.fitTangentsConstrained = true;
+                fittedData.fitStartTangent = startJet.first;
+                fittedData.fitEndTangent = endJet.first;
+                REQUIRE(fitted->fitTangentsMatchCurve());
+            }
         } else if (profile == 4) {
             RS_Spline closed(nullptr, RS_SplineData{3, false});
             const std::array<RS_Vector, 8> controlPoints{{
@@ -3558,6 +3574,10 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     const auto& x = a->getData();
                     const auto& y = b->getData();
                     if (x.closed != y.closed || x.cut != y.cut) return false;
+                    if (x.fitTangentsConstrained &&
+                        (!y.fitTangentsConstrained ||
+                         !closeVector(x.fitStartTangent, y.fitStartTangent) ||
+                         !closeVector(x.fitEndTangent, y.fitEndTangent))) return false;
                     if (x.useControlPoints) {
                         if (x.controlPoints.size() != y.controlPoints.size()) return false;
                         for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
@@ -3572,15 +3592,52 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 }
                 const auto* b = dynamic_cast<const RS_Spline*>(&actual);
                 if (!b) return false;
-                RS_SplineData data{2, false};
-                data.controlPoints = a->getControlPoints();
-                const auto n = data.controlPoints.size();
-                if (n < 3) return false;
-                data.knotslist.insert(data.knotslist.end(), 3, 0.0);
-                for (std::size_t i = 3; i < n; ++i)
-                    data.knotslist.push_back(double(i - 2) / double(n - 2));
-                data.knotslist.insert(data.knotslist.end(), 3, 1.0);
-                return sameSpline(data, b->getData());
+                const auto& sourceData = a->getData();
+                const auto& loadedData = b->getData();
+                if (sourceData.fitTangentsConstrained &&
+                    (!loadedData.fitTangentsConstrained ||
+                     !closeVector(sourceData.fitStartTangent, loadedData.fitStartTangent) ||
+                     !closeVector(sourceData.fitEndTangent, loadedData.fitEndTangent)))
+                    return false;
+                if (profile != 6) {
+                    RS_SplineData data{2, false};
+                    data.controlPoints = a->getControlPoints();
+                    const auto n = data.controlPoints.size();
+                    if (n < 3) return false;
+                    data.knotslist.insert(data.knotslist.end(), 3, 0.0);
+                    for (std::size_t i = 3; i < n; ++i)
+                        data.knotslist.push_back(double(i - 2) / double(n - 2));
+                    data.knotslist.insert(data.knotslist.end(), 3, 1.0);
+                    return sameSpline(data, loadedData);
+                }
+                double loadedStart = 0.0, loadedEnd = 0.0;
+                if (!b->getParameterDomain(loadedStart, loadedEnd) ||
+                    !(loadedEnd > loadedStart)) return false;
+                const double sourceEnd = static_cast<double>(a->getSegmentCount());
+                if (!(sourceEnd > 0.0)) return false;
+                for (unsigned sample = 0; sample <= 128; ++sample) {
+                    const double fraction = static_cast<double>(sample) / 128.0;
+                    const double sourceParameter = sourceEnd * fraction;
+                    const double loadedParameter = loadedStart +
+                        (loadedEnd - loadedStart) * fraction;
+                    LC_CurveJet sourceJet;
+                    LC_CurveJet loadedJet;
+                    if (!a->tryEvaluateJet(sourceParameter,
+                            sample == 128 ? LC_CurveEvaluationSide::Left
+                                          : LC_CurveEvaluationSide::Right,
+                            sourceJet) ||
+                        !b->tryEvaluateJet(loadedParameter,
+                            sample == 128 ? LC_CurveEvaluationSide::Left
+                                          : LC_CurveEvaluationSide::Right,
+                            loadedJet)) return false;
+                    const auto& sourcePoint = sourceJet.point;
+                    const auto& loadedPoint = loadedJet.point;
+                    const double scale = std::max({1.0, std::abs(sourcePoint.x),
+                        std::abs(sourcePoint.y), std::abs(loadedPoint.x),
+                        std::abs(loadedPoint.y)});
+                    if (sourcePoint.distanceTo(loadedPoint) > 2e-8 * scale) return false;
+                }
+                return true;
             }
             if (expected.rtti() != actual.rtti()) return false;
             if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {

@@ -32976,7 +32976,8 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   }
   const bool writeFitScenario = !data.useControlPoints && !data.cut &&
                                 fitPoints.size() >= 2 &&
-                                !data.fitTangentsConstrained && !s->isClosed();
+                                (!data.fitTangentsConstrained || m_dwgW) &&
+                                !s->isClosed();
   sp.degree = 2;
   sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;
 
@@ -32988,9 +32989,10 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.tolfit = std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0
                     ? data.fitTolerance
                     : 0.0000001;
-    const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
-    const RS_Vector endTangent =
-        fitPoints.back() - fitPoints[fitPoints.size() - 2];
+    const RS_Vector startTangent = data.fitTangentsConstrained
+        ? data.fitStartTangent : fitPoints[1] - fitPoints[0];
+    const RS_Vector endTangent = data.fitTangentsConstrained
+        ? data.fitEndTangent : fitPoints.back() - fitPoints[fitPoints.size() - 2];
     sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
     sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
   } else {
