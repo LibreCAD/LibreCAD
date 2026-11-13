@@ -6060,8 +6060,13 @@ std::optional<LC_CurveOffsetStatus> erodeStrictlyConvexPolyline(
         if (start.distanceTo(end) <= options.tolerance.classification) {
             return LC_CurveOffsetStatus::SingularOffset;
         }
+        const double lengthSquared = dot(directions[i], directions[i]);
+        const double startProjection = dot(start - vertices[i], directions[i]) / lengthSquared;
+        const double endProjection = dot(end - vertices[i], directions[i]) / lengthSquared;
+        const double parameterSpan = breaks[i + 1] - breaks[i];
         LC_OffsetCubicPiece piece;
-        piece.provenance = {i, breaks[i], breaks[i + 1], signedDistance, true};
+        piece.provenance = {i, breaks[i] + parameterSpan * startProjection,
+                            breaks[i] + parameterSpan * endProjection, signedDistance, true};
         const RS_Vector delta = end - start;
         piece.bezier = {start, start + delta / 3.0, start + delta * (2.0 / 3.0), end};
         cycle.cubicPieces.push_back(piece);
@@ -6270,6 +6275,32 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     const double t0 = breaks.front();
     const double t1 = breaks.back();
     const double speedFloor = scale.numericFloor / (t1 - t0);
+
+    // The exact polygon erosion path is independently guarded by a bounded
+    // non-adjacent segment test; do not make its eligibility depend on the
+    // general curve intersection solver's endpoint noding behavior.
+    if (!dilate) {
+        if (const auto* polyline = dynamic_cast<const PolylineSource*>(&source)) {
+            std::vector<RS_Vector> vertices;
+            if (polyline->straightVertices(vertices)) {
+                LC_OffsetPolylineData polygon;
+                polygon.startpoint = vertices.front();
+                polygon.endpoint = vertices.front();
+                polygon.closed = true;
+                polygon.segments.reserve(vertices.size());
+                for (std::size_t i = 0; i < vertices.size(); ++i) {
+                    polygon.segments.emplace_back(
+                        RS_LineData{vertices[i], vertices[(i + 1) % vertices.size()]});
+                }
+                if (LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(polygon)) {
+                    const std::optional<LC_CurveOffsetStatus> eroded =
+                        erodeStrictlyConvexPolyline(vertices, breaks, magnitude, options, cycles);
+                    if (eroded) return *eroded;
+                }
+            }
+        }
+    }
+
     LC_IntersectionOptions query;
     query.tolerance = options.tolerance.nodeMerge;
     query.maxBoxPairs = options.maxIntersectionPairs;
@@ -6290,16 +6321,6 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         return fromIntersectionStatus(crossings.status);
     }
     result.sourceIntersections = crossings.intersections.size();
-    if (!dilate && crossings.intersections.empty()) {
-        if (const auto* polyline = dynamic_cast<const PolylineSource*>(&source)) {
-            std::vector<RS_Vector> vertices;
-            if (polyline->straightVertices(vertices)) {
-                const std::optional<LC_CurveOffsetStatus> eroded =
-                    erodeStrictlyConvexPolyline(vertices, breaks, magnitude, options, cycles);
-                if (eroded) return *eroded;
-            }
-        }
-    }
     std::vector<double> cuts;
     for (const LC_ParametricIntersection& x : crossings.intersections) {
         cuts.push_back(x.parameterA);

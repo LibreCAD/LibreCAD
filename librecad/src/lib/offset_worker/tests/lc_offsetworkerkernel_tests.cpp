@@ -9197,6 +9197,68 @@ TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains
     }
 }
 
+TEST_CASE("worker routes only matching simple convex linear erosion through region boundaries",
+          "[lc-offsetcurve][worker-kernel][tolerance][polyline][region-boundary]") {
+    const LC_OffsetPolylineData square{
+        {0, 0}, {0, 0}, true,
+        {RS_LineData{{0, 0}, {4, 0}}, RS_LineData{{4, 0}, {4, 4}},
+         RS_LineData{{4, 4}, {0, 4}}, RS_LineData{{0, 4}, {0, 0}}}};
+    const LC_OffsetSourceDefinition inward{
+        LC_OffsetSourceGeometry{square}, 0.25, 1e-4, false};
+    auto matchingEntity = inward.source.makeEntity();
+    REQUIRE(matchingEntity);
+    const auto inwardOptions = LC_OffsetWorkerTolerance::directOptions(inward, *matchingEntity);
+    REQUIRE(inwardOptions);
+    CHECK(inwardOptions->mode == LC_CurveOffsetMode::RegionBoundary);
+
+    auto outward = inward;
+    outward.signedDistance = -0.25;
+    const auto outwardOptions = LC_OffsetWorkerTolerance::directOptions(outward, *matchingEntity);
+    REQUIRE(outwardOptions);
+    CHECK(outwardOptions->mode == LC_CurveOffsetMode::Direct);
+
+    const LC_OffsetPolylineData clockwiseSquare{
+        {0, 0}, {0, 0}, true,
+        {RS_LineData{{0, 0}, {0, 4}}, RS_LineData{{0, 4}, {4, 4}},
+         RS_LineData{{4, 4}, {4, 0}}, RS_LineData{{4, 0}, {0, 0}}}};
+    LC_OffsetSourceDefinition clockwise{
+        LC_OffsetSourceGeometry{clockwiseSquare}, -0.25, 1e-4, false};
+    auto clockwiseEntity = clockwise.source.makeEntity();
+    REQUIRE(clockwiseEntity);
+    const auto clockwiseInward = LC_OffsetWorkerTolerance::directOptions(clockwise, *clockwiseEntity);
+    REQUIRE(clockwiseInward);
+    CHECK(clockwiseInward->mode == LC_CurveOffsetMode::RegionBoundary);
+    clockwise.signedDistance = 0.25;
+    const auto clockwiseOutward = LC_OffsetWorkerTolerance::directOptions(clockwise, *clockwiseEntity);
+    REQUIRE(clockwiseOutward);
+    CHECK(clockwiseOutward->mode == LC_CurveOffsetMode::Direct);
+
+    auto differentEntity = LC_OffsetSourceGeometry{LC_OffsetPolylineData{
+        {10, 10}, {10, 10}, true,
+        {RS_LineData{{10, 10}, {15, 10}}, RS_LineData{{15, 10}, {15, 15}},
+         RS_LineData{{15, 15}, {10, 15}}, RS_LineData{{10, 15}, {10, 10}}}}}.makeEntity();
+    REQUIRE(differentEntity);
+    const auto mismatchedOptions = LC_OffsetWorkerTolerance::directOptions(inward, *differentEntity);
+    REQUIRE(mismatchedOptions);
+    CHECK(mismatchedOptions->mode == LC_CurveOffsetMode::Direct);
+
+    const LC_OffsetPolylineData star{
+        {0, 0}, {0, 0}, true,
+        {RS_LineData{{0, 0}, {2, 4}}, RS_LineData{{2, 4}, {4, 0}},
+         RS_LineData{{4, 0}, {0, 3}}, RS_LineData{{0, 3}, {4, 3}},
+         RS_LineData{{4, 3}, {0, 0}}}};
+    const LC_OffsetSourceDefinition selfIntersecting{
+        LC_OffsetSourceGeometry{star}, 0.25, 1e-4, false};
+    RS_Polyline starEntity;
+    for (const auto& segment : star.segments)
+        starEntity.addVertex(std::get<RS_LineData>(segment).startpoint);
+    starEntity.setClosed(true);
+    starEntity.endPolyline();
+    const auto starOptions = LC_OffsetWorkerTolerance::directOptions(selfIntersecting, starEntity);
+    REQUIRE(starOptions);
+    CHECK(starOptions->mode == LC_CurveOffsetMode::Direct);
+}
+
 TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
     RS_Polyline polyline;

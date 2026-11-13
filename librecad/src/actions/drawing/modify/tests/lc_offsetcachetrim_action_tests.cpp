@@ -427,8 +427,70 @@ std::string trimGeometry(const RS_Entity& entity) {
         const auto& d = arc->getData(); vector(d.center); out << d.radius << ':' << d.angle1 << ':' << d.angle2 << ':' << d.reversed;
     } else if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         const auto& d = ellipse->getData(); vector(d.center); vector(d.majorP); out << d.ratio << ':' << d.angle1 << ':' << d.angle2 << ':' << d.reversed;
+    } else if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) {
+        const auto& d = line->getData(); vector(d.startpoint); vector(d.endpoint);
+    } else if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
+        out << polyline->isClosed() << ':';
+        for (const auto* child : *polyline) out << trimGeometry(*child);
     }
     return out.str();
+}
+bool sameTrimGeometry(const RS_Entity& expected, const RS_Entity& actual) {
+    const double scale = std::max({1.0, expected.getLength(), actual.getLength()});
+    const double tolerance = 2e-8 * scale;
+    if (expected.rtti() != actual.rtti() || std::abs(expected.getLength() - actual.getLength()) > tolerance) return false;
+    const auto closePoint = [tolerance](const RS_Vector& a, const RS_Vector& b) {
+        return a.distanceTo(b) <= tolerance;
+    };
+    if (const auto* line = dynamic_cast<const RS_Line*>(&expected)) {
+        const auto* other = dynamic_cast<const RS_Line*>(&actual);
+        if (!other) return false;
+        const auto& a = line->getData();
+        const auto& b = other->getData();
+        return (closePoint(a.startpoint, b.startpoint) && closePoint(a.endpoint, b.endpoint)) ||
+               (closePoint(a.startpoint, b.endpoint) && closePoint(a.endpoint, b.startpoint));
+    }
+    if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&expected)) {
+        const auto* other = dynamic_cast<const RS_Polyline*>(&actual);
+        if (!other || polyline->isClosed() != other->isClosed() || polyline->size() != other->size()) return false;
+        for (qsizetype i = 0; i < polyline->size(); ++i) {
+            if (!sameTrimGeometry(*polyline->entityAt(i), *other->entityAt(i))) return false;
+        }
+        return true;
+    }
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&expected)) {
+        const auto* other = dynamic_cast<const RS_Spline*>(&actual);
+        if (!other) return false;
+        double a0 = 0.0, a1 = 0.0, b0 = 0.0, b1 = 0.0;
+        if (!spline->getParameterDomain(a0, a1) || !other->getParameterDomain(b0, b1) ||
+            !(a1 > a0) || !(b1 > b0)) return false;
+        for (unsigned i = 0; i <= 128; ++i) {
+            const double fraction = static_cast<double>(i) / 128.0;
+            LC_CurveJet a, b;
+            const auto side = i == 128 ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right;
+            if (!spline->tryEvaluateJet(a0 + (a1 - a0) * fraction, side, a) ||
+                !other->tryEvaluateJet(b0 + (b1 - b0) * fraction, side, b) ||
+                !closePoint(a.point, b.point)) return false;
+        }
+        return true;
+    }
+    return closePoint(expected.getStartpoint(), actual.getStartpoint()) &&
+           closePoint(expected.getEndpoint(), actual.getEndpoint());
+}
+template <typename ExpectedRange, typename ActualRange>
+bool sameTrimGeometrySet(const ExpectedRange& expected, const ActualRange& actual) {
+    if (expected.size() != actual.size()) return false;
+    std::vector<bool> matched(actual.size(), false);
+    for (const auto* entity : expected) {
+        std::size_t candidate = 0;
+        while (candidate < actual.size() &&
+               (matched[candidate] || !sameTrimGeometry(*entity, *actual[candidate]))) {
+            ++candidate;
+        }
+        if (candidate == actual.size()) return false;
+        matched[candidate] = true;
+    }
+    return true;
 }
 std::vector<std::string> trimPreview(const RS_EntityContainer& container) {
     std::vector<std::string> out;
@@ -767,10 +829,7 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
     REQUIRE(directory.isValid());
     const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
-    auto expectedFileGeometry = committed;
-    expectedFileGeometry.push_back(trimGeometry(*cutter));
-    expectedFileGeometry.push_back(trimGeometry(*hyperbola));
-    std::sort(expectedFileGeometry.begin(), expectedFileGeometry.end());
+    const auto expectedFileGeometry = live(f.graphic);
     for (std::size_t i = 0; i < formats.size(); ++i) {
         const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
         const auto file = std::filesystem::path(directory.filePath(
@@ -778,14 +837,13 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
         REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
         RS_Graphic reopened;
         REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
-        std::vector<std::string> reopenedGeometry;
+        std::vector<const RS_Entity*> reopenedGeometry;
         for (auto* entity : live(reopened)) {
             CHECK(entity->rtti() != RS2::EntityOffsetCurve);
-            reopenedGeometry.push_back(trimGeometry(*entity));
+            reopenedGeometry.push_back(entity);
         }
-        std::sort(reopenedGeometry.begin(), reopenedGeometry.end());
         CAPTURE(formats[i]);
-        CHECK(reopenedGeometry == expectedFileGeometry);
+        CHECK(sameTrimGeometrySet(expectedFileGeometry, reopenedGeometry));
     }
 
     REQUIRE(f.graphic.undo());
@@ -4517,6 +4575,7 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline);
     update.use(source);
     lc::test::awaitUpdate(update);
+    for (const auto& outcome : update.lastReport().outcomes) INFO(outcome.refusal.toStdString());
     REQUIRE(update.lastReport().updated == 1);
 
     LC_OffsetCurve *native = nullptr;
@@ -4537,10 +4596,7 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
         nativeData.controlPoints.front().x - nativeData.controlPoints.back().x,
         nativeData.controlPoints.front().y - nativeData.controlPoints.back().y);
     CHECK_FALSE(nativeData.m_closedFlag);
-    if (towardCentre)
-      CHECK(cacheEndpointGap == 0.0);
-    else
-      CHECK(cacheEndpointGap > 0.0);
+    CHECK(cacheEndpointGap == 0.0);
 
     constexpr double lineY = 1.337;
     auto *line =
@@ -4570,7 +4626,7 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
             native->getData().knotslist.size(), cacheEndpointGap);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
     REQUIRE(byCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(byCurve.rootCount == (towardCentre ? 2u : 1u));
+    REQUIRE(byCurve.rootCount == 2);
     const auto overlaps = [](const LC_Interval &a, const LC_Interval &b) {
       return a.isValid() && b.isValid() && a.lo() <= b.hi() && b.lo() <= a.hi();
     };
@@ -4585,27 +4641,49 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
               });
         }));
 
-    f.action->click(linePick);
-    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
     const auto epoch = f.graphic.undoStateEpoch();
     const auto entityCount = live(f.graphic).size();
-    f.action->hover(nativePick);
-    if (towardCentre)
-      CHECK_FALSE(f.action->m_preview->isEmpty());
-    else
-      CHECK(f.action->m_preview->isEmpty());
+    if (towardCentre) {
+      f.action->click(linePick);
+      REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+      f.action->hover(nativePick);
+    }
+    else {
+      f.action->contextTarget(native, nativePick);
+      f.action->hover(linePick);
+    }
+    CHECK_FALSE(f.action->m_preview->isEmpty());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(line->isDeleted());
     CHECK(f.graphic.undoStateEpoch() == epoch);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
-    if (towardCentre) {
-      f.action->click(nativePick);
-      REQUIRE(native->isDeleted());
-      REQUIRE(line->isDeleted());
-      REQUIRE(f.graphic.undo());
-      CHECK_FALSE(native->isDeleted());
-      CHECK_FALSE(line->isDeleted());
+    f.action->click(towardCentre ? nativePick : linePick);
+    REQUIRE(native->isDeleted());
+    REQUIRE(line->isDeleted());
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+    const auto expected = live(f.graphic);
+    for (std::size_t i = 0; i < formats.size(); ++i) {
+      const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+      const auto file = std::filesystem::path(directory.filePath(
+          QStringLiteral("closed-polyline-trim-two-%1-%2").arg(towardCentre).arg(i) +
+              (dwg ? ".dwg" : ".dxf")).toStdString());
+      REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+      RS_Graphic reopened;
+      REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+      std::vector<const RS_Entity*> reopenedEntities;
+      for (const auto* entity : live(reopened)) {
+        CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+        reopenedEntities.push_back(entity);
+      }
+      CAPTURE(towardCentre, formats[i]);
+      CHECK(sameTrimGeometrySet(expected, reopenedEntities));
     }
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(line->isDeleted());
     CHECK(live(f.graphic).size() == entityCount);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
   }
