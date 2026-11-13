@@ -42081,3 +42081,22 @@ assertions / 1 case. The worker/persistence matrix passes 200,965 assertions /
 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`; `git diff --check` passes.
 Other crossing layouts, ambiguous stationary loops, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+
+## 1206. Run the Broader Worker and qmake6 Checks (2026-11-13)
+
+Supplemental validation of the source tests from `4f6ec05d8` passes the complete
+spline-points Trim selection: 2,302 assertions / 9 cases. The full worker-client
+selection passes 3,308,112 assertions / 40 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=600000` and LibreDWG enabled. Its first run
+reached the existing 150-second suite-wide watchdog after all geometry checks
+seen to that point had passed; the only reported failures were elapsed-time
+guards. The bounded six-minute override rerun completed with no failures.
+
+The existing macOS arm64 qmake6 product tree at
+`/private/tmp/offset-2961-qmake-current` also completes `make -j6` with exit
+code 0. It was incremental and rebuilt no product objects; the shell retains
+the existing warning about the absent optional `/private/tmp/libdxfrw-cargo/env`.
+This is not clean qmake/test-target, visible-GUI, cross-platform, or external
+CAD acceptance. CI for the then-current PR head was still running, and exact
+head CI plus the remaining family matrix and visible/external gates remain
+open.
