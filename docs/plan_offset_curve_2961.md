@@ -43064,3 +43064,26 @@ the tested refusal paths, other high-segment arrangements, visible Properties
 and Trim workflows, cross-platform runtime, and independent ODA/AutoCAD
 acceptance remain open. Continue with those concrete topology and acceptance
 gates; do not treat this slice as completion of the full roadmap.
+
+## 1245. Verify qmake6 Delivery at the Worker-erosion Head (2026-11-13)
+
+After `0123b1723`, the recursive macOS arm64 qmake6 Release product build in
+`/private/tmp/offset-2961-qmake-current` rebuilt the application and native
+worker. It completed with exit code 0, and both product executables are
+present. The optional `/private/tmp/libdxfrw-cargo/env` shell file remains
+absent; the build uses its configured bundled dependencies. Existing DWG
+metadata and geometry warnings remain. One new signed-size comparison warning
+in the worker eligibility check was removed in commit `ba00606cc` by comparing
+the nonnegative polyline count as `size_t`.
+
+After that commit, recursive `make -j6` completed again with exit code 0; it
+reported the configured targets up to date. The focused CMake worker-route
+regression passes 15 assertions / 1 case, and `git diff --check` passes. This
+is qmake6 product-build evidence on macOS, not a qmake test-suite run, clean
+reconfigure, runtime worker launch, or visible-GUI check.
+
+This closes the qmake6 build gate for the strict-convex erosion slice. Continue
+with the still-open curved/concave polyline geometry and remaining family by
+variant gates from Slice 4, followed by visible Properties/Trim and independent
+CAD acceptance. Do not mark the overall roadmap complete from these product
+builds.
