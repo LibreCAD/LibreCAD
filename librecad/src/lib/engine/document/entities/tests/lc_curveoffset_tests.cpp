@@ -1945,10 +1945,13 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Closed fit-point splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u}) {
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u}) {
         CAPTURE(profile);
         LC_SplinePointsData data{true, false};
-        data.splinePoints = profile == 3
+        data.splinePoints = profile == 4
+            ? std::vector<RS_Vector>{{-4, 0}, {-1, 3.2}, {2.8, 2.1},
+                                     {3.6, -1.8}, {-1.7, -3}}
+            : profile == 3
             ? std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}, {0, -3}}
             : profile == 2
             ? std::vector<RS_Vector>{{-5, 0}, {-4, 3}, {-1, 5}, {3, 4},
