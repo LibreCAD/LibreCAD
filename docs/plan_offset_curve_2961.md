@@ -295,6 +295,10 @@ following slices in order, preserving the detailed safety requirements below:
 | 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts for tested circles, ellipses, circular arcs and elliptic arcs in both traversal directions (sections 1022-1030). Exact duplicate singleton contacts can be merged; overlapping non-singleton certificates whose equality is unproved refuse atomically (section 1024). Section 1033 qualifies async action preview/commit, peer isolation, and undo/redo for both real producer-generated native components in both cache directions. Section 1034 qualifies save, low-level inspection, reopen, and second-save/reopen for those outputs in every native-capable DXF/DWG target (R12 is intentionally excluded). Section 1117 additionally qualifies one rotated inward near-cusp ellipse Trim Two profile through worker action and five file lanes. These qualify specific layouts and versions, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies linear circle-boundary Trim across disconnected components. Section 1023 verifies disconnected degree-3 circle-boundary branches with linear loci. Section 1024 verifies safe atomic refusal when disconnected components produce overlapping non-singleton conic-contact certificates. Section 1025 verifies disconnected ellipse-boundary contacts through direct and worker result transport. Section 1026 verifies circular-arc domain preservation in both traversal directions. Section 1027 verifies elliptic-arc domains and worker transport in both traversal directions. Section 1028 verifies genuinely curved cubic circle-boundary branches. Section 1029 verifies genuinely curved cubic branches against an eccentric ellipse through direct and worker paths. Section 1030 verifies curved cubic branches clipped to a bounded elliptic arc in both directions. Section 1033 verifies both components from the trimmed-ellipse producer through the native action path. Section 1034 verifies their native metadata across all native-capable DXF/DWG round-trip lanes. Section 1117 verifies one near-cusp full-ellipse profile at one axis ratio/distance in both Trim Two pick orders. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
+Recent Trim progress is narrowly scoped: sections 1117-1118 qualify one
+near-cusp ellipse cache, 19 sampled native-pick fractions, and two action pick
+orders. The broader ellipse ratio/distance matrix remains open.
+
 Existing picker and parabola tests are useful regression evidence, not a
 substitute for the remaining matrix or visible acceptance. The chooser has a
 separate explicit "Select in drawing" command; automatic indication must not
@@ -40398,3 +40402,22 @@ The shell's missing `/private/tmp/libdxfrw-cargo/env` warning did not fail the
 build. This qualifies the one near-cusp profile and tested picks only, not the
 continuous ratio, cusp-distance, precision, or other-ellipse matrix. Visible
 GUI, cross-platform and ODA/AutoCAD acceptance remain open.
+
+## 1118. Sweep Sampled Picks on the Near-cusp Ellipse Cache (2026-11-12)
+
+Test commit `3119edd3f` turns the earlier diagnostic scan into 19 direct
+`LC_OffsetCacheTrim::prepare` assertions on the worker-produced near-cusp
+ellipse cache, at normalized native-pick fractions `0.05` through `0.95` in
+increments of `0.05`. Every sample must return `Refusal::None` and exactly one
+retained fragment against the existing line cutter. The full Trim Two action
+continues to exercise the 25% pick in both operand orders through preview,
+commit, undo/redo, and five DXF/DWG save/reopen lanes.
+
+On macOS arm64 CMake Release with LibreDWG 0.14, the focused ellipse Trim Two
+case passes 5,634 assertions / 1 case; the full `[trim-action]` suite passes
+119,897 assertions / 87 cases; and `git diff --check` passes. This is a finite
+sample of picks on one near-cusp cache with one cutter. It does not prove a
+continuous parameter interval, other ellipse ratios/distances, tangent or
+equidistant projection behavior beyond the existing refusal tests, or the
+broader family/variant matrix. Visible GUI, cross-platform, and ODA/AutoCAD
+acceptance remain open.
