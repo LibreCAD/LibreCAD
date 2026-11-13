@@ -3077,7 +3077,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     constexpr double nearCuspRotation = 1.17;
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u,
                                    12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u,
-                                   21u, 22u, 23u, 24u, 25u})
+                                   21u, 22u, 23u, 24u, 25u, 26u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3091,7 +3091,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                                       profile == 17 ? .0675 : profile == 18 ? .1215 :
                                       profile == 19 ? .2025 : profile == 20 ? .27 :
                                       profile == 21 ? .1875 : profile == 22 ? .3375 :
-                                      profile == 23 ? .5625 : profile == 25 ? .5 : .054;
+                                      profile == 23 ? .5625 : profile == 25 ? .5 :
+                                      profile == 26 ? .25 : .054;
         const bool towardCentre = profile == 3 || (profile >= 5 && profile != 25);
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
@@ -3114,7 +3115,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                         ? RS_EllipseData{{-4, 6}, {3 * std::cos(reversedArcRotation),
                                                    3 * std::sin(reversedArcRotation)},
                                          .6, .25, 1.6, true, true}
-                    : profile == 25
+                    : profile == 25 || profile == 26
                         ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
                                          .6, .25, 1.6, true, true}
@@ -3186,7 +3187,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
             for (const double fraction : {.05, .1, .15, .2, .25, .3, .35, .4,
                                           .45, .5, .55, .6, .65, .7, .75, .8,
                                           .85, .9, .95}) {
-                if (profile == 25 && fraction != .25) continue;
+                if ((profile == 25 || profile == 26) && fraction != .25) continue;
                 CAPTURE(fraction);
                 const auto probe = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
                     {native->getPointAt(first + (last - first) * fraction)});
