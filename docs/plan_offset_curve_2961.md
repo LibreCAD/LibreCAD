@@ -42143,3 +42143,19 @@ On macOS arm64 CMake Release with `QT_QPA_PLATFORM=offscreen`,
 `librecad_tests '[gui][dialog][offsetcurve][source]'` passes 15,116 assertions /
 44 cases. The physical visible Properties workflow, cross-platform runtime,
 independent ODA/AutoCAD acceptance, and exact-head CI remain open.
+
+## 1209. Rerun Full Fit-point Coverage After the Star Range Extension (2026-11-13)
+
+After adding the five-point star and extending its worker distances to `0.2`
+and `0.5`, the broader spline-points Trim and full worker-client selectors
+were rerun from the current CMake Release tree. This replaces section 1206's
+pre-star assertion totals for current validation while preserving its timeout
+history and qmake6 receipt.
+
+The spline-points Trim suite passes 2,828 assertions / 9 cases. The complete
+worker-client suite passes 3,329,602 assertions / 40 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=600000` and
+`DWGREAD=/opt/homebrew/bin/dwgread`. There are no test failures or skips.
+These remain macOS/headless/internal-reader results; visible GUI,
+cross-platform runtime, independent ODA/AutoCAD acceptance, and exact-head CI
+remain open.
