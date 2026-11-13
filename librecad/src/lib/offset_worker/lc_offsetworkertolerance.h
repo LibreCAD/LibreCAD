@@ -18,7 +18,7 @@
 
 namespace LC_OffsetWorkerTolerance {
 
-inline std::optional<double> strictConvexLinearPolylineOrientation(
+inline std::optional<double> strictConvexPolylineOrientation(
     const LC_OffsetSourceDefinition& definition, const RS_Entity& source) {
     const auto* data = std::get_if<LC_OffsetPolylineData>(&definition.source.value);
     const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
@@ -26,82 +26,123 @@ inline std::optional<double> strictConvexLinearPolylineOrientation(
         !polyline->isClosed()) {
         return std::nullopt;
     }
-    if (!std::all_of(data->segments.begin(), data->segments.end(), [](const auto& segment) {
-            return std::holds_alternative<RS_LineData>(segment);
-        })) {
-        return std::nullopt;
-    }
-    if (static_cast<std::size_t>(polyline->size()) != data->segments.size() ||
-        !LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data)) {
+    if (!LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data)) {
         return std::nullopt;
     }
 
-    std::vector<RS_Vector> vertices;
-    std::vector<RS_Vector> directions;
-    std::vector<double> lengths;
-    vertices.reserve(data->segments.size());
-    directions.reserve(data->segments.size());
-    lengths.reserve(data->segments.size());
-    RS_Vector previousEnd;
-    RS_Vector definitionTranslation;
-    std::size_t index = 0;
-    std::size_t segmentIndex = 0;
-    for (const RS_Entity* child : *polyline) {
-        const auto* line = dynamic_cast<const RS_Line*>(child);
-        if (line == nullptr) return std::nullopt;
-        const RS_Vector start = line->getStartpoint();
-        const RS_Vector end = line->getEndpoint();
-        if (index == 0) {
-            definitionTranslation = data->startpoint - start;
+    const auto liveGeometry = LC_OffsetSourceGeometry::capture(source);
+    const auto* liveData = liveGeometry
+        ? std::get_if<LC_OffsetPolylineData>(&liveGeometry->value) : nullptr;
+    if (liveData == nullptr || liveData->segments.size() != data->segments.size()) {
+        return std::nullopt;
+    }
+    const RS_Vector translation = data->startpoint - liveData->startpoint;
+    const double coordinateScale = [&] {
+        double scale = 1.0;
+        for (const auto& segment : data->segments) {
+            std::visit([&](const auto& item) {
+                using T = std::decay_t<decltype(item)>;
+                if constexpr (std::is_same_v<T, RS_LineData>) {
+                    scale = std::max({scale, std::abs(item.startpoint.x), std::abs(item.startpoint.y),
+                                      std::abs(item.endpoint.x), std::abs(item.endpoint.y)});
+                } else {
+                    scale = std::max({scale, std::abs(item.center.x), std::abs(item.center.y), item.radius});
+                }
+            }, segment);
         }
-        const auto& definitionLine = std::get<RS_LineData>(data->segments[segmentIndex]);
-        const double scale = std::max({1.0, std::abs(start.x), std::abs(start.y), std::abs(end.x),
-                                       std::abs(end.y), std::abs(previousEnd.x), std::abs(previousEnd.y),
-                                       std::abs(definitionLine.startpoint.x), std::abs(definitionLine.startpoint.y),
-                                       std::abs(definitionLine.endpoint.x), std::abs(definitionLine.endpoint.y)});
-        const double slack = 64.0 * std::numeric_limits<double>::epsilon() * scale;
-        if ((start + definitionTranslation).distanceTo(definitionLine.startpoint) > slack ||
-            (end + definitionTranslation).distanceTo(definitionLine.endpoint) > slack) return std::nullopt;
-        if (index > 0 && start.distanceTo(previousEnd) > slack) return std::nullopt;
-        vertices.push_back(start);
-        directions.push_back(end - start);
-        lengths.push_back(directions.back().magnitude());
-        if (!(lengths.back() > 0.0) || !std::isfinite(lengths.back())) return std::nullopt;
-        previousEnd = end;
-        ++index;
-        ++segmentIndex;
-    }
-    const double closureScale = std::max({1.0, std::abs(previousEnd.x), std::abs(previousEnd.y),
-                                          std::abs(vertices.front().x), std::abs(vertices.front().y)});
-    if (index != vertices.size() || previousEnd.distanceTo(vertices.front()) >
-            64.0 * std::numeric_limits<double>::epsilon() * closureScale) {
-        return std::nullopt;
+        return scale;
+    }();
+    const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
+    const double angleSlack = 128.0 * std::numeric_limits<double>::epsilon();
+    const auto sameAngle = [angleSlack](const double a, const double b) {
+        return std::abs(std::remainder(a - b, 2.0 * std::acos(-1.0))) <= angleSlack;
+    };
+
+    struct SegmentFrame {
+        RS_Vector start;
+        RS_Vector end;
+        RS_Vector startTangent;
+        RS_Vector endTangent;
+        bool curved = false;
+        double signedSweep = 0.0;
+    };
+    std::vector<SegmentFrame> frames;
+    frames.reserve(data->segments.size());
+    long double twiceArea = 0.0L;
+    const RS_Vector origin = data->startpoint;
+    bool hasStrictTurn = false;
+    bool hasLine = false;
+    for (std::size_t i = 0; i < data->segments.size(); ++i) {
+        const auto& definitionSegment = data->segments[i];
+        const auto& actualSegment = liveData->segments[i];
+        SegmentFrame frame;
+        if (const auto* line = std::get_if<RS_LineData>(&definitionSegment)) {
+            hasLine = true;
+            const auto* actualLine = std::get_if<RS_LineData>(&actualSegment);
+            if (actualLine == nullptr ||
+                (actualLine->startpoint + translation).distanceTo(line->startpoint) > pointSlack ||
+                (actualLine->endpoint + translation).distanceTo(line->endpoint) > pointSlack) {
+                return std::nullopt;
+            }
+            frame.start = line->startpoint;
+            frame.end = line->endpoint;
+            frame.startTangent = frame.endTangent = frame.end - frame.start;
+            const RS_Vector a = frame.start - origin;
+            const RS_Vector b = frame.end - origin;
+            twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
+        } else {
+            const auto& arc = std::get<RS_ArcData>(definitionSegment);
+            const auto* actualArc = std::get_if<RS_ArcData>(&actualSegment);
+            if (actualArc == nullptr || actualArc->reversed != arc.reversed ||
+                (actualArc->center + translation).distanceTo(arc.center) > pointSlack ||
+                std::abs(actualArc->radius - arc.radius) > pointSlack ||
+                !sameAngle(actualArc->angle1, arc.angle1) || !sameAngle(actualArc->angle2, arc.angle2)) {
+                return std::nullopt;
+            }
+            frame.curved = true;
+            frame.signedSweep = arc.reversed ? -arc.getAngleLength() : arc.getAngleLength();
+            if (!std::isfinite(frame.signedSweep) || frame.signedSweep == 0.0) return std::nullopt;
+            const double startAngle = arc.angle1;
+            const double endAngle = startAngle + frame.signedSweep;
+            frame.start = {arc.center.x + arc.radius * std::cos(startAngle),
+                           arc.center.y + arc.radius * std::sin(startAngle)};
+            frame.end = {arc.center.x + arc.radius * std::cos(endAngle),
+                         arc.center.y + arc.radius * std::sin(endAngle)};
+            const double direction = frame.signedSweep > 0.0 ? 1.0 : -1.0;
+            frame.startTangent = {-direction * std::sin(startAngle), direction * std::cos(startAngle)};
+            frame.endTangent = {-direction * std::sin(endAngle), direction * std::cos(endAngle)};
+            const long double cx = static_cast<long double>(arc.center.x - origin.x);
+            const long double cy = static_cast<long double>(arc.center.y - origin.y);
+            const long double radius = arc.radius;
+            twiceArea += cx * radius * (std::sin(endAngle) - std::sin(startAngle)) +
+                         cy * radius * (std::cos(startAngle) - std::cos(endAngle)) +
+                         radius * radius * frame.signedSweep;
+        }
+        if (frame.start.distanceTo(frame.end) <= 0.0 ||
+            !frame.startTangent.valid || !frame.endTangent.valid) return std::nullopt;
+        frames.push_back(frame);
     }
 
-    long double twiceArea = 0.0L;
-    for (std::size_t i = 0; i < vertices.size(); ++i) {
-        const RS_Vector a = vertices[i] - vertices.front();
-        const RS_Vector b = vertices[(i + 1) % vertices.size()] - vertices.front();
-        twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
-    }
+    if (!hasLine) return std::nullopt;
     if (!std::isfinite(static_cast<double>(twiceArea)) || twiceArea == 0.0L) return std::nullopt;
     const double orientation = twiceArea > 0.0L ? 1.0 : -1.0;
-    int turnSign = 0;
-    for (std::size_t i = 0; i < directions.size(); ++i) {
-        const RS_Vector& current = directions[i];
-        const RS_Vector& next = directions[(i + 1) % directions.size()];
-        const long double turn = static_cast<long double>(current.x) * next.y -
-                                 static_cast<long double>(current.y) * next.x;
+    for (std::size_t i = 0; i < frames.size(); ++i) {
+        const auto& current = frames[i];
+        const auto& next = frames[(i + 1) % frames.size()];
+        const RS_Vector joinDelta = next.start - current.end;
+        if (joinDelta.magnitude() > pointSlack) return std::nullopt;
+        const long double turn = static_cast<long double>(current.endTangent.x) * next.startTangent.y -
+                                 static_cast<long double>(current.endTangent.y) * next.startTangent.x;
         const long double threshold = 128.0L * std::numeric_limits<double>::epsilon() *
-                                      static_cast<long double>(lengths[i]) * lengths[(i + 1) % lengths.size()];
-        if (std::abs(turn) <= threshold) return std::nullopt;
-        const int sign = turn > 0.0L ? 1 : -1;
-        if (turnSign != 0 && turnSign != sign) return std::nullopt;
-        turnSign = sign;
+            static_cast<long double>(current.endTangent.magnitude()) * next.startTangent.magnitude();
+        if (orientation * turn < -threshold) return std::nullopt;
+        if (orientation * turn > threshold) hasStrictTurn = true;
+        if (current.curved) {
+            if (orientation * current.signedSweep <= angleSlack) return std::nullopt;
+            hasStrictTurn = true;
+        }
     }
-    return turnSign == (orientation > 0.0 ? 1 : -1)
-        ? std::optional<double>{orientation}
-        : std::nullopt;
+    return hasStrictTurn ? std::optional<double>{orientation} : std::nullopt;
 }
 
 inline std::optional<LC_CurveOffsetOptions> directOptions(
@@ -130,7 +171,7 @@ inline std::optional<LC_CurveOffsetOptions> directOptions(
 inline std::optional<LC_CurveOffsetOptions> directOptions(
     const LC_OffsetSourceDefinition& definition, const RS_Entity& source) {
     auto options = directOptions(source, definition.signedDistance, definition.relativeTolerance);
-    const auto orientation = strictConvexLinearPolylineOrientation(definition, source);
+    const auto orientation = strictConvexPolylineOrientation(definition, source);
     if (options && orientation && definition.signedDistance * *orientation > 0.0) {
         options->mode = LC_CurveOffsetMode::RegionBoundary;
     }

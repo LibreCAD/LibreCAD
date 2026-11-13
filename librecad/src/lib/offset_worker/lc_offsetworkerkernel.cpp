@@ -256,8 +256,9 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         options.maxIntersectionPairs = input.limits.maxIntersectionPairs;
     options.maxOutputBranches = std::min(options.maxOutputBranches,
         input.limits.outputBudget.maxOutputEntities);
-    const LC_CurveOffsetSide side = definition.signedDistance > 0
-        ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
+    const LC_CurveOffsetSide side = options.mode == LC_CurveOffsetMode::RegionBoundary
+        ? LC_CurveOffsetSide::Left
+        : definition.signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
 
     trace.nativePrepareEntered = true;
     output.engineRuns = 1;

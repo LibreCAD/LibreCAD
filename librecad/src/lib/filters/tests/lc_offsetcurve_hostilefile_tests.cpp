@@ -3205,6 +3205,140 @@ TEST_CASE("closed mixed-bulge polyline promotes only its representable side acro
     }
 }
 
+TEST_CASE("closed rounded-polyline erosion cache survives DXF and DWG promotion lanes",
+          "[lc-offsetcurve][import-session][typed-source][polyline][rounded][cache-promotion][persistence]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-rounded-polyline-erosion-promotion");
+    namespace req = LC_OffsetWorkerRequest;
+    namespace result = LC_OffsetWorkerResult;
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    RS_Polyline sourcePolyline;
+    const double quarterArcBulge = std::tan(std::acos(-1.0) / 8.0);
+    sourcePolyline.addVertex({1, 0});
+    sourcePolyline.addVertex({9, 0}, quarterArcBulge);
+    sourcePolyline.addVertex({10, 1});
+    sourcePolyline.addVertex({10, 9}, quarterArcBulge);
+    sourcePolyline.addVertex({9, 10});
+    sourcePolyline.addVertex({1, 10}, quarterArcBulge);
+    sourcePolyline.addVertex({0, 9});
+    sourcePolyline.addVertex({0, 1}, quarterArcBulge);
+    sourcePolyline.setClosed(true);
+    sourcePolyline.endPolyline();
+    const auto source = LC_OffsetSourceGeometry::capture(sourcePolyline);
+    REQUIRE(source);
+    REQUIRE(source->isWellFormed());
+    const LC_OffsetSourceDefinition definition{*source, 0.25, 1e-4, false};
+
+    LC_OffsetWorkerClient worker;
+    req::Request generationRequest;
+    generationRequest.token = {1, 1, 1, 1};
+    generationRequest.operation = req::GenerateSource{definition, {}};
+    std::optional<LC_OffsetWorkerClient::Outcome> generationOutcome;
+    REQUIRE(worker.submit(generationRequest, LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetWorkerClient::Outcome completed) {
+            generationOutcome.emplace(std::move(completed));
+        }));
+    QElapsedTimer generationTimer;
+    generationTimer.start();
+    while (!generationOutcome) {
+        REQUIRE(generationTimer.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    REQUIRE(generationOutcome->status == LC_OffsetWorkerClient::Status::Completed);
+    REQUIRE(generationOutcome->completed);
+    REQUIRE(generationOutcome->completed->isJoined());
+    const auto generation = std::move(generationOutcome->completed);
+    REQUIRE(generation);
+    const auto& generatedReply = generation->reply();
+    REQUIRE(generatedReply.operation == 7);
+    REQUIRE(std::holds_alternative<result::Native>(generatedReply.result));
+    const auto& generated = std::get<result::Native>(generatedReply.result);
+    REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+    REQUIRE(generated.ordinary.size() == 1);
+    REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+    auto sourceEntity = source->makeEntity();
+    REQUIRE(sourceEntity);
+    const auto nativeCache = generation->nativeSource(*sourceEntity);
+    REQUIRE(nativeCache);
+    const RS_SplineData expectedCache = nativeCache->getData();
+    RS_Spline checked{nullptr, expectedCache};
+    REQUIRE(checked.validate());
+
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        xd::Definition metadata;
+        metadata.source = definition;
+        xd::Options encoding;
+        if (format.dwg) {
+            encoding.eed = true;
+            encoding.textEncoding = xd::TextEncoding::Utf16;
+        } else {
+            encoding.asciiDxf = false;
+        }
+        const auto tags = xd::forExport(
+            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+            metadata, encoding);
+        REQUIRE(tags);
+        DRW_Spline cache = f::raw(1, *tags);
+        cache.controllist.clear();
+        for (const auto& point : expectedCache.controlPoints)
+            cache.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+        cache.knotslist = expectedCache.knotslist;
+        cache.weightlist = expectedCache.weights;
+        cache.degree = expectedCache.degree;
+        cache.flags = 8;
+        cache.m_scenario = 1;
+        cache.ncontrol = cache.controllist.size();
+        cache.nknots = cache.knotslist.size();
+        cache.nfit = 0;
+
+        const auto input = directory.file(format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg)
+            f::dwgFile(input, cache, format.version);
+        else
+            f::binaryDxf(input, cache, format.version);
+#else
+        f::binaryDxf(input, cache, format.version);
+#endif
+        const auto outcome = stagedImport(input, format.lane);
+        INFO(format.suffix);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        CHECK(outcome.admitted == 1);
+        CHECK(outcome.downgraded == 0);
+        const auto* imported = dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic));
+        REQUIRE(imported);
+        REQUIRE(imported->sourceDefinition());
+        const auto expectedSource = values::encodeSourceDefinition(definition);
+        const auto actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
+        REQUIRE(expectedSource);
+        REQUIRE(actualSource);
+        CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
+        CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+              RS_Spline::geometryFingerprint(expectedCache));
+    }
+}
+
 TEST_CASE("open mixed-bulge polyline promotes complete worker caches across file lanes",
           "[lc-offsetcurve][import-session][typed-source][polyline][cache-promotion][persistence]") {
     Setup setup;

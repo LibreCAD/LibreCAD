@@ -1116,8 +1116,14 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
 }
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
+    const bool rounded = GENERATE(false, true);
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    CAPTURE(rounded, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
     RS_Graphic graphic;
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
@@ -1128,10 +1134,22 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
 
     auto* target = native(graphic);
     auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
-    sourceOwner->addVertex({0, 0});
-    sourceOwner->addVertex({10, 0});
-    sourceOwner->addVertex({10, 10});
-    sourceOwner->addVertex({0, 10});
+    if (rounded) {
+        const double quarterArcBulge = std::tan(M_PI / 8.0);
+        sourceOwner->addVertex({1, 0});
+        sourceOwner->addVertex({9, 0}, quarterArcBulge);
+        sourceOwner->addVertex({10, 1});
+        sourceOwner->addVertex({10, 9}, quarterArcBulge);
+        sourceOwner->addVertex({9, 10});
+        sourceOwner->addVertex({1, 10}, quarterArcBulge);
+        sourceOwner->addVertex({0, 9});
+        sourceOwner->addVertex({0, 1}, quarterArcBulge);
+    } else {
+        sourceOwner->addVertex({0, 0});
+        sourceOwner->addVertex({10, 0});
+        sourceOwner->addVertex({10, 10});
+        sourceOwner->addVertex({0, 10});
+    }
     sourceOwner->setClosed(true);
     sourceOwner->endPolyline();
     sourceOwner->setLayer(graphic.findLayer("0"));
@@ -1168,8 +1186,12 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);
     REQUIRE(kernel.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(kernel.fragments.size() > 1);
+    REQUIRE(kernel.fragments.size() == 1);
     const auto expectedOutputCount = kernel.fragments.size();
+    std::vector<std::uint64_t> expectedTrimmed;
+    for (const auto& fragment : kernel.fragments)
+        expectedTrimmed.push_back(RS_Spline::geometryFingerprint(fragment.data));
+    std::sort(expectedTrimmed.begin(), expectedTrimmed.end());
     const auto undoEpochBefore = graphic.undoStateEpoch();
 
     TrimActionProbe trim(&context);
@@ -1195,4 +1217,34 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     CHECK(splineCount == expectedOutputCount);
     CHECK(graphic.undoStateEpoch() > undoEpochBefore);
     for (const auto& message : context.messages) CHECK_FALSE(message.contains("nothing changed"));
+
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(replacement->isDeleted());
+    std::size_t restoredSplines = 0;
+    for (const auto* entity : graphic)
+        if (!entity->isDeleted() && entity->rtti() == RS2::EntitySpline) ++restoredSplines;
+    CHECK(restoredSplines == 0);
+    REQUIRE(graphic.redo());
+    CHECK(replacement->isDeleted());
+    std::size_t redoneSplines = 0;
+    for (const auto* entity : graphic)
+        if (!entity->isDeleted() && entity->rtti() == RS2::EntitySpline) ++redoneSplines;
+    CHECK(redoneSplines == expectedOutputCount);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("closed-polyline-trim-%1-%2.drawing")
+            .arg(rounded ? QStringLiteral("rounded") : QStringLiteral("square"))
+            .arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    std::vector<std::uint64_t> reopenedTrimmed;
+    for (const auto* entity : reopened) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        reopenedTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    }
+    std::sort(reopenedTrimmed.begin(), reopenedTrimmed.end());
+    CHECK(reopenedTrimmed == expectedTrimmed);
 }

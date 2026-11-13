@@ -9259,6 +9259,139 @@ TEST_CASE("worker routes only matching simple convex linear erosion through regi
     CHECK(starOptions->mode == LC_CurveOffsetMode::Direct);
 }
 
+TEST_CASE("rounded-rectangle polyline erodes through curved region boundaries",
+          "[lc-offsetcurve][worker-kernel][polyline][region-boundary][curved]") {
+    const double halfPi = M_PI / 2.0;
+    const LC_OffsetPolylineData counterClockwise{
+        {1, 0}, {1, 0}, true,
+        {RS_LineData{{1, 0}, {9, 0}},
+         RS_ArcData{{9, 1}, 1, 3 * halfPi, 2 * M_PI, false},
+         RS_LineData{{10, 1}, {10, 9}},
+         RS_ArcData{{9, 9}, 1, 0, halfPi, false},
+         RS_LineData{{9, 10}, {1, 10}},
+         RS_ArcData{{1, 9}, 1, halfPi, M_PI, false},
+         RS_LineData{{0, 9}, {0, 1}},
+         RS_ArcData{{1, 1}, 1, M_PI, 3 * halfPi, false}}};
+    const auto reversed = [](LC_OffsetPolylineData data) {
+        std::vector<LC_OffsetPolylineSegment> segments;
+        segments.reserve(data.segments.size());
+        for (auto it = data.segments.rbegin(); it != data.segments.rend(); ++it) {
+            if (const auto* line = std::get_if<RS_LineData>(&*it)) {
+                segments.emplace_back(RS_LineData{line->endpoint, line->startpoint});
+            } else {
+                auto arc = std::get<RS_ArcData>(*it);
+                std::swap(arc.angle1, arc.angle2);
+                arc.reversed = !arc.reversed;
+                segments.emplace_back(arc);
+            }
+        }
+        data.segments = std::move(segments);
+        std::swap(data.startpoint, data.endpoint);
+        return data;
+    };
+
+    for (const auto& [data, signedDistance] :
+         {std::pair{counterClockwise, 0.25}, std::pair{reversed(counterClockwise), -0.25}}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceGeometry sourceGeometry{data};
+        REQUIRE(sourceGeometry.isWellFormed());
+        const LC_OffsetSourceDefinition definition{sourceGeometry, signedDistance, 1e-4, false};
+        auto source = sourceGeometry.makeEntity();
+        REQUIRE(source);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
+        REQUIRE(options);
+        CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+
+        const auto oppositeSide = LC_OffsetSourceDefinition{
+            sourceGeometry, -signedDistance, 1e-4, false};
+        const auto oppositeOptions = LC_OffsetWorkerTolerance::directOptions(oppositeSide, *source);
+        REQUIRE(oppositeOptions);
+        CHECK(oppositeOptions->mode == LC_CurveOffsetMode::Direct);
+
+        const auto geometry = LC_CurveOffset::buildDirectBranches(
+            *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(geometry.status), geometry.exactSamples,
+                geometry.sourceIntersections, geometry.branches.size());
+        REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(geometry.branches.size() == 1);
+        CHECK(geometry.branches.front().closed);
+        const auto materialized = LC_CurveOffset::materializeBranches(
+            *source, geometry, *options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(materialized.status), materialized.entities.size());
+        REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(materialized.entities.empty());
+        CHECK(materialized.entities.back()->getEndpoint() == materialized.entities.front()->getStartpoint());
+
+        const req::Request request{token, req::GenerateSource{definition, {}}};
+        const auto reply = LC_OffsetWorkerKernel::run(request);
+        const auto& generated = native(reply, 7);
+        CAPTURE(generated.engineStatus, static_cast<int>(generated.ordinaryStatus),
+                generated.refusal, generated.ordinary.size());
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+        const RS_SplineData cache = std::get<RS_SplineData>(generated.ordinary.front());
+        const RS_Spline offsetSpline{nullptr, cache};
+        double parameterStart = 0.0;
+        double parameterEnd = 0.0;
+        REQUIRE(offsetSpline.getParameterDomain(parameterStart, parameterEnd));
+        double minX = std::numeric_limits<double>::infinity();
+        double minY = std::numeric_limits<double>::infinity();
+        double maxX = -std::numeric_limits<double>::infinity();
+        double maxY = -std::numeric_limits<double>::infinity();
+        for (int sample = 0; sample <= 256; ++sample) {
+            const double parameter = parameterStart + (parameterEnd - parameterStart) * sample / 256.0;
+            const RS_Vector point = offsetSpline.getPointAt(parameter);
+            REQUIRE(point.valid);
+            minX = std::min(minX, point.x);
+            minY = std::min(minY, point.y);
+            maxX = std::max(maxX, point.x);
+            maxY = std::max(maxY, point.y);
+        }
+        CAPTURE(minX, minY, maxX, maxY);
+        CHECK(std::abs(minX - 0.25) < 0.03);
+        CHECK(std::abs(minY - 0.25) < 0.03);
+        CHECK(std::abs(maxX - 9.75) < 0.03);
+        CHECK(std::abs(maxY - 9.75) < 0.03);
+        const req::Request validationRequest{token,
+            req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+        const auto& validated = native(validationReply, 8);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+        const auto validationWire = result::encode(validationReply, validationRequest);
+        REQUIRE(validationWire);
+        CHECK(result::decode(*validationWire, validationRequest));
+    }
+
+    const LC_OffsetPolylineData concave{
+        {0, 0}, {0, 0}, true,
+        {RS_LineData{{0, 0}, {4, 0}}, RS_LineData{{4, 0}, {4, 4}},
+         RS_LineData{{4, 4}, {2, 2}}, RS_LineData{{2, 2}, {0, 4}},
+         RS_LineData{{0, 4}, {0, 0}}}};
+    const LC_OffsetSourceGeometry concaveSource{concave};
+    REQUIRE(concaveSource.isWellFormed());
+    auto concaveEntity = concaveSource.makeEntity();
+    REQUIRE(concaveEntity);
+    const auto concaveOptions = LC_OffsetWorkerTolerance::directOptions(
+        LC_OffsetSourceDefinition{concaveSource, 0.25, 1e-4, false}, *concaveEntity);
+    REQUIRE(concaveOptions);
+    CHECK(concaveOptions->mode == LC_CurveOffsetMode::Direct);
+
+    LC_OffsetPolylineData mismatched = counterClockwise;
+    std::get<RS_ArcData>(mismatched.segments[1]).radius = 1.1;
+    const auto counterClockwiseSource = LC_OffsetSourceGeometry{counterClockwise}.makeEntity();
+    REQUIRE(counterClockwiseSource);
+    const auto mismatchedOptions = LC_OffsetWorkerTolerance::directOptions(
+        LC_OffsetSourceDefinition{LC_OffsetSourceGeometry{mismatched}, 0.25, 1e-4, false},
+        *counterClockwiseSource);
+    REQUIRE(mismatchedOptions);
+    CHECK(mismatchedOptions->mode == LC_CurveOffsetMode::Direct);
+}
+
 TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
     RS_Polyline polyline;
