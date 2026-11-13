@@ -40893,6 +40893,27 @@ standard spline geometry when the format promotes it to `RS_Spline`.
 After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
 `[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
 case passes 4,511 assertions / 1 case; `git diff --check` passes. This
-qualifies the tested three-point fit layout only. More fit points, constrained
-tangents, fit tolerances, closed fit splines, visible GUI, cross-platform, and
+qualifies the tested three-point unconstrained fit layout only. A multi-point
+constrained-tangent profile is covered separately in section 1146; other fit
+counts, fit tolerances, closed fit splines, visible GUI, cross-platform, and
 independent-CAD acceptance remain open.
+
+## 1146. Preserve Constrained Multi-point Spline-points in DWG (2026-11-12)
+
+Implementation commit `5f5f92bcd` adds a four-fit-point `LC_SplinePoints`
+Trim Two profile with endpoint tangent constraints derived from and validated
+against the fitted geometry. The profile exercises both operand orders through
+worker source update, preview/commit, undo/redo, and all five DXF/DWG
+save/reopen lanes. The file comparator checks the sampled source curve and
+requires constrained endpoint tangents to survive the round trip.
+
+The test exposed that DWG output changed constrained fit-point sources to a
+control-net scenario, which did not preserve the multi-span geometry. The
+writer now emits the DWG fit-point scenario with the stored endpoint tangents;
+the DXF control-net-plus-fit-data layout is unchanged. After rebuilding macOS
+arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 5,282 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
+`git diff --check` passes. This qualifies one four-point constrained open
+profile, not all fit counts, tolerance values, closed fit splines, other DWG
+versions, visible GUI, cross-platform, or independent-CAD acceptance.
