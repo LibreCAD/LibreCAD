@@ -1945,10 +1945,12 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Closed fit-point splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u}) {
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u}) {
         CAPTURE(profile);
         LC_SplinePointsData data{true, false};
-        data.splinePoints = profile == 5
+        data.splinePoints = profile == 6
+            ? std::vector<RS_Vector>{}
+            : profile == 5
             ? std::vector<RS_Vector>{{-4, 0}, {-2.5, 2.4}, {-0.5, 3.1},
                                      {2.2, 2.7}, {3.8, 0.6}, {1.8, -2.7},
                                      {-2.3, -2.1}}
@@ -1961,6 +1963,15 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
             ? std::vector<RS_Vector>{{-5, 0}, {-4, 3}, {-1, 5}, {3, 4},
                                      {5, 0}, {3, -4}, {-1, -5}, {-4, -3}}
             : std::vector<RS_Vector>{{-4, 0}, {-2, 3}, {2, 3}, {4, 0}, {2, -3}, {-2, -3}};
+        if (profile == 6) {
+            constexpr double twoPi = 6.2831853071795864769;
+            for (unsigned i = 0; i < 9; ++i) {
+                const double angle = twoPi * static_cast<double>(i) / 9.0;
+                const double radius = 3.2 + 0.4 * std::cos(2.0 * angle);
+                data.splinePoints.emplace_back(radius * std::cos(angle),
+                                               0.8 * radius * std::sin(angle));
+            }
+        }
         if (profile == 1) {
             constexpr double angle = 0.47;
             constexpr double scale = 2.0;

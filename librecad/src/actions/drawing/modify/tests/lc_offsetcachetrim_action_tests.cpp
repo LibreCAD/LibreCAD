@@ -3404,7 +3404,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3423,7 +3423,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
                 data.closed = profile >= 8;
-                data.splinePoints = profile == 13
+                data.splinePoints = profile == 14
+                    ? std::vector<RS_Vector>{}
+                    : profile == 13
                     ? std::vector<RS_Vector>{{-4, 0}, {-2.5, 2.4}, {-0.5, 3.1},
                                              {2.2, 2.7}, {3.8, 0.6}, {1.8, -2.7},
                                              {-2.3, -2.1}}
@@ -3444,6 +3446,15 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
                                                  {2, 1.4}, {4, 0}}
                         : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
+                if (profile == 14) {
+                    constexpr double twoPi = 6.2831853071795864769;
+                    for (unsigned i = 0; i < 9; ++i) {
+                        const double angle = twoPi * static_cast<double>(i) / 9.0;
+                        const double radius = 3.2 + 0.4 * std::cos(2.0 * angle);
+                        data.splinePoints.emplace_back(radius * std::cos(angle),
+                                                       0.8 * radius * std::sin(angle));
+                    }
+                }
                 if (profile == 9) {
                     constexpr double angle = 0.47;
                     constexpr double scale = 2.0;
