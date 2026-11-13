@@ -45,14 +45,12 @@ Existing table-driven, worker and file-lane tests cover particular fixtures;
 they do not establish universal geometry, platform, or visible-GUI support.
 Do not introduce a second type selector or a parabola-only picker.
 
-**Latest user clarification and disposition (2026-11-12):** While specifying a
-replacement source in the existing Properties source widget, the user can
-change the requested source type in place while browsing candidates in its
-entity chooser, inspect the immediately refreshed candidate list, and change
-type again without leaving or cancelling the replacement workflow. This is
-not a request to add canvas-picking behavior. Changing the filter must not
-commit a candidate; choosing a candidate remains a separate action. “All
-supported types” means
+**Latest user clarification and disposition (2026-11-12):** While the source
+replacement workflow is active in the existing Properties source widget, the
+user can change the requested source type in place, inspect the immediately
+refreshed candidate list, and change type again without leaving or cancelling
+replacement. This must work during candidate selection, not only as a setup
+step before entering replacement mode. “All supported types” means
 the nine current
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
@@ -68,15 +66,16 @@ in the selector does not prove all its geometry variants pass generation,
 worker/cache validation, trimming, or persistence. Do not extend the picker to
 unrelated drawable entities.
 
-**Acceptance sequence:** in the Properties source widget, start replacement,
-keep the type selector and candidate chooser in the active replacement
-workflow, change the family at least twice before choosing, and verify each
-change refreshes candidates to the newly selected family. Choose an entity of
-the final family and verify that the committed source, cache, identity, and
-current-source indication remain unchanged until asynchronous validation
-succeeds. After publication, verify the displayed source type and indication
-follow the replacement; on cancellation, refusal, stale input, or worker
-failure, verify they remain with the prior source. Exercise every member of
+**Acceptance sequence:** in the Properties source widget, start replacement
+and, while replacement/candidate selection remains active, keep the type
+selector available. Change the family at least twice before choosing and
+verify each change immediately refreshes candidates to the newly selected
+family without exiting replacement mode. Choose an entity of the final family
+and verify that the committed source, cache, identity, and current-source
+indication remain unchanged until asynchronous validation succeeds. After
+publication, verify the displayed source type and indication follow the
+replacement; on cancellation, refusal, stale input, or worker failure, verify
+they remain with the prior source. Exercise every member of
 the nine-kind `SupportedKinds` inventory and verify parabola remains distinct
 from spline-points. For each family, verify an eligible concrete entity can
 appear as a replacement candidate and be selected; a combo-box entry by itself
@@ -90,11 +89,12 @@ repeat the already-covered selector request.
 
 1. Derive the selector entries and candidate matching from the canonical
    `LC_OffsetSourceGeometry::SupportedKinds`; avoid a parallel UI inventory.
-2. In a single replacement workflow, browse candidates in the existing entity
-   chooser and change the type selector repeatedly before choosing one. Assert
-   that the list refreshes immediately and contains only eligible entities of
-   the chosen kind, including a distinct parabola choice; changing the filter
-   must neither commit a candidate nor mutate the target.
+2. In a single active replacement workflow, browse candidates in the existing
+   entity chooser and change the type selector repeatedly before choosing
+   one. Assert that the selector remains available, the list refreshes
+   immediately, and it contains only eligible entities of the chosen kind,
+   including a distinct parabola choice; changing the filter must neither end
+   replacement, commit a candidate, nor mutate the target.
 3. Snapshot the target's source definition, geometry/cache fingerprint,
    identity, selection, and temporary indication. Assert that type changes and
    candidate browsing do not mutate that snapshot.
@@ -41116,3 +41116,25 @@ built for macOS 27 was linked while targeting macOS 14.4; neither changed the
 successful build result. qmake6 runtime/plugin loading, cross-platform
 execution, visible Properties GUI, and independent ODA/AutoCAD acceptance
 remain open.
+
+## 1159. Isolate the Extreme Translated Parabola Persistence Profile (2026-11-12)
+
+Test commit `1d245c2d0` isolates the hostile-file matrix cell that stopped the
+broad `[parabola]` run in section 1156: scale `1000`, translation ratio `1e9`,
+and normalized signed distance `-2`. Worker operation 7 produces three
+ordinary branches. For each branch, operation 8 must refuse the cache as
+`NotCacheRepresentable` without changing its geometry fingerprint. The
+fallback SPLINE carrier is then saved and staged-imported through R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. Each lane must preserve the sampled spline
+geometry and the exact typed source metadata while remaining a regular
+`RS_Spline`, not being promoted to an editable native offset. LibreDWG parses
+both DWG versions and confirms the SPLINE record.
+
+On macOS arm64 CMake Release, `librecad_offset_hostilefile_tests` builds and
+the focused `extreme translated parabola branches retain refusal metadata
+through staged import` case passes 7,676 assertions / 1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; `git diff --check` passes. This provides
+focused evidence for the previously slow matrix cell, but does not supersede
+the interrupted broad aggregate receipt in section 1156 or prove neighboring
+scales, translations, and distances. Cross-platform execution, visible
+Properties interaction, and independent ODA/AutoCAD acceptance remain open.
