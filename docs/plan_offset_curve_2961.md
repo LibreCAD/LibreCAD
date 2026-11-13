@@ -66,6 +66,15 @@ in the selector does not prove all its geometry variants pass generation,
 worker/cache validation, trimming, or persistence. Do not extend the picker to
 unrelated drawable entities.
 
+**Scope revalidated (2026-11-13):** The follow-up requests to change source
+type while choosing a replacement, cover all supported source types, and
+specifically include parabola do not add a family beyond the existing nine
+`SupportedKinds`. Keep parabola as its own typed choice and preserve the
+in-place filter-change behavior. The headless picker matrix already verifies
+these selector and state transitions; remaining work is the visible workflow
+gate and Slice 4's concrete-variant geometry/worker/cache/Trim/DXF/DWG checks.
+Do not treat this scope confirmation as evidence that either gate has passed.
+
 **Acceptance sequence:** in the Properties source widget, start replacement
 and, while replacement/candidate selection remains active, keep the type
 selector available. Change the family at least twice before choosing and
@@ -41300,3 +41309,26 @@ ellipse with ratio `1e-3`. These results respectively cover staged file paths,
 direct ellipse cusp geometry, and process-backed typed worker/cache/file
 handling; they do not establish arbitrary ratios or intervals, all visible
 workflows, cross-platform runtime, or independent ODA/AutoCAD acceptance.
+
+## 1169. Reconcile With Current Master and Reconfirm Source-picker Scope (2026-11-13)
+
+Merged `origin/master` at `652987c3bd9e21651854426773444cee3bca1b1a` into the
+offset branch as `d514b6c79` and pushed the merge to PR #3193. The conflict
+resolution retains the offset verification workflow targets and also includes
+master's linetype UI tests, CMake test sources, and qmake project updates.
+The merged macOS arm64 CMake Release build completes for LibreCAD and the
+registered offset-worker, offset, DWG, DXF, and linetype UI targets. The
+source-picker suite passes 14,831 assertions / 43 cases; CTest passes
+`librecad_linetype_ui_tests`, `librecad_dwg_fast_tests`, and
+`librecad_dxf_fast_tests` (3/3). `actionlint` passes on the merged workflow.
+
+The user's repeated request for in-place source-type switching across all
+supported kinds, explicitly including parabola, is reaffirmed as existing
+picker scope rather than a new implementation family. The plan front matter
+now states that the current nine-kind headless selector contract is covered;
+the visible Properties interaction and concrete geometry-variant
+generation/worker/cache/Trim/DXF/DWG matrix remain open. This merge validation
+does not close those gates, nor cross-platform or independent ODA/AutoCAD
+acceptance. The merge includes upstream translation-file changes with existing
+trailing whitespace, so repository-wide `git diff --check` reports those
+upstream lines; the roadmap edit itself is clean.
