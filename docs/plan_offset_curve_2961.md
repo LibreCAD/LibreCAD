@@ -69,8 +69,8 @@ unrelated drawable entities.
 **Latest scope confirmation (2026-11-13):** The user reiterates that, while
 choosing a replacement source curve, the existing Properties widget must allow
 changing the source-type filter and must offer every currently supported
-offset-source kind. This is an explicit acceptance requirement, not a request
-to add drawable families beyond the nine
+offset-source kind, including parabola. This is an explicit acceptance
+requirement, not a request to add drawable families beyond the nine
 `LC_OffsetSourceGeometry::SupportedKinds` entries. Keep parabola as a distinct
 typed choice from spline-points. While replacement selection is active, the
 user can change the type filter repeatedly and inspect the refreshed candidate
@@ -129,8 +129,8 @@ repeat the already-covered selector request.
    revision, exact command, and result; headless coverage does not close the
    visible-GUI gate.
 
-Automated picker evidence: the focused headless source-picker suite passes
-14,831 assertions / 43 cases (`librecad_tests
+Automated picker evidence: the latest focused headless source-picker suite
+passes 15,116 assertions / 44 cases (`librecad_tests
 '[gui][dialog][offsetcurve][source]'`), including repeated type changes and
 candidate refresh across all nine kinds. This is not visible-GUI acceptance
 and does not establish that every geometry variant of those families works.
@@ -43364,3 +43364,46 @@ The build emitted the existing optional missing
 warnings, and macOS deployment-target warnings for locally installed
 Harfbuzz, FreeType, and QtSvg binaries newer than the configured macOS 14.4
 minimum. These warnings were not introduced or addressed by this slice.
+
+## 1254. Refine the Symmetric Clockwise Root Isolation Task (2026-11-13)
+
+The exact `x = 0` clockwise fixture was reproduced in all five file-lane
+iterations before export; each refusal occurs in `LC_OffsetCacheTrim::prepare`,
+so the format writers are not the cause. A bounded analytic-monotonicity
+prototype produced two candidate root records but did not complete Trim's
+root contraction and parameter-ordering checks. That prototype was discarded;
+it is not implementation or validation evidence. Do not whitelist a new proof
+category until the root isolation, Trim consumer, and worker-result validator
+all accept and verify its complete contract.
+
+Refined implementation steps:
+
+1. Add a dedicated in-memory regression for the clockwise all-arc cache and
+   exact centerline cutter, retaining the existing off-axis and CCW cases.
+2. Inspect the normalized Bezier spans, one-sided derivatives, and exact
+   signed-distance values using stored doubles interpreted as exact rationals.
+   Prove whether the represented cache crosses the line; a source-design
+   symmetry or floating-point proximity is not itself proof.
+3. If it crosses, implement a bounded isolator that proves a unique transverse
+   root, returns a parameter interval narrow enough for Trim's span-location,
+   cut ordering, and fragment construction, and proves the root lies on the
+   finite cutter segment. Keep tangencies, overlaps, and unproved near-misses
+   as atomic refusals.
+4. If the stored cache misses the exact line, retain refusal and instead
+   determine whether the producer's symmetric cache construction should
+   preserve its expected symmetry. Any normalization must be justified by a
+   geometric error bound and must not move unrelated geometry silently.
+5. Carry any new proof semantics through intersection event validation,
+   contact matching, Trim's accepted-root policy, CBOR worker-result range
+   checks, and hostile-result tests. Preserve existing proof enum values for
+   persisted/protocol compatibility.
+6. Validate the direct kernel first, then worker transport, both winding
+   directions, tangency/near-miss refusal, Trim action undo/redo, and all five
+   applicable DXF/DWG lanes. Run focused source-picker and broader build/test
+   checks after the kernel slice. Commit implementation and roadmap receipts
+   separately and push both to PR #3193.
+
+The endpoint control coordinates observed in one clockwise output were around
+`2.2e-16` and `4.4e-16` at the nominal axis; these measurements motivate the
+exact-rational audit but do not settle whether the represented spline crosses
+or misses `x = 0`. The symmetric root issue remains open.
