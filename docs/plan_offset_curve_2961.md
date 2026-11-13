@@ -42486,3 +42486,23 @@ through repeated type changes, and only a valid accepted candidate replaces
 the source. Do not report this visible-GUI behavior as verified until that gate
 can run. Cross-platform runtime and independent ODA/AutoCAD validation also
 remain open as tracked elsewhere in the roadmap.
+
+## 1227. Qualify a Thirty-two-point Closed Fit Spline Through Trim Two (2026-11-13)
+
+Test commit `db3a0746b` adds one irregular 32-point closed SplinePoints profile
+with fit tolerance `1e-4` to the independent signed-distance trim oracle and
+the worker-backed Trim Two matrix. The direct oracle checks three distances on
+both signed sides. The action matrix carries the profile through Update from
+Source, both pick orders, commit, undo/redo, all five DXF/DWG lanes, sampled
+reopened-geometry checks, and LibreDWG inspection. This qualifies this
+32-point profile and tolerance only; it does not prove arbitrary fit-point
+layouts, tolerances, or spline topology.
+
+On macOS arm64 CMake Release, the direct `[curve-offset][three-point]`
+selection passes 189 assertions / 1 case, and the broader
+`[curve-offset][trim][spline-points][fit-points]` selection passes 3,982
+assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+typed spline Trim Two matrix passes 24,178 assertions / 1 case. The test target
+had been rebuilt after the changes, and `git diff --check` passes. Visible GUI,
+cross-platform runtime, broader fit-point coverage, and independent ODA/AutoCAD
+acceptance remain open.
