@@ -41039,3 +41039,21 @@ DXF/DWG persistence lanes remain qualified only for the single small-scale
 profile in section 1151; carrying this full matrix through those lanes,
 visible GUI, broader conditioning limits, cross-platform, and independent-CAD
 acceptance remain open.
+
+## 1154. Persist Parabola Reconstruction Matrix Across File Lanes (2026-11-12)
+
+Test commit `7998e09c6` extends the three-scale, three-layout matrix from
+sections 1152-1153 through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG for both
+signed offset distances. Every reopened entity retains the typed parabola
+source, signed distance, source control geometry, and editable cache
+fingerprint. When `dwgread` is available, it parses every generated DWG and
+confirms the cache is represented by a SPLINE.
+
+On macOS arm64, the CMake Release
+`librecad_offset_worker_client_tests` target builds and the focused
+`Four-point parabola matrix retains typed sources across file lanes` case
+passes 5,336 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
+`git diff --check` passes. This closes the file-lane qualification for these
+specific fit layouts, scales, and signed distances, not all parabola
+conditioning/domain boundaries. Visible Properties GUI, cross-platform, and
+independent ODA/AutoCAD acceptance remain open.
