@@ -4982,7 +4982,7 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     closedNearCoincident.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
     LC_SplinePointsData openNearCoincident{false, false};
     openNearCoincident.splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
-    std::array<LC_SplinePointsData, 22> sourceProfiles{{sourceData, sourceData,
+    std::array<LC_SplinePointsData, 23> sourceProfiles{{sourceData, sourceData,
                                                       leadingRepeated, trailingRepeated,
                                                       closedRepeated, closedInteriorRepeated,
                                                       closedNearCoincident, openNearCoincident}};
@@ -5026,6 +5026,8 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     sourceProfiles[20].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {13 + closedPlacementGap, 8}, {4, 13}, {-3, 8}};
     sourceProfiles[21] = LC_SplinePointsData{true, false};
     sourceProfiles[21].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, closedPlacementGap}};
+    sourceProfiles[22] = LC_SplinePointsData{true, false};
+    sourceProfiles[22].splinePoints = {{-5, -3}, {5, 3}, {-5, 3}, {5, -3}};
     for (std::size_t profileIndex = 14; profileIndex < sourceProfiles.size(); ++profileIndex)
         sourceProfiles[profileIndex].fitTolerance = 1e-8;
     const std::array<double, 2> distances{{0.2, 0.5}};

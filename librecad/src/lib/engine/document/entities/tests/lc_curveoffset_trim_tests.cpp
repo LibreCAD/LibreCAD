@@ -628,6 +628,65 @@ TEST_CASE("All-coincident fit points fail closed for trimming",
     CHECK(result.branches.empty());
 }
 
+TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branches",
+          "[curve-offset][trim][spline-points][fit-points][self-intersection][oracle]") {
+    LC_SplinePointsData data{true, false};
+    data.splinePoints = {{-5, -3}, {5, 3}, {-5, 3}, {5, -3}};
+    const LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.isClosed());
+    REQUIRE(source.getSegmentCount() == data.splinePoints.size());
+    const auto captured = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(captured);
+
+    std::array<RS_Vector, 257> samples;
+    for (std::size_t i = 0; i < samples.size(); ++i) {
+        LC_CurveJet jet;
+        REQUIRE(source.tryEvaluateJet(static_cast<double>(source.getSegmentCount()) * i /
+                                      static_cast<double>(samples.size() - 1),
+                                      LC_CurveEvaluationSide::Interior, jet));
+        samples[i] = jet.point;
+        REQUIRE(samples[i].valid);
+    }
+    const auto orient = [](const RS_Vector& a, const RS_Vector& b, const RS_Vector& c) {
+        return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+    };
+    bool hasProperCrossing = false;
+    const std::size_t segments = samples.size() - 1;
+    for (std::size_t i = 0; i < segments && !hasProperCrossing; ++i) {
+        for (std::size_t j = i + 2; j < segments; ++j) {
+            if (i == 0 && j + 1 == segments) continue;
+            const double o1 = orient(samples[i], samples[i + 1], samples[j]);
+            const double o2 = orient(samples[i], samples[i + 1], samples[j + 1]);
+            const double o3 = orient(samples[j], samples[j + 1], samples[i]);
+            const double o4 = orient(samples[j], samples[j + 1], samples[i + 1]);
+            if (o1 * o2 < 0.0 && o3 * o4 < 0.0) {
+                hasProperCrossing = true;
+                break;
+            }
+        }
+    }
+    REQUIRE(hasProperCrossing);
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+        options.mode = LC_CurveOffsetMode::Trimmed;
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, 0.25), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 2);
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+        const Checked checked = check(result, curveOf(source), 0.0,
+                                      static_cast<double>(source.getSegmentCount()), 0.25,
+                                      -1.0, sourceDistance);
+        CHECK(checked.nearestKept >= 0.25 - 2.0 * options.tolerance.requestedGeometry);
+        CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("Trimming removes a local loop and keeps the offset around it", "[curve-offset][trim]") {
     // Inside y = x^2 at distance 1: the swallowtail between the cusps, and the
     // two stretches from the cusps to the crossing at (0, 1.25), are nearer
