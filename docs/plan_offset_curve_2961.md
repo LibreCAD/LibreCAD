@@ -42651,15 +42651,50 @@ strict proof would not be justified by this fixture.
 
 On macOS arm64 CMake Release, the complete
 `[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]`
-selection passes 8,625 assertions / 1 case with `DWGREAD` set to LibreDWG.
+selection passes 8,613 assertions / 1 case with `DWGREAD` set to LibreDWG.
 The direct high-segment oracle passes 74,580 assertions / 1 case. The test
 target rebuild and `git diff --check` pass.
 
-Next implementation: inspect why the certified root query fails for the
-native-cache-by-line pair (including candidate bounds, span ownership, and
-intersection work at the unresolved candidate). Fix the kernel only if a
-complete, bounded root exclusion or isolation proof can be established; keep
-the atomic refusal otherwise. Add a separate certified dense-curved positive
+Investigation result: the native-cache-by-line query produces one valid
+`IntervalUniqueTransverse` root (segment pair 127/256), with 257 leaves and
+310 total box pairs; refinement itself does not exhaust its budget. Contracting
+the root reduces its source parameter interval from about `6.7e-4` to about
+`2.3e-10`, then to roughly `5.4e-13`, where outward-rounded Krawczyk images
+reach a fixed interval. The cutter parameter is already near machine
+precision. The resulting source-curve image is still wider than Trim's
+`7.1e-16` arithmetic allowance, so Trim correctly refuses rather than certify
+an insufficiently localized contact. A bounded subdivision attempt did not
+prove a unique child and was discarded; it must not be treated as a fix.
+
+Next implementation slice: add a kernel-level regression for contracting this
+certified root under disparate source/cutter parameter scales, then evaluate
+an affine-normalized parameter formulation of the Krawczyk operator. The
+normalization must be an exact interval-domain transformation: derivative
+columns, proof domains, contractions, event isolation, and retained-session
+provenance must all map consistently between normalized and public parameters.
+Require strict inclusion/exclusion proofs and bounded work; do not relax the
+Trim arithmetic allowance or accept a floating-point point estimate as a
+certificate. Re-run the existing dense direct oracle and both worker-action
+pick orders; preserve atomic refusal if the transformed operator cannot prove
+the required location accuracy. Add a separate certified dense-curved positive
 Trim fixture when available. Until then, dense monotone-curved Trim Two,
 visible GUI, cross-platform runtime, and independent ODA/AutoCAD acceptance
 remain open.
+
+## 1235. Reconcile the Source-type Picker Request (2026-11-13)
+
+The renewed request is covered by the existing source-replacement contract in
+the opening checklist and section 1226. During replacement, the Properties
+widget must keep its type selector active so the user can change the requested
+source family and immediately refresh candidates without leaving the workflow.
+The selector and candidate filter use all nine current
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+distinct typed option. Changing the filter does not mutate the current source;
+the chosen candidate becomes the source only after successful asynchronous
+validation. Headless coverage for repeated switching and all nine selector
+families is already recorded in sections 1226 and 1227-1228. This request adds
+no new family or UI implementation slice. Keep the visible Properties-widget
+acceptance gate open until it is performed and recorded; geometry-variant
+support remains the separate Slice 4 obligation and must not be inferred from
+selector coverage.
