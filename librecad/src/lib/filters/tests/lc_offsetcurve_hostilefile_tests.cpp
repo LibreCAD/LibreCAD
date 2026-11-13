@@ -11221,6 +11221,185 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
 #endif
 }
 
+TEST_CASE("extreme translated parabola branches retain refusal metadata through staged import",
+          "[lc-offsetcurve][import-session][typed-source][parabola][precision][focused]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-parabola-extreme-focused");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    namespace req = LC_OffsetWorkerRequest;
+    namespace result = LC_OffsetWorkerResult;
+
+    const LC_ParabolaData base{{RS_Vector{0, 0}, RS_Vector{5, 50}, RS_Vector{10, 0}}};
+    constexpr double scale = 1000.0;
+    constexpr double translationRatio = 1e9;
+    constexpr double normalizedDistance = -2.0;
+    const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
+    auto controls = base.m_controlPoints;
+    for (auto& point : controls) {
+        point.x = point.x * scale + translation.x;
+        point.y = point.y * scale + translation.y;
+    }
+    const LC_OffsetSourceGeometry source{LC_ParabolaData{controls}};
+    REQUIRE(source.isWellFormed());
+    const LC_OffsetSourceDefinition definition{
+        source, normalizedDistance * scale, 1e-4, false};
+    const auto encodedDefinition = values::encodeSourceDefinition(definition);
+    REQUIRE(encodedDefinition);
+
+    LC_OffsetWorkerClient worker;
+    qint64 requestId = 1;
+    const auto runWorker = [&](req::Request request) {
+        std::optional<LC_OffsetWorkerClient::Outcome> outcome;
+        REQUIRE(worker.submit(request,
+            LC_OffsetWorkerClient::Mode::Commit,
+            [&](LC_OffsetWorkerClient::Outcome completed) {
+                outcome.emplace(std::move(completed));
+            }));
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetWorkerClient::Status::Completed);
+        REQUIRE(outcome->completed);
+        REQUIRE(outcome->completed->isJoined());
+        return std::move(outcome->completed);
+    };
+
+    auto generatedCompletion = runWorker({{requestId++, 1, 1, 1},
+        req::GenerateSource{definition, {}}});
+    const auto& reply = generatedCompletion->reply();
+    REQUIRE(reply.failure == result::Failure::None);
+    REQUIRE(reply.operation == 7);
+    REQUIRE(std::holds_alternative<result::Native>(reply.result));
+    const auto& generated = std::get<result::Native>(reply.result);
+    REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+    REQUIRE(generated.ordinary.size() == 3);
+
+    const auto asSpline = [](const req::Cutter& item) {
+        if (const auto* spline = std::get_if<RS_SplineData>(&item)) return *spline;
+        const auto& segment = std::get<req::Segment>(item);
+        RS_SplineData line{1, false};
+        line.controlPoints = {segment.start, segment.end};
+        line.knotslist = {0, 0, 1, 1};
+        line.weights = {1, 1};
+        return line;
+    };
+    std::vector<RS_SplineData> caches;
+    for (const auto& item : generated.ordinary) {
+        auto cache = asSpline(item);
+        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+        auto validatedCompletion = runWorker({{requestId++, 1, 1, 1},
+            req::ValidateSourceCache{cache, definition, {}}});
+        const auto& validatedReply = validatedCompletion->reply();
+        REQUIRE(validatedReply.failure == result::Failure::None);
+        REQUIRE(validatedReply.operation == 8);
+        REQUIRE(std::holds_alternative<result::Native>(validatedReply.result));
+        const auto& validated = std::get<result::Native>(validatedReply.result);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+        CHECK_FALSE(validated.changed);
+        CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+        caches.push_back(std::move(cache));
+    }
+
+    struct Format { Lane lane; DRW::Version version; const char* suffix; };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, DRW::AC1032, "r2018.dwg"}}};
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    for (std::size_t branch = 0; branch < caches.size(); ++branch) {
+        RS_Spline expectedCache{nullptr, caches[branch]};
+        REQUIRE(expectedCache.validate());
+        for (const auto& formatLane : formats) {
+            xd::Definition metadata;
+            metadata.source = definition;
+            xd::Options encoding;
+            if (isDwg(formatLane.lane)) {
+                encoding.eed = true;
+                if (formatLane.version == DRW::AC1015) {
+                    encoding.textEncoding = xd::TextEncoding::Legacy;
+                    encoding.legacyEncodedBytes = [](std::string_view text)
+                        -> std::optional<std::size_t> { return text.size(); };
+                } else {
+                    encoding.textEncoding = xd::TextEncoding::Utf16;
+                }
+            } else {
+                encoding.asciiDxf = false;
+            }
+            const auto tags = xd::forExport(
+                {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))}, metadata, encoding);
+            REQUIRE(tags);
+            DRW_Spline carrier = f::raw(1, *tags);
+            carrier.controllist.clear();
+            for (const auto& point : caches[branch].controlPoints)
+                carrier.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+            carrier.knotslist = caches[branch].knotslist;
+            carrier.weightlist = caches[branch].weights;
+            carrier.degree = caches[branch].degree;
+            carrier.flags = 8;
+            carrier.m_scenario = 1;
+            carrier.ncontrol = carrier.controllist.size();
+            carrier.nknots = carrier.knotslist.size();
+            carrier.nfit = 0;
+            const auto input = directory.file(std::to_string(branch) + "-" + formatLane.suffix);
+            writeInput(input, formatLane.lane, carrier);
+
+            const auto imported = stagedImport(input, formatLane.lane);
+            REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(imported.graphic);
+            CHECK(imported.admitted == 0);
+            REQUIRE(imported.downgraded == 1);
+            const auto* entity = f::sole(*imported.graphic);
+            REQUIRE(entity);
+            CHECK(dynamic_cast<const LC_OffsetCurve*>(entity) == nullptr);
+            const auto* importedSpline = dynamic_cast<const RS_Spline*>(entity);
+            REQUIRE(importedSpline);
+            for (int sample = 0; sample <= 128; ++sample) {
+                const double parameter = static_cast<double>(sample) / 128.0;
+                const RS_Vector expected = expectedCache.getPointAt(parameter);
+                const RS_Vector actual = importedSpline->getPointAt(parameter);
+                REQUIRE(expected.valid);
+                REQUIRE(actual.valid);
+                CHECK(expected.distanceTo(actual) <= 0.05);
+            }
+
+            CHECK_FALSE(imported.diagnostics.empty());
+            const auto parsed = xd::parseAndStrip(entity->getDrwExtData(), encoding);
+            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            const auto actualDefinition = values::encodeSourceDefinition(*parsed.definition->source);
+            REQUIRE(actualDefinition);
+            CHECK(QCborValue(*encodedDefinition).toCbor() ==
+                  QCborValue(*actualDefinition).toCbor());
+
+            if (!libreDwgReader.isEmpty() && isDwg(formatLane.lane)) {
+                QProcess reader;
+                reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(input)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                const QJsonArray objects = document.object().value("OBJECTS").toArray();
+                CHECK(std::any_of(objects.begin(), objects.end(), [](const QJsonValue& value) {
+                    return value.toObject().value("entity").toString() == "SPLINE";
+                }));
+            }
+        }
+    }
+}
+
 TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG import",
           "[lc-offsetcurve][import-session][typed-source][polyline][precision][combined]") {
     Setup setup;
