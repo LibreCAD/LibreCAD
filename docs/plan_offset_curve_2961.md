@@ -40824,3 +40824,13 @@ case passes 2,999 assertions / 1 case; `git diff --check` passes. This
 qualifies one C1 two-span rational cubic topology. Higher knot multiplicities,
 periodic/closed rational layouts, other spline-points variants, visible GUI,
 cross-platform, and independent-CAD acceptance remain open.
+
+## 1141. Re-run Aggregate Trim-action Tests After Spline Expansion (2026-11-12)
+
+The current macOS arm64 CMake Release `[trim-action]` suite passes 132,406
+assertions across 87 cases with `QT_QPA_PLATFORM=offscreen` and LibreDWG 0.14
+provided as `DWGREAD`. The suite includes the expanded elliptic-arc matrix and
+both rational spline additions from sections 1139-1140. This supersedes
+section 1138's 131,002-assertion aggregate receipt. Remaining family/variant
+gaps, visible GUI, cross-platform, clean qmake6, and independent-CAD acceptance
+remain open.
