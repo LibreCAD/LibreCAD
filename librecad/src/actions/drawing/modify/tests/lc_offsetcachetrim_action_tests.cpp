@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3509,7 +3509,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
                 data.closed = profile >= 8;
-                data.splinePoints = profile == 15
+                data.splinePoints = profile == 15 || profile == 16
                     ? std::vector<RS_Vector>{}
                     : profile == 14
                     ? std::vector<RS_Vector>{}
@@ -3550,6 +3550,16 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         const double radius = 3.0 + 0.35 * std::cos(3.0 * angle);
                         data.splinePoints.emplace_back(radius * std::cos(angle),
                                                        0.75 * radius * std::sin(angle));
+                    }
+                }
+                if (profile == 16) {
+                    constexpr double twoPi = 6.2831853071795864769;
+                    for (unsigned i = 0; i < 12; ++i) {
+                        const double angle = twoPi * static_cast<double>(i) / 12.0;
+                        const double radius = 3.4 + 0.05 * std::cos(3.0 * angle) +
+                                              0.02 * std::sin(5.0 * angle);
+                        data.splinePoints.emplace_back(radius * std::cos(angle),
+                                                       0.9 * radius * std::sin(angle));
                     }
                 }
                 if (profile == 9 || profile == 15) {
@@ -3642,25 +3652,56 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         REQUIRE(native->getParameterDomain(first, last));
         const auto breaks = native->getBreakParameters();
         REQUIRE(breaks.size() >= 2);
-        const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
-        const RS_Vector intersection = native->getPointAt(parameter);
         const double step = std::max(1e-7, (last - first) * 1e-5);
-        const RS_Vector before = native->getPointAt(parameter - step);
-        const RS_Vector after = native->getPointAt(parameter + step);
-        RS_Vector tangent{after.x - before.x, after.y - before.y};
+        double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+        auto tangentAt = [&](const double t) {
+            const RS_Vector before = native->getPointAt(t - step);
+            const RS_Vector after = native->getPointAt(t + step);
+            RS_Vector tangent{after.x - before.x, after.y - before.y};
+            if (tangent.magnitude() > RS_TOLERANCE) tangent /= tangent.magnitude();
+            return tangent;
+        };
+        RS_Vector tangent = tangentAt(parameter);
         REQUIRE(tangent.magnitude() > RS_TOLERANCE);
-        tangent /= tangent.magnitude();
+        RS_Vector intersection = native->getPointAt(parameter);
         RS_Vector cutterDirection{-tangent.y, tangent.x};
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection /= cutterDirection.magnitude();
         cutterDirection += tangent;
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
+        RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
+        if (profile == 16) {
+            bool foundCertifiedCut = false;
+            for (const double contactFraction : {.1, .2, .3, .4, .5, .6, .7, .8, .9}) {
+                if (foundCertifiedCut) break;
+                parameter = breaks.front() + (breaks[1] - breaks.front()) * contactFraction;
+                tangent = tangentAt(parameter);
+                if (tangent.magnitude() <= RS_TOLERANCE) continue;
+                intersection = native->getPointAt(parameter);
+                for (const double tangentSkew : {-1.0, 0.0, 1.0}) {
+                    RS_Vector direction{-tangent.y, tangent.x};
+                    direction += tangent * tangentSkew;
+                    if (direction.magnitude() <= RS_TOLERANCE) continue;
+                    direction = direction / direction.magnitude() * 16.0;
+                    RS_Line probeCutter(nullptr,
+                        RS_LineData{intersection - direction, intersection + direction});
+                    const RS_Vector pick = native->getPointAt(
+                        breaks.front() + (breaks[1] - breaks.front()) * .95);
+                    const auto probe = LC_OffsetCacheTrim::prepare(native->getData(), probeCutter, {pick});
+                    if (probe.refusal != LC_OffsetCacheTrim::Refusal::None) continue;
+                    cutterDirection = direction;
+                    nativePick = pick;
+                    foundCertifiedCut = true;
+                    break;
+                }
+            }
+            REQUIRE(foundCertifiedCut);
+        }
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
 
-        const RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
         f.action->click(nativeFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
@@ -3672,6 +3713,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
 
         f.action->click(nativeFirst ? cutterPick : nativePick);
+        INFO(f.context.messages.join('\n').toStdString());
         REQUIRE(native->isDeleted());
         REQUIRE(cutter->isDeleted());
         std::vector<RS_Entity*> fragments;

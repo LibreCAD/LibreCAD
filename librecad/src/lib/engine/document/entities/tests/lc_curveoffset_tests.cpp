@@ -1691,7 +1691,8 @@ RS_Vector exactOffset(const EvalFn& eval, const double t, const LC_CurveEvaluati
  * offset, from either side of the gap, moves no more than @p stall; a round
  * corner may span a gap of any size.
  */
-double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& eval, const double stall = 0.0) {
+double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& eval,
+                    const double stall = 0.0, const double closedDomainEnd = 0.0) {
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(result.branches.empty());
     double worst = 0.0;
@@ -1720,7 +1721,13 @@ double maxDeviation(const LC_CurveOffsetGeometryResult& result, const EvalFn& ev
             continue;
         }
         CHECK(p.sourceT0 < p.sourceT1);
-        if (p.sourceT0 != previousT1) {
+        const bool closesDomain = closedDomainEnd > 0.0 && previousT1 == closedDomainEnd && p.sourceT0 == 0.0;
+        if (closesDomain) {
+            CHECK(exactOffset(eval, previousT1, LC_CurveEvaluationSide::Left, p.signedDistance)
+                      .distanceTo(exactOffset(eval, 0.0, LC_CurveEvaluationSide::Right,
+                                              p.signedDistance)) <= stall);
+            previousT1 = 0.0;
+        } else if (p.sourceT0 != previousT1) {
             CHECK(p.sourceT0 > previousT1);
             if (!corner) {
                 CHECK(exactOffset(eval, previousT1, LC_CurveEvaluationSide::Left, p.signedDistance)
@@ -1945,7 +1952,7 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Closed fit-point splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u}) {
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u}) {
         CAPTURE(profile);
         LC_SplinePointsData data{true, false};
         data.splinePoints = profile == 7
@@ -1983,6 +1990,16 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
                                                0.75 * radius * std::sin(angle));
             }
         }
+        if (profile == 8) {
+            constexpr double twoPi = 6.2831853071795864769;
+            for (unsigned i = 0; i < 12; ++i) {
+                const double angle = twoPi * static_cast<double>(i) / 12.0;
+                const double radius = 3.4 + 0.05 * std::cos(3.0 * angle) +
+                                      0.02 * std::sin(5.0 * angle);
+                data.splinePoints.emplace_back(radius * std::cos(angle),
+                                               0.9 * radius * std::sin(angle));
+            }
+        }
         if (profile == 1 || profile == 7) {
             const double angle = profile == 1 ? 0.47 : 0.29;
             const double scale = profile == 1 ? 2.0 : 1.5;
@@ -2012,7 +2029,8 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
                 source, LC_CurveOffset::makeSideRequest(side, distance), options,
                 LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            CHECK(maxDeviation(result, evaluator(source)) <=
+            CHECK(maxDeviation(result, evaluator(source), options.tolerance.requestedGeometry,
+                               profile == 8 ? static_cast<double>(source.getSegmentCount()) : 0.0) <=
                   options.tolerance.requestedGeometry);
         }
     }
