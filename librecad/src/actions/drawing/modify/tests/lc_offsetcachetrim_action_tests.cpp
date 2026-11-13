@@ -804,7 +804,7 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
 TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][trim-two]") {
     constexpr double rotation = .37;
-    for (const unsigned profile : {0u, 1u, 2u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u})
     for (const bool leftBranch : {false, true})
     for (const bool hyperbolaFirst : {false, true}) {
         CAPTURE(profile, leftBranch, hyperbolaFirst);
@@ -815,8 +815,11 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
             : profile == 1
                 ? LC_HyperbolaData{{5, -4}, {3 * std::cos(rotation), 3 * std::sin(rotation)},
                                    .75, -.55, 1.15, leftBranch}
-                : LC_HyperbolaData{{-2, 6}, {3.5 * std::cos(-.58), 3.5 * std::sin(-.58)},
-                                   .6, -1.1, .9, leftBranch};
+                : profile == 2
+                    ? LC_HyperbolaData{{-2, 6}, {3.5 * std::cos(-.58), 3.5 * std::sin(-.58)},
+                                       .6, -1.1, .9, leftBranch}
+                    : LC_HyperbolaData{{9, -7}, {8 * std::cos(.23), 8 * std::sin(.23)},
+                                       .4, -1.1, .9, leftBranch};
         auto* hyperbola = new LC_Hyperbola(&f.graphic, sourceData);
         f.graphic.addEntity(hyperbola);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
