@@ -42993,3 +42993,74 @@ implementation commit.
 This closes direct geometry only for the tested strict-convex linear case; it
 does not establish cache acceptance, Trim actions, serialization, or worker
 routing. Continue from the two slices in section 1241.
+
+## 1243. Reconfirm Replacement Type Switching Across Supported Sources (2026-11-13)
+
+The latest request repeats the source-widget requirement already captured in
+the current execution checklist: during replacement selection, the user must
+be able to change the requested source type in the existing widget and browse
+the refreshed candidates without cancelling or restarting replacement. This
+applies to every kind in the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola remains a distinct type; do not treat it as spline-points or add a
+parabola-only selector.
+
+The headless selector and cross-family replacement matrix already cover the
+filter transitions and typed candidate publication for representative
+fixtures. No additional selector or picker implementation slice is needed
+unless those tests regress. The outstanding work remains exactly scoped:
+complete visible Properties-workflow acceptance (including existing-source
+highlight/selection behavior), and qualify concrete geometry variants through
+generation, worker/cache, Trim, and applicable DXF/DWG persistence. A family
+being selectable is not evidence that all of its geometric variants are
+supported end to end. Use the acceptance sequence and verification steps in
+the roadmap front matter; do not mark either remaining gate complete from
+headless tests alone.
+
+## 1244. Complete Worker-backed Strict-convex Erosion Slice (2026-11-13)
+
+Commit `0123b1723` completes the two implementation slices previously listed
+in section 1241. `directOptions()` selects RegionBoundary only for inward
+erosion of a closed, all-linear, strictly convex polyline whose live entity
+matches the structured source geometry up to the worker's coordinate-frame
+translation. It also requires the bounded non-adjacent-segment check to prove
+the loop simple. Clockwise and counter-clockwise winding are both handled;
+outward, mismatched, self-intersecting, curved, and non-convex inputs do not
+take this optimized route.
+
+The RegionBoundary engine now tries the exact polygon path using its own
+bounded simplicity proof, independent of endpoint-noding output from the
+general curve-intersection solver. Each miter edge records the projected
+source-parameter interval at its actual endpoints, rather than claiming the
+entire original edge interval. This lets worker cache materialization validate
+and publish the closed eroded boundary without weakening general spline
+correspondence or Trim intersection checks.
+
+The 256-edge closed-polyline Trim Two case now covers both inward and outward
+profiles, both operand roles, both pick orders, non-mutating preview,
+commit/undo, and one-to-one tolerant geometry comparisons after AC1014 DXF,
+AC1015 DXF, legacy DWG, AC1032 DXF, and AC1032 DWG save/reopen. The explicit
+worker-routing test covers both windings and confirms outward, mismatched,
+and self-crossing cases stay off the optimized route. A collapsed inradius is
+still refused by the direct geometry regression from section 1242.
+
+Validation on macOS arm64 CMake Release:
+
+- `[region-boundary]`: 15 assertions / 1 worker-kernel case.
+- `[source-generation]`: 14,226 assertions / 20 cases.
+- `[translation]`: 39,040 assertions / 1 case.
+- CTest `offset_worker_kernel`: passed in 220.06 seconds.
+- `[curve-offset][region]`: 27,150 assertions / 13 cases.
+- `[closed][high-segment]`: 695 assertions / 1 Trim case.
+- Full `librecad_offset_trim_tests`: 203,976 assertions / 162 cases.
+- `git diff --check`: passed before the implementation commit.
+
+This supersedes the open worker-routing and miter-provenance tasks in
+section 1241 and the worker/materialization caveat in section 1242. It closes
+only strict-convex linear erosion. Curved polyline corners, concave and
+self-intersecting region semantics, disconnected or ambiguous results beyond
+the tested refusal paths, other high-segment arrangements, visible Properties
+and Trim workflows, cross-platform runtime, and independent ODA/AutoCAD
+acceptance remain open. Continue with those concrete topology and acceptance
+gates; do not treat this slice as completion of the full roadmap.
