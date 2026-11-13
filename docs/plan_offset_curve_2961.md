@@ -42868,8 +42868,11 @@ a distinct typed choice from spline-points.
 
 The implementation and headless selector/candidate matrix are already in
 place. During an active replacement workflow, the type selector remains
-available, changing it refreshes eligible candidates immediately, and a
-candidate only becomes the new source after asynchronous validation succeeds.
+available as a live candidate filter, and changing it refreshes the eligible
+candidate list immediately. The filter must remain usable for repeated family
+changes before a candidate is chosen; it must not end replacement mode or
+retype the committed entity. The accepted candidate's actual supported type
+becomes the replacement's type only after asynchronous validation succeeds.
 Filtering or failed/stale preparation must leave the current source, cache,
 identity, and source indication unchanged. Existing-source highlighting is
 part of the visible interaction contract. Sections 1192-1193 and 1225-1226
@@ -42928,33 +42931,65 @@ On macOS arm64 CMake Release, `[region][kink]` passes 24 assertions / 1 case;
 the complete `[curve-offset][region]` selection passes 23,026 assertions / 12
 cases. The existing worker-backed `[closed][high-segment]` Trim case passes
 508 assertions / 1 case, retaining successful outward behavior and atomic
-inward refusal. A direct 256-edge RegionBoundary probe still returns
-`LimitExceeded` during visibility classification at the bounded 1,048,576
-distance-map-box allowance (candidate intersection work is 289,213 box pairs,
-with 4,608 exact offset samples). RegionBoundary is therefore not routed into
-the native worker yet, and no high-segment inward worker success is claimed.
+inward refusal. A direct 256-edge RegionBoundary probe initially returned
+`LimitExceeded` before offset fitting, with zero source crossings, 289 source
+intersection box pairs, and zero exact offset samples. Section 1242 records
+the bounded strict-convex erosion path that now handles this direct-geometry
+case. RegionBoundary is still not routed into the native worker, and no
+high-segment inward worker success is claimed.
 
 **Next implementation slices:**
 
-1. Reduce the RegionBoundary visibility work for high-segment linear polygons
-   without raising hard limits based only on input count. Preserve uncertainty
-   as an explicit refusal, and prove the 256-edge polygon stays within the
-   fixed work budget.
-2. Carry explicit corner/miter provenance through geometry construction and
-   materialization. Independently verify both adjacent shifted-line residuals,
-   source-segment projection bounds, continuity, orientation, and region
+1. Carry and validate explicit corner/miter provenance through geometry
+   construction, worker cache creation, materialization, and Trim. Preserve
+   source-span identity and signed distance, and verify both adjacent shifted
+   line residuals, projection bounds, continuity, orientation, and region
    classification. Do not relax generic spline correspondence or intersection
    certification to admit a miter.
-3. Route only validated closed, all-linear polyline sources through the
-   eroded-region path in the native worker. Verify cache materialization and
-   source identity before enabling it. Add regular high-segment polygon tests
-   for both sides, both operand roles, both pick orders, worker preview,
-   commit/undo, and applicable DXF/DWG save/reopen. Retain atomic refusal cases
-   for a collapsed inradius, concave/ambiguous topology, unstable miters,
-   resource limits, and disconnected results. Run the complete Trim and
-   geometry suites.
+2. Route only validated closed, all-linear, strictly convex polyline erosion
+   through the native worker. Verify cache materialization and source identity
+   before enabling it. Add both sides, both operand roles, both pick orders,
+   worker preview, commit/undo, and applicable DXF/DWG save/reopen coverage.
+   Retain atomic refusal for collapsed inradius, concave/self-intersecting or
+   ambiguous topology, unstable miters, resource limits, and disconnected
+   results. Run the complete Trim and geometry suites.
 
 This closes only the exact linear convex-erosion subcase. Curved polyline
 corners, self-intersections, broader fill-rule arrangements, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain separate gates;
 keep full closed/high-segment polyline support open.
+
+## 1242. Bound Strictly Convex Polyline Erosion (2026-11-13)
+
+The high-segment direct RegionBoundary failure was earlier than visibility:
+the per-source-fragment inside/outside classifier repeatedly evaluated
+winding against every straight span and exhausted its fixed work budget before
+offset fitting (`sourceIntersections=0`, 289 intersection box pairs,
+`exactSamples=0`). Raising the budget would only hide this quadratic work.
+
+Commit `f67342649` adds a narrow exact path for inward erosion of a closed,
+all-straight, strictly convex polyline with no source self-intersections. It
+intersects adjacent inward-shifted edge lines, then checks finite miter points,
+perpendicular residuals against both shifted lines, projection bounds on both
+source edges, positive edge order, positive orientation, and every miter
+against every shifted half-plane. The pairwise verification is capped by the
+existing `maxDistanceMapBoxes` budget. Valid output is one closed cycle of
+straight cubic pieces with source-span and signed-distance provenance; a
+collapsed or empty erosion returns an explicit refusal with no branches.
+Nonconvex, self-intersecting, curved, or otherwise unclassified inputs remain
+on the general RegionBoundary path.
+
+The direct regression uses a 256-edge regular polygon in both traversal
+orientations and checks 4,112 assertions for one closed cycle, source-edge
+projection bounds, exact offset residuals, and counter-clockwise output. A
+10.1-unit erosion of the radius-10 polygon refuses atomically. On macOS arm64
+CMake Release, the full `[curve-offset][region]` selection passes 27,150
+assertions / 13 cases, and the existing worker-backed `[closed][high-segment]`
+Trim regression passes 530 assertions / 1 case. The latter still proves
+outward behavior and atomic inward refusal; the new exact erosion path is not
+yet selected by worker preparation. CMake `git diff --check` passed before the
+implementation commit.
+
+This closes direct geometry only for the tested strict-convex linear case; it
+does not establish cache acceptance, Trim actions, serialization, or worker
+routing. Continue from the two slices in section 1241.
