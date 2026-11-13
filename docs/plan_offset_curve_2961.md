@@ -40697,3 +40697,21 @@ passes 23,974 assertions / 1 case; `git diff --check` passes. This qualifies
 the specified longer interval, outward distance, and `0.75` cutter placement
 only. Other intervals, inward distances, cutters, visible GUI, cross-platform,
 and independent-CAD acceptance remain open.
+
+## 1133. Qualify Inward Trim on the Longer Forward Elliptic Arc (2026-11-12)
+
+Test commit `fdd1a9d10` adds the inward signed-side counterpart for the longer
+forward interval from section 1132: center `(-6, 8)`, semi-major length `3`,
+ratio `0.6`, bounds `-0.4..2.4`, and inward distance `0.5`. The cutter at
+normalized arc parameter `0.75` produced ambiguous refusals, while parameter
+`0.25` yields certified picks. Both operand orders sweep 19 source-pick
+fractions, require empty fragments on refused probes, and exercise
+preview/commit, undo/redo, and all five DXF/DWG save/reopen lanes with
+LibreDWG parsing.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 24,733 assertions / 1 case; `git diff --check` passes. This completes
+both signed sides for this one longer interval at distance `0.5`, each with
+its successful cutter placement. Other intervals/distances/cutters, visible
+GUI, cross-platform, and independent-CAD acceptance remain open.
