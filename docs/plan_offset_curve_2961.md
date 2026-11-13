@@ -40928,3 +40928,19 @@ with `QT_QPA_PLATFORM=offscreen` and LibreDWG through `DWGREAD` passed all 87
 cases / 176,238 assertions. This establishes a clean rerun, not that the
 initial failures were impossible; load-sensitive preview and bounded-wait
 flakiness remain worth monitoring in later full-suite runs.
+
+## 1148. Qualify Five-point Fit Spline-points Trim Two (2026-11-12)
+
+Test commit `311ff674e` adds a five-fit-point `LC_SplinePoints` Trim Two
+profile with non-default fit tolerance `1e-3`. Both operand orders exercise
+worker update, preview/commit, undo/redo, and all five DXF/DWG save/reopen
+lanes. Round-trip checks compare fit tolerance when the file reader promotes
+the spline-points entity to `RS_Spline`, in addition to sampled curve geometry.
+
+The focused macOS arm64 CMake Release
+`[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]`
+case passes 6,059 assertions / 1 case with LibreDWG enabled; `git diff
+--check` passes. This qualifies one five-point unconstrained fit with a single
+non-default tolerance, alongside the constrained four-point case in section
+1146. Other fit counts/tolerances, closed fit splines, visible GUI,
+cross-platform, and independent-CAD acceptance remain open.
