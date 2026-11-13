@@ -732,7 +732,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         SourceKind::Ellipse, SourceKind::Spline, SourceKind::SplinePoints,
         SourceKind::Parabola, SourceKind::BoundedHyperbola, SourceKind::Polyline);
     const unsigned fitPointVariant = kind == SourceKind::SplinePoints
-        ? GENERATE(0u, 1u, 2u) : 0u;
+        ? GENERATE(0u, 1u, 2u, 3u) : 0u;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -749,8 +749,14 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    view.getViewPort()->setOffsetAndFactor(200, 200,
-        kind == SourceKind::SplinePoints && fitPointVariant != 0 ? 15. : 30.);
+    constexpr double fitTransformScale = 0.5;
+    constexpr double fitTransformAngle = 0.41;
+    const RS_Vector fitTransformOrigin{-18.0, 27.0};
+    const double fitZoom = fitPointVariant == 3 ? 15.0 / fitTransformScale : 15.0;
+    const RS_Vector viewOrigin = fitPointVariant == 3 ? fitTransformOrigin : RS_Vector{};
+    view.getViewPort()->setOffsetAndFactor(qRound(200.0 - viewOrigin.x * fitZoom),
+        qRound(200.0 - viewOrigin.y * fitZoom),
+        kind == SourceKind::SplinePoints && fitPointVariant != 0 ? fitZoom : 30.);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
@@ -769,6 +775,18 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
             ? std::vector<RS_Vector>{{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}}
             : std::vector<RS_Vector>{{0, 0}, {10, 0}, {10.0 + gap, 0},
                                      {13, 8}, {4, 13}, {-3, 8}};
+        if (fitPointVariant == 3) {
+            const double cosine = std::cos(fitTransformAngle);
+            const double sine = std::sin(fitTransformAngle);
+            for (RS_Vector& point : fitPoints.splinePoints) {
+                const double x = point.x;
+                const double y = -point.y;
+                point = {fitTransformOrigin.x + fitTransformScale * (x * cosine - y * sine),
+                         fitTransformOrigin.y + fitTransformScale * (x * sine + y * cosine)};
+            }
+            std::reverse(fitPoints.splinePoints.begin(), fitPoints.splinePoints.end());
+            fitPoints.fitTolerance = 1e-4;
+        }
         sourceData = LC_OffsetSourceGeometry{std::move(fitPoints)};
     }
     auto sourceOwner = sourceData.makeEntity();
@@ -790,7 +808,14 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         ? RS_Vector{semiMajor, 0} : sourcePickPoint(kind);
     if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
         double sourceDistance = 0.0;
-        sourcePick = source->getNearestPointOnEntity({10.0, 0.0}, true, &sourceDistance);
+        RS_Vector pickTarget{10.0, 0.0};
+        if (fitPointVariant == 3) {
+            const double cosine = std::cos(fitTransformAngle);
+            const double sine = std::sin(fitTransformAngle);
+            pickTarget = {fitTransformOrigin.x + fitTransformScale * (10.0 * cosine),
+                          fitTransformOrigin.y + fitTransformScale * (10.0 * sine)};
+        }
+        sourcePick = source->getNearestPointOnEntity(pickTarget, true, &sourceDistance);
         REQUIRE(sourcePick.valid);
         CHECK(sourceDistance >= 0.0);
     }
@@ -837,6 +862,18 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         cutterStart = {5.0, -5.0};
         cutterEnd = {5.0, 18.0};
         cutterPick = {5.0, 6.5};
+        if (fitPointVariant == 3) {
+            const double cosine = std::cos(fitTransformAngle);
+            const double sine = std::sin(fitTransformAngle);
+            const auto transform = [&](const RS_Vector& point) {
+                const double y = -point.y;
+                return RS_Vector{fitTransformOrigin.x + fitTransformScale * (point.x * cosine - y * sine),
+                                 fitTransformOrigin.y + fitTransformScale * (point.x * sine + y * cosine)};
+            };
+            cutterStart = transform(cutterStart);
+            cutterEnd = transform(cutterEnd);
+            cutterPick = transform(cutterPick);
+        }
     }
     auto* cutter = new RS_Line(&graphic, cutterStart, cutterEnd);
     cutter->setLayer(graphic.findLayer("0"));
