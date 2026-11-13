@@ -70,10 +70,15 @@ unrelated drawable entities.
 type while choosing a replacement, cover all supported source types, and
 specifically include parabola do not add a family beyond the existing nine
 `SupportedKinds`. Keep parabola as its own typed choice and preserve the
-in-place filter-change behavior. The headless picker matrix already verifies
-these selector and state transitions; remaining work is the visible workflow
-gate and Slice 4's concrete-variant geometry/worker/cache/Trim/DXF/DWG checks.
-Do not treat this scope confirmation as evidence that either gate has passed.
+in-place filter-change behavior. Once replacement mode is active, the user must
+be able to change the type filter and inspect the refreshed candidate list
+without cancelling or restarting replacement. The filter chooses which
+candidates are shown; the accepted candidate's actual supported type becomes
+the new source type only after asynchronous validation succeeds. The headless
+picker matrix already verifies these selector and state transitions; remaining
+work is the visible workflow gate and Slice 4's concrete-variant
+geometry/worker/cache/Trim/DXF/DWG checks. Do not treat this scope confirmation
+as evidence that either gate has passed.
 
 **Acceptance sequence:** in the Properties source widget, start replacement
 and, while replacement/candidate selection remains active, keep the type
@@ -41536,3 +41541,23 @@ assertions, the direct hyperbola variant oracle passes 94,807 assertions, and
 the recursive qmake6 build exits 0. This documents one fail-closed post-cusp
 case, not full post-cusp hyperbola support; other branch/pick combinations,
 visible GUI, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1180. Add a High-eccentricity Partial Ellipse Oracle Case (2026-11-13)
+
+Test commit `542975fdc` adds a rotated, translated partial ellipse arc with
+semiaxes `3` and `0.6`, parameter bounds `[-0.45, 0.75]`, and inward offset
+distance `0.03`. The direct exact-normal oracle checks the curve in both
+traversal directions using the corresponding left/right offset side. The
+existing worker-backed ellipse Trim Two matrix was restored and rerun unchanged
+as a regression check.
+
+On macOS arm64 CMake Release, `[curve-offset][ellipse]` passes 1,354,583
+assertions / 57 cases, including the new direct case; the ellipse Trim Two
+matrix passes 29,732 assertions / 1 case with LibreDWG enabled; `git diff
+--check` passes. An attempted Trim Two profile using this partial arc produced
+only `AmbiguousRoots` and no certified pick, even after shortening the cutter,
+so no action-level claim is made for this geometry and that experimental action
+profile was removed. This adds one direct-oracle geometry point only. Ellipse
+Trim Two coverage for this partial-arc layout, broader sweep/axis-ratio and
+distance matrices, visible GUI, cross-platform behavior, and independent
+ODA/AutoCAD acceptance remain open.
