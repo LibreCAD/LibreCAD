@@ -3404,8 +3404,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const bool fitPoints : {false, true}) for (const bool nativeFirst : {false, true}) {
-        CAPTURE(fitPoints, nativeFirst);
+    for (const unsigned profile : {0u, 1u, 2u})
+    for (const bool nativeFirst : {false, true}) {
+        const bool fitPoints = profile == 2;
+        CAPTURE(profile, fitPoints, nativeFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -3422,10 +3424,16 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
             source = new LC_SplinePoints(&f.graphic, data);
         } else {
-            RS_SplineData data{2, false};
-            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
-            data.knotslist = {0, 0, 0, 1, 1, 1};
-            data.weights = {1, .8, 1};
+            RS_SplineData data{profile == 1 ? 3 : 2, false};
+            if (profile == 1) {
+                data.controlPoints = {{-5, 0}, {-3, 3}, {-1, 2}, {2, 4}, {5, 0}};
+                data.knotslist = {0, 0, 0, 0, .45, 1, 1, 1, 1};
+                data.weights = {1, .8, 1.2, .9, 1};
+            } else {
+                data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+                data.knotslist = {0, 0, 0, 1, 1, 1};
+                data.weights = {1, .8, 1};
+            }
             source = new RS_Spline(&f.graphic, data);
         }
         f.graphic.addEntity(source);
@@ -3564,7 +3572,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         for (std::size_t i = 0; i < formats.size(); ++i) {
             const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("typed-spline-trim-two-%1-%2").arg(fitPoints).arg(i) +
+                QStringLiteral("typed-spline-trim-two-%1-%2").arg(profile).arg(i) +
                     (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
 #ifdef DWGSUPPORT
@@ -3598,7 +3606,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             }));
             std::vector<bool> consumed(reopenedEntities.size(), false);
             for (const auto* expected : expectedEntities) {
-                CAPTURE(fitPoints, nativeFirst, formats[i], expected->rtti());
+                CAPTURE(profile, fitPoints, nativeFirst, formats[i], expected->rtti());
                 bool found = false;
                 for (std::size_t j = 0; j < reopenedEntities.size(); ++j) {
                     if (consumed[j] || !sameGeometry(*expected, *reopenedEntities[j])) continue;
@@ -3608,7 +3616,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 }
                 CHECK(found);
             }
-            CAPTURE(fitPoints, nativeFirst, formats[i]);
+            CAPTURE(profile, fitPoints, nativeFirst, formats[i]);
         }
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
