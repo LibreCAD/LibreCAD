@@ -40944,3 +40944,14 @@ case passes 6,059 assertions / 1 case with LibreDWG enabled; `git diff
 non-default tolerance, alongside the constrained four-point case in section
 1146. Other fit counts/tolerances, closed fit splines, visible GUI,
 cross-platform, and independent-CAD acceptance remain open.
+
+## 1149. Revalidate the Nine-family Source Chooser (2026-11-12)
+
+At PR head `036b1daf8`, the current macOS arm64 CMake Release
+`librecad_tests` executable passes `[gui][dialog][offsetcurve][source]` with
+14,831 assertions / 43 cases. This includes repeated source-type changes and
+candidate-list refresh across the nine `SupportedKinds`, with parabola kept
+distinct from spline-points. It verifies the chooser contract for the current
+headless widget tests; it is not visible-GUI acceptance or proof of every
+family's geometry variants. The visible Properties workflow remains open in
+Slice 5.
