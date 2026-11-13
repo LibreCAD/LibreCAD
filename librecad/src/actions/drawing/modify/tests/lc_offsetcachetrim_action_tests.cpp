@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3509,7 +3509,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
                 data.closed = profile >= 8;
-                data.splinePoints = profile == 15 || profile == 16 || profile == 17 || profile == 18
+                data.splinePoints = profile == 15 || profile == 16 || profile == 17 || profile == 18 || profile == 19
                     ? std::vector<RS_Vector>{}
                     : profile == 14
                     ? std::vector<RS_Vector>{}
@@ -3552,7 +3552,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                                                        0.75 * radius * std::sin(angle));
                     }
                 }
-                if (profile == 16 || profile == 17 || profile == 18) {
+                if (profile == 16 || profile == 17 || profile == 18 || profile == 19) {
                     constexpr double twoPi = 6.2831853071795864769;
                     for (unsigned i = 0; i < 12; ++i) {
                         const double angle = twoPi * static_cast<double>(i) / 12.0;
@@ -3562,6 +3562,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                                                        0.9 * radius * std::sin(angle));
                     }
                     if (profile == 18) data.splinePoints.push_back(data.splinePoints.front());
+                    if (profile == 19)
+                        data.splinePoints.insert(data.splinePoints.begin() + 6, data.splinePoints[5]);
                 }
                 if (profile == 9 || profile == 15 || profile == 17) {
                     const double angle = profile == 9 ? 0.47 : profile == 15 ? 0.29 : 0.63;
@@ -3578,7 +3580,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     }
                 }
                 if (profile == 10) data.fitTolerance = 1e-4;
-                if (profile == 15 || profile == 17 || profile == 18) data.fitTolerance = 2e-4;
+                if (profile == 15 || profile == 17 || profile == 18 || profile == 19)
+                    data.fitTolerance = 2e-4;
                 if (profile == 7) data.fitTolerance = 1e-3;
             } else {
                 data.useControlPoints = true;
@@ -3672,7 +3675,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
         RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
-        if (profile == 16 || profile == 18) {
+        if (profile == 16 || profile == 18 || profile == 19) {
             bool foundCertifiedCut = false;
             for (const double contactFraction : {.1, .2, .3, .4, .5, .6, .7, .8, .9}) {
                 if (foundCertifiedCut) break;
