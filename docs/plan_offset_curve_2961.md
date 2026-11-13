@@ -317,6 +317,8 @@ six-fit-point closed SplinePoints sources through direct normals, worker-backed
 Trim Two, and five DXF/DWG lanes. Their closed cut/control-file representation
 is checked by sampled geometry, not by internal storage equality. These two
 fixtures do not close other fit-point counts, tolerances, or transformations.
+Section 1172 adds an eight-fit-point closed profile with fit tolerance `1e-4`
+through the same direct, worker Trim Two, and five-file-lane checks.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41381,4 +41383,22 @@ application sources required rebuilding after the prior full qmake6 pass in
 section 1170); `git diff --check` passes. This qualifies only the stated
 similarity transform and source profile. Other transformations, closed fit
 counts and tolerances, visible GUI, cross-platform runtime, and independent
+ODA/AutoCAD acceptance remain open.
+
+## 1172. Qualify an Eight-point Closed Fit Spline with Non-default Tolerance (2026-11-13)
+
+Test commit `bf7981c7d` adds an eight-fit-point closed `LC_SplinePoints`
+profile with fit tolerance `1e-4`. The direct exact-normal oracle checks both
+offset sides. The source also runs through worker-backed source update, Trim
+Two preview/commit in both operand orders, undo/redo, and R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG save/reopen. As for the six-point profile, reopened
+closed cut/control storage is compared to the source curve by sampled geometry.
+
+On macOS arm64 CMake Release, the focused closed-fit direct selection passes
+26,328 assertions / 4 cases, and the complete fit-point Trim Two action case
+passes 8,308 assertions / 1 case with LibreDWG enabled. `librecad_tests` builds,
+the recursive qmake6 application/worker/plugin build rechecks incrementally
+with exit 0, and `git diff --check` passes. This qualifies one eight-point
+layout and one non-default tolerance only. Other fit counts/tolerances,
+transformations, visible GUI, cross-platform behavior, and independent
 ODA/AutoCAD acceptance remain open.
