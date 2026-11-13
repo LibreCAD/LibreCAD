@@ -3404,9 +3404,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u})
     for (const bool nativeFirst : {false, true}) {
-        const bool fitPoints = profile == 5 || profile == 6;
+        const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
         CAPTURE(profile, fitPoints, splinePointsSource, nativeFirst);
         Drawing<true> f;
@@ -3424,7 +3424,11 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             if (fitPoints) {
                 data.splinePoints = profile == 6
                     ? std::vector<RS_Vector>{{-4, 0}, {-1, 2}, {2, 3}, {4, 0}}
-                    : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
+                    : profile == 7
+                        ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
+                                                 {2, 1.4}, {4, 0}}
+                        : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
+                if (profile == 7) data.fitTolerance = 1e-3;
             } else {
                 data.useControlPoints = true;
                 data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
@@ -3599,7 +3603,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                      !closeVector(sourceData.fitStartTangent, loadedData.fitStartTangent) ||
                      !closeVector(sourceData.fitEndTangent, loadedData.fitEndTangent)))
                     return false;
-                if (profile != 6) {
+                if (!sourceData.useControlPoints &&
+                    !close(sourceData.fitTolerance, loadedData.fitTolerance)) return false;
+                if (profile < 6) {
                     RS_SplineData data{2, false};
                     data.controlPoints = a->getControlPoints();
                     const auto n = data.controlPoints.size();
