@@ -2922,6 +2922,76 @@ TEST_CASE("Open arc-line polylines follow exact normals across tangent and corne
     verifyProfile(2.0, 1e4, {1e6, -2e6});
 }
 
+TEST_CASE("High-segment open polylines follow exact segment normals",
+          "[curve-offset][direct][polyline][segment-count][oracle]") {
+    RS_Polyline source;
+    constexpr unsigned segmentCount = 256;
+    for (unsigned i = 0; i <= segmentCount; ++i) {
+        const double x = 0.1 * static_cast<double>(i);
+        const double y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
+        source.addVertex({x, y});
+    }
+    source.endPolyline();
+    CHECK_FALSE(source.isClosed());
+
+    const auto sourceSegments = orientedSegments(source);
+    REQUIRE(sourceSegments.size() == segmentCount);
+    std::vector<double> sourceBreaks{0.0};
+    for (const auto& segment : sourceSegments) {
+        REQUIRE_FALSE(segment.arc);
+        sourceBreaks.push_back(sourceBreaks.back() + segment.length());
+    }
+
+    for (const double distance : {0.02, 0.05}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const double signedDistance = side == LC_CurveOffsetSide::Left ? distance : -distance;
+
+            for (const auto& branch : result.branches) {
+                REQUIRE_FALSE(branch.cubicPieces.empty());
+                for (const auto& piece : branch.cubicPieces) {
+                    if (piece.provenance.arcCentre.valid) {
+                        for (int sample = 0; sample <= 9; ++sample) {
+                            const RS_Vector point = bezierAt(piece.bezier, sample / 9.0);
+                            CHECK(std::abs(point.distanceTo(piece.provenance.arcCentre) - distance) <=
+                                  2.0 * options.tolerance.requestedGeometry);
+                        }
+                        continue;
+                    }
+
+                    for (int sample = 1; sample < 9; ++sample) {
+                        const double fraction = sample / 9.0;
+                        const double parameter = piece.provenance.sourceT0 + fraction *
+                            (piece.provenance.sourceT1 - piece.provenance.sourceT0);
+                        const auto sampleUpper = std::upper_bound(sourceBreaks.begin(),
+                                                                  sourceBreaks.end(), parameter);
+                        REQUIRE(sampleUpper != sourceBreaks.begin());
+                        const std::size_t sampleIndex = std::min(sourceSegments.size() - 1,
+                            static_cast<std::size_t>(sampleUpper - sourceBreaks.begin() - 1));
+                        const auto& sourceSegment = sourceSegments[sampleIndex];
+                        const double local = std::clamp((parameter - sourceBreaks[sampleIndex]) /
+                            (sourceBreaks[sampleIndex + 1] - sourceBreaks[sampleIndex]), 0.0, 1.0);
+                        const RS_Vector tangent = (sourceSegment.b - sourceSegment.a) /
+                                                  sourceSegment.length();
+                        const RS_Vector normal{-tangent.y, tangent.x};
+                        const RS_Vector exact = sourceSegment.pointAt(local) +
+                                                normal * signedDistance;
+                        CHECK(bezierAt(piece.bezier, fraction).distanceTo(exact) <=
+                              options.tolerance.requestedGeometry);
+                    }
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("Major and minor bulge offsets follow exact segment normals", "[curve-offset][direct][polyline][bulge][major][oracle]") {
     RS_Polyline source;
     source.addVertex({0, 0}, 2.0);

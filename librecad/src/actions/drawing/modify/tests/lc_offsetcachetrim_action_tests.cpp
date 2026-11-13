@@ -4123,12 +4123,14 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
     }
 }
 
-TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source in both pick orders",
+TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment polyline sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
+    for (const bool highSegmentCount : {false, true})
     for (const double sourceBulge : {1.0, .5})
         for (const bool addThirdSpan : {false, true})
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
-        CAPTURE(sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
+        if (highSegmentCount && (sourceBulge != 1.0 || addThirdSpan || trimLineSpan)) continue;
+        CAPTURE(highSegmentCount, sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -4136,10 +4138,20 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
         auto* source = new RS_Polyline(&f.graphic);
-        source->addVertex({0, 0}, sourceBulge);
-        source->addVertex({2, 0});
-        source->addVertex({2, 2});
-        if (addThirdSpan) source->addVertex({0, 2});
+        if (highSegmentCount) {
+            constexpr unsigned segmentCount = 256;
+            for (unsigned i = 0; i <= segmentCount; ++i) {
+                const double x = 0.1 * static_cast<double>(i);
+                const double y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
+                source->addVertex({x, y});
+            }
+        }
+        else {
+            source->addVertex({0, 0}, sourceBulge);
+            source->addVertex({2, 0});
+            source->addVertex({2, 2});
+            if (addThirdSpan) source->addVertex({0, 2});
+        }
         source->endPolyline();
         f.graphic.addEntity(source);
         const bool belowFiveOutputCap = sourceBulge == .5 && addThirdSpan && !trimLineSpan && !polylineFirst;
@@ -4169,7 +4181,8 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         const auto breaks = native->getBreakParameters();
         REQUIRE(breaks.size() >= (trimLineSpan ? 3u : 2u));
         if (addThirdSpan) REQUIRE(breaks.size() >= 4);
-        const std::size_t span = trimLineSpan ? breaks.size() - 2 : 0;
+        const std::size_t span = highSegmentCount ? (breaks.size() - 2) / 2 :
+                                 trimLineSpan ? breaks.size() - 2 : 0;
         const double parameter = breaks[span] + (breaks[span + 1] - breaks[span]) * .43;
         const RS_Vector intersection = native->getPointAt(parameter);
         const double step = std::max(1e-7, (last - first) * 1e-5);
@@ -4193,6 +4206,21 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
+        if (highSegmentCount) {
+            CHECK(f.action->m_preview->isEmpty());
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK_FALSE(source->isDeleted());
+            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+            const auto count = f.graphic.count();
+            f.action->click(polylineFirst ? cutterPick : nativePick);
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK_FALSE(source->isDeleted());
+            CHECK(f.graphic.count() == count);
+            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+            REQUIRE_FALSE(f.context.messages.isEmpty());
+            CHECK(f.context.messages.back().contains("nothing changed"));
+            continue;
+        }
         if (belowFiveOutputCap) {
             CHECK(f.action->m_preview->isEmpty());
             CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
