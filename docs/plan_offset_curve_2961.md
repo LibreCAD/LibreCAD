@@ -40600,3 +40600,28 @@ focused ellipse Trim Two case passes 21,550 assertions / 1 case, and
 distance on each signed side; it does not establish matching-distance parity,
 other arc sweeps, other cutters, cross-platform, visible-GUI, or external-CAD
 acceptance.
+
+## 1128. Reconcile the Source-type Switching Request (2026-11-12)
+
+The latest request reiterates that the Properties source-curve widget must let
+the user change the source type while choosing a replacement, and that the
+replacement chooser must cover all supported offset-source types. This is
+already implemented and covered at the headless picker/state-transition
+level: the single selector is derived from
+`LC_OffsetSourceGeometry::SupportedKinds`, filters candidates immediately
+without ending replacement selection, and includes line, arc, circle, ellipse,
+spline, spline-points, distinct parabola, bounded hyperbola, and polyline.
+Changing the filter does not replace or mutate the current source, cache,
+identity, or indication; successful asynchronous validation publishes the
+chosen candidate, while refusal preserves the previous source. Parabola must
+remain a distinct type rather than being folded into spline-points.
+
+No new picker implementation slice is required. Keep the existing repeated
+family-switching and candidate-filter tests as the picker regression gate.
+Remaining work is to exercise the workflow visibly in the Properties widget,
+including repeated type changes during candidate selection and preservation of
+the old-source highlight until successful validation. Continue Slice 4's
+separate family-by-variant generation, worker/cache, trimming, and applicable
+DXF/DWG qualification; the nine selector entries do not imply end-to-end
+support for every geometry variant. If `SupportedKinds` changes, update the
+selector inventory and its tests from that canonical list.
