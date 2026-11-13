@@ -731,6 +731,8 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     const auto kind = GENERATE(SourceKind::Line, SourceKind::Arc, SourceKind::Circle,
         SourceKind::Ellipse, SourceKind::Spline, SourceKind::SplinePoints,
         SourceKind::Parabola, SourceKind::BoundedHyperbola, SourceKind::Polyline);
+    const unsigned fitPointVariant = kind == SourceKind::SplinePoints
+        ? GENERATE(0u, 1u, 2u) : 0u;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -746,7 +748,8 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    view.getViewPort()->setOffsetAndFactor(200, 200,
+        kind == SourceKind::SplinePoints && fitPointVariant != 0 ? 15. : 30.);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
@@ -755,9 +758,18 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     constexpr double vertexRadius = semiMajor * ratio * ratio;
     const double distance = kind == SourceKind::BoundedHyperbola ? .5 * vertexRadius : .05;
     auto* target = native(graphic, distance);
-    const LC_OffsetSourceGeometry sourceData = kind == SourceKind::BoundedHyperbola
+    LC_OffsetSourceGeometry sourceData = kind == SourceKind::BoundedHyperbola
         ? LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {semiMajor, 0}, ratio, -.4, .4, false}}
         : sourceGeometry(kind);
+    if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
+        LC_SplinePointsData fitPoints{true, false};
+        const double gap = fitPointVariant == 1 ? 0.0 : 5.1e-4;
+        fitPoints.splinePoints = fitPointVariant == 1
+            ? std::vector<RS_Vector>{{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}}
+            : std::vector<RS_Vector>{{0, 0}, {10, 0}, {10.0 + gap, 0},
+                                     {13, 8}, {4, 13}, {-3, 8}};
+        sourceData = LC_OffsetSourceGeometry{std::move(fitPoints)};
+    }
     auto sourceOwner = sourceData.makeEntity();
     REQUIRE(sourceOwner);
     auto* source = sourceOwner.get();
@@ -773,8 +785,14 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
     REQUIRE(updateAction);
     updateAction->setSourceKind(kind);
-    const RS_Vector sourcePick = kind == SourceKind::BoundedHyperbola
+    RS_Vector sourcePick = kind == SourceKind::BoundedHyperbola
         ? RS_Vector{semiMajor, 0} : sourcePickPoint(kind);
+    if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
+        double sourceDistance = 0.0;
+        sourcePick = source->getNearestPointOnEntity({10.0, 0.0}, true, &sourceDistance);
+        REQUIRE(sourcePick.valid);
+        CHECK(sourceDistance >= 0.0);
+    }
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
     mouse(*update, view, sourcePick, true);
     lc::test::awaitUpdate(*updateAction);
@@ -810,16 +828,30 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         REQUIRE(cutterDirection.magnitude() > 0.0);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 12.0;
     }
-    else cutterDirection *= .5;
-    auto* cutter = new RS_Line(&graphic, jet.point - cutterDirection, jet.point + cutterDirection);
+    else if (kind != SourceKind::SplinePoints || fitPointVariant == 0) cutterDirection *= .5;
+    RS_Vector cutterStart = jet.point - cutterDirection;
+    RS_Vector cutterEnd = jet.point + cutterDirection;
+    RS_Vector cutterPick = jet.point + cutterDirection * .75;
+    if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
+        cutterStart = {5.0, -5.0};
+        cutterEnd = {5.0, 18.0};
+        cutterPick = {5.0, 6.5};
+    }
+    auto* cutter = new RS_Line(&graphic, cutterStart, cutterEnd);
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
     const RS_Vector targetPick = nativeCurve->getPointAt(
         parameterStart + targetFraction * (parameterEnd - parameterStart));
     REQUIRE(targetPick.valid);
+    if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
+        const auto preparedTrim = LC_OffsetCacheTrim::prepare(nativeCurve->getData(), *cutter, {targetPick});
+        CAPTURE(fitPointVariant, static_cast<int>(preparedTrim.refusal), preparedTrim.rootCount,
+                nativeCurve->getData().m_closedFlag);
+        REQUIRE(preparedTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+    }
     TrimActionProbe trim(&context);
     trim.init(0);
-    mouse(trim, view, jet.point + cutterDirection * .75, true);
+    mouse(trim, view, cutterPick, true);
     mouse(trim, view, targetPick, true);
     QElapsedTimer trimWait;
     trimWait.start();
