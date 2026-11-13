@@ -323,8 +323,9 @@ near-coincident chords, including a transformed/reflected/reversed profile.
 Section 1202 carries a unique closed fit-point profile and the `5.1e-4`
 near-coincident profile through actual Properties replacement, worker/cache
 admission, native Trim, undo/redo, and all five R14/R2000/R2018 DXF/DWG
-save/reopen lanes. This is three additional bounded layouts, not general
-fit-point topology or a completion of Slice 4.
+save/reopen lanes; its follow-up also carries a reflected/reversed transformed
+near-coincident profile through those lanes. These are bounded layouts, not
+general fit-point topology or a completion of Slice 4.
 
 Sections 1170-1171 qualify nominal and similarity-transformed six-fit-point
 closed SplinePoints sources through direct normals, worker-backed Trim Two,
@@ -42023,3 +42024,17 @@ cache, Trim, undo/redo, and internal round-trip evidence for these three
 closed fit-point layouts only. Other fit-point counts or chord spacings, wider
 similarity/scale combinations, visible GUI interaction, cross-platform builds,
 and independent ODA/AutoCAD acceptance remain open.
+
+## 1203. Revalidate qmake6 Product Build at the Updated Head (2026-11-13)
+
+At PR revision `ba683023c`, the existing recursive macOS arm64 qmake6 Release
+tree `/private/tmp/offset-2961-qmake-current` completes `make -j6` with exit
+code 0. The application, worker, libraries, plugins, and tools are up to date;
+this incremental invocation did not need to recompile product sources. The
+shell emits the existing warning that optional
+`/private/tmp/libdxfrw-cargo/env` is absent; it does not stop qmake or make.
+
+This confirms the existing qmake6 product tree at the current PR head. It is
+not a clean qmake build or test-target run (qmake has no registered
+`librecad_tests` target here), nor visible GUI, Windows/Linux, runtime-helper,
+or independent ODA/AutoCAD validation. Those gates remain open.
