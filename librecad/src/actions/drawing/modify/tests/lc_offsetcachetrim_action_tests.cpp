@@ -3404,7 +3404,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3422,7 +3422,11 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         if (splinePointsSource) {
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
-                data.splinePoints = profile == 6
+                data.closed = profile == 8;
+                data.splinePoints = profile == 8
+                    ? std::vector<RS_Vector>{{-4, 0}, {-2, 3}, {2, 3},
+                                             {4, 0}, {2, -3}, {-2, -3}}
+                    : profile == 6
                     ? std::vector<RS_Vector>{{-4, 0}, {-1, 2}, {2, 3}, {4, 0}}
                     : profile == 7
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
@@ -3577,7 +3581,30 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 if (const auto* b = dynamic_cast<const LC_SplinePoints*>(&actual)) {
                     const auto& x = a->getData();
                     const auto& y = b->getData();
-                    if (x.closed != y.closed || x.cut != y.cut) return false;
+                    if (x.closed != y.closed) return false;
+                    if (x.closed && !x.cut && !x.useControlPoints && y.cut) {
+                        const double sourceEnd = static_cast<double>(a->getSegmentCount());
+                        const double actualEnd = static_cast<double>(b->getSegmentCount());
+                        if (!(sourceEnd > 0.0) || !(actualEnd > 0.0)) return false;
+                        for (unsigned sample = 0; sample <= 128; ++sample) {
+                            const double fraction = static_cast<double>(sample) / 128.0;
+                            LC_CurveJet sourceJet;
+                            LC_CurveJet actualJet;
+                            const auto side = sample == 128
+                                ? LC_CurveEvaluationSide::Left
+                                : LC_CurveEvaluationSide::Right;
+                            if (!a->tryEvaluateJet(sourceEnd * fraction, side, sourceJet) ||
+                                !b->tryEvaluateJet(actualEnd * fraction, side, actualJet))
+                                return false;
+                            const double scale = std::max({1.0, std::abs(sourceJet.point.x),
+                                std::abs(sourceJet.point.y), std::abs(actualJet.point.x),
+                                std::abs(actualJet.point.y)});
+                            if (sourceJet.point.distanceTo(actualJet.point) > 2e-8 * scale)
+                                return false;
+                        }
+                        return true;
+                    }
+                    if (x.cut != y.cut) return false;
                     if (x.fitTangentsConstrained &&
                         (!y.fitTangentsConstrained ||
                          !closeVector(x.fitStartTangent, y.fitStartTangent) ||
