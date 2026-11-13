@@ -41679,3 +41679,16 @@ does not expand the fixture matrix or establish untested fit-point layouts.
 omission and timeout issues recorded in the active validation log; no full
 CTest pass is claimed here. Visible GUI, cross-platform behavior, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1187. Run the Complete Worker-kernel Suite Without the CTest Timeout (2026-11-13)
+
+After test commit `9b7655e53`, the complete
+`librecad_offset_worker_kernel_tests` executable was run directly, avoiding
+CTest's 30-second per-test limit. On macOS arm64 CMake Release it exits 0 with
+1,924,537 assertions across all 106 test cases. This supersedes the earlier
+timeout-only observation for the worker-kernel executable and includes the
+repeated fit-point matrix from section 1186.
+
+This direct run does not validate other CTest executables, the overall CTest
+registration/build matrix, qmake6, visible GUI behavior, cross-platform
+delivery, or independent ODA/AutoCAD acceptance; those gates remain open.
