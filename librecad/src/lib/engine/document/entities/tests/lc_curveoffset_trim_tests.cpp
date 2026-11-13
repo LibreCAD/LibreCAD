@@ -717,6 +717,36 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
     }
 }
 
+TEST_CASE("Three-point closed fit splines trim to the requested signed distance",
+          "[curve-offset][trim][spline-points][fit-points][closed][three-point][oracle]") {
+    LC_SplinePointsData data{true, false};
+    data.splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.isClosed());
+    REQUIRE(source.getSegmentCount() == 3);
+    REQUIRE(LC_OffsetSourceGeometry::capture(source));
+
+    const auto sourceDistance = [&source](const RS_Vector& point) {
+        return source.getDistanceToPoint(point);
+    };
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        constexpr double distance = 0.25;
+        auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        options.mode = LC_CurveOffsetMode::Trimmed;
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(result.branches.empty());
+        const Checked checked = check(result, curveOf(source), 0.0,
+                                      static_cast<double>(source.getSegmentCount()), distance,
+                                      -1.0, sourceDistance);
+        CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+        CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("Trimming removes a local loop and keeps the offset around it", "[curve-offset][trim]") {
     // Inside y = x^2 at distance 1: the swallowtail between the cusps, and the
     // two stretches from the cusps to the crossing at (0, 1.25), are nearer

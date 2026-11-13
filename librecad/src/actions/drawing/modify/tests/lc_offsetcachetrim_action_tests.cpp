@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u, 22u, 23u, 24u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u, 22u, 23u, 24u, 25u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3511,7 +3511,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 data.closed = profile >= 8;
                 data.splinePoints = profile == 20 || profile == 21
                     ? std::vector<RS_Vector>{{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}}
-                    : profile >= 22
+                    : profile >= 22 && profile <= 24
                     ? std::vector<RS_Vector>{}
                     : profile == 15 || profile == 16 || profile == 17 || profile == 18 || profile == 19
                     ? std::vector<RS_Vector>{}
@@ -3538,6 +3538,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
                                                  {2, 1.4}, {4, 0}}
                         : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
+                if (profile == 25)
+                    data.splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
                 if (profile == 14) {
                     constexpr double twoPi = 6.2831853071795864769;
                     for (unsigned i = 0; i < 9; ++i) {
@@ -3595,7 +3597,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                                  -21.0 + scale * (x * sine + y * cosine)};
                     }
                 }
-                if (profile >= 22) {
+                if (profile >= 22 && profile <= 24) {
                     constexpr double starPi = 3.14159265358979323846;
                     for (const std::size_t vertex : {0U, 2U, 4U, 1U, 3U}) {
                         const double angle = -starPi / 2.0 +
