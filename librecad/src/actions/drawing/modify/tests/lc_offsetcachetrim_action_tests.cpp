@@ -3833,7 +3833,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         cutterDirection /= cutterDirection.magnitude();
         cutterDirection += tangent;
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
-        cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
+        cutterDirection = cutterDirection / cutterDirection.magnitude();
+        cutterDirection *= 16.0;
         RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
         if (profile == 16 || profile == 18 || profile == 19 || profile == 20 || profile == 21 || profile >= 22) {
             bool foundCertifiedCut = false;
@@ -4125,12 +4126,14 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 
 TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment polyline sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
-    for (const bool highSegmentCount : {false, true})
+    for (const unsigned segmentCount : {0u, 256u})
+    for (const bool curvedProfile : {false, true})
     for (const double sourceBulge : {1.0, .5})
         for (const bool addThirdSpan : {false, true})
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
-        if (highSegmentCount && (sourceBulge != 1.0 || addThirdSpan || trimLineSpan)) continue;
-        CAPTURE(highSegmentCount, sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
+        if ((curvedProfile && !segmentCount) ||
+            (segmentCount && (sourceBulge != 1.0 || addThirdSpan || trimLineSpan))) continue;
+        CAPTURE(segmentCount, curvedProfile, sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -4138,11 +4141,10 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
         auto* source = new RS_Polyline(&f.graphic);
-        if (highSegmentCount) {
-            constexpr unsigned segmentCount = 256;
+        if (segmentCount) {
             for (unsigned i = 0; i <= segmentCount; ++i) {
                 const double x = 0.1 * static_cast<double>(i);
-                const double y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
+                const double y = curvedProfile ? 0.15 * std::sin(0.3 * x) + 0.02 * x : 0.02 * x;
                 source->addVertex({x, y});
             }
         }
@@ -4181,7 +4183,7 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         const auto breaks = native->getBreakParameters();
         REQUIRE(breaks.size() >= (trimLineSpan ? 3u : 2u));
         if (addThirdSpan) REQUIRE(breaks.size() >= 4);
-        const std::size_t span = highSegmentCount ? (breaks.size() - 2) / 2 :
+        const std::size_t span = segmentCount ? (breaks.size() - 2) / 2 :
                                  trimLineSpan ? breaks.size() - 2 : 0;
         const double parameter = breaks[span] + (breaks[span + 1] - breaks[span]) * .43;
         const RS_Vector intersection = native->getPointAt(parameter);
@@ -4194,9 +4196,13 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         RS_Vector cutterDirection{-tangent.y, tangent.x};
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection /= cutterDirection.magnitude();
-        cutterDirection += tangent;
-        REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
-        cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
+        if (segmentCount == 256) cutterDirection = {0.0, 1.0};
+        else {
+            cutterDirection += tangent;
+            REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
+            cutterDirection = cutterDirection / cutterDirection.magnitude();
+        }
+        cutterDirection *= 16.0;
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
@@ -4206,7 +4212,7 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
-        if (highSegmentCount) {
+        if (curvedProfile) {
             CHECK(f.action->m_preview->isEmpty());
             CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
             CHECK_FALSE(source->isDeleted());
@@ -4218,7 +4224,10 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
             CHECK(f.graphic.count() == count);
             CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
             REQUIRE_FALSE(f.context.messages.isEmpty());
-            CHECK(f.context.messages.back().contains("nothing changed"));
+            const QString refusal = f.context.messages.back();
+            INFO(refusal.toStdString());
+            CHECK(refusal.contains("uncertain, tangent or overlapping intersections"));
+            CHECK(refusal.contains("nothing changed"));
             continue;
         }
         if (belowFiveOutputCap) {
