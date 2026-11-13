@@ -3137,12 +3137,12 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u,
                                    12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u,
                                    21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u, 29u, 30u, 31u,
-                                   32u, 33u, 34u, 35u})
+                                   32u, 33u, 34u, 35u, 36u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        const double offsetDistance = profile == 35 ? .03 :
+        const double offsetDistance = profile >= 35 ? .03 :
                                       profile == 5 ? .0135 : profile == 6 ? .003375 :
                                       profile == 7 ? .00084375 : profile == 8 ? .0075 :
                                       profile == 9 ? .0225 : profile == 10 ? .03 :
@@ -3192,6 +3192,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                     : profile == 35
                         ? RS_EllipseData{{4, -3}, {3 * std::cos(.37), 3 * std::sin(.37)},
                                          .2, .8, 1.5, true, false}
+                    : profile == 36
+                        ? RS_EllipseData{{4, -3}, {3 * std::cos(.37), 3 * std::sin(.37)},
+                                         .2, -.45, .75, true, false}
                     : profile == 34
                         ? RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
                                                    3 * std::sin(nearCuspRotation)},
@@ -3248,7 +3251,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         REQUIRE(native->getParameterDomain(first, last));
         REQUIRE(native->getBreakParameters().size() >= 2);
         const double parameter = first + (last - first) *
-                                 ((profile == 27 || profile == 30 || profile == 31 ||
+                                 (profile == 36 ? .9 :
+                                  (profile == 27 || profile == 30 || profile == 31 ||
                                    profile == 32 || profile == 33 || profile == 34) ? .25 :
                                   profile == 29 ? .75 : .487);
         const RS_Vector intersection = native->getPointAt(parameter);
@@ -3263,7 +3267,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         cutterDirection /= cutterDirection.magnitude();
         if (profile != 3 && profile < 5) cutterDirection += tangent;
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
-        cutterDirection = cutterDirection / cutterDirection.magnitude() * (profile == 35 ? 2.0 : 18.0);
+        cutterDirection = cutterDirection / cutterDirection.magnitude() * (profile >= 35 ? 2.0 : 18.0);
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
