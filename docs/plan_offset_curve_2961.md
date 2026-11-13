@@ -41716,3 +41716,23 @@ in that 27-test attempt had already passed. The full worker-kernel executable
 also passes separately as recorded in section 1187. These CMake results do
 not close qmake6, visible GUI, cross-platform, or independent ODA/AutoCAD
 acceptance.
+
+## 1189. Run All Registered CTest Gates in One Invocation (2026-11-13)
+
+Infrastructure commit `b67f4bfea` raises only the comprehensive
+`offset_worker_kernel` CTest timeout from 30 to 900 seconds; its full Release
+matrix takes 219.97 seconds. After building all registered `EXCLUDE_FROM_ALL`
+test executables and correcting the repeated-fit-point expectation in section
+1188, a single serial CTest run completes **28/28 tests** successfully in
+615.17 seconds. The real-helper client matrix takes 353.91 seconds; fault and
+geometry-timeout tests also pass. `DWGREAD=/opt/homebrew/bin/dwgread` is set.
+
+Exact command:
+`QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread ctest --test-dir /private/tmp/offset-2961-cmake-clean --output-on-failure --parallel 1`.
+The run log is `/private/tmp/offset-2961-ctest-full.log`. CMake configure and
+generation succeed; Qt Linguist reports existing unresolved language-code
+warnings for English and Norwegian catalogs.
+
+This closes the current configured macOS CMake registered-test run only. It
+does not establish qmake6, visible GUI, Windows/Linux, ASan, deployed helper,
+or independent ODA/AutoCAD acceptance.
