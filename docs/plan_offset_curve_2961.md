@@ -40732,3 +40732,14 @@ passes 25,455 assertions / 1 case; `git diff --check` passes. This adds the
 inward side for this exact short forward interval only. Other arc intervals,
 distances and cutters, visible GUI, cross-platform, and independent-CAD
 acceptance remain open.
+
+## 1135. Re-run the Aggregate Trim-action Regression Suite (2026-11-12)
+
+After sections 1128-1134, the macOS arm64 CMake Release `[trim-action]`
+suite passes 128,175 assertions across 87 test cases with
+`QT_QPA_PLATFORM=offscreen` and LibreDWG 0.14 available as `DWGREAD`. The run
+includes the source-widget-related action regressions and the expanded
+elliptic-arc Trim Two signed-side, traversal, and interval profiles. This is
+aggregate regression evidence only; it does not close the remaining source
+family/variant matrix, visible GUI, cross-platform, clean qmake6, or
+independent-CAD acceptance gates.
