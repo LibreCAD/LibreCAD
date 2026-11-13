@@ -41829,3 +41829,21 @@ On macOS arm64 CMake Release, the focused case passes 285 assertions / 1 case
 with `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes. The test is still
 headless; physical visible-GUI acceptance, cross-platform runs, and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1194. Record the Local ODA Converter Launch Blocker (2026-11-13)
+
+The installed ODAFileConverter 27.1.0.0 was evaluated for independent DWG
+acceptance using the generated DWG fixtures under
+`/private/tmp/offset2961-dwg-fixtures`. A direct CLI invocation using the
+converter's standard input-folder/output-folder/version/type/recurse/audit
+arguments aborts with exit 134 after `com.apple.pasteboard` errors `-4960` and
+an invalid `com.apple.hiservices-xpcservice` reply. Retrying through
+`launchctl asuser 502` produces the same abort. Launch Services also returns
+`kLSNoExecutableErr` for the installed app bundle despite its declared
+`Contents/MacOS/ODAFileConverter` binary being present. The requested output
+folder remains empty, so none of these attempts validates or rejects the DWG
+files.
+
+Independent ODA acceptance remains open pending a converter launch from a
+working interactive macOS session or another supported standalone ODA reader.
+Do not count successful LibreDWG parsing as a substitute for this check.
