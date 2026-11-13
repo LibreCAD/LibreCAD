@@ -41824,6 +41824,16 @@ definition are unchanged. Only after this complete browse pass does the test
 select candidates and run the worker-backed replacement sequence. This
 exercises repeated in-place switching, including transitions to and from the
 distinct parabola type, without treating filter changes as a committed edit.
+This headless sequence proves widget-state refresh, but not that the selector
+remains operable during the actual drawing-candidate pick. The visible GUI gate
+must start replacement picking, change the family repeatedly without canceling
+or restarting that interaction, verify the candidate set follows each of all
+nine supported families, and accept a matching candidate only after the final
+family choice. It must also verify that an invalid candidate leaves the
+original source/highlight intact and a valid asynchronously prepared candidate
+updates the displayed source type. Thus “all supported types” covers both the
+family choices and the active type-changing picker interaction; parabola is a
+distinct choice.
 
 On macOS arm64 CMake Release, the focused case passes 285 assertions / 1 case
 with `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes. The test is still
@@ -41847,3 +41857,22 @@ files.
 Independent ODA acceptance remains open pending a converter launch from a
 working interactive macOS session or another supported standalone ODA reader.
 Do not count successful LibreDWG parsing as a substitute for this check.
+
+## 1195. Qualify a 12-point Closed Fit-point Source Through Trim Two (2026-11-13)
+
+Test commit `1fb750e0c` extends the closed fit-point direct-offset oracle with a
+12-point, mildly asymmetric near-elliptical profile. The oracle explicitly
+checks exact-offset continuity across the closed source-domain seam, in
+addition to the existing two-sided geometric-deviation checks. The same source
+profile is added to the worker-created typed spline-points Trim Two matrix; the
+test probes contact locations and cutter orientations with
+`LC_OffsetCacheTrim::prepare` and uses only a certified cut, preserving the
+kernel's refusal behavior for ambiguous geometry. Both pick orders and the
+existing edit, undo/redo, and five DXF/DWG round-trip lanes remain exercised.
+
+On macOS arm64 CMake Release, the direct closed-fit-point oracle passes 39,700
+assertions / 1 case, and the full typed spline/fit-point Trim Two matrix passes
+12,870 assertions / 1 case. `git diff --check` passes. This is focused geometry,
+action, and serialization evidence; it does not close the full registered
+suite, visible GUI acceptance, cross-platform testing, or independent
+ODA/AutoCAD acceptance.
