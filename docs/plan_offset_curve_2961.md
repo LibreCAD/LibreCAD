@@ -329,8 +329,9 @@ Section 1178 adds rotated, translated, asymmetric bounded-hyperbola profiles
 at ratios `0.6` and `0.4` to the direct oracle and worker-backed Trim Two
 round-trip matrix. The ratio-`0.4` profile passes when the semi-major axis is
 large enough that the fixed action offset stays below the vertex curvature
-radius; a smaller post-cusp candidate still yields no Trim Two preview and is
-not counted as supported.
+radius; a smaller post-cusp candidate still yields no Trim Two preview. Its
+explicit atomic refusal is covered in section 1179, but it is not counted as
+supported geometry.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41511,7 +41512,7 @@ curvature radius; action tests cover both branches and pick orders, Trim Two,
 undo/redo, five DXF/DWG lanes, and independent LibreDWG decoding.
 
 On macOS arm64 CMake Release, the focused direct hyperbola-variant selection
-passes 94,807 assertions / 2 cases, and the focused action case passes 5,038
+passes 94,807 assertions / 2 cases, and the focused action case passes 5,035
 assertions / 1 case with LibreDWG enabled. The recursive qmake6
 application/worker/plugin build exits 0 and `git diff --check` passes. An
 otherwise similar ratio-`0.4`, major-axis-`3.5` profile remains outside the
@@ -41519,3 +41520,19 @@ support claim: its fixed action offset exceeds the vertex curvature radius and
 one branch/pick-order produces an empty preview. This qualifies only the two
 stated sub-cusp geometries; the wider hyperbola interval/eccentricity matrix,
 visible GUI, cross-platform, and ODA/AutoCAD acceptance remain open.
+
+## 1179. Assert Atomic Refusal for a Post-cusp Hyperbola Trim (2026-11-13)
+
+Test commit `29dc3b092` isolates the ratio-`0.4`, major-axis-`3.5` hyperbola
+profile whose fixed editable-offset distance exceeds the vertex curvature
+radius. In the reproducible right-branch, circle-first configuration, the
+worker source update succeeds, but Trim Two returns an empty preview. The test
+now asserts that the editable offset and circle remain live and geometrically
+unchanged and that previewing does not advance the undo epoch.
+
+On macOS arm64 CMake Release, this focused atomic-refusal case passes 106
+assertions. The supported ratio-`0.4` scaled matrix still passes 5,035
+assertions, the direct hyperbola variant oracle passes 94,807 assertions, and
+the recursive qmake6 build exits 0. This documents one fail-closed post-cusp
+case, not full post-cusp hyperbola support; other branch/pick combinations,
+visible GUI, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
