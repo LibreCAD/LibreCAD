@@ -41619,3 +41619,22 @@ in the action/persistence layers only. It does not resolve the certified
 other partial domains, eccentricities, distances, visible GUI, cross-platform
 behavior, or independent ODA/AutoCAD acceptance. qmake6 was not rerun because
 this slice changes only the CMake-registered test source.
+
+## 1184. Trim the Lower-curvature Portion of a Near-cusp Ellipse Arc (2026-11-13)
+
+Test commit `b671be7ca` adds the ratio-`0.2` partial ellipse arc from section
+1180 (center `(4,-3)`, semimajor axis `3`, rotation `0.37`, bounds
+`[-0.45, 0.75]`, inward distance `0.03`) to the Trim Two action matrix. The
+cutter intersects at normalized source parameter `0.9`, away from the
+high-curvature region around parameter zero. Both operand pick orders exercise
+preview, commit, undo/redo, and all five native-capable DXF/DWG round-trip
+lanes.
+
+On macOS arm64 CMake Release with LibreDWG enabled, the isolated profile passes
+803 assertions and the full 37-profile ellipse action matrix passes 29,910
+assertions / 1 case. The focused test target builds and `git diff --check`
+passes. This establishes Trim Two for this arc when contact is at the tested
+lower-curvature portion; a cutter through the high-curvature region around
+parameter zero still yielded `AmbiguousRoots` in the exploratory probe and is
+not qualified. Other contact positions, ratios, distances, visible GUI,
+cross-platform behavior, and independent ODA/AutoCAD acceptance remain open.
