@@ -252,6 +252,33 @@ TEST_CASE("LC_Parabola: From4Points reconstructs at realistic scale",
   REQUIRE(foundMatch);
 }
 
+TEST_CASE("LC_Parabola: From4Points is stable for small translated geometry",
+          "[parabola][reconstruction][scale]") {
+  const auto original = makeCanonicalParabola(100.0, 50.0);
+  const auto& controlPoints = original.getData().m_controlPoints;
+  constexpr double scale = 1e-6;
+  constexpr double angle = 0.37;
+  const RS_Vector translation{10.0, -20.0};
+  const auto transform = [=](const RS_Vector& point) {
+    RS_Vector mapped = point * scale;
+    mapped.rotate(angle);
+    return mapped + translation;
+  };
+  std::vector<RS_Vector> samples;
+  for (const double t : {0.0, 0.3, 0.7, 1.0})
+    samples.push_back(transform(bezierAt(controlPoints, t)));
+
+  const auto candidates = LC_ParabolaData::From4Points(samples);
+  REQUIRE_FALSE(candidates.empty());
+  const double fitTolerance = 1e-8 * scale;
+  const bool reconstructed = std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
+    return candidate.isValid() && std::all_of(samples.begin(), samples.end(), [&](const RS_Vector& sample) {
+      return candidate.fromX(candidate.findX(sample)).distanceTo(sample) <= fitTolerance;
+    });
+  });
+  CHECK(reconstructed);
+}
+
 TEST_CASE("LC_Parabola: getLength matches numerical integration",
           "[parabola][length]") {
   auto p = makeCanonicalParabola(1.0, 1.0);

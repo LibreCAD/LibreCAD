@@ -144,52 +144,63 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     // uninitialized) if the input size were different.
     if (points.size() != 4)
         return {};
-    // rotate y-axis to axis around points.front()
+    if (!std::all_of(points.begin(), points.end(), [](const RS_Vector& point) {
+            return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+                   std::isfinite(point.z) && point.z == 0.0;
+        }))
+        return {};
+    // Fit in a centered, uniformly normalized frame. The absolute world
+    // coordinates otherwise make the least-squares determinant depend on
+    // drawing units and lose precision for translated samples.
     const auto& rCenter = points.front();
+    const double toAxisAngle = M_PI/2 - axis.angle();
     std::array<RS_Vector, 4> rotated;
     std::transform(points.cbegin(), points.cend(), rotated.begin(),
-                   [&rCenter, da=RS_Vector{M_PI/2 - axis.angle()}](const RS_Vector& vp){
-        RS_Vector ret = vp;
-        return ret.rotate(rCenter, da);
+                   [&rCenter, toAxisAngle](const RS_Vector& point) {
+        return (point - rCenter).rotate(RS_Vector{}, toAxisAngle);
     });
+    double coordinateScale = 0.0;
+    for (const RS_Vector& point : rotated)
+        coordinateScale = std::max(coordinateScale, std::hypot(point.x, point.y));
+    if (!std::isfinite(coordinateScale) || coordinateScale == 0.0)
+        return {};
+    for (RS_Vector& point : rotated)
+        point /= coordinateScale;
     std::sort(rotated.begin(), rotated.end(), [](const RS_Vector& p0, const RS_Vector& p1) {
         return p0.x < p1.x;
     });
     // y = a*x^2 + b*x + c
     // (y(x2) - y(x1))/(x2 - x1) = a*(x2 + x1) + b
     double sxi2=0., sxi=0., sxyi=0., syi=0.;
-    std::vector<double> xis,yis;
+    std::vector<double> xis;
     for (size_t i = 1; i < rotated.size(); ++i) {
         double xi = rotated[i].x + rotated.front().x;
-        //assert(std::abs(rotated[i].x - rotated.front().x) > RS_TOLERANCE);
-        if (std::abs(rotated[i].x - rotated.front().x) <= RS_TOLERANCE)
+        const double deltaX = rotated[i].x - rotated.front().x;
+        if (std::abs(deltaX) <= 64.0 * std::numeric_limits<double>::epsilon())
             continue;
-        double yi = (rotated[i].y - rotated.front().y)/(rotated[i].x - rotated.front().x);
+        double yi = (rotated[i].y - rotated.front().y)/deltaX;
         sxi2 += xi * xi;
         sxi += xi;
         sxyi += xi * yi;
         syi += yi;
         xis.push_back(xi);
-        yis.push_back(yi);
     }
     // least-square
+    if (xis.size() < 2)
+        return {};
     const double d = sxi2*xis.size() - sxi*sxi;
-    if (std::abs(d) < RS_TOLERANCE)
+    const double determinantScale = std::max({1.0, std::abs(sxi2*xis.size()), std::abs(sxi*sxi)});
+    if (!std::isfinite(d) || d <= 64.0 * std::numeric_limits<double>::epsilon() * determinantScale)
     {
         //assert(!"least-square failure for Parabola");
         return {};
     }
     const double a = (sxyi*xis.size() - syi*sxi)/d;
-    if (std::abs(a) < RS_TOLERANCE2)
+    if (!std::isfinite(a) || std::abs(a) <= 64.0 * std::numeric_limits<double>::epsilon())
     {
         return {};
     }
     const double b = (sxi2*syi - sxi*sxyi)/d;
-    //LC_ERR <<" axis angle: "<<axis.angle();
-    for (size_t i=0; i< xis.size(); i++)
-    {
-        LC_LOG<<__func__<<"(): fitting: xi = "<<xis[i]<<": "<<yis[i] - (a*xis[i] + b);
-    }
     double c = 0.;
     for (const auto& point: rotated)
     {
@@ -197,28 +208,16 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     }
     c /= 4;
     double da = {axis.angle() - M_PI/2};
-    auto f0 = [&a, &b, &c, &rCenter, &da](const RS_Vector& pt) {
-        double x = RS_Vector{pt}.rotate(rCenter, -da).x;
-        double y = c + x*(b + a*x);
-        return RS_Vector{x, y}.rotate(rCenter, da);
-    };
-
-    // fitting errors
-    double ds2=0.;
-    for (const auto& point: points)
-    {
-        double ds= (point - f0(point)).squared();
+    double ds2 = 0.0;
+    for (const auto& point : rotated) {
+        const double residual = point.y - (c + point.x * (b + a * point.x));
+        const double ds = residual * residual;
         ds2 += ds;
-        LC_LOG<<"oxi = ("<<point.x<<", "<< point.y<<"): ("<<f0(point).x<<", "<<f0(point).y<<"): dr="
-             << ds<<": "<<ds2;
     }
-    // Tolerance must scale with the input span; RS_TOLERANCE2 (~1e-20) is
-    // unreachable for points spread over realistic drawing scales — using it
-    // raw silently rejects every fit with any roundoff noise.
     double pointSpan2 = 0.;
-    for (size_t i = 0; i < points.size(); ++i)
-      for (size_t j = i + 1; j < points.size(); ++j)
-        pointSpan2 = std::max(pointSpan2, points[i].squaredTo(points[j]));
+    for (size_t i = 0; i < rotated.size(); ++i)
+      for (size_t j = i + 1; j < rotated.size(); ++j)
+        pointSpan2 = std::max(pointSpan2, rotated[i].squaredTo(rotated[j]));
     const double fitTolerance2 =
         std::max(RS_TOLERANCE2, RS_TOLERANCE * RS_TOLERANCE * pointSpan2);
     if (ds2 >= fitTolerance2)
@@ -230,9 +229,14 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         return RS_Vector{1., 2.*a*x +b}.rotate(da);
     };
     std::array<RS_Vector, 2> tangents = {{f1(rotated.front().x), f1(rotated.back().x)}};
+    const auto toWorld = [&rCenter, coordinateScale, da](const RS_Vector& point) {
+        RS_Vector world = point;
+        world.rotate(da);
+        return world * coordinateScale + rCenter;
+    };
 
     auto ret = LC_ParabolaData::FromEndPointsTangents(
-        {rotated.front().rotate(rCenter, da), rotated.back().rotate(rCenter, da)},
+        {toWorld(rotated.front()), toWorld(rotated.back())},
         tangents
     );
 
