@@ -42438,3 +42438,16 @@ or controllable desktop surface in this session; no visible source-selection
 behavior is claimed. Keep the existing visible test-copy acceptance steps
 open and retry only when a desktop-control path is available. The independent
 ODA/AutoCAD and cross-platform gates are unaffected.
+
+## 1224. Run the Complete Registered CTest Suite at Current PR Source (2026-11-13)
+
+On the macOS arm64 CMake Release build configured from the current PR source,
+`ctest --output-on-failure -j6` in
+`/private/tmp/offset-2961-cmake-clean` passes all 28 registered tests in
+608.94 seconds. This includes the worker wire/request/result/kernel/client,
+fault, process, ordinary-process, and geometry-timeout lanes, alongside the
+registered text, DXF/DWG, import, entity-container, painter, linetype, hatch,
+dimension, console, and catalog tests. The slow worker-kernel and worker-client
+tests pass in 221.96 and 367.96 seconds respectively. This is broad local CTest
+evidence, not a clean rebuild, cross-platform runtime, visible GUI, or
+independent ODA/AutoCAD acceptance.
