@@ -10922,7 +10922,7 @@ TEST_CASE("Cached Produce transports real cubic spline records without geometry 
 TEST_CASE("polyline worker generation and cache admission survive scale and translation",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][translation]") {
     const double pi = std::acos(-1.0);
-    const std::array<LC_OffsetPolylineData, 4> variants{{
+    const std::array<LC_OffsetPolylineData, 5> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -10934,7 +10934,16 @@ TEST_CASE("polyline worker generation and cache admission survive scale and tran
          {RS_ArcData{{0, 0}, 2, 0, pi / 2, false},
           RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
           RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
-          RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}}}};
+          RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}},
+        {{1, 0}, {1, 0}, true,
+         {RS_LineData{{1, 0}, {9, 0}},
+          RS_ArcData{{9, 1}, 1, 3 * pi / 2, 2 * pi, false},
+          RS_LineData{{10, 1}, {10, 9}},
+          RS_ArcData{{9, 9}, 1, 0, pi / 2, false},
+          RS_LineData{{9, 10}, {1, 10}},
+          RS_ArcData{{1, 9}, 1, pi / 2, pi, false},
+          RS_LineData{{0, 9}, {0, 1}},
+          RS_ArcData{{1, 1}, 1, pi, 3 * pi / 2, false}}}}};
     constexpr std::array<double, 3> scales{1e-3, 1.0, 1e3};
     constexpr std::array<double, 2> translationRatios{1e4, 1e6};
     constexpr std::array<double, 4> normalizedDistances{-.25, -.1, .1, .25};
@@ -10996,6 +11005,48 @@ TEST_CASE("polyline worker generation and cache admission survive scale and tran
                 local.y - (worldReverse.y - translation.y)));
         }
         return std::min(forward, reverse);
+    };
+    const auto sampledHausdorff = [](const RS_Spline& centered, const RS_Spline& translated,
+                                    const RS_Vector& translation) {
+        double centeredFirst = 0.0, centeredLast = 0.0;
+        double translatedFirst = 0.0, translatedLast = 0.0;
+        REQUIRE(centered.getParameterDomain(centeredFirst, centeredLast));
+        REQUIRE(translated.getParameterDomain(translatedFirst, translatedLast));
+        constexpr int sampleCount = 256;
+        std::array<RS_Vector, sampleCount + 1> centeredPoints;
+        std::array<RS_Vector, sampleCount + 1> translatedPoints;
+        for (int i = 0; i <= sampleCount; ++i) {
+            const double fraction = static_cast<double>(i) / sampleCount;
+            centeredPoints[static_cast<std::size_t>(i)] = centered.getPointAt(
+                centeredFirst + (centeredLast - centeredFirst) * fraction);
+            translatedPoints[static_cast<std::size_t>(i)] = translated.getPointAt(
+                translatedFirst + (translatedLast - translatedFirst) * fraction) - translation;
+            REQUIRE(centeredPoints[static_cast<std::size_t>(i)].valid);
+            REQUIRE(translatedPoints[static_cast<std::size_t>(i)].valid);
+        }
+        const auto directedDistance = [](const auto& points, const auto& polyline) {
+            double maximum = 0.0;
+            for (const RS_Vector& point : points) {
+                double nearest = std::numeric_limits<double>::infinity();
+                for (std::size_t i = 1; i < polyline.size(); ++i) {
+                    const RS_Vector start = polyline[i - 1];
+                    const RS_Vector delta = polyline[i] - start;
+                    const double lengthSquared = delta.x * delta.x + delta.y * delta.y;
+                    const double fraction = lengthSquared > 0.0
+                        ? std::clamp(((point.x - start.x) * delta.x +
+                                      (point.y - start.y) * delta.y) / lengthSquared, 0.0, 1.0)
+                        : 0.0;
+                    const double dx = point.x - (start.x + fraction * delta.x);
+                    const double dy = point.y - (start.y + fraction * delta.y);
+                    nearest = std::min(nearest, std::hypot(dx, dy));
+                }
+                maximum = std::max(maximum, nearest);
+            }
+            return maximum;
+        };
+        const double forward = directedDistance(centeredPoints, translatedPoints);
+        const double reverse = directedDistance(translatedPoints, centeredPoints);
+        return std::max(forward, reverse);
     };
     const auto ulp = [](const double value) {
         const double magnitude = std::abs(value);
@@ -11088,7 +11139,9 @@ TEST_CASE("polyline worker generation and cache admission survive scale and tran
                         std::size_t bestIndex = translatedSplines.size();
                         for (std::size_t candidate = 0; candidate < translatedSplines.size(); ++candidate) {
                             if (matched[candidate]) continue;
-                            const double error = geometryError(local, translatedSplines[candidate], translation);
+                            const double error = variant == 4
+                                ? sampledHausdorff(local, translatedSplines[candidate], translation)
+                                : geometryError(local, translatedSplines[candidate], translation);
                             if (error < best) {
                                 best = error;
                                 bestIndex = candidate;

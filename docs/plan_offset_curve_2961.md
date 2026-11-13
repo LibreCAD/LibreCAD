@@ -43142,3 +43142,35 @@ Other bulge layouts, all-arc loops, larger/more varied curved topologies,
 collapsed or disconnected boundaries, visible GUI acceptance, non-macOS
 runtime, and independent ODA/AutoCAD acceptance remain open. This does not
 close the broader family-by-variant, source-widget, or roadmap goals.
+
+## 1247. Qualify Rounded-polyline Translation With a Seam-invariant Oracle (2026-11-13)
+
+A follow-up expanded the scale/translation matrix with the mixed
+line/quarter-arc rounded rectangle from section 1246. Closed output splines can
+use different parameter-domain seams, so this fixture is compared with a
+sampled, seam-invariant Hausdorff estimate: 257 points per spline, measured in
+both directions against the other spline's 256-segment sampled polyline. The
+check covers inward and outward signed distances at all three source scales
+and both translation ratios; the other four fixtures retain their existing
+full signed-distance matrix.
+
+The initial comparison used `RS_Spline::getNearestPointOnEntity` and reported
+outward errors of roughly `6.7e-6` to `7.6e-6` against an approximately
+`5.66e-6` limit. That API's interactive nearest-point tolerance is too coarse
+for the smallest scaled fixture, so those measurements did not establish a
+geometry defect. A temporary RegionBoundary/dilation experiment also showed
+no improvement and was discarded. The test-local sampled polyline distance
+passes the full matrix without loosening the geometry limit. No production
+change is warranted by the earlier measurement; do not retain an outward-case
+exclusion on its account.
+
+Validation on macOS arm64 CMake Release:
+
+- `librecad_offset_worker_kernel_tests '[translation]'`: passed 48,316
+  assertions / 1 case, covering all 120 scale/translation/distance cells.
+- `git diff --check`: passed.
+
+This qualifies only the tested rounded rectangle's sampled translation
+stability. Other curved-polyline layouts, all-arc loops, visible GUI
+acceptance, non-macOS runtime, and independent ODA/AutoCAD acceptance remain
+open.
