@@ -41824,16 +41824,16 @@ definition are unchanged. Only after this complete browse pass does the test
 select candidates and run the worker-backed replacement sequence. This
 exercises repeated in-place switching, including transitions to and from the
 distinct parabola type, without treating filter changes as a committed edit.
-This headless sequence proves widget-state refresh, but not that the selector
-remains operable during the actual drawing-candidate pick. The visible GUI gate
-must start replacement picking, change the family repeatedly without canceling
-or restarting that interaction, verify the candidate set follows each of all
-nine supported families, and accept a matching candidate only after the final
-family choice. It must also verify that an invalid candidate leaves the
-original source/highlight intact and a valid asynchronously prepared candidate
-updates the displayed source type. Thus “all supported types” covers both the
-family choices and the active type-changing picker interaction; parabola is a
-distinct choice.
+This headless sequence proves widget-state refresh, but not visible operation
+of the selector during the active Properties replacement workflow. The visible
+GUI gate must open an existing offset's Properties, begin replacement in the
+existing source widget, change the family repeatedly while that workflow is
+active, verify the in-widget candidate list follows each of all nine supported
+families, and accept a matching candidate only after the final family choice.
+It must also verify that an invalid candidate leaves the original
+source/highlight intact and a valid asynchronously prepared candidate updates
+the displayed source type. This is the existing filtered entity chooser, not a
+new canvas-picking mode; parabola remains a distinct choice.
 
 On macOS arm64 CMake Release, the focused case passes 285 assertions / 1 case
 with `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes. The test is still
