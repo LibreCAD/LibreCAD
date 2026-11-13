@@ -41790,3 +41790,25 @@ confirm the original source/highlight remains. If visible GUI access is
 unavailable, retain this as an explicitly open acceptance gate rather than
 claiming completion. The full CMake CTest and qmake6 build results in sections
 1189-1190 do not substitute for this interaction test.
+
+## 1192. Exercise Every Source Family in the Properties Picker (2026-11-13)
+
+Test commit `b01cb8629` adds an end-to-end headless Properties-widget matrix for
+all nine `LC_OffsetSourceGeometry::SupportedKinds`. A single widget switches
+between the line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline candidate filters, requires exactly the corresponding
+entity in each filtered list, then selects it and waits for real worker-backed
+preparation to publish. Each replacement is checked for its resulting typed
+source; ellipse is checked through the compatible legacy ellipse-definition
+path. The test also verifies that candidate choice does not mutate the old
+cache/source before successful worker completion. This closes the headless
+all-family Properties-picker and replacement coverage gap identified by
+section 1191; it does not establish mouse/keyboard behavior in a visible
+desktop session.
+
+On macOS arm64 CMake Release with DWGSUPPORT, the focused new case passes 222
+assertions / 1 case. The complete
+`librecad_tests '[gui][dialog][offsetcurve][source]'` selection passes 15,053
+assertions / 44 cases with `QT_QPA_PLATFORM=offscreen`; `git diff --check`
+passes. This is not visible GUI acceptance, cross-platform execution, or
+independent ODA/AutoCAD acceptance. Those gates remain open.
