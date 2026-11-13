@@ -720,6 +720,18 @@ bool boundCacheChord(const CacheSpan& span, const ReferenceFrame& frame, const d
         result.x = LC_Interval::hull(result.x, net[i].x);
         result.y = LC_Interval::hull(result.y, net[i].y);
     }
+    // Exact equality of the original ordinates proves a constant Bezier coordinate.
+    const auto constantCoordinate = [&](const bool x, LC_Interval& value) {
+        const double first = x ? span.controls[0].x : span.controls[0].y;
+        for (std::size_t i = 1; i <= span.degree; ++i) {
+            if ((x ? span.controls[i].x : span.controls[i].y) != first) { return false; }
+        }
+        LC_Interval ignored;
+        return frame.pointToFrame(span.controls[0], x ? value : ignored, x ? ignored : value);
+    };
+    LC_Interval constant;
+    if (constantCoordinate(true, constant)) { result.startX = result.endX = result.x = constant; }
+    if (constantCoordinate(false, constant)) { result.startY = result.endY = result.y = constant; }
     double error = 0.0;
     if (span.degree == 3 && a != b) {
         const auto two = LC_Interval::point(2), three = LC_Interval::point(3);
@@ -1165,6 +1177,24 @@ bool ReferenceFrame::pointToFrame(const RS_Vector& world, LC_Interval& x, LC_Int
         return false;
     }
     const auto coordinate = [this](const double value, const double centre) {
+        const double difference = value - centre;
+        if (std::isfinite(difference) && (difference != 0.0 || value == centre)) {
+            // TwoDiff recovers the exact subtraction residual so exact local
+            // coordinates do not acquire an unnecessary outward ulp.
+            const double bVirtual = value - difference;
+            const double aVirtual = difference + bVirtual;
+            const double bRound = bVirtual - centre;
+            const double aRound = value - aVirtual;
+            const double error = aRound + bRound;
+            const double local = std::scalbn(difference, -m_scaleExponent);
+            if (std::isfinite(error) && std::isfinite(local) &&
+                std::scalbn(local, m_scaleExponent) == difference) {
+                if (error == 0.0) { return LC_Interval::point(local); }
+                return error > 0.0
+                    ? LC_Interval::hull(local, std::nextafter(local, std::numeric_limits<double>::infinity()))
+                    : LC_Interval::hull(std::nextafter(local, -std::numeric_limits<double>::infinity()), local);
+            }
+        }
         const LC_Interval delta = LC_Interval::point(value) - LC_Interval::point(centre);
         return finiteInterval(delta) ? scaled(delta, -m_scaleExponent) :
             scaled(LC_Interval::point(value), -m_scaleExponent) -

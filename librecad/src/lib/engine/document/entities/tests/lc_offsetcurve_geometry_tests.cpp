@@ -6250,6 +6250,29 @@ TEST_CASE("Cache chord primitives enclose restricted linear endpoints and points
     }
 }
 
+TEST_CASE("Cache chord bounds preserve exactly constant coordinates without subdivision widening",
+          "[lc-offsetcurve][geometry][cache-bounds]") {
+    auto source = basis(); source.center = {1e12, -1e12};
+    const auto frame = geo::ReferenceFrame::create(source, 0); REQUIRE(frame);
+    for (const std::size_t degree : {1u, 3u}) {
+        geo::CacheSpan span; span.degree = degree;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            span.controls[i] = i % 2 == 0 ? RS_Vector{source.center.x + 0.125, source.center.y + double(i)}
+                                         : RS_Vector{source.center.x + 0.125, source.center.y - double(i)};
+        }
+        LC_Interval expectedX, ignored;
+        REQUIRE(frame->pointToFrame(span.controls[0], expectedX, ignored));
+        for (const auto& range : {LC_Interval::hull(0.0, 1.0), LC_Interval::hull(0.125, 0.875),
+                                  LC_Interval::point(0.5)}) {
+            geo::CurveChordBounds out;
+            REQUIRE(geo::boundCacheChord(span, *frame, range.lo(), range.hi(), out));
+            CHECK(out.x.lo() == expectedX.lo()); CHECK(out.x.hi() == expectedX.hi());
+            CHECK(out.startX.lo() == expectedX.lo()); CHECK(out.startX.hi() == expectedX.hi());
+            CHECK(out.endX.lo() == expectedX.lo()); CHECK(out.endX.hi() == expectedX.hi());
+        }
+    }
+}
+
 TEST_CASE("Cache cubic chord residual bounds independent de Casteljau curves including narrow and point ranges",
           "[lc-offsetcurve][geometry][cache-bounds]") {
     const auto source = basis(); const auto frame = geo::ReferenceFrame::create(source, 3); REQUIRE(frame);

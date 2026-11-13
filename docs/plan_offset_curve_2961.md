@@ -42674,17 +42674,26 @@ dense monotone-curved Trim case: the worker action continues to refuse it
 atomically, as required by its regression. This is not evidence that the
 strict Trim image-width target has been met.
 
-Next implementation slice: measure the post-normalization root/image snapshots
-for the actual Bezier-cache-by-line fixture, then investigate a rigorous tighter
-local enclosure for the cache span (for example, a validated Taylor form or a
-local affine reparameterization that preserves interval outwardness). Add a
-kernel regression for the measured failure and require the computed image to
-meet Trim's unchanged arithmetic allowance before changing the action's refusal
-expectation. Keep all root isolation, exclusion, work/depth limits, retained
-session provenance and atomicity checks. Add a separate certified dense-curved
-positive Trim fixture when available. Until then, dense monotone-curved Trim
-Two, visible GUI, cross-platform runtime, and independent ODA/AutoCAD
-acceptance remain open.
+The actual cache-by-line snapshots have now been measured and the constant
+cutter-coordinate enclosure tightened in section 1237. The certified
+intersection X image is now about `1.11e-16`, but the selected source cut point
+remains about `8.88e-16` from that image, slightly above the unchanged
+`7.11e-16` allowance. The source span's whole-isolation X bound remains about
+`6.66e-15`; adjacent representable cut parameters tested inside the isolation
+do not improve the point-to-root bound enough. The worker action therefore
+continues to refuse atomically.
+
+Next implementation slice: develop a tighter *certified point evaluation* for
+the selected parameter on a unit-weight Bezier cache span (or a direct interval
+root-to-cut error proof) that reduces the current point-to-root enclosure while
+remaining outward-rounded and valid for degree 1 and 3. Add an independent
+high-precision oracle and hostile scale/cancellation cases before using the new
+bound in Trim. Do not accept a nearest floating estimate or alter the current
+allowance. Require the actual worker action to pass both pick orders and preserve
+all root isolation, exclusion, work/depth, retained-session and atomicity
+invariants. Add a separate certified dense-curved positive Trim fixture when
+available. Until then, dense monotone-curved Trim Two, visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 
@@ -42731,3 +42740,33 @@ operator is therefore covered for the tested scale contrast, but dense curved
 Trim still has no successful proof-level fixture; see the next step in section
 1234. Visible GUI, cross-platform runtime, and independent ODA/AutoCAD
 acceptance remain open.
+
+## 1237. Tighten Constant Cache Coordinates and Measure the Remaining Cut Error (2026-11-13)
+
+`ReferenceFrame::pointToFrame` now uses an error-free TwoDiff residual for a
+finite coordinate subtraction and preserves an exact scaled difference as a
+singleton interval when power-of-two scaling is reversible. A nonzero residual
+is enclosed by the adjacent representable value on its signed side; overflow,
+underflow, or non-reversible scaling retains the previous general interval
+path. `boundCacheChord` also preserves an exactly constant X or Y coordinate
+when every original stored control has that exact same coordinate, rather than
+letting interval subdivision invent variation through dependency. The shortcut
+is based on equality of original controls, not equality of rounded intervals.
+
+The cache-bound suite adds linear and cubic constant-coordinate spans over
+whole, partial, and singleton parameter domains. On macOS arm64 CMake Release,
+`[reference-frame]` passes 359,105 assertions / 7 cases,
+`[cache-bounds]` passes 46,227 assertions / 26 cases, and
+`[parameter-scale]` passes 30 assertions / 1 case. The complete worker-backed
+`[lc-offsetcurve][geometry]` suite passes 1,576,455 assertions / 376 cases.
+The complete worker-backed
+`[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]`
+selection passes 8,661 assertions / 1 case. In the dense curved fixture, the
+certified intersection X image contracts to `1.11e-16`; source point evaluation
+at the selected cut remains at best `8.88e-16` from the root image against the
+unchanged `7.11e-16` allowance. A bounded scan of neighboring representable
+parameters inside the certified root interval finds no acceptable cut. Both
+pick orders continue to refuse atomically. `git diff --check` passes. This
+proves tighter constant-coordinate handling and narrows the remaining numeric
+gap, but does not complete dense curved Trim or any visible/cross-platform/
+independent-CAD gate.
