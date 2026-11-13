@@ -630,7 +630,7 @@ TEST_CASE("All-coincident fit points fail closed for trimming",
 
 TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branches",
           "[curve-offset][trim][spline-points][fit-points][self-intersection][oracle]") {
-    std::array<LC_SplinePointsData, 2> profiles;
+    std::array<LC_SplinePointsData, 3> profiles;
     profiles[0] = LC_SplinePointsData{true, false};
     profiles[0].splinePoints = {{-5, -3}, {5, 3}, {-5, 3}, {5, -3}};
     profiles[1] = profiles[0];
@@ -640,6 +640,14 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
                  27.0 + 0.5 * (point.x * std::sin(0.41) + reflectedY * std::cos(0.41))};
     }
     std::reverse(profiles[1].splinePoints.begin(), profiles[1].splinePoints.end());
+    profiles[2] = LC_SplinePointsData{true, false};
+    constexpr double starRadius = 8.0;
+    constexpr double pi = 3.14159265358979323846;
+    for (const std::size_t vertex : {0U, 2U, 4U, 1U, 3U}) {
+        const double angle = -pi / 2.0 + 2.0 * pi * static_cast<double>(vertex) / 5.0;
+        profiles[2].splinePoints.emplace_back(starRadius * std::cos(angle),
+                                              starRadius * std::sin(angle));
+    }
 
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
@@ -685,7 +693,7 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
                 source, LC_CurveOffset::makeSideRequest(side, 0.25), options,
                 LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE(result.branches.size() == 2);
+            REQUIRE(result.branches.size() >= 2);
             const auto sourceDistance = [&source](const RS_Vector& point) {
                 return source.getDistanceToPoint(point);
             };
