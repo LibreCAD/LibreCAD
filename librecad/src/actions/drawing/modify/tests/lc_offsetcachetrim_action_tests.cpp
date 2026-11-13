@@ -3180,17 +3180,26 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
 
-        const RS_Vector nativePick = native->getPointAt(
-            first + (last - first) * (profile >= 5 ? .25 : .1));
+        double nativePickFraction = profile >= 5 ? .25 : .1;
+        bool hasCertifiedInwardArcPick = false;
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
         if (profile >= 5 && !ellipseFirst) {
             for (const double fraction : {.05, .1, .15, .2, .25, .3, .35, .4,
                                           .45, .5, .55, .6, .65, .7, .75, .8,
                                           .85, .9, .95}) {
-                if ((profile == 25 || profile == 26) && fraction != .25) continue;
+                if (profile == 25 && fraction != .25) continue;
                 CAPTURE(fraction);
                 const auto probe = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
                     {native->getPointAt(first + (last - first) * fraction)});
+                if (profile == 26) {
+                    if (probe.refusal == LC_OffsetCacheTrim::Refusal::None) {
+                        if (!hasCertifiedInwardArcPick) nativePickFraction = fraction;
+                        hasCertifiedInwardArcPick = true;
+                    } else {
+                        CHECK(probe.fragments.empty());
+                    }
+                    continue;
+                }
                 if (profile == 23 && fraction == .5) {
                     CHECK(probe.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
                     CHECK(probe.fragments.empty());
@@ -3201,6 +3210,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                 else CHECK(probe.fragments.size() == 1);
             }
         }
+        if (profile == 26 && !ellipseFirst) CHECK(hasCertifiedInwardArcPick);
+        const RS_Vector nativePick = native->getPointAt(first + (last - first) * nativePickFraction);
         f.action->click(ellipseFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
