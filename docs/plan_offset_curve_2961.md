@@ -41057,3 +41057,14 @@ passes 5,336 assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
 specific fit layouts, scales, and signed distances, not all parabola
 conditioning/domain boundaries. Visible Properties GUI, cross-platform, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1155. Revalidate the Nine-family Source Chooser at Current PR Head (2026-11-12)
+
+At PR head `f8c13d52a`, the macOS arm64 CMake Release `librecad_tests`
+executable passes `[gui][dialog][offsetcurve][source]` with 14,831
+assertions / 43 cases. The tests exercise repeated type changes and candidate
+filter refresh across all nine `LC_OffsetSourceGeometry::SupportedKinds`,
+including parabola as a distinct kind. This is headless selector and state
+transition evidence only; visible Properties interaction, old-source
+highlight behavior in the desktop, and external-customer acceptance remain
+open.
