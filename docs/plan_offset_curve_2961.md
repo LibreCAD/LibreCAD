@@ -43236,7 +43236,41 @@ Validation on macOS arm64:
 - `git diff --check`: passed before commit.
 
 This qualifies only the four-quarter-arc circular polyline for worker
-generation/cache processing and scale/translation stability. It does not
-claim arbitrary all-arc loop topology, all-arc Trim or DXF/DWG round trips,
-visible GUI acceptance, non-macOS runtime, or independent ODA/AutoCAD
-acceptance. Those remain open roadmap gates.
+generation/cache processing and scale/translation stability. The staged
+DXF/DWG cache-import matrix also includes this circle, as noted in section
+1250. It does not claim arbitrary all-arc loop topology, all-arc Trim or
+native document save/reopen, visible GUI acceptance, non-macOS runtime, or
+independent ODA/AutoCAD acceptance. Those remain open roadmap gates.
+
+## 1250. Persist Unequal-radius Rounded Polyline Caches (2026-11-13)
+
+The existing scaled/translated polyline staged-import matrix now includes the
+unequal-radius four-quarter-arc closed polyline from section 1248. It covers
+all three existing scales plus `1e4`, both translation ratios, all four signed
+distances, and the matrix's five lanes: AC1014 DXF, AC1015 DXF/DWG, and AC1032
+DXF/DWG. For each cell, the generated branches are compared against the
+centered result, validated as cache candidates, serialized as native spline
+carriers, then reopened through staged import. Cache-representable outputs
+must promote to native offset curves; non-representable branches must remain
+ordinary fallback geometry with their typed source metadata intact.
+
+This matrix also exposed two false all-arc-circle translation failures in its
+prior branch comparator: equal/reversed arc-length samples depended on the
+closed spline seam. The comparator now samples each curve by arc length and
+computes bidirectional point-to-polyline distance, so a cyclic seam shift does
+not look like changed geometry. The tolerance is unchanged. Both previously
+failing tiny-scale/large-translation cells now pass, and no production
+geometry change was required for that finding.
+
+Validation on macOS arm64 CMake Release:
+
+- Target `librecad_offset_hostilefile_tests` built successfully.
+- `[precision][combined]`: passed 9,216,725 assertions / 5 cases, including
+  the full 12-variant, 384-cell source matrix and staged DXF/DWG lanes.
+- `git diff --check`: passed before commit.
+
+This closes staged cache-import qualification for the tested asymmetric
+rounded fixture and confirms the all-arc circle in that staged-import matrix.
+It does not establish Trim/undo or native document save/reopen for the new
+fixture, nor arbitrary all-arc/polyline topology, visible GUI, cross-platform
+runtime, or independent ODA/AutoCAD acceptance.

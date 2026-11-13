@@ -11749,7 +11749,7 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     CHECK(reflectedPositiveMajor->center.x == Catch::Approx(105.0));
     CHECK(reflectedPositiveMajor->center.y == Catch::Approx(-103.75));
     CHECK(reflectedPositiveMajor->radius == Catch::Approx(6.25));
-    const std::array<LC_OffsetPolylineData, 11> variants{{
+    const std::array<LC_OffsetPolylineData, 12> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -11768,7 +11768,16 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         oppositeMajorBulgesData,
         unequalMajorBulgesData,
         reversedUnequalMajorBulgesData,
-        reflectedUnequalMajorBulgesData}};
+        reflectedUnequalMajorBulgesData,
+        LC_OffsetPolylineData{{1, 0}, {1, 0}, true,
+            {RS_LineData{{1, 0}, {12, 0}},
+             RS_ArcData{{12, 2}, 2, 3 * pi / 2.0, 2 * pi, false},
+             RS_LineData{{14, 2}, {14, 8.25}},
+             RS_ArcData{{13.25, 8.25}, 0.75, 0, pi / 2.0, false},
+             RS_LineData{{13.25, 9}, {1.5, 9}},
+             RS_ArcData{{1.5, 7.5}, 1.5, pi / 2.0, pi, false},
+             RS_LineData{{0, 7.5}, {0, 1}},
+             RS_ArcData{{1, 1}, 1, pi, 3 * pi / 2.0, false}}}}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
@@ -11843,10 +11852,10 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         if (!centeredSpline.validate() || !translatedSpline.validate() ||
             !centeredSpline.getParameterDomain(centeredFirst, centeredLast) ||
             !translatedSpline.getParameterDomain(translatedFirst, translatedLast)) return false;
-        constexpr std::size_t intervals = 1024;
+        constexpr std::size_t intervals = 4096;
         const auto sampleByLength = [&](const RS_Spline& spline, const double first,
                                         const double last)
-            -> std::optional<std::array<RS_Vector, 129>> {
+            -> std::optional<std::array<RS_Vector, 513>> {
             std::array<double, intervals + 1> parameters{};
             std::array<double, intervals + 1> lengths{};
             std::array<RS_Vector, intervals + 1> points{};
@@ -11861,7 +11870,7 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
                     points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
             }
             if (!(lengths.back() > 0.0) || !std::isfinite(lengths.back())) return std::nullopt;
-            std::array<RS_Vector, 129> samples{};
+            std::array<RS_Vector, 513> samples{};
             for (std::size_t i = 0; i < samples.size(); ++i) {
                 const double target = lengths.back() * static_cast<double>(i) /
                     static_cast<double>(samples.size() - 1);
@@ -11886,23 +11895,34 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         const auto translatedSamples = sampleByLength(
             translatedSpline, translatedFirst, translatedLast);
         if (!centeredSamples || !translatedSamples) return false;
-        const auto matchesDirection = [&](const bool reverse) {
-            for (std::size_t i = 0; i < centeredSamples->size(); ++i) {
-                const auto& local = (*centeredSamples)[i];
-                const std::size_t other = reverse ? centeredSamples->size() - 1 - i : i;
-                const auto& world = (*translatedSamples)[other];
-                const double expectedX = local.x + translation.x;
-                const double expectedY = local.y + translation.y;
-                const double magnitude = std::max({std::abs(expectedX), std::abs(expectedY),
-                    std::abs(world.x), std::abs(world.y)});
-                const double ulp = std::nextafter(magnitude,
-                    std::numeric_limits<double>::infinity()) - magnitude;
-                if (std::hypot(world.x - expectedX, world.y - expectedY) >
-                    4.0 * tolerance + 64.0 * ulp) return false;
+        auto translatedLocal = *translatedSamples;
+        for (RS_Vector& point : translatedLocal) {
+            point.x -= translation.x;
+            point.y -= translation.y;
+        }
+        const auto directedDistance = [](const auto& points, const auto& polyline) {
+            double maximum = 0.0;
+            for (const RS_Vector& point : points) {
+                double nearest = std::numeric_limits<double>::infinity();
+                for (std::size_t i = 1; i < polyline.size(); ++i) {
+                    const RS_Vector start = polyline[i - 1];
+                    const RS_Vector delta = polyline[i] - start;
+                    const double lengthSquared = delta.x * delta.x + delta.y * delta.y;
+                    const double fraction = lengthSquared > 0.0
+                        ? std::clamp(((point.x - start.x) * delta.x +
+                                      (point.y - start.y) * delta.y) / lengthSquared,
+                                     0.0, 1.0)
+                        : 0.0;
+                    const double dx = point.x - (start.x + fraction * delta.x);
+                    const double dy = point.y - (start.y + fraction * delta.y);
+                    nearest = std::min(nearest, std::hypot(dx, dy));
+                }
+                maximum = std::max(maximum, nearest);
             }
-            return true;
+            return maximum;
         };
-        return matchesDirection(false) || matchesDirection(true);
+        return std::max(directedDistance(*centeredSamples, translatedLocal),
+                        directedDistance(translatedLocal, *centeredSamples)) <= 4.0 * tolerance;
     };
 
     std::size_t cells = 0;
