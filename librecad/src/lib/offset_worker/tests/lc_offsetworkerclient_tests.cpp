@@ -5070,6 +5070,7 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
         REQUIRE(sourceJet.first.magnitude() > 0.0);
         const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(), sourceJet.first.x / sourceJet.first.magnitude()};
         const double distanceScale = profileIndex == 7 ? 0.1
+            : profileIndex == 24 ? 1.0
             : profileIndex >= 14 ? ((profileIndex % 2 == 0) ? 0.01 : 0.1)
             : profileIndex >= 8 ? conditioningScales[(profileIndex - 8) / 2] *
                                      ((profileIndex % 2 == 0) ? 0.1 : 1.0)
