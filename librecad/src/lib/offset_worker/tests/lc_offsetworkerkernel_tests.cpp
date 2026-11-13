@@ -9509,7 +9509,9 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                 oracleSource, signedDistance, 1e-4, false};
             const auto options = LC_OffsetWorkerTolerance::directOptions(
                 oracleDefinition, *fitPointSource);
-            if (profileIndex >= 5 && profileIndex <= 7) CHECK_FALSE(options);
+            if (profileIndex >= 5 && profileIndex <= 7) {
+                REQUIRE(options);
+            }
             const req::Request generation{token,
                 req::GenerateSource{definition, {}}};
             if (!options) {
