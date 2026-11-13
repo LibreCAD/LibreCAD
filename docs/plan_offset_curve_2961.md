@@ -41883,3 +41883,20 @@ assertions / 1 case, and the full typed spline/fit-point Trim Two matrix passes
 action, and serialization evidence; it does not close the full registered
 suite, visible GUI acceptance, cross-platform testing, or independent
 ODA/AutoCAD acceptance.
+
+## 1196. Qualify a Transformed 12-point Closed Fit-point Source (2026-11-13)
+
+Test commit `f326c476c` extends the 12-point closed fit-point profile from
+section 1195 with a similarity transform: scale 2.25, rotation 0.63 radians,
+and translation `(35, -21)`, retaining fit tolerance `2e-4`. The direct oracle
+checks both offset sides and exact continuity across the closed parameter seam
+after transformation. The worker-created source is also exercised by Trim Two
+in both pick orders, including preview/commit, source/cutter replacement,
+undo/redo, and all five existing DXF/DWG round-trip lanes.
+
+On macOS arm64 CMake Release, the direct transformed profile passes 49,509
+assertions / 1 case; the complete typed spline/fit-point Trim Two matrix passes
+13,872 assertions / 1 case. `git diff --check` passes. This closes this
+specific transformed profile only; broader closed-fit-point interpolation,
+knot/tangent, topology, and scale variants remain in Slice 4, as do visible
+GUI, cross-platform, and independent ODA/AutoCAD acceptance.
