@@ -42631,7 +42631,7 @@ topologies beyond 256, successful Trim for denser curved chains with certified
 intersections, materialization near the 16-entity cap, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
 
-## 1234. Qualify Dense Monotone-curved Polyline Trim Refusal (2026-11-13)
+## 1234. Qualify Dense Monotone-curved Polyline Trim Two (2026-11-13)
 
 The direct high-segment oracle now includes a 256-segment monotone quadratic
 profile (`y = 0.001*x*x`); both signed sides at distances `0.02` and `0.05`
@@ -42669,10 +42669,9 @@ prove a unique child and was discarded; it must not be treated as a fix.
 The affine-normalized Krawczyk slice is implemented and recorded in section
 1236. It improves a certified transverse intersection's contraction with a
 source parameter near `127.43` against a `[0,1]` cutter, while retaining the
-public parameter intervals and original proof domain. It does not yet close the
-dense monotone-curved Trim case: the worker action continues to refuse it
-atomically, as required by its regression. This is not evidence that the
-strict Trim image-width target has been met.
+public parameter intervals and original proof domain. Section 1237 then
+isolated the remaining precision loss to the global parameter representation
+and measured the certified root image against the selected cut point.
 
 The actual cache-by-line snapshots have now been measured and the constant
 cutter-coordinate enclosure tightened in section 1237. The certified
@@ -42683,35 +42682,58 @@ remains about `8.88e-16` from that image, slightly above the unchanged
 do not improve the point-to-root bound enough. The worker action therefore
 continues to refuse atomically.
 
-Next implementation slice: develop a tighter *certified point evaluation* for
-the selected parameter on a unit-weight Bezier cache span (or a direct interval
-root-to-cut error proof) that reduces the current point-to-root enclosure while
-remaining outward-rounded and valid for degree 1 and 3. Add an independent
-high-precision oracle and hostile scale/cancellation cases before using the new
-bound in Trim. Do not accept a nearest floating estimate or alter the current
-allowance. Require the actual worker action to pass both pick orders and preserve
-all root isolation, exclusion, work/depth, retained-session and atomicity
-invariants. Add a separate certified dense-curved positive Trim fixture when
-available. Until then, dense monotone-curved Trim Two, visible GUI,
+The dense monotone-curved limitation is now resolved for this fixture by a
+certified scalar contractor specialized to cache-line cutters when the global
+source parameter has substantially fewer representable values than its local
+span parameter. It evaluates the Bezier residual at an exactly represented
+midpoint with rational arithmetic, encloses the projected derivative
+outwardly, and applies interval Newton only when that derivative excludes zero.
+The chosen local cut is accepted only when its derivative-Lipschitz bound plus
+a bounded rounding allowance proves the root-to-cut distance within the
+existing arithmetic allowance. Other intersections retain the established
+coordinatewise proof/refinement path. The proof thresholds and work/depth
+budgets are unchanged.
+
+The 256-segment monotone quadratic is now certified in both cache operand
+orders with one root each. The worker-backed Trim Two action succeeds in both
+entity-pick orders, previews without mutating the drawing, commits atomically,
+and retains its undo/redo behavior and native file-format coverage. The focused
+ellipse and high-segment polyline action matrices pass 45,801 assertions / 2
+cases; the focused prepared-worker consumption case passes 1,569 assertions / 1
+case. After rebuilding both the parent test executable and helper from the same
+source revision, the complete `librecad_offset_trim_tests` target passes
+230,656 assertions / 159 cases. The earlier apparent parity failures came
+from running a stale parent test executable against the newly rebuilt helper;
+they are superseded by this matched-build run. The direct high-segment oracle
+still passes 74,580 assertions / 1 case, and `git diff --check` passes.
+
+This closes the dense monotone-quadratic fixture and its worker action gate,
+not every dense-curved polyline topology. High-segment non-monotone profiles,
+all remaining supported polyline arrangements, visible GUI acceptance,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 
 The renewed request is covered by the existing source-replacement contract in
-the opening checklist and section 1226. During replacement, the Properties
-widget must keep its type selector active so the user can change the requested
-source family and immediately refresh candidates without leaving the workflow.
-The selector and candidate filter use all nine current
-`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
-spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
-distinct typed option. Changing the filter does not mutate the current source;
-the chosen candidate becomes the source only after successful asynchronous
-validation. Headless coverage for repeated switching and all nine selector
-families is already recorded in sections 1226 and 1227-1228. This request adds
-no new family or UI implementation slice. Keep the visible Properties-widget
-acceptance gate open until it is performed and recorded; geometry-variant
-support remains the separate Slice 4 obligation and must not be inferred from
-selector coverage.
+the opening checklist and section 1226. While replacing a source, the user must
+be able to change the requested curve family without leaving the widget; every
+change refreshes the candidate list for that family; the current source is
+highlighted when present; and selecting a candidate does not replace the source
+until asynchronous validation succeeds and the user accepts it. This applies
+to all nine current `LC_OffsetSourceGeometry::SupportedKinds`: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola is a distinct selector choice, not a spline-points alias.
+New supported kinds must flow from `SupportedKinds`, not a second hard-coded
+list.
+
+Headless coverage for repeated family switching, all nine candidate families,
+parabola identity, and accepted typed replacement is recorded in sections
+1192-1193 and 1225-1226. The remaining acceptance gap is visual confirmation in
+a desktop session of current-source highlighting, repeated family changes,
+candidate refresh, and validation-before-replacement. Do not report this visible
+workflow as verified until that gate can run. Cross-platform runtime and
+independent ODA/AutoCAD validation also remain open as tracked elsewhere in the
+roadmap.
 
 ## 1236. Normalize Strict Krawczyk Parameter Coordinates (2026-11-13)
 
