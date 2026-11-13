@@ -3137,7 +3137,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u,
                                    12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u,
                                    21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u, 29u, 30u, 31u,
-                                   32u, 33u, 34u, 35u, 36u})
+                                   32u, 33u, 34u, 35u, 36u, 37u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3193,6 +3193,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                         ? RS_EllipseData{{4, -3}, {3 * std::cos(.37), 3 * std::sin(.37)},
                                          .2, .8, 1.5, true, false}
                     : profile == 36
+                        ? RS_EllipseData{{4, -3}, {3 * std::cos(.37), 3 * std::sin(.37)},
+                                         .2, -.45, .75, true, false}
+                    : profile == 37
                         ? RS_EllipseData{{4, -3}, {3 * std::cos(.37), 3 * std::sin(.37)},
                                          .2, -.45, .75, true, false}
                     : profile == 34
@@ -3271,6 +3274,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
+        const std::uint64_t nativeGeometryFingerprint = RS_Spline::geometryFingerprint(native->getData());
+        const RS_LineData cutterGeometry = cutter->getData();
 
         double nativePickFraction = profile >= 5 ? .25 : .1;
         bool hasCertifiedArcPick = false;
@@ -3302,21 +3307,35 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                 else CHECK(probe.fragments.size() == 1);
             }
         }
-        if (profile >= 26 && !ellipseFirst)
-            CHECK(hasCertifiedArcPick);
+        if (profile >= 26 && !ellipseFirst) {
+            if (profile == 37) CHECK_FALSE(hasCertifiedArcPick);
+            else CHECK(hasCertifiedArcPick);
+        }
         const RS_Vector nativePick = native->getPointAt(first + (last - first) * nativePickFraction);
         f.action->click(ellipseFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(ellipseFirst ? cutterPick : nativePick);
         f.action->waitForTrim();
-        if (profile != 5) CHECK_FALSE(f.action->m_preview->isEmpty());
+        if (profile == 37) CHECK(f.action->m_preview->isEmpty());
+        else if (profile != 5) CHECK_FALSE(f.action->m_preview->isEmpty());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
         CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
 
         f.action->click(ellipseFirst ? cutterPick : nativePick);
         INFO(f.context.messages.join('\n').toStdString());
+        if (profile == 37) {
+            CHECK_FALSE(native->isDeleted());
+            CHECK_FALSE(cutter->isDeleted());
+            CHECK(RS_Spline::geometryFingerprint(native->getData()) == nativeGeometryFingerprint);
+            CHECK(cutter->getData().startpoint == cutterGeometry.startpoint);
+            CHECK(cutter->getData().endpoint == cutterGeometry.endpoint);
+            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+            CHECK(f.context.messages.join('\n').contains(
+                QStringLiteral("uncertain, tangent or overlapping intersections")));
+            continue;
+        }
         REQUIRE(native->isDeleted());
         REQUIRE(cutter->isDeleted());
         std::vector<RS_Entity*> fragments;
