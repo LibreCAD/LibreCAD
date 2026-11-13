@@ -42548,3 +42548,26 @@ typed spline Trim Two matrix passes 24,715 assertions / 1 case. The test target
 was rebuilt after the changes, and `git diff --check` passes. Visible GUI,
 cross-platform runtime, broader fit-point coverage, and independent ODA/AutoCAD
 acceptance remain open.
+
+## 1230. Qualify a Two-hundred-fifty-six-point Closed Fit Spline Through Trim Two (2026-11-13)
+
+Test commit `e08423a22` adds a smooth, irregular 256-point closed SplinePoints
+profile with fit tolerance `1e-4` to the independent signed-distance trim
+oracle and worker-backed Trim Two matrix. This point count matches the
+previously measured large-source capture/encoding fixture, but the new tests
+add end-to-end geometry evidence rather than inferring Trim support from that
+timing. The direct oracle checks distances `0.1`, `0.25`, and `0.5` on both
+signed sides. The action matrix carries the profile through Update from Source,
+both pick orders, commit, undo/redo, all five DXF/DWG lanes, sampled
+reopened-geometry checks, and LibreDWG inspection. This qualifies this
+256-point profile and tolerance only, not arbitrary fit-point layouts,
+tolerances, or spline topology.
+
+On macOS arm64 CMake Release, the direct `[curve-offset][three-point]`
+selection passes 270 assertions / 1 case, and the broader
+`[curve-offset][trim][spline-points][fit-points]` selection passes 4,063
+assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+typed spline Trim Two matrix passes 25,148 assertions / 1 case. The test target
+was rebuilt after the changes, and `git diff --check` passes. Visible GUI,
+cross-platform runtime, broader fit-point layouts and tolerances, and
+independent ODA/AutoCAD acceptance remain open.
