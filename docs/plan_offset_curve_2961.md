@@ -35100,6 +35100,13 @@ slopes and the matrix's constructed geometry; it does not prove continuous
 slope coverage, arbitrary parabola domains, visible-GUI behavior,
 cross-platform runtime, or independent ODA/AutoCAD acceptance.
 
+After this expansion, the full `[parabola]` selection passes 5,730,498
+assertions / 4 cases on the same macOS arm64 CMake Release build, with
+LibreDWG enabled. The run was performed at source commit `a2c3fa8d0`; the
+subsequent `be69e1656` commit changes only this roadmap. This aggregate result
+does not close the remaining family-by-variant matrix or visible GUI,
+cross-platform, and independent-CAD gates.
+
 ## 855. Refresh Live Source Ambiguity (2026-11-11)
 
 Commit `39060e650` updates an existing source-highlight watch when matching
