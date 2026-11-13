@@ -719,7 +719,7 @@ TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branch
 
 TEST_CASE("Three-point closed fit splines trim to the requested signed distance",
           "[curve-offset][trim][spline-points][fit-points][closed][three-point][oracle]") {
-    std::array<LC_SplinePointsData, 2> profiles;
+    std::array<LC_SplinePointsData, 3> profiles;
     profiles[0] = LC_SplinePointsData{true, false};
     profiles[0].splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
     profiles[1] = profiles[0];
@@ -729,12 +729,20 @@ TEST_CASE("Three-point closed fit splines trim to the requested signed distance"
                  -21.0 + 1.5 * (point.x * std::sin(0.63) + reflectedY * std::cos(0.63))};
     }
     std::reverse(profiles[1].splinePoints.begin(), profiles[1].splinePoints.end());
+    profiles[2] = LC_SplinePointsData{true, false};
+    constexpr double twoPi = 6.2831853071795864769;
+    for (unsigned i = 0; i < 11; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 11.0;
+        const double radius = 4.0 + 0.3 * std::cos(3.0 * angle) + 0.1 * std::sin(2.0 * angle);
+        profiles[2].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.85 * radius * std::sin(angle));
+    }
 
     for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
         CAPTURE(profile);
         const LC_SplinePoints source{nullptr, profiles[profile]};
         REQUIRE(source.isClosed());
-        REQUIRE(source.getSegmentCount() == 3);
+        REQUIRE(source.getSegmentCount() == profiles[profile].splinePoints.size());
         REQUIRE(LC_OffsetSourceGeometry::capture(source));
 
         const auto sourceDistance = [&source](const RS_Vector& point) {
