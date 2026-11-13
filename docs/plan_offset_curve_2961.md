@@ -47,11 +47,12 @@ Do not introduce a second type selector or a parabola-only picker.
 
 **Latest user clarification and disposition (2026-11-12):** While specifying a
 replacement source in the existing Properties source widget, the user can
-change the requested source type in place, including while canvas candidate
-selection is active, inspect the immediately refreshed candidate list, and
-change type again without leaving or cancelling the replacement workflow.
-Changing the filter must not end canvas-pick mode or commit a candidate;
-choosing a candidate remains a separate action. “All supported types” means
+change the requested source type in place while browsing candidates in its
+entity chooser, inspect the immediately refreshed candidate list, and change
+type again without leaving or cancelling the replacement workflow. This is
+not a request to add canvas-picking behavior. Changing the filter must not
+commit a candidate; choosing a candidate remains a separate action. “All
+supported types” means
 the nine current
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
@@ -87,11 +88,11 @@ selector request.
 
 1. Derive the selector entries and candidate matching from the canonical
    `LC_OffsetSourceGeometry::SupportedKinds`; avoid a parallel UI inventory.
-2. In a single replacement workflow, enter canvas-pick mode, then change the
-   selector repeatedly without leaving that mode. Assert that candidate
-   results change immediately and contain only eligible entities of the chosen
-   kind, including a distinct parabola choice; the filter change itself must
-   neither commit a candidate nor mutate the target.
+2. In a single replacement workflow, browse candidates in the existing entity
+   chooser and change the type selector repeatedly before choosing one. Assert
+   that the list refreshes immediately and contains only eligible entities of
+   the chosen kind, including a distinct parabola choice; changing the filter
+   must neither commit a candidate nor mutate the target.
 3. Snapshot the target's source definition, geometry/cache fingerprint,
    identity, selection, and temporary indication. Assert that type changes and
    candidate browsing do not mutate that snapshot.
@@ -261,10 +262,11 @@ preparation is busy. Candidate
 filtering checks capture, worker encoding, and constrained spline tangents; it
 does not by itself prove that the offset can be generated successfully.
 
-**Requested outcome and execution order (2026-11-11, reconfirmed):** This is a
-Properties workflow for replacing the source of an editable offset, not a
-request to replace the existing chooser with a canvas-picking tool. While
-choosing a replacement in the Properties widget, the user can change the
+**Requested outcome and execution order (2026-11-11, reconfirmed 2026-11-12):**
+This is a Properties workflow for replacing the source of an editable offset,
+using its existing entity chooser; it is not a request to add or switch to a
+canvas-picking tool. While choosing a replacement in the Properties widget,
+the user can change the
 requested source type at any point before choosing a candidate, including
 after already browsing candidates from another family; the chooser then offers
 eligible entities of the selected type, not only the current source's type.
