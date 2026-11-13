@@ -739,6 +739,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
     if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
     CAPTURE(kind);
+    CAPTURE(fitPointVariant);
     CAPTURE(static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
