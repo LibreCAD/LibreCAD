@@ -312,13 +312,14 @@ The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
 fail-closed cache-validation and pick-query boundaries.
 
-Sections 1170-1171 now also qualify nominal and similarity-transformed
-six-fit-point closed SplinePoints sources through direct normals, worker-backed
-Trim Two, and five DXF/DWG lanes. Their closed cut/control-file representation
-is checked by sampled geometry, not by internal storage equality. These two
-fixtures do not close other fit-point counts, tolerances, or transformations.
-Section 1172 adds an eight-fit-point closed profile with fit tolerance `1e-4`
-through the same direct, worker Trim Two, and five-file-lane checks.
+Sections 1170-1171 qualify nominal and similarity-transformed six-fit-point
+closed SplinePoints sources through direct normals, worker-backed Trim Two,
+and five DXF/DWG lanes. Section 1172 adds an eight-fit-point closed profile
+with fit tolerance `1e-4`; section 1173 adds a four-fit-point closed profile.
+All three counts use the same direct, worker Trim Two, and five-file-lane
+checks. Their closed cut/control-file representation is checked by sampled
+geometry, not by internal storage equality. These fixtures do not close other
+fit-point counts, tolerances, or transformations.
 
 Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1125
 qualify nineteen successful near-cusp/exact-cusp/post-cusp ellipse cache
@@ -41402,3 +41403,22 @@ with exit 0, and `git diff --check` passes. This qualifies one eight-point
 layout and one non-default tolerance only. Other fit counts/tolerances,
 transformations, visible GUI, cross-platform behavior, and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1173. Qualify a Four-point Closed Fit Spline (2026-11-13)
+
+Test commit `97027c92c` adds a four-fit-point closed `LC_SplinePoints` profile
+to the exact-normal direct oracle and worker-backed Trim Two action matrix. The
+action exercises both operand pick orders, undo/redo, and R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG save/reopen; reopened closed cut/control storage is
+compared with the source using sampled geometry. The direct test is named for
+closed fit-point splines generally because it now covers four-, six-, and
+eight-point profiles, including the previously recorded transformed and
+non-default-tolerance cases.
+
+On macOS arm64 CMake Release, the focused closed-fit direct selection passes
+29,946 assertions / 4 cases, and the full fit-point Trim Two action case passes
+9,078 assertions / 1 case with LibreDWG enabled. The incremental recursive
+qmake6 application/worker/plugin build exits 0 and `git diff --check` passes.
+This qualifies one four-point layout only. Other fit-point layouts,
+transformations and tolerances, visible GUI, cross-platform behavior, and
+independent ODA/AutoCAD acceptance remain open.
