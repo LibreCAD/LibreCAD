@@ -752,6 +752,35 @@ public:
         if (m_closed || m_pieces.size() != 1) return false;
         return m_pieces.front().source->straightSegment(start, end);
     }
+    bool straightVertices(std::vector<RS_Vector>& vertices) const {
+        vertices.clear();
+        if (!m_closed || m_pieces.size() < 3) return false;
+        RS_Vector previousEnd;
+        for (std::size_t i = 0; i < m_pieces.size(); ++i) {
+            RS_Vector start;
+            RS_Vector end;
+            if (!m_pieces[i].source->straightSegment(start, end) || start.distanceTo(end) == 0.0) {
+                vertices.clear();
+                return false;
+            }
+            const double scale = std::max({1.0, std::abs(start.x), std::abs(start.y), std::abs(end.x),
+                                           std::abs(end.y), std::abs(previousEnd.x), std::abs(previousEnd.y)});
+            const double slack = 64.0 * std::numeric_limits<double>::epsilon() * scale;
+            if (i > 0 && start.distanceTo(previousEnd) > slack) {
+                vertices.clear();
+                return false;
+            }
+            vertices.push_back(start);
+            previousEnd = end;
+        }
+        const double scale = std::max({1.0, std::abs(previousEnd.x), std::abs(previousEnd.y),
+                                       std::abs(vertices.front().x), std::abs(vertices.front().y)});
+        if (previousEnd.distanceTo(vertices.front()) > 64.0 * std::numeric_limits<double>::epsilon() * scale) {
+            vertices.clear();
+            return false;
+        }
+        return true;
+    }
     bool cubicSpans() const override {
         return std::all_of(m_pieces.begin(), m_pieces.end(),
             [](const Piece& piece) { return piece.source->cubicSpans(); });
@@ -5918,6 +5947,137 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
 // Region boundary (plan 5.13)
 // ---------------------------------------------------------------------------
 
+// A convex polygon's erosion is the intersection of its inward-shifted edge
+// half-planes. Build its miters directly, then certify every vertex against
+// every shifted half-plane before publishing the single closed cycle.
+std::optional<LC_CurveOffsetStatus> erodeStrictlyConvexPolyline(
+    const std::vector<RS_Vector>& vertices, const std::vector<double>& breaks, const double magnitude,
+    const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& cycles) {
+    const std::size_t count = vertices.size();
+    if (count < 3 || breaks.size() != count + 1) return std::nullopt;
+
+    long double twiceArea = 0.0L;
+    for (std::size_t i = 0; i < count; ++i) {
+        const RS_Vector a = vertices[i] - vertices.front();
+        const RS_Vector b = vertices[(i + 1) % count] - vertices.front();
+        twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
+    }
+    if (!std::isfinite(static_cast<double>(twiceArea)) || twiceArea == 0.0L) return std::nullopt;
+    const double orientation = twiceArea > 0.0L ? 1.0 : -1.0;
+
+    std::vector<RS_Vector> directions(count);
+    std::vector<RS_Vector> inwardNormals(count);
+    std::vector<double> lengths(count);
+    for (std::size_t i = 0; i < count; ++i) {
+        directions[i] = vertices[(i + 1) % count] - vertices[i];
+        lengths[i] = directions[i].magnitude();
+        if (!(lengths[i] > options.tolerance.classification) || !std::isfinite(lengths[i])) {
+            return LC_CurveOffsetStatus::AmbiguousTopology;
+        }
+        inwardNormals[i] = orientation > 0.0
+                               ? RS_Vector{-directions[i].y, directions[i].x} / lengths[i]
+                               : RS_Vector{directions[i].y, -directions[i].x} / lengths[i];
+    }
+    int turnSign = 0;
+    for (std::size_t i = 0; i < count; ++i) {
+        const RS_Vector next = directions[(i + 1) % count];
+        const long double turn = static_cast<long double>(directions[i].x) * next.y -
+                                 static_cast<long double>(directions[i].y) * next.x;
+        const long double threshold = 128.0L * std::numeric_limits<double>::epsilon() *
+                                      static_cast<long double>(lengths[i]) * lengths[(i + 1) % count];
+        if (std::abs(turn) <= threshold) return std::nullopt;
+        const int sign = turn > 0.0L ? 1 : -1;
+        if (turnSign != 0 && sign != turnSign) return std::nullopt;
+        turnSign = sign;
+    }
+    if (turnSign != (orientation > 0.0 ? 1 : -1)) return std::nullopt;
+
+    std::vector<RS_Vector> miters(count);
+    const double residualTolerance = options.tolerance.requestedGeometry + options.tolerance.classification;
+    for (std::size_t i = 0; i < count; ++i) {
+        const std::size_t previous = (i + count - 1) % count;
+        const RS_Vector previousShift = vertices[i] + inwardNormals[previous] * magnitude;
+        const RS_Vector nextShift = vertices[i] + inwardNormals[i] * magnitude;
+        const long double denominator = static_cast<long double>(directions[previous].x) * directions[i].y -
+                                        static_cast<long double>(directions[previous].y) * directions[i].x;
+        if (denominator == 0.0L) return LC_CurveOffsetStatus::AmbiguousTopology;
+        const RS_Vector delta = nextShift - previousShift;
+        const long double parameter = (static_cast<long double>(delta.x) * directions[i].y -
+                                       static_cast<long double>(delta.y) * directions[i].x) /
+                                      denominator;
+        miters[i] = previousShift + directions[previous] * static_cast<double>(parameter);
+        if (!isFinite(miters[i])) return LC_CurveOffsetStatus::AmbiguousTopology;
+
+        const double previousProjection =
+            dot(miters[i] - vertices[previous], directions[previous]) / dot(directions[previous], directions[previous]);
+        const double nextProjection = dot(miters[i] - vertices[i], directions[i]) / dot(directions[i], directions[i]);
+        const double previousSlack = residualTolerance / lengths[previous];
+        const double nextSlack = residualTolerance / lengths[i];
+        if (previousProjection < -previousSlack || previousProjection > 1.0 + previousSlack ||
+            nextProjection < -nextSlack || nextProjection > 1.0 + nextSlack ||
+            std::abs(dot(miters[i] - previousShift, inwardNormals[previous])) > residualTolerance ||
+            std::abs(dot(miters[i] - nextShift, inwardNormals[i])) > residualTolerance) {
+            return LC_CurveOffsetStatus::SingularOffset;
+        }
+    }
+
+    if (count > options.maxDistanceMapBoxes / count) return LC_CurveOffsetStatus::LimitExceeded;
+    for (const RS_Vector& miter : miters) {
+        for (std::size_t edge = 0; edge < count; ++edge) {
+            const long double side = orientation *
+                (static_cast<long double>(directions[edge].x) * (miter.y - vertices[edge].y) -
+                 static_cast<long double>(directions[edge].y) * (miter.x - vertices[edge].x));
+            const long double required = static_cast<long double>(magnitude) * lengths[edge];
+            const long double slack = static_cast<long double>(residualTolerance) * lengths[edge];
+            if (side + slack < required) return LC_CurveOffsetStatus::SingularOffset;
+        }
+    }
+    for (std::size_t edge = 0; edge < count; ++edge) {
+        const double lengthSquared = dot(directions[edge], directions[edge]);
+        const double start = dot(miters[edge] - vertices[edge], directions[edge]) / lengthSquared;
+        const double end = dot(miters[(edge + 1) % count] - vertices[edge], directions[edge]) / lengthSquared;
+        if (!(end > start + residualTolerance / lengths[edge])) {
+            return LC_CurveOffsetStatus::SingularOffset;
+        }
+    }
+
+    long double erodedArea = 0.0L;
+    for (std::size_t i = 0; i < count; ++i) {
+        const RS_Vector a = miters[i] - miters.front();
+        const RS_Vector b = miters[(i + 1) % count] - miters.front();
+        erodedArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
+    }
+    if (!std::isfinite(static_cast<double>(erodedArea)) || orientation * erodedArea <= 0.0L) {
+        return LC_CurveOffsetStatus::SingularOffset;
+    }
+
+    LC_OffsetBranch cycle;
+    cycle.closed = true;
+    const double signedDistance = orientation > 0.0 ? magnitude : -magnitude;
+    for (std::size_t i = 0; i < count; ++i) {
+        const RS_Vector start = miters[i];
+        const RS_Vector end = miters[(i + 1) % count];
+        if (start.distanceTo(end) <= options.tolerance.classification) {
+            return LC_CurveOffsetStatus::SingularOffset;
+        }
+        LC_OffsetCubicPiece piece;
+        piece.provenance = {i, breaks[i], breaks[i + 1], signedDistance, true};
+        const RS_Vector delta = end - start;
+        piece.bezier = {start, start + delta / 3.0, start + delta * (2.0 / 3.0), end};
+        cycle.cubicPieces.push_back(piece);
+    }
+    if (orientation < 0.0) {
+        std::reverse(cycle.cubicPieces.begin(), cycle.cubicPieces.end());
+        for (LC_OffsetCubicPiece& piece : cycle.cubicPieces) {
+            std::reverse(piece.bezier.begin(), piece.bezier.end());
+            std::swap(piece.provenance.sourceT0, piece.provenance.sourceT1);
+            piece.provenance.forward = false;
+        }
+    }
+    cycles = {std::move(cycle)};
+    return LC_CurveOffsetStatus::Ok;
+}
+
 /**
  * How many times the closed source winds around @p p, counter-clockwise
  * positive: the angle it turns through as seen from p, summed over pieces each
@@ -6130,6 +6290,16 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         return fromIntersectionStatus(crossings.status);
     }
     result.sourceIntersections = crossings.intersections.size();
+    if (!dilate && crossings.intersections.empty()) {
+        if (const auto* polyline = dynamic_cast<const PolylineSource*>(&source)) {
+            std::vector<RS_Vector> vertices;
+            if (polyline->straightVertices(vertices)) {
+                const std::optional<LC_CurveOffsetStatus> eroded =
+                    erodeStrictlyConvexPolyline(vertices, breaks, magnitude, options, cycles);
+                if (eroded) return *eroded;
+            }
+        }
+    }
     std::vector<double> cuts;
     for (const LC_ParametricIntersection& x : crossings.intersections) {
         cuts.push_back(x.parameterA);

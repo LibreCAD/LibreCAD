@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {
@@ -455,4 +456,75 @@ TEST_CASE("A boundary fragment across the seam is one stretch of the source", "[
             CHECK(check.wrongSide == 0);
         }
     }
+}
+
+TEST_CASE("A high-segment convex polyline has an exact inward region boundary", "[curve-offset][region][high-segment]") {
+    constexpr unsigned segmentCount = 256;
+    constexpr double radius = 10.0;
+    constexpr double distance = 0.15;
+    for (const bool reverse : {false, true}) {
+        RS_Polyline source;
+        std::vector<RS_Vector> vertices;
+        for (unsigned i = 0; i < segmentCount; ++i) {
+            const unsigned index = reverse ? segmentCount - i : i;
+            const double angle = 2.0 * M_PI * static_cast<double>(index % segmentCount) / segmentCount;
+            const RS_Vector point{radius * std::cos(angle), radius * std::sin(angle)};
+            source.addVertex(point);
+            vertices.push_back(point);
+        }
+        source.setClosed(true);
+        source.endPolyline();
+
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(reverse, static_cast<int>(result.status), result.sourceIntersections,
+                result.intersectionDiagnostics.work.totalBoxPairs);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const LC_OffsetBranch& cycle = result.branches.front();
+        REQUIRE(cycle.closed);
+        REQUIRE(cycle.cubicPieces.size() == segmentCount);
+        CHECK(cycle.cubicPieces.front().bezier[0] == cycle.cubicPieces.back().bezier[3]);
+        CHECK(cycle.cubicPieces.front().provenance.signedDistance == (reverse ? -distance : distance));
+
+        long double twiceArea = 0.0L;
+        for (std::size_t i = 0; i < cycle.cubicPieces.size(); ++i) {
+            const LC_OffsetCubicPiece& piece = cycle.cubicPieces[i];
+            const std::size_t span = piece.provenance.sourceSpan;
+            REQUIRE(span < vertices.size());
+            const RS_Vector start = vertices[span];
+            const RS_Vector direction = vertices[(span + 1) % vertices.size()] - start;
+            const double length = direction.magnitude();
+            REQUIRE(length > 0.0);
+            for (const RS_Vector& point : {piece.bezier[0], piece.bezier[3]}) {
+                CHECK(std::abs(RS_Vector::crossP(direction, point - start).z) / length ==
+                      Catch::Approx(distance).margin(1e-10));
+                const double projection = RS_Vector::dotP(point - start, direction) / direction.squared();
+                CHECK(projection >= -1e-10);
+                CHECK(projection <= 1.0 + 1e-10);
+            }
+            const RS_Vector a = piece.bezier[0];
+            const RS_Vector b = piece.bezier[3];
+            twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
+        }
+        CHECK(twiceArea > 0.0L);
+    }
+
+    RS_Polyline collapsedSource;
+    for (unsigned i = 0; i < segmentCount; ++i) {
+        const double angle = 2.0 * M_PI * static_cast<double>(i) / segmentCount;
+        collapsedSource.addVertex({radius * std::cos(angle), radius * std::sin(angle)});
+    }
+    collapsedSource.setClosed(true);
+    collapsedSource.endPolyline();
+    LC_CurveOffsetOptions collapsedOptions = LC_CurveOffset::makeDirectOptions(collapsedSource, 10.1);
+    collapsedOptions.mode = LC_CurveOffsetMode::RegionBoundary;
+    const LC_CurveOffsetGeometryResult collapsed = LC_CurveOffset::buildDirectBranches(
+        collapsedSource, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 10.1), collapsedOptions,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(collapsed.status == LC_CurveOffsetStatus::SingularOffset);
+    CHECK(collapsed.branches.empty());
 }
