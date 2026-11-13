@@ -40660,3 +40660,22 @@ passes 22,343 assertions / 1 case; `git diff --check` passes. This closes
 matching signed-distance coverage for this exact reversed arc and cutter
 placement. Other bounded-arc intervals, cutters, distances, and independent
 CAD/visible-GUI acceptance remain open.
+
+## 1131. Qualify Forward-traversal Elliptic-arc Trim (2026-11-12)
+
+Test commit `3871c4a9b` adds a forward-traversal counterpart to the reversed
+bounded arc profiles in sections 1126-1130. It uses the same center, axes,
+ratio and angular interval, with outward distance `0.5` and a cutter through
+normalized arc parameter `0.487`. For both Trim Two operand orders, the test
+probes 19 source-pick fractions, requires refused probes to return no
+fragments, and selects a certified pick for preview/commit, undo/redo, and all
+five DXF/DWG save/reopen lanes with LibreDWG parsing. A trial cutter at
+parameter `0.25` hit the bounded work/output refusal; the recorded successful
+profile therefore covers the `0.487` placement only.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 23,060 assertions / 1 case; `git diff --check` passes. This adds one
+forward-traversal interval and signed distance, not general arc-interval or
+cutter coverage. Other intervals/distances/cutters, visible GUI, cross-
+platform, and independent-CAD acceptance remain open.
