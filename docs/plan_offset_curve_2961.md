@@ -42451,3 +42451,15 @@ dimension, console, and catalog tests. The slow worker-kernel and worker-client
 tests pass in 221.96 and 367.96 seconds respectively. This is broad local CTest
 evidence, not a clean rebuild, cross-platform runtime, visible GUI, or
 independent ODA/AutoCAD acceptance.
+
+## 1225. Revalidate All-family Source Replacement After Full CTest (2026-11-13)
+
+After the full CTest pass in section 1224, the focused Properties source-picker
+suite was rerun from the current macOS arm64 CMake Release test executable.
+With `QT_QPA_PLATFORM=offscreen`,
+`./librecad_tests '[gui][dialog][offsetcurve][source]'` passes 15,116
+assertions / 44 cases. This confirms repeated in-workflow family switching,
+candidate refresh, worker-backed typed replacement across all nine supported
+kinds, and distinct parabola identity on the current source tree. It remains
+headless evidence and does not close the visible Properties workflow,
+cross-platform, or independent ODA/AutoCAD gates.
