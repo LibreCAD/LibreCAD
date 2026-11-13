@@ -42709,11 +42709,15 @@ still passes 74,580 assertions / 1 case, and `git diff --check` passes.
 
 This closes the four exercised 256-segment open-polyline profiles (linear,
 piecewise-kinked, sinusoidal, and monotone quadratic) for the tested single
-transverse line crossing and worker action flow. It does not close every
-dense-curved polyline topology: multi-crossing cutters, closed/high-segment
-chains, self-overlap, and broader bulge/layout combinations remain open, as do
-visible GUI acceptance, cross-platform runtime, and independent ODA/AutoCAD
-acceptance.
+transverse line crossing and worker action flow. A follow-up two-crossing
+sinusoidal probe exposed an additional root-enumeration defect: the same
+line/cache pair reports one root when the dense cache is the source and two
+when operand roles are reversed; the action safely refuses without mutation.
+Do not claim multi-crossing support until root count and root images agree in
+both operand orders and both worker pick orders complete atomically. This is
+the next implementation gate. Closed/high-segment chains, self-overlap, and
+broader bulge/layout combinations also remain open, as do visible GUI
+acceptance, cross-platform runtime, and independent ODA/AutoCAD acceptance.
 
 ## 1235. Reconcile the Source-type Picker Request (2026-11-13)
 

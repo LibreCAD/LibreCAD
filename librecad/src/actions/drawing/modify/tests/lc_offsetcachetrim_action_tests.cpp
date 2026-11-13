@@ -4219,6 +4219,7 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
             const auto lineByCurve = LC_OffsetCacheTrim::prepare(lineCache, *native, {cutterPick});
             CAPTURE(static_cast<int>(curveByLine.refusal), curveByLine.rootCount,
                     static_cast<int>(lineByCurve.refusal), lineByCurve.rootCount,
+                    curveByLine.work.intersections.totalBoxPairs,
                     lineByCurve.work.intersections.totalBoxPairs,
                     lineByCurve.work.intersections.generatedLeaves);
             CHECK(curveByLine.refusal == LC_OffsetCacheTrim::Refusal::None);
