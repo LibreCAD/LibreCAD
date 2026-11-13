@@ -273,7 +273,7 @@ preparation is busy. Candidate
 filtering checks capture, worker encoding, and constrained spline tangents; it
 does not by itself prove that the offset can be generated successfully.
 
-**Requested outcome and execution order (2026-11-11, reconfirmed 2026-11-12):**
+**Requested outcome and execution order (2026-11-11, reconfirmed 2026-11-12 and 2026-11-13):**
 This is a Properties workflow for replacing the source of an editable offset,
 using its existing entity chooser; it is not a request to add or switch to a
 canvas-picking tool. While choosing a replacement in the Properties widget,
