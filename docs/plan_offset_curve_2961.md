@@ -42267,3 +42267,25 @@ while replacement is active, verify the current source remains highlighted
 until a valid candidate is accepted, and verify an invalid candidate leaves it
 unchanged. Cross-platform runtime and independent ODA/AutoCAD acceptance also
 remain open.
+
+## 1215. Qualify a Three-point Closed Fit-point Spline Through Trim Two (2026-11-13)
+
+Test commit `2602c3861` fills the previously unsampled three-fit-point closed
+SplinePoints layout. A direct trimmed-offset oracle checks both signed sides
+at distance `0.25` against the source-distance function. The worker-backed
+Trim Two action matrix also runs the triangular fit source through Update from
+Source, then exercises the real action in both pick orders, commit, undo/redo,
+and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG round trips. Reopened cut
+geometry is compared by sampled locus; LibreDWG inspects both DWG outputs.
+This qualifies the stated triangle and does not establish arbitrary
+three-point fit layouts, all closed-spline topology, or the family-by-variant
+matrix.
+
+On macOS arm64 CMake Release, `QT_QPA_PLATFORM=offscreen
+./librecad_tests '[curve-offset][three-point]'` passes 11 assertions / 1 case.
+With `DWGREAD=/opt/homebrew/bin/dwgread`,
+`QT_QPA_PLATFORM=offscreen ./librecad_tests
+'[trim-action][typed-source][spline][fit-points][trim-two]'` passes 22,479
+assertions / 1 case. The `librecad_tests` target rebuild succeeds and
+`git diff --check` passes. Cross-platform runtime, visible GUI, broader
+fit-point variants, and independent ODA/AutoCAD acceptance remain open.
