@@ -3446,8 +3446,8 @@ TEST_CASE("Worker cache admission preserves near-coincident chord placement vari
     CHECK(owned.get().healthyAndIdle());
 }
 
-TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
-          "[lc-offsetcurve][worker-client][fit-points][refusal]") {
+TEST_CASE("Endpoint repeated fit-point sources normalize and admit worker caches",
+          "[lc-offsetcurve][worker-client][fit-points][cache-admission]") {
     auto& rt = runtime();
     OwnedClient owned{rt};
     std::array<LC_SplinePointsData, 3> profiles;
@@ -3457,6 +3457,8 @@ TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
     profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
     profiles[2] = LC_SplinePointsData{false, false};
     profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
     qint64 requestId = 1;
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
@@ -3471,16 +3473,32 @@ TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
             rt.until([&] { return receipts.calls[0] != 0; });
             const auto& completion = completed(receipts.at(0), requestId, 7);
             const auto& result = std::get<Reply::Native>(completion.reply().result);
-            CHECK(result.refusal != LC_OffsetCurveRefusal::None);
+            CHECK(result.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
             CHECK_FALSE(result.changed);
-            CHECK(result.engineStatus != LC_CurveOffsetStatus::Ok);
-            CHECK(result.ordinaryStatus != Reply::OrdinaryStatus::Complete);
-            CHECK(result.ordinary.empty());
+            REQUIRE(result.engineStatus);
+            CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(result.ordinary.empty());
             RS_SplineData cache;
-            CHECK_FALSE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
-            ++requestId;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+
+            const Req::ValidateSourceCache validation{cache, definition, {}};
+            Receipts validatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId + 1), validation}, Client::Mode::Commit,
+                validatedReceipts.into(0)));
+            rt.until([&] { return validatedReceipts.calls[0] != 0; });
+            const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+            auto native = validated.nativeValidatedSource(attributes);
+            REQUIRE(native);
+            REQUIRE(native->sourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*native->sourceDefinition()) ==
+                  Req::Values::encodeSourceDefinition(definition));
+            exactCache(native->getData(), cache);
+            requestId += 2;
         }
     }
+    CHECK(owned.get().healthyAndIdle());
 }
 
 TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and DWG",

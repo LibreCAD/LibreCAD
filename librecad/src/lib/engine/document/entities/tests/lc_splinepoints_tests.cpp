@@ -209,7 +209,7 @@ TEST_CASE("LC_SplinePoints offsets a two-point spline to the requested side",
     CHECK(line.getEndpoint().y == Approx(8.0));
 }
 
-TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be solved",
+TEST_CASE("LC_SplinePoints normalizes duplicate fit points after edits",
           "[spline][LC_SplinePoints]") {
     auto allFinite = [](const LC_SplinePoints& spline) {
         for (const RS_Vector& v : spline.getControlPoints()) {
@@ -226,18 +226,25 @@ TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be so
     const LC_SplinePoints fromDuplicates(nullptr, duplicate);
     CHECK(allFinite(fromDuplicates));
 
-    // A solvable spline keeps its control points when an edit makes it unsolvable.
+    // Editing to repeated fit points normalizes the derived geometry while
+    // retaining the original fit-point metadata.
     LC_SplinePointsData good(false, false);
     good.splinePoints = {{0, 0}, {1, 2}, {3, 2}, {4, 0}, {6, 1}};
     LC_SplinePoints spline(nullptr, good);
-    const std::vector<RS_Vector> before = spline.getControlPoints();
-    REQUIRE(before.size() == 5);
-    REQUIRE(allFinite(spline));
     spline.getData().splinePoints = {{0, 0}, {2, 2}, {2, 2}, {2, 2}, {6, 1}};
     spline.update();
-    REQUIRE(spline.getControlPoints().size() == before.size());
-    for (size_t i = 0; i < before.size(); ++i) {
-        CHECK(near(spline.getControlPoints()[i], before[i]));
+    REQUIRE(spline.getData().splinePoints.size() == 5);
+    CHECK(spline.getData().splinePoints[1].x == 2.0);
+    CHECK(spline.getData().splinePoints[2].x == 2.0);
+    CHECK(spline.getData().splinePoints[3].x == 2.0);
+    CHECK(allFinite(spline));
+
+    LC_SplinePointsData normalized(false, false);
+    normalized.splinePoints = {{0, 0}, {2, 2}, {6, 1}};
+    const LC_SplinePoints equivalent(nullptr, normalized);
+    REQUIRE(spline.getControlPoints().size() == equivalent.getControlPoints().size());
+    for (size_t i = 0; i < spline.getControlPoints().size(); ++i) {
+        CHECK(near(spline.getControlPoints()[i], equivalent.getControlPoints()[i]));
     }
 }
 
