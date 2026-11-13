@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u, 21u, 22u, 23u, 24u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3511,6 +3511,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 data.closed = profile >= 8;
                 data.splinePoints = profile == 20 || profile == 21
                     ? std::vector<RS_Vector>{{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}}
+                    : profile >= 22
+                    ? std::vector<RS_Vector>{}
                     : profile == 15 || profile == 16 || profile == 17 || profile == 18 || profile == 19
                     ? std::vector<RS_Vector>{}
                     : profile == 14
@@ -3592,6 +3594,31 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         point = {35.0 + scale * (x * cosine - y * sine),
                                  -21.0 + scale * (x * sine + y * cosine)};
                     }
+                }
+                if (profile >= 22) {
+                    constexpr double starPi = 3.14159265358979323846;
+                    for (const std::size_t vertex : {0U, 2U, 4U, 1U, 3U}) {
+                        const double angle = -starPi / 2.0 +
+                            2.0 * starPi * static_cast<double>(vertex) / 5.0;
+                        data.splinePoints.emplace_back(8.0 * std::cos(angle),
+                                                       8.0 * std::sin(angle));
+                    }
+                    if (profile == 23) {
+                        const RS_Vector repeatedStarPoint = data.splinePoints[1];
+                        data.splinePoints.insert(data.splinePoints.begin() + 2,
+                                                 repeatedStarPoint);
+                    }
+                    if (profile == 24) {
+                        for (RS_Vector& point : data.splinePoints) {
+                            const double reflectedY = -point.y;
+                            point = {1.0e6 + 1.25 * (point.x * std::cos(0.73) -
+                                                      reflectedY * std::sin(0.73)),
+                                     -2.0e6 + 1.25 * (point.x * std::sin(0.73) +
+                                                      reflectedY * std::cos(0.73))};
+                        }
+                        std::reverse(data.splinePoints.begin(), data.splinePoints.end());
+                    }
+                    data.fitTolerance = 1e-8;
                 }
                 if (profile == 10) data.fitTolerance = 1e-4;
                 if (profile == 15 || profile == 17 || profile == 18 || profile == 19)
@@ -3689,30 +3716,61 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
         RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
-        if (profile == 16 || profile == 18 || profile == 19 || profile == 20 || profile == 21) {
+        if (profile == 16 || profile == 18 || profile == 19 || profile == 20 || profile == 21 || profile >= 22) {
             bool foundCertifiedCut = false;
-            for (const double contactFraction : {.1, .2, .3, .4, .5, .6, .7, .8, .9}) {
-                if (foundCertifiedCut) break;
-                parameter = breaks.front() + (breaks[1] - breaks.front()) * contactFraction;
-                tangent = tangentAt(parameter);
-                if (tangent.magnitude() <= RS_TOLERANCE) continue;
-                intersection = native->getPointAt(parameter);
-                for (const double tangentSkew : {-1.0, 0.0, 1.0}) {
-                    RS_Vector direction{-tangent.y, tangent.x};
-                    direction += tangent * tangentSkew;
-                    if (direction.magnitude() <= RS_TOLERANCE) continue;
-                    direction = direction / direction.magnitude() * 16.0;
-                    RS_Line probeCutter(nullptr,
-                        RS_LineData{intersection - direction, intersection + direction});
-                    const RS_Vector pick = native->getPointAt(
-                        breaks.front() + (breaks[1] - breaks.front()) * .95);
-                    const auto probe = LC_OffsetCacheTrim::prepare(native->getData(), probeCutter, {pick});
-                    if (probe.refusal != LC_OffsetCacheTrim::Refusal::None) continue;
-                    cutterDirection = direction;
-                    nativePick = pick;
-                    foundCertifiedCut = true;
-                    break;
+            int lastRefusal = -1;
+            RS_LineData lastCutterData;
+            RS_Vector lastPick;
+            for (std::size_t interval = 0; interval + 1 < breaks.size() && !foundCertifiedCut; ++interval) {
+                for (const double contactFraction : {.1, .2, .3, .4, .5, .6, .7, .8, .9}) {
+                    parameter = breaks[interval] +
+                        (breaks[interval + 1] - breaks[interval]) * contactFraction;
+                    tangent = tangentAt(parameter);
+                    if (tangent.magnitude() <= RS_TOLERANCE) continue;
+                    intersection = native->getPointAt(parameter);
+                    for (const double tangentSkew : {-1.0, 0.0, 1.0}) {
+                        RS_Vector direction{-tangent.y, tangent.x};
+                        direction += tangent * tangentSkew;
+                        if (direction.magnitude() <= RS_TOLERANCE) continue;
+                        direction = direction / direction.magnitude() * 16.0;
+                        cutterDirection = direction;
+                        RS_Line probeCutter(nullptr,
+                            RS_LineData{intersection - direction, intersection + direction});
+                        const RS_Vector pick = native->getPointAt(
+                            breaks[interval] + (breaks[interval + 1] - breaks[interval]) * .95);
+                        lastCutterData = probeCutter.getData();
+                        lastPick = pick;
+                        const auto probe = LC_OffsetCacheTrim::prepare(native->getData(), probeCutter, {pick});
+                        lastRefusal = static_cast<int>(probe.refusal);
+                        if (probe.refusal != LC_OffsetCacheTrim::Refusal::None) continue;
+                        nativePick = pick;
+                        foundCertifiedCut = true;
+                        break;
+                    }
+                    if (foundCertifiedCut) break;
                 }
+            }
+            CAPTURE(lastRefusal);
+            if (profile >= 22 && !foundCertifiedCut) {
+                CHECK(lastRefusal == static_cast<int>(LC_OffsetCacheTrim::Refusal::AmbiguousRoots));
+                nativePick = lastPick;
+                auto* cutter = new RS_Line(&f.graphic, lastCutterData);
+                f.graphic.addEntity(cutter);
+                const RS_Vector cutterPick = intersection + cutterDirection * .75;
+                const auto undoEpoch = f.graphic.undoStateEpoch();
+                f.action->click(nativeFirst ? nativePick : cutterPick);
+                REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+                f.action->hover(nativeFirst ? cutterPick : nativePick);
+                CHECK(f.action->m_preview->isEmpty());
+                CHECK_FALSE(native->isDeleted());
+                CHECK_FALSE(cutter->isDeleted());
+                f.action->click(nativeFirst ? cutterPick : nativePick);
+                CHECK_FALSE(native->isDeleted());
+                CHECK_FALSE(cutter->isDeleted());
+                CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+                CHECK(native->hasGeneralizedSourceDefinition());
+                CHECK(native->sourceDefinition()->source.kind() == kind);
+                continue;
             }
             REQUIRE(foundCertifiedCut);
         }
