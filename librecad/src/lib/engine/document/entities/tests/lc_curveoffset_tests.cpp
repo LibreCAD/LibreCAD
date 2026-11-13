@@ -1952,7 +1952,7 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Closed fit-point splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u}) {
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u}) {
         CAPTURE(profile);
         LC_SplinePointsData data{true, false};
         data.splinePoints = profile == 7
@@ -1990,7 +1990,7 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
                                                0.75 * radius * std::sin(angle));
             }
         }
-        if (profile == 8 || profile == 9) {
+        if (profile == 8 || profile == 9 || profile == 10) {
             constexpr double twoPi = 6.2831853071795864769;
             for (unsigned i = 0; i < 12; ++i) {
                 const double angle = twoPi * static_cast<double>(i) / 12.0;
@@ -1999,6 +1999,7 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
                 data.splinePoints.emplace_back(radius * std::cos(angle),
                                                0.9 * radius * std::sin(angle));
             }
+            if (profile == 10) data.splinePoints.push_back(data.splinePoints.front());
         }
         if (profile == 1 || profile == 7 || profile == 9) {
             const double angle = profile == 1 ? 0.47 : profile == 7 ? 0.29 : 0.63;
@@ -2015,10 +2016,10 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
             }
         }
         if (profile == 2) data.fitTolerance = 1e-4;
-        if (profile == 7 || profile == 9) data.fitTolerance = 2e-4;
+        if (profile == 7 || profile == 9 || profile == 10) data.fitTolerance = 2e-4;
         LC_SplinePoints source{nullptr, data};
         REQUIRE(source.isClosed());
-        REQUIRE(source.getSegmentCount() == data.splinePoints.size());
+        REQUIRE(source.getSegmentCount() == data.splinePoints.size() - (profile == 10 ? 1 : 0));
 
         for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
                                                LC_CurveOffsetSide::Right}) {
@@ -2030,7 +2031,7 @@ TEST_CASE("Closed fit-point splines retain exact offset geometry",
                 LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
             CHECK(maxDeviation(result, evaluator(source), options.tolerance.requestedGeometry,
-                               profile == 8 || profile == 9
+                               profile >= 8
                                    ? static_cast<double>(source.getSegmentCount()) : 0.0) <=
                   options.tolerance.requestedGeometry);
         }
