@@ -41938,3 +41938,21 @@ one repeated-interior layout only; other repeat distributions, near-coincident
 distinct points, and broader fit-point counts/tolerances remain open in Slice
 4, as do visible GUI, cross-platform runtime, and independent ODA/AutoCAD
 acceptance.
+
+## 1199. Carry a Near-coincident Distinct Fit Chord Through Trim Two (2026-11-13)
+
+Test commit `def0794d8` carries the existing closed six-fit-point profile with
+the distinct chord from `(10, 0)` to `(10.001, 0)` through the real worker and
+typed Trim Two action. The direct oracle verifies that this nonzero chord
+remains finite and that both signed offsets match the exact source normals.
+The action test covers both pick orders, preview/commit, undo/redo, and all
+five R14/R2000/R2018 DXF/DWG save/reopen lanes. This profile is intentionally
+not coalesced as a repeated-point case.
+
+On macOS arm64 CMake Release, the focused direct oracle passes 3,784 assertions
+/ 1 case and the complete typed spline/fit-point Trim Two matrix passes 15,888
+assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`.
+`git diff --check` passes. This qualifies the stated `0.001` chord only; other
+near-coincident scales, transformations, and fit-point topologies remain in
+Slice 4, as do visible GUI, cross-platform runtime, and independent
+ODA/AutoCAD acceptance.
