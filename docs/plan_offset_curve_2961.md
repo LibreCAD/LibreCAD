@@ -41138,3 +41138,16 @@ focused evidence for the previously slow matrix cell, but does not supersede
 the interrupted broad aggregate receipt in section 1156 or prove neighboring
 scales, translations, and distances. Cross-platform execution, visible
 Properties interaction, and independent ODA/AutoCAD acceptance remain open.
+
+## 1160. Complete the Broad Hostile Parabola Persistence Case (2026-11-12)
+
+After the normalized-frame reconstruction change in commit `7fd251f06` and the
+direct-control recovery in that same implementation slice, the previously
+interrupted hostile-parabola persistence case now completes in full. The
+macOS arm64 CMake Release `librecad_offset_hostilefile_tests` invocation
+`scaled translated parabola caches persist through staged DXF and DWG import`
+passes 3,960,952 assertions / 1 case, including the large-origin profile
+isolated separately in section 1159. This supersedes the interrupted run in
+section 1156 for this exact broad case; it is not a pass of the entire
+`[parabola]` aggregate or cross-platform execution. Visible Properties
+interaction and independent ODA/AutoCAD acceptance remain open.
