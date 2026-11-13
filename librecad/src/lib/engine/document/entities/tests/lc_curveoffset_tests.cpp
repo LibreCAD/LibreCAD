@@ -2924,12 +2924,14 @@ TEST_CASE("Open arc-line polylines follow exact normals across tangent and corne
 
 TEST_CASE("High-segment open polylines follow exact segment normals",
           "[curve-offset][direct][polyline][segment-count][oracle]") {
-    const auto verifyProfile = [](const bool curvedProfile) {
+    const auto verifyProfile = [](const unsigned profileKind) {
         RS_Polyline source;
         constexpr unsigned segmentCount = 256;
         for (unsigned i = 0; i <= segmentCount; ++i) {
             const double x = 0.1 * static_cast<double>(i);
-            const double y = curvedProfile ? 0.15 * std::sin(0.3 * x) + 0.02 * x : 0.02 * x;
+            double y = 0.02 * x;
+            if (profileKind == 1 && x > 6.4) y += 0.1 * (x - 6.4);
+            if (profileKind == 2) y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
             source.addVertex({x, y});
         }
         source.endPolyline();
@@ -2946,7 +2948,7 @@ TEST_CASE("High-segment open polylines follow exact segment normals",
         for (const double distance : {0.02, 0.05}) {
             for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
                                                    LC_CurveOffsetSide::Right}) {
-                CAPTURE(curvedProfile, distance, side);
+                CAPTURE(profileKind, distance, side);
                 const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
                 const auto result = LC_CurveOffset::buildDirectBranches(
                     source, LC_CurveOffset::makeSideRequest(side, distance), options,
@@ -2992,8 +2994,9 @@ TEST_CASE("High-segment open polylines follow exact segment normals",
             }
         }
     };
-    verifyProfile(false);
-    verifyProfile(true);
+    verifyProfile(0);
+    verifyProfile(1);
+    verifyProfile(2);
 }
 
 TEST_CASE("Major and minor bulge offsets follow exact segment normals", "[curve-offset][direct][polyline][bulge][major][oracle]") {

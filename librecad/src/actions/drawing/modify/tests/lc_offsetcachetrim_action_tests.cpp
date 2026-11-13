@@ -4127,13 +4127,13 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment polyline sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
     for (const unsigned segmentCount : {0u, 256u})
-    for (const bool curvedProfile : {false, true})
+    for (const unsigned profileKind : {0u, 1u, 2u})
     for (const double sourceBulge : {1.0, .5})
         for (const bool addThirdSpan : {false, true})
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
-        if ((curvedProfile && !segmentCount) ||
+        if ((profileKind && !segmentCount) ||
             (segmentCount && (sourceBulge != 1.0 || addThirdSpan || trimLineSpan))) continue;
-        CAPTURE(segmentCount, curvedProfile, sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
+        CAPTURE(segmentCount, profileKind, sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -4144,7 +4144,9 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         if (segmentCount) {
             for (unsigned i = 0; i <= segmentCount; ++i) {
                 const double x = 0.1 * static_cast<double>(i);
-                const double y = curvedProfile ? 0.15 * std::sin(0.3 * x) + 0.02 * x : 0.02 * x;
+                double y = 0.02 * x;
+                if (profileKind == 1 && x > 6.4) y += 0.1 * (x - 6.4);
+                if (profileKind == 2) y = 0.15 * std::sin(0.3 * x) + 0.02 * x;
                 source->addVertex({x, y});
             }
         }
@@ -4212,7 +4214,7 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
-        if (curvedProfile) {
+        if (profileKind == 2) {
             CHECK(f.action->m_preview->isEmpty());
             CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
             CHECK_FALSE(source->isDeleted());
