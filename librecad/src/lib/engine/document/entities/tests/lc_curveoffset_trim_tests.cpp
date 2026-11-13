@@ -742,19 +742,21 @@ TEST_CASE("Three-point closed fit splines trim to the requested signed distance"
         };
         for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
             CAPTURE(side);
-            constexpr double distance = 0.25;
-            auto options = LC_CurveOffset::makeDirectOptions(source, distance);
-            options.mode = LC_CurveOffsetMode::Trimmed;
-            const auto result = LC_CurveOffset::buildDirectBranches(
-                source, LC_CurveOffset::makeSideRequest(side, distance), options,
-                LC_CurveOffset::makeDirectSourceBudget());
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(result.branches.empty());
-            const Checked checked = check(result, curveOf(source), 0.0,
-                                          static_cast<double>(source.getSegmentCount()), distance,
-                                          -1.0, sourceDistance);
-            CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
-            CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+            for (const double distance : {0.1, 0.25, 0.5}) {
+                CAPTURE(distance);
+                auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                options.mode = LC_CurveOffsetMode::Trimmed;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const Checked checked = check(result, curveOf(source), 0.0,
+                                              static_cast<double>(source.getSegmentCount()), distance,
+                                              -1.0, sourceDistance);
+                CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+                CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+            }
         }
     }
 }
