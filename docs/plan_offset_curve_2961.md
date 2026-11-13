@@ -41654,6 +41654,10 @@ passes 535 assertions and the full 38-profile ellipse Trim Two matrix passes
 30,122 assertions / 1 case. The focused `librecad_tests` target builds and
 `git diff --check` passes. This proves atomic refusal for this one uncertified
 high-curvature contact, not successful Trim Two there or a general cusp
-boundary. qmake6 was not rerun because this slice changes only the CMake test
-source; visible GUI, cross-platform behavior, and independent ODA/AutoCAD
-acceptance remain open.
+boundary. A disposable contact probe at normalized parameter `0.6` also
+refused with the same message; it was not retained as a test because no distinct
+behavioral contract was established. The current matrix proves success at
+`0.9` and atomic refusal at `0.487`, not a continuous contact threshold.
+qmake6 was not rerun because this slice changes only the CMake test source;
+visible GUI, cross-platform behavior, and independent ODA/AutoCAD acceptance
+remain open.
