@@ -40778,3 +40778,14 @@ passes 27,977 assertions / 1 case; `git diff --check` passes. This qualifies
 one sub-cusp distance and interval for ratio `0.2`; exact/post-cusp distances,
 other transforms and intervals, other cutters, visible GUI, cross-platform,
 and independent-CAD acceptance remain open.
+
+## 1138. Re-run Aggregate Trim-action Tests After Arc-matrix Expansion (2026-11-12)
+
+The current macOS arm64 CMake Release `[trim-action]` suite passes 131,002
+assertions across 87 cases with `QT_QPA_PLATFORM=offscreen` and LibreDWG 0.14
+provided through `DWGREAD`. This run includes the forward/reversed, signed-side
+and interval additions in sections 1128-1137, including the eccentric
+ratio-`0.2` partial-arc case. It supersedes section 1135's earlier aggregate
+count of 128,175 assertions. Family/variant coverage beyond these tested
+profiles, visible GUI, cross-platform, clean qmake6, and independent-CAD gates
+remain open.
