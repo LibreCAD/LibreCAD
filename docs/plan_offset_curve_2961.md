@@ -43174,3 +43174,33 @@ This qualifies only the tested rounded rectangle's sampled translation
 stability. Other curved-polyline layouts, all-arc loops, visible GUI
 acceptance, non-macOS runtime, and independent ODA/AutoCAD acceptance remain
 open.
+
+## 1248. Qualify Unequal-radius Rounded Polyline Erosion (2026-11-13)
+
+The curved closed-polyline worker coverage now includes a strictly convex
+rounded rectangle with four unequal quarter-circle radii (`1`, `2`, `0.75`,
+and `1.5`) and unequal width/height. The fixture is tested in counter-clockwise
+and reversed clockwise traversal with the corresponding inward signed
+distance. Both are certified for RegionBoundary erosion; the opposite signed
+side remains on Direct. Worker generation emits one closed spline cache, its
+sampled bounds match the expected eroded extents within `0.03`, cache
+validation admits it, and result wire encode/decode succeeds.
+
+The scale/translation matrix now includes this asymmetric fixture at scales
+`1e-3`, `1`, and `1e3`, translation ratios `1e4` and `1e6`, and all four
+normalized signed distances. Curved variants use section 1247's seam-invariant
+sampled-polyline distance oracle; all six fixture variants retain the full
+signed-distance matrix.
+
+Validation on macOS arm64 CMake Release:
+
+- Build target `librecad_offset_worker_kernel_tests`: passed.
+- Focused `[asymmetric],[translation]` run: passed 58,758 assertions / 3
+  cases, including the 144-cell scale/translation matrix.
+- `git diff --check`: passed before commit.
+
+This qualifies one unequal-radius, four-quarter-arc convex topology for
+worker erosion and cache validation. It does not establish general bulge
+layouts, all-arc optimization, self-intersecting/concave fill semantics,
+Trim/file round trips for this exact variant, visible GUI acceptance,
+non-macOS runtime, or independent ODA/AutoCAD acceptance; those remain open.

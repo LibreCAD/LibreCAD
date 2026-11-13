@@ -9392,6 +9392,96 @@ TEST_CASE("rounded-rectangle polyline erodes through curved region boundaries",
     CHECK(mismatchedOptions->mode == LC_CurveOffsetMode::Direct);
 }
 
+TEST_CASE("worker erodes convex mixed polyline with unequal corner radii",
+          "[lc-offsetcurve][worker-kernel][polyline][region-boundary][curved][asymmetric]") {
+    const double halfPi = M_PI / 2.0;
+    const LC_OffsetPolylineData counterClockwise{
+        {1, 0}, {1, 0}, true,
+        {RS_LineData{{1, 0}, {12, 0}},
+         RS_ArcData{{12, 2}, 2, 3 * halfPi, 2 * M_PI, false},
+         RS_LineData{{14, 2}, {14, 8.25}},
+         RS_ArcData{{13.25, 8.25}, 0.75, 0, halfPi, false},
+         RS_LineData{{13.25, 9}, {1.5, 9}},
+         RS_ArcData{{1.5, 7.5}, 1.5, halfPi, M_PI, false},
+         RS_LineData{{0, 7.5}, {0, 1}},
+         RS_ArcData{{1, 1}, 1, M_PI, 3 * halfPi, false}}};
+    const auto reverse = [](LC_OffsetPolylineData data) {
+        std::vector<LC_OffsetPolylineSegment> segments;
+        segments.reserve(data.segments.size());
+        for (auto it = data.segments.rbegin(); it != data.segments.rend(); ++it) {
+            if (const auto* line = std::get_if<RS_LineData>(&*it)) {
+                segments.emplace_back(RS_LineData{line->endpoint, line->startpoint});
+            } else {
+                auto arc = std::get<RS_ArcData>(*it);
+                std::swap(arc.angle1, arc.angle2);
+                arc.reversed = !arc.reversed;
+                segments.emplace_back(arc);
+            }
+        }
+        data.segments = std::move(segments);
+        std::swap(data.startpoint, data.endpoint);
+        return data;
+    };
+
+    for (const auto& [data, signedDistance] :
+         {std::pair{counterClockwise, 0.25}, std::pair{reverse(counterClockwise), -0.25}}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceGeometry source{data};
+        REQUIRE(source.isWellFormed());
+        const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+        auto entity = source.makeEntity();
+        REQUIRE(entity);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *entity);
+        REQUIRE(options);
+        CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+
+        auto oppositeDefinition = definition;
+        oppositeDefinition.signedDistance = -signedDistance;
+        const auto oppositeOptions = LC_OffsetWorkerTolerance::directOptions(oppositeDefinition, *entity);
+        REQUIRE(oppositeOptions);
+        CHECK(oppositeOptions->mode == LC_CurveOffsetMode::Direct);
+
+        const req::Request request{token, req::GenerateSource{definition, {}}};
+        const auto reply = LC_OffsetWorkerKernel::run(request);
+        const auto& generated = native(reply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+        const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+        const RS_Spline output{nullptr, cache};
+        double first = 0.0;
+        double last = 0.0;
+        REQUIRE(output.getParameterDomain(first, last));
+        double minX = std::numeric_limits<double>::infinity();
+        double minY = std::numeric_limits<double>::infinity();
+        double maxX = -std::numeric_limits<double>::infinity();
+        double maxY = -std::numeric_limits<double>::infinity();
+        for (int i = 0; i <= 512; ++i) {
+            const RS_Vector point = output.getPointAt(first + (last - first) * i / 512.0);
+            REQUIRE(point.valid);
+            minX = std::min(minX, point.x);
+            minY = std::min(minY, point.y);
+            maxX = std::max(maxX, point.x);
+            maxY = std::max(maxY, point.y);
+        }
+        CHECK(std::abs(minX - 0.25) < 0.03);
+        CHECK(std::abs(minY - 0.25) < 0.03);
+        CHECK(std::abs(maxX - 13.75) < 0.03);
+        CHECK(std::abs(maxY - 8.75) < 0.03);
+
+        const req::Request validationRequest{token,
+            req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+        const auto& validated = native(validationReply, 8);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        const auto wire = result::encode(validationReply, validationRequest);
+        REQUIRE(wire);
+        CHECK(result::decode(*wire, validationRequest));
+    }
+}
+
 TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
     RS_Polyline polyline;
@@ -10922,7 +11012,7 @@ TEST_CASE("Cached Produce transports real cubic spline records without geometry 
 TEST_CASE("polyline worker generation and cache admission survive scale and translation",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][translation]") {
     const double pi = std::acos(-1.0);
-    const std::array<LC_OffsetPolylineData, 5> variants{{
+    const std::array<LC_OffsetPolylineData, 6> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -10943,6 +11033,15 @@ TEST_CASE("polyline worker generation and cache admission survive scale and tran
           RS_LineData{{9, 10}, {1, 10}},
           RS_ArcData{{1, 9}, 1, pi / 2, pi, false},
           RS_LineData{{0, 9}, {0, 1}},
+          RS_ArcData{{1, 1}, 1, pi, 3 * pi / 2, false}}},
+        {{1, 0}, {1, 0}, true,
+         {RS_LineData{{1, 0}, {12, 0}},
+          RS_ArcData{{12, 2}, 2, 3 * pi / 2, 2 * pi, false},
+          RS_LineData{{14, 2}, {14, 8.25}},
+          RS_ArcData{{13.25, 8.25}, 0.75, 0, pi / 2, false},
+          RS_LineData{{13.25, 9}, {1.5, 9}},
+          RS_ArcData{{1.5, 7.5}, 1.5, pi / 2, pi, false},
+          RS_LineData{{0, 7.5}, {0, 1}},
           RS_ArcData{{1, 1}, 1, pi, 3 * pi / 2, false}}}}};
     constexpr std::array<double, 3> scales{1e-3, 1.0, 1e3};
     constexpr std::array<double, 2> translationRatios{1e4, 1e6};
@@ -11139,7 +11238,7 @@ TEST_CASE("polyline worker generation and cache admission survive scale and tran
                         std::size_t bestIndex = translatedSplines.size();
                         for (std::size_t candidate = 0; candidate < translatedSplines.size(); ++candidate) {
                             if (matched[candidate]) continue;
-                            const double error = variant == 4
+                            const double error = variant >= 4
                                 ? sampledHausdorff(local, translatedSplines[candidate], translation)
                                 : geometryError(local, translatedSplines[candidate], translation);
                             if (error < best) {
