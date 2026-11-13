@@ -3490,7 +3490,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u, 20u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3509,7 +3509,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
                 data.closed = profile >= 8;
-                data.splinePoints = profile == 15 || profile == 16 || profile == 17 || profile == 18 || profile == 19
+                data.splinePoints = profile == 20
+                    ? std::vector<RS_Vector>{{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}}
+                    : profile == 15 || profile == 16 || profile == 17 || profile == 18 || profile == 19
                     ? std::vector<RS_Vector>{}
                     : profile == 14
                     ? std::vector<RS_Vector>{}
@@ -3675,7 +3677,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
         RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
-        if (profile == 16 || profile == 18 || profile == 19) {
+        if (profile == 16 || profile == 18 || profile == 19 || profile == 20) {
             bool foundCertifiedCut = false;
             for (const double contactFraction : {.1, .2, .3, .4, .5, .6, .7, .8, .9}) {
                 if (foundCertifiedCut) break;
