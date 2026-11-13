@@ -3404,7 +3404,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u})
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -3422,8 +3422,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         if (splinePointsSource) {
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
-                data.closed = profile == 8;
-                data.splinePoints = profile == 8
+                data.closed = profile >= 8;
+                data.splinePoints = profile >= 8
                     ? std::vector<RS_Vector>{{-4, 0}, {-2, 3}, {2, 3},
                                              {4, 0}, {2, -3}, {-2, -3}}
                     : profile == 6
@@ -3432,6 +3432,18 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
                                                  {2, 1.4}, {4, 0}}
                         : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
+                if (profile == 9) {
+                    constexpr double angle = 0.47;
+                    constexpr double scale = 2.0;
+                    const double cosine = std::cos(angle);
+                    const double sine = std::sin(angle);
+                    for (RS_Vector& point : data.splinePoints) {
+                        const double x = point.x;
+                        const double y = point.y;
+                        point = {18.0 + scale * (x * cosine - y * sine),
+                                 -11.0 + scale * (x * sine + y * cosine)};
+                    }
+                }
                 if (profile == 7) data.fitTolerance = 1e-3;
             } else {
                 data.useControlPoints = true;

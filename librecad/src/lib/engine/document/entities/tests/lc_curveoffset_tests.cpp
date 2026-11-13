@@ -1945,23 +1945,38 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
 
 TEST_CASE("Six-point closed fit splines retain exact offset geometry",
           "[curve-offset][direct][spline-points][closed][fit-points][oracle]") {
-    LC_SplinePointsData data{true, false};
-    data.splinePoints = {{-4, 0}, {-2, 3}, {2, 3}, {4, 0}, {2, -3}, {-2, -3}};
-    LC_SplinePoints source{nullptr, data};
-    REQUIRE(source.isClosed());
-    REQUIRE(source.getSegmentCount() == data.splinePoints.size());
+    for (const bool transformed : {false, true}) {
+        CAPTURE(transformed);
+        LC_SplinePointsData data{true, false};
+        data.splinePoints = {{-4, 0}, {-2, 3}, {2, 3}, {4, 0}, {2, -3}, {-2, -3}};
+        if (transformed) {
+            constexpr double angle = 0.47;
+            constexpr double scale = 2.0;
+            const double cosine = std::cos(angle);
+            const double sine = std::sin(angle);
+            for (RS_Vector& point : data.splinePoints) {
+                const double x = point.x;
+                const double y = point.y;
+                point = {18.0 + scale * (x * cosine - y * sine),
+                         -11.0 + scale * (x * sine + y * cosine)};
+            }
+        }
+        LC_SplinePoints source{nullptr, data};
+        REQUIRE(source.isClosed());
+        REQUIRE(source.getSegmentCount() == data.splinePoints.size());
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
-                                           LC_CurveOffsetSide::Right}) {
-        CAPTURE(side);
-        constexpr double distance = 0.15;
-        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
-        const auto result = LC_CurveOffset::buildDirectBranches(
-            source, LC_CurveOffset::makeSideRequest(side, distance), options,
-            LC_CurveOffset::makeDirectSourceBudget());
-        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-        CHECK(maxDeviation(result, evaluator(source)) <=
-              options.tolerance.requestedGeometry);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            constexpr double distance = 0.15;
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, evaluator(source)) <=
+                  options.tolerance.requestedGeometry);
+        }
     }
 }
 
