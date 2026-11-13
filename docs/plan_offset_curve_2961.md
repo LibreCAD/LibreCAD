@@ -42184,3 +42184,21 @@ passes 2,104 assertions / 1 case. The focused worker/persistence matrix passes
 `git diff --check` passes. Other repeated-point patterns, crossing layouts,
 ambiguous stationary loops, visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1211. Carry the Multi-crossing Star Through a Similarity/Reflection Transform (2026-11-13)
+
+Test commit `76bd5ab00` extends the star profiles from sections 1207 and 1210
+with a unique-neighbor transformed copy: scale `1.25`, rotation `0.73` radians,
+translation `(1e6,-2e6)`, y reflection, and reversed fit-point order. The
+direct Trim oracle checks both signed sides at distance `0.25`; the worker
+matrix checks both sides at distances `0.2` and `0.5`, native-cache
+validation, and all five DXF/DWG save/reopen lanes. LibreDWG inspects both DWG
+versions. This is a single transformed star profile, not arbitrary source
+conditioning or topology coverage.
+
+On macOS arm64 CMake Release, the direct self-intersection oracle passes 2,630
+assertions / 1 case. The focused worker/persistence matrix passes 265,899
+assertions / 1 case with `DWGREAD=/opt/homebrew/bin/dwgread`;
+`git diff --check` passes. Other crossing layouts and conditioning limits,
+ambiguous stationary loops, visible GUI, cross-platform runtime, and
+independent ODA/AutoCAD acceptance remain open.
