@@ -1116,11 +1116,12 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
 }
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
-    const int profile = GENERATE(0, 1, 2, 3);
+    const int profile = GENERATE(0, 1, 2, 3, 4);
     const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    const std::array<const char*, 4> profileNames{{"square", "rounded", "unequal-radii", "all-arc-circle"}};
+    const std::array<const char*, 5> profileNames{{
+        "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -1165,6 +1166,13 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         sourceOwner->addVertex({0, 2}, quarterArcBulge);
         sourceOwner->addVertex({-2, 0}, quarterArcBulge);
         sourceOwner->addVertex({0, -2}, quarterArcBulge);
+    } else if (profile == 4) {
+        sourcePick = {2, 0};
+        cutterX = 0.25;
+        sourceOwner->addVertex({2, 0}, -quarterArcBulge);
+        sourceOwner->addVertex({0, -2}, -quarterArcBulge);
+        sourceOwner->addVertex({-2, 0}, -quarterArcBulge);
+        sourceOwner->addVertex({0, 2}, -quarterArcBulge);
     } else {
         sourceOwner->addVertex({0, 0});
         sourceOwner->addVertex({10, 0});
