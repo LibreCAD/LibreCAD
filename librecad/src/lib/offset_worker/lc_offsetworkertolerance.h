@@ -31,7 +31,7 @@ inline std::optional<double> strictConvexLinearPolylineOrientation(
         })) {
         return std::nullopt;
     }
-    if (polyline->size() != static_cast<qsizetype>(data->segments.size()) ||
+    if (static_cast<std::size_t>(polyline->size()) != data->segments.size() ||
         !LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data)) {
         return std::nullopt;
     }
