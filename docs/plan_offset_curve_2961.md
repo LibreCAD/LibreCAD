@@ -30430,9 +30430,10 @@ these rows do not imply every parameter/domain is supported):
 **Spline-points distance clarification:** The shared worker matrix uses nominal
 distances `0.2` and `0.5` and applies a profile-specific multiplier. For the
 self-crossing fit-point records, the base bow-tie and the five-point star use
-actual magnitudes `0.002` and `0.005`; the transformed/reversed bow-tie uses
-`0.02` and `0.05`. These actual values supersede the shorthand in the matrix
-row and sections 1204-1205.
+actual magnitudes `0.002` and `0.005` for the bow-tie; the transformed/reversed
+bow-tie uses `0.02` and `0.05`. The five-point star is separately overridden
+to use actual magnitudes `0.2` and `0.5`. These actual values supersede the
+shorthand in the matrix row and sections 1204-1205.
 
 This closes the immediate worker/persistence gap for the two newly discovered
 accepted layouts; it does not complete step 3 or prove arbitrary legal source
@@ -42112,7 +42113,7 @@ open.
 
 ## 1207. Qualify a Multi-crossing Closed Fit-point Star (2026-11-13)
 
-Test commit `840be2617` adds a closed five-fit-point star ordered from the
+Test commits `840be2617` and `5a01d65ab` add a closed five-fit-point star ordered from the
 vertices of a regular pentagon as `[0, 2, 4, 1, 3]`, with radius `8`. The
 sampled-chord check confirms the source has proper self-crossings. Direct
 Trim-mode results on both signed sides are checked against an independent
@@ -42123,8 +42124,8 @@ inspection. It does not claim Trim Two worker support or arbitrary star/polygon
 topology.
 
 On macOS arm64 CMake Release, the direct self-intersection oracle passes 1,578
-assertions / 1 case. The focused worker/persistence matrix passes 211,747
-assertions / 1 case; for this profile the actual signed distances are
-`+/-0.002` and `+/-0.005`. `git diff --check` passes. Other crossing layouts,
+assertions / 1 case. The focused worker/persistence matrix passes 222,515
+assertions / 1 case with actual signed distances `+/-0.2` and `+/-0.5`;
+LibreDWG checks both DWG lanes. `git diff --check` passes. Other crossing layouts,
 ambiguous stationary loops, visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance remain open.
