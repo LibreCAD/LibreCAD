@@ -41840,6 +41840,13 @@ with `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes. The test is still
 headless; physical visible-GUI acceptance, cross-platform runs, and independent
 ODA/AutoCAD acceptance remain open.
 
+The companion end-to-end case `Native source picker replaces every modeled
+source family without filter side effects` was rerun on PR revision
+`7a2710648` with the same macOS arm64 CMake Release build. It passes 8,318
+assertions / 1 case, exercising actual candidate selection and worker-backed
+publication for all nine kinds. This remains headless evidence and does not
+close the visible Properties workflow gate.
+
 ## 1194. Record the Local ODA Converter Launch Blocker (2026-11-13)
 
 The installed ODAFileConverter 27.1.0.0 was evaluated for independent DWG
