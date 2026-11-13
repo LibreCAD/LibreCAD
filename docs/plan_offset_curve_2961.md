@@ -42344,3 +42344,23 @@ On macOS arm64 CMake Release with `QT_QPA_PLATFORM=offscreen` and
 passes 23,026 assertions / 1 case. The test target rebuild and
 `git diff --check` pass. Other fit layouts/distances, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+
+## 1219. Qualify an Eleven-point Closed Fit Spline Through Trim Two (2026-11-13)
+
+Test commit `ecd082e0a` fills the eleven-fit-point count gap between the
+previously sampled closed four-through-ten-point profiles and the twelve-point
+profiles. It adds an irregular eleven-point closed SplinePoints source to the
+direct trimmed-offset oracle at distances `0.1`, `0.25`, and `0.5` on both
+signed sides, checked against source distance. The worker-backed Trim Two
+matrix carries the same profile through Update from Source, both pick orders,
+commit, undo/redo, all five DXF/DWG lanes, sampled reopened-geometry checks,
+and LibreDWG inspection. This qualifies the chosen eleven-point profile only.
+
+On macOS arm64 CMake Release, the direct `[curve-offset][three-point]`
+selection passes 81 assertions / 1 case, and the broader
+`[curve-offset][trim][spline-points][fit-points]` selection passes 3,874
+assertions / 9 cases. With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused
+typed spline Trim Two matrix passes 24,340 assertions / 1 case. The test
+target rebuild and `git diff --check` pass. Other eleven-point layouts,
+general spline topology, visible GUI, cross-platform runtime, and independent
+ODA/AutoCAD acceptance remain open.
