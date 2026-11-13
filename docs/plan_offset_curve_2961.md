@@ -296,18 +296,19 @@ following slices in order, preserving the detailed safety requirements below:
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 The older Slice 4 evidence summary in the table is superseded by sections
-1122-1123 for the current ellipse cusp-distance matrix and its explicit
-fail-closed exact-cusp boundary.
+1122-1124 for the current ellipse cusp-distance matrix and its explicit
+fail-closed cache-validation and pick-query boundaries.
 
-Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1123
-qualify fifteen successful near-cusp/exact-cusp/post-cusp ellipse cache
+Recent Trim progress is narrowly scoped: sections 1117-1120 and 1122-1124
+qualify eighteen successful near-cusp/exact-cusp/post-cusp ellipse cache
 profiles, 19 sampled native-pick fractions on each, and both action pick
 orders for one fixed line cutter. Ratios `0.1` and `0.2` each have tested 25%,
 45%, 75%, 100%, and 105% of minimum curvature radius; ratio `0.3` has tested
 25%, 45%, and 75%, while its exact-cusp case atomically refuses at the
-bounded cache-validation limit. Ratios `0.025` and `0.05` have a tested 45%
-profile. General cusp/post-cusp topology, other cutters, and broader ellipse
-ratio/distance coverage remain open.
+bounded cache-validation limit; ratio `0.5` has tested 25%, 45%, and 75%, with
+one bounded midpoint-pick refusal at 75%. Ratios `0.025` and `0.05` have a
+tested 45% profile. General cusp/post-cusp topology, other cutters, and
+broader ellipse ratio/distance coverage remain open.
 
 Existing picker and parabola tests are useful regression evidence, not a
 substitute for the remaining matrix or visible acceptance. The chooser has a
@@ -40531,3 +40532,21 @@ rebuilding the macOS arm64 CMake Release `librecad_tests` target, the focused
 ellipse Trim Two case passes 17,110 assertions / 1 case; `git diff --check`
 passes. Ratio `0.3` at 105% post-cusp, other cutters, other ratios, and
 continuous parameter ranges remain unqualified.
+
+## 1124. Extend Sub-cusp Ellipse Trim to Axis Ratio 0.5 (2026-11-12)
+
+Test commit `26e8fac54` adds three worker-created inward full-ellipse Trim Two
+profiles with semi-major length `3`, axis ratio `0.5`, and rotation `1.17`.
+Distances `0.1875`, `0.3375`, and `0.5625` are 25%, 45%, and 75% of minimum
+curvature radius `0.75`. Each profile is exercised in both action pick orders
+through preview/commit, undo/redo, and five DXF/DWG save/reopen lanes with
+LibreDWG parsing. Direct cache picks are sampled at 19 normalized fractions;
+all are required to succeed except the midpoint (`0.5`) of the 75% profile,
+which must return `LimitExceeded` with no partial fragments.
+
+After rebuilding the macOS arm64 CMake Release `librecad_tests` target, the
+focused ellipse Trim Two case passes 19,687 assertions / 1 case, and
+`git diff --check` passes. This qualifies these three ratio-`0.5` distances,
+one fixed line cutter and the stated pick set only. Exact/post-cusp distances,
+other cutter families, arbitrary transforms, continuous ranges, visible GUI,
+cross-platform and external-CAD acceptance remain open.
