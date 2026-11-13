@@ -40643,3 +40643,20 @@ passes 21,451 assertions / 1 case, and `git diff --check` passes. This
 qualifies the tested pick sample set for the one reversed arc interval,
 distance, and cutter only; other arc intervals, distances, cutters, visible
 GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1130. Match Signed Distance for Reversed Elliptic-arc Trim (2026-11-12)
+
+Test commit `14094ba7c` adds the inward distance `0.5` counterpart to the
+outward distance `0.5` profile from section 1126. It uses the same reversed
+bounded elliptic arc (center `(-6, 8)`, semi-major length `3`, ratio `0.6`,
+angular bounds `0.25..1.6`) and a cutter through normalized arc parameter
+`0.25`. Both operand orders probe 19 source-pick fractions; refusals must
+leave fragments empty, and a certified pick drives preview/commit, undo/redo,
+and the five DXF/DWG save/reopen lanes with LibreDWG parsing.
+
+After rebuilding macOS arm64 CMake Release `librecad_tests`, the focused
+`[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]` case
+passes 22,343 assertions / 1 case; `git diff --check` passes. This closes
+matching signed-distance coverage for this exact reversed arc and cutter
+placement. Other bounded-arc intervals, cutters, distances, and independent
+CAD/visible-GUI acceptance remain open.
