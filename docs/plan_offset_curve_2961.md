@@ -44808,3 +44808,21 @@ combinations. This adds one moderate rigid transform for these rational
 profiles; it is not arbitrary affine or large-origin conditioning coverage.
 Other spline shapes, weight distributions, knot layouts, large translations,
 visible-GUI, cross-platform, and external-CAD checks remain open.
+
+## 1312. Revalidate qmake6 Release Product Build (2026-11-14)
+
+The recursive qmake6 Release product tree was rebuilt from the current source
+worktree with `make -j6` in `/private/tmp/offset-2961-qmake-current`. The
+command completed with exit code 0 for LibreCAD, the offset worker, libraries,
+plugins, and tools. A subsequent incremental `make -j6` also completed with
+exit code 0. This qualifies the product build only; the qmake project does
+not build the CMake Catch2 test executable, so it is not qmake test-suite
+coverage.
+
+The macOS arm64 build emitted existing missing-field-initializer and
+signedness warnings. Linker diagnostics also state that the build targets
+macOS 14.4 while locally installed HarfBuzz/FreeType/Qt dylibs were built for
+macOS 27.0/27.2. Shell startup reported the absent optional
+`/private/tmp/libdxfrw-cargo/env`, which did not affect the build. Keep clean
+cross-platform builds, qmake test coverage if made available, visible GUI,
+and independent-CAD validation open.
