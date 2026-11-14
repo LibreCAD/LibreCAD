@@ -981,6 +981,44 @@ TEST_CASE("Worker Trim certifies monotone roots across extreme origins and scale
     }
 }
 
+TEST_CASE("Worker Trim transports rotated roots at a large translated origin", tags) {
+    const RS_Vector origin{1e15, -1e15};
+    const RS_Vector direction{256, 192};
+    const RS_Vector normal{-direction.y, direction.x};
+    const std::array<double, 4> along{.2, .4, .6, .8};
+    const std::array<double, 4> across{-2, -1, 1, 2};
+
+    for (const bool reverseSource : {false, true}) for (const bool reverseCutter : {false, true}) {
+        std::vector<RS_Vector> controls;
+        for (std::size_t i = 0; i < along.size(); ++i)
+            controls.push_back(origin + direction * along[i] + normal * across[i]);
+        if (reverseSource) std::reverse(controls.begin(), controls.end());
+        const auto data = cache(std::move(controls), 3);
+        const RS_Vector end = origin + direction;
+        RS_Line cutter{nullptr, reverseCutter ? end : origin, reverseCutter ? origin : end};
+        const Trim::Pick pick{origin + direction * .7 + normal * 1.5};
+        const auto prepared = Trim::prepare(data, cutter, pick);
+        CAPTURE(reverseSource, reverseCutter, prepared.refusal, prepared.rootCount);
+        REQUIRE(prepared.refusal == Trim::Refusal::None);
+        REQUIRE(prepared.roots.size() == 1);
+        CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(prepared.roots.front().isolation.parameterB.lo() >= 0);
+        CHECK(prepared.roots.front().isolation.parameterB.hi() <= 1);
+
+        Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), pick, {}}};
+        const auto encoded = Reply::encode(reply(request, prepared), request);
+        REQUIRE(encoded);
+        const auto decoded = Reply::decode(*encoded, request);
+        REQUIRE(decoded);
+        const auto* received = std::get_if<Trim::Result>(&decoded->result);
+        REQUIRE(received);
+        REQUIRE(received->roots.size() == 1);
+        CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(received->roots.front().isolation.parameterB.lo() >= 0);
+        CHECK(received->roots.front().isolation.parameterB.hi() <= 1);
+    }
+}
+
 TEST_CASE("Worker Trim conic and paired results preserve original conics and all diagnostics", tags) {
     for (bool reverse : {false, true}) for (unsigned kind = 0; kind < 4; ++kind) {
         const auto data = cache({{-3, .5}, {3, .5}});
