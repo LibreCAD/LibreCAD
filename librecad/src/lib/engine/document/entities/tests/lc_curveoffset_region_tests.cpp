@@ -104,6 +104,7 @@ std::vector<std::pair<RS_Vector, RS_Vector>> regionEdges(const std::vector<RS_Ve
 struct CycleCheck {
     /** Largest | distance to the region's boundary - d | over the output. */
     double worstDistance{0.0};
+    RS_Vector worstPoint;
     /** Output points on the wrong side of the region (inside when growing, outside when shrinking). */
     int wrongSide{0};
     /** Signed areas of the cycles, positive counter-clockwise. */
@@ -136,7 +137,10 @@ CycleCheck checkCycles(const LC_CurveOffsetGeometryResult& result, const std::ve
             for (const auto& [a, b] : edges) {
                 nearest = std::min(nearest, distanceToSegment(points[i], a, b));
             }
-            check.worstDistance = std::max(check.worstDistance, std::abs(nearest - d));
+            if (std::abs(nearest - d) > check.worstDistance) {
+                check.worstDistance = std::abs(nearest - d);
+                check.worstPoint = points[i];
+            }
             if (includedBy(winding(polygon, points[i]), rule) == grow) {
                 ++check.wrongSide;
             }
@@ -159,6 +163,7 @@ LC_CurveOffsetGeometryResult region(const RS_Spline& source, const double d, con
 // waist at the origin, and a limacon whose inner loop is wound twice.
 const std::vector<RS_Vector> g_ring{{0, 0}, {40, -10}, {60, 30}, {20, 50}, {-15, 25}};
 const std::vector<RS_Vector> g_bowTie{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}};
+const std::vector<RS_Vector> g_bowTieNoded{{20, 10}, {20, -10}, {0, 0}, {-20, 10}, {-20, -10}, {0, 0}};
 
 std::vector<RS_Vector> limacon() {
     std::vector<RS_Vector> points;
@@ -215,7 +220,7 @@ TEST_CASE("A bow tie shrinks into its two lobes and grows into one region", "[cu
     }
 }
 
-TEST_CASE("Self-crossing polyline region offsets refuse atomically when noding is ambiguous",
+TEST_CASE("Self-crossing polyline regions grow and erode under both fill rules",
           "[curve-offset][region][polyline][self-crossing]") {
     RS_Polyline source;
     for (const RS_Vector& point : g_bowTie) source.addVertex(point);
@@ -237,9 +242,16 @@ TEST_CASE("Self-crossing polyline region offsets refuse atomically when noding i
                     result.intersectionDiagnostics.failureDomain.segmentA,
                     result.intersectionDiagnostics.failureDomain.segmentB,
                     result.intersectionDiagnostics.failureDepth);
-            CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-            CHECK(result.branches.empty());
-            CHECK(result.intersections.empty());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.sourceIntersections == 1);
+            REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+            const CycleCheck check = checkCycles(result, g_bowTieNoded, rule, distance, grow);
+            CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
+            CHECK(check.closed);
+            CHECK(check.worstDistance < 0.02);
+            CHECK(check.wrongSide == 0);
+            REQUIRE(check.areas.size() == result.branches.size());
+            for (const double area : check.areas) CHECK(area > 0.0);
         }
     }
 }
