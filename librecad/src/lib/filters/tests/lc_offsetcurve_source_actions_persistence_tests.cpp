@@ -1631,10 +1631,11 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
 
 TEST_CASE("partial eccentric ellipse source trims through document actions and file lanes",
           "[lc-offsetcurve][source-action][ellipse][partial][trim-action][persistence]") {
+    const bool reversed = GENERATE(false, true);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(static_cast<int>(format));
+    CAPTURE(reversed, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1654,7 +1655,7 @@ TEST_CASE("partial eccentric ellipse source trims through document actions and f
     constexpr double ratio = 0.25;
     const LC_OffsetSourceGeometry expectedSource{RS_EllipseData{
         {0, 0}, {majorRadius * std::cos(axisAngle), majorRadius * std::sin(axisAngle)},
-        ratio, -1.1, 1.1, false}};
+        ratio, reversed ? 1.1 : -1.1, reversed ? -1.1 : 1.1, reversed}};
     REQUIRE(expectedSource.isWellFormed());
     auto sourceOwner = expectedSource.makeEntity();
     REQUIRE(sourceOwner);
