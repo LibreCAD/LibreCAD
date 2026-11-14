@@ -2097,19 +2097,6 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
             prepared.work.intersections.bvhDisjointPairs, prepared.work.intersections.bvhMonotonePathPrunes,
             prepared.work.intersections.bvhLeafCandidates, prepared.work.intersections.bvhExpandedPairs,
             prepared.work.intersections.bvhInterruptedPairs);
-    if (weightProfile == 2 && prepared.refusal != LC_OffsetCacheTrim::Refusal::None) {
-        CHECK(prepared.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
-        CHECK(prepared.rootCount == 0);
-        CHECK(prepared.fragments.empty());
-        CHECK_FALSE(replacement->isDeleted());
-        CHECK(replacement->getParent() == &graphic);
-        CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == cacheBeforeTrim);
-        REQUIRE(replacement->sourceDefinition());
-        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
-                  replacement->sourceDefinition()->source) == expectedEncoding);
-        CHECK_FALSE(cutter->isDeleted());
-        return;
-    }
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(prepared.rootCount == 2);
     REQUIRE(prepared.fragments.size() == 1);

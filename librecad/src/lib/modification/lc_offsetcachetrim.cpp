@@ -1221,15 +1221,18 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                 const double upper = std::nextafter(value, INFINITY);
                 return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
             };
-            // A finite-line scalar contraction can certify the local root even
-            // when its global midpoint rounds onto an integer span boundary.
+            // A finite-line scalar contraction tightens the source interval
+            // when global parameters lose local precision or session contraction
+            // cannot refine an already-certified transverse root.
             const bool roundedToKnot = !singleton(t) && globalMiddle == std::floor(globalMiddle);
             const bool globalParameterLosesLocalPrecision = std::isfinite(globalMiddle) &&
                 (ulp(globalMiddle) > 128 * ulp(localMiddle) || roundedToKnot);
-            const bool lineCutter = globalParameterLosesLocalPrecision && input.cutter &&
+            const bool finiteLineCutter = input.cutter &&
                 cutterId >= input.source->size() &&
                 cutterId - input.source->size() < input.cutter->size() &&
                 (*input.cutter)[cutterId - input.source->size()].degree == 1;
+            const bool lineCutter = finiteLineCutter &&
+                (globalParameterLosesLocalPrecision || scalarContracted);
             if (singleton(t)) { break; }
             bool lineProgress = false;
             if (lineCutter) {
@@ -1263,9 +1266,24 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                 if (x.width() <= error && y.width() <= error) { break; }
             }
             if (round == c.limits.maxDepth) { fail(Refusal::AmbiguousRoots); }
-            snapshot = contract(c, session, handle, Refusal::AmbiguousRoots);
-            t = intersect(snapshot->event.isolation.parameterA, t);
-            if (!finite(t)) { fail(Refusal::AmbiguousRoots); }
+            bool usedScalarFallback = false;
+            try {
+                snapshot = contract(c, session, handle, Refusal::AmbiguousRoots);
+            } catch (const Failure& failure) {
+                if (failure.reason != Refusal::AmbiguousRoots || !finiteLineCutter) { throw; }
+                const auto& line = (*input.cutter)[cutterId - input.source->size()];
+                c.items(1);
+                c.compare();
+                const I narrowed = contractCacheRootAgainstLine((*input.source)[id], line, input.frame, u);
+                if (!finite(narrowed) || narrowed.width() >= u.width()) { throw; }
+                t = global(id, narrowed);
+                scalarContracted = true;
+                usedScalarFallback = true;
+            }
+            if (!usedScalarFallback) {
+                t = intersect(snapshot->event.isolation.parameterA, t);
+                if (!finite(t)) { fail(Refusal::AmbiguousRoots); }
+            }
         }
         if (scalarContracted && !lineContracted) { t = snapshot->event.isolation.parameterA; }
         // A segment endpoint certificate alone does not prove that a CORNER
