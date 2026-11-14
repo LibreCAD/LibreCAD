@@ -44375,22 +44375,36 @@ variant obligations complete from headless picker tests alone.
 
 The inward unequal-radius rounded-polyline fixture is now qualified for its
 current traversal at the origin, `(1e6,-1e6)`, and `(1e9,-1e9)` (sections
-1288-1290), but not for reversed vertex traversal. An exploratory paired
-fixture reversed the vertex order and bulge signs and exercised the same
-source update, independent arc-radius oracle, component-aware Trim, undo/redo,
-and five DXF/DWG lanes. The first side setting failed the oracle by as much as
-about `1.61` drawing units against the checked `0.00213` tolerance; the other
-side setting also failed by about `0.92` units. The profile was removed rather
-than weakening the oracle or presenting an unverified Trim result as support.
+1288-1290), but not for reversed traversal. An exploratory paired fixture
+reversed the captured typed segments with the same construction used by the
+worker tests. The reversed source is well-formed, and capture/encode after
+entity reconstruction is byte-for-byte stable. However,
+`strictConvexPolylineOrientation` declines this particular source in both
+traversals, so generation falls back to Direct. The action-backed cache then
+fails the independent arc-radius oracle at the origin: errors reach about
+`1.61` drawing units against `0.00213` tolerance, and neither signed-side
+choice establishes the intended eight-component Trim result. The profile was
+removed rather than weakening the oracle or presenting an unverified result
+as support.
 
-This is an unresolved geometry/fixture discrepancy, not yet evidence that the
-production writer is wrong: the next slice must first prove that the reversed
-polyline's exploded arcs match the forward source locus (same centers and
-radii, reversed endpoints and traversal), then trace the chosen signed side
-through `LC_OffsetSourceGeometry` capture, worker request, and generated cache.
-Only after an independent locus check passes should it add the reversed
-profile to the worker-backed Trim and five-file-lane matrix. If the production
-cache deviates from the correctly derived offset, add a focused regression and
-fix the producer; do not merely broaden tolerances. Until then, reversed
-traversal remains outside the inward rounded-polyline evidence in sections
-1288-1290 and the corresponding Slice 4 gate remains open.
+The analytic worker regression `worker erodes convex mixed polyline with
+unequal corner radii` now checks the expected concentric offset locus at three
+interior points on every source arc, using 8,193 cache samples to find the
+nearest output point. The focused command
+`QT_QPA_PLATFORM=offscreen librecad_offset_worker_kernel_tests "worker erodes convex mixed polyline with unequal corner radii" --reporter compact`
+passes 1,134 assertions / 1 case for both traversal directions, including
+typed cache validation and worker-result wire round-trip. This strengthens the
+analytic worker evidence; it does not resolve the separate rounded-bulge
+action profile, for which `strictConvexPolylineOrientation` returns no
+orientation in either traversal and the cache fails the arc-radius oracle.
+
+Next, determine why that rounded-bulge profile is not admitted by the
+strict-convex classifier, and independently derive direct-offset points for
+both traversals/signs. Then compare worker generation with those loci and
+confirm the selected side semantics. If the source is not strictly convex,
+retain Direct mode only if the oracle proves its geometry; if the source is
+strictly convex or the generated cache deviates, add a focused regression and
+fix the relevant classifier/producer. Only after source-to-cache deviation is
+bounded should this profile enter the worker-backed Trim, undo/redo and
+five-file-lane matrix. Reversed traversal remains outside the evidence in
+sections 1288-1290 until those steps pass.
