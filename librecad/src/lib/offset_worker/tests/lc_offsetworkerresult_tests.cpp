@@ -1019,6 +1019,45 @@ TEST_CASE("Worker Trim transports rotated roots at a large translated origin", t
     }
 }
 
+TEST_CASE("Worker Trim refuses one-ULP parallel near misses at a large origin", tags) {
+    const RS_Vector origin{1e15, -1e15};
+    const double separatedY = std::nextafter(origin.y, std::numeric_limits<double>::infinity());
+    REQUIRE(separatedY > origin.y);
+    const double separation = separatedY - origin.y;
+    CAPTURE(separation);
+
+    for (const std::size_t degree : {1u, 3u}) {
+        std::vector<RS_Vector> controls;
+        if (degree == 1) {
+            controls = {origin + RS_Vector{-16, separation}, origin + RS_Vector{16, separation}};
+        } else {
+            controls = {origin + RS_Vector{-16, separation}, origin + RS_Vector{-5, separation},
+                        origin + RS_Vector{5, separation}, origin + RS_Vector{16, separation}};
+        }
+        const auto data = cache(std::move(controls), degree);
+        RS_Line cutter{nullptr, origin + RS_Vector{-32, 0}, origin + RS_Vector{32, 0}};
+        const Trim::Pick pick{origin + RS_Vector{8, separation}};
+        const auto prepared = Trim::prepare(data, cutter, pick);
+        CAPTURE(degree, prepared.refusal, prepared.rootCount);
+        REQUIRE(prepared.refusal == Trim::Refusal::NoUsableRoots);
+        CHECK(prepared.roots.empty());
+        CHECK(prepared.fragments.empty());
+        CHECK(Trim::strictlySeparatedBezierFromLine(data.controlPoints,
+            cutter.getStartpoint(), cutter.getEndpoint()));
+
+        Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), pick, {}}};
+        const auto encoded = Reply::encode(reply(request, prepared), request);
+        REQUIRE(encoded);
+        const auto decoded = Reply::decode(*encoded, request);
+        REQUIRE(decoded);
+        const auto* refusal = std::get_if<Trim::Result>(&decoded->result);
+        REQUIRE(refusal);
+        CHECK(refusal->refusal == Trim::Refusal::NoUsableRoots);
+        CHECK(refusal->roots.empty());
+        CHECK(refusal->fragments.empty());
+    }
+}
+
 TEST_CASE("Worker Trim conic and paired results preserve original conics and all diagnostics", tags) {
     for (bool reverse : {false, true}) for (unsigned kind = 0; kind < 4; ++kind) {
         const auto data = cache({{-3, .5}, {3, .5}});
