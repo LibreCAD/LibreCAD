@@ -35,11 +35,12 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** While choosing
-a replacement curve in the existing Properties widget, the user must be able
-to change the requested source type repeatedly without closing the chooser or
-restarting replacement; each change refreshes eligible candidates in place.
-The canonical inventory is
+**Current source-widget requirement and status (2026-11-14):** In the existing
+Properties source chooser, while replacement/candidate selection is active,
+the user can change the requested source type repeatedly without closing the
+chooser or restarting replacement; each change refreshes eligible candidates
+in place. This applies to every kind in the canonical offset-source inventory,
+not every drawable entity in LibreCAD. The canonical inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
 distinct selectable and preserved type, not a spline-points alias. The filter
@@ -56,8 +57,12 @@ selection, verify candidate refresh and source indication, then verify
 successful replacement and cancel/refusal behavior. Keep this gate separate
 from Slice 4's per-variant capture/reconstruction, worker/cache, Trim, and
 DXF/DWG qualification; selector availability alone does not prove full support
-for every mathematical variant. Do not add unrelated drawable families or a
-second type selector.
+for every mathematical variant. The focused Properties-dialog tests also
+verify the selector inventory and eligible candidate filtering against all
+nine kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`,
+source chooser tests). Do not add unrelated drawable families or a second type
+selector. The latest request therefore adds no new implementation slice; it
+reaffirms the visible interaction gate and the separate family-by-variant gate.
 
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
@@ -30449,6 +30454,16 @@ these rows do not imply every parameter/domain is supported):
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing; sections 1101 and 1103 cover two distinct bounded profiles on both branches through worker-backed Trim Two, undo/redo, five-file round trips, and LibreDWG structural reads; sections 1335-1336 cover source-replacement Trim, undo/redo, and five-lane file round trips over both branches, ratios 0.25/0.75, scales 0.25/1/4, both signed sides, and both parameter traversal orders | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; all 11 recorded open/closed linear, mixed-bulge, major/minor and unequal-major profiles pass both worker sides over scales `1e-3`, `1`, `1e3`, `1e4`, translation ratios `1e4` and `1e6`, normalized distances `+/-0.1` and `+/-0.25`, cache admission/refusal, and five staged DXF/DWG lanes; the 256-segment collinear, piecewise-kinked, sinusoidal, and monotone-quadratic open chains pass direct exact-normal checks on both sides; collinear and piecewise-kinked chains pass worker Trim Two in both pick orders and five file lanes (section 1233); the monotone-quadratic cache-line contact is certified in both operand roles and Trim Two succeeds in both pick orders (section 1234); a bounded 32-segment sinusoid with two crossings passes worker Trim Two in both pick orders (section 1238); the dense 256-segment sinusoid certifies both cache roots and refuses atomically at the fixed 16-output limit (section 1239); a 256-edge closed strictly convex linear polyline passes direct and worker-backed inward erosion, both Trim operand roles and pick orders, undo/redo, and five file lanes, while collapsed inradius refuses (sections 1242-1244) | Curved-corner and concave/self-intersecting closed-region semantics, dense curved/multi-crossing layouts beyond the recorded output-cap refusal, segment counts/topologies beyond 256, materialization near the 16-entity cap, broader transformed corners and scales/origins, and boundary-pick/collapse oracles |
 
+**High-segment polyline clarification (section 1337):** The closed, strictly
+convex linear profile is now qualified through worker source replacement and
+cache publication at 512 and 1024 edges, with outward miter-radius and inward
+shifted-half-plane checks. Full Trim Two, undo/redo, and five-lane persistence
+remain qualified only at 256 edges. The cache root isolator returns
+`AmbiguousRoots` for some tested 512/1024-edge Trim inputs; this is a separate
+remaining limitation and is not waived by the successful high-edge worker
+generation. Continue high-edge Trim investigation and preserve atomic refusal
+until roots are certified.
+
 **Spline-points distance clarification:** The shared worker matrix uses nominal
 distances `0.2` and `0.5` and applies a profile-specific multiplier. For the
 self-crossing fit-point records, the base bow-tie and the five-point star use
@@ -45283,3 +45298,32 @@ assertions / 1 case. This qualifies only the recorded interval `[-0.9, 1.1]`
 and its reversed ordering; additional parameter extents, curvature
 neighborhoods, other cutter geometries, visible GUI, and independent CAD
 acceptance remain open.
+
+## 1337. Scale Strictly Convex Polyline Worker Generation (2026-11-14)
+
+Replaced the all-miters-against-all-shifted-halfplanes quadratic erosion check
+with validation of the constructed miter cycle: each vertex remains certified
+against its adjacent shifted support lines, the cycle has nondegenerate
+consistent turns and no non-adjacent segment intersections, each cycle edge
+progresses along its source support line, and the signed area preserves
+orientation. This removes the old `maxDistanceMapBoxes`-derived 256-edge cap
+from this specific worker-generation path without relaxing geometric
+tolerances or changing fail-closed behavior.
+
+Expanded the closed strictly convex regular-polyline regression to 256, 512,
+and 1024 edges in both offset directions. All six worker source-replacement
+cases pass; at 512/1024 the published cache controls are independently checked
+against the regular outward miter radius or every inward shifted source
+half-plane. The 256-edge profile continues through both Trim operand roles,
+both pick orders, preview/commit, undo, and five R14/R2000/R2018 DXF/DWG
+round-trip lanes. Do not claim high-edge Trim from these generation checks: an
+exploratory run observed `AmbiguousRoots` at 512 and 1024 for some cache-root
+layouts, and the high-edge test intentionally keeps that stage separate.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+passes. The focused `[closed][high-segment]` regression passes 776 assertions /
+1 generated test case. High-edge Trim root certification, curved/concave
+closed-region semantics, segment counts above 1024, external CAD, and visible
+GUI remain open; this section advances only strictly convex linear worker
+generation and the 256-edge Trim/persistence slice.
