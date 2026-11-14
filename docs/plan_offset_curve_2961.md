@@ -311,10 +311,11 @@ The older Slice 4 evidence summary in the table is superseded by sections
 fail-closed cache-validation and pick-query boundaries.
 
 Section 1328 extends the wrapped-periodic rational spline matrix to a mild
-asymmetric positive-weight profile. It records 160 successful Trim/persistence
-combinations and 20 degree-four `AmbiguousRoots` refusals that preserve the
-original cache, typed source and cutter. Those refusals are an explicit open
-Slice 4 boundary, not proof of general asymmetric-rational Trim support.
+asymmetric positive-weight profile. A bounded scalar interval-Newton fallback
+now contracts finite-line roots inside the original certified session interval
+when session contraction reports `AmbiguousRoots`. All 180 Trim/persistence
+combinations in this matrix succeed; this does not establish general support
+for arbitrary rational weights, conditioning, or knot/control topologies.
 
 Sections 1201-1202 extend the closed fit-point spline evidence. Section 1201
 adds independent direct-normal checks for the admission-boundary and larger
@@ -45081,23 +45082,23 @@ three positive-weight profiles: unit weights, the prior symmetric
 `1 + 0.01*cos(2*angle)` profile, and a mild asymmetric profile
 `1 + 0.005*cos(angle) + 0.0025*sin(3*angle)`. Across degrees four through six,
 identity and rotated/translated frames, both signed distances, and the five
-R14/R2000/R2018 DXF/DWG lanes, the focused test passes 22,112 assertions.
+R14/R2000/R2018 DXF/DWG lanes, all 180 combinations complete successfully and
+the focused test passes 23,796 assertions.
 
-The unit and symmetric profiles, plus all degree-five/six asymmetric cases,
-complete worker-backed source replacement, cache Trim, undo/redo, and file
-round trips. Twenty degree-four asymmetric combinations (two frames, both
-signs, five lanes) stop at certified-root isolation with
-`AmbiguousRoots`. Each explicitly verifies that no fragment is published and
-that the original target, exact cache fingerprint, typed source definition,
-and cutter remain unchanged. No intersection or tangency proof rule was
-weakened. A diagnostic experiment showed one crossing certified transverse;
-the other root remains unresolved by the bounded session, so this profile is
-not claimed as supported for Trim.
+Every profile completes worker-backed source replacement, cache Trim,
+undo/redo, and file round trips. For finite-line cutters only, when certified
+session contraction reports `AmbiguousRoots`, the fallback applies the
+existing scalar interval-Newton contraction to the source Bezier signed
+distance and intersects that enclosure with the session's original unique-root
+interval. Existing transverse/position checks, work limits, and uniqueness
+requirements remain in force; no proof rule or budget was weakened. This
+resolves the previously refused degree-four asymmetric cases without claiming
+support for unresolved or tangential roots.
 
 Validation on macOS arm64 CMake Release:
 `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
 'wrapped periodic high-degree splines trim and persist through file lanes'
---reporter compact` passes 22,112 assertions / 1 case. This adds bounded
-fail-closed and successful-profile evidence; resolving degree-four asymmetric
-root isolation and widening the family-by-variant matrix remain open under
-Slice 4.
+--reporter compact` passes 23,796 assertions / 1 case. The full Trim suite
+passes 204,835 assertions / 164 cases, and the source-picker suite passes
+15,116 assertions / 44 cases. Broader rational-weight and knot/control
+topology coverage remains open under Slice 4.
