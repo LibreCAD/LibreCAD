@@ -44371,14 +44371,16 @@ representative undo/redo and save/reopen. Record platform, exact build/revision,
 route, and result. Do not mark Slice 5 or the independent Slice 4 family-by-
 variant obligations complete from headless picker tests alone.
 
-## 1294. Keep Reversed Rounded-polyline Inward Trim Open (2026-11-13)
+## 1294. Qualify Reversed Rounded-polyline Inward Trim (2026-11-14)
 
 The initial exploratory conclusion that reversed traversal failed at the
 origin is superseded by the worker and action/persistence regressions recorded
-in sections 1295-1296: both traversal directions pass the worker arc-locus
+in sections 1295-1297: both traversal directions pass the worker arc-locus
 oracle, and the reversed origin fixture passes source replacement, undo/redo,
-and all five file lanes. Keep reversed Trim open; those tests do not exercise
-the Trim action.
+and all five file lanes. The translated/rotated reversed fixture now also
+passes Update from Source, Trim, undo/redo, and five file lanes (section 1297).
+Keep other rounded-polyline profiles and the `(1e9,-1e9)` action/Trim route
+open; they are not covered by that action-level matrix.
 
 The analytic worker regression `worker erodes convex mixed polyline with
 unequal corner radii` now checks the expected concentric offset locus at three
@@ -44386,15 +44388,15 @@ interior points on every source arc, using 8,193 cache samples to find the
 nearest output point. The focused command
 `QT_QPA_PLATFORM=offscreen librecad_offset_worker_kernel_tests "worker erodes convex mixed polyline with unequal corner radii" --reporter compact`
 passes 1,134 assertions / 1 case for both traversal directions, including
-typed cache validation and worker-result wire round-trip. This strengthens
-the analytic worker evidence; it does not close the translated/reversed
-action-to-Trim path or its five-file matrix.
+typed cache validation and worker-result wire round-trip. The translated
+action/Trim matrix for one reversed profile is recorded separately in section
+1297.
 
-The strict-convex classifier's translated-coordinate rejection and the
-remaining action/cache discrepancy are tracked in section 1296. Keep this
-fixture outside Trim acceptance until action-generated cache geometry agrees
-with the independent arc-locus oracle and a trimmed output passes its
-component, undo/redo, and persistence checks.
+The strict-convex classifier's translated-coordinate rejection was fixed in
+section 1296. The prior scratch action/cache discrepancy came from an invalid
+test fixture that finalized a polyline a second time after reconstructing it
+from typed geometry; the corrected, unmodified source entity is covered in
+section 1297.
 
 ## 1295. Qualify Reversed Rounded-polyline Replacement and Persistence (2026-11-13)
 
@@ -44414,11 +44416,10 @@ uses the source entity captured from the drawing as its byte-encoding
 baseline, so it checks the persisted entity representation rather than a
 pre-construction input structure.
 
-**Acceptance status:** this closes the action, undo/redo, analytic cache-locus,
-and five-format persistence checks for this fixture in headless tests. It does
-not close visible source-picker acceptance, other rounded-polyline profiles,
-or the translated classifier/action/Trim investigations retained in sections
-1294 and 1296.
+**Acceptance status:** this closes the origin action, undo/redo, analytic
+cache-locus, and five-format persistence checks for this fixture in headless
+tests. It does not close visible source-picker acceptance, other
+rounded-polyline profiles, or the `(1e9,-1e9)` action/Trim route.
 
 ## 1296. Stabilize Convex Classification for Reversed Large-origin Polylines (2026-11-13)
 
@@ -44439,18 +44440,36 @@ analytic samples on every source arc. The focused test passes 74 assertions.
 The existing 13-profile/five-format Trim matrix also passes 4,100 assertions
 after adding a source-capture/definition encoding parity check.
 
-An exploratory action-driven reversed profile at a translated, rotated
-origin still produced cache-locus deviations (up to about `0.5` drawing units
-against a `0.002` tolerance), although direct worker-kernel generation of the
-same transformed typed source passes the 74-assertion arc oracle. This action
-experiment was not retained as a passing regression. The distinction between
-the action's worker request/application path and direct kernel generation is
-unresolved; do not infer translated action support from the classifier test.
+The first action-level experiment appeared to show a cache mismatch, but its
+test fixture called the polyline finalization methods again after constructing
+the entity from typed geometry. The corrected action regression in section
+1297 uses the unmodified factory-created entity, verifies its encoding against
+the published source definition, compares the published cache fingerprint to
+an independent worker-process result, and passes the analytic arc oracle.
+There is no remaining action/worker divergence established for this fixture.
 
-**Next:** add a focused one-format action test using the exact transformed
-typed source. Compare the captured source definition, serialized
-`GenerateSource` request, direct kernel cache, worker process reply, and
-published entity cache byte-for-byte before applying the arc-locus oracle.
-Find and fix the first divergence; then retain the test, expand to five file
-lanes, and add the reversed Trim/cutter/undo/redo checks. Keep the broad
-13-profile matrix and visible GUI acceptance separate.
+## 1297. Verify Translated Reversed Polyline Action, Trim, and Persistence (2026-11-14)
+
+Added `translated reversed source action matches an independent worker
+request` to `lc_offsetcurve_source_actions_persistence_tests.cpp`. It reverses
+the exact mixed line/arc typed profile, rotates it by `0.37` radians, and
+translates it to `(1e6,-1e6)`. Update from Source must retain signed distance
+`-0.25`; the captured polyline encoding must match the published source
+definition. A second joined worker-process request from that exact definition
+must produce a cache with the same geometry fingerprint as the action's
+published cache. An independent oracle checks three interior points on each
+source arc against an 8,193-sample cache.
+
+The same case then cuts the inward closed cache with a transformed line,
+asserts two certified roots and one retained fragment, runs the Trim action,
+checks undo/redo, and exports/reopens R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+The focused command
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests "translated reversed source action matches an independent worker request" --reporter compact`
+passes 325 assertions / 1 case across the five file formats.
+
+**Acceptance status:** this qualifies the rotated reversed mixed line/arc
+fixture at `(1e6,-1e6)` through source action, worker parity, analytic cache
+locus, Trim, undo/redo, and five-format round-trip. The worker classifier and
+cache oracle also pass at `(1e9,-1e9)`, but action/Trim and file lanes at that
+origin remain open, as do other rounded-polyline profiles, visible desktop
+interaction, and the independent family-by-variant matrix.
