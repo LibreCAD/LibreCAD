@@ -45571,3 +45571,20 @@ target builds; qmake6 Release application/plugins `make -j6` exits 0; and
 `git diff --check` passes. Other origin/scale regimes, tangent or near-tangent
 dense contacts, nonconvex caches, visible GUI interaction, cross-platform
 runtime, and independent CAD acceptance remain open.
+
+## 1346. Separate Dense Vertex Tangency from a Proved Near-tangent Crossing (2026-11-14)
+
+Added a paired 64-, 128-, 256-, 512-, 1024-, and 2048-span boundary matrix
+for a closed regular polygon against a circle near its rightmost vertex. At
+exact tangency, Trim must refuse with no fragments, removed result, or source
+mutation. Moving the circle center inward by 0.1 produces two transverse
+contacts; Trim must then return exactly two roots and the single expected
+complement with correct sampled parameter coverage. This guards against both
+inventing a crossing at a corner touch and over-refusing a separated secant.
+
+Validation on macOS arm64 CMake Release: the exact-tangency refusal matrix
+passes 16,248 assertions / 1 case; the near-tangent secant matrix passes
+223,320 assertions / 1 case; `[trim-kernel]` passes 826,586 assertions / 79
+cases; `librecad_tests` builds; and `git diff --check` passes. This is not a
+general tangent/cusp proof for arbitrary source and cutter geometry; other
+contact orientations, narrower gaps, and nonconvex layouts remain open.

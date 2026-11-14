@@ -433,6 +433,57 @@ TEST_CASE("Dense conic Trim preserves a rotated cache at a large origin", tags) 
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
+TEST_CASE("Dense cache tangency at a source vertex refuses without output", tags) {
+    const std::size_t segmentCount = GENERATE(64u, 128u, 256u, 512u, 1024u, 2048u);
+    CAPTURE(segmentCount);
+    constexpr double radius = 10.0;
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.emplace_back(radius * std::cos(angle), radius * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    RS_Circle cutter{nullptr, {{20.0, 0.0}, 10.0}};
+
+    const auto result = Trim::prepare(data, cutter, {{-5.0, 0.0}});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    refused(result);
+    equalData(data, before);
+}
+
+TEST_CASE("Dense cache retains a proved near-tangent conic crossing", tags) {
+    const std::size_t segmentCount = GENERATE(64u, 128u, 256u, 512u, 1024u, 2048u);
+    CAPTURE(segmentCount);
+    constexpr double radius = 10.0;
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.emplace_back(radius * std::cos(angle), radius * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    RS_Circle cutter{nullptr, {{19.9, 0.0}, 10.0}};
+
+    const auto result = Trim::prepare(data, cutter, {{10.0, 0.0}});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result);
+    equalData(data, before);
+    CHECK(coverage(result, .5) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
+}
+
 TEST_CASE("Closed cache trim canonicalizes a proved root at the old storage seam", tags) {
     for (bool reverse : {false, true}) {
         auto data = cache({{0, -2}, {2, -2}, {2, 2}, {-2, 2}, {-2, -2}, {0, -2}});
