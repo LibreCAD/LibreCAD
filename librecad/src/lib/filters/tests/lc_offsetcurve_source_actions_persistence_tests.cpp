@@ -1975,8 +1975,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
 TEST_CASE("wrapped periodic high-degree splines trim and persist through file lanes",
           "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]") {
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
-    const bool nonuniformWeights = GENERATE_COPY(
-        Catch::Generators::range<int>(0, 2)) != 0;
+    const int weightProfile = GENERATE(0, 1, 2);
     const int transformed = GENERATE(0, 1);
     const double signedDistance = GENERATE(-0.02, 0.02);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
@@ -1990,7 +1989,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
         return RS_Vector{cosine * point.x - sine * point.y + frameOrigin.x,
                          sine * point.x + cosine * point.y + frameOrigin.y};
     };
-    CAPTURE(degree, nonuniformWeights, transformed, signedDistance, static_cast<int>(format));
+    CAPTURE(degree, weightProfile, transformed, signedDistance, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -2012,7 +2011,10 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     for (std::size_t i = 0; i < controlCount; ++i) {
         const double angle = 2.0 * M_PI * static_cast<double>(i) / static_cast<double>(controlCount);
         splineData.controlPoints.push_back(mapPoint({10.0 * std::cos(angle), 7.0 * std::sin(angle)}));
-        splineData.weights.push_back(1.0 + (nonuniformWeights ? 0.01 : 0.0) * std::cos(2.0 * angle));
+        double weight = 1.0;
+        if (weightProfile == 1) weight += 0.01 * std::cos(2.0 * angle);
+        if (weightProfile == 2) weight += 0.005 * std::cos(angle) + 0.0025 * std::sin(3.0 * angle);
+        splineData.weights.push_back(weight);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), degree + 1, 0.0);
     for (std::size_t i = 1; i <= controlCount - degree - 1; ++i)
@@ -2095,8 +2097,8 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
             prepared.work.intersections.bvhDisjointPairs, prepared.work.intersections.bvhMonotonePathPrunes,
             prepared.work.intersections.bvhLeafCandidates, prepared.work.intersections.bvhExpandedPairs,
             prepared.work.intersections.bvhInterruptedPairs);
-    if (degree == 6 && nonuniformWeights && prepared.refusal != LC_OffsetCacheTrim::Refusal::None) {
-        CHECK(prepared.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+    if (weightProfile == 2 && prepared.refusal != LC_OffsetCacheTrim::Refusal::None) {
+        CHECK(prepared.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
         CHECK(prepared.rootCount == 0);
         CHECK(prepared.fragments.empty());
         CHECK_FALSE(replacement->isDeleted());
