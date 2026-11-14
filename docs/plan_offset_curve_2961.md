@@ -43938,3 +43938,20 @@ other layouts must remain refused until extraction, proof validation, worker
 transport, and persistence are implemented and qualified together. Broader
 valid knot-layout and geometry/persistence coverage, cross-platform lanes,
 external-CAD checks, and visible GUI acceptance remain open.
+
+## 1276. Cover Supported Linear Knot Multiplicities (2026-11-13)
+
+Test commit `054f3bc41` extends the knot-layout matrix to degree 1. It exercises
+two nonuniform three-span layouts with internal multiplicities 1 and 2 in
+opposite orderings. For each layout, the finite-line crossing is on raw span
+2; the kernel emits `AnalyticMonotoneTransverse`, and result encoding/decoding
+revalidates and preserves that root and span identity. The focused case passes
+20 assertions; the complete worker-result suite passes 470,282 assertions /
+32 cases on macOS arm64 CMake Release. `git diff --check` is clean.
+
+Together with section 1275, this checks the explicitly supported internal
+multiplicities for both normalized degrees and retains an atomic refusal
+regression for unsupported degree-3 multiplicities 1 and 2. It does not
+qualify arbitrary source geometry or every knot domain; continue the family
+and variant matrix through geometry oracles and applicable file lanes, with
+cross-platform, external-CAD, and visible-GUI acceptance still open.
