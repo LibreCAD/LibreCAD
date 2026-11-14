@@ -45621,6 +45621,23 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1352. Refuse Dense Near-full Ellipse-arc Trim Cutters (2026-11-14)
+
+Added a 128-, 512-, and 2048-span closed circular cache matrix against an
+eccentric ellipse arc whose end angle is the representable value immediately
+below `2π`. Both forward and reversed traversal are tested. Each case must
+refuse specifically as `UnsupportedCutter`, return no roots/fragments/removal,
+and leave the source cache unchanged; this verifies that near-full arc
+normalization never silently completes the missing interval or treats it as a
+full ellipse.
+
+Validation on macOS arm64 CMake Release: the focused matrix passes 21,627
+assertions / 1 case; `[trim-kernel]` passes 1,379,977 assertions / 84 cases;
+`librecad_tests` builds; and `git diff --check` passes. This covers only this
+near-full angle representation, ellipse ratio, and source profile; other
+near-full gaps, sweep boundaries, cutter/source topologies, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
 ## 1351. Qualify Certified Post-cusp Hyperbola Trim Two (2026-11-14)
 
 Replaced section 1179's stale refusal assertion after direct cache preparation
@@ -45669,9 +45686,9 @@ complement, unchanged source data, and expected picked-interval coverage.
 Validation on macOS arm64 CMake Release: the seam-crossing arc matrix passes
 228,587 assertions / 1 case; `[trim-kernel]` passes 1,292,971 assertions / 82
 cases; `librecad_tests` builds; and `git diff --check` passes. This closes this
-arc domain only; other seam-adjacent angles, sweep limits, near-full arcs,
-visible GUI, cross-platform runtime, and independent CAD acceptance remain
-open.
+arc domain only; other seam-adjacent angles, sweep limits, and near-full arc
+gaps beyond the section 1352 fixture, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
 
 ## 1348. Trim Dense Eccentric Ellipse Arcs Across Uniform Scales (2026-11-14)
 
