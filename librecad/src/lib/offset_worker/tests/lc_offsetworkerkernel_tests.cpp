@@ -2288,7 +2288,8 @@ TEST_CASE("high-degree rational spline offsets match an independent repeated-kno
             const std::size_t multiplicity = multiplicityCase == 3 ? degree - 1 : multiplicityCase;
             for (const bool transformed : {false, true}) {
                 for (const double signedDistance : {-0.02, 0.02}) {
-                    CAPTURE(degree, multiplicity, transformed, signedDistance);
+                    const int weightProfile = transformed ? 1 : 0;
+                    CAPTURE(degree, multiplicity, transformed, signedDistance, weightProfile);
                     RS_SplineData data;
                     data.degree = degree;
                     data.type = RS_SplineData::SplineType::ClampedOpen;
@@ -2306,7 +2307,8 @@ TEST_CASE("high-degree rational spline offsets match an independent repeated-kno
                         data.controlPoints.emplace_back(
                             cosine * x - sine * y + origin.x,
                             sine * x + cosine * y + origin.y);
-                        data.weights.push_back(0.75 + 0.5 * t);
+                        data.weights.push_back(weightProfile == 0
+                            ? 0.75 + 0.5 * t : (i % 2 == 0 ? 0.7 : 1.3));
                     }
                     data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
                     data.knotslist.insert(data.knotslist.end(), multiplicity, 0.5);
