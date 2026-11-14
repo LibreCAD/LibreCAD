@@ -324,9 +324,11 @@ in every lane (section 1330). Section 1331 adds an off-center repeated interior
 knot across all degrees, weight profiles, frames, signs and file lanes, bringing
 the matrix to 540 successful combinations. Section 1333 adds two distinct
 nonuniform interior knots and a direct-normal oracle for that profile, bringing
-the matrix to 810 passing combinations. Section 1332 records a successful full
-qmake6 application/plugin build at its source revision; visible Properties
-workflow acceptance and cross-platform gates remain open.
+the matrix to 810 passing combinations. Section 1334 adds a four-span profile
+with four distinct nonuniform knots and direct-normal checks, bringing it to
+1,080 passing combinations. Section 1332 records a successful full qmake6
+application/plugin build at its source revision; visible Properties workflow
+acceptance and cross-platform gates remain open.
 
 Sections 1201-1202 extend the closed fit-point spline evidence. Section 1201
 adds independent direct-normal checks for the admission-boundary and larger
@@ -45205,8 +45207,8 @@ and repeated-knot profiles. The 810-case matrix covers degrees four through
 six, three positive-weight profiles, identity/rotated/reflected frames, both
 signed offsets, and five R14/R2000/R2018 DXF/DWG lanes. Cases continue through
 typed worker source replacement, cache Trim, undo/redo, and two save/reopen
-passes. The sampled direct-normal oracle now also checks the asymmetric
-reflected degree-four profile with distinct nonuniform knots in each file lane.
+passes. The sampled direct-normal oracle also checks the asymmetric reflected
+degree-four profile with distinct nonuniform knots in each file lane.
 
 Validation on macOS arm64 CMake Release:
 `cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
@@ -45215,3 +45217,23 @@ This covers the recorded two-knot layouts, not arbitrary nonuniform knot
 vectors, additional interior knots, higher multiplicities, or every
 conditioning regime; those Slice 4 gaps remain open alongside visible GUI and
 independent CAD acceptance.
+
+## 1334. Persist Four-span Periodic Rational Splines (2026-11-14)
+
+Added a four-span topology to the wrapped-periodic high-degree spline matrix,
+using distinct nonuniform interior knots `0.12`, `0.31`, `0.62`, and `0.88`.
+Together with the uniform, double-knot, and two-distinct-knot profiles, the
+matrix now covers 1,080 combinations across degrees four through six, three
+positive-weight profiles, identity/rotated/reflected frames, both signed
+offsets, and five R14/R2000/R2018 DXF/DWG lanes. Each case exercises typed
+worker replacement, cache Trim, undo/redo, and two save/reopen passes. The
+sampled direct-normal oracle checks the asymmetric reflected degree-four
+four-span profile in each file lane.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+passes. The focused wrapped-periodic test passes 142,131 assertions / 1 case.
+The evidence is limited to this four-knot layout and does not prove arbitrary
+knot vectors, additional spans, higher multiplicities, or all conditioning
+regimes. Those Slice 4 gaps remain open, as do visible GUI and independent CAD
+acceptance.
