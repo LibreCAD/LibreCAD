@@ -2289,7 +2289,9 @@ TEST_CASE("high-degree rational spline offsets match an independent repeated-kno
             for (const bool transformed : {false, true}) {
                 for (const double signedDistance : {-0.02, 0.02}) {
                     const int weightProfile = transformed ? 1 : 0;
-                    CAPTURE(degree, multiplicity, transformed, signedDistance, weightProfile);
+                    const double interiorKnot = transformed ? 0.37 : 0.5;
+                    CAPTURE(degree, multiplicity, transformed, signedDistance,
+                            weightProfile, interiorKnot);
                     RS_SplineData data;
                     data.degree = degree;
                     data.type = RS_SplineData::SplineType::ClampedOpen;
@@ -2311,7 +2313,7 @@ TEST_CASE("high-degree rational spline offsets match an independent repeated-kno
                             ? 0.75 + 0.5 * t : (i % 2 == 0 ? 0.7 : 1.3));
                     }
                     data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
-                    data.knotslist.insert(data.knotslist.end(), multiplicity, 0.5);
+                    data.knotslist.insert(data.knotslist.end(), multiplicity, interiorKnot);
                     data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
                     const LC_OffsetSourceDefinition definition{
                         LC_OffsetSourceGeometry{data}, signedDistance, 2e-3, false};
