@@ -479,11 +479,68 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
                 const bool expectedSuccess = (frame == 0 && grow) ||
-                    (frame == 3 && !grow);
+                    (frame == 2 && !grow) || (frame == 3 && !grow);
                 if (expectedSuccess) {
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
                     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                    REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+                    const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
+                    CHECK(check.closed);
+                    CHECK(check.worstDistance < 0.04);
+                    CHECK(check.wrongSide == 0);
+                    REQUIRE(check.areas.size() == result.branches.size());
+                    for (const double area : check.areas) CHECK(area > 0.0);
+                } else {
+                    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+                    CHECK(result.intersectionDiagnostics.failureSite !=
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
+                    CHECK(result.branches.empty());
+                }
+                CHECK(source.getVertexes().size() == originalVertices.size());
+                for (int i = 0; i < originalVertices.size(); ++i) {
+                    CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Negative-bulge bow-tie frames return checked cycles or atomic refusals",
+          "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
+    for (const int frame : {0, 1, 2, 3}) {
+        RS_Polyline source;
+        source.addVertex({20, 10});
+        source.addVertex({20, -10}, -0.5);
+        source.addVertex({-20, 10});
+        source.addVertex({-20, -10});
+        source.setClosed(true);
+        source.endPolyline();
+        if (frame == 1 || frame == 3)
+            source.rotate({0, 0}, M_PI / 7.0);
+        if (frame == 2 || frame == 3)
+            source.move({123.25, -2000000.5});
+        const QList<RS_Vector> originalVertices = source.getVertexes();
+        const std::vector<RS_Vector> polygon = polygonOf(source);
+
+        for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+            for (const bool grow : {false, true}) {
+                auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+                options.mode = LC_CurveOffsetMode::RegionBoundary;
+                options.fillRule = rule;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(
+                                grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(frame, grow, static_cast<int>(rule), static_cast<int>(result.status),
+                        static_cast<int>(result.intersectionDiagnostics.failureSite),
+                        static_cast<int>(result.intersectionDiagnostics.stage),
+                        static_cast<int>(result.intersectionDiagnostics.status),
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB);
+                if (result.status == LC_CurveOffsetStatus::Ok) {
+                    CHECK(result.intersectionDiagnostics.failureSite ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
                     REQUIRE(result.branches.size() == (grow ? 1u : 2u));
                     const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
                     CHECK(check.closed);

@@ -6458,43 +6458,54 @@ private:
     bool m_wraps{false};
 };
 
-class TranslatedOffsetSource final : public OffsetSource {
+class LocalFrameOffsetSource final : public OffsetSource {
 public:
-    TranslatedOffsetSource(const OffsetSource& source, const RS_Vector& origin)
-        : m_source{source}, m_origin{origin} {
+    LocalFrameOffsetSource(const OffsetSource& source, const RS_Vector& origin, const double angle)
+        : m_source{source}, m_origin{origin}, m_cos{std::cos(angle)}, m_sin{std::sin(angle)} {
+        const double rotationLength = std::hypot(m_cos, m_sin);
+        m_cos /= rotationLength;
+        m_sin /= rotationLength;
+        m_rotationNorm = m_cos * m_cos + m_sin * m_sin;
         m_hull.reserve(source.hull().size());
-        for (const RS_Vector& point : source.hull()) m_hull.push_back(point - origin);
+        for (const RS_Vector& point : source.hull()) m_hull.push_back(toLocalPoint(point));
     }
 
     bool closed() const override { return m_source.closed(); }
     const std::vector<double>& breaks() const override { return m_source.breaks(); }
     bool jet(const double t, const LC_CurveEvaluationSide side, LC_CurveJet& out) const override {
         if (!m_source.jet(t, side, out)) return false;
-        out.point -= m_origin;
+        out.point = toLocalPoint(out.point);
+        out.first = toLocalVector(out.first);
+        out.second = toLocalVector(out.second);
+        out.third = toLocalVector(out.third);
         return isFinite(out.point) && isFinite(out.first) && isFinite(out.second);
     }
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
         if (!m_source.boundJet(a, b, out)) return false;
-        translate(out);
+        transform(out);
         return out.isValid();
     }
     bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
         if (!m_source.boundJetWithProducts(a, b, out)) return false;
-        translate(out);
+        transform(out);
         return out.isValid();
     }
     bool boundJetForCusp(const double a, const double b, const double signedDistance,
                          LC_CurveJetBounds& out) const override {
         if (!m_source.boundJetForCusp(a, b, signedDistance, out)) return false;
-        translate(out);
+        transform(out);
         return out.isValid();
     }
     const std::vector<RS_Vector>& hull() const override { return m_hull; }
     bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
         if (!m_source.straightSegment(start, end)) return false;
-        start -= m_origin;
-        end -= m_origin;
+        start = toLocalPoint(start);
+        end = toLocalPoint(end);
         return isFinite(start) && isFinite(end);
+    }
+    RS_Vector toWorldPoint(const RS_Vector& point) const {
+        return {(m_cos * point.x - m_sin * point.y) / m_rotationNorm + m_origin.x,
+                (m_sin * point.x + m_cos * point.y) / m_rotationNorm + m_origin.y};
     }
     bool cubicSpans() const override { return m_source.cubicSpans(); }
     bool rationalCuspRootBounds() const override { return m_source.rationalCuspRootBounds(); }
@@ -6504,13 +6515,35 @@ public:
     }
 
 private:
-    void translate(LC_CurveJetBounds& bounds) const {
-        bounds.x = bounds.x - LC_Interval::point(m_origin.x);
-        bounds.y = bounds.y - LC_Interval::point(m_origin.y);
+    RS_Vector toLocalVector(const RS_Vector& vector) const {
+        return {m_cos * vector.x + m_sin * vector.y,
+                -m_sin * vector.x + m_cos * vector.y};
+    }
+    RS_Vector toLocalPoint(const RS_Vector& point) const {
+        return toLocalVector(point - m_origin);
+    }
+    void transform(LC_Interval& x, LC_Interval& y, const bool translate) const {
+        if (translate) {
+            x = x - LC_Interval::point(m_origin.x);
+            y = y - LC_Interval::point(m_origin.y);
+        }
+        const LC_Interval oldX = x;
+        const LC_Interval oldY = y;
+        x = LC_Interval::point(m_cos) * oldX + LC_Interval::point(m_sin) * oldY;
+        y = LC_Interval::point(-m_sin) * oldX + LC_Interval::point(m_cos) * oldY;
+    }
+    void transform(LC_CurveJetBounds& bounds) const {
+        transform(bounds.x, bounds.y, true);
+        transform(bounds.dx, bounds.dy, false);
+        transform(bounds.ddx, bounds.ddy, false);
+        transform(bounds.dddx, bounds.dddy, false);
     }
 
     const OffsetSource& m_source;
     RS_Vector m_origin;
+    double m_cos;
+    double m_sin;
+    double m_rotationNorm{1.0};
     std::vector<RS_Vector> m_hull;
 };
 
@@ -6539,42 +6572,64 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         return LC_CurveOffsetStatus::InvalidSource; // a region needs a closed boundary
     }
     const auto* polylineSource = dynamic_cast<const PolylineSource*>(&source);
-    if (!normalized && polylineSource != nullptr && polylineSource->hasCircularSegment() &&
-        scale.coordinate > 8192.0 * scale.feature) {
-        RS_Vector lo = source.hull().front();
-        RS_Vector hi = lo;
-        for (const RS_Vector& point : source.hull()) {
-            lo = RS_Vector::minimum(lo, point);
-            hi = RS_Vector::maximum(hi, point);
+    if (!normalized && polylineSource != nullptr && polylineSource->hasCircularSegment()) {
+        const std::vector<double>& sourceBreaks = source.breaks();
+        if (sourceBreaks.size() < 2) return LC_CurveOffsetStatus::InvalidSource;
+        LC_CurveJet startJet;
+        if (!source.jet(sourceBreaks.front(), LC_CurveEvaluationSide::Interior, startJet)) {
+            return LC_CurveOffsetStatus::InvalidSource;
         }
-        const RS_Vector origin{lo.x * 0.5 + hi.x * 0.5, lo.y * 0.5 + hi.y * 0.5};
-        if (isFinite(origin) && (origin.x != 0.0 || origin.y != 0.0)) {
-            TranslatedOffsetSource localSource{source, origin};
-            SourceScale localScale = scale;
-            localScale.coordinate = std::max(scale.feature, magnitude);
-            localScale.numericFloor = 64.0 * g_eps * std::max(localScale.coordinate,
-                                                               std::numeric_limits<double>::min());
-            localScale.tangentFloor = 64.0 * g_eps * std::max(scale.feature,
-                                                              std::numeric_limits<double>::min());
+        double angle = std::numeric_limits<double>::quiet_NaN();
+        const double tangentFloor = 64.0 * g_eps *
+            std::max(scale.feature, std::numeric_limits<double>::min());
+        for (std::size_t i = 0; i + 1 < sourceBreaks.size(); ++i) {
+            const double middle = sourceBreaks[i] + (sourceBreaks[i + 1] - sourceBreaks[i]) * 0.5;
+            LC_CurveJet jet;
+            if (source.jet(middle, LC_CurveEvaluationSide::Interior, jet) &&
+                std::hypot(jet.first.x, jet.first.y) > tangentFloor) {
+                const double tangentAngle = std::atan2(jet.first.y, jet.first.x);
+                // Remove only the rotation from the nearest cardinal frame.
+                const double axisAngle = std::round(tangentAngle / M_PI_2) * M_PI_2;
+                angle = tangentAngle - axisAngle;
+                break;
+            }
+        }
+        if (!std::isfinite(angle) || !isFinite(startJet.point)) {
+            return LC_CurveOffsetStatus::InvalidSource;
+        }
+        // Keep ordinary local drawings on their established arithmetic path.
+        const bool translateToLocal = scale.coordinate > 16.0 * scale.feature;
+        const RS_Vector origin = translateToLocal ? startJet.point : RS_Vector{0.0, 0.0};
+        const double angleFloor = 64.0 * g_eps;
+        if (translateToLocal || std::abs(angle) > angleFloor) {
+            LocalFrameOffsetSource localSource{source, origin, angle};
+            SourceScale localScale;
+            if (!computeScale(localSource, magnitude, localScale)) return LC_CurveOffsetStatus::InvalidSource;
             LC_CurveOffsetOptions localOptions = options;
-            LC_CurveOffsetTolerances& tolerance = localOptions.tolerance;
-            tolerance.evaluation = std::max(8.0 * g_eps * localScale.coordinate,
-                std::min(tolerance.requestedGeometry / 8.0, tolerance.requestedGeometry * 0.05));
-            tolerance.nodeMerge = std::min(tolerance.requestedGeometry * 0.10,
-                                           tolerance.requestedGeometry - tolerance.evaluation);
-            tolerance.fit = tolerance.requestedGeometry - tolerance.evaluation - tolerance.nodeMerge;
-            tolerance.classification = std::max(tolerance.evaluation + tolerance.nodeMerge,
-                                                tolerance.requestedGeometry * 0.25);
-            tolerance.rootResidual = tolerance.evaluation;
+            if (translateToLocal) {
+                LC_CurveOffsetTolerances& tolerance = localOptions.tolerance;
+                tolerance.evaluation = std::max(8.0 * g_eps * localScale.coordinate,
+                    std::min(tolerance.requestedGeometry / 8.0, tolerance.requestedGeometry * 0.05));
+                tolerance.nodeMerge = std::min(tolerance.requestedGeometry * 0.10,
+                                               tolerance.requestedGeometry - tolerance.evaluation);
+                tolerance.fit = tolerance.requestedGeometry - tolerance.evaluation - tolerance.nodeMerge;
+                tolerance.classification = std::max(tolerance.evaluation + tolerance.nodeMerge,
+                                                    tolerance.requestedGeometry * 0.25);
+                tolerance.rootResidual = tolerance.evaluation;
+            }
             const LC_CurveOffsetStatus status = regionBoundary(localSource, localScale, magnitude, dilate,
                                                                localOptions, budget, cycles, result, true);
             for (LC_OffsetBranch& branch : cycles) {
                 for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                    for (RS_Vector& point : piece.bezier) point += origin;
-                    if (piece.provenance.arcCentre.valid) piece.provenance.arcCentre += origin;
+                    for (RS_Vector& point : piece.bezier) point = localSource.toWorldPoint(point);
+                    if (piece.provenance.arcCentre.valid) {
+                        piece.provenance.arcCentre = localSource.toWorldPoint(piece.provenance.arcCentre);
+                    }
                 }
             }
-            for (LC_ParametricIntersection& intersection : result.intersections) intersection.point += origin;
+            for (LC_ParametricIntersection& intersection : result.intersections) {
+                intersection.point = localSource.toWorldPoint(intersection.point);
+            }
             return status;
         }
     }
