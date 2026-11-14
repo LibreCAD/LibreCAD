@@ -44917,3 +44917,22 @@ cache evidence for one alternating-weight layout, but does not qualify that
 weight profile through document Trim, undo/redo, or DXF/DWG persistence; those
 end-to-end variants remain open, as do broader control nets, weight ranges,
 conditioning, visible GUI, cross-platform runtime, and ODA/AutoCAD acceptance.
+
+## 1317. Oracle-check an Off-center Repeated Spline Knot (2026-11-14)
+
+Test commit `bdbc08a31` extends the same independent worker oracle with an
+interior knot at `0.37`, alongside the centered `0.5` knot. The off-center
+layout is exercised for degrees four and six, multiplicities one, two, and
+degree-minus-one, both offset signs, and a moderate rotated/translated frame;
+that frame also carries the alternating `0.7`/`1.3` positive weights from
+section 1316. The centered identity-frame profile retains its smoothly varying
+weights. Both layouts are checked against the high-precision independent
+source/normal oracle and typed cache validation.
+
+Validation on macOS arm64 CMake Release: the focused repeated-knot oracle
+passes 744 assertions / 1 case, and the full `[spline][high-degree]` worker
+selection passes 13,719 assertions / 11 cases. This is worker generation and
+cache evidence only. The off-center knot and alternating-weight combination
+still needs document Trim, undo/redo, and DXF/DWG persistence coverage; other
+knot positions, weight profiles, control nets, visible GUI, cross-platform
+runtime, and ODA/AutoCAD acceptance remain open.
