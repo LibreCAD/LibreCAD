@@ -46173,8 +46173,10 @@ invariance or mixed-bulge topology support.
 
 Validation on macOS arm64 CMake Release: the focused positive-bulge frame
 matrix passes 194 assertions / 1 case; `[curve-offset][region]` passes 27,740
-assertions / 20 cases; the dedicated mixed-frame worker-client case passes
-1,220 assertions / 1 case; the `librecad_tests` target builds; the incremental
+assertions / 20 cases; the dedicated worker-client matrix now covers identity,
+rotation-only, translation-only, and combined frames for both offset
+directions, matching direct engine outcomes in all cells, and passes 2,000
+assertions / 1 case; the `librecad_tests` target builds; the incremental
 qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0;
 and `git diff --check` passes. The new result is verified through direct and
 worker routing, but native cache/Trim integration, persistence, broader

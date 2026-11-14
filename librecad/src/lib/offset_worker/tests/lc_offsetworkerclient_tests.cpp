@@ -740,13 +740,25 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
 }
 
 TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
-          "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][refusal]") {
+          "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][outcomes]") {
     auto& rt = runtime();
     OwnedClient owned{rt};
     RS_Line attributes{nullptr, RS_LineData{{0, 0}, {1, 0}}};
 
+    struct Frame {
+        const char* name;
+        bool rotate;
+        bool translate;
+    };
+    constexpr std::array<Frame, 4> frames{{
+        {"identity", false, false},
+        {"rotation-only", true, false},
+        {"translation-only", false, true},
+        {"combined", true, true},
+    }};
+
     qint64 requestId = 601;
-    for (const bool transformed : {false, true}) {
+    for (const Frame& frame : frames) {
         RS_Polyline sourceEntity;
         sourceEntity.addVertex({20, 10});
         sourceEntity.addVertex({20, -10}, 0.5);
@@ -754,8 +766,10 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
         sourceEntity.addVertex({-20, -10});
         sourceEntity.setClosed(true);
         sourceEntity.endPolyline();
-        if (transformed) {
+        if (frame.rotate) {
             sourceEntity.rotate({0, 0}, M_PI / 7.0);
+        }
+        if (frame.translate) {
             sourceEntity.move({123.25, -2000000.5});
         }
         const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
@@ -765,7 +779,7 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
 
         for (const double signedDistance : {0.5, -0.5}) {
             const qint64 currentRequestId = requestId++;
-            CAPTURE(transformed, signedDistance);
+            CAPTURE(frame.name, signedDistance);
             const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
             const auto& sourceData = std::get<LC_OffsetPolylineData>(source->value);
             auto recentered = source->makeGenerationEntity();
@@ -793,7 +807,10 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
                     signedDistance < 0.0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
                     std::abs(signedDistance)),
                 directOptions, LC_CurveOffset::makeDirectSourceBudget());
-            const auto expectedStatus = (transformed ? signedDistance > 0.0 : signedDistance < 0.0)
+            const bool identity = !frame.rotate && !frame.translate;
+            const bool expectedSuccess = (identity && signedDistance < 0.0) ||
+                                         (!identity && signedDistance > 0.0);
+            const auto expectedStatus = expectedSuccess
                 ? LC_CurveOffsetStatus::Ok : LC_CurveOffsetStatus::AmbiguousTopology;
             CHECK(direct.status == expectedStatus);
             CHECK(result.engineStatus == direct.status);
