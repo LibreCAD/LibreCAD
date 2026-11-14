@@ -9333,6 +9333,59 @@ TEST_CASE("polyline cache promotion preserves mixed segment orientation and offs
     }
 }
 
+TEST_CASE("convex linear polyline outward offsets retain exact round joins in either orientation",
+          "[lc-offsetcurve][worker-kernel][source-cache][polyline][convex][round-join]") {
+    const std::array<RS_Vector, 5> ccw{{{0, 0}, {4, 0}, {5, 2}, {3, 4}, {-1, 2}}};
+    for (const bool clockwise : {false, true}) {
+        std::vector<RS_Vector> vertices(ccw.begin(), ccw.end());
+        if (clockwise) std::reverse(vertices.begin(), vertices.end());
+        LC_OffsetPolylineData data;
+        data.startpoint = vertices.front();
+        data.endpoint = vertices.front();
+        data.closed = true;
+        for (std::size_t i = 0; i < vertices.size(); ++i) {
+            data.segments.emplace_back(RS_LineData{vertices[i], vertices[(i + 1) % vertices.size()]});
+        }
+        const LC_OffsetSourceGeometry source{data};
+        REQUIRE(source.isWellFormed());
+        const double signedDistance = clockwise ? .2 : -.2;
+        const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+        const req::Request request{token, req::GenerateSource{definition, {}}};
+        const auto reply = LC_OffsetWorkerKernel::run(request);
+        const auto& generated = native(reply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        const auto* cacheData = std::get_if<RS_SplineData>(&generated.ordinary.front());
+        REQUIRE(cacheData);
+        RS_Spline cache{nullptr, *cacheData};
+
+        for (int sample = 0; sample <= 256; ++sample) {
+            const RS_Vector point = cache.getPointAt(static_cast<double>(sample) / 256.0);
+            REQUIRE(point.valid);
+            double distance = std::numeric_limits<double>::infinity();
+            for (std::size_t edge = 0; edge < vertices.size(); ++edge) {
+                const RS_Vector start = vertices[edge];
+                const RS_Vector direction = vertices[(edge + 1) % vertices.size()] - start;
+                const double lengthSquared = direction.squared();
+                const double projection = std::clamp(
+                    ((point.x - start.x) * direction.x + (point.y - start.y) * direction.y) /
+                        lengthSquared,
+                    0.0, 1.0);
+                const RS_Vector nearest = start + direction * projection;
+                distance = std::min(distance, point.distanceTo(nearest));
+            }
+            CHECK(std::abs(distance - .2) < 1e-4);
+        }
+
+        const req::Request validation{token, req::ValidateSourceCache{*cacheData, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+        const auto& validated = native(validationReply, 8);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+    }
+}
+
 TEST_CASE("open polyline worker generation and cache admission follow output topology",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][open][side]") {
     const double pi = std::acos(-1.0);

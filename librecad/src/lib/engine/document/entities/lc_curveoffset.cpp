@@ -752,6 +752,21 @@ public:
         if (m_closed || m_pieces.size() != 1) return false;
         return m_pieces.front().source->straightSegment(start, end);
     }
+    bool straightSpan(const std::size_t span) const {
+        if (span + 1 >= m_breaks.size()) return false;
+        const double middle = m_breaks[span] + (m_breaks[span + 1] - m_breaks[span]) * 0.5;
+        const auto index = pieceAt(middle, LC_CurveEvaluationSide::Interior);
+        if (!index) return false;
+        const Piece& piece = m_pieces[*index];
+        RS_Vector start;
+        RS_Vector end;
+        if (!piece.source->straightSegment(start, end)) return false;
+        const auto localStart = localParameter(piece, m_breaks[span]);
+        const auto localEnd = localParameter(piece, m_breaks[span + 1]);
+        const auto& localBreaks = piece.source->breaks();
+        return localStart && localEnd && *localStart == localBreaks.front() &&
+               *localEnd == localBreaks.back();
+    }
     bool straightVertices(std::vector<RS_Vector>& vertices) const {
         vertices.clear();
         if (!m_closed || m_pieces.size() < 3) return false;
@@ -3972,6 +3987,14 @@ private:
         if (p.arcCentre.valid) {
             return validateArc(w);
         }
+        const auto* polyline = dynamic_cast<const PolylineSource*>(&m_source);
+        const auto& sourceBreaks = m_source.breaks();
+        if (polyline != nullptr && sourceBreaks.size() >= 2 &&
+            p.sourceSpan < sourceBreaks.size() - 1 &&
+            p.sourceT0 == sourceBreaks[p.sourceSpan] && p.sourceT1 == sourceBreaks[p.sourceSpan + 1] &&
+            polyline->straightSpan(p.sourceSpan)) {
+            return validateStraightOffset(w);
+        }
         const double h = p.sourceT1 - p.sourceT0;
         double nodes[11] = {0.0, 1.0};
         for (int k = 1; k <= 9; ++k) {
@@ -4065,6 +4088,33 @@ private:
         }
         w.checked = true;
         w.passed = w.error <= m_options.tolerance.requestedGeometry;
+        return LC_CurveOffsetStatus::Ok;
+    }
+
+    // For a line segment the exact signed offset is itself linear in source
+    // parameter. Two endpoint evaluations establish that line; the Bezier
+    // control-point hull bounds the whole candidate against it without the
+    // generic nearest-point iteration at nine additional interior samples.
+    LC_CurveOffsetStatus validateStraightOffset(Work& w) {
+        const LC_OffsetBranchProvenance& p = w.piece.provenance;
+        OffsetJet start;
+        OffsetJet end;
+        LC_CurveOffsetStatus status = jet(p.sourceT0, LC_CurveEvaluationSide::Right,
+                                          p.signedDistance, start);
+        if (status != LC_CurveOffsetStatus::Ok) return status;
+        status = jet(p.sourceT1, LC_CurveEvaluationSide::Left, p.signedDistance, end);
+        if (status != LC_CurveOffsetStatus::Ok) return status;
+
+        const RS_Vector delta = end.point - start.point;
+        const std::array<RS_Vector, 4> exact{{start.point, start.point + delta / 3.0,
+                                              start.point + delta * (2.0 / 3.0), end.point}};
+        w.error = 0.0;
+        for (std::size_t i = 0; i < exact.size(); ++i) {
+            w.error = std::max(w.error, w.piece.bezier[i].distanceTo(exact[i]));
+        }
+        w.worstU = 0.5;
+        w.checked = true;
+        w.passed = std::isfinite(w.error) && w.error <= m_options.tolerance.requestedGeometry;
         return LC_CurveOffsetStatus::Ok;
     }
 
@@ -5992,8 +6042,8 @@ std::optional<LC_CurveOffsetStatus> erodeStrictlyConvexPolyline(
     }
     if (turnSign != (orientation > 0.0 ? 1 : -1)) return std::nullopt;
 
-    std::vector<RS_Vector> miters(count);
     const double residualTolerance = options.tolerance.requestedGeometry + options.tolerance.classification;
+    std::vector<RS_Vector> miters(count);
     for (std::size_t i = 0; i < count; ++i) {
         const std::size_t previous = (i + count - 1) % count;
         const RS_Vector previousShift = vertices[i] + inwardNormals[previous] * magnitude;
@@ -6100,6 +6150,112 @@ std::optional<LC_CurveOffsetStatus> erodeStrictlyConvexPolyline(
         }
     }
     cycles = {std::move(cycle)};
+    return LC_CurveOffsetStatus::Ok;
+}
+
+// A convex polygon's Direct outward offset consists of parallel edge spans
+// joined by exact circular arcs at its vertices. Building these primitives
+// directly avoids repeatedly solving the same line/vertex distance problem
+// for very dense polylines; Materializer still independently validates every
+// emitted line and arc against its source.
+std::optional<LC_CurveOffsetStatus> roundOffsetStrictlyConvexPolyline(
+    const std::vector<RS_Vector>& vertices, const std::vector<double>& breaks, const double signedDistance,
+    const LC_CurveOffsetOptions& options, const LC_OffsetSourceBudget& budget,
+    std::vector<LC_OffsetBranch>& branches) {
+    const std::size_t count = vertices.size();
+    if (count < 3 || breaks.size() != count + 1 || !std::isfinite(signedDistance) || signedDistance == 0.0) {
+        return std::nullopt;
+    }
+
+    long double twiceArea = 0.0L;
+    for (std::size_t i = 0; i < count; ++i) {
+        const RS_Vector a = vertices[i] - vertices.front();
+        const RS_Vector b = vertices[(i + 1) % count] - vertices.front();
+        twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
+    }
+    if (!std::isfinite(static_cast<double>(twiceArea)) || twiceArea == 0.0L) return std::nullopt;
+    const double orientation = twiceArea > 0.0L ? 1.0 : -1.0;
+    if (signedDistance * orientation >= 0.0) return std::nullopt;
+
+    const double radius = std::abs(signedDistance);
+    const double pi = std::acos(-1.0);
+    std::vector<RS_Vector> directions(count);
+    std::vector<RS_Vector> outwardNormals(count);
+    std::vector<double> lengths(count);
+    std::vector<double> turns(count);
+    double totalTurn = 0.0;
+    for (std::size_t i = 0; i < count; ++i) {
+        directions[i] = vertices[(i + 1) % count] - vertices[i];
+        lengths[i] = directions[i].magnitude();
+        if (!(lengths[i] > options.tolerance.classification) || !std::isfinite(lengths[i])) {
+            return std::nullopt;
+        }
+        outwardNormals[i] = orientation > 0.0
+            ? RS_Vector{directions[i].y, -directions[i].x} / lengths[i]
+            : RS_Vector{-directions[i].y, directions[i].x} / lengths[i];
+        const std::size_t next = (i + 1) % count;
+        const long double cross = static_cast<long double>(directions[i].x) * directions[next].y -
+                                  static_cast<long double>(directions[i].y) * directions[next].x;
+        const long double dotValue = static_cast<long double>(directions[i].x) * directions[next].x +
+                                     static_cast<long double>(directions[i].y) * directions[next].y;
+        const double turn = std::atan2(static_cast<double>(cross), static_cast<double>(dotValue));
+        const double turnSlack = 128.0 * std::numeric_limits<double>::epsilon();
+        if (!std::isfinite(turn) || orientation * turn <= turnSlack || std::abs(turn) >= pi - turnSlack) {
+            return std::nullopt;
+        }
+        turns[i] = turn;
+        totalTurn += turn;
+    }
+    if (std::abs(orientation * totalTurn - 2.0 * pi) >
+        1024.0 * std::numeric_limits<double>::epsilon() * static_cast<double>(count)) {
+        return std::nullopt;
+    }
+
+    LC_OffsetBranch cycle;
+    cycle.closed = true;
+    std::size_t pieceCount = 0;
+    for (std::size_t i = 0; i < count; ++i) {
+        if (++pieceCount > budget.maxCubicPieces) return LC_CurveOffsetStatus::LimitExceeded;
+        const RS_Vector edgeStart = vertices[i] + outwardNormals[i] * radius;
+        const RS_Vector edgeEnd = vertices[(i + 1) % count] + outwardNormals[i] * radius;
+        LC_OffsetCubicPiece linePiece;
+        linePiece.provenance = {i, breaks[i], breaks[i + 1], signedDistance, true};
+        const RS_Vector lineDelta = edgeEnd - edgeStart;
+        linePiece.bezier = {edgeStart, edgeStart + lineDelta / 3.0,
+                            edgeStart + lineDelta * (2.0 / 3.0), edgeEnd};
+        cycle.cubicPieces.push_back(linePiece);
+
+        const std::size_t next = (i + 1) % count;
+        const double angleStart = std::atan2(outwardNormals[i].y, outwardNormals[i].x);
+        const double arcCountValue = std::ceil(std::abs(turns[i]) / (0.5 * pi));
+        if (!std::isfinite(arcCountValue) || arcCountValue < 1.0 ||
+            arcCountValue > static_cast<double>(budget.maxCubicPieces)) {
+            return LC_CurveOffsetStatus::LimitExceeded;
+        }
+        const std::size_t arcCount = static_cast<std::size_t>(arcCountValue);
+        if (arcCount > budget.maxCubicPieces - std::min(budget.maxCubicPieces, pieceCount)) {
+            return LC_CurveOffsetStatus::LimitExceeded;
+        }
+        for (std::size_t arc = 0; arc < arcCount; ++arc) {
+            const double a0 = angleStart + turns[i] * static_cast<double>(arc) / arcCount;
+            const double a1 = angleStart + turns[i] * static_cast<double>(arc + 1) / arcCount;
+            LC_OffsetCubicPiece arcPieceValue;
+            arcPieceValue.provenance = {i, a0, a1, signedDistance, true};
+            arcPieceValue.provenance.arcCentre = vertices[next];
+            arcPieceValue.bezier = arcPiece(vertices[next], radius, a0, a1);
+            if (arc == 0) arcPieceValue.bezier[0] = edgeEnd;
+            if (arc + 1 == arcCount) {
+                arcPieceValue.bezier[3] = vertices[next] + outwardNormals[next] * radius;
+            }
+            cycle.cubicPieces.push_back(std::move(arcPieceValue));
+            ++pieceCount;
+        }
+    }
+    if (cycle.cubicPieces.empty() || cycle.cubicPieces.size() > budget.maxCubicPieces ||
+        options.maxOutputBranches == 0) {
+        return LC_CurveOffsetStatus::LimitExceeded;
+    }
+    branches = {std::move(cycle)};
     return LC_CurveOffsetStatus::Ok;
 }
 
@@ -7036,6 +7192,54 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         adapter->shrinksAway(d, options.tolerance.requestedGeometry + options.tolerance.classification)) {
         result.status = LC_CurveOffsetStatus::Ok;
         return result;
+    }
+
+    // A strictly-convex polygon's Direct outward boundary is composed of
+    // offset line spans and circular vertex joins. Build those exact primitives
+    // directly; the materializer independently checks each emitted piece.
+    if (!trimmed) {
+        if (const auto* polyline = dynamic_cast<const PolylineSource*>(&curve)) {
+            std::vector<RS_Vector> vertices;
+            if (polyline->straightVertices(vertices)) {
+                long double twiceArea = 0.0L;
+                for (std::size_t i = 0; i < vertices.size(); ++i) {
+                    const RS_Vector a = vertices[i] - vertices.front();
+                    const RS_Vector b = vertices[(i + 1) % vertices.size()] - vertices.front();
+                    twiceArea += static_cast<long double>(a.x) * b.y -
+                                 static_cast<long double>(a.y) * b.x;
+                }
+                const bool outward = twiceArea != 0.0L &&
+                    ((d > 0.0) != (twiceArea > 0.0L));
+                if (outward) {
+                    LC_OffsetPolylineData polygon;
+                    polygon.startpoint = vertices.front();
+                    polygon.endpoint = vertices.front();
+                    polygon.closed = true;
+                    polygon.segments.reserve(vertices.size());
+                    for (std::size_t i = 0; i < vertices.size(); ++i) {
+                        polygon.segments.emplace_back(
+                            RS_LineData{vertices[i], vertices[(i + 1) % vertices.size()]});
+                    }
+                    if (LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(polygon)) {
+                        std::vector<LC_OffsetBranch> roundedCycle;
+                        const auto roundedStatus = roundOffsetStrictlyConvexPolyline(
+                            vertices, curve.breaks(), d, options, budget, roundedCycle);
+                        if (roundedStatus) {
+                            if (*roundedStatus != LC_CurveOffsetStatus::Ok ||
+                                roundedCycle.size() > options.maxOutputBranches) {
+                                result.status = *roundedStatus == LC_CurveOffsetStatus::Ok
+                                    ? LC_CurveOffsetStatus::LimitExceeded : *roundedStatus;
+                                return result;
+                            }
+                            result.branches = std::move(roundedCycle);
+                            result.validationLevel = LC_OffsetValidationLevel::None;
+                            result.status = LC_CurveOffsetStatus::Ok;
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     const std::vector<double>& breaks = curve.breaks();
