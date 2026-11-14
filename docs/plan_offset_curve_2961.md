@@ -39,11 +39,11 @@ variant from the presence of a family in a combo box.
 a new source curve in the existing Properties replacement widget, the user
 must be able to change the requested source type in place, repeatedly and
 without closing the chooser or restarting replacement. Each type change
-immediately refreshes the eligible replacement candidates. The latest
-clarification is that this workflow covers the full set of source types
-supported by the offset feature, not only common types or a parabola-specific
-addition. This applies to every kind in the canonical offset-source inventory,
-not every drawable entity in LibreCAD. The canonical inventory is
+immediately refreshes eligible replacement candidates. The latest restatement
+confirms the full set of source types supported by the offset feature, not only
+common types or a parabola-specific addition. This applies to every kind in
+the canonical offset-source inventory, not every drawable entity in LibreCAD.
+The canonical inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
 distinct selectable and preserved type, not a spline-points alias. Changing
@@ -72,7 +72,9 @@ unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
 indicated, then verify successful replacement and cancel/refusal behavior.
-Keep this gate separate from Slice 4's per-variant capture/reconstruction,
+This restatement confirms the existing all-kinds contract; it does not add a
+second selector or a parabola-only implementation slice. Keep this gate
+separate from Slice 4's per-variant capture/reconstruction,
 worker/cache, Trim, and DXF/DWG qualification; selector availability alone
 does not prove full support for every mathematical variant. The focused
 Properties-dialog tests also verify
@@ -45836,9 +45838,37 @@ Validation on macOS arm64 CMake Release: the focused mixed-bulge tests pass 96
 assertions / 2 cases; `[curve-offset][region]` passes 27,411 assertions / 19
 cases; the full `[curve-offset]` suite passes 2,245,478 assertions / 345
 cases; and the `librecad_tests` target builds. The qmake6 full application and
-plugin build also succeeds. Worker-process, editable-cache/action, persistence,
-visible GUI, cross-platform runtime, and independent CAD checks remain
-separate gates.
+plugin build also succeeds. The real worker-process path for the same
+negative-bulge bow-tie is qualified in section 1370; editable-cache/action,
+persistence, visible GUI, cross-platform runtime, and independent CAD checks
+remain separate gates.
+
+## 1370. Qualify Mixed-bulge Region Generation in the Native Worker (2026-11-14)
+
+Commit `0b847731f` extends generation-only source admission and worker routing
+from self-crossing linear polylines to closed line/arc polylines. The strict
+cache/source admission path remains unchanged. The self-intersection detector
+now compares both line and arc children against the live reconstructed source,
+uses a variant-aware coordinate scale, and selects `RegionBoundary` for the
+crossing negative-bulge bow-tie instead of throwing while inspecting an arc.
+The subprocess client test sends both signed offsets through request
+encode/decode and the real helper, then verifies the expected two ordinary
+spline branches for `+0.5`, one for `-0.5`, valid reconstructed entities, and
+no native-cache publication. This qualifies only this closed four-segment
+profile and these offsets; general arc-containing self-crossings, broader
+topologies, and cache representability remain open.
+
+Validation on macOS arm64: the focused worker-client region selector passes
+1,807 assertions / 3 cases; the complete worker-client selector passes
+3,376,707 assertions / 43 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`; the mixed-bulge direct region tests
+pass 96 assertions / 2 cases; and the worker-kernel polyline source-cache
+selector passes 62,368 assertions / 8 cases. The CMake `librecad_tests` and
+worker-client targets build, the qmake6 full application/plugin/helper build
+passes, and `git diff --check` passes. The qmake6 build reports existing DWG
+metadata initializer warnings. Visible GUI, cross-platform runtime, cache
+editing/action, persistence for this mixed-bulge case, and independent CAD
+acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
