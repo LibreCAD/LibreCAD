@@ -1257,9 +1257,10 @@ TEST_CASE("I replace and persist a reversed rounded polyline source",
 
 TEST_CASE("translated reversed source action matches an independent worker request",
           "[lc-offsetcurve][source-action][polyline][reversed][large-origin]") {
+    const RS_Vector origin = GENERATE(RS_Vector{1e6, -1e6}, RS_Vector{1e9, -1e9});
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    CAPTURE(static_cast<int>(format));
+    CAPTURE(origin.x, origin.y, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1268,9 +1269,8 @@ TEST_CASE("translated reversed source action matches an independent worker reque
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    constexpr double zoom = 10.0;
     constexpr double angle = .37;
-    const RS_Vector origin{1e6, -1e6};
+    const double zoom = origin.x > 1e8 ? 2.0 : 10.0;
     view.getViewPort()->setOffsetAndFactor(qRound(200. - origin.x * zoom),
                                           qRound(200. - origin.y * zoom), zoom);
     Context context;
