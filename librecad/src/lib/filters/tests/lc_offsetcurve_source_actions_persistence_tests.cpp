@@ -1120,17 +1120,18 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
 }
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
     const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    const std::array<const char*, 12> profileNames{{
+    const std::array<const char*, 13> profileNames{{
         "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw",
         "all-arc-circle-cw-centerline-audit", "all-arc-circle-cw-rotated-translated",
         "all-arc-circle-ccw-rotated-translated", "all-arc-circle-cw-large-scale-translated",
         "unequal-radii-rounded-rotated-translated",
         "unequal-radii-rounded-rotated-inward",
-        "unequal-radii-rounded-rotated-translated-inward"}};
+        "unequal-radii-rounded-rotated-translated-inward",
+        "unequal-radii-rounded-rotated-large-origin-inward"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -1141,7 +1142,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
     view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
-    const RS_Vector transformedCenter = profile == 8 ? RS_Vector{1e9, -1e9}
+    const RS_Vector transformedCenter = profile == 8 || profile == 12 ? RS_Vector{1e9, -1e9}
         : profile == 10 ? RS_Vector{0, 0} : RS_Vector{1e6, -1e6};
     const double transformedRadius = profile == 8 ? 2000. : 2.;
     constexpr double transformedAngle = .37;
@@ -1158,13 +1159,16 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     else if (profile == 8)
         view.getViewPort()->setOffsetAndFactor(qRound(200. - transformedCenter.x * .001),
                                               qRound(200. - transformedCenter.y * .001), .001);
-    else if (profile == 9 || profile == 10 || profile == 11)
+    else if (profile == 12)
+        view.getViewPort()->setOffsetAndFactor(qRound(200. - transformedCenter.x * 2.),
+                                              qRound(200. - transformedCenter.y * 2.), 2.);
+    else if (profile == 9 || profile == 10 || profile == 11 || profile == 12)
         view.getViewPort()->setOffsetAndFactor(qRound(200. - transformedCenter.x * 10.),
                                               qRound(200. - transformedCenter.y * 10.), 10.);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    auto* target = native(graphic, .25, profile == 10 || profile == 11);
+    auto* target = native(graphic, .25, profile == 10 || profile == 11 || profile == 12);
     auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
     RS_Vector sourcePick{5, 0};
     double cutterX = 5.0;
@@ -1214,7 +1218,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         sourceOwner->addVertex(transformedCenter + transformedYAxis * transformedRadius, quarterArcBulge);
         sourceOwner->addVertex(transformedCenter - transformedXAxis * transformedRadius, quarterArcBulge);
         sourceOwner->addVertex(transformedCenter - transformedYAxis * transformedRadius, quarterArcBulge);
-    } else if (profile == 9 || profile == 10 || profile == 11) {
+    } else if (profile == 9 || profile == 10 || profile == 11 || profile == 12) {
         sourcePick = transformLocal({7, 0});
         for (const RS_Vector point : {RS_Vector{1, 0}, RS_Vector{12, 0}, RS_Vector{14, 2},
                 RS_Vector{14, 8.25}, RS_Vector{13.25, 9}, RS_Vector{1.5, 9},
@@ -1248,7 +1252,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     REQUIRE(updateAction->lastReport().updated == 1);
     auto* replacement = onlyNative(graphic);
     REQUIRE(replacement->sourceDefinition());
-    if (profile == 9 || profile == 10 || profile == 11) {
+    if (profile == 9 || profile == 10 || profile == 11 || profile == 12) {
         const double signedDistance = replacement->sourceDefinition()->signedDistance;
         double cacheStart = 0., cacheEnd = 0.;
         REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
@@ -1342,7 +1346,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     double parameterEnd = 0.0;
     REQUIRE(replacement->getParameterDomain(parameterStart, parameterEnd));
     RS_Vector targetPick = replacement->getPointAt(
-        parameterStart + ((profile == 10 || profile == 11) ? .25 : .7) *
+        parameterStart + ((profile == 10 || profile == 11 || profile == 12) ? .25 : .7) *
             (parameterEnd - parameterStart));
     REQUIRE(targetPick.valid);
     RS_Vector cutterStart{cutterX, -20}, cutterEnd{cutterX, 20};
@@ -1354,7 +1358,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         cutterEnd = transformLocal({7, 20});
     }
     double inwardCutterX = 10.;
-    if (profile == 10 || profile == 11) {
+    if (profile == 10 || profile == 11 || profile == 12) {
         cutterStart = transformLocal({inwardCutterX, -30.});
         cutterEnd = transformLocal({inwardCutterX, 30.});
     }
@@ -1404,7 +1408,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         }
         CHECK(certifiedCrossings == 2);
     }
-    if (profile == 10 || profile == 11) {
+    if (profile == 10 || profile == 11 || profile == 12) {
         std::size_t sampledCrossings = 0;
         std::size_t firstCrossingSample = 4097;
         double minimumAbsDistance = INFINITY;
@@ -1435,8 +1439,8 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     CAPTURE(kernel.work.intersections.totalBoxPairs, kernel.work.intersections.deepestPairRefinement,
             kernel.work.intersections.deepestRootRefinement, kernel.work.intersections.generatedItems);
     REQUIRE(kernel.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(kernel.fragments.size() == ((profile == 10 || profile == 11) ? 8 : 1));
-    if (profile == 10 || profile == 11) {
+    REQUIRE(kernel.fragments.size() == ((profile == 10 || profile == 11 || profile == 12) ? 8 : 1));
+    if (profile == 10 || profile == 11 || profile == 12) {
         CHECK(kernel.rootCount == 1);
         REQUIRE(kernel.roots.size() == 1);
         CHECK((kernel.roots.front().proof == LC_IntersectionProof::IntervalUniqueTransverse ||
