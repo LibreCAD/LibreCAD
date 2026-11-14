@@ -318,7 +318,9 @@ combinations in this matrix succeed; this does not establish general support
 for arbitrary rational weights, conditioning, or knot/control topologies.
 Section 1329 adds an orientation-reversing rotated/translated frame to that
 matrix; all 270 combinations now pass through worker replacement, Trim,
-undo/redo, and two-pass DXF/DWG persistence.
+undo/redo, and two-pass DXF/DWG persistence. A representative asymmetric
+degree-four profile also passes a direct-normal geometry oracle in every lane
+(section 1330).
 
 Sections 1201-1202 extend the closed fit-point spline evidence. Section 1201
 adds independent direct-normal checks for the admission-boundary and larger
@@ -45119,15 +45121,32 @@ Each case performs typed source replacement through the worker, verifies the
 wrapped-closed source encoding, prepares and applies cache Trim, exercises
 undo/redo, then saves/reopens and repeats the save/reopen. Trim fragments are
 checked against the prepared geometry fingerprints throughout. This broadens
-the tested affine-frame and orientation coverage; it is not an independent
-geometric oracle for arbitrary rational periodic splines.
+the tested affine-frame and orientation coverage; it does not independently
+validate the complete matrix's generated offset geometry.
 
 Validation on macOS arm64 CMake Release:
 `cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
 passes. The focused test
 `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
 'wrapped periodic high-degree splines trim and persist through file lanes'
---reporter compact` passes 35,574 assertions / 1 case. This closes the reflected
-frame slice only; broader weight profiles, conditioning, knot/control
+--reporter compact` initially passed 35,574 assertions / 1 case. Section 1330
+adds the independent direct-normal check to this same matrix. This closes the
+reflected-frame slice only; broader weight profiles, conditioning, knot/control
 topologies, visible GUI interaction, and independent CAD interoperability
 remain open under Slices 4 and 5.
+
+## 1330. Oracle-check a Reflected Periodic Rational Offset (2026-11-14)
+
+For the degree-four asymmetric positive-weight spline in the reflected,
+rotated/translated frame, compare 65 samples from the generated full offset
+cache against the source's analytical `C + dN` locus. The expected locus is
+evaluated from `RS_Spline::tryEvaluateJet`; a dense parameter scan followed by
+bounded local golden-section refinement finds the nearest direct-normal point.
+The check uses the existing checked-world tolerance capped at one tenth of the
+offset distance. It runs for all five DXF/DWG file lanes, in addition to the
+Trim, undo/redo, and two-pass persistence checks in section 1329.
+
+Validation on macOS arm64 CMake Release: the focused wrapped-periodic spline
+test passes 36,239 assertions / 1 case across 270 generated combinations. This
+is a sampled independent geometry oracle for one reflected asymmetric profile,
+not proof for every degree, weight profile, or periodic knot topology.
