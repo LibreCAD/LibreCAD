@@ -1780,7 +1780,7 @@ TEST_CASE("partial eccentric ellipse source trims through document actions and f
 
 TEST_CASE("rational high-degree splines trim through document actions and file lanes",
           "[lc-offsetcurve][source-action][spline][high-degree][interior-knot][trim-action][persistence]") {
-    const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{6});
+    const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
     const std::size_t multiplicityCase = GENERATE(std::size_t{1}, std::size_t{2}, std::size_t{3});
     const std::size_t interiorMultiplicity = multiplicityCase == 3 ? degree - 1 : multiplicityCase;
     const int transformed = GENERATE(0, 1);
