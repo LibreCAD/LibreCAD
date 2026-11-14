@@ -45621,6 +45621,22 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1353. Trim Dense Caches Against a Narrow Rotated Ellipse (2026-11-14)
+
+Added a full-ellipse cutter with minor/major ratio `0.2`, rotated by `π/12`,
+against the 128-, 512-, and 2048-span closed circular cache. Each case requires
+at least two certified contacts, one valid complementary fragment, unchanged
+source data, correct picked-interval coverage, and sampled geometry agreement.
+The test adds a narrow-ellipse point to the existing dense `0.8` ratio matrix;
+it does not claim an exhaustive eccentricity sweep or an independent root
+oracle for this profile.
+
+Validation on macOS arm64 CMake Release: the focused matrix passes 143,975
+assertions / 1 case; `[trim-kernel]` passes 1,523,952 assertions / 85 cases;
+`librecad_tests` builds; and `git diff --check` passes. Other ellipse ratios,
+near-tangent contacts, source topologies, visible GUI, cross-platform runtime,
+and independent CAD acceptance remain open.
+
 ## 1352. Refuse Dense Near-full Ellipse-arc Trim Cutters (2026-11-14)
 
 Added a 128-, 512-, and 2048-span closed circular cache matrix against an
