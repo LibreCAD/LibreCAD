@@ -745,49 +745,73 @@ TEST_CASE("Worker client refuses overlapping positive-bulge erosion candidates",
     OwnedClient owned{rt};
     RS_Line attributes{nullptr, RS_LineData{{0, 0}, {1, 0}}};
 
-    RS_Polyline sourceEntity;
-    sourceEntity.addVertex({20, 10});
-    sourceEntity.addVertex({20, -10}, 0.5);
-    sourceEntity.addVertex({-20, 10});
-    sourceEntity.addVertex({-20, -10});
-    sourceEntity.setClosed(true);
-    sourceEntity.endPolyline();
-    const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
-    REQUIRE(source);
-    CHECK_FALSE(source->isWellFormed());
-    REQUIRE(source->isWellFormedForGeneration());
-
-    for (const auto [requestId, signedDistance] :
-         {std::pair<qint64, double>{601, 0.5}, {602, -0.5}}) {
-        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
-        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
-        const auto encoded = Req::encode(request);
-        REQUIRE(encoded);
-        const auto decoded = Req::decode(*encoded);
-        REQUIRE(decoded);
-        CHECK(Req::admitted(*decoded));
-
-        Receipts receipts;
-        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
-        rt.until([&] { return receipts.calls[0] != 0; });
-
-        const auto& completion = completed(receipts.at(0), requestId, 7);
-        const auto& result = std::get<Reply::Native>(completion.reply().result);
-        CHECK_FALSE(completion.nativeSource(attributes));
-        if (signedDistance > 0.0) {
-            CHECK(result.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
-            CHECK(result.ordinary.empty());
-            CHECK_FALSE(result.curve);
-            continue;
+    qint64 requestId = 601;
+    for (const bool transformed : {false, true}) {
+        RS_Polyline sourceEntity;
+        sourceEntity.addVertex({20, 10});
+        sourceEntity.addVertex({20, -10}, 0.5);
+        sourceEntity.addVertex({-20, 10});
+        sourceEntity.addVertex({-20, -10});
+        sourceEntity.setClosed(true);
+        sourceEntity.endPolyline();
+        if (transformed) {
+            sourceEntity.rotate({0, 0}, M_PI / 7.0);
+            sourceEntity.move({123.25, -2000000.5});
         }
+        const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
+        REQUIRE(source);
+        CHECK_FALSE(source->isWellFormed());
+        REQUIRE(source->isWellFormedForGeneration());
 
-        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        REQUIRE(result.ordinary.size() == 1);
-        const auto* spline = std::get_if<RS_SplineData>(&result.ordinary.front());
-        REQUIRE(spline);
-        RS_Spline materialized{nullptr, *spline};
-        CHECK(materialized.validate());
+        for (const double signedDistance : {0.5, -0.5}) {
+            const qint64 currentRequestId = requestId++;
+            CAPTURE(transformed, signedDistance);
+            const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+            const auto& sourceData = std::get<LC_OffsetPolylineData>(source->value);
+            auto recentered = source->makeGenerationEntity();
+            REQUIRE(recentered);
+            recentered->move({-sourceData.startpoint.x, -sourceData.startpoint.y});
+            CHECK(LC_OffsetWorkerTolerance::hasIntersectingPolyline(definition, *recentered));
+            const Req::Request request{token(currentRequestId), Req::GenerateSource{definition, {}}};
+            const auto encoded = Req::encode(request);
+            REQUIRE(encoded);
+            const auto decoded = Req::decode(*encoded);
+            REQUIRE(decoded);
+            CHECK(Req::admitted(*decoded));
+
+            Receipts receipts;
+            REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+
+            const auto& completion = completed(receipts.at(0), currentRequestId, 7);
+            const auto& result = std::get<Reply::Native>(completion.reply().result);
+            auto directOptions = LC_CurveOffset::makeDirectOptions(sourceEntity, 0.5);
+            directOptions.mode = LC_CurveOffsetMode::RegionBoundary;
+            const auto direct = LC_CurveOffset::buildDirectBranches(
+                sourceEntity,
+                LC_CurveOffset::makeSideRequest(
+                    signedDistance < 0.0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                    std::abs(signedDistance)),
+                directOptions, LC_CurveOffset::makeDirectSourceBudget());
+            const auto expectedStatus = !transformed && signedDistance < 0.0
+                ? LC_CurveOffsetStatus::Ok : LC_CurveOffsetStatus::AmbiguousTopology;
+            CHECK(direct.status == expectedStatus);
+            CHECK(result.engineStatus == direct.status);
+            CHECK_FALSE(completion.nativeSource(attributes));
+            if (direct.status != LC_CurveOffsetStatus::Ok) {
+                CHECK(result.ordinary.empty());
+                CHECK_FALSE(result.curve);
+                continue;
+            }
+
+            REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE(result.ordinary.size() == 1);
+            const auto* spline = std::get_if<RS_SplineData>(&result.ordinary.front());
+            REQUIRE(spline);
+            RS_Spline materialized{nullptr, *spline};
+            CHECK(materialized.validate());
+        }
     }
 }
 

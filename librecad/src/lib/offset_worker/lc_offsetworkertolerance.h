@@ -162,11 +162,31 @@ inline bool hasIntersectingPolyline(const LC_OffsetSourceDefinition& definition,
         return false;
     }
 
-    const auto liveGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
-    const auto* liveData = liveGeometry
-        ? std::get_if<LC_OffsetPolylineData>(&liveGeometry->value) : nullptr;
-    if (liveData == nullptr || liveData->segments.size() != data->segments.size()) return false;
-    const RS_Vector translation = data->startpoint - liveData->startpoint;
+    // The worker recenters captured geometry before offsetting. Re-running
+    // captureForGeneration here would validate rounded arc joins at the smaller
+    // local coordinate scale and can reject a source already accepted in its
+    // original frame. Snapshot the bounded primitive children without a second
+    // topology validation; the comparison below still requires them to match
+    // the trusted request geometry.
+    LC_OffsetPolylineData liveData;
+    liveData.startpoint = polyline->getStartpoint();
+    liveData.endpoint = polyline->getEndpoint();
+    liveData.closed = polyline->isClosed();
+    if (polyline->size() != data->segments.size() ||
+        polyline->size() > LC_OffsetSourceDetail::MaximumSourceItems ||
+        liveData.closed != data->closed) return false;
+    liveData.segments.reserve(polyline->size());
+    for (const RS_Entity* child : *polyline) {
+        if (const auto* line = dynamic_cast<const RS_Line*>(child))
+            liveData.segments.emplace_back(line->getData());
+        else if (const auto* arc = dynamic_cast<const RS_Arc*>(child))
+            liveData.segments.emplace_back(arc->getData());
+        else
+            return false;
+    }
+    if (liveData.segments.size() != data->segments.size()) return false;
+    const RS_Vector translation = data->startpoint - liveData.startpoint;
+    if (!LC_OffsetSourceDetail::finite(translation)) return false;
     double coordinateScale = 1.0;
     for (const auto& segment : data->segments) {
         std::visit([&](const auto& item) {
@@ -181,8 +201,9 @@ inline bool hasIntersectingPolyline(const LC_OffsetSourceDefinition& definition,
         }, segment);
     }
     const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
-    if ((liveData->startpoint + translation).distanceTo(data->startpoint) > pointSlack ||
-        (liveData->endpoint + translation).distanceTo(data->endpoint) > pointSlack) {
+    if (!std::isfinite(pointSlack)) return false;
+    if ((liveData.startpoint + translation).distanceTo(data->startpoint) > pointSlack ||
+        (liveData.endpoint + translation).distanceTo(data->endpoint) > pointSlack) {
         return false;
     }
     const auto sameTranslatedSegment = [&](const LC_OffsetPolylineSegment& expected,
@@ -196,18 +217,20 @@ inline bool hasIntersectingPolyline(const LC_OffsetSourceDefinition& definition,
                 return (found->startpoint + translation).distanceTo(wanted.startpoint) <= pointSlack &&
                        (found->endpoint + translation).distanceTo(wanted.endpoint) <= pointSlack;
             } else {
-                const double angleSlack = 128.0 * std::numeric_limits<double>::epsilon() *
-                    std::max({1.0, std::abs(wanted.angle1), std::abs(wanted.angle2)});
+                const double angleSlack = 256.0 * std::numeric_limits<double>::epsilon() * M_PI;
+                const auto sameAngle = [angleSlack](const double lhs, const double rhs) {
+                    return std::abs(std::remainder(lhs - rhs, 2.0 * M_PI)) <= angleSlack;
+                };
                 return (found->center + translation).distanceTo(wanted.center) <= pointSlack &&
                        std::abs(found->radius - wanted.radius) <= pointSlack &&
-                       std::abs(found->angle1 - wanted.angle1) <= angleSlack &&
-                       std::abs(found->angle2 - wanted.angle2) <= angleSlack &&
+                       sameAngle(found->angle1, wanted.angle1) &&
+                       sameAngle(found->angle2, wanted.angle2) &&
                        found->reversed == wanted.reversed;
             }
         }, expected);
     };
     for (std::size_t i = 0; i < data->segments.size(); ++i) {
-        if (!sameTranslatedSegment(data->segments[i], liveData->segments[i])) return false;
+        if (!sameTranslatedSegment(data->segments[i], liveData.segments[i])) return false;
     }
     return !LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data);
 }
