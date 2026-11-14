@@ -44845,3 +44845,22 @@ geometry check for the exact layouts carried through document Trim and file
 lanes in section 1311; it does not establish arbitrary spline shapes,
 conditioning, all knot multiplicities, visible GUI, cross-platform behavior,
 or external-CAD interoperability.
+
+## 1314. Verify Second-save Stability for Rational Spline Trims (2026-11-14)
+
+Test commit `111703d13` extends section 1311's sixty degree/frame/knot/format
+combinations with a second export, reopen, and geometry comparison. Each
+drawing is first trimmed and saved in its target format, reopened, exported
+again to the same format, and reopened a second time. The two retained Trim
+fragment fingerprints must still match the pure-kernel preparation, and the
+original source spline must remain excluded as unchanged geometry throughout
+both file cycles.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[high-degree][interior-knot][trim-action]' --reporter compact`
+passes 4,432 assertions / 1 case across sixty variants and two round-trip
+cycles for each of R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The DWG lanes
+also run the available conditional LibreDWG spline-reader check on the first
+export. This validates geometry stability for these fixtures; it does not
+qualify general metadata parity, all spline variants, ODA/AutoCAD acceptance,
+visible GUI, or cross-platform behavior.
