@@ -46320,9 +46320,11 @@ mixed-bulge guarantee.
 Validation on macOS arm64 CMake Release at PR head `11108f3ff`:
 `[polyline][region-boundary][mixed-bulge]` in
 `librecad_offset_worker_client_tests` passes 4,798 assertions / 3 cases;
-the test target builds; and `git diff --check` passes. Broader worker geometry,
-visible GUI, cross-platform runtime, and independent CAD acceptance remain
-open.
+the complete worker-client suite with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000` passes 3,492,134 assertions / 45
+cases; the test target builds; and `git diff --check` passes. The full suite
+was rerun at PR head `84cf2fd7e`. Broader worker geometry, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
