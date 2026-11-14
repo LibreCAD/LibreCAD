@@ -379,8 +379,10 @@ the geometry row above is superseded by focused positive- and negative-bulge
 frame matrices. Bulged-polyline region work now uses a local rigid frame when
 rotated or sufficiently far from its origin. The tests accept only
 independently checked closed cycles or atomic `AmbiguousTopology` refusals;
-the tested translated positive-bulge erosion is newly successful. Rotation-
-only and other unsupported cells remain open, so this does not close the
+sections 1387 and 1378 now qualify both translated-only growth and erosion for
+the stated positive- and negative-bulge profiles. Positive identity erosion,
+positive rotation-only growth, and combined-frame growth still refuse
+atomically. Other unsupported cells remain open, so this does not close the
 self-crossing-polyline topology feature generally.
 
 **Slice 4 status addendum (sections 1364-1367):** the tested all-straight
@@ -46316,6 +46318,43 @@ suite passes 2,246,436 assertions / 349 cases; `librecad_tests` builds; and
 `git diff --check` passes. Production build and qmake6 application validation
 are recorded in section 1382. Wider arrangements, visible GUI, cross-platform
 runtime, and independent CAD acceptance remain open.
+
+## 1387. Preserve Proven Straight Spans in Translated Mixed-bulge Noding (2026-11-14)
+
+Implementation commit `62041736b`:
+Exact candidate arrangement previously rejected a translated polyline offset
+whose source fragment was provably one straight polyline span because small
+recentered cubic-control deviations exceeded a machine-epsilon-only collinearity
+test. The interval fallback then exhausted its candidate search and refused an
+otherwise valid arrangement. Exact eligibility now consults the source's
+`straightSpan` contract and allows only that proven-straight case to use the
+configured evaluation tolerance for control collinearity; curved source spans
+retain the strict machine-scale threshold. When the proven straight span is
+represented by multiple adjacent generated segments, the noder combines their
+bounded branch endpoints into the single exact line primitive.
+
+Both the positive- and negative-bulge self-crossing profiles now produce
+independently checked RegionBoundary cycles for translation-only growth and
+erosion under both fill rules. The negative-bulge matrix also succeeds in
+identity, rotation-only, and combined-frame shrink/growth cells except combined
+growth. Positive-bulge identity erosion, rotation-only growth, and combined
+growth remain atomic `AmbiguousTopology` refusals. Tests verify source
+immutability, cycle closure, requested-side membership, positive area, and
+boundary distance; the worker case additionally compares generated splines
+with the direct result and round-trips successful outputs through R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. No editable native cache is claimed for these
+self-intersecting source profiles.
+
+Validation on macOS arm64 CMake Release: focused negative-bulge frame matrix
+passes 228 assertions / 1 case; `[curve-offset][region]` passes 28,632
+assertions / 23 cases; positive/negative mixed-frame worker outcomes pass
+3,770 assertions / 2 cases; the full worker-client suite passes 3,381,195
+assertions / 45 cases; and the complete `[curve-offset]` suite passes
+2,246,699 assertions / 349 cases. qmake6 `make -j4` succeeds for the
+application, worker, and plugins; `git diff --check` passes. This qualifies
+only the two listed profiles and tested frames, not arbitrary bulge layouts,
+topologies, native cache/Trim behavior, visible GUI, cross-platform runtime,
+or independent CAD acceptance.
 
 ## 1386. Expose and Verify Region Arrangement Work Phases (2026-11-14)
 
