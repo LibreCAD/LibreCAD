@@ -478,9 +478,7 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                         static_cast<int>(result.intersectionDiagnostics.status),
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
-                const bool expectedSuccess = (frame == 0 && grow) ||
-                    (frame == 1 && !grow) ||
-                    (frame == 2) || (frame == 3 && !grow);
+                const bool expectedSuccess = !(frame == 3 && grow);
                 if (expectedSuccess) {
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
@@ -507,7 +505,7 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
     }
 }
 
-TEST_CASE("Polyline exact-arrangement fallback shares its intersection work budget",
+TEST_CASE("Rotated mixed-bulge endpoint recovery respects the intersection work budget",
           "[curve-offset][region][polyline][self-crossing][mixed-bulge][budget]") {
     RS_Polyline source;
     source.addVertex({20, 10});
@@ -566,7 +564,7 @@ TEST_CASE("Polyline exact-arrangement fallback shares its intersection work budg
         CHECK(successfulLimits > 0);
     }
     CAPTURE(fallbackCells);
-    CHECK(fallbackCells > 0);
+    CHECK(fallbackCells == 0);
 }
 
 TEST_CASE("Negative-bulge RegionBoundary obeys the shared intersection work cap",

@@ -813,16 +813,24 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
                     signedDistance < 0.0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
                     std::abs(signedDistance)),
                 *directOptions, LC_CurveOffset::makeDirectSourceBudget());
-            const bool identity = !frame.rotate && !frame.translate;
-            const bool expectedSuccess = identity ||
-                                         (frame.translate && !frame.rotate) ||
-                                         (!identity && signedDistance > 0.0);
-            const auto expectedStatus = expectedSuccess
-                ? LC_CurveOffsetStatus::Ok : LC_CurveOffsetStatus::AmbiguousTopology;
-            CHECK(direct.status == expectedStatus);
-            CHECK(result.engineStatus == direct.status);
+            const auto directMaterialized = direct.status == LC_CurveOffsetStatus::Ok
+                ? LC_CurveOffset::materializeBranches(*directSource, direct, *directOptions,
+                                                       LC_CurveOffset::makeDirectSourceBudget())
+                : LC_CurveOffsetMaterializationResult{};
+            const bool combinedGrowth = frame.rotate && frame.translate && signedDistance < 0.0;
+            const bool rotationGrowth = frame.rotate && !frame.translate && signedDistance < 0.0;
+            const LC_CurveOffsetStatus expectedGeometryStatus = combinedGrowth
+                ? LC_CurveOffsetStatus::AmbiguousTopology : LC_CurveOffsetStatus::Ok;
+            const LC_CurveOffsetStatus expectedStatus = combinedGrowth
+                ? LC_CurveOffsetStatus::AmbiguousTopology
+                : rotationGrowth ? LC_CurveOffsetStatus::ToleranceNotMet : LC_CurveOffsetStatus::Ok;
+            CHECK(direct.status == expectedGeometryStatus);
+            if (direct.status == LC_CurveOffsetStatus::Ok)
+                CHECK(directMaterialized.status == expectedStatus);
+            const bool expectedSuccess = expectedStatus == LC_CurveOffsetStatus::Ok;
+            CHECK(result.engineStatus == expectedStatus);
             CHECK_FALSE(completion.nativeSource(attributes));
-            if (direct.status != LC_CurveOffsetStatus::Ok) {
+            if (!expectedSuccess) {
                 CHECK(result.ordinary.empty());
                 CHECK_FALSE(result.curve);
                 continue;
@@ -831,9 +839,6 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
             REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
             REQUIRE(result.ordinary.size() == direct.branches.size());
-            auto directMaterialized = LC_CurveOffset::materializeBranches(
-                *directSource, direct, *directOptions, LC_CurveOffset::makeDirectSourceBudget());
-            REQUIRE(directMaterialized.status == LC_CurveOffsetStatus::Ok);
             REQUIRE(directMaterialized.entities.size() == result.ordinary.size());
             for (const auto& ordinary : result.ordinary) {
                 const auto* spline = std::get_if<RS_SplineData>(&ordinary);

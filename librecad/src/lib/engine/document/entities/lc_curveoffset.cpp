@@ -6996,7 +6996,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 circle.sweep = 2.0 * M_PI;
                 primitives.push_back({circle, firstCircle + n, 0.0, 2.0 * M_PI, true});
             }
-            const auto parameterAt = [](const Primitive& primitive, const RS_Vector& point,
+            const auto parameterAt = [&options](const Primitive& primitive, const RS_Vector& point,
                                         double& parameter, double& fraction) {
                 if (primitive.circle) {
                     double angle = std::atan2(point.y - primitive.segment.centre.y,
@@ -7018,7 +7018,16 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     fraction = along / primitive.segment.sweep;
                     const double slack = 128.0 * std::numeric_limits<double>::epsilon() *
                                          std::max(1.0, std::abs(primitive.segment.sweep));
-                    if (!std::isfinite(fraction) || fraction < -slack || fraction > 1.0 + slack) return false;
+                    if (!std::isfinite(fraction)) return false;
+                    if (fraction < -slack || fraction > 1.0 + slack) {
+                        if (point.distanceTo(primitive.segment.a) <= options.tolerance.evaluation) {
+                            fraction = 0.0;
+                        } else if (point.distanceTo(primitive.segment.b) <= options.tolerance.evaluation) {
+                            fraction = 1.0;
+                        } else {
+                            return false;
+                        }
+                    }
                     fraction = std::clamp(fraction, 0.0, 1.0);
                     parameter = primitive.parameter0 + (primitive.parameter1 - primitive.parameter0) * fraction;
                     return std::isfinite(parameter);
@@ -7028,8 +7037,15 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 if (!(lengthSquared > 0.0)) return false;
                 fraction = dot(point - primitive.segment.a, axis) / lengthSquared;
                 const double parameterSlack = 128.0 * std::numeric_limits<double>::epsilon();
-                if (!std::isfinite(fraction) || fraction < -parameterSlack || fraction > 1.0 + parameterSlack) {
-                    return false;
+                if (!std::isfinite(fraction)) return false;
+                if (fraction < -parameterSlack || fraction > 1.0 + parameterSlack) {
+                    if (point.distanceTo(primitive.segment.a) <= options.tolerance.evaluation) {
+                        fraction = 0.0;
+                    } else if (point.distanceTo(primitive.segment.b) <= options.tolerance.evaluation) {
+                        fraction = 1.0;
+                    } else {
+                        return false;
+                    }
                 }
                 fraction = std::clamp(fraction, 0.0, 1.0);
                 parameter = primitive.parameter0 + (primitive.parameter1 - primitive.parameter0) * fraction;
