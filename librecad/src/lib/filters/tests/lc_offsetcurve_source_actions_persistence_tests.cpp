@@ -1784,6 +1784,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const std::size_t multiplicityCase = GENERATE(std::size_t{1}, std::size_t{2}, std::size_t{3});
     const std::size_t interiorMultiplicity = multiplicityCase == 3 ? degree - 1 : multiplicityCase;
     const int transformed = GENERATE(0, 1);
+    const double signedDistance = GENERATE(-0.02, 0.02);
     const double frameAngle = transformed ? 0.37 : 0.0;
     const RS_Vector frameOrigin = transformed ? RS_Vector{2.0, -3.0} : RS_Vector{0.0, 0.0};
     const auto mapPoint = [frameAngle, frameOrigin](const RS_Vector& point) {
@@ -1795,7 +1796,8 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(degree, interiorMultiplicity, transformed, static_cast<int>(format));
+    CAPTURE(degree, interiorMultiplicity, transformed, signedDistance,
+            static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1843,7 +1845,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const auto expectedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedSource);
     REQUIRE(expectedEncoding);
 
-    auto* target = native(graphic, 0.02);
+    auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
     graphic.select(QList<RS_Entity*>{target}, true);
     auto update = LC_ActionsHandlerFactory::createActionInstance(
         RS2::ActionOffsetCurveUpdateSource, &context);
@@ -1863,7 +1865,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     auto* replacement = onlyNative(graphic);
     REQUIRE(replacement->sourceDefinition());
     CHECK(replacement->sourceDefinition()->source.kind() == SourceKind::Spline);
-    CHECK(replacement->sourceDefinition()->signedDistance == 0.02);
+    CHECK(replacement->sourceDefinition()->signedDistance == signedDistance);
     CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
               replacement->sourceDefinition()->source) == expectedEncoding);
     CHECK(std::get<RS_SplineData>(replacement->sourceDefinition()->source.value).degree == degree);
