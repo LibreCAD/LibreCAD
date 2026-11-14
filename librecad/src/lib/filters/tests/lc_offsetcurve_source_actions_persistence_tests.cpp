@@ -25,6 +25,8 @@
 #include <QTemporaryDir>
 #include <QThread>
 
+#include <boost/multiprecision/cpp_int.hpp>
+
 #include "lc_action_modify_trim.h"
 #include "lc_action_offsetcurve_updatesource.h"
 #include "lc_action_offsetcurve_restoreoriginal.h"
@@ -35,6 +37,7 @@
 #include "../../offset_worker/lc_offsetworkerrequest.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcachetrim.h"
+#include "lc_ellipseoffsetgeometry.h"
 #include "lc_splinepoints.h"
 #include "lc_parabola.h"
 #include "lc_hyperbola.h"
@@ -1116,13 +1119,15 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
 }
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
-    const int profile = GENERATE(0, 1, 2, 3, 4);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5);
     const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    const std::array<const char*, 5> profileNames{{
-        "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw"}};
+    const std::array<const char*, 6> profileNames{{
+        "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw",
+        "all-arc-circle-cw-centerline-audit"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
+    if (profile == 5 && format != RS2::FormatDXFRW14) return;
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1166,9 +1171,9 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         sourceOwner->addVertex({0, 2}, quarterArcBulge);
         sourceOwner->addVertex({-2, 0}, quarterArcBulge);
         sourceOwner->addVertex({0, -2}, quarterArcBulge);
-    } else if (profile == 4) {
+    } else if (profile == 4 || profile == 5) {
         sourcePick = {2, 0};
-        cutterX = 0.25;
+        cutterX = profile == 4 ? 0.25 : 0.0;
         sourceOwner->addVertex({2, 0}, -quarterArcBulge);
         sourceOwner->addVertex({0, -2}, -quarterArcBulge);
         sourceOwner->addVertex({-2, 0}, -quarterArcBulge);
@@ -1212,8 +1217,48 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     auto* cutter = new RS_Line(&graphic, {cutterX, -20}, {cutterX, 20});
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
+    if (profile == 5) {
+        using Rational = boost::multiprecision::cpp_rational;
+        LC_OffsetCheckLimits limits;
+        geo::WorkBudget budget{limits};
+        const auto layout = geo::inspectCacheLayout(replacement->getData(), budget);
+        REQUIRE(layout.status == geo::CacheLayoutStatus::Ok);
+        std::size_t certifiedCrossings = 0;
+        for (const auto& span : layout.spans) {
+            std::array<Rational, 4> signedDistance;
+            std::array<Rational, 4> ordinate;
+            for (std::size_t control = 0; control <= span.degree; ++control) {
+                signedDistance[control] = Rational(span.controls[control].x);
+                ordinate[control] = Rational(span.controls[control].y);
+            }
+            bool increasing = true, decreasing = true;
+            for (std::size_t control = 0; control < span.degree; ++control) {
+                const Rational derivative = Rational(span.degree) *
+                    (signedDistance[control + 1] - signedDistance[control]);
+                increasing = increasing && derivative > 0;
+                decreasing = decreasing && derivative < 0;
+            }
+            const bool crosses = (signedDistance[0] < 0 && signedDistance[span.degree] > 0) ||
+                                 (signedDistance[0] > 0 && signedDistance[span.degree] < 0);
+            const auto first = signedDistance.begin();
+            const auto last = first + static_cast<std::ptrdiff_t>(span.degree + 1);
+            const bool sameSide = std::all_of(first, last, [](const Rational& value) { return value > 0; }) ||
+                                  std::all_of(first, last, [](const Rational& value) { return value < 0; });
+            if (crosses && (increasing || decreasing)) {
+                ++certifiedCrossings;
+                for (std::size_t control = 0; control <= span.degree; ++control)
+                    CHECK((ordinate[control] >= -20 && ordinate[control] <= 20));
+            } else {
+                CHECK(sameSide);
+            }
+        }
+        CHECK(certifiedCrossings == 2);
+        return;
+    }
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);
+    CAPTURE(kernel.work.intersections.totalBoxPairs, kernel.work.intersections.deepestPairRefinement,
+            kernel.work.intersections.deepestRootRefinement, kernel.work.intersections.generatedItems);
     REQUIRE(kernel.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(kernel.fragments.size() == 1);
     const auto expectedOutputCount = kernel.fragments.size();
