@@ -122,14 +122,23 @@ repeat the already-covered selector request.
    is asynchronous and atomic: success updates the source type and indication;
    cancellation, invalid/stale candidates, and worker refusal preserve the
    prior target and indication.
-5. Keep geometry-variant support separate from selector coverage. For each
-   eligible source variant, use Slice 4's generation, worker/cache, trimming,
-   and applicable DXF/DWG matrix; do not treat a selectable type as proof of
-   end-to-end geometry support.
+5. Keep geometry-variant support separate from selector coverage. Maintain a
+   nine-row family matrix for line, arc, circle, ellipse, spline,
+   spline-points, parabola, bounded hyperbola, and polyline. For every row,
+   identify concrete entity variants that can be selected, then qualify each
+   claimed variant in this order: source capture and reconstruction; bounded
+   worker generation and cache validation; Trim where applicable; and the
+   supported DXF/DWG save/reopen lanes. Record exact variant constraints and
+   refusals. A selector entry or one passing fixture does not establish the
+   whole family; variants without evidence must remain explicitly unqualified
+   and be disabled or refused atomically rather than partially published.
 6. Run the focused headless source-picker/action suite, then the visible
-   Properties workflow and delivery checks in Slice 5. Record platform,
-   revision, exact command, and result; headless coverage does not close the
-   visible-GUI gate.
+   Properties workflow and delivery checks in Slice 5. In the visible check,
+   keep the family selector usable after replacement picking has begun,
+   switch it repeatedly, verify the candidate list changes without leaving
+   that workflow, and confirm source highlighting/state changes only after
+   successful validation. Record platform, revision, exact command, and
+   result; headless coverage does not close the visible-GUI gate.
 
 Automated picker evidence: the latest focused headless source-picker suite
 passes 15,116 assertions / 44 cases (`librecad_tests
