@@ -44569,3 +44569,20 @@ now succeeds for the tested requests. It does not establish all cusp distances,
 parabola constructions, transforms, cutters, or numerical limits, and does not
 close the family-by-variant matrix or visible-GUI, cross-platform, and
 independent-CAD gates.
+
+## 1301. Revalidate the Complete Trim-action Suite (2026-11-14)
+
+At PR head `37597e758ac4be23eba9de592f7a0894749eb6b6`, the current CMake
+Release command
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[lc-offsetcurve][trim-action]' --reporter compact`
+passes 170,628 assertions / 92 test cases. This includes the existing
+parabola cusp and beyond-cusp Trim Two action cases, as well as the broader
+typed-source and cache-trim regressions. The test output was captured at
+`/private/tmp/offset-trim-action-current.log`; `git diff --check` passes for
+this roadmap-only update.
+
+PR checks for this head report Headless ON and OFF successful. The CMake
+macOS/Windows build and analysis jobs and the DWG/DXF verification jobs were
+still in progress when recorded; no result is inferred for them here. This
+revalidation does not close family-by-variant, visible desktop,
+cross-platform-runtime, or independent-CAD acceptance.
