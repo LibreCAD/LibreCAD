@@ -43420,9 +43420,14 @@ picker is active, changing its source-type control must refresh the eligible
 canvas candidates immediately. The user must be able to switch among line,
 arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
 polyline without cancelling the replacement action or reopening Properties.
-The type control filters candidate selection; it must not coerce the selected
-entity into the chosen type. The accepted replacement retains the actual
-selected entity's supported typed geometry.
+The source-curve widget must keep its type control available during the
+replacement-selection step, not only when initially opening the chooser. A
+type change updates the candidate filter in place, and the user may change it
+repeatedly before choosing a new source curve. The type control filters
+candidate selection; it must not coerce the selected entity into the chosen
+type. The accepted replacement retains the actual selected entity's supported
+typed geometry. Treat all nine currently supported kinds as picker types, not
+as a claim that every variant in every family is valid for offset generation.
 
 When the offset curve already has a live source entity, opening Properties
 must visibly identify/highlight that source and initialize the picker to its
@@ -43464,11 +43469,13 @@ not a root-isolation implementation.
 
 Revised implementation sequence:
 
-1. Add a minimal synthetic `LC_ParametricCurves` test for one cubic Bezier and
-   one finite line. Its analytic certificate must isolate an exact
-   non-dyadic crossing, a root exactly on a subdivision boundary, a tangent,
-   a finite-segment miss, and a near-miss. Assert only proven transverse roots
-   are accepted and that the other cases are excluded or refused atomically.
+1. **Complete in section 1259.** A standalone exact-rational Bezier/finite-line
+   root primitive and direct tests cover a non-dyadic crossing, a root exactly
+   on a subdivision boundary, a tangent, a finite-segment miss, and a
+   near-miss. It returns only a unique strictly monotone crossing, with
+   bounded parameter enclosures and a projection proof inside the finite line
+   segment. A missing result means "not certified"; it is not an exclusion
+   proof.
 2. Add round-trip/hostile validation tests for any proof token before the
    Trim provider emits it. The token must preserve existing enum values,
    serialize through the worker result, and be rejected if its proof
@@ -43530,7 +43537,38 @@ worker-result suite passes 467,713 assertions / 27 cases. Both
 `git diff --check` passes.
 
 This implements only proof-token admission and transport. It does not prove
-the token's geometry, add the exact Bezier/line isolator, test boundary-root,
-tangent, finite miss, and near-miss certificates, or fix the centerline Trim
-failure. Add those tests before the Trim provider uses this token; then run
-worker-backed action and persistence suites before claiming the integration.
+the token's geometry or fix the centerline Trim failure. The standalone exact
+Bezier/line isolator and its direct geometry tests are recorded in section
+1259; worker hostile-result validation and production provider integration
+remain required before the Trim provider may emit this token.
+
+## 1259. Add a Standalone Exact Monotone Bezier/Line Isolator (2026-11-13)
+
+Implementation commit `976e9d92c` adds
+`LC_OffsetCacheTrim::certifyMonotoneLineRoot`. It interprets each finite input
+double as its exact binary rational, requires the signed-distance Bernstein
+controls to be strictly monotone with an endpoint sign change (or exact
+endpoint root), and bisects with exact de Casteljau arithmetic. Non-exact
+roots are isolated to a parameter interval no wider than `2^-48`. The returned
+finite-line parameter enclosure is derived from the restricted Bezier control
+hull and is emitted only when that entire hull projects inside the segment.
+Tangencies, non-crossings, invalid input, and out-of-segment intersections
+return no certificate. A missing certificate is explicitly not an exclusion
+proof. The helper is not connected to the production Trim provider.
+
+On macOS arm64 CMake Release, `librecad_tests` builds successfully. The direct
+five-section isolator case passes 10 assertions, and the full
+`[lc-offsetcurve][trim-kernel]` selection passes 41,291 assertions across 72
+cases. `git diff --check` passes. These are direct-core tests only; the worker
+does not yet consume this certificate, and hostile token validation,
+worker-backed actions, symmetric centerline Trim, undo/redo, and persistence
+lanes remain open.
+
+The next implementation slice is to test this certificate's proof category
+against worker-result constraints, including forged category and interval
+payloads, before any Trim provider integration. Then integrate the primitive
+for one source-span/finite-line pair at a time, prove root occurrence identity
+and duplicate suppression across adjacent boxes, and validate both winding
+directions, tangent/near-miss atomic refusal, actions, undo/redo, and all five
+native-capable persistence lanes. The implementation commit is local at this
+receipt; push it and this roadmap update to PR #3193 after review.
