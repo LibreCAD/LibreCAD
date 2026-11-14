@@ -977,6 +977,7 @@ struct TrimContext {
     bool conic = false, emitCache = false;
     Counts output;
     const RS_SplineData* sourceData = nullptr;
+    std::optional<Req::Segment> lineCutter;
 };
 TrimContext trimContext(const Req::Request& r, std::size_t roots) {
     TrimContext c{trimLimits(r)};
@@ -993,6 +994,7 @@ TrimContext trimContext(const Req::Request& r, std::size_t roots) {
     c.sourceData = data;
     c.source = sourceSpans(*data);
     c.conic = cutter->index() >= 1 && cutter->index() <= 3;
+    if (const auto* line = std::get_if<Req::Segment>(cutter)) c.lineCutter = *line;
     c.cutter = c.conic ? 8 : cutter->index() == 0 ? 1 : cutter->index() == 4 ? sourceSpans(std::get<RS_SplineData>(*cutter)) : 0;
     return c;
 }
@@ -1024,6 +1026,43 @@ bool endpoint(const Trim::Endpoint& d, const TrimContext& c) {
         (!(d.labels & unsigned(Trim::EndLabel::SourceEnd)) || sourceEnd) &&
         (!component || (!sourceStart && !sourceEnd));
 }
+bool encloses(const LC_Interval& outer, const LC_Interval& inner) {
+    return admitted(outer) && admitted(inner) && outer.lo() <= inner.lo() && outer.hi() >= inner.hi();
+}
+bool overlaps(const LC_Interval& a, const LC_Interval& b) {
+    return admitted(a) && admitted(b) && std::max(a.lo(), b.lo()) <= std::min(a.hi(), b.hi());
+}
+bool analyticMonotoneRoot(const Trim::RootProvenance& d, const TrimContext& c) {
+    if (c.conic || c.cutter != 1 || !c.lineCutter || !c.sourceData ||
+        d.isolation.parameterA.width() > 1.0 / 1099511627776.0 ||
+        d.target.rawSpan != d.isolation.segmentA ||
+        !encloses(d.proofDomain.parameterA, d.isolation.parameterA) ||
+        !encloses(d.proofDomain.parameterB, d.isolation.parameterB)) return false;
+
+    const auto degree = c.sourceData->degree;
+    const auto first = d.isolation.segmentA * degree;
+    if ((degree != 1 && degree != 3) || first + degree >= c.sourceData->controlPoints.size()) return false;
+    std::vector<RS_Vector> controls;
+    controls.reserve(degree + 1);
+    for (std::size_t i = 0; i <= degree; ++i) {
+        const auto& point = c.sourceData->controlPoints[first + i];
+        if (!point.valid || point.z != 0 || c.sourceData->weights[first + i] != 1) return false;
+        controls.push_back(point);
+    }
+    const auto certificate = Trim::certifyMonotoneLineRoot(
+        controls, c.lineCutter->start, c.lineCutter->end);
+    if (!certificate || certificate->bezierParameter.lo() <= 0 ||
+        certificate->bezierParameter.hi() >= 1) return false;
+
+    const double span = double(d.isolation.segmentA);
+    const auto& local = certificate->bezierParameter;
+    const LC_Interval globalSource = LC_Interval::hull(
+        std::nextafter(span + local.lo(), -INFINITY),
+        std::nextafter(span + local.hi(), INFINITY));
+    return overlaps(d.isolation.parameterA, globalSource) &&
+        overlaps(d.target.localParameter, local) &&
+        overlaps(d.isolation.parameterB, certificate->lineParameter);
+}
 bool section(const Trim::Section& d, const TrimContext& c) {
     if (!admitted(d) || d.rawSpan >= c.source || d.from < 0 || d.from >= d.to || d.to > 1 ||
         d.originalDomain.lo() >= d.originalDomain.hi()) return false;
@@ -1042,7 +1081,7 @@ bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c
             a.parameterB.hi() <= double(a.segmentB - c.source + 1))) &&
         (d.proof == LC_IntersectionProof::IntervalUniqueTransverse ||
          d.proof == LC_IntersectionProof::AnalyticEndpoint ||
-         d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+         (d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse && analyticMonotoneRoot(d, c)));
 }
 bool conic(const Trim::Result::ConicFragment& d, const TrimContext& c) {
     // ORIGINAL axes/ratio and rendering caches are retained, not normalized.

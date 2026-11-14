@@ -703,6 +703,37 @@ TEST_CASE("Worker Trim prepare preserves polynomial sections endpoints roots rem
     CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
 }
 
+TEST_CASE("Worker Trim revalidates monotone proof categories and both root intervals", tags) {
+    auto [request, result] = trimLine();
+    REQUIRE_FALSE(result.roots.empty());
+    result.roots.front().proof = LC_IntersectionProof::AnalyticMonotoneTransverse;
+    const auto encoded = Reply::encode(reply(request, result), request);
+    REQUIRE(encoded);
+    const auto broadSource = patched(*encoded, {4, 3, 0, 2, 2}, QCborArray{0., 1.});
+    const auto wrongSource = patched(*encoded, {4, 3, 0, 2, 2}, QCborArray{.8, .9});
+    const auto outsideLine = patched(*encoded, {4, 3, 0, 2, 3}, QCborArray{-.1, .1});
+    const auto wrongLine = patched(*encoded, {4, 3, 0, 2, 3}, QCborArray{.8, .9});
+    CHECK_FALSE(Reply::decode(broadSource, request));
+    CHECK_FALSE(Reply::decode(wrongSource, request));
+    CHECK_FALSE(Reply::decode(outsideLine, request));
+    CHECK_FALSE(Reply::decode(wrongLine, request));
+    auto shiftedCutter = request;
+    std::get<Req::TrimCache>(shiftedCutter.operation).cutter = Req::Segment{{4.5, -2}, {4.5, 2}};
+    CHECK_FALSE(Reply::encode(reply(shiftedCutter, result), shiftedCutter));
+    auto weightedSource = request;
+    std::get<Req::TrimCache>(weightedSource.operation).cache.weights[0] = 2;
+    CHECK_FALSE(Reply::encode(reply(weightedSource, result), weightedSource));
+
+    const auto data = cache({{-3, .5}, {3, .5}});
+    RS_Circle circle{nullptr, {{0, 0}, 2}};
+    Req::Request conicRequest{token(), Req::TrimConic{data, cutterValue(circle), {{0, 2}}, {}, {}}};
+    auto conicResult = Trim::prepareConic(data, circle, {{0, 2}});
+    REQUIRE(conicResult.refusal == Trim::Refusal::None);
+    REQUIRE_FALSE(conicResult.roots.empty());
+    conicResult.roots.front().proof = LC_IntersectionProof::AnalyticMonotoneTransverse;
+    CHECK_FALSE(Reply::encode(reply(conicRequest, conicResult), conicRequest));
+}
+
 TEST_CASE("Worker Trim conic and paired results preserve original conics and all diagnostics", tags) {
     for (bool reverse : {false, true}) for (unsigned kind = 0; kind < 4; ++kind) {
         const auto data = cache({{-3, .5}, {3, .5}});
