@@ -734,6 +734,46 @@ TEST_CASE("Worker Trim revalidates monotone proof categories and both root inter
     CHECK_FALSE(Reply::encode(reply(conicRequest, conicResult), conicRequest));
 }
 
+TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cubic sources", tags) {
+    const RS_Vector origin{10, -7}, direction{4, 3}, normal{-3, 4};
+    for (std::size_t degree : {1u, 3u}) for (bool reverseSource : {false, true})
+        for (bool reverseLine : {false, true}) {
+            const std::vector<double> along = degree == 1
+                ? std::vector<double>{.25, .75}
+                : std::vector<double>{.2, .4, .6, .8};
+            const std::vector<double> across = degree == 1
+                ? std::vector<double>{-1, 1}
+                : std::vector<double>{-2, -1, 1, 2};
+            std::vector<RS_Vector> controls;
+            for (std::size_t i = 0; i < along.size(); ++i)
+                controls.push_back(origin + direction * along[i] + normal * across[i]);
+            if (reverseSource) std::reverse(controls.begin(), controls.end());
+            const auto data = cache(std::move(controls), degree);
+            const RS_Vector lineEnd = origin + direction;
+            RS_Line cutter{nullptr, reverseLine ? lineEnd : origin, reverseLine ? origin : lineEnd};
+            auto pickNet = data.controlPoints;
+            for (std::size_t level = 1; level <= degree; ++level)
+                for (std::size_t i = 0; i <= degree - level; ++i)
+                    pickNet[i] = pickNet[i] * .9 + pickNet[i + 1] * .1;
+            const auto pick = Trim::Pick{pickNet.front()};
+            const auto result = Trim::prepare(data, cutter, pick);
+            CAPTURE(degree, reverseSource, reverseLine, result.refusal, result.rootCount);
+            REQUIRE(result.refusal == Trim::Refusal::None);
+            REQUIRE(result.roots.size() == 1);
+            CHECK(result.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+
+            Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), pick, {}}};
+            const auto encoded = Reply::encode(reply(request, result), request);
+            REQUIRE(encoded);
+            const auto decoded = Reply::decode(*encoded, request);
+            REQUIRE(decoded);
+            const auto* received = std::get_if<Trim::Result>(&decoded->result);
+            REQUIRE(received);
+            REQUIRE(received->roots.size() == 1);
+            CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        }
+}
+
 TEST_CASE("Worker Trim conic and paired results preserve original conics and all diagnostics", tags) {
     for (bool reverse : {false, true}) for (unsigned kind = 0; kind < 4; ++kind) {
         const auto data = cache({{-3, .5}, {3, .5}});
