@@ -44826,3 +44826,22 @@ macOS 27.0/27.2. Shell startup reported the absent optional
 `/private/tmp/libdxfrw-cargo/env`, which did not affect the build. Keep clean
 cross-platform builds, qmake test coverage if made available, visible GUI,
 and independent-CAD validation open.
+
+## 1313. Independently Oracle-check Repeated-knot Spline Offsets (2026-11-14)
+
+Test commit `c38615dd9` adds a worker-kernel oracle case matching the degree
+four/six rational source profiles and interior-knot multiplicities from
+sections 1309-1311. For simple, multiplicity-two, and degree-minus-one knots,
+it checks origin-aligned and rotated/translated frames, both signed offset
+distances, a high-precision independent source evaluator and offset normal,
+and the generated piecewise output against a dense cache search. The combined
+cache is also passed through typed worker cache validation.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests 'high-degree rational spline offsets match an independent repeated-knot oracle' --reporter compact`
+passes 744 assertions / 1 case. The full `[spline][high-degree]` worker
+selection passes 13,719 assertions / 11 cases. This supplies an independent
+geometry check for the exact layouts carried through document Trim and file
+lanes in section 1311; it does not establish arbitrary spline shapes,
+conditioning, all knot multiplicities, visible GUI, cross-platform behavior,
+or external-CAD interoperability.
