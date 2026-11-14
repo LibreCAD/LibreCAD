@@ -1496,13 +1496,15 @@ TEST_CASE("translated rounded polyline action matches an independent worker requ
 TEST_CASE("bounded hyperbola source trims through document actions and file lanes",
           "[lc-offsetcurve][source-action][hyperbola][trim-action][persistence]") {
     const bool leftBranch = GENERATE(false, true);
+    const bool reversedParameters = GENERATE(false, true);
     const double ratio = GENERATE(0.25, 0.75);
     const double sourceScale = GENERATE(0.25, 1.0, 4.0);
     const double signedDistance = GENERATE(-0.25, 0.25) * sourceScale;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(leftBranch, ratio, sourceScale, signedDistance, static_cast<int>(format));
+    CAPTURE(leftBranch, reversedParameters, ratio, sourceScale, signedDistance,
+            static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1519,7 +1521,9 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
     const RS_Vector majorAxis{std::cos(0.37), std::sin(0.37)};
     const LC_OffsetSourceGeometry expectedSource{LC_HyperbolaData{
-        {0, 0}, majorAxis * (8.0 * sourceScale), ratio, -0.9, 1.1, leftBranch}};
+        {0, 0}, majorAxis * (8.0 * sourceScale), ratio,
+        reversedParameters ? 1.1 : -0.9, reversedParameters ? -0.9 : 1.1,
+        leftBranch}};
     REQUIRE(expectedSource.isWellFormed());
     auto sourceOwner = expectedSource.makeEntity();
     REQUIRE(sourceOwner);
