@@ -69,7 +69,8 @@ and ordered-family replacement tests cited in sections 1291-1293, including
 1,101 assertions across all nine kinds. Section 1342 additionally verifies
 that the current-source highlight remains visible while the replacement filter
 changes to parabola and back to line; its focused source-picker suite passes
-15,129 assertions / 44 cases. No new selector implementation slice is needed
+15,129 assertions / 44 cases. Section 1375 extends the highlight/state check
+across all nine filter kinds. No new selector implementation slice is needed
 unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
@@ -46032,6 +46033,23 @@ latest source-widget reaffirmation at the top of the document: one in-place
 type filter for all nine `SupportedKinds`, with parabola distinct; existing
 headless coverage is complete, while physical visible-GUI acceptance remains
 open.
+
+## 1375. Preserve Current-source Highlight Across All Family Filters (2026-11-14)
+
+Test commit `43ec6599a` extends the Properties-widget highlight regression from
+the line/parabola pair to every kind in `SupportedKinds`. With a line committed
+as the replacement source, the test cycles through all nine filters, including
+families with no candidate in the fixture. At every step it verifies that the
+existing line remains selected and highlighted, and that filtering has not
+changed the committed source definition or cache. It also checks the line and
+parabola candidate rows appear only under their respective filters. This is
+headless interaction coverage; it does not establish visible desktop behavior.
+
+On macOS arm64 CMake Release, `cmake --build
+/private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
+`Native source picker preserves highlighted source across family filters`
+passes 138 assertions / 1 case. `git diff --check` passes. The visible GUI
+switching/indication and cross-platform acceptance gates remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
