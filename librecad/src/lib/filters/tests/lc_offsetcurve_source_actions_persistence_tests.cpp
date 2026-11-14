@@ -1308,6 +1308,16 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
             CHECK(error < oracleTolerance);
             ++arcsChecked;
 
+            for (const double fraction : {.25, .75}) {
+                const double angle = startAngle + orientation * data.getAngleLength() * fraction;
+                const RS_Vector expectedQuarter = data.center +
+                    RS_Vector::polar(expectedRadius, angle);
+                const double quarterError = distanceToCache(expectedQuarter);
+                CAPTURE(fraction, signedDistance, data.radius, expectedRadius, expectedQuarter,
+                    quarterError, replacement->checkedWorldTolerance(), oracleTolerance);
+                CHECK(quarterError < oracleTolerance);
+            }
+
             const double endAngle = data.reversed ? data.angle1 : data.angle2;
             for (const double angle : {startAngle, endAngle}) {
                 const RS_Vector expectedEndpoint = data.center +
