@@ -260,7 +260,17 @@ struct LC_CurveOffsetGeometryResult {
     /** Last intersection query, including its bounded work, for failure triage. */
     struct IntersectionDiagnostics {
         enum class Stage { None, OffsetSelfNoding, SourceSelfNoding, TrimBoundary, RegionBoundary, MaterializedOutput };
+        enum class FailureSite {
+            None,
+            SourceSideClassification,
+            CandidateOffsetGeneration,
+            CandidateArrangement,
+            CandidateSplit,
+            CandidateClassification,
+            CycleAssembly
+        };
         Stage stage{Stage::None};
+        FailureSite failureSite{FailureSite::None};
         LC_IntersectionStatus status{LC_IntersectionStatus::Ok};
         LC_IntersectionWorkStats work{};
         bool hasFailureDomain{false};

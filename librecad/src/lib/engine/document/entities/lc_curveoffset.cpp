@@ -6534,6 +6534,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                                     const bool dilate, const LC_CurveOffsetOptions& options,
                                     const LC_OffsetSourceBudget& budget, std::vector<LC_OffsetBranch>& cycles,
                                     LC_CurveOffsetGeometryResult& result, const bool normalized = false) {
+    using FailureSite = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite;
     if (!source.closed()) {
         return LC_CurveOffsetStatus::InvalidSource; // a region needs a closed boundary
     }
@@ -6696,6 +6697,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             }
         }
         if (!decided) {
+            result.intersectionDiagnostics.failureSite = FailureSite::SourceSideClassification;
             return boxes > options.maxDistanceMapBoxes ? LC_CurveOffsetStatus::LimitExceeded
                                                        : LC_CurveOffsetStatus::AmbiguousTopology;
         }
@@ -6781,6 +6783,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             }
             result.exactSamples += candidateSamples;
             if (status != LC_CurveOffsetStatus::Ok) {
+                result.intersectionDiagnostics.failureSite = FailureSite::CandidateOffsetGeneration;
                 return status;
             }
             candidates.push_back(std::move(candidate));
@@ -7009,6 +7012,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
                                   LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
     if (found.status != LC_IntersectionStatus::Ok) {
+        result.intersectionDiagnostics.failureSite = FailureSite::CandidateArrangement;
         return fromIntersectionStatus(found.status);
     }
     std::vector<std::vector<Occurrence>> offsetCuts(candidates.size());
@@ -7035,6 +7039,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                                                               candidates[c].signedDistance, speedFloor, options,
                                                               offsetCuts[c], candidates[c].branches);
         if (status != LC_CurveOffsetStatus::Ok) {
+            result.intersectionDiagnostics.failureSite = FailureSite::CandidateSplit;
             return status;
         }
     }
@@ -7177,6 +7182,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             }
         }
         if (decision < 0) {
+            result.intersectionDiagnostics.failureSite = FailureSite::CandidateClassification;
             return boxes > options.maxDistanceMapBoxes ? LC_CurveOffsetStatus::LimitExceeded
                                                        : LC_CurveOffsetStatus::AmbiguousTopology;
         }
@@ -7205,6 +7211,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             for (const size_t k : kept) {
                 if (!used[k] && pieces[k].pieces.front().bezier[0] == end) {
                     if (next != pieces.size()) {
+                        result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
                         return LC_CurveOffsetStatus::AmbiguousTopology; // cycles touching at a point
                     }
                     next = k;
@@ -7212,12 +7219,14 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             }
             const bool closes = end == cycle.cubicPieces.front().bezier[0];
             if (closes && next != pieces.size()) {
+                result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
                 return LC_CurveOffsetStatus::AmbiguousTopology; // another cycle touches it at its start
             }
             if (closes) {
                 break;
             }
             if (next == pieces.size()) {
+                result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
                 return LC_CurveOffsetStatus::AmbiguousTopology; // a boundary that does not close
             }
             current = next;

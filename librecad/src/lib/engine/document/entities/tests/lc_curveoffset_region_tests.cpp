@@ -473,6 +473,7 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                                 grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
                     options, LC_CurveOffset::makeDirectSourceBudget());
                 CAPTURE(frame, grow, static_cast<int>(rule), static_cast<int>(result.status),
+                        static_cast<int>(result.intersectionDiagnostics.failureSite),
                         static_cast<int>(result.intersectionDiagnostics.stage),
                         static_cast<int>(result.intersectionDiagnostics.status),
                         result.intersectionDiagnostics.failureDomain.segmentA,
@@ -480,6 +481,8 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                 const bool expectedSuccess = (frame == 0 && grow) ||
                     (frame == 3 && !grow);
                 if (expectedSuccess) {
+                    CHECK(result.intersectionDiagnostics.failureSite ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
                     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
                     REQUIRE(result.branches.size() == (grow ? 1u : 2u));
                     const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
@@ -490,6 +493,8 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                     for (const double area : check.areas) CHECK(area > 0.0);
                 } else {
                     CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+                    CHECK(result.intersectionDiagnostics.failureSite !=
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
                     CHECK(result.branches.empty());
                 }
                 CHECK(source.getVertexes().size() == originalVertices.size());

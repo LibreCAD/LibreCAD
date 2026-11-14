@@ -46074,10 +46074,13 @@ the refusal cells.
 On macOS arm64 CMake Release, `cmake --build
 /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
 `Positive-bulge bow-tie mixed-frame successes are independently checked`
-passes 154 assertions / 1 case. `git diff --check` passes. Resolving the
-transform-sensitive topology results remains an open geometry feature; worker
-parity, persistence, visible GUI, cross-platform, and independent CAD gates
-remain separate.
+passes 170 assertions / 1 case. The result now includes a failure-site
+classification for refused cells (source-side classification, candidate
+generation/arrangement/splitting/classification, or cycle assembly), so future
+geometry work can target the stage that refuses without weakening the atomic
+failure behavior. `git diff --check` passes. Resolving the transform-sensitive
+topology results remains an open geometry feature; worker parity, persistence,
+visible GUI, cross-platform, and independent CAD gates remain separate.
 
 ## 1377. Persist Negative-bulge Region Worker Branches (2026-11-14)
 
