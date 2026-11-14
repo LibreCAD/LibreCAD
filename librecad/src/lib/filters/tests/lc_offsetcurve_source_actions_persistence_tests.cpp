@@ -1495,10 +1495,12 @@ TEST_CASE("translated rounded polyline action matches an independent worker requ
 
 TEST_CASE("bounded hyperbola source trims through document actions and file lanes",
           "[lc-offsetcurve][source-action][hyperbola][trim-action][persistence]") {
+    const bool leftBranch = GENERATE(false, true);
+    const double signedDistance = GENERATE(-0.25, 0.25);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(static_cast<int>(format));
+    CAPTURE(leftBranch, signedDistance, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1512,10 +1514,10 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    auto* target = native(graphic);
+    auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
+    const RS_Vector majorAxis{std::cos(0.37), std::sin(0.37)};
     const LC_OffsetSourceGeometry expectedSource{LC_HyperbolaData{
-        {0, 0}, {8.0 * std::cos(0.37), 8.0 * std::sin(0.37)},
-        0.5, -0.9, 1.1, false}};
+        {0, 0}, majorAxis * 8.0, 0.5, -0.9, 1.1, leftBranch}};
     REQUIRE(expectedSource.isWellFormed());
     auto sourceOwner = expectedSource.makeEntity();
     REQUIRE(sourceOwner);
@@ -1548,14 +1550,13 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     auto* replacement = onlyNative(graphic);
     REQUIRE(replacement->sourceDefinition());
     CHECK(replacement->sourceDefinition()->source.kind() == SourceKind::BoundedHyperbola);
-    CHECK(replacement->sourceDefinition()->signedDistance == 0.25);
+    CHECK(replacement->sourceDefinition()->signedDistance == signedDistance);
     CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
               replacement->sourceDefinition()->source) == expectedEncoding);
     const auto cacheBeforeTrim = RS_Spline::geometryFingerprint(replacement->getData());
 
-    const RS_Vector majorAxis{std::cos(0.37), std::sin(0.37)};
     const RS_Vector minorAxis{-majorAxis.y, majorAxis.x};
-    const RS_Vector cutterCenter = majorAxis * 9.5;
+    const RS_Vector cutterCenter = majorAxis * (leftBranch ? -9.5 : 9.5);
     const RS_Vector cutterHalfLength = minorAxis * 20.0;
     auto* cutter = new RS_Line(&graphic, cutterCenter - cutterHalfLength,
                                cutterCenter + cutterHalfLength);
