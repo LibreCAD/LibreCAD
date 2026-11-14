@@ -109,6 +109,20 @@ struct Cancellation {
     std::shared_ptr<const std::atomic_bool> requested;
 };
 
+/** Exact-rational certificate for one strictly monotone Bezier/finite-line
+ * crossing. A missing result means only "not certified". The parameter
+ * intervals enclose the unique intersection and its projection on the finite
+ * line segment. This primitive is intentionally not yet a Trim root provider.
+ */
+struct MonotoneLineRootCertificate {
+    LC_Interval bezierParameter;
+    LC_Interval lineParameter;
+};
+
+std::optional<MonotoneLineRootCertificate> certifyMonotoneLineRoot(
+    const std::vector<RS_Vector>& bezierControlPoints,
+    const RS_Vector& lineStart, const RS_Vector& lineEnd);
+
 struct Result {
     struct ConicFragment {
         // Preserve the ORIGINAL conic axes/ratio; only angular bounds change.

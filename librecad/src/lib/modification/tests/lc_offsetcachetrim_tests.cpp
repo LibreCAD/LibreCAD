@@ -126,6 +126,36 @@ void linearComplement(const RS_SplineData& data, const Trim::Result& result, dou
     }
 }
 
+TEST_CASE("Monotone Bezier line certificates isolate only finite transverse crossings", tags) {
+    SECTION("non-dyadic unique crossing") {
+        const auto certificate = Trim::certifyMonotoneLineRoot(
+            {{0, 0}, {1. / 3, 0}, {2. / 3, 0}, {1, 0}}, {.3, -1}, {.3, 1});
+        REQUIRE(certificate);
+        CHECK(certificate->bezierParameter.contains(.3));
+        CHECK(certificate->lineParameter.contains(.5));
+        CHECK(certificate->bezierParameter.width() < 1e-12);
+    }
+    SECTION("root exactly at a subdivision boundary") {
+        const auto certificate = Trim::certifyMonotoneLineRoot(
+            {{0, 0}, {1, 0}}, {.5, -1}, {.5, 1});
+        REQUIRE(certificate);
+        CHECK(certificate->bezierParameter.contains(.5));
+        CHECK(certificate->lineParameter.contains(.5));
+    }
+    SECTION("tangent is not strictly monotone") {
+        CHECK_FALSE(Trim::certifyMonotoneLineRoot(
+            {{0, .25}, {.5, -.25}, {1, .25}}, {-1, 0}, {2, 0}));
+    }
+    SECTION("infinite-line crossing outside finite segment") {
+        CHECK_FALSE(Trim::certifyMonotoneLineRoot(
+            {{0, 2}, {1, 2}}, {.5, -1}, {.5, 1}));
+    }
+    SECTION("strict near miss has no crossing certificate") {
+        CHECK_FALSE(Trim::certifyMonotoneLineRoot(
+            {{-1, 2}, {1, 2}}, {0, -1}, {0, 1}));
+    }
+}
+
 RS_SplineData twoCuts(std::size_t degree = 1, double first = 3, double last = 7) {
     if (degree == 1) { return cache({{first, -2}, {first, 2}, {last, 2}, {last, -2}}); }
     return cache({{first, -2}, {first, -2. / 3}, {first, 2. / 3}, {first, 2},

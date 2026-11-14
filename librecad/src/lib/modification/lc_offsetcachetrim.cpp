@@ -50,6 +50,122 @@ I enclose(const Q& q) {
                    rounded < q ? std::nextafter(v, INFINITY) : v);
 }
 
+struct ExactPoint { Q x, y; };
+using ExactNet = std::array<ExactPoint, 4>;
+
+Q signedDistance(const ExactPoint& point, const ExactPoint& origin,
+                 const Q& dx, const Q& dy) {
+    return dx * (point.y - origin.y) - dy * (point.x - origin.x);
+}
+
+std::pair<ExactNet, ExactNet> splitHalf(const ExactNet& net, std::size_t degree) {
+    ExactNet work = net, left{}, right{};
+    left[0] = work[0]; right[degree] = work[degree];
+    for (std::size_t level = 1; level <= degree; ++level) {
+        for (std::size_t i = 0; i <= degree - level; ++i) {
+            work[i] = {(work[i].x + work[i + 1].x) / 2,
+                       (work[i].y + work[i + 1].y) / 2};
+        }
+        left[level] = work[0]; right[degree - level] = work[degree - level];
+    }
+    return {left, right};
+}
+
+std::optional<MonotoneLineRootCertificate> certifyMonotoneLineRootExact(
+        const std::vector<RS_Vector>& controls,
+        const RS_Vector& lineStart, const RS_Vector& lineEnd) {
+    if (controls.size() < 2 || controls.size() > 4 ||
+        !std::isfinite(lineStart.x) || !std::isfinite(lineStart.y) ||
+        !std::isfinite(lineEnd.x) || !std::isfinite(lineEnd.y)) { return {}; }
+
+    const std::size_t degree = controls.size() - 1;
+    const ExactPoint origin{Q{lineStart.x}, Q{lineStart.y}};
+    const Q dx = Q{lineEnd.x} - origin.x, dy = Q{lineEnd.y} - origin.y;
+    const Q lengthSquared = dx * dx + dy * dy;
+    if (lengthSquared == 0) { return {}; }
+
+    ExactNet net{};
+    std::array<Q, 4> distances{};
+    for (std::size_t i = 0; i <= degree; ++i) {
+        if (!std::isfinite(controls[i].x) || !std::isfinite(controls[i].y)) { return {}; }
+        net[i] = {Q{controls[i].x}, Q{controls[i].y}};
+        distances[i] = signedDistance(net[i], origin, dx, dy);
+    }
+
+    const bool increasing = distances[1] > distances[0];
+    if (distances[1] == distances[0]) { return {}; }
+    for (std::size_t i = 1; i < degree; ++i) {
+        if (increasing ? distances[i + 1] <= distances[i]
+                       : distances[i + 1] >= distances[i]) { return {}; }
+    }
+    if ((distances[0] < 0 && distances[degree] < 0) ||
+        (distances[0] > 0 && distances[degree] > 0)) { return {}; }
+
+    const auto makeCertificate = [&](const Q& parameterLo, const Q& parameterHi,
+                                     const ExactNet& restricted,
+                                     bool exactRoot, const ExactPoint& rootPoint)
+            -> std::optional<MonotoneLineRootCertificate> {
+        if (!exactRoot && parameterHi - parameterLo > Q{1} / Q{std::uint64_t{1} << 48}) {
+            return {};
+        }
+        Q projectionLo, projectionHi;
+        if (exactRoot) {
+            const Q projection = dx * (rootPoint.x - origin.x) + dy * (rootPoint.y - origin.y);
+            if (projection < 0 || projection > lengthSquared) { return {}; }
+            projectionLo = projectionHi = projection;
+        } else {
+            bool first = true;
+            for (std::size_t i = 0; i <= degree; ++i) {
+                const Q projection = dx * (restricted[i].x - origin.x) +
+                                     dy * (restricted[i].y - origin.y);
+                if (first) { projectionLo = projectionHi = projection; first = false; }
+                else { projectionLo = std::min(projectionLo, projection);
+                       projectionHi = std::max(projectionHi, projection); }
+            }
+            if (projectionLo < 0 || projectionHi > lengthSquared) { return {}; }
+        }
+
+        const I parameter = exactRoot ? enclose(parameterLo)
+            : I::hull(enclose(parameterLo).lo(), enclose(parameterHi).hi());
+        const I lineParameter = I::hull(enclose(projectionLo / lengthSquared).lo(),
+                                        enclose(projectionHi / lengthSquared).hi());
+        if (!finite(parameter) || !finite(lineParameter)) { return {}; }
+        return MonotoneLineRootCertificate{parameter, lineParameter};
+    };
+
+    if (distances[0] == 0) {
+        return makeCertificate(Q{0}, Q{0}, net, true, net[0]);
+    }
+    if (distances[degree] == 0) {
+        return makeCertificate(Q{1}, Q{1}, net, true, net[degree]);
+    }
+
+    Q parameterLo = 0, parameterHi = 1;
+    for (unsigned iteration = 0; iteration < 96; ++iteration) {
+        auto halves = splitHalf(net, degree);
+        const Q middleParameter = (parameterLo + parameterHi) / 2;
+        const Q middleDistance = signedDistance(halves.first[degree], origin, dx, dy);
+        if (middleDistance == 0) {
+            return makeCertificate(middleParameter, middleParameter,
+                                   halves.first, true, halves.first[degree]);
+        }
+        const bool lowerHasRoot = (distances[0] < 0) != (middleDistance < 0);
+        if (lowerHasRoot) {
+            net = halves.first;
+            parameterHi = middleParameter;
+            distances[degree] = middleDistance;
+        } else {
+            net = halves.second;
+            parameterLo = middleParameter;
+            distances[0] = middleDistance;
+        }
+        if (auto certificate = makeCertificate(parameterLo, parameterHi, net, false, {})) {
+            return certificate;
+        }
+    }
+    return {};
+}
+
 Limits clamp(Limits l) {
     const Limits hard;
 #define LC_TRIM_CLAMP(field) l.field = std::min(l.field, hard.field)
@@ -1678,6 +1794,13 @@ Result prepareComponents(Context& c, const Input& input, const std::vector<Compo
 }
 
 } // namespace
+
+std::optional<MonotoneLineRootCertificate> certifyMonotoneLineRoot(
+        const std::vector<RS_Vector>& bezierControlPoints,
+        const RS_Vector& lineStart, const RS_Vector& lineEnd) {
+    try { return certifyMonotoneLineRootExact(bezierControlPoints, lineStart, lineEnd); }
+    catch (...) { return {}; }
+}
 
 namespace {
 static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, const Pick& pick,
