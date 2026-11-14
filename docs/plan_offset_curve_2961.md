@@ -44288,11 +44288,15 @@ coerce their geometry or commit a replacement.
 The focused headless test `Native source picker filters and replaces every
 supported source family` passes 285 assertions / 1 case on the current CMake
 test binary. It verifies all nine selector entries, candidate filtering, and
-that browsing leaves the current source definition/cache unchanged. This
-establishes dialog-level headless behavior and typed replacement, but does not
-prove that type switching remains operable while the visible canvas action is
-active, nor that each kind completes asynchronous publication, undo/redo, or
-file round-trip in the visible application.
+that browsing leaves the current source definition/cache unchanged. The
+action-level test `I update source type changes the live candidate filter
+without changing the target` also passes 148 assertions / 1 case. It changes
+the action-options selector while the source-update action is active, checks
+that candidate eligibility changes in place across all nine kinds, and
+confirms the selected target and its definition/cache remain unchanged. These
+headless tests establish dialog and active-action behavior, but do not prove
+the visible desktop interactions or that each kind completes asynchronous
+publication, undo/redo, or file round-trip in the visible application.
 
 **Remaining acceptance:** in the visible Properties and Update from Source
 workflows, open replacement selection, change type repeatedly without ending
