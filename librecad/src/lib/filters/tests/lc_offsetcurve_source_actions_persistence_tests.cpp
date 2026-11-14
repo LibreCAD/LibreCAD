@@ -7,6 +7,7 @@
 #include <cmath>
 #include <filesystem>
 #include <memory>
+#include <optional>
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -24,6 +25,7 @@
 #include <QStringList>
 #include <QTemporaryDir>
 #include <QThread>
+#include <QTimer>
 
 #include <boost/multiprecision/cpp_int.hpp>
 
@@ -36,6 +38,7 @@
 #include "lc_filtertestsupport.h"
 #include "../../offset_worker/lc_offsetworkerrequest.h"
 #include "../../offset_worker/lc_offsetworkerresult.h"
+#include "../../offset_worker/lc_offsetworkerclient.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcachetrim.h"
 #include "lc_ellipseoffsetgeometry.h"
@@ -1250,6 +1253,220 @@ TEST_CASE("I replace and persist a reversed rounded polyline source",
     CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
         reopenedCurve->sourceDefinition()->source) == expectedEncoding);
     CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) == cacheFingerprint);
+}
+
+TEST_CASE("translated reversed source action matches an independent worker request",
+          "[lc-offsetcurve][source-action][polyline][reversed][large-origin]") {
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    CAPTURE(static_cast<int>(format));
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    constexpr double zoom = 10.0;
+    constexpr double angle = .37;
+    const RS_Vector origin{1e6, -1e6};
+    view.getViewPort()->setOffsetAndFactor(qRound(200. - origin.x * zoom),
+                                          qRound(200. - origin.y * zoom), zoom);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+    const auto transform = [&](const RS_Vector point) {
+        return origin + RS_Vector{std::cos(angle) * point.x - std::sin(angle) * point.y,
+                                  std::sin(angle) * point.x + std::cos(angle) * point.y};
+    };
+
+    LC_OffsetPolylineData data{
+        {1, 0}, {1, 0}, true,
+        {RS_LineData{{1, 0}, {12, 0}},
+         RS_ArcData{{12, 2}, 2, 3 * M_PI / 2, 2 * M_PI, false},
+         RS_LineData{{14, 2}, {14, 8.25}},
+         RS_ArcData{{13.25, 8.25}, .75, 0, M_PI / 2, false},
+         RS_LineData{{13.25, 9}, {1.5, 9}},
+         RS_ArcData{{1.5, 7.5}, 1.5, M_PI / 2, M_PI, false},
+         RS_LineData{{0, 7.5}, {0, 1}},
+         RS_ArcData{{1, 1}, 1, M_PI, 3 * M_PI / 2, false}}};
+    std::reverse(data.segments.begin(), data.segments.end());
+    for (auto& segment : data.segments) {
+        if (auto* line = std::get_if<RS_LineData>(&segment)) {
+            std::swap(line->startpoint, line->endpoint);
+        } else {
+            auto& arc = std::get<RS_ArcData>(segment);
+            std::swap(arc.angle1, arc.angle2);
+            arc.reversed = !arc.reversed;
+        }
+    }
+    std::swap(data.startpoint, data.endpoint);
+    data.startpoint = transform(data.startpoint);
+    data.endpoint = transform(data.endpoint);
+    for (auto& segment : data.segments) {
+        if (auto* line = std::get_if<RS_LineData>(&segment)) {
+            line->startpoint = transform(line->startpoint);
+            line->endpoint = transform(line->endpoint);
+        } else {
+            auto& arc = std::get<RS_ArcData>(segment);
+            arc.center = transform(arc.center);
+            arc.angle1 += angle;
+            arc.angle2 += angle;
+        }
+    }
+    const LC_OffsetSourceGeometry expectedSource{std::move(data)};
+    REQUIRE(expectedSource.isWellFormed());
+    auto sourceOwner = expectedSource.makeEntity();
+    REQUIRE(sourceOwner);
+    auto* source = dynamic_cast<RS_Polyline*>(sourceOwner.get());
+    REQUIRE(source);
+    source->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(source);
+    sourceOwner.release();
+    const RS_Vector sourcePick = source->getNearestPointOnEntity(transform({7, 0}), true);
+    REQUIRE(sourcePick.valid);
+
+    auto* target = native(graphic, .25, true);
+    graphic.select(QList<RS_Entity*>{target}, true);
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* action = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(action);
+    action->setSourceKind(SourceKind::Polyline);
+    mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*action);
+    REQUIRE(action->lastReport().updated == 1);
+    auto* published = onlyNative(graphic);
+    REQUIRE(published->sourceDefinition());
+    CHECK(published->sourceDefinition()->signedDistance == -.25);
+    const auto captured = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(captured);
+    const auto sourceEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*captured);
+    REQUIRE(sourceEncoding);
+    CHECK(sourceEncoding == LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+        published->sourceDefinition()->source));
+
+    const LC_OffsetWorkerRequest::Request workerRequest{{1, 0, 0, 0},
+        LC_OffsetWorkerRequest::GenerateSource{*published->sourceDefinition(), {}}};
+    LC_OffsetWorkerClient independentWorker;
+    std::optional<LC_OffsetWorkerClient::Outcome> workerOutcome;
+    QEventLoop eventLoop;
+    QTimer deadline;
+    deadline.setSingleShot(true);
+    QObject::connect(&deadline, &QTimer::timeout, &eventLoop, &QEventLoop::quit);
+    REQUIRE(independentWorker.submit(workerRequest, LC_OffsetWorkerClient::Mode::Commit,
+        [&](LC_OffsetWorkerClient::Outcome outcome) {
+            workerOutcome.emplace(std::move(outcome));
+            eventLoop.quit();
+        }));
+    deadline.start(35000);
+    eventLoop.exec();
+    REQUIRE(workerOutcome);
+    REQUIRE(workerOutcome->status == LC_OffsetWorkerClient::Status::Completed);
+    REQUIRE(workerOutcome->completed);
+    auto independentlyGenerated = workerOutcome->completed->nativeSource(*published);
+    REQUIRE(independentlyGenerated);
+    CHECK(RS_Spline::geometryFingerprint(independentlyGenerated->getData()) ==
+          RS_Spline::geometryFingerprint(published->getData()));
+
+    const auto& polyline = std::get<LC_OffsetPolylineData>(captured->value);
+    double first = 0.0, last = 0.0;
+    REQUIRE(published->getParameterDomain(first, last));
+    for (const auto& segment : polyline.segments) {
+        const auto* arc = std::get_if<RS_ArcData>(&segment);
+        if (arc == nullptr) continue;
+        const double direction = arc->reversed ? -1.0 : 1.0;
+        const double radius = arc->radius - direction * published->sourceDefinition()->signedDistance;
+        REQUIRE(radius > 0.0);
+        for (const double fraction : {.25, .5, .75}) {
+            const double angleAt = arc->angle1 + direction * arc->getAngleLength() * fraction;
+            const RS_Vector expected = arc->center + RS_Vector::polar(radius, angleAt);
+            double nearest = std::numeric_limits<double>::infinity();
+            for (int sample = 0; sample <= 8192; ++sample) {
+                const RS_Vector candidate = published->getPointAt(first +
+                    (last - first) * sample / 8192.0);
+                if (candidate.valid) nearest = std::min(nearest, candidate.distanceTo(expected));
+            }
+            CAPTURE(fraction, arc->radius, expected, nearest);
+            CHECK(nearest < .02);
+        }
+    }
+
+    REQUIRE(graphic.removeEntity(source));
+    const RS_Vector cutterStart = transform({10, -30});
+    const RS_Vector cutterEnd = transform({10, 30});
+    auto* cutter = new RS_Line(&graphic, cutterStart, cutterEnd);
+    cutter->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(cutter);
+    const RS_Vector targetPick = published->getPointAt(first + .1 * (last - first));
+    REQUIRE(targetPick.valid);
+    const auto trimKernel = LC_OffsetCacheTrim::prepare(
+        published->getData(), *cutter, {targetPick});
+    REQUIRE(trimKernel.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(trimKernel.rootCount == 2);
+    REQUIRE(trimKernel.fragments.size() == 1);
+    std::vector<std::uint64_t> expectedTrimmed;
+    for (const auto& fragment : trimKernel.fragments)
+        expectedTrimmed.push_back(RS_Spline::geometryFingerprint(fragment.data));
+    std::sort(expectedTrimmed.begin(), expectedTrimmed.end());
+
+    graphic.select(QList<RS_Entity*>{published}, true);
+    TrimActionProbe trim(&context);
+    trim.init(0);
+    mouse(trim, view, cutterStart, true);
+    mouse(trim, view, targetPick, true);
+    QElapsedTimer trimWait;
+    trimWait.start();
+    while (trim.pending() && trimWait.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    CHECK_FALSE(trim.pending());
+    CHECK(published->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    std::vector<std::uint64_t> actualTrimmed;
+    for (const auto* entity : graphic) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        actualTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    }
+    std::sort(actualTrimmed.begin(), actualTrimmed.end());
+    CHECK(actualTrimmed == expectedTrimmed);
+
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(published->isDeleted());
+    REQUIRE(graphic.redo());
+    CHECK(published->isDeleted());
+    actualTrimmed.clear();
+    for (const auto* entity : graphic) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        actualTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    }
+    std::sort(actualTrimmed.begin(), actualTrimmed.end());
+    CHECK(actualTrimmed == expectedTrimmed);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("translated-reversed-trim-%1.drawing").arg(static_cast<int>(format)))
+            .toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    std::vector<std::uint64_t> reopenedTrimmed;
+    for (const auto* entity : reopened) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        reopenedTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    }
+    std::sort(reopenedTrimmed.begin(), reopenedTrimmed.end());
+    CHECK(reopenedTrimmed == expectedTrimmed);
 }
 
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
