@@ -44373,19 +44373,12 @@ variant obligations complete from headless picker tests alone.
 
 ## 1294. Keep Reversed Rounded-polyline Inward Trim Open (2026-11-13)
 
-The inward unequal-radius rounded-polyline fixture is now qualified for its
-current traversal at the origin, `(1e6,-1e6)`, and `(1e9,-1e9)` (sections
-1288-1290), but not for reversed traversal. An exploratory paired fixture
-reversed the captured typed segments with the same construction used by the
-worker tests. The reversed source is well-formed, and capture/encode after
-entity reconstruction is byte-for-byte stable. However,
-`strictConvexPolylineOrientation` declines this particular source in both
-traversals, so generation falls back to Direct. The action-backed cache then
-fails the independent arc-radius oracle at the origin: errors reach about
-`1.61` drawing units against `0.00213` tolerance, and neither signed-side
-choice establishes the intended eight-component Trim result. The profile was
-removed rather than weakening the oracle or presenting an unverified result
-as support.
+The initial exploratory conclusion that reversed traversal failed at the
+origin is superseded by the worker and action/persistence regressions recorded
+in sections 1295-1296: both traversal directions pass the worker arc-locus
+oracle, and the reversed origin fixture passes source replacement, undo/redo,
+and all five file lanes. Keep reversed Trim open; those tests do not exercise
+the Trim action.
 
 The analytic worker regression `worker erodes convex mixed polyline with
 unequal corner radii` now checks the expected concentric offset locus at three
@@ -44393,22 +44386,15 @@ interior points on every source arc, using 8,193 cache samples to find the
 nearest output point. The focused command
 `QT_QPA_PLATFORM=offscreen librecad_offset_worker_kernel_tests "worker erodes convex mixed polyline with unequal corner radii" --reporter compact`
 passes 1,134 assertions / 1 case for both traversal directions, including
-typed cache validation and worker-result wire round-trip. This strengthens the
-analytic worker evidence; it does not resolve the separate rounded-bulge
-action profile, for which `strictConvexPolylineOrientation` returns no
-orientation in either traversal and the cache fails the arc-radius oracle.
+typed cache validation and worker-result wire round-trip. This strengthens
+the analytic worker evidence; it does not close the translated/reversed
+action-to-Trim path or its five-file matrix.
 
-Next, determine why that specific rounded-bulge profile is not admitted by
-the strict-convex classifier, and independently derive direct-offset points
-for both traversals/signs. Then compare worker generation with those loci and
-confirm the selected side semantics. If the source is not strictly convex,
-retain Direct mode only if the oracle proves its geometry; if the source is
-strictly convex or the generated cache deviates, add a focused regression and
-fix the relevant classifier/producer. The action-level fixture below proves a
-separate rounded-polyline profile through replacement, undo/redo, and the
-five-file persistence matrix; it does not establish that the exploratory
-profile described above has been corrected. Keep that profile open until its
-own source-to-cache deviation and side semantics are bounded.
+The strict-convex classifier's translated-coordinate rejection and the
+remaining action/cache discrepancy are tracked in section 1296. Keep this
+fixture outside Trim acceptance until action-generated cache geometry agrees
+with the independent arc-locus oracle and a trimmed output passes its
+component, undo/redo, and persistence checks.
 
 ## 1295. Qualify Reversed Rounded-polyline Replacement and Persistence (2026-11-13)
 
@@ -44431,4 +44417,40 @@ pre-construction input structure.
 **Acceptance status:** this closes the action, undo/redo, analytic cache-locus,
 and five-format persistence checks for this fixture in headless tests. It does
 not close visible source-picker acceptance, other rounded-polyline profiles,
-or the distinct classifier/profile investigation retained in section 1294.
+or the translated classifier/action/Trim investigations retained in sections
+1294 and 1296.
+
+## 1296. Stabilize Convex Classification for Reversed Large-origin Polylines (2026-11-13)
+
+The strict-convex classifier compared reconstructed arc angles and tangent
+turns at fixed near-machine-epsilon tolerances. Rotating and translating the
+reversed mixed line/arc source to `(1e6,-1e6)` introduced a tangent turn of
+`2.3e-11` at an otherwise smooth join; the classifier rejected it and selected
+Direct mode. The angle and tangent comparisons now account for the existing
+coordinate-derived point slack, with a `1e-3` angular cap so poorly resolved
+geometry remains unclassified rather than being accepted as convex.
+
+The new worker-kernel test `convex polyline orientation survives rotated
+large-origin reconstruction` constructs the reversed unequal-radius profile
+at `(1e6,-1e6)` and `(1e9,-1e9)`. It verifies clockwise classification,
+RegionBoundary selection for the inward sign, Direct selection for the
+outward sign, and independently checks the generated cache against three
+analytic samples on every source arc. The focused test passes 74 assertions.
+The existing 13-profile/five-format Trim matrix also passes 4,100 assertions
+after adding a source-capture/definition encoding parity check.
+
+An exploratory action-driven reversed profile at a translated, rotated
+origin still produced cache-locus deviations (up to about `0.5` drawing units
+against a `0.002` tolerance), although direct worker-kernel generation of the
+same transformed typed source passes the 74-assertion arc oracle. This action
+experiment was not retained as a passing regression. The distinction between
+the action's worker request/application path and direct kernel generation is
+unresolved; do not infer translated action support from the classifier test.
+
+**Next:** add a focused one-format action test using the exact transformed
+typed source. Compare the captured source definition, serialized
+`GenerateSource` request, direct kernel cache, worker process reply, and
+published entity cache byte-for-byte before applying the arc-locus oracle.
+Find and fix the first divergence; then retain the test, expand to five file
+lanes, and add the reversed Trim/cutter/undo/redo checks. Keep the broad
+13-profile matrix and visible GUI acceptance separate.
