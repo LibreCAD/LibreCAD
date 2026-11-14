@@ -1938,6 +1938,14 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     RS_Graphic reopened;
     REQUIRE(lc::test::importDrawing(reopened, output, format));
     CHECK(collectFragments(reopened) == expectedFragments);
+    const auto secondOutput = std::filesystem::path(directory.filePath(
+        QStringLiteral("degree-%1-spline-trim-%2-%3-second.drawing")
+            .arg(static_cast<qulonglong>(degree)).arg(transformed)
+            .arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(reopened, secondOutput, format));
+    RS_Graphic reopenedAgain;
+    REQUIRE(lc::test::importDrawing(reopenedAgain, secondOutput, format));
+    CHECK(collectFragments(reopenedAgain) == expectedFragments);
     if (dwg) {
         QString libreDwgReader = qEnvironmentVariable("DWGREAD");
         if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
