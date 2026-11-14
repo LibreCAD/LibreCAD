@@ -44313,7 +44313,7 @@ geometry/persistence matrix before it is advertised as supported.
 
 ## 1292. Revalidate Source Picker and qmake6 Delivery (2026-11-13)
 
-On the PR worktree at `bcabd3d9a`, the complete offscreen source-picker union
+On the PR worktree at `0e47bb4a5`, the complete offscreen source-picker union
 `QT_QPA_PLATFORM=offscreen librecad_tests '[gui][dialog][offsetcurve][source]'`
 passes 15,116 assertions / 44 cases. The active Update from Source candidate
 filter case passes 148 assertions, and the all-family Properties filter and
@@ -44335,3 +44335,38 @@ cancel/refusal, and save/reopen. Record the platform, binary revision, exact
 interaction route, and result. Continue Slice 4's family-by-variant geometry,
 worker/cache, Trim, and file-lane matrix independently; selector availability
 and qmake product compilation do not close those obligations.
+
+## 1293. Keep Source-family Choice Available During Replacement (2026-11-13)
+
+The source-curve widget requirement is that a user replacing an offset's
+source can change the requested source family while choosing the new entity,
+and that every currently supported family is selectable. This is already
+implemented by the Properties source-type selector and candidate filter,
+sharing `LC_OffsetSourceGeometry::SupportedKinds` with Update from Source.
+The nine choices are line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. Parabola is a distinct type even
+though it derives from spline-points. Changing the filter must not coerce a
+candidate, replace the committed source, or mutate its cache. When the old
+source resolves unambiguously, it remains indicated/highlighted until
+successful asynchronous publication of the replacement.
+
+This request does not add another geometry family and does not establish that
+every geometric variant in those families can produce an offset. Existing
+headless evidence remains: the all-family Properties filter/replacement test
+passes 285 assertions, active Update from Source type switching passes 148,
+and the offscreen source-picker union passes 15,116 assertions / 44 cases.
+The recursive qmake6 Release product build also passes as recorded in section
+1292. These results establish selector behavior and buildability, not visible
+desktop interaction or the broader Slice 4 geometry/worker/cache/Trim/file
+matrix.
+
+**Acceptance status:** implementation and automated picker coverage are
+complete for the current nine-kind inventory. Keep visible acceptance open:
+in both Properties and Update from Source, start replacement, switch the type
+repeatedly without leaving the workflow, verify the candidate list refreshes,
+and choose parabola plus representative candidates from the other kinds.
+Confirm the existing source remains indicated and unchanged until successful
+worker publication, and remains unchanged on cancellation/refusal; then verify
+representative undo/redo and save/reopen. Record platform, exact build/revision,
+route, and result. Do not mark Slice 5 or the independent Slice 4 family-by-
+variant obligations complete from headless picker tests alone.
