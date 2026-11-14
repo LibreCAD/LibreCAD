@@ -361,6 +361,15 @@ following slices in order, preserving the detailed safety requirements below:
 | 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts for tested circles, ellipses, circular arcs and elliptic arcs in both traversal directions (sections 1022-1030). Exact duplicate singleton contacts can be merged; overlapping non-singleton certificates whose equality is unproved refuse atomically (section 1024). Section 1033 qualifies async action preview/commit, peer isolation, and undo/redo for both real producer-generated native components in both cache directions. Section 1034 qualifies save, low-level inspection, reopen, and second-save/reopen for those outputs in every native-capable DXF/DWG target (R12 is intentionally excluded). Sections 1117-1122 qualify selected rotated inward near/exact/post-cusp ellipse Trim Two profiles through worker action and five file lanes, at three axis ratios. Section 1170 adds one six-fit-point closed SplinePoints profile through an independent direct normal oracle, worker-backed Trim Two in both pick orders, undo/redo, and five DXF/DWG lanes; its reopened closed cut/control representation is compared by sampled geometry. Section 1201 extends the independent direct-normal oracle for closed fit-point splines to the `5.1e-4` admission-boundary chord, a `2e-3` chord, and a transformed/reflected/reversed profile. A new exact bow-tie `RS_Polyline` probe in `RegionBoundary` returned `AmbiguousTopology` while noding offset candidates; unlike the spline bow-tie evidence, self-crossing polyline growth/erosion is not qualified. Add a focused case for both fill rules and grow/shrink, diagnose exact corner-circle/offset tangencies in candidate noding, and require correct closed result cycles or an explicit atomic refusal until the geometry is supported. These qualify specific layouts and versions, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies linear circle-boundary Trim across disconnected components. Section 1023 verifies disconnected degree-3 circle-boundary branches with linear loci. Section 1024 verifies safe atomic refusal when disconnected components produce overlapping non-singleton conic-contact certificates. Section 1025 verifies disconnected ellipse-boundary contacts through direct and worker result transport. Section 1026 verifies circular-arc domain preservation in both traversal directions. Section 1027 verifies elliptic-arc domains and worker transport in both traversal directions. Section 1028 verifies genuinely curved cubic circle-boundary branches. Section 1029 verifies genuinely curved cubic branches against an eccentric ellipse through direct and worker paths. Section 1030 verifies curved cubic branches clipped to a bounded elliptic arc in both directions. Section 1033 verifies both components from the trimmed-ellipse producer through the native action path. Section 1034 verifies their native metadata across all native-capable DXF/DWG round-trip lanes. Sections 1117-1122 verify selected near/exact/post-cusp full-ellipse profiles at three axis ratios in Trim Two and file lanes; section 1170 verifies one closed fit-point spline profile through Trim Two and five lanes. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly after candidates are displayed but before choosing; verify list refresh, active chooser state, and unchanged current source/cache/identity/highlight; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. The full qmake6 application/plugin build passes at the source revision recorded in section 1332; this does not include a qmake test executable. Visible GUI and cross-platform delivery gates remain open until actually exercised. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. |
 
+**Slice 4 correction (sections 1376 and 1378):** the older bow-tie note in
+the geometry row above is superseded by focused positive- and negative-bulge
+frame matrices. Bulged-polyline region work now uses a local rigid frame when
+rotated or sufficiently far from its origin. The tests accept only
+independently checked closed cycles or atomic `AmbiguousTopology` refusals;
+the tested translated positive-bulge erosion is newly successful. Rotation-
+only and other unsupported cells remain open, so this does not close the
+self-crossing-polyline topology feature generally.
+
 **Slice 4 status addendum (sections 1364-1367):** the tested all-straight
 single-crossing bow-tie polyline passes direct `RegionBoundary` growth and
 erosion for both fill rules under identity, rotation, reflection, reversal,
@@ -46067,38 +46076,37 @@ switching/indication and cross-platform acceptance gates remain open.
 Test commit `d0277c883` expands section 1373's positive-bulge bow-tie probe to
 four explicit frames: identity, rotation only, translation only, and the
 previously tested combined rotation/translation. It runs both fill rules and
-both offset directions. Identity growth succeeds with one checked cycle;
-combined-transform erosion succeeds with two cycles. Rotation-only and
-translation-only cases, plus the opposite direction in each successful frame,
-return `AmbiguousTopology` with no branches. Successful cycles retain the
+both offset directions. The implementation now evaluates rotated and
+large-origin bulged-polyline RegionBoundary work in a local rigid frame while
+preserving the original arithmetic path for already-local axis-aligned input.
+Identity growth succeeds with one checked cycle; translation-only and
+combined-transform erosion each succeed with two independently checked
+cycles. Identity erosion and all rotation-only cells remain atomic
+`AmbiguousTopology` refusals; translation-only growth and combined-transform
+growth remain atomic classification refusals. Successful cycles retain the
 independent closure, winding/side, distance, positive-area, and source-
-immutability checks. This exposes a transform-sensitive topology boundary; it
-does not claim rigid-transform-invariant geometry or a successful result for
-the refusal cells.
+immutability checks. The frame matrix remains intentionally explicit about
+unsupported cells; it does not claim general rigid-transform-invariant
+topology.
 
 On macOS arm64 CMake Release, `cmake --build
 /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
 `Positive-bulge bow-tie mixed-frame successes are independently checked`
-passes 170 assertions / 1 case. The result now includes a failure-site
-classification for refused cells (source-side classification, candidate
-generation/arrangement/splitting/classification, or cycle assembly), so future
-geometry work can target the stage that refuses without weakening the atomic
-failure behavior. The full qmake6 app/plugins build also succeeds from
-`/private/tmp/offset2961-qmake6-current` with `make -j4` (exit 0; existing
-aggregate-initializer warnings only). `git diff --check` passes. Resolving the
-transform-sensitive topology results remains an open geometry feature; worker
-parity, persistence, visible GUI, cross-platform, and independent CAD gates
-remain separate.
+passes 182 assertions / 1 case. The broader `[curve-offset][region]` suite
+passes 27,736 assertions / 20 cases. Failure-site classification remains
+available for refusals (source-side classification, candidate generation,
+arrangement, splitting, classification, or cycle assembly). An incremental
+qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0;
+`git diff --check` passes. Worker parity, persistence, visible GUI,
+cross-platform, other topology layouts, and independent CAD gates remain
+separate.
 
-The recorded refusal cells are not all the same failure: identity erosion and
-all four rotation-only cells fail in candidate arrangement; translation-only
-erosion fails there as well, while translation-only growth and combined-frame
-growth fail in candidate classification. Fill rule does not change those
-sites. The attempted endpoint-event experiment for overlapping collinear
-candidate segments did not change the outcome and was discarded. Keep the
-arrangement and classification paths separate in the next implementation
-investigation; do not relax tolerances or weaken atomic refusal based on this
-matrix alone.
+The earlier attempt to pass overlapping collinear candidates through as
+endpoint events did not change the result and was discarded. The local-frame
+implementation is a separate correction: it adds a verified translated
+erosion success but does not resolve the remaining arrangement/classification
+refusals. Do not relax tolerances or weaken atomic refusal based on this
+bounded matrix alone.
 
 ## 1377. Persist Negative-bulge Region Worker Branches (2026-11-14)
 
@@ -46108,7 +46116,10 @@ outputs: the two-branch growth side and one-branch erosion side. Each generated
 ordinary result is saved and reopened twice, with exact spline geometry
 fingerprints checked across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG where DWG
 support is enabled. Both remain ordinary spline geometry; no native editable
-cache is admitted for the self-crossing source.
+cache is admitted for the self-crossing source. Section 1378 additionally
+checks this negative-bulge profile through direct RegionBoundary in identity,
+rotation-only, translation-only, and combined frames: successful cells are
+independently checked; remaining cells must refuse atomically.
 
 On macOS arm64 CMake Release, `cmake --build
 /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
@@ -46117,6 +46128,33 @@ passes 312 assertions / 1 case. `git diff --check` passes. This covers only
 the stated negative-bulge profile and offsets; native cache/action support,
 other mixed-bulge layouts, visible GUI, cross-platform runtime, and independent
 CAD acceptance remain open.
+
+## 1378. Normalize Mixed-bulge Region Work in a Local Rigid Frame (2026-11-14)
+
+Commit `ddccee965` replaces the translation-only adapter used by closed bulged
+polylines with a local rigid-frame source wrapper. The frame removes rotation
+relative to the nearest cardinal direction and translates only when the
+drawing coordinates exceed the feature scale threshold; already-local
+axis-aligned geometry keeps its established arithmetic path. Jet values,
+conservative derivative bounds, generated cubic controls, arc provenance
+centres, and reported intersection points are transformed consistently.
+
+The positive-bulge matrix now independently verifies identity growth,
+translation-only erosion, and combined-frame erosion. Identity erosion,
+rotation-only cases, translation growth, and combined-frame growth still
+refuse atomically at their diagnosed topology stages. The negative-bulge matrix
+covers both fill rules, both signed directions, and all four frames; every
+success has closed-cycle, distance, side, and winding checks, and every other
+cell must return `AmbiguousTopology` without branches. It does not claim
+transform invariance or general self-crossing topology support.
+
+On macOS arm64, the focused positive- and negative-bulge matrices pass 182 and
+184 assertions respectively; `[curve-offset][region]` passes 27,736 assertions
+/ 20 cases. CMake rebuild and incremental qmake6 app/plugins build from
+`/private/tmp/offset2961-qmake6-current` both succeed, and `git diff --check`
+passes. Broader polyline arrangements, worker/cache/Trim integration for these
+results, persistence, visible GUI, cross-platform runtime, and independent CAD
+acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
