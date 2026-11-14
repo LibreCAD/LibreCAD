@@ -2073,6 +2073,84 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
           RS_SplineData::SplineType::WrappedClosed);
     sourceLayer->freeze(true);
 
+    if (degree == 4 && weightProfile == 2 && transformed == 2 && signedDistance > 0.0) {
+        double sourceStart = 0.0;
+        double sourceEnd = 0.0;
+        REQUIRE(source->getParameterDomain(sourceStart, sourceEnd));
+        const auto directOffsetPoint = [&](double parameter) -> std::optional<RS_Vector> {
+            LC_CurveJet jet;
+            const auto side = parameter == sourceEnd ? LC_CurveEvaluationSide::Left
+                                                     : LC_CurveEvaluationSide::Right;
+            if (!source->tryEvaluateJet(parameter, side, jet))
+                return std::nullopt;
+            const double speed = jet.first.magnitude();
+            if (!std::isfinite(speed) || speed == 0.0) return std::nullopt;
+            const RS_Vector normal{-jet.first.y / speed, jet.first.x / speed};
+            return jet.point + normal * signedDistance;
+        };
+        const auto distanceToDirectOffset = [&](const RS_Vector& point) -> double {
+            constexpr std::size_t sourceSamples = 4096;
+            const double sourceStep = (sourceEnd - sourceStart) / sourceSamples;
+            double bestParameter = sourceStart;
+            double bestDistanceSquared = INFINITY;
+            for (std::size_t sample = 0; sample <= sourceSamples; ++sample) {
+                const double parameter = sourceStart + sourceStep * sample;
+                const auto candidate = directOffsetPoint(parameter);
+                if (!candidate) return INFINITY;
+                const double distanceSquared = (*candidate - point).squared();
+                if (distanceSquared < bestDistanceSquared) {
+                    bestDistanceSquared = distanceSquared;
+                    bestParameter = parameter;
+                }
+            }
+            const auto distanceSquared = [&](double parameter) -> double {
+                const auto candidate = directOffsetPoint(parameter);
+                if (!candidate) return INFINITY;
+                return (*candidate - point).squared();
+            };
+            double lower = std::max(sourceStart, bestParameter - sourceStep);
+            double upper = std::min(sourceEnd, bestParameter + sourceStep);
+            constexpr double inversePhi = 0.6180339887498948482;
+            double left = upper - inversePhi * (upper - lower);
+            double right = lower + inversePhi * (upper - lower);
+            double leftDistance = distanceSquared(left);
+            double rightDistance = distanceSquared(right);
+            for (int iteration = 0; iteration < 64; ++iteration) {
+                if (leftDistance < rightDistance) {
+                    upper = right;
+                    right = left;
+                    rightDistance = leftDistance;
+                    left = upper - inversePhi * (upper - lower);
+                    leftDistance = distanceSquared(left);
+                } else {
+                    lower = left;
+                    left = right;
+                    leftDistance = rightDistance;
+                    right = lower + inversePhi * (upper - lower);
+                    rightDistance = distanceSquared(right);
+                }
+            }
+            return std::sqrt(std::min({bestDistanceSquared, leftDistance, rightDistance}));
+        };
+        REQUIRE(directOffsetPoint(sourceStart + 0.5 * (sourceEnd - sourceStart)));
+        double cacheStart = 0.0;
+        double cacheEnd = 0.0;
+        REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
+        const double oracleTolerance = std::min(replacement->checkedWorldTolerance(),
+                                                0.1 * signedDistance);
+        double maximumError = 0.0;
+        for (std::size_t sample = 0; sample <= 64; ++sample) {
+            const double parameter = cacheStart + (cacheEnd - cacheStart) *
+                (double(sample) / 64.0);
+            const RS_Vector cachePoint = replacement->getPointAt(parameter);
+            REQUIRE(cachePoint.valid);
+            const double error = distanceToDirectOffset(cachePoint);
+            maximumError = std::max(maximumError, error);
+            CAPTURE(sample, error, maximumError, oracleTolerance, signedDistance);
+            CHECK(error < oracleTolerance);
+        }
+    }
+
     double cacheStart = 0.0;
     double cacheEnd = 0.0;
     REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
