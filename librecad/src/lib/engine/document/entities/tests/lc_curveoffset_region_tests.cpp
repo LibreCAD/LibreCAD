@@ -448,7 +448,7 @@ TEST_CASE("Mixed line and arc bow-tie regions use exact arc noding",
 
 TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checked",
           "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
-    for (const bool transformed : {false, true}) {
+    for (const int frame : {0, 1, 2, 3}) {
         RS_Polyline source;
         source.addVertex({20, 10});
         source.addVertex({20, -10}, 0.5);
@@ -456,10 +456,10 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
         source.addVertex({-20, -10});
         source.setClosed(true);
         source.endPolyline();
-        if (transformed) {
+        if (frame == 1 || frame == 3)
             source.rotate({0, 0}, M_PI / 7.0);
+        if (frame == 2 || frame == 3)
             source.move({123.25, -2000000.5});
-        }
         const QList<RS_Vector> originalVertices = source.getVertexes();
         const std::vector<RS_Vector> polygon = polygonOf(source);
 
@@ -472,12 +472,13 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                     source, LC_CurveOffset::makeSideRequest(
                                 grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
                     options, LC_CurveOffset::makeDirectSourceBudget());
-                CAPTURE(transformed, grow, static_cast<int>(rule), static_cast<int>(result.status),
+                CAPTURE(frame, grow, static_cast<int>(rule), static_cast<int>(result.status),
                         static_cast<int>(result.intersectionDiagnostics.stage),
                         static_cast<int>(result.intersectionDiagnostics.status),
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
-                const bool expectedSuccess = transformed ? !grow : grow;
+                const bool expectedSuccess = (frame == 0 && grow) ||
+                    (frame == 3 && !grow);
                 if (expectedSuccess) {
                     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
                     REQUIRE(result.branches.size() == (grow ? 1u : 2u));
