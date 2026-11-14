@@ -43779,32 +43779,37 @@ limits and atomic refusal at unresolvable inputs.
 The latest request reiterates that the source-curve widget must let users
 change the requested type while choosing a replacement, and asks that every
 supported source type, including parabola, be available. The current code
-already implements this contract: the Properties widget builds choices from
-`LC_OffsetSourceGeometry::SupportedKinds`, matches `LC_Parabola` separately
-from `LC_SplinePoints`, and refreshes candidates as the type changes. The
-headless test `Native source picker replaces every modeled source kind` in
-`lc_offsetcurve_propertiesdialog_tests.cpp` switches/filter-selects each
-currently modeled kind and checks that the old definition/cache remain intact
-until asynchronous replacement succeeds. This includes the distinct
-parabola choice.
+implements the headless contract through the shared
+`LC_OffsetSourceGeometry::SupportedKinds` inventory: the Properties selector
+and Update from Source action options both enumerate it, candidate filtering
+refreshes on type changes, and `LC_Parabola` is matched separately from
+`LC_SplinePoints`. The focused test is named
+`Native source picker filters and replaces every supported source family` in
+`lc_offsetcurve_propertiesdialog_tests.cpp`; it creates one candidate of each
+of the nine kinds, switches the selector, checks candidate filtering, and
+verifies that browsing does not mutate the existing source definition/cache.
+It passes 285 assertions / 1 case on the current CMake test binary.
 
-The follow-up request makes the interaction boundary explicit: changing the
-source type is part of selecting a *new* source, so the type control must
-remain operable throughout the active canvas-picking session. Each change
-refreshes the eligible candidate filter in place; it neither commits a source
-change nor changes the existing source's type. “All supported types” is the
-canonical `SupportedKinds` inventory (line, arc, circle, ellipse, spline,
-spline-points, parabola, bounded hyperbola, and polyline). Parabola stays a
-separate choice from spline-points. This request does not add a tenth source
-kind or broaden which geometric variants are valid for offset generation.
+The interaction boundary is explicit: changing the source type is part of
+selecting a *new* source, so the type control must remain operable throughout
+the active canvas-picking session. Each change refreshes eligible candidates
+in place; it neither commits a source change nor changes the existing source's
+type. “All supported types” is the canonical `SupportedKinds` inventory
+(line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline). Parabola stays a separate choice from spline-points.
+This request does not add a tenth source kind or broaden which geometric
+variants are valid for offset generation. The 285-assertion test establishes
+headless selector behavior and typed replacement, not that the control stays
+usable in the visible canvas-picking route.
 
 Implementation-ready acceptance sequence:
 
 1. Open Properties for an offset with a live source; verify that source is
    highlighted and its actual type is initially selected.
-2. Start replacement, switch the type repeatedly while canvas picking remains
-   active, and verify candidate eligibility updates immediately for all nine
-   types, including parabola.
+2. Start replacement from both the Properties dialog and the Update from
+   Source action. While canvas picking remains active, switch the source type
+   repeatedly and verify the same control remains enabled and candidate
+   eligibility refreshes immediately for all nine types, including parabola.
 3. Verify each accepted candidate retains its real entity type and typed
    geometry; the filter must not coerce a candidate to the selected type.
 4. Verify filtering alone leaves the original source, highlight, definition,
@@ -43826,14 +43831,15 @@ all geometric variants, Trim behavior, file round-trips, or visible desktop
 behavior.
 
 **Remaining acceptance:** execute the visible Properties workflow from
-section 1162: start source replacement, change the type repeatedly without
-leaving the chooser, confirm the candidate list refreshes in place, then
-select a parabola and representative candidates from the other eight kinds.
-Confirm the displayed source/indication and committed cache stay with the old
-source until successful asynchronous publication, and remain unchanged on
-cancellation or refusal. Record platform, revision, exact interaction route,
-and result. Until that is done, mark the source-picker feature as
-headless-implemented with visible-GUI acceptance open, not wholly complete.
+section 1162 and the action-options workflow: start source replacement,
+change the type repeatedly without leaving active canvas picking, confirm the
+candidate list refreshes in place, then select a parabola and representative
+candidates from the other eight kinds. Confirm the displayed source/indication
+and committed cache stay with the old source until successful asynchronous
+publication, and remain unchanged on cancellation or refusal. Record platform,
+revision, exact interaction route, and result. Until that is done, mark the
+source-picker feature as headless-implemented with visible-GUI acceptance
+open, not wholly complete.
 
 ## 1271. Revalidate Monotone Trim Proofs From Extracted Spline Spans (2026-11-13)
 
@@ -44266,3 +44272,37 @@ this small-feature inward profile and a resolvable view setup; it does not
 prove arbitrary origin/scale combinations, subpixel UI picking, global
 deviation bounds, other source families, cross-platform/qmake6 behavior,
 visible desktop Properties acceptance, or external-CAD interoperability.
+
+## 1291. Preserve In-session Source-type Switching Across All Supported Kinds (2026-11-13)
+
+The latest request restates that choosing a replacement source must allow
+changing the requested curve type without leaving the picker, and that the
+picker must cover every currently supported kind. The current implementation
+uses `LC_OffsetSourceGeometry::SupportedKinds` as the shared nine-kind
+inventory for the Properties selector and the Update from Source action
+options: line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. `LC_Parabola` remains a distinct typed source, not a
+spline-points alias. Switching type filters eligible candidates; it does not
+coerce their geometry or commit a replacement.
+
+The focused headless test `Native source picker filters and replaces every
+supported source family` passes 285 assertions / 1 case on the current CMake
+test binary. It verifies all nine selector entries, candidate filtering, and
+that browsing leaves the current source definition/cache unchanged. This
+establishes dialog-level headless behavior and typed replacement, but does not
+prove that type switching remains operable while the visible canvas action is
+active, nor that each kind completes asynchronous publication, undo/redo, or
+file round-trip in the visible application.
+
+**Remaining acceptance:** in the visible Properties and Update from Source
+workflows, open replacement selection, change type repeatedly without ending
+canvas picking, and confirm the candidate filter updates in place for all nine
+kinds, including parabola. Select parabola and representative candidates of
+the other kinds; verify the old source stays highlighted and its definition
+and cache remain unchanged until successful worker publication, with
+cancellation/refusal also leaving them unchanged. Record platform, build and
+revision, route, and results. Keep this visible-GUI gate open until performed;
+do not infer full geometric or persistence support for every variant from the
+picker-only test. Any future source kind must join `SupportedKinds` and pass
+candidate matching, capture/reconstruction, worker validation, and the
+geometry/persistence matrix before it is advertised as supported.
