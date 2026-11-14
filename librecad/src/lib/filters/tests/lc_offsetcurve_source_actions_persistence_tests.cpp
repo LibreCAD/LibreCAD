@@ -1118,6 +1118,140 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
     std::sort(reopenedTrimmed.begin(), reopenedTrimmed.end());
     CHECK(reopenedTrimmed == expectedTrimmed);
 }
+TEST_CASE("I replace and persist a reversed rounded polyline source",
+          "[lc-offsetcurve][source-action][polyline][reversed][persistence]") {
+    const bool reversedTraversal = GENERATE(false, true);
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    CAPTURE(reversedTraversal, static_cast<int>(format));
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 30.0);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    const double halfPi = M_PI / 2.0;
+    LC_OffsetPolylineData data{
+        {1, 0}, {1, 0}, true,
+        {RS_LineData{{1, 0}, {12, 0}},
+         RS_ArcData{{12, 2}, 2, 3 * halfPi, 2 * M_PI, false},
+         RS_LineData{{14, 2}, {14, 8.25}},
+         RS_ArcData{{13.25, 8.25}, 0.75, 0, halfPi, false},
+         RS_LineData{{13.25, 9}, {1.5, 9}},
+         RS_ArcData{{1.5, 7.5}, 1.5, halfPi, M_PI, false},
+         RS_LineData{{0, 7.5}, {0, 1}},
+         RS_ArcData{{1, 1}, 1, M_PI, 3 * halfPi, false}}};
+    if (reversedTraversal) {
+        std::vector<LC_OffsetPolylineSegment> reversed;
+        reversed.reserve(data.segments.size());
+        for (auto it = data.segments.rbegin(); it != data.segments.rend(); ++it) {
+            if (const auto* line = std::get_if<RS_LineData>(&*it)) {
+                reversed.emplace_back(RS_LineData{line->endpoint, line->startpoint});
+            } else {
+                auto arc = std::get<RS_ArcData>(*it);
+                std::swap(arc.angle1, arc.angle2);
+                arc.reversed = !arc.reversed;
+                reversed.emplace_back(arc);
+            }
+        }
+        data.segments = std::move(reversed);
+        std::swap(data.startpoint, data.endpoint);
+    }
+    LC_OffsetSourceGeometry expectedSource{data};
+    REQUIRE(expectedSource.isWellFormed());
+    auto sourceOwner = expectedSource.makeEntity();
+    REQUIRE(sourceOwner);
+    sourceOwner->setLayer(graphic.findLayer("0"));
+    auto* source = sourceOwner.get();
+    graphic.addEntity(source);
+    sourceOwner.release();
+    const auto capturedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(capturedSource);
+    expectedSource = *capturedSource;
+    data = std::get<LC_OffsetPolylineData>(expectedSource.value);
+    const auto expectedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(expectedSource);
+    REQUIRE(expectedEncoding);
+
+    const double signedDistance = reversedTraversal ? -0.25 : 0.25;
+    auto* target = native(graphic, .25, reversedTraversal);
+    graphic.select(QList<RS_Entity*>{target}, true);
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* action = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(action);
+    action->setSourceKind(SourceKind::Polyline);
+    double sourceDistance = 0.0;
+    const RS_Vector sourcePick = source->getNearestPointOnEntity({6, 0}, true, &sourceDistance);
+    REQUIRE(sourcePick.valid);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*action);
+    REQUIRE(action->lastReport().updated == 1);
+    auto* replacement = onlyNative(graphic);
+    REQUIRE(replacement->sourceDefinition());
+    CHECK(replacement->sourceDefinition()->source.kind() == SourceKind::Polyline);
+    CHECK(replacement->sourceDefinition()->signedDistance == signedDistance);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+        replacement->sourceDefinition()->source) == expectedEncoding);
+    REQUIRE(replacement->isConsistent());
+    REQUIRE(graphic.removeEntity(source));
+
+    double cacheStart = 0.0, cacheEnd = 0.0;
+    REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
+    for (const auto& segment : data.segments) {
+        const auto* arc = std::get_if<RS_ArcData>(&segment);
+        if (!arc) continue;
+        const double orientation = arc->reversed ? -1.0 : 1.0;
+        const double expectedRadius = arc->radius - orientation * signedDistance;
+        REQUIRE(expectedRadius > 0.0);
+        for (const double fraction : {0.25, 0.5, 0.75}) {
+            const double angle = arc->angle1 + orientation * arc->getAngleLength() * fraction;
+            const RS_Vector expected = arc->center + RS_Vector::polar(expectedRadius, angle);
+            double nearest = std::numeric_limits<double>::infinity();
+            for (int sample = 0; sample <= 8192; ++sample) {
+                const RS_Vector point = replacement->getPointAt(
+                    cacheStart + (cacheEnd - cacheStart) * sample / 8192.0);
+                if (!point.valid) break;
+                nearest = std::min(nearest, point.distanceTo(expected));
+            }
+            CAPTURE(reversedTraversal, signedDistance, arc->radius, fraction, nearest);
+            CHECK(nearest < 0.02);
+        }
+    }
+
+    const auto cacheFingerprint = RS_Spline::geometryFingerprint(replacement->getData());
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(target->isDeleted());
+    CHECK(onlyNative(graphic) == target);
+    REQUIRE(graphic.redo());
+    CHECK(target->isDeleted());
+    CHECK(onlyNative(graphic) == replacement);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("reversed-rounded-polyline-%1-%2.drawing")
+            .arg(reversedTraversal ? QStringLiteral("reverse") : QStringLiteral("forward"))
+            .arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    auto* reopenedCurve = onlyNative(reopened);
+    REQUIRE(reopenedCurve->sourceDefinition());
+    CHECK(reopenedCurve->sourceDefinition()->source.kind() == SourceKind::Polyline);
+    CHECK(reopenedCurve->sourceDefinition()->signedDistance == signedDistance);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+        reopenedCurve->sourceDefinition()->source) == expectedEncoding);
+    CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) == cacheFingerprint);
+}
+
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
     const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
