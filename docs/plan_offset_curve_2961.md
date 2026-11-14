@@ -44398,13 +44398,37 @@ analytic worker evidence; it does not resolve the separate rounded-bulge
 action profile, for which `strictConvexPolylineOrientation` returns no
 orientation in either traversal and the cache fails the arc-radius oracle.
 
-Next, determine why that rounded-bulge profile is not admitted by the
-strict-convex classifier, and independently derive direct-offset points for
-both traversals/signs. Then compare worker generation with those loci and
+Next, determine why that specific rounded-bulge profile is not admitted by
+the strict-convex classifier, and independently derive direct-offset points
+for both traversals/signs. Then compare worker generation with those loci and
 confirm the selected side semantics. If the source is not strictly convex,
 retain Direct mode only if the oracle proves its geometry; if the source is
 strictly convex or the generated cache deviates, add a focused regression and
-fix the relevant classifier/producer. Only after source-to-cache deviation is
-bounded should this profile enter the worker-backed Trim, undo/redo and
-five-file-lane matrix. Reversed traversal remains outside the evidence in
-sections 1288-1290 until those steps pass.
+fix the relevant classifier/producer. The action-level fixture below proves a
+separate rounded-polyline profile through replacement, undo/redo, and the
+five-file persistence matrix; it does not establish that the exploratory
+profile described above has been corrected. Keep that profile open until its
+own source-to-cache deviation and side semantics are bounded.
+
+## 1295. Qualify Reversed Rounded-polyline Replacement and Persistence (2026-11-13)
+
+Added `I replace and persist a reversed rounded polyline source` in
+`lc_offsetcurve_source_actions_persistence_tests.cpp`. It runs forward and
+reversed traversal against R14 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018
+DWG. Each lane replaces the selected offset source through Update from Source,
+checks the typed source, signed distance and encoded source definition, then
+checks an independent arc-locus oracle at three interior points per source
+arc against an 8,193-sample cache. It also verifies undo/redo and save/reopen
+preservation of the native replacement and cache geometry.
+
+Validation:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests "I replace and persist a reversed rounded polyline source" --reporter compact`
+passes 630 assertions / 1 case (ten traversal-format combinations). The test
+uses the source entity captured from the drawing as its byte-encoding
+baseline, so it checks the persisted entity representation rather than a
+pre-construction input structure.
+
+**Acceptance status:** this closes the action, undo/redo, analytic cache-locus,
+and five-format persistence checks for this fixture in headless tests. It does
+not close visible source-picker acceptance, other rounded-polyline profiles,
+or the distinct classifier/profile investigation retained in section 1294.
