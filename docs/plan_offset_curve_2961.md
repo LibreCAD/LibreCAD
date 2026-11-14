@@ -44067,10 +44067,21 @@ The focused counterclockwise profile passes 190 assertions, and the complete
 eight-profile/five-format persistence matrix passes 1,690 assertions on macOS
 arm64 CMake Release. `git diff --check` passes.
 
+The qmake6 macOS arm64 Release product tree at
+`/private/tmp/offset-2961-qmake-current` also completed `make -j6` for this
+source head; a subsequent incremental `make -j6` exited 0. The build emitted
+existing signedness and DWG metadata aggregate-initializer warnings. The
+interactive shell startup also printed that the optional
+`/private/tmp/libdxfrw-cargo/env` file is missing; it did not prevent the
+build. This is one local qmake6 product-build result, not cross-platform CI or
+qmake6 test-suite coverage.
+
 Sections 1281-1282 now cover both traversal directions for this one
 transformed all-arc-circle geometry and this cutter orientation. They do not
 establish arbitrary rotations, translations, scales, non-circular rounded
 polylines, or other source families. Continue those family/variant cases
 through the direct geometry oracle, worker/cache and Trim actions, and
 applicable file lanes; keep qmake6, cross-platform, external-CAD, and visible
-Properties acceptance as separate open gates.
+Properties acceptance as separate open gates. The local qmake6 product build
+is now qualified at `b35cf48bb`; broader platform/build and test gates remain
+open.
