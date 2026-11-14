@@ -44188,3 +44188,21 @@ bulge layouts, the inward signed side, arbitrary transforms, or the remaining
 source-family variants. Continue those independent geometry checks and keep
 cross-platform, qmake6 test, external-CAD, and visible Properties acceptance
 as separate gates.
+
+## 1287. Sample Rounded Polyline Arc Quarter Points (2026-11-14)
+
+Test commit `6e9571a0a` adds two additional independent offset-locus samples
+per source arc at its 25% and 75% sweep positions. Together with section 1285's
+midpoint and section 1286's endpoints, each of the eight arcs is now checked
+at five evenly distributed source parameters against the materialized native
+cache. The expected points are computed from the source center/radius,
+traversal direction, and signed offset; the cache nearest-distance oracle
+requires error below both its recorded world tolerance and 10% of the offset.
+
+On macOS arm64 CMake Release, the focused transformed rounded-polyline profile
+passes 485 assertions over all five DXF/DWG lanes; the complete ten-profile,
+five-format persistence matrix passes 2,365 assertions. `git diff --check`
+passes. This is a finite set of 40 exact source-locus samples for one profile,
+not a global maximum-deviation proof, and does not qualify other bulge
+layouts, the inward signed side, arbitrary scales/transforms, other source
+families, or visible/external-CAD behavior. Keep those gates open.
