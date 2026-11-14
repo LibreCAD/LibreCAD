@@ -18,45 +18,96 @@
 
 namespace LC_OffsetWorkerTolerance {
 
+struct MatchedPolylineSnapshot {
+    LC_OffsetPolylineData live;
+    RS_Vector translation;
+    double pointSlack = 0.0;
+};
+
+inline std::optional<MatchedPolylineSnapshot> matchLivePolyline(
+    const LC_OffsetPolylineData& expected, const RS_Entity& source) {
+    const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
+    if (polyline == nullptr || !expected.closed || !polyline->isClosed() ||
+        expected.segments.empty() || expected.segments.size() > LC_OffsetSourceDetail::MaximumSourceItems ||
+        polyline->size() != expected.segments.size()) return std::nullopt;
+
+    MatchedPolylineSnapshot snapshot;
+    snapshot.live.startpoint = polyline->getStartpoint();
+    snapshot.live.endpoint = polyline->getEndpoint();
+    snapshot.live.closed = polyline->isClosed();
+    snapshot.live.segments.reserve(polyline->size());
+    for (const RS_Entity* child : *polyline) {
+        if (const auto* line = dynamic_cast<const RS_Line*>(child))
+            snapshot.live.segments.emplace_back(line->getData());
+        else if (const auto* arc = dynamic_cast<const RS_Arc*>(child))
+            snapshot.live.segments.emplace_back(arc->getData());
+        else
+            return std::nullopt;
+    }
+    if (snapshot.live.segments.size() != expected.segments.size()) return std::nullopt;
+
+    snapshot.translation = expected.startpoint - snapshot.live.startpoint;
+    if (!LC_OffsetSourceDetail::finite(snapshot.translation)) return std::nullopt;
+    double coordinateScale = 1.0;
+    for (const auto& segment : expected.segments) {
+        std::visit([&](const auto& item) {
+            using T = std::decay_t<decltype(item)>;
+            if constexpr (std::is_same_v<T, RS_LineData>) {
+                coordinateScale = std::max({coordinateScale, std::abs(item.startpoint.x),
+                    std::abs(item.startpoint.y), std::abs(item.endpoint.x), std::abs(item.endpoint.y)});
+            } else {
+                coordinateScale = std::max({coordinateScale, std::abs(item.center.x),
+                    std::abs(item.center.y), item.radius});
+            }
+        }, segment);
+    }
+    snapshot.pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
+    if (!std::isfinite(snapshot.pointSlack) ||
+        (snapshot.live.startpoint + snapshot.translation).distanceTo(expected.startpoint) > snapshot.pointSlack ||
+        (snapshot.live.endpoint + snapshot.translation).distanceTo(expected.endpoint) > snapshot.pointSlack) {
+        return std::nullopt;
+    }
+
+    const double angleSlack = 256.0 * std::numeric_limits<double>::epsilon() * M_PI;
+    const auto sameAngle = [angleSlack](const double lhs, const double rhs) {
+        return std::abs(std::remainder(lhs - rhs, 2.0 * M_PI)) <= angleSlack;
+    };
+    for (std::size_t i = 0; i < expected.segments.size(); ++i) {
+        const auto& wanted = expected.segments[i];
+        const auto& actual = snapshot.live.segments[i];
+        const bool matches = std::visit([&](const auto& item) {
+            using T = std::decay_t<decltype(item)>;
+            const auto* found = std::get_if<T>(&actual);
+            if (found == nullptr) return false;
+            if constexpr (std::is_same_v<T, RS_LineData>) {
+                return (found->startpoint + snapshot.translation).distanceTo(item.startpoint) <= snapshot.pointSlack &&
+                       (found->endpoint + snapshot.translation).distanceTo(item.endpoint) <= snapshot.pointSlack;
+            } else {
+                return (found->center + snapshot.translation).distanceTo(item.center) <= snapshot.pointSlack &&
+                       std::abs(found->radius - item.radius) <= snapshot.pointSlack &&
+                       sameAngle(found->angle1, item.angle1) && sameAngle(found->angle2, item.angle2) &&
+                       found->reversed == item.reversed;
+            }
+        }, wanted);
+        if (!matches) return std::nullopt;
+    }
+    return snapshot;
+}
+
 inline std::optional<double> strictConvexPolylineOrientation(
     const LC_OffsetSourceDefinition& definition, const RS_Entity& source) {
     const auto* data = std::get_if<LC_OffsetPolylineData>(&definition.source.value);
-    const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
-    if (data == nullptr || !data->closed || data->segments.size() < 3 || polyline == nullptr ||
-        !polyline->isClosed()) {
+    if (data == nullptr || !data->closed || data->segments.size() < 3) {
         return std::nullopt;
     }
     if (!LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data)) {
         return std::nullopt;
     }
 
-    const auto liveGeometry = LC_OffsetSourceGeometry::capture(source);
-    const auto* liveData = liveGeometry
-        ? std::get_if<LC_OffsetPolylineData>(&liveGeometry->value) : nullptr;
-    if (liveData == nullptr || liveData->segments.size() != data->segments.size()) {
-        return std::nullopt;
-    }
-    const RS_Vector translation = data->startpoint - liveData->startpoint;
-    const double coordinateScale = [&] {
-        double scale = 1.0;
-        for (const auto& segment : data->segments) {
-            std::visit([&](const auto& item) {
-                using T = std::decay_t<decltype(item)>;
-                if constexpr (std::is_same_v<T, RS_LineData>) {
-                    scale = std::max({scale, std::abs(item.startpoint.x), std::abs(item.startpoint.y),
-                                      std::abs(item.endpoint.x), std::abs(item.endpoint.y)});
-                } else {
-                    scale = std::max({scale, std::abs(item.center.x), std::abs(item.center.y), item.radius});
-                }
-            }, segment);
-        }
-        return scale;
-    }();
-    const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
+    const auto snapshot = matchLivePolyline(*data, source);
+    if (!snapshot) return std::nullopt;
+    const double pointSlack = snapshot->pointSlack;
     const double angleSlack = 128.0 * std::numeric_limits<double>::epsilon();
-    const auto sameAngle = [](const double a, const double b, const double tolerance) {
-        return std::abs(std::remainder(a - b, 2.0 * std::acos(-1.0))) <= tolerance;
-    };
 
     struct SegmentFrame {
         RS_Vector start;
@@ -73,15 +124,8 @@ inline std::optional<double> strictConvexPolylineOrientation(
     bool hasStrictTurn = false;
     for (std::size_t i = 0; i < data->segments.size(); ++i) {
         const auto& definitionSegment = data->segments[i];
-        const auto& actualSegment = liveData->segments[i];
         SegmentFrame frame;
         if (const auto* line = std::get_if<RS_LineData>(&definitionSegment)) {
-            const auto* actualLine = std::get_if<RS_LineData>(&actualSegment);
-            if (actualLine == nullptr ||
-                (actualLine->startpoint + translation).distanceTo(line->startpoint) > pointSlack ||
-                (actualLine->endpoint + translation).distanceTo(line->endpoint) > pointSlack) {
-                return std::nullopt;
-            }
             frame.start = line->startpoint;
             frame.end = line->endpoint;
             frame.startTangent = frame.endTangent = frame.end - frame.start;
@@ -90,18 +134,6 @@ inline std::optional<double> strictConvexPolylineOrientation(
             twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
         } else {
             const auto& arc = std::get<RS_ArcData>(definitionSegment);
-            const auto* actualArc = std::get_if<RS_ArcData>(&actualSegment);
-            // Endpoint reconstruction at large origins loses angle precision proportional to 1/radius.
-            const double arcAngleSlack = actualArc == nullptr ? angleSlack : std::max(
-                angleSlack, pointSlack / std::min(arc.radius, actualArc->radius));
-            if (actualArc == nullptr || actualArc->reversed != arc.reversed ||
-                (actualArc->center + translation).distanceTo(arc.center) > pointSlack ||
-                std::abs(actualArc->radius - arc.radius) > pointSlack ||
-                !std::isfinite(arcAngleSlack) || arcAngleSlack > 1e-3 ||
-                !sameAngle(actualArc->angle1, arc.angle1, arcAngleSlack) ||
-                !sameAngle(actualArc->angle2, arc.angle2, arcAngleSlack)) {
-                return std::nullopt;
-            }
             frame.curved = true;
             frame.signedSweep = arc.reversed ? -arc.getAngleLength() : arc.getAngleLength();
             if (!std::isfinite(frame.signedSweep) || frame.signedSweep == 0.0) return std::nullopt;
@@ -156,82 +188,7 @@ inline std::optional<double> strictConvexPolylineOrientation(
 inline bool hasIntersectingPolyline(const LC_OffsetSourceDefinition& definition,
                                     const RS_Entity& source) {
     const auto* data = std::get_if<LC_OffsetPolylineData>(&definition.source.value);
-    const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
-    if (data == nullptr || !data->closed || data->segments.size() < 4 || polyline == nullptr ||
-        !polyline->isClosed()) {
-        return false;
-    }
-
-    // The worker recenters captured geometry before offsetting. Re-running
-    // captureForGeneration here would validate rounded arc joins at the smaller
-    // local coordinate scale and can reject a source already accepted in its
-    // original frame. Snapshot the bounded primitive children without a second
-    // topology validation; the comparison below still requires them to match
-    // the trusted request geometry.
-    LC_OffsetPolylineData liveData;
-    liveData.startpoint = polyline->getStartpoint();
-    liveData.endpoint = polyline->getEndpoint();
-    liveData.closed = polyline->isClosed();
-    if (polyline->size() != data->segments.size() ||
-        polyline->size() > LC_OffsetSourceDetail::MaximumSourceItems ||
-        liveData.closed != data->closed) return false;
-    liveData.segments.reserve(polyline->size());
-    for (const RS_Entity* child : *polyline) {
-        if (const auto* line = dynamic_cast<const RS_Line*>(child))
-            liveData.segments.emplace_back(line->getData());
-        else if (const auto* arc = dynamic_cast<const RS_Arc*>(child))
-            liveData.segments.emplace_back(arc->getData());
-        else
-            return false;
-    }
-    if (liveData.segments.size() != data->segments.size()) return false;
-    const RS_Vector translation = data->startpoint - liveData.startpoint;
-    if (!LC_OffsetSourceDetail::finite(translation)) return false;
-    double coordinateScale = 1.0;
-    for (const auto& segment : data->segments) {
-        std::visit([&](const auto& item) {
-            using T = std::decay_t<decltype(item)>;
-            if constexpr (std::is_same_v<T, RS_LineData>) {
-                coordinateScale = std::max({coordinateScale, std::abs(item.startpoint.x),
-                    std::abs(item.startpoint.y), std::abs(item.endpoint.x), std::abs(item.endpoint.y)});
-            } else {
-                coordinateScale = std::max({coordinateScale, std::abs(item.center.x),
-                    std::abs(item.center.y), item.radius});
-            }
-        }, segment);
-    }
-    const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
-    if (!std::isfinite(pointSlack)) return false;
-    if ((liveData.startpoint + translation).distanceTo(data->startpoint) > pointSlack ||
-        (liveData.endpoint + translation).distanceTo(data->endpoint) > pointSlack) {
-        return false;
-    }
-    const auto sameTranslatedSegment = [&](const LC_OffsetPolylineSegment& expected,
-                                           const LC_OffsetPolylineSegment& actual) {
-        if (expected.valueless_by_exception() || actual.valueless_by_exception()) return false;
-        return std::visit([&](const auto& wanted) {
-            using T = std::decay_t<decltype(wanted)>;
-            const auto* found = std::get_if<T>(&actual);
-            if (found == nullptr) return false;
-            if constexpr (std::is_same_v<T, RS_LineData>) {
-                return (found->startpoint + translation).distanceTo(wanted.startpoint) <= pointSlack &&
-                       (found->endpoint + translation).distanceTo(wanted.endpoint) <= pointSlack;
-            } else {
-                const double angleSlack = 256.0 * std::numeric_limits<double>::epsilon() * M_PI;
-                const auto sameAngle = [angleSlack](const double lhs, const double rhs) {
-                    return std::abs(std::remainder(lhs - rhs, 2.0 * M_PI)) <= angleSlack;
-                };
-                return (found->center + translation).distanceTo(wanted.center) <= pointSlack &&
-                       std::abs(found->radius - wanted.radius) <= pointSlack &&
-                       sameAngle(found->angle1, wanted.angle1) &&
-                       sameAngle(found->angle2, wanted.angle2) &&
-                       found->reversed == wanted.reversed;
-            }
-        }, expected);
-    };
-    for (std::size_t i = 0; i < data->segments.size(); ++i) {
-        if (!sameTranslatedSegment(data->segments[i], liveData.segments[i])) return false;
-    }
+    if (data == nullptr || data->segments.size() < 4 || !matchLivePolyline(*data, source)) return false;
     return !LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data);
 }
 

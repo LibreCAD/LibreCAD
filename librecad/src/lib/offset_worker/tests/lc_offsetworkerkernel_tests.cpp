@@ -9908,6 +9908,28 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         const auto options = LC_OffsetWorkerTolerance::directOptions(inward, *source);
         REQUIRE(options);
         CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+        const auto originalGeometry = LC_CurveOffset::buildDirectBranches(
+            *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK((originalGeometry.status == LC_CurveOffsetStatus::Ok ||
+               originalGeometry.status == LC_CurveOffsetStatus::AmbiguousTopology));
+
+        auto recentered = sourceGeometry.makeGenerationEntity();
+        REQUIRE(recentered);
+        const auto* sourceData = std::get_if<LC_OffsetPolylineData>(&sourceGeometry.value);
+        REQUIRE(sourceData);
+        recentered->move({-sourceData->startpoint.x, -sourceData->startpoint.y});
+        const auto recenteredOrientation = LC_OffsetWorkerTolerance::strictConvexPolylineOrientation(
+            inward, *recentered);
+        REQUIRE(recenteredOrientation);
+        CHECK(*recenteredOrientation == -1.0);
+        const auto recenteredOptions = LC_OffsetWorkerTolerance::directOptions(inward, *recentered);
+        REQUIRE(recenteredOptions);
+        CHECK(recenteredOptions->mode == LC_CurveOffsetMode::RegionBoundary);
+        const auto recenteredGeometry = LC_CurveOffset::buildDirectBranches(
+            *recentered, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25),
+            *recenteredOptions, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(recenteredGeometry.status == originalGeometry.status);
 
         auto outward = inward;
         outward.signedDistance = .25;
@@ -9918,7 +9940,17 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         const req::Request request{token, req::GenerateSource{inward, {}}};
         const auto reply = LC_OffsetWorkerKernel::run(request);
         const auto& generated = native(reply, 7);
-        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.engineStatus == originalGeometry.status);
+        if (originalGeometry.status == LC_CurveOffsetStatus::AmbiguousTopology) {
+            CHECK(originalGeometry.branches.empty());
+            CHECK(recenteredGeometry.branches.empty());
+            CHECK(generated.ordinary.empty());
+            CHECK_FALSE(generated.curve);
+            CHECK(originalGeometry.intersectionDiagnostics.stage ==
+                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
+            CHECK(originalGeometry.intersectionDiagnostics.hasFailureDomain);
+            continue;
+        }
         REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
         REQUIRE(generated.ordinary.size() == 1);
         REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
