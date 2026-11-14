@@ -46343,7 +46343,13 @@ immutability, cycle closure, requested-side membership, positive area, and
 boundary distance; the worker case additionally compares generated splines
 with the direct result and round-trips successful outputs through R14 DXF,
 R2000 DXF/DWG, and R2018 DXF/DWG. No editable native cache is claimed for these
-self-intersecting source profiles.
+self-intersecting source profiles. A follow-up NonZero positive-bulge
+rotation-only growth probe confirms the remaining refusal is not a work-cap
+exit: exact primitive noding invokes interval fallback, which reports
+`AmbiguousTopology` on candidate pair `(5, 12)` after 2,774 box-pair work.
+The engine exposes no partial result, and this evidence does not establish
+whether the contact is truly ambiguous or a numerical false refusal; retain
+atomic rejection until an independent geometry oracle resolves that question.
 
 Validation on macOS arm64 CMake Release: focused negative-bulge frame matrix
 passes 228 assertions / 1 case; `[curve-offset][region]` passes 28,632
