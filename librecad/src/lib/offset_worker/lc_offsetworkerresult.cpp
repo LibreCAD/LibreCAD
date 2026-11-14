@@ -355,7 +355,9 @@ bool ordinaryHeader(const Native& n, const Req::Request& r, std::size_t count) {
             : LC_CurveOffset::kDefaultMaxSamples;
         if (count > cap.maxOutputEntities || n.curve || n.changed || n.engineRuns > 1 ||
             bool(n.engineStatus) != (n.engineRuns == 1) || !zero(n.checkWork) || !zero(n.throughWork) ||
-            !usage(n.attemptedOutputUsage, cap) || !usage(n.outputUsage, cap) || n.sampleUnits > sampleCap)
+            !usage(n.attemptedOutputUsage, cap) || !usage(n.outputUsage, cap) ||
+            n.sampleUnits > sampleCap + 1 ||
+            (n.sampleUnits > sampleCap && n.engineStatus != Status::LimitExceeded))
             return false;
         if (!n.engineRuns) {
             return !n.engineStatus && n.ordinaryStatus == OrdinaryStatus::None && !count &&

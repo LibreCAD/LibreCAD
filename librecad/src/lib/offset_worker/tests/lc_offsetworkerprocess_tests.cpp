@@ -678,6 +678,31 @@ TEST_CASE("Built helper produces a typed line source", "[lc-offsetcurve][worker-
     CHECK(std::holds_alternative<Req::Segment>(produced.outputs.front()));
 }
 
+TEST_CASE("Built helper returns a bounded typed-source sample-limit refusal",
+          "[lc-offsetcurve][worker-process][source-generation][limits]") {
+    int argc = 1; char name[] = "offset-worker-source-limit-tests"; char* argv[] = {name, nullptr};
+    std::unique_ptr<QCoreApplication> application;
+    if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
+    Helper helper;
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {100, 0}, .5, 0, 0, false}},
+        .25, 1e-4, false};
+    Req::GenerateSource operation{definition, {}};
+    operation.limits.maxSamples = 1;
+
+    const auto reply = helper.run({Token, operation});
+    REQUIRE(std::holds_alternative<Reply::Native>(reply.result));
+    const auto& refused = std::get<Reply::Native>(reply.result);
+    CHECK(refused.refusal == LC_OffsetCurveRefusal::Engine);
+    CHECK(refused.engineStatus == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(refused.engineRuns == 1);
+    CHECK(refused.sampleUnits == 2);
+    CHECK_FALSE(refused.curve);
+    CHECK_FALSE(refused.changed);
+    CHECK(refused.ordinaryStatus == Reply::OrdinaryStatus::None);
+    CHECK(refused.ordinary.empty());
+}
+
 TEST_CASE("Fresh helper processes preserve cached preview hits while native adoption remains checked",
           "[lc-offsetcurve][worker-process][preview-portable]") {
     int argc = 1; char name[] = "offset-worker-cached-produce-tests"; char* argv[] = {name, nullptr};
