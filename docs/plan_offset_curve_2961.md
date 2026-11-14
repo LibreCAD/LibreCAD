@@ -44969,3 +44969,46 @@ native spline limit would be a separate scope decision with its own bounded
 algorithm, worker-protocol, cache-admission, performance, Trim, and persistence
 review. Continue closing coverage within degrees 1-6; do not advertise support
 above the current maximum.
+
+## 1320. Reconfirm Source-type Changes During Replacement (2026-11-14)
+
+The source-curve Properties widget must allow changing the requested source
+type while replacement selection is active, without closing or restarting
+that workflow. The candidate chooser must refresh for every current
+`LC_OffsetSourceGeometry::SupportedKinds` entry: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola
+remains a distinct typed option. This is the existing nine-kind picker
+contract, not a request to add unrelated drawable entities or additional
+source families; no production change is indicated by this clarification.
+
+Headless coverage for repeated in-workflow filter changes, all nine families,
+candidate filtering, and typed replacement is already recorded in the
+roadmap. The remaining acceptance gate is visible desktop validation that the
+filter remains usable during candidate selection, the list refreshes, the
+current source remains indicated until successful asynchronous publication,
+and cancellation/refusal leaves the prior source unchanged. Keep this UI gate
+separate from the still-open family/variant geometry, Trim, worker/cache, and
+DXF/DWG qualification; a selectable family is not proof that all its variants
+work end to end.
+
+## 1321. Trim Wrapped Periodic High-degree Splines (2026-11-14)
+
+Test commit `584617ed5` adds an end-to-end document-action fixture for wrapped
+closed rational spline sources at degrees four and six. It checks both signed
+offset directions, identity and rotated/translated frames, source replacement
+through the worker, two certified cutter intersections, native Trim
+publication, undo/redo, and two save/reopen cycles in each of R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG (40 degree/frame/sign/format combinations). The
+source is kept in the drawing but its dedicated layer is temporarily frozen
+during synthetic target picking because the small offset cache is otherwise
+ambiguous with its source; it is thawed before file export.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'wrapped periodic high-degree splines trim and persist through file lanes'
+--abortx 1 --reporter compact` passes 3,248 assertions / 1 case. The adjacent
+`[high-degree][interior-knot][trim-action]` selection passes 17,728 assertions
+/ 1 case. DWG spline inspection runs conditionally when `dwgread` is available.
+These are bounded fixture results only; they do not prove arbitrary periodic
+control nets, weight profiles, knot layouts, visible-GUI picking, other
+platforms, or ODA/AutoCAD acceptance. Those roadmap gates remain open.
