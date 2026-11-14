@@ -43979,19 +43979,15 @@ gates.
 ## 1278. Verify Rotated Proofs at a Large Translated Origin (2026-11-13)
 
 Test commit `806e5cb4e` adds a cubic monotone-crossing case whose finite cutter
-is rotated and translated to `(1e15,-1e15)`. Both source traversal directions
-and both cutter directions certify the single transverse root; the line
-parameter enclosure remains within the finite segment, and worker-result
-encoding/decoding revalidates the proof against the original request. The
-focused case passes 48 assertions; the complete worker-result suite passes
-470,458 assertions / 34 cases on macOS arm64 CMake Release. `git diff --check`
-is clean.
+is rotated and translated to `(1e15,-1e15)`. The original 48-assertion case
+covered direction `(256,192)` and both source/cutter traversal reversals. Its
+orientation expansion and current results are recorded in section 1280.
 
 This complements section 1277's axis-aligned extreme-origin cases and
-section 1264's moderate-origin orientation matrix. It does not cover arbitrary
-angles at extreme origins, sub-ULP conditioning, or asynchronous action/file
-round-trips for these transformed fixtures; retain those as open Slice 4
-coverage, along with cross-platform, external-CAD, and visible-GUI acceptance.
+section 1264's moderate-origin orientation matrix. At the time of this initial
+slice, arbitrary angles at extreme origins, sub-ULP conditioning, and
+asynchronous action/file round-trips remained open Slice 4 coverage, along
+with cross-platform, external-CAD, and visible-GUI acceptance.
 
 ## 1279. Refuse One-ULP Parallel Near Misses at Large Origins (2026-11-13)
 
@@ -44010,3 +44006,21 @@ limits. Keep exact exclusion distinct from inability to certify and preserve
 atomic refusal whenever the boundary cannot be proved. The broader async
 action/file matrix, cross-platform validation, external-CAD checks, and visible
 GUI acceptance remain open.
+
+## 1280. Expand Extreme-origin Proofs Across Cutter Orientations (2026-11-13)
+
+Test commit `18a2c7c04` expands section 1278's rotated large-origin case to
+eight representable cutter directions: four oblique quadrants, both axes, and
+two near-axis directions whose minor components remain multiple ULPs at the
+chosen origin. Both source traversal directions and both cutter directions
+are exercised for each orientation. All 32 cases certify one
+`AnalyticMonotoneTransverse` root with the finite-line parameter enclosure in
+`[0,1]`, and worker-result encode/decode revalidates each proof. The focused
+matrix passes 384 assertions; the complete worker-result suite passes 470,815
+assertions / 35 cases on macOS arm64 CMake Release. `git diff --check` passes.
+
+This closes the eight-direction proof-admission matrix at this one origin and
+feature scale only. It does not cover sub-ULP directions, arbitrary
+translations/scales, or async action and file round-trips for these rotated
+fixtures. Keep those with the broader geometry/persistence, cross-platform,
+external-CAD, and visible-GUI gates.
