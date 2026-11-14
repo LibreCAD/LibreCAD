@@ -4629,9 +4629,6 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
         CAPTURE(minimumSupportClearance);
         CHECK(minimumSupportClearance >= -3e-4);
       }
-      SUCCEED("high-edge source replacement and worker cache publication succeeded; "
-              "Trim root isolation remains qualified separately");
-      return;
     }
 
     constexpr double lineY = 1.337;

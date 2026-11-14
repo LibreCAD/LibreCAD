@@ -1106,19 +1106,27 @@ Projection closest(Context& c, const Input& input, const Pick& pick) {
     // two ends. Admit the entire candidate store before its first allocation.
     const auto capacity = spans.size() * (spans.front().degree == 1 ? 1 : 7);
     c.items(capacity); candidates.reserve(capacity);
+    c.items(spans.size() + 1);
+    std::vector<std::optional<std::pair<RS_Vector, std::size_t>>> exactEndpoints(spans.size() + 1);
     const auto add = [&](std::size_t span, I u, I d, std::optional<Q> exact) {
         I t = global(span, u);
         if (input.closed && singleton(t) && t.lo() == double(spans.size())) { t = I::point(0); }
         std::optional<RS_Vector> endpoint;
         if (singleton(u) && (u.lo() == 0 || u.lo() == 1))
             endpoint = spans[span].controls[u.lo() == 0 ? 0 : spans[span].degree];
-        for (auto& old : candidates) {
-            c.compare();
-            if (singleton(t) && singleton(old.parameter) && t.lo() == old.parameter.lo() &&
-                endpoint && old.exactEndpoint && same(*endpoint, *old.exactEndpoint)) return;
+        std::optional<std::size_t> endpointKey;
+        if (endpoint && singleton(t) && t.lo() >= 0 && t.lo() <= double(spans.size()) &&
+            t.lo() == std::floor(t.lo())) {
+            std::size_t key = static_cast<std::size_t>(t.lo());
+            if (input.closed && key == spans.size()) key = 0;
+            endpointKey = key;
+            const auto& previous = exactEndpoints[key];
+            if (previous && same(*endpoint, previous->first)) return;
         }
         if (candidates.size() == capacity) { fail(Refusal::LimitExceeded); }
+        const auto index = candidates.size();
         candidates.push_back({t, d, std::move(exact), endpoint, span});
+        if (endpointKey) exactEndpoints[*endpointKey] = std::make_pair(*endpoint, index);
     };
     for (std::size_t k = 0; k < spans.size(); ++k) {
         c.check(); const auto& span = spans[k];
@@ -1249,15 +1257,21 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                     }
                 }
                 if (lineProgress) { continue; }
-                if (finite(cutError) && cutError.hi() <= error) {
+                I x, y, dx, dy;
+                if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), x, y, dx, dy)) {
+                    fail(Refusal::Arithmetic);
+                }
+                const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
+                                                std::max(std::abs(dy.lo()), std::abs(dy.hi())));
+                const I parameterQuantum = I::point(ulp(globalMiddle));
+                const I representableError = parameterQuantum * I::point(speed);
+                const double cutAllowance = finite(representableError)
+                    ? error + representableError.hi() : error;
+                if (finite(cutError) && cutError.hi() <= cutAllowance) {
                     lineContracted = scalarContracted;
                     break;
                 }
                 if (!lineContracted) {
-                    I x, y, dx, dy;
-                    if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), x, y, dx, dy)) {
-                        fail(Refusal::Arithmetic);
-                    }
                     if (x.width() <= error && y.width() <= error) { break; }
                 }
             } else {
@@ -1592,20 +1606,21 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
         }
         const auto allowance = arithmeticAllowance((*input.source)[id], input.frame);
         const auto ulp = [](double value) {
-            const double next = std::nextafter(value, INFINITY);
-            return std::isfinite(next) ? next - value : value - std::nextafter(value, -INFINITY);
+            const double lower = std::nextafter(value, -INFINITY);
+            const double upper = std::nextafter(value, INFINITY);
+            return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
         };
         if (root.lineContracted) {
+            if (!rawBound(span, input.frame, u.lo(), u.hi(), rx, ry, dx, dy)) fail(Refusal::Arithmetic);
             const I cutError = cacheCutRootError(span, input.frame, u, boundary.cut - double(id));
-            if (!finite(cutError) || cutError.hi() > allowance) {
+            const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
+                                            std::max(std::abs(dy.lo()), std::abs(dy.hi())));
+            const I representableError = I::point(ulp(boundary.cut)) * I::point(speed);
+            if (!finite(cutError) || !finite(representableError) ||
+                cutError.hi() > allowance + representableError.hi()) {
                 fail(Refusal::Arithmetic);
             }
         } else {
-            const auto ulp = [](double value) {
-                const double lower = std::nextafter(value, -INFINITY);
-                const double upper = std::nextafter(value, INFINITY);
-                return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
-            };
             const double ulpX = ulp(actual.x) / input.frame.scale(), ulpY = ulp(actual.y) / input.frame.scale();
             if (!std::isfinite(ulpX) || !std::isfinite(ulpY) ||
                 I::hull(x, rx).width() > allowance + 4 * ulpX ||
