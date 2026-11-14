@@ -46234,7 +46234,7 @@ source to an editable native cache or claim Trim action support.
 
 Validation on macOS arm64 CMake Release: the focused negative-bulge matrix
 passes 1,627 assertions / 1 case; the complete `[lc-offsetcurve][worker-client]`
-suite passes 3,380,387 assertions / 45 cases with
+suite passes 3,381,612 assertions / 45 cases with
 `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`; the `LibreCADOffsetWorker` and
 worker-client test targets build; and `git diff --check` passes. This closes
 only the stated profile, frame matrix, and generated-output file lanes.
