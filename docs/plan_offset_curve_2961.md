@@ -45623,6 +45623,24 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1361. Grow and Shrink a Concave Polyline Region (2026-11-14)
+
+Test commit `cb98eccef` adds a simple U-shaped closed linear polyline to the
+programmatic `RegionBoundary` path. Both growth and erosion at distance `0.5`
+must produce one positively oriented closed cycle, include circular-corner
+provenance, remain on the correct side of the source region, and stay within
+`1e-7` of the original boundary under an independent winding/segment-distance
+oracle. This validates one simple concave topology and reflex-corner layout;
+it does not establish arbitrary concave, self-intersecting, disconnected, or
+collapsing region behavior.
+
+Validation on macOS arm64 CMake Release: the focused case passes 14 assertions
+/ 1 case; `[curve-offset][region]` passes 27,164 assertions / 14 cases;
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests
+-j4` succeeds; and `git diff --check` passes. Broader concave and
+self-intersecting topologies, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
+
 ## 1360. Trim and Persist Varied Typed Parabola Sources (2026-11-14)
 
 Test commit `708ea85fe` extends the all-source-family worker replacement and
