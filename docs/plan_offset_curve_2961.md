@@ -45633,8 +45633,6 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
-## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
-
 ## 1363. Guard Ambiguous Self-crossing Polyline Region Offsets (2026-11-14)
 
 Test commit `b91828d93` adds a bow-tie `RS_Polyline` `RegionBoundary` regression
@@ -45662,6 +45660,8 @@ Validation on macOS arm64 CMake Release: the focused case passes 12 assertions
 `librecad_tests` target builds; and `git diff --check` passes. This does not
 qualify other self-intersection arrangements, bulged self-crossing polylines,
 visible GUI behavior, cross-platform runtime, or independent CAD acceptance.
+
+## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
 Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
 neck between two wider lobes. Inward `RegionBoundary` offset by `0.6` must
