@@ -1629,6 +1629,154 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     }
 }
 
+TEST_CASE("partial eccentric ellipse source trims through document actions and file lanes",
+          "[lc-offsetcurve][source-action][ellipse][partial][trim-action][persistence]") {
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+    CAPTURE(static_cast<int>(format));
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 20.0);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic);
+    constexpr double axisAngle = 0.37;
+    constexpr double majorRadius = 8.0;
+    constexpr double ratio = 0.25;
+    const LC_OffsetSourceGeometry expectedSource{RS_EllipseData{
+        {0, 0}, {majorRadius * std::cos(axisAngle), majorRadius * std::sin(axisAngle)},
+        ratio, -1.1, 1.1, false}};
+    REQUIRE(expectedSource.isWellFormed());
+    auto sourceOwner = expectedSource.makeEntity();
+    REQUIRE(sourceOwner);
+    auto* source = dynamic_cast<RS_Ellipse*>(sourceOwner.get());
+    REQUIRE(source);
+    source->setLayer(graphic.findLayer("0"));
+    const RS_Vector sourcePick = source->getMajorPoint();
+    REQUIRE(sourcePick.valid);
+    graphic.addEntity(source);
+    sourceOwner.release();
+
+    graphic.select(QList<RS_Entity*>{target}, true);
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::Ellipse);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*updateAction);
+    REQUIRE(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
+    CHECK(target->isDeleted());
+
+    auto* replacement = onlyNative(graphic);
+    REQUIRE(replacement->hasEditableDefinition());
+    CHECK(replacement->definition().distance == 0.25);
+    const auto& actualBasis = replacement->definition().basis;
+    const auto& expectedBasis = source->getData();
+    CHECK(actualBasis.center == expectedBasis.center);
+    CHECK(actualBasis.majorP == expectedBasis.majorP);
+    CHECK(actualBasis.ratio == expectedBasis.ratio);
+    CHECK(std::abs(std::remainder(actualBasis.angle1 - expectedBasis.angle1,
+                                  2.0 * M_PI)) < 1e-12);
+    CHECK(std::abs(std::remainder(actualBasis.angle2 - expectedBasis.angle2,
+                                  2.0 * M_PI)) < 1e-12);
+    CHECK(actualBasis.reversed == expectedBasis.reversed);
+    const auto cacheBeforeTrim = RS_Spline::geometryFingerprint(replacement->getData());
+
+    const RS_Vector majorAxis{std::cos(axisAngle), std::sin(axisAngle)};
+    const RS_Vector minorAxis{-majorAxis.y, majorAxis.x};
+    const RS_Vector cutterCenter = majorAxis * 7.0;
+    const RS_Vector cutterHalfLength = minorAxis * 20.0;
+    auto* cutter = new RS_Line(&graphic, cutterCenter - cutterHalfLength,
+                               cutterCenter + cutterHalfLength);
+    cutter->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(cutter);
+
+    double cacheStart = 0.0;
+    double cacheEnd = 0.0;
+    REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
+    const RS_Vector targetPick = replacement->getPointAt(cacheStart + 0.5 * (cacheEnd - cacheStart));
+    REQUIRE(targetPick.valid);
+    const auto prepared = LC_OffsetCacheTrim::prepare(
+        replacement->getData(), *cutter, {targetPick});
+    CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount,
+            prepared.fragments.size());
+    REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(prepared.rootCount == 2);
+    REQUIRE(prepared.fragments.size() == 2);
+    std::vector<std::uint64_t> expectedFragments;
+    for (const auto& fragment : prepared.fragments)
+        expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
+    std::sort(expectedFragments.begin(), expectedFragments.end());
+
+    graphic.select(QList<RS_Entity*>{replacement}, true);
+    TrimActionProbe trimAction(&context);
+    trimAction.init(0);
+    mouse(trimAction, view, cutterCenter, true);
+    mouse(trimAction, view, targetPick, true);
+    QElapsedTimer trimWait;
+    trimWait.start();
+    while (trimAction.pending() && trimWait.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    CHECK_FALSE(trimAction.pending());
+    CHECK(replacement->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+
+    const auto collectFragments = [](const RS_Graphic& drawing) {
+        std::vector<std::uint64_t> fingerprints;
+        for (const auto* entity : drawing) {
+            if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+            const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+            if (spline) fingerprints.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+        }
+        std::sort(fingerprints.begin(), fingerprints.end());
+        return fingerprints;
+    };
+    CHECK(collectFragments(graphic) == expectedFragments);
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(replacement->isDeleted());
+    CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == cacheBeforeTrim);
+    REQUIRE(graphic.redo());
+    CHECK(replacement->isDeleted());
+    CHECK(collectFragments(graphic) == expectedFragments);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("partial-ellipse-trim-%1.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    CHECK(collectFragments(reopened) == expectedFragments);
+    if (dwg) {
+        QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+        if (!libreDwgReader.isEmpty()) {
+            for (const auto* entity : reopened) {
+                if (entity->rtti() != RS2::EntitySpline) continue;
+                const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+                REQUIRE(spline);
+                checkLibreDwgSpline(libreDwgReader, output, spline->getData());
+                break;
+            }
+        }
+    }
+}
+
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
     const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
