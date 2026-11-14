@@ -43709,3 +43709,20 @@ This covers one exact near-miss shape and one smooth tangent shape, not a
 general tolerance/scale matrix. Continue with translated/scaled adversarial
 variants and verify refusal remains stable through the asynchronous action
 path. Broad input conditioning and cross-platform verification remain open.
+
+## 1266. Exercise Rotated Trim Proofs Across Fixed-origin Scales (2026-11-13)
+
+Test commit `687671953` expands section 1264's worker matrix while holding the
+translated origin fixed at `(10000, -70000)` and scaling the source/cutter
+geometry by `0.01`, `1`, and `100`. Across degree-1 and degree-3 sources, both
+source traversal directions, and both cutter directions, all 24 combinations
+produce one certified root and pass request-bound worker encode/decode. On
+macOS arm64 CMake Release, the focused matrix passes 192 assertions and the
+complete `librecad_offset_worker_result_tests` suite passes 467,917 assertions
+/ 29 cases; `git diff --check` passes.
+
+This increases translated scale coverage but does not establish sub-ULP
+features, extreme origins, overflow/subnormal limits, broad angle coverage, or
+multi-span high-degree source behavior. Continue with focused adversarial
+conditioning boundaries and the real async action path where those inputs are
+admitted; otherwise require explicit atomic refusal.
