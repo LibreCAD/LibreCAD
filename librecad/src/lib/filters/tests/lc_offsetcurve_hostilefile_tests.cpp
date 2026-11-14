@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdint>
 #include <cstdlib>
 #include <filesystem>
 #include <limits>
@@ -3552,6 +3553,142 @@ TEST_CASE("open mixed-bulge polyline promotes complete worker caches across file
         }
     }
     CHECK(multiBranchPromotions > 0);
+}
+
+TEST_CASE("mixed-bulge RegionBoundary worker branches round-trip as ordinary splines",
+          "[lc-offsetcurve][worker-client][polyline][mixed-bulge][persistence]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-mixed-bulge-region-ordinary-roundtrip");
+    namespace req = LC_OffsetWorkerRequest;
+    namespace result = LC_OffsetWorkerResult;
+
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+
+    struct Case {
+        bool translated;
+        double signedDistance;
+        std::size_t branchCount;
+    };
+    const std::array<Case, 2> cases{{
+        {false, -0.5, 1},
+        {true, 0.5, 2}}};
+
+    LC_OffsetWorkerClient worker;
+    qint64 requestId = 1;
+    for (const Case& test : cases) {
+        CAPTURE(test.translated, test.signedDistance);
+        RS_Polyline polyline;
+        polyline.addVertex({20, 10});
+        polyline.addVertex({20, -10}, 0.5);
+        polyline.addVertex({-20, 10});
+        polyline.addVertex({-20, -10});
+        polyline.setClosed(true);
+        polyline.endPolyline();
+        if (test.translated) {
+            polyline.rotate({0, 0}, M_PI / 7.0);
+            polyline.move({123.25, -2000000.5});
+        }
+        const auto source = LC_OffsetSourceGeometry::captureForGeneration(polyline);
+        REQUIRE(source);
+        const LC_OffsetSourceDefinition definition{
+            *source, test.signedDistance, 1e-4, false};
+        const auto entity = definition.source.makeGenerationEntity();
+        REQUIRE(entity);
+
+        std::optional<LC_OffsetWorkerClient::Outcome> completion;
+        REQUIRE(worker.submit({{requestId++, 1, 1, 1},
+                               req::GenerateSource{definition, {}}},
+                              LC_OffsetWorkerClient::Mode::Commit,
+                              [&](LC_OffsetWorkerClient::Outcome outcome) {
+                                  completion.emplace(std::move(outcome));
+                              }));
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (!completion) {
+            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(completion->status == LC_OffsetWorkerClient::Status::Completed);
+        REQUIRE(completion->completed);
+        REQUIRE(completion->completed->isJoined());
+        const auto& reply = completion->completed->reply();
+        REQUIRE(reply.failure == result::Failure::None);
+        REQUIRE(reply.operation == 7);
+        REQUIRE(std::holds_alternative<result::Native>(reply.result));
+        const auto& generated = std::get<result::Native>(reply.result);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == test.branchCount);
+        CHECK_FALSE(generated.curve);
+        CHECK_FALSE(completion->completed->nativeSource(*entity));
+
+        RS_Graphic drawing;
+        drawing.initForNewDocument();
+        drawing.onLoadingCompleted();
+        std::vector<std::uint64_t> expectedGeometry;
+        for (const auto& branch : generated.ordinary) {
+            const auto* splineData = std::get_if<RS_SplineData>(&branch);
+            REQUIRE(splineData);
+            auto* spline = new RS_Spline(nullptr, *splineData);
+            REQUIRE(spline->validate());
+            expectedGeometry.push_back(RS_Spline::geometryFingerprint(*splineData));
+            spline->setLayer(drawing.getActiveLayer());
+            drawing.addEntity(spline);
+        }
+
+        for (const Format& fileFormat : formats) {
+#ifndef DWGSUPPORT
+            if (fileFormat.dwg) continue;
+#endif
+            CAPTURE(fileFormat.suffix);
+            const auto firstSave = directory.file(
+                std::string(test.translated ? "translated-" : "identity-") +
+                fileFormat.suffix);
+            REQUIRE(lc::test::exportDrawing(drawing, firstSave, format(fileFormat.lane)));
+
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, firstSave, format(fileFormat.lane)));
+            std::vector<std::uint64_t> reopenedGeometry;
+            for (const RS_Entity* imported : reopened) {
+                const auto* spline = dynamic_cast<const RS_Spline*>(imported);
+                REQUIRE(spline);
+                REQUIRE(spline->validate());
+                reopenedGeometry.push_back(
+                    RS_Spline::geometryFingerprint(spline->getData()));
+            }
+            CHECK(reopenedGeometry == expectedGeometry);
+
+            const auto secondSave = directory.file(
+                std::string(test.translated ? "translated-second-" : "identity-second-") +
+                fileFormat.suffix);
+            REQUIRE(lc::test::exportDrawing(reopened, secondSave,
+                                             format(fileFormat.lane)));
+            RS_Graphic secondReopen;
+            REQUIRE(lc::test::importDrawing(secondReopen, secondSave,
+                                             format(fileFormat.lane)));
+            std::vector<std::uint64_t> secondGeometry;
+            for (const RS_Entity* imported : secondReopen) {
+                const auto* spline = dynamic_cast<const RS_Spline*>(imported);
+                REQUIRE(spline);
+                REQUIRE(spline->validate());
+                secondGeometry.push_back(
+                    RS_Spline::geometryFingerprint(spline->getData()));
+            }
+            CHECK(secondGeometry == expectedGeometry);
+        }
+    }
 }
 
 TEST_CASE("control-point spline-points source promotes through DXF and DWG import",
