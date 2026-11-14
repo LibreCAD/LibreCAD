@@ -1039,14 +1039,17 @@ bool analyticMonotoneRoot(const Trim::RootProvenance& d, const TrimContext& c) {
         !encloses(d.proofDomain.parameterA, d.isolation.parameterA) ||
         !encloses(d.proofDomain.parameterB, d.isolation.parameterB)) return false;
 
-    const auto degree = c.sourceData->degree;
-    const auto first = d.isolation.segmentA * degree;
-    if ((degree != 1 && degree != 3) || first + degree >= c.sourceData->controlPoints.size()) return false;
+    Geo::WorkBudget budget;
+    const auto layout = Geo::inspectCacheLayout(*c.sourceData, budget);
+    if (layout.status != Geo::CacheLayoutStatus::Ok || d.isolation.segmentA >= layout.spans.size()) return false;
+    const auto& bezierSpan = layout.spans[d.isolation.segmentA];
+    const auto degree = bezierSpan.degree;
+    if ((degree != 1 && degree != 3) || degree != c.sourceData->degree) return false;
     std::vector<RS_Vector> controls;
     controls.reserve(degree + 1);
     for (std::size_t i = 0; i <= degree; ++i) {
-        const auto& point = c.sourceData->controlPoints[first + i];
-        if (!point.valid || point.z != 0 || c.sourceData->weights[first + i] != 1) return false;
+        const auto& point = bezierSpan.controls[i];
+        if (!point.valid || point.z != 0) return false;
         controls.push_back(point);
     }
     const auto certificate = Trim::certifyMonotoneLineRoot(

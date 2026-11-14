@@ -1339,3 +1339,66 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     std::sort(reopenedTrimmed.begin(), reopenedTrimmed.end());
     CHECK(reopenedTrimmed == expectedTrimmed);
 }
+
+TEST_CASE("Native Trim tangency refusal preserves the curve and undo state",
+          "[lc-offsetcurve][trim-action][async][tangency][atomic]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic);
+    const auto beforeCache = RS_Spline::geometryFingerprint(target->getData());
+    const auto beforeDefinition = target->definition();
+    double start = 0, end = 0;
+    REQUIRE(target->getParameterDomain(start, end));
+    LC_CurveJet jet;
+    REQUIRE(target->tryEvaluateJet(start + .5 * (end - start),
+        LC_CurveEvaluationSide::Interior, jet));
+    REQUIRE(jet.first.magnitude() > 0);
+    const RS_Vector halfTangent = jet.first / jet.first.magnitude() * 10.0;
+    const RS_Vector targetPick = target->getPointAt(start + .25 * (end - start));
+    REQUIRE(targetPick.valid);
+    auto* cutter = new RS_Line(&graphic, jet.point - halfTangent, jet.point + halfTangent);
+    cutter->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(cutter);
+
+    const auto direct = LC_OffsetCacheTrim::prepare(target->getData(), *cutter, {targetPick});
+    CAPTURE(static_cast<int>(direct.refusal), direct.rootCount);
+    REQUIRE(direct.refusal != LC_OffsetCacheTrim::Refusal::None);
+    CHECK(direct.fragments.empty());
+    CHECK(direct.conicFragments.empty());
+    CHECK_FALSE(direct.removed);
+
+    const auto undoEpoch = graphic.undoStateEpoch();
+    TrimActionProbe trim(&context);
+    trim.init(0);
+    mouse(trim, view, jet.point + halfTangent * .75, true);
+    mouse(trim, view, targetPick, true);
+    REQUIRE(trim.pending());
+    QElapsedTimer wait;
+    wait.start();
+    while (trim.pending() && wait.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QThread::msleep(1);
+    }
+    CHECK_FALSE(trim.pending());
+    CHECK_FALSE(target->isDeleted());
+    CHECK(onlyNative(graphic) == target);
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == beforeCache);
+    basisEquals(target->definition().basis, beforeDefinition.basis);
+    CHECK(target->definition().distance == beforeDefinition.distance);
+    CHECK(target->definition().towardCentre == beforeDefinition.towardCentre);
+    CHECK(target->definition().relTolerance == beforeDefinition.relTolerance);
+    CHECK(target->definition().cacheReversed == beforeDefinition.cacheReversed);
+    CHECK(graphic.undoStateEpoch() == undoEpoch);
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(graphic.size() == 2);
+    REQUIRE_FALSE(context.messages.isEmpty());
+    CHECK(context.messages.back().contains("nothing changed"));
+}

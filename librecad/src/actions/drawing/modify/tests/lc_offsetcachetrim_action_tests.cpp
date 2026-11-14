@@ -3037,7 +3037,8 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
         const double sourceParameter = double(root.target.rawSpan) + root.target.localParameter.lo();
         exactKnot |= root.proof == LC_IntersectionProof::AnalyticEndpoint &&
                      sourceParameter == std::round(sourceParameter);
-        interiorCrossing |= root.proof == LC_IntersectionProof::IntervalUniqueTransverse &&
+        interiorCrossing |= (root.proof == LC_IntersectionProof::IntervalUniqueTransverse ||
+                             root.proof == LC_IntersectionProof::AnalyticMonotoneTransverse) &&
                             std::abs(sourceParameter - std::round(sourceParameter)) > .1;
     }
     CHECK(exactKnot);
