@@ -44370,3 +44370,27 @@ worker publication, and remains unchanged on cancellation/refusal; then verify
 representative undo/redo and save/reopen. Record platform, exact build/revision,
 route, and result. Do not mark Slice 5 or the independent Slice 4 family-by-
 variant obligations complete from headless picker tests alone.
+
+## 1294. Keep Reversed Rounded-polyline Inward Trim Open (2026-11-13)
+
+The inward unequal-radius rounded-polyline fixture is now qualified for its
+current traversal at the origin, `(1e6,-1e6)`, and `(1e9,-1e9)` (sections
+1288-1290), but not for reversed vertex traversal. An exploratory paired
+fixture reversed the vertex order and bulge signs and exercised the same
+source update, independent arc-radius oracle, component-aware Trim, undo/redo,
+and five DXF/DWG lanes. The first side setting failed the oracle by as much as
+about `1.61` drawing units against the checked `0.00213` tolerance; the other
+side setting also failed by about `0.92` units. The profile was removed rather
+than weakening the oracle or presenting an unverified Trim result as support.
+
+This is an unresolved geometry/fixture discrepancy, not yet evidence that the
+production writer is wrong: the next slice must first prove that the reversed
+polyline's exploded arcs match the forward source locus (same centers and
+radii, reversed endpoints and traversal), then trace the chosen signed side
+through `LC_OffsetSourceGeometry` capture, worker request, and generated cache.
+Only after an independent locus check passes should it add the reversed
+profile to the worker-backed Trim and five-file-lane matrix. If the production
+cache deviates from the correctly derived offset, add a focused regression and
+fix the producer; do not merely broaden tolerances. Until then, reversed
+traversal remains outside the inward rounded-polyline evidence in sections
+1288-1290 and the corresponding Slice 4 gate remains open.
