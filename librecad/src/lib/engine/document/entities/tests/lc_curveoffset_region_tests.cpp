@@ -215,6 +215,35 @@ TEST_CASE("A bow tie shrinks into its two lobes and grows into one region", "[cu
     }
 }
 
+TEST_CASE("Self-crossing polyline region offsets refuse atomically when noding is ambiguous",
+          "[curve-offset][region][polyline][self-crossing]") {
+    RS_Polyline source;
+    for (const RS_Vector& point : g_bowTie) source.addVertex(point);
+    source.setClosed(true);
+    source.endPolyline();
+    for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+        for (const bool grow : {true, false}) {
+            constexpr double distance = 1.0;
+            LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+            options.mode = LC_CurveOffsetMode::RegionBoundary;
+            options.fillRule = rule;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source,
+                LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                                distance),
+                options, LC_CurveOffset::makeDirectSourceBudget());
+            CAPTURE(rule, grow, static_cast<int>(result.status),
+                    static_cast<int>(result.intersectionDiagnostics.status),
+                    result.intersectionDiagnostics.failureDomain.segmentA,
+                    result.intersectionDiagnostics.failureDomain.segmentB,
+                    result.intersectionDiagnostics.failureDepth);
+            CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+            CHECK(result.branches.empty());
+            CHECK(result.intersections.empty());
+        }
+    }
+}
+
 TEST_CASE("The fill rule decides whether a doubly wound lobe is a hole", "[curve-offset][region]") {
     const RS_Spline source = closedSpline(limacon());
     const std::vector<RS_Vector> polygon = polygonOf(source);
