@@ -962,27 +962,38 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
         LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition());
     REQUIRE(sourceBefore);
     const auto cacheBefore = RS_Spline::geometryFingerprint(clone->getData());
-    const int parabolaType = typeBox->findData(static_cast<int>(
-        LC_OffsetSourceGeometry::Kind::Parabola));
-    REQUIRE(parabolaType >= 0);
-    typeBox->setCurrentIndex(parabolaType);
+    for (const auto kind : LC_OffsetSourceGeometry::SupportedKinds) {
+        CAPTURE(static_cast<int>(kind));
+        const int kindIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(kindIndex >= 0);
+        typeBox->setCurrentIndex(kindIndex);
 
-    CHECK(typeBox->isEnabled());
-    CHECK_FALSE(widget.isPreparing());
-    checkLineHighlight();
-    CHECK(line->getFlag(RS2::FlagSelected));
-    std::vector<qulonglong> parabolaCandidates;
-    for (int i = 0; i < sourceBox->count(); ++i) {
-        bool hasEntityId = false;
-        const auto id = sourceBox->itemData(i).toULongLong(&hasEntityId);
-        if (hasEntityId) parabolaCandidates.push_back(id);
+        CHECK(typeBox->isEnabled());
+        CHECK_FALSE(widget.isPreparing());
+        checkLineHighlight();
+        CHECK(line->getFlag(RS2::FlagSelected));
+
+        std::vector<qulonglong> visibleCandidates;
+        for (int i = 0; i < sourceBox->count(); ++i) {
+            bool hasEntityId = false;
+            const auto id = sourceBox->itemData(i).toULongLong(&hasEntityId);
+            if (hasEntityId) visibleCandidates.push_back(id);
+        }
+        const std::size_t expectedCount =
+            kind == LC_OffsetSourceGeometry::Kind::Line ||
+                    kind == LC_OffsetSourceGeometry::Kind::Parabola
+                ? 1 : 0;
+        REQUIRE(visibleCandidates.size() == expectedCount);
+        if (kind == LC_OffsetSourceGeometry::Kind::Line)
+            CHECK(visibleCandidates.front() == line->getId());
+        if (kind == LC_OffsetSourceGeometry::Kind::Parabola)
+            CHECK(visibleCandidates.front() == parabola->getId());
+
+        REQUIRE(clone->sourceDefinition());
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+                  *clone->sourceDefinition()) == sourceBefore);
+        CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
     }
-    REQUIRE(parabolaCandidates.size() == 1);
-    CHECK(parabolaCandidates.front() == parabola->getId());
-    REQUIRE(clone->sourceDefinition());
-    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
-              *clone->sourceDefinition()) == sourceBefore);
-    CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
 
     typeBox->setCurrentIndex(lineType);
     checkLineHighlight();
