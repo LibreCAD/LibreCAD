@@ -43788,6 +43788,34 @@ currently modeled kind and checks that the old definition/cache remain intact
 until asynchronous replacement succeeds. This includes the distinct
 parabola choice.
 
+The follow-up request makes the interaction boundary explicit: changing the
+source type is part of selecting a *new* source, so the type control must
+remain operable throughout the active canvas-picking session. Each change
+refreshes the eligible candidate filter in place; it neither commits a source
+change nor changes the existing source's type. “All supported types” is the
+canonical `SupportedKinds` inventory (line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline). Parabola stays a
+separate choice from spline-points. This request does not add a tenth source
+kind or broaden which geometric variants are valid for offset generation.
+
+Implementation-ready acceptance sequence:
+
+1. Open Properties for an offset with a live source; verify that source is
+   highlighted and its actual type is initially selected.
+2. Start replacement, switch the type repeatedly while canvas picking remains
+   active, and verify candidate eligibility updates immediately for all nine
+   types, including parabola.
+3. Verify each accepted candidate retains its real entity type and typed
+   geometry; the filter must not coerce a candidate to the selected type.
+4. Verify filtering alone leaves the original source, highlight, definition,
+   and cache unchanged; cancellation or refusal also leaves them unchanged.
+5. Verify a successful replacement publishes only after worker completion,
+   then exercise representative undo/redo and save/reopen cases. A deleted or
+   missing source must not be shown as a live highlighted selection.
+6. Run the visible desktop workflow and record platform, build/revision,
+   interaction route, and results. Headless coverage is useful preparation,
+   but cannot close this acceptance item.
+
 No additional type-specific selector or parabola-only picker should be added.
 Keep the canonical inventory as the single source of truth. Any future source
 kind must be added to that inventory and flow through candidate matching,
