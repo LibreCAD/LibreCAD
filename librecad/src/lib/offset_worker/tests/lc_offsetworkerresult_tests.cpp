@@ -797,6 +797,49 @@ TEST_CASE("Worker Trim revalidates monotone roots after a discontinuous cubic kn
     }
 }
 
+TEST_CASE("Worker Trim handles supported and unsupported repeated cubic knots", tags) {
+    struct Layout { std::vector<double> knots; std::size_t rawSpan; bool supported; };
+    const std::array<Layout, 3> layouts{{
+        {{0, 0, 0, 0, .25, 3, 7, 9, 9, 9, 9}, 0, false},
+        {{0, 0, 0, 0, .25, .25, 7, 9, 9, 9, 9}, 0, false},
+        {{0, 0, 0, 0, 3, 3, 3, 9, 9, 9, 9}, 1, true}}};
+    RS_Line cutter{nullptr, {4.5, -1}, {4.5, 1}};
+
+    for (const auto& layout : layouts) {
+        auto data = cache({{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}}, 3);
+        data.knotslist = layout.knots;
+        const Trim::Pick pick{{5.5, 0}};
+        const auto prepared = Trim::prepare(data, cutter, pick);
+        CAPTURE(layout.rawSpan, layout.supported, prepared.refusal, prepared.rootCount);
+
+        Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), pick, {}}};
+        if (!layout.supported) {
+            CHECK(prepared.refusal == Trim::Refusal::UnsupportedLayout);
+            CHECK(prepared.roots.empty()); CHECK(prepared.fragments.empty());
+            const auto refused = Reply::encode(reply(request, prepared), request);
+            REQUIRE(refused);
+            const auto decodedRefusal = Reply::decode(*refused, request);
+            REQUIRE(decodedRefusal);
+            CHECK(std::get<Trim::Result>(decodedRefusal->result).refusal == Trim::Refusal::UnsupportedLayout);
+            continue;
+        }
+
+        REQUIRE(prepared.refusal == Trim::Refusal::None);
+        REQUIRE(prepared.roots.size() == 1);
+        CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(prepared.roots.front().target.rawSpan == layout.rawSpan);
+        const auto encoded = Reply::encode(reply(request, prepared), request);
+        REQUIRE(encoded);
+        const auto decoded = Reply::decode(*encoded, request);
+        REQUIRE(decoded);
+        const auto* received = std::get_if<Trim::Result>(&decoded->result);
+        REQUIRE(received);
+        REQUIRE(received->roots.size() == 1);
+        CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(received->roots.front().target.rawSpan == layout.rawSpan);
+    }
+}
+
 TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cubic sources", tags) {
     const RS_Vector origin{10000, -70000};
     const std::array<RS_Vector, 8> directions{{
