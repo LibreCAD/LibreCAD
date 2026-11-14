@@ -1288,6 +1288,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
             return std::sqrt(std::min({bestDistanceSquared, leftDistance, rightDistance}));
         };
         std::size_t arcsChecked = 0;
+        std::size_t arcEndpointsChecked = 0;
         for (const auto* segment : *source) {
             const auto* arc = dynamic_cast<const RS_Arc*>(segment);
             REQUIRE(arc);
@@ -1306,8 +1307,21 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
                 replacement->checkedWorldTolerance(), oracleTolerance);
             CHECK(error < oracleTolerance);
             ++arcsChecked;
+
+            const double endAngle = data.reversed ? data.angle1 : data.angle2;
+            for (const double angle : {startAngle, endAngle}) {
+                const RS_Vector expectedEndpoint = data.center +
+                    RS_Vector::polar(expectedRadius, angle);
+                const double endpointError = distanceToCache(expectedEndpoint);
+                CAPTURE(arcEndpointsChecked, signedDistance, data.radius, expectedRadius,
+                    expectedEndpoint, endpointError, replacement->checkedWorldTolerance(),
+                    oracleTolerance);
+                CHECK(endpointError < oracleTolerance);
+                ++arcEndpointsChecked;
+            }
         }
         CHECK(arcsChecked == 8);
+        CHECK(arcEndpointsChecked == 16);
     }
     REQUIRE(graphic.removeEntity(source));
 
