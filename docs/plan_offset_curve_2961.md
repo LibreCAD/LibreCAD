@@ -372,11 +372,13 @@ and corner-circle primitives. A crossing negative-bulge bow-tie passes direct
 growth and erosion under both fill rules with independent cycle, side, and
 distance checks. A positive-bulge profile whose eroded candidates overlap
 still returns `AmbiguousTopology` atomically at the identity frame; section
-1373 records a separately validated translated erosion result. This is bounded mixed-bulge
-coverage, not general self-crossing support. Other arc signs/layouts and
-overlap topologies, editable cache/action integration, file persistence,
-visible GUI, cross-platform runtime, and independent CAD acceptance remain
-open. This supersedes the refusal-only evidence in section 1368 and the earlier
+1373 records a separately validated translated erosion result. This is bounded
+mixed-bulge coverage, not general self-crossing support. Other arc
+signs/layouts and overlap topologies, editable cache/action integration,
+broader file persistence, visible GUI, cross-platform runtime, and independent
+CAD acceptance remain open. Sections 1374 and 1377 qualify ordinary-output
+save/reopen for the stated positive- and negative-bulge fixtures only. This
+supersedes the refusal-only evidence in section 1368 and the earlier
 bow-tie refusal text in the Slice 4 table above. Section 1376 separates the
 positive-bulge outcome by identity, rotation-only, translation-only, and
 combined rotation/translation frames, and asserts atomic refusal for every
@@ -46076,6 +46078,24 @@ passes 154 assertions / 1 case. `git diff --check` passes. Resolving the
 transform-sensitive topology results remains an open geometry feature; worker
 parity, persistence, visible GUI, cross-platform, and independent CAD gates
 remain separate.
+
+## 1377. Persist Negative-bulge Region Worker Branches (2026-11-14)
+
+Test commit `14fb7e9e7` extends section 1374's ordinary-spline save/reopen
+matrix with the negative-bulge self-crossing profile's two successful worker
+outputs: the two-branch growth side and one-branch erosion side. Each generated
+ordinary result is saved and reopened twice, with exact spline geometry
+fingerprints checked across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG where DWG
+support is enabled. Both remain ordinary spline geometry; no native editable
+cache is admitted for the self-crossing source.
+
+On macOS arm64 CMake Release, `cmake --build
+/private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
+`mixed-bulge RegionBoundary worker branches round-trip as ordinary splines`
+passes 312 assertions / 1 case. `git diff --check` passes. This covers only
+the stated negative-bulge profile and offsets; native cache/action support,
+other mixed-bulge layouts, visible GUI, cross-platform runtime, and independent
+CAD acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
