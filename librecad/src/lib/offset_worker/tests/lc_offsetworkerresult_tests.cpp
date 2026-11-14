@@ -762,6 +762,24 @@ TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cub
             REQUIRE(result.refusal == Trim::Refusal::None);
             REQUIRE(result.roots.size() == 1);
             CHECK(result.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+            REQUIRE(result.fragments.size() == 1);
+            const auto& fragment = result.fragments.front();
+            const bool rootAtStart = fragment.start.labels & unsigned(Trim::EndLabel::CutterRoot);
+            const bool rootAtEnd = fragment.end.labels & unsigned(Trim::EndLabel::CutterRoot);
+            REQUIRE(rootAtStart != rootAtEnd);
+            const auto& rootPoint = rootAtStart ? fragment.data.controlPoints.front()
+                                                : fragment.data.controlPoints.back();
+            const double cross = direction.x * (rootPoint.y - origin.y) -
+                                 direction.y * (rootPoint.x - origin.x);
+            const double projection = ((rootPoint.x - origin.x) * direction.x +
+                                       (rootPoint.y - origin.y) * direction.y) /
+                                      (direction.x * direction.x + direction.y * direction.y);
+            const double tolerance = 128 * std::numeric_limits<double>::epsilon() *
+                std::max(std::abs(origin.x), std::abs(origin.y)) * std::hypot(direction.x, direction.y) +
+                1e-10 * scale * scale;
+            CHECK(std::abs(cross) <= tolerance);
+            CHECK(projection >= -tolerance / (scale * scale * 25));
+            CHECK(projection <= 1 + tolerance / (scale * scale * 25));
 
             Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), pick, {}}};
             const auto encoded = Reply::encode(reply(request, result), request);
