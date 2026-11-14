@@ -983,12 +983,15 @@ TEST_CASE("Worker Trim certifies monotone roots across extreme origins and scale
 
 TEST_CASE("Worker Trim transports rotated roots at a large translated origin", tags) {
     const RS_Vector origin{1e15, -1e15};
-    const RS_Vector direction{256, 192};
-    const RS_Vector normal{-direction.y, direction.x};
+    const std::array<RS_Vector, 8> directions{{
+        {256, 192}, {256, 0}, {0, 256}, {-192, 256},
+        {256, -192}, {256, .5}, {.5, 256}, {-256, .5}}};
     const std::array<double, 4> along{.2, .4, .6, .8};
     const std::array<double, 4> across{-2, -1, 1, 2};
 
-    for (const bool reverseSource : {false, true}) for (const bool reverseCutter : {false, true}) {
+    for (const RS_Vector direction : directions) for (const bool reverseSource : {false, true})
+        for (const bool reverseCutter : {false, true}) {
+        const RS_Vector normal{-direction.y, direction.x};
         std::vector<RS_Vector> controls;
         for (std::size_t i = 0; i < along.size(); ++i)
             controls.push_back(origin + direction * along[i] + normal * across[i]);
@@ -998,7 +1001,8 @@ TEST_CASE("Worker Trim transports rotated roots at a large translated origin", t
         RS_Line cutter{nullptr, reverseCutter ? end : origin, reverseCutter ? origin : end};
         const Trim::Pick pick{origin + direction * .7 + normal * 1.5};
         const auto prepared = Trim::prepare(data, cutter, pick);
-        CAPTURE(reverseSource, reverseCutter, prepared.refusal, prepared.rootCount);
+        CAPTURE(direction.x, direction.y, reverseSource, reverseCutter,
+                prepared.refusal, prepared.rootCount);
         REQUIRE(prepared.refusal == Trim::Refusal::None);
         REQUIRE(prepared.roots.size() == 1);
         CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
