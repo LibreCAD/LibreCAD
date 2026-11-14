@@ -1,5 +1,6 @@
 /* Copyright (C) 2026 LibreCAD.org. SPDX-License-Identifier: GPL-2.0-or-later */
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -9,6 +10,7 @@
 #include <sstream>
 #include <functional>
 #include <filesystem>
+#include <limits>
 #include <utility>
 #include <QPointer>
 #include <QScopeGuard>
@@ -4549,8 +4551,9 @@ TEST_CASE("Sinusoidal Trim Two resolves multiple roots across operand roles",
 TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
           "overlapping offsets",
           "[lc-offsetcurve][trim-action][polyline][closed][high-segment]") {
-  for (const bool towardCentre : {true, false}) {
-    CAPTURE(towardCentre);
+    const unsigned segmentCount = GENERATE(256u, 512u, 1024u);
+    const bool towardCentre = GENERATE(true, false);
+    CAPTURE(segmentCount, towardCentre);
     Drawing<true> f;
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
     auto initial = LC_OffsetCurve::create(seed, .15, towardCentre);
@@ -4558,7 +4561,6 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     auto *previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
-    constexpr unsigned segmentCount = 256;
     constexpr double radius = 10.0;
     auto *source = new RS_Polyline(&f.graphic);
     for (unsigned i = 0; i < segmentCount; ++i) {
@@ -4598,6 +4600,39 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
         nativeData.controlPoints.front().y - nativeData.controlPoints.back().y);
     CHECK_FALSE(nativeData.m_closedFlag);
     CHECK(cacheEndpointGap == 0.0);
+    if (segmentCount >= 512) {
+      CHECK(nativeData.controlPoints.size() > segmentCount);
+      if (towardCentre) {
+        const double pi = std::acos(-1.0);
+        const double expectedRadius = radius + .15 / std::cos(pi / static_cast<double>(segmentCount));
+        double maximumRadialError = 0.0;
+        for (const RS_Vector& point : nativeData.controlPoints) {
+          maximumRadialError = std::max(maximumRadialError,
+              std::abs(point.magnitude() - expectedRadius));
+        }
+        CAPTURE(expectedRadius, maximumRadialError);
+        CHECK(maximumRadialError < 3e-4);
+      }
+      else {
+        double minimumSupportClearance = std::numeric_limits<double>::infinity();
+        for (const RS_Vector& point : nativeData.controlPoints) {
+          for (unsigned edge = 0; edge < segmentCount; ++edge) {
+            const RS_Vector start = source->getVertex(static_cast<int>(edge));
+            const RS_Vector end = source->getVertex(static_cast<int>((edge + 1) % segmentCount));
+            const RS_Vector direction = end - start;
+            const double length = direction.magnitude();
+            const double signedSide =
+                (direction.x * (point.y - start.y) - direction.y * (point.x - start.x)) / length;
+            minimumSupportClearance = std::min(minimumSupportClearance, signedSide - .15);
+          }
+        }
+        CAPTURE(minimumSupportClearance);
+        CHECK(minimumSupportClearance >= -3e-4);
+      }
+      SUCCEED("high-edge source replacement and worker cache publication succeeded; "
+              "Trim root isolation remains qualified separately");
+      return;
+    }
 
     constexpr double lineY = 1.337;
     auto *line =
@@ -4669,7 +4704,8 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     for (std::size_t i = 0; i < formats.size(); ++i) {
       const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
       const auto file = std::filesystem::path(directory.filePath(
-          QStringLiteral("closed-polyline-trim-two-%1-%2").arg(towardCentre).arg(i) +
+          QStringLiteral("closed-polyline-trim-two-%1-%2-%3")
+              .arg(segmentCount).arg(towardCentre).arg(i) +
               (dwg ? ".dwg" : ".dxf")).toStdString());
       REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
       RS_Graphic reopened;
@@ -4687,7 +4723,6 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     CHECK_FALSE(line->isDeleted());
     CHECK(live(f.graphic).size() == entityCount);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
-  }
 }
 
 TEST_CASE("Dense sinusoidal cache maps component roots and enforces the Trim Two output cap",

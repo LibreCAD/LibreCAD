@@ -5948,8 +5948,8 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
 // ---------------------------------------------------------------------------
 
 // A convex polygon's erosion is the intersection of its inward-shifted edge
-// half-planes. Build its miters directly, then certify every vertex against
-// every shifted half-plane before publishing the single closed cycle.
+// half-planes. Build the miter cycle directly and certify its ordered convex
+// boundary; each cycle edge lies on its corresponding shifted support line.
 std::optional<LC_CurveOffsetStatus> erodeStrictlyConvexPolyline(
     const std::vector<RS_Vector>& vertices, const std::vector<double>& breaks, const double magnitude,
     const LC_CurveOffsetOptions& options, std::vector<LC_OffsetBranch>& cycles) {
@@ -6021,16 +6021,36 @@ std::optional<LC_CurveOffsetStatus> erodeStrictlyConvexPolyline(
         }
     }
 
-    if (count > options.maxDistanceMapBoxes / count) return LC_CurveOffsetStatus::LimitExceeded;
-    for (const RS_Vector& miter : miters) {
-        for (std::size_t edge = 0; edge < count; ++edge) {
-            const long double side = orientation *
-                (static_cast<long double>(directions[edge].x) * (miter.y - vertices[edge].y) -
-                 static_cast<long double>(directions[edge].y) * (miter.x - vertices[edge].x));
-            const long double required = static_cast<long double>(magnitude) * lengths[edge];
-            const long double slack = static_cast<long double>(residualTolerance) * lengths[edge];
-            if (side + slack < required) return LC_CurveOffsetStatus::SingularOffset;
+    LC_OffsetPolylineData miterPolygon;
+    miterPolygon.startpoint = miters.front();
+    miterPolygon.endpoint = miters.front();
+    miterPolygon.closed = true;
+    miterPolygon.segments.reserve(count);
+    int miterTurnSign = 0;
+    for (std::size_t edge = 0; edge < count; ++edge) {
+        const RS_Vector direction = miters[(edge + 1) % count] - miters[edge];
+        const RS_Vector next = miters[(edge + 2) % count] - miters[(edge + 1) % count];
+        const double directionLength = direction.magnitude();
+        const double nextLength = next.magnitude();
+        if (!(directionLength > residualTolerance) || !(nextLength > residualTolerance) ||
+            !std::isfinite(directionLength) || !std::isfinite(nextLength)) {
+            return LC_CurveOffsetStatus::SingularOffset;
         }
+        const long double turn = static_cast<long double>(direction.x) * next.y -
+                                 static_cast<long double>(direction.y) * next.x;
+        const long double threshold = 128.0L * std::numeric_limits<double>::epsilon() *
+                                      static_cast<long double>(directionLength) * nextLength;
+        if (std::abs(turn) <= threshold) return LC_CurveOffsetStatus::SingularOffset;
+        const int sign = turn > 0.0L ? 1 : -1;
+        if (sign != (orientation > 0.0 ? 1 : -1) ||
+            (miterTurnSign != 0 && sign != miterTurnSign)) {
+            return LC_CurveOffsetStatus::SingularOffset;
+        }
+        miterTurnSign = sign;
+        miterPolygon.segments.emplace_back(RS_LineData{miters[edge], miters[(edge + 1) % count]});
+    }
+    if (!LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(miterPolygon)) {
+        return LC_CurveOffsetStatus::AmbiguousTopology;
     }
     for (std::size_t edge = 0; edge < count; ++edge) {
         const double lengthSquared = dot(directions[edge], directions[edge]);
