@@ -45500,3 +45500,32 @@ assertions / 44 cases; `git diff --check` passes. This is headless widget and
 overlay coverage, not visible desktop acceptance. The nine-kind family/variant
 geometry and persistence matrix, physical GUI interaction, cross-platform
 runtime, and independent CAD gates remain open.
+
+## 1343. Trim Dense Linear Caches Against Transverse Conics (2026-11-14)
+
+The 64- through 2048-edge regular-polyline cache now trims against a transverse
+circle boundary. The certified intersection session can prove the unique
+source/conic roots but stop contracting once global source parameters approach
+their representable precision. Added a bounded interval-Newton contractor for
+the conic's implicit ellipse equation, applied only within the already-certified
+unique-root interval. Root records distinguish conic contraction from finite-
+line contraction; endpoint validation bounds both root-bracket/midpoint
+rounding and exact/conservative Bezier point-to-double conversion error. The
+contractor does not grant source-knot identity or relax tangent/overlap proof
+requirements.
+
+The regressions check 64, 128, 256, 512, 1024, and 2048 linear spans against a
+transverse circle, plus 128, 512, and 2048 spans against a rotated eccentric
+ellipse. They require certified roots, one valid complementary fragment, exact
+source immutability, and expected retained/removed coverage. Finite-line
+contraction keeps its established acceptance path; the new bracket-only
+acceptance is confined to conic cutters.
+
+Validation on macOS arm64 CMake Release: the focused dense conic matrices pass
+273,379 assertions / 2 cases; `[trim-kernel]` passes 314,874 assertions / 75
+cases; `Closed high-segment polyline Trim Two distinguishes connected and
+overlapping offsets` passes 2,970 assertions / 1 case including persistence;
+`librecad_tests` builds; and `git diff --check` passes. This closes only the
+tested regular convex polygon with the listed transverse circle/ellipse
+cutters and does not establish tangent contacts, nonconvex caches, other
+ellipse-arc cutters, or visible GUI behavior.

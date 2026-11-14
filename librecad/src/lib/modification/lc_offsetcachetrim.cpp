@@ -435,6 +435,42 @@ bool conicJet(const Conic& conic, const Geo::ReferenceFrame& frame,
     return finite(out.x) && finite(out.y) && finite(out.dx) && finite(out.dy) && finite(out.ddx) && finite(out.ddy);
 }
 
+I contractCacheRootAgainstConic(const Geo::CacheSpan& source, const Conic& conic,
+                               const Geo::ReferenceFrame& frame, const I& parameter) {
+    if (!finite(parameter) || parameter.lo() < 0 || parameter.hi() > 1) { return {}; }
+    I x, y, dx, dy, mx, my, mdx, mdy, cx, cy;
+    const double middle = mid(parameter);
+    if (!rawBound(source, frame, parameter.lo(), parameter.hi(), x, y, dx, dy) ||
+        !rawBound(source, frame, middle, middle, mx, my, mdx, mdy) ||
+        !frame.pointToFrame(conic.data.center, cx, cy)) { return {}; }
+
+    const I scale = I::point(frame.scale());
+    const I ax = I::point(conic.data.majorP.x) / scale;
+    const I ay = I::point(conic.data.majorP.y) / scale;
+    const I axisSquared = sqr(ax) + sqr(ay);
+    const I ratio = I::point(conic.data.ratio);
+    if (!finite(axisSquared) || !axisSquared.isPositive() || !finite(ratio) || !ratio.isPositive()) { return {}; }
+
+    const auto coordinates = [&](const I& px, const I& py, const I& vx, const I& vy,
+                                 I& u, I& v, I& du, I& dv) {
+        const I rx = px - cx, ry = py - cy;
+        u = (rx * ax + ry * ay) / axisSquared;
+        v = (-rx * ay + ry * ax) / (axisSquared * ratio);
+        du = (vx * ax + vy * ay) / axisSquared;
+        dv = (-vx * ay + vy * ax) / (axisSquared * ratio);
+        return finite(u) && finite(v) && finite(du) && finite(dv);
+    };
+
+    I u, v, du, dv, midpointU, midpointV, midpointDu, midpointDv;
+    if (!coordinates(x, y, dx, dy, u, v, du, dv) ||
+        !coordinates(mx, my, mdx, mdy, midpointU, midpointV, midpointDu, midpointDv)) { return {}; }
+    const I value = sqr(midpointU) + sqr(midpointV) - I::point(1);
+    const I derivative = I::point(2) * (u * du + v * dv);
+    if (!finite(value) || !finite(derivative) || !derivative.excludesZero()) { return {}; }
+    const I narrowed = intersect(parameter, I::point(middle) - value / derivative);
+    return finite(narrowed) ? narrowed : I{};
+}
+
 double conicAllowance(const Conic& conic, const Geo::ReferenceFrame& frame) {
     const double axis = std::max({std::abs(conic.data.majorP.x), std::abs(conic.data.majorP.y),
         std::abs(conic.data.majorP.x * conic.data.ratio), std::abs(conic.data.majorP.y * conic.data.ratio)}) / frame.scale();
@@ -1213,6 +1249,7 @@ struct Root {
     std::size_t provenanceId = 0;
     bool lineContracted = false;
     bool exactRationalRounding = false;
+    bool conicContracted = false;
 };
 
 std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
@@ -1230,6 +1267,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
         auto t = snapshot->event.isolation.parameterA;
         bool lineContracted = false;
         bool exactRationalRounding = false;
+        bool conicContracted = false;
         bool scalarContracted = false;
         for (unsigned round = 0;; ++round) {
             const auto id = snapshot->event.isolation.segmentA;
@@ -1310,15 +1348,55 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
             try {
                 snapshot = contract(c, session, handle, Refusal::AmbiguousRoots);
             } catch (const Failure& failure) {
-                if (failure.reason != Refusal::AmbiguousRoots || !finiteLineCutter) { throw; }
-                const auto& line = (*input.cutter)[cutterId - input.source->size()];
-                c.items(1);
-                c.compare();
-                const I narrowed = contractCacheRootAgainstLine((*input.source)[id], line, input.frame, u);
-                if (!finite(narrowed) || narrowed.width() >= u.width()) { throw; }
-                t = global(id, narrowed);
-                scalarContracted = true;
-                usedScalarFallback = true;
+                if (failure.reason != Refusal::AmbiguousRoots) { throw; }
+                I x, y, dx, dy;
+                if (!rawBound((*input.source)[id], input.frame, u.lo(), u.hi(), x, y, dx, dy)) {
+                    fail(Refusal::Arithmetic);
+                }
+                const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
+                                                std::max(std::abs(dy.lo()), std::abs(dy.hi())));
+                const I parameterQuantum = I::point(0.5 * t.width() + ulp(globalMiddle));
+                const I representableError = parameterQuantum * I::point(speed);
+                if (input.conic && finite(representableError) && representableError.hi() <= error) {
+                    conicContracted = true;
+                    break;
+                }
+                if (input.conic) {
+                    c.items(1);
+                    c.compare();
+                    const I narrowed = contractCacheRootAgainstConic(
+                        (*input.source)[id], *input.conic, input.frame, u);
+                    const I narrowedGlobal = finite(narrowed) ? global(id, narrowed) : I{};
+                    if (finite(narrowedGlobal) && narrowed.width() < u.width() &&
+                        narrowedGlobal.width() < t.width()) {
+                        t = narrowedGlobal;
+                        snapshot->event.isolation.parameterA = t;
+                        conicContracted = true;
+                        usedScalarFallback = true;
+                    }
+                    else {
+                        const double cut = mid(t);
+                        const I cutError = cacheCutRootError(
+                            (*input.source)[id], input.frame, u, cut - double(id));
+                        if (finite(cutError) && finite(representableError) &&
+                            cutError.hi() <= error + representableError.hi()) {
+                            conicContracted = true;
+                            break;
+                        }
+                        throw;
+                    }
+                }
+                else if (finiteLineCutter) {
+                    const auto& line = (*input.cutter)[cutterId - input.source->size()];
+                    c.items(1);
+                    c.compare();
+                    const I narrowed = contractCacheRootAgainstLine((*input.source)[id], line, input.frame, u);
+                    if (!finite(narrowed) || narrowed.width() >= u.width()) { throw; }
+                    t = global(id, narrowed);
+                    scalarContracted = true;
+                    usedScalarFallback = true;
+                }
+                else { throw; }
             }
             if (!usedScalarFallback) {
                 t = intersect(snapshot->event.isolation.parameterA, t);
@@ -1354,7 +1432,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
         }
         if (!duplicate) {
             out.push_back({handle, *snapshot, t, cut, 0, lineContracted,
-                           exactRationalRounding});
+                           exactRationalRounding, conicContracted});
         }
     }
     // Insertion sort is bounded by the shared comparison allowance; never use
@@ -1621,7 +1699,8 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
         out.labels |= unsigned(EndLabel::CutterRoot); out.rootId = boundary.root;
         // Cover root-location uncertainty AND one-rounding subdivision error.
         const auto id = root.snapshot.event.isolation.segmentA;
-        const auto t = root.lineContracted ? root.parameter : root.snapshot.event.isolation.parameterA;
+        const auto t = root.lineContracted || root.conicContracted
+            ? root.parameter : root.snapshot.event.isolation.parameterA;
         const auto u = intersect(t - I::point(double(id)), I::hull(0, 1));
         I rx, ry, dx, dy;
         const auto& span = (*input.source)[id];
@@ -1639,7 +1718,7 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
             const double upper = std::nextafter(value, INFINITY);
             return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
         };
-        if (root.lineContracted) {
+        if (root.lineContracted || root.conicContracted) {
             if (!rawBound(span, input.frame, u.lo(), u.hi(), rx, ry, dx, dy)) fail(Refusal::Arithmetic);
             const I cutError = cacheCutRootError(span, input.frame, u,
                                                 boundary.cut - double(id),
