@@ -45623,6 +45623,24 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1360. Trim and Persist Varied Typed Parabola Sources (2026-11-14)
+
+Test commit `708ea85fe` extends the all-source-family worker replacement and
+Trim integration test with three distinct typed parabola constructions: the
+baseline symmetric profile, an asymmetric control-point sample, and a scaled,
+rotated, translated, reversed-traversal profile. Each passes typed source
+replacement, native Trim action, undo/redo, and all five R14/R2000/R2018 DXF
+and DWG save/reopen lanes while retaining parabola source identity. This adds
+end-to-end evidence for these three samples; other constructions, more extreme
+conditioning, broader transforms, and visible-GUI acceptance remain open.
+
+Validation on macOS arm64 CMake Release: the focused
+`[lc-offsetcurve][trim-action][typed-source][all-source-kinds]` case passes
+5,081 assertions; `cmake --build /private/tmp/offset-2961-cmake-clean --target
+librecad_tests -j4` succeeds; and `git diff --check` passes. Optional LibreDWG
+geometry inspection runs only when `dwgread` is available; this result does
+not claim external ODA/AutoCAD acceptance.
+
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
 Test commits `bc050a90c` and `6b9859713` add transverse ellipse cuts whose
