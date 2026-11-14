@@ -35,17 +35,16 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** While selecting
-a new source curve in the existing Properties replacement widget, the user
-must be able to change the requested source type in place, repeatedly and
-without closing the chooser or restarting replacement. Each type change
-immediately refreshes eligible replacement candidates. The type control must
-remain usable after replacement selection has started and candidates are
-visible; it filters which existing entity can be selected, rather than
-converting the current source entity. The latest restatement confirms the full
-set of source types supported by the offset feature, not only common types or a
-parabola-specific addition. This applies to every kind in
-the canonical offset-source inventory, not every drawable entity in LibreCAD.
+**Current source-widget requirement and status (2026-11-14):** The latest
+request reaffirms the complete source-replacement contract: while selecting a
+new source curve in the existing Properties widget, the user can change the
+requested source type in place, repeatedly and without closing the chooser or
+restarting replacement. Each type change immediately refreshes eligible
+replacement candidates. The type control remains usable after replacement
+selection has started and candidates are visible; it filters which existing
+entity can be selected, rather than converting the current source entity. This
+covers all source types supported by the offset feature, not every drawable
+entity in LibreCAD, and is not a parabola-only request.
 The canonical inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
@@ -75,8 +74,8 @@ unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
 indicated, then verify successful replacement and cancel/refusal behavior.
-This restatement confirms the existing all-kinds contract; it does not add a
-second selector or a parabola-only implementation slice. Keep this gate
+This repeated request confirms the existing all-kinds contract; it adds no
+second selector or separate parabola-only implementation slice. Keep this gate
 separate from Slice 4's per-variant capture/reconstruction,
 worker/cache, Trim, and DXF/DWG qualification; selector availability alone
 does not prove full support for every mathematical variant. The focused
@@ -84,13 +83,13 @@ Properties-dialog tests also verify
 the selector inventory and eligible candidate filtering against all nine
 kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`, source
 chooser tests). Do not add unrelated drawable families or a second type
-selector. The latest repeated request (2026-11-14) confirms the same two
-obligations, not a narrower parabola-only change: the user can change the
-requested source family while replacement selection is active, and eligible
-replacement candidates exist for every kind in `SupportedKinds`, with
-parabola represented as a distinct type. The in-place selector/filter
-behavior is implemented and headlessly tested; adding a family to the selector
-is not sufficient evidence that its source geometry is supported. Do not
+selector. The latest repeated request confirms the same two obligations, not a
+narrower parabola-only change: the user can change the requested source family
+while replacement selection is active, and eligible replacement candidates
+exist for every kind in `SupportedKinds`, with parabola represented as a
+distinct type. The in-place selector/filter behavior is implemented and
+headlessly tested; adding a family to the selector is not sufficient evidence
+that its source geometry is supported. Do not
 create a duplicate selector or parabola-only implementation slice. Slice 5
 owns visible verification of the interactive picker and source indication.
 Slice 4 owns concrete-family and variant qualification through source
@@ -45987,8 +45986,10 @@ parity, branch counts, valid ordinary splines, and absence of native-cache
 publication. This adds one translated erosion layout; it does not establish
 translation invariance across signs or general mixed-bulge/self-crossing
 support. Other arc signs, distances, transforms, and overlap arrangements,
-editable cache/action integration, Trim, file persistence, visible GUI,
-cross-platform runtime, and independent CAD acceptance remain open.
+editable cache/action integration and Trim remain open. Section 1374 adds
+ordinary-geometry file persistence for the two successful layouts; other
+layouts, visible GUI, cross-platform runtime, and independent CAD acceptance
+remain open.
 
 Validation on macOS arm64 CMake Release: `[curve-offset][region]` passes
 27,458 assertions / 19 cases; the focused mixed-bulge helper-process case
@@ -45999,8 +46000,33 @@ client targets build; and `git diff --check` passes. The recursive qmake6
 application/plugin/helper build exits 0. It reports sign-comparison, DWG
 metadata initializer, and macOS deployment-target/dylib warnings; no build
 failures. Implementation commit `3581785a6` is recorded here; this roadmap
-update is its follow-up commit. Visible-GUI, cross-platform runtime,
-cache/action, persistence, and independent CAD gates remain open.
+update is its follow-up commit. Section 1374 separately closes only the
+ordinary-geometry save/reopen gate for the two tested layouts. Visible-GUI,
+cross-platform runtime, cache/action, broader persistence, and independent CAD
+gates remain open.
+
+## 1374. Persist Mixed-bulge Region Worker Branches as Ordinary Splines (2026-11-14)
+
+Test commit `6c076d4a5` takes the two successful mixed-bulge RegionBoundary
+layouts already qualified in section 1373 through the real helper process:
+identity-frame growth producing one branch and translated/rotated inward
+offset producing two branches. Both results remain ordinary splines, with no
+native editable-cache publication. The test writes each result as plain drawing
+geometry and checks exact spline geometry fingerprints after first and second
+save/reopen in R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes where DWG support
+is enabled.
+
+On macOS arm64 CMake Release, the focused case passes 562 assertions / 1 case;
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests
+-j4` succeeds; and `git diff --check` passes. This closes persistence only for
+these two ordinary-output layouts and listed versions. It does not establish
+editable-cache promotion, action integration, Trim, other mixed-bulge signs or
+transforms, broader DXF/DWG interoperability, visible GUI, cross-platform
+runtime, or independent CAD acceptance. This roadmap update also records the
+latest source-widget reaffirmation at the top of the document: one in-place
+type filter for all nine `SupportedKinds`, with parabola distinct; existing
+headless coverage is complete, while physical visible-GUI acceptance remains
+open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
