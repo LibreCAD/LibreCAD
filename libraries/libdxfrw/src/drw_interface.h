@@ -32,6 +32,9 @@ class DRW_Attdef;
 /// Encoding may mutate caller DTOs: consumers must use private emission copies.
 /// Rejection does not roll back interface side effects or a live document.
 using DRW_StagedFileVerifier = bool (*)(const std::filesystem::path&, void*);
+/// Caller-owned destination policy check immediately before staged publication.
+/// This narrows, but cannot make atomic, the check-to-rename window.
+using DRW_OutputPublishGuard = bool (*)(void*);
 
 /**
  * Abstract class (interface) for communicate dxfReader with the application.

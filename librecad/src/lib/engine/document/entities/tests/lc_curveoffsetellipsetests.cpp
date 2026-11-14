@@ -29,7 +29,10 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
+#include <iomanip>
+#include <limits>
 #include <memory>
 #include <tuple>
 #include <vector>
@@ -68,34 +71,75 @@ struct Curve {
         return (minor * std::cos(eta) - major * std::sin(eta)) * (sweep >= 0.0 ? 1.0 : -1.0);
     }
 
-    /** The exact least distance from @p p, and the eta it is at: dense samples, then a ternary search. */
+    /** The least distance from @p p, refining narrow basins near
+     * eccentric-ellipse vertices. */
     double distance(const RS_Vector& p, double* foot = nullptr) const {
         constexpr int samples = 4000;
-        int best = 0;
+        const double end = from + sweep;
+        const double low = std::min(from, end);
+        const double high = std::max(from, end);
+        double bestAngle = from;
         double least = RS_MAXDOUBLE;
+        const auto include = [&](const double angle) {
+            if (angle < low || angle > high) {
+                return;
+            }
+            const double candidate = p.distanceTo(at(angle));
+            if (candidate < least) {
+                least = candidate;
+                bestAngle = angle;
+            }
+        };
         for (int i = 0; i <= samples; ++i) {
-            const double d = p.distanceTo(at(from + sweep * i / samples));
-            if (d < least) {
-                least = d;
-                best = i;
-            }
+            include(from + sweep * static_cast<double>(i) / samples);
         }
-        double lo = from + sweep * std::max(best - 1, 0) / samples;
-        double hi = from + sweep * std::min(best + 1, samples) / samples;
-        for (int k = 0; k < 200; ++k) {
-            const double u = lo + (hi - lo) / 3.0;
-            const double v = hi - (hi - lo) / 3.0;
-            if (p.distanceTo(at(u)) < p.distanceTo(at(v))) {
-                hi = v;
+        const auto refine = [&](const double center, const double radius) {
+            double lo = std::max(low, center - radius);
+            double hi = std::min(high, center + radius);
+            for (int i = 0; i < 80 && hi - lo > 1e-13; ++i) {
+                const double u = lo + (hi - lo) / 3.0;
+                const double v = hi - (hi - lo) / 3.0;
+                if (p.distanceTo(at(u)) < p.distanceTo(at(v))) {
+                    hi = v;
+                }
+                else {
+                    lo = u;
+                }
             }
-            else {
-                lo = u;
+            include(0.5 * (lo + hi));
+        };
+        refine(bestAngle, std::abs(sweep) / samples);
+
+        RS_Vector local = p - ellipse.getCenter();
+        local.rotate(-ellipse.getAngle());
+        const double a = ellipse.getMajorRadius();
+        const double b = a * ellipse.getRatio();
+        const double projectedAngle = std::atan2(local.y / b, local.x / a);
+        for (int axisIndex = -8; axisIndex <= 8; ++axisIndex) {
+            const double axis = axisIndex * M_PI_2;
+            if (std::abs(std::remainder(projectedAngle - axis, 2.0 * M_PI)) > 0.02) {
+                continue;
+            }
+            const double step = std::max(ellipse.getRatio() / 32.0, 1e-10);
+            const double first = std::max(low, axis - 0.01);
+            const double last = std::min(high, axis + 0.01);
+            if (!(first < last)) {
+                continue;
+            }
+            const int localSamples = std::max(1, static_cast<int>(std::ceil((last - first) / step)));
+            const double previousLeast = least;
+            for (int i = 0; i <= localSamples; ++i) {
+                include(first + (last - first) * static_cast<double>(i) / localSamples);
+            }
+            if (least < previousLeast || (bestAngle >= first && bestAngle <= last)) {
+                const double bracket = (last - first) / localSamples;
+                refine(bestAngle, bracket);
             }
         }
         if (foot != nullptr) {
-            *foot = 0.5 * (lo + hi);
+            *foot = bestAngle;
         }
-        return p.distanceTo(at(0.5 * (lo + hi)));
+        return least;
     }
 };
 
@@ -168,17 +212,19 @@ struct Offset {
     LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidRequest};
     std::vector<std::unique_ptr<RS_Entity>> entities;
     std::vector<Chain> chains;
+    LC_CurveOffsetGeometryResult::IntersectionDiagnostics intersectionDiagnostics;
     /** Twice the geometric tolerance the offset was made to: what every check allows. */
     double slack{0.0};
 };
 
-Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double d) {
+Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double d, const double requestedTolerance = 0.0) {
     Offset result;
-    const LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(e, d);
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(e, d, requestedTolerance);
     result.slack = 2.0 * options.tolerance.requestedGeometry;
-    LC_CurveOffsetMaterializationResult made = LC_CurveOffset::createEntities(
-        e, LC_CurveOffset::makeSideRequest(side, d), options, LC_CurveOffset::makeDirectSourceBudget());
+    LC_CurveOffsetMaterializationResult made =
+        LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side, d), options, LC_CurveOffset::makeDirectSourceBudget());
     result.status = made.status;
+    result.intersectionDiagnostics = made.intersectionDiagnostics;
     result.entities = std::move(made.entities);
     for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
         const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
@@ -190,9 +236,19 @@ Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double
     return result;
 }
 
+RS_Vector inwardOffset(const RS_Ellipse& e, double eta, double d);
+
 /** P1, P2, P5 and P6 of every chain, and P9: how many, and which close. */
 void checkOffset(const Offset& offset, const Curve& source, const double d, const std::vector<bool>& closed,
-                 const std::vector<RS_Vector>& corners = {}) {
+                 const std::vector<RS_Vector>& knownFeatures = {}) {
+    INFO("offset status=" << static_cast<int>(offset.status));
+    INFO("intersection stage=" << static_cast<int>(offset.intersectionDiagnostics.stage)
+                                << " status=" << static_cast<int>(offset.intersectionDiagnostics.status)
+                                << " pairs=" << offset.intersectionDiagnostics.work.totalBoxPairs);
+    CAPTURE(offset.intersectionDiagnostics.hasFailureDomain, offset.intersectionDiagnostics.failureDepth,
+            offset.intersectionDiagnostics.failureDomain.segmentA, offset.intersectionDiagnostics.failureDomain.parameterA.lo(),
+            offset.intersectionDiagnostics.failureDomain.parameterA.hi(), offset.intersectionDiagnostics.failureDomain.segmentB,
+            offset.intersectionDiagnostics.failureDomain.parameterB.lo(), offset.intersectionDiagnostics.failureDomain.parameterB.hi());
     REQUIRE(offset.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(offset.chains.size() == closed.size());
     for (std::size_t c = 0; c < offset.chains.size(); ++c) {
@@ -213,14 +269,12 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
             INFO("at (" << jet.point.x << ", " << jet.point.y << ")");
             CHECK(distance >= d - offset.slack); // P1
             CHECK(distance <= d + offset.slack); // P2
-            const bool nearCorner = std::any_of(corners.begin(), corners.end(), [&](const RS_Vector& corner) {
-                return corner.distanceTo(jet.point) < 1e-2 * d;
-            });
+            const bool nearFeature = std::any_of(knownFeatures.begin(), knownFeatures.end(),
+                                                 [&](const RS_Vector& feature) { return feature.distanceTo(jet.point) < 1e-2 * d; });
             // a stretch within the tolerance of an end has no direction to
             // check: a tail past a cusp there is absorbed when it is that short
-            const bool atEnd = jet.point.distanceTo(chain.start()) <= offset.slack ||
-                               jet.point.distanceTo(chain.end()) <= offset.slack;
-            if (!nearCorner && !atEnd) {
+            const bool atEnd = jet.point.distanceTo(chain.start()) <= offset.slack || jet.point.distanceTo(chain.end()) <= offset.slack;
+            if (!nearFeature && !atEnd) {
                 CHECK(RS_Vector::dotP(jet.first, source.tangent(foot)) > 0.0); // P5
             }
             LC_OffsetSegment segment;
@@ -236,21 +290,41 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
         // P6: no two sample segments but neighbours meet
         const std::size_t n = polygon.size();
         bool crossing = false;
+        std::size_t crossingI = 0;
+        std::size_t crossingJ = 0;
         for (std::size_t i = 0; i < n && !crossing; ++i) {
             for (std::size_t j = i + 2; j < n && !crossing; ++j) {
                 if (closed[c] && i == 0 && j == n - 1) {
                     continue; // neighbours across the seam
                 }
-                crossing = segmentsIntersect(polygon[i], polygon[j], 0.0);
+                if (segmentsIntersect(polygon[i], polygon[j], 0.0)) {
+                    const auto confinedToKnownFeature = [&](const RS_Vector& feature) {
+                        return polygon[i].a.distanceTo(feature) <= offset.slack && polygon[i].b.distanceTo(feature) <= offset.slack &&
+                            polygon[j].a.distanceTo(feature) <= offset.slack && polygon[j].b.distanceTo(feature) <= offset.slack;
+                    };
+                    if (!std::any_of(knownFeatures.begin(), knownFeatures.end(), confinedToKnownFeature)) {
+                        crossing = true;
+                        crossingI = i;
+                        crossingJ = j;
+                    }
+                }
             }
         }
-        CHECK_FALSE(crossing);
+        INFO("sampled crossing segments " << crossingI << " and " << crossingJ);
+        if (crossing) {
+            const auto& first = polygon[crossingI];
+            const auto& second = polygon[crossingJ];
+            CAPTURE(first.a.x, first.a.y, first.b.x, first.b.y, second.a.x, second.a.y, second.b.x, second.b.y);
+            FAIL_CHECK("crossing endpoints: (" << std::setprecision(17) << first.a.x << ", " << first.a.y << ") -> (" << first.b.x
+                                               << ", " << first.b.y << "); (" << second.a.x << ", " << second.a.y << ") -> ("
+                                               << second.b.x << ", " << second.b.y << ")");
+        }
     }
-    for (const RS_Vector& corner : corners) {
-        INFO("corner (" << corner.x << ", " << corner.y << ")");
+    for (const RS_Vector& feature : knownFeatures) {
+        INFO("known offset feature (" << feature.x << ", " << feature.y << ")");
         double nearest = RS_MAXDOUBLE;
         for (const Chain& chain : offset.chains) {
-            nearest = std::min(nearest, chain.distanceFrom(corner));
+            nearest = std::min(nearest, chain.distanceFrom(feature));
         }
         CHECK(nearest <= offset.slack);
     }
@@ -258,10 +332,11 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
 
 /** The exact offset of the ellipse's point at @p eta, @p d towards its inside. */
 RS_Vector inwardOffset(const RS_Ellipse& e, const double eta, const double d) {
-    const double a = e.getMajorRadius();
-    const double b = e.getMinorRadius();
-    const RS_Vector normal = RS_Vector{b * std::cos(eta), a * std::sin(eta)}.normalized(); // axis-aligned only
-    return e.getEllipsePoint(eta) - normal * d;
+    const RS_Vector major = e.getMajorP();
+    const RS_Vector minor{-major.y * e.getRatio(), major.x * e.getRatio()};
+    const RS_Vector tangent = (minor * std::cos(eta) - major * std::sin(eta)).normalized();
+    const RS_Vector inward{-tangent.y, tangent.x};
+    return e.getEllipsePoint(eta) + inward * d;
 }
 
 const LC_CurveOffsetSide kLeft = LC_CurveOffsetSide::Left;   // inside an ellipse that runs anticlockwise
@@ -338,6 +413,23 @@ TEST_CASE("Ellipse offsets are trimmed past b^2/a and vanish from b", "[curve-of
         const Offset none = offsetOf(tall, kLeft, 1.0);
         CHECK(none.status == LC_CurveOffsetStatus::Ok);
         CHECK(none.chains.empty());
+
+        const double rotation = M_PI / 7.0;
+        const RS_Ellipse translated{nullptr, RS_EllipseData{{1.0e4, -2.0e4},
+            {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 0.0, 0.0, false}};
+        for (const auto side : {kLeft, kRight})
+            checkOffset(offsetOf(translated, side, 0.25), curveOf(translated), 0.25, {true});
+        checkOffset(offsetOf(translated, kLeft, 2.4), curveOf(translated), 2.4, {true});
+
+        const RS_Ellipse translatedArc{nullptr, RS_EllipseData{{1.0e4, -2.0e4},
+            {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 0.2, 1.4, false}};
+        for (const auto side : {kLeft, kRight})
+            checkOffset(offsetOf(translatedArc, side, 0.1), curveOf(translatedArc), 0.1, {false});
+
+        const RS_Ellipse translatedReversedArc{nullptr, RS_EllipseData{{1.0e4, -2.0e4},
+            {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 1.4, 0.2, true}};
+        for (const auto side : {kLeft, kRight})
+            checkOffset(offsetOf(translatedReversedArc, side, 0.1), curveOf(translatedReversedArc), 0.1, {false});
     }
     SECTION("a 100:1 ellipse just inside b is not silently reported empty") {
         // a = 100, b = 1: shrinksAway() judged the whole ellipse shrunk away
@@ -456,6 +548,20 @@ TEST_CASE("Elliptic arcs are judged on their own sweep", "[curve-offset][ellipse
         const Offset none = offsetOf(small, kLeft, 1.0);
         CHECK(none.status == LC_CurveOffsetStatus::Ok);
         CHECK(none.chains.empty());
+    }
+    SECTION("thin partial arcs at several eccentricities in either traversal direction") {
+        const double rotation = 0.37;
+        const RS_Vector major{3.0 * std::cos(rotation), 3.0 * std::sin(rotation)};
+        for (const double ratio : {0.1, 0.2, 0.4}) {
+            const double distance = 0.25 * 3.0 * ratio * ratio;
+            for (const bool reversed : {false, true}) {
+                const RS_Ellipse arc{nullptr, RS_EllipseData{{4.0, -3.0}, major, ratio,
+                                                            -0.45, 0.75, reversed}};
+                const LC_CurveOffsetSide side = reversed ? kRight : kLeft;
+                CAPTURE(ratio, distance, reversed, side);
+                checkOffset(offsetOf(arc, side, distance), curveOf(arc), distance, {false});
+            }
+        }
     }
     SECTION("0.4 to 2.7 rad: untrimmed at 1.5, trimmed at its start only at 2.2") {
         const RS_Ellipse arc = ellipse(5.0, 0.4, 0.4, 2.7);
@@ -660,6 +766,1075 @@ TEST_CASE("Thin and far ellipse offsets stay at the distance everywhere", "[curv
     checkOffset(offsetOf(needle, kRight, 10.0), curveOf(needle), 10.0, {true});
     const RS_Ellipse thin = ellipse(100.0, 0.03);
     checkOffset(offsetOf(thin, kRight, 0.1), curveOf(thin), 0.1, {true});
+    const RS_Ellipse narrow = ellipse(10.0, 1e-4);
+    checkOffset(offsetOf(narrow, kRight, 0.01), curveOf(narrow), 0.01, {true});
+    const Offset erasedNarrow = offsetOf(narrow, kLeft, 0.01);
+    CHECK(erasedNarrow.status == LC_CurveOffsetStatus::Ok);
+    CHECK(erasedNarrow.entities.empty());
+    const RS_Ellipse farNarrow = ellipse(100.0, 1e-4);
+    checkOffset(offsetOf(farNarrow, kRight, 0.1), curveOf(farNarrow), 0.1, {true});
+    const Offset erasedFarNarrow = offsetOf(farNarrow, kLeft, 0.1);
+    CHECK(erasedFarNarrow.status == LC_CurveOffsetStatus::Ok);
+    CHECK(erasedFarNarrow.entities.empty());
+    const RS_Ellipse translatedNarrow{nullptr, RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}};
+    checkOffset(offsetOf(translatedNarrow, kRight, 0.1), curveOf(translatedNarrow), 0.1, {true});
+    const RS_Ellipse narrowArc = ellipse(100.0, 1e-4, 0.25, 1.5);
+    checkOffset(offsetOf(narrowArc, kRight, 0.1), curveOf(narrowArc), 0.1, {false});
+    const RS_Ellipse reversedNarrowArc = ellipse(100.0, 1e-4, 1.5, 0.25, true);
+    checkOffset(offsetOf(reversedNarrowArc, kLeft, 0.1), curveOf(reversedNarrowArc), 0.1, {false});
+    const RS_Ellipse translatedNarrowArc{
+        nullptr, RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false}};
+    checkOffset(offsetOf(translatedNarrowArc, kRight, 0.1), curveOf(translatedNarrowArc), 0.1, {false});
+    const RS_Vector translatedArcProbe =
+        translatedNarrowArc.getEllipsePoint(0.875) + RS_Vector{1e-4 * std::cos(0.875), std::sin(0.875)}.normalized() * 0.1;
+    const auto translatedArcSide =
+        LC_CurveOffset::resolveSide(translatedNarrowArc, translatedArcProbe, LC_CurveOffset::makeOffsetOptions(translatedNarrowArc, 0.1));
+    INFO("translated arc side status=" << static_cast<int>(translatedArcSide.status));
+    CHECK(translatedArcSide.status == LC_CurveOffsetStatus::Ok);
+    const RS_Ellipse translatedReversedNarrowArc{nullptr, RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true}};
+    checkOffset(offsetOf(translatedReversedNarrowArc, kLeft, 0.1), curveOf(translatedReversedNarrowArc), 0.1, {false});
+    const double rotation = M_PI / 6.0;
+    const RS_Vector rotatedMajor{100.0 * std::cos(rotation), 100.0 * std::sin(rotation)};
+    const RS_Ellipse rotatedNarrowArc{nullptr, RS_EllipseData{{0.0, 0.0}, rotatedMajor, 1e-4, 0.25, 1.5, false}};
+    checkOffset(offsetOf(rotatedNarrowArc, kRight, 0.1), curveOf(rotatedNarrowArc), 0.1, {false});
+    const RS_Ellipse translatedRotatedReversedNarrowArc{
+        nullptr, RS_EllipseData{{1e8, -1e8}, {50.0, 100.0 * std::sin(rotation)}, 1e-4, 1.5, 0.25, true}};
+    checkOffset(offsetOf(translatedRotatedReversedNarrowArc, kLeft, 0.1), curveOf(translatedRotatedReversedNarrowArc), 0.1, {false});
+    const double seamGap = 0.1;
+    const RS_Ellipse shortSeamNarrowArc = ellipse(100.0, 1e-4, 2.0 * M_PI - seamGap, seamGap);
+    checkOffset(offsetOf(shortSeamNarrowArc, kRight, 0.1), curveOf(shortSeamNarrowArc), 0.1, {false});
+    const RS_Ellipse nearFullNarrowArc = ellipse(100.0, 1e-4, seamGap, 2.0 * M_PI - seamGap);
+    checkOffset(offsetOf(nearFullNarrowArc, kRight, 0.1), curveOf(nearFullNarrowArc), 0.1, {false});
+    const RS_Ellipse reversedNearFullNarrowArc = ellipse(100.0, 1e-4, 2.0 * M_PI - seamGap, seamGap, true);
+    checkOffset(offsetOf(reversedNearFullNarrowArc, kLeft, 0.1), curveOf(reversedNearFullNarrowArc), 0.1, {false});
+}
+
+TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-offset][ellipse][boundary]") {
+    const RS_Ellipse source = ellipse(10.0, 1e-4);
+    const auto refinedOptions = LC_CurveOffset::makeDirectOptions(source, 0.01);
+    CHECK(refinedOptions.maxSubdivisionDepth == LC_CurveOffset::kDefaultMaxSubdivisionDepth + 12);
+    auto baseOptions = refinedOptions;
+    baseOptions.maxSubdivisionDepth = LC_CurveOffset::kDefaultMaxSubdivisionDepth;
+    const auto baseline = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kRight, 0.01), baseOptions,
+                                                              LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(baseline.status == LC_CurveOffsetStatus::ToleranceNotMet);
+    CHECK(baseline.branches.empty());
+
+    const auto geometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kRight, 0.01), refinedOptions,
+                                                              LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(geometry.branches.size() == 1);
+    CHECK(geometry.exactSamples > baseline.exactSamples);
+    CHECK(geometry.exactSamples < refinedOptions.maxSamples);
+    const auto materialized =
+        LC_CurveOffset::materializeBranches(source, geometry, refinedOptions, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    CHECK(materialized.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
+    CHECK(materialized.maxObservedError <= refinedOptions.tolerance.requestedGeometry);
+    REQUIRE(materialized.entities.size() == 1);
+}
+
+TEST_CASE("Extreme thin ellipse inward offsets bracket the major-vertex cusp", "[curve-offset][ellipse][cusp]") {
+    const RS_Vector majorP{100.0, 0.0};
+    const RS_Ellipse sources[]{ellipse(100.0, 1e-4),
+                               RS_Ellipse{nullptr, RS_EllipseData{RS_Vector{100.0, -100.0}, majorP, 1e-4, 0.0, 0.0, false}}};
+    constexpr double cuspRadius = 1e-6;
+    for (const RS_Ellipse& source : sources) {
+        for (const double distance : {0.5 * cuspRadius, 0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius, 2.0 * cuspRadius}) {
+            CAPTURE(source.getCenter().x, source.getCenter().y, source.getAngle(), distance);
+            const Offset inward = offsetOf(source, kLeft, distance, 0.01 * distance);
+            CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+            checkOffset(inward, curveOf(source), distance, {true});
+        }
+    }
+}
+
+TEST_CASE("Rotated extreme thin ellipse cusps trim within the bounded intersection budget", "[curve-offset][ellipse][cusp]") {
+    constexpr double distance = 0.5e-6;
+    for (const double degrees : {0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0}) {
+        const double angle = degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
+        CAPTURE(degrees);
+        CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
+        const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {true});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < options.maxIntersectionPairs);
+        if (degrees > 0.0 && degrees < 90.0) {
+            CHECK(inward.intersectionDiagnostics.work.orientedProjectionExclusions > 0);
+        }
+        CHECK(inward.intersectionDiagnostics.work.totalBoxPairs ==
+              inward.intersectionDiagnostics.work.candidateBoxPairs + inward.intersectionDiagnostics.work.refinementBoxPairs +
+                  inward.intersectionDiagnostics.work.certificateBoxPairs);
+    }
+}
+
+TEST_CASE("Translated rotated thin ellipse cusps preserve accurate trimming", "[curve-offset][ellipse][cusp]") {
+    constexpr double distance = 0.5e-6;
+    for (const RS_Vector center : {RS_Vector{100.0, -100.0}, RS_Vector{1e4, -1e4}}) {
+        for (const double degrees : {30.0, 45.0}) {
+            const double angle = degrees * M_PI / 180.0;
+            const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+            const RS_Ellipse source{nullptr, RS_EllipseData{center, majorP, 1e-4, 0.0, 0.0, false}};
+            CAPTURE(center.x, center.y, degrees);
+            CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
+            const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+            const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+            CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+            checkOffset(inward, curveOf(source), distance, {true});
+            CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < options.maxIntersectionPairs);
+        }
+    }
+}
+
+TEST_CASE("Rotated thin ellipse cusp threshold retains topology", "[curve-offset][ellipse][cusp]") {
+    for (const double degrees : {30.0, 45.0}) {
+        const double angle = degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
+        for (const double distance : {0.9e-6, 1.0e-6, 1.1e-6, 2.0e-6}) {
+            CAPTURE(degrees, distance);
+            const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+            CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+            checkOffset(inward, curveOf(source), distance, {true});
+        }
+    }
+}
+
+TEST_CASE("Extreme thin elliptic arcs retain cusp-local topology", "[curve-offset][ellipse][cusp]") {
+    struct Profile {
+        double from;
+        double to;
+        bool reversed;
+        double distance;
+    };
+    const std::array<Profile, 9> profiles{{
+        {-0.2, 0.2, false, 0.5e-6},
+        {-0.2, 0.2, false, 0.9e-6},
+        {-0.2, 0.2, false, 1.0e-6},
+        {-0.2, 0.2, false, 1.1e-6},
+        {0.0, 0.2, false, 1.1e-6},
+        {-0.2, 0.0, false, 1.1e-6},
+        {0.2, -0.2, true, 1.1e-6},
+        {0.2, -0.2, true, 0.9e-6},
+        {0.2, -0.2, true, 1.0e-6},
+    }};
+    for (const Profile& profile : profiles) {
+        const RS_Ellipse source = ellipse(100.0, 1e-4, profile.from, profile.to, profile.reversed);
+        CAPTURE(profile.from, profile.to, profile.reversed, profile.distance);
+        const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, profile.distance, 0.1 * profile.distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        INFO("chains=" << inward.chains.size());
+        checkOffset(inward, curveOf(source), profile.distance, {false});
+    }
+}
+
+TEST_CASE("Translated and rotated thin elliptic-arc cusps remain bounded", "[curve-offset][ellipse][cusp]") {
+    struct Profile {
+        RS_Vector center;
+        double degrees;
+        double from;
+        double to;
+        bool reversed;
+    };
+    const std::array<Profile, 3> profiles{{
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, 30.0, 0.2, -0.2, true},
+    }};
+    constexpr double distance = 0.5e-6;
+    for (const Profile& profile : profiles) {
+        const double angle = profile.degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{profile.center, majorP, 1e-4, profile.from, profile.to, profile.reversed}};
+        CAPTURE(profile.center.x, profile.center.y, profile.degrees, profile.from, profile.to, profile.reversed);
+        const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, distance, 0.1 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < LC_CurveOffset::makeOffsetOptions(source, distance).maxIntersectionPairs);
+    }
+
+    const RS_Ellipse unrepresentable{nullptr, RS_EllipseData{RS_Vector{1e8, -1e8}, RS_Vector{100.0, 0.0}, 1e-4, -0.2, 0.2, false}};
+    CHECK(std::isnan(LC_CurveOffset::toleranceFor(unrepresentable, distance, LC_CurveOffset::relativeOffsetTolerance(unrepresentable))));
+    const auto refused = LC_CurveOffset::buildDirectBranches(unrepresentable, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                             LC_CurveOffset::makeOffsetOptions(unrepresentable, distance),
+                                                             LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(refused.status == LC_CurveOffsetStatus::InvalidRequest);
+    CHECK(refused.branches.empty());
+}
+
+TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    struct Profile {
+        RS_Vector center;
+        double degrees;
+        double from;
+        double to;
+        bool reversed;
+        double distance;
+    };
+    const std::array<Profile, 12> profiles{{
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 0.9e-6},
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.0e-6},
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.1e-6},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 0.9e-6},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.0e-6},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.1e-6},
+        {{100.0, -100.0}, 30.0, 0.2, -0.2, true, 1.0e-6},
+        {{1e4, -1e4}, 45.0, 0.2, -0.2, true, 0.9e-6},
+        {{1e4, -1e4}, 45.0, 0.2, -0.2, true, 1.0e-6},
+        {{1e4, -1e4}, 45.0, 0.2, -0.2, true, 1.1e-6},
+        {{100.0, -100.0}, 30.0, 0.2, -0.2, true, 0.9e-6},
+        {{100.0, -100.0}, 30.0, 0.2, -0.2, true, 1.1e-6},
+    }};
+    for (const Profile& profile : profiles) {
+        const double angle = profile.degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{profile.center, majorP, 1e-4, profile.from, profile.to, profile.reversed}};
+        CAPTURE(profile.center.x, profile.center.y, profile.degrees, profile.from, profile.to, profile.reversed, profile.distance);
+        const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, profile.distance, 0.1 * profile.distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        const std::vector<RS_Vector> criticalPoint{inwardOffset(source, 0.0, profile.distance)};
+        checkOffset(inward, curveOf(source), profile.distance, {false}, criticalPoint);
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1000-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        const std::vector<RS_Vector> criticalPoint{inwardOffset(source, 0.0, distance)};
+        checkOffset(inward, curveOf(source), distance, {false}, criticalPoint);
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 100-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-2;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        const std::vector<RS_Vector> criticalPoint{inwardOffset(source, 0.0, distance)};
+        checkOffset(inward, curveOf(source), distance, {false}, criticalPoint);
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        const RS_Ellipse normalizedSource{nullptr, RS_EllipseData{{0.0, 0.0}, majorP, ratio, -0.2, 0.2, false}};
+        const double workerTolerance = LC_CurveOffset::toleranceFor(normalizedSource, distance, 1e-4);
+        const auto workerOptions = LC_CurveOffset::makeDirectOptions(normalizedSource, distance, workerTolerance);
+        const auto workerGeometry = LC_CurveOffset::buildDirectBranches(normalizedSource, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        workerOptions, LC_CurveOffset::makeDirectSourceBudget());
+        INFO("worker-matched geometry status=" << static_cast<int>(workerGeometry.status) << ", samples=" << workerGeometry.exactSamples
+                                               << ", intersection stage=" << static_cast<int>(workerGeometry.intersectionDiagnostics.stage)
+                                               << ", pairs=" << workerGeometry.intersectionDiagnostics.work.totalBoxPairs);
+        CHECK(workerGeometry.status == LC_CurveOffsetStatus::Ok);
+        const auto workerMaterialized =
+            LC_CurveOffset::materializeBranches(normalizedSource, workerGeometry, workerOptions, LC_CurveOffset::makeDirectSourceBudget());
+        INFO("worker-matched materialization status=" << static_cast<int>(workerMaterialized.status)
+                                                      << ", entities=" << workerMaterialized.entities.size()
+                                                      << ", samples=" << workerMaterialized.sampleUnits);
+        CHECK(workerMaterialized.status == LC_CurveOffsetStatus::Ok);
+    }
+}
+
+TEST_CASE("Reversed rotated 100-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-2;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, 0.2, -0.2, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 1e-4);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Translated reversed 1000-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 4.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e4, -1e4}, majorP, ratio, 0.2, -0.2, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CAPTURE(side, result.intersectionDiagnostics.stage, result.intersectionDiagnostics.status,
+                    result.intersectionDiagnostics.work.totalBoxPairs);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Reversed translated 1000-to-1 elliptic arcs ending at the cusp retain geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 4.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e4, -1e4}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            if (!result.entities.empty())
+                CHECK(result.intersectionDiagnostics.stage ==
+                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        }
+    }
+}
+
+TEST_CASE("Large-origin reversed 1000-to-1 elliptic arc endpoint retains cusp-threshold geometry",
+          "[curve-offset][ellipse][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e6, -1e6}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Large-origin reversed 100-to-1 elliptic arc endpoint retains cusp-threshold geometry",
+          "[curve-offset][ellipse][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-2;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e6, -1e6}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Very-large-origin reversed 100-to-1 elliptic arc endpoint retains cusp-threshold geometry",
+          "[curve-offset][ellipse][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-2;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e7, -1e7}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Very-large-origin reversed 1000-to-1 elliptic arc endpoint retains cusp-threshold geometry",
+          "[curve-offset][ellipse][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e7, -1e7}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Large-origin reversed 10000-to-1 elliptic arc endpoint retains cusp-threshold geometry",
+          "[curve-offset][ellipse][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-4;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e6, -1e6}, majorP, ratio, 0.2, 0.0, true}};
+    {
+        const double distance = 1.1 * cuspRadius;
+        const double minorRadius = majorRadius * ratio;
+        const double sinSquared = (distance * distance * majorRadius * majorRadius /
+                                   (minorRadius * minorRadius) - minorRadius * minorRadius) /
+                                  (majorRadius * majorRadius - minorRadius * minorRadius);
+        REQUIRE(sinSquared > 0.0);
+        REQUIRE(sinSquared < 1.0);
+        const double returnAngle = std::asin(std::sqrt(sinSquared));
+        const auto inwardPoint = [&](const double parameter) {
+            const double cosine = std::cos(parameter);
+            const double sine = std::sin(parameter);
+            const double speed = std::hypot(majorRadius * sine, minorRadius * cosine);
+            return RS_Vector{majorRadius * cosine - distance * minorRadius * cosine / speed,
+                             minorRadius * sine - distance * majorRadius * sine / speed};
+        };
+        const RS_Vector cuspPoint = inwardPoint(0.0);
+        const RS_Vector returnedPoint = inwardPoint(returnAngle);
+        const double numericFloor = 64.0 * std::numeric_limits<double>::epsilon() * 1e6;
+        double maximumExcursion = 0.0;
+        constexpr int sampleCount = 256;
+        for (int i = 0; i <= sampleCount; ++i) {
+            const RS_Vector point = inwardPoint(returnAngle * i / sampleCount);
+            maximumExcursion = std::max(maximumExcursion, (point - cuspPoint).magnitude());
+        }
+        CAPTURE(returnAngle, numericFloor, maximumExcursion, (returnedPoint - cuspPoint).magnitude());
+        CHECK((returnedPoint - cuspPoint).magnitude() <= 2.0 * numericFloor);
+        CHECK(maximumExcursion <= 2.0 * numericFloor);
+        CHECK(maximumExcursion < 0.1 * distance);
+    }
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            if (distance >= cuspRadius && side == kRight) {
+                CAPTURE(result.intersectionDiagnostics.stage, result.intersectionDiagnostics.status,
+                        result.intersectionDiagnostics.work.totalBoxPairs,
+                        result.intersectionDiagnostics.work.candidateBoxPairs,
+                        result.intersectionDiagnostics.work.refinementBoxPairs,
+                        result.intersectionDiagnostics.work.bvhLeafCandidates,
+                        result.intersectionDiagnostics.work.deepestPairRefinement,
+                        result.intersectionDiagnostics.hasFailureDomain,
+                        result.intersectionDiagnostics.failureDepth,
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB,
+                        result.intersectionDiagnostics.failureDomain.parameterA.lo(),
+                        result.intersectionDiagnostics.failureDomain.parameterA.hi(),
+                        result.intersectionDiagnostics.failureDomain.parameterB.lo(),
+                        result.intersectionDiagnostics.failureDomain.parameterB.hi());
+                CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+                CHECK(result.entities.empty());
+                CHECK(result.chains.empty());
+                if (distance == cuspRadius) {
+                    const auto& failure = result.intersectionDiagnostics.failureDomain;
+                    REQUIRE(result.intersectionDiagnostics.hasFailureDomain);
+                    CHECK(failure.segmentA == failure.segmentB);
+                    const auto exactInwardPoint = [&](const double sourceParameter) {
+                        const double eta = 0.2 - sourceParameter;
+                        const double cosine = std::cos(eta);
+                        const double sine = std::sin(eta);
+                        const double speed = std::hypot(majorRadius * sine, majorRadius * ratio * cosine);
+                        return RS_Vector{majorRadius * cosine - distance * majorRadius * ratio * cosine / speed,
+                                         majorRadius * ratio * sine - distance * majorRadius * sine / speed};
+                    };
+                    const double parameterA = 0.5 * failure.parameterA.lo() + 0.5 * failure.parameterA.hi();
+                    const double parameterB = 0.5 * failure.parameterB.lo() + 0.5 * failure.parameterB.hi();
+                    const double exactPairGap = (exactInwardPoint(parameterA) - exactInwardPoint(parameterB)).magnitude();
+                    const double numericFloor = 64.0 * std::numeric_limits<double>::epsilon() * 1e6;
+                    CAPTURE(parameterA, parameterB, exactPairGap, numericFloor);
+                    CHECK(parameterA != parameterB);
+                    CHECK(exactPairGap < numericFloor);
+                }
+                continue;
+            }
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
+TEST_CASE("Large-origin reversed 10000-to-1 ellipse direct branches materialize across the cusp threshold",
+          "[curve-offset][ellipse][direct][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-4;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e6, -1e6}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const double tolerance = LC_CurveOffset::toleranceFor(
+            source, distance, LC_CurveOffset::relativeOffsetTolerance(source));
+        REQUIRE(std::isfinite(tolerance));
+        CHECK(tolerance == 0.1 * distance);
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance, tolerance);
+        const auto geometry = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(kRight, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        INFO("direct geometry status=" << static_cast<int>(geometry.status));
+        REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(geometry.branches.empty());
+        const auto materialized = LC_CurveOffset::materializeBranches(
+            source, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+        INFO("materialized status=" << static_cast<int>(materialized.status));
+        REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+        CHECK(materialized.maxObservedError <= tolerance);
+        CHECK(materialized.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
+    }
+}
+
+TEST_CASE("Translated rotated wide-axis ellipse reports the cusp boundary and over-cusp topology",
+          "[curve-offset][ellipse][direct][cusp]") {
+    constexpr double majorRadius = 6.0;
+    constexpr double ratio = 2.0 / 3.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 7.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e4, -2e4}, majorP, ratio, 0.0, 0.0, false}};
+
+    for (const double distance : {cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+        INFO("status=" << static_cast<int>(inward.status) << ", entities=" << inward.entities.size()
+                        << ", chains=" << inward.chains.size() << ", topology status="
+                        << static_cast<int>(inward.intersectionDiagnostics.status));
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        CHECK_FALSE(inward.entities.empty());
+        CHECK_FALSE(inward.chains.empty());
+        checkOffset(inward, curveOf(source), distance, {true});
+    }
+
+    constexpr double outwardDistance = 2.4;
+    const Offset outward = offsetOf(source, kRight, outwardDistance, 0.1 * outwardDistance);
+    CHECK(outward.status == LC_CurveOffsetStatus::Ok);
+    CHECK(outward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    CHECK_FALSE(outward.entities.empty());
+    CHECK_FALSE(outward.chains.empty());
+    checkOffset(outward, curveOf(source), outwardDistance, {true});
+
+    const RS_Ellipse reversedArc{nullptr, RS_EllipseData{{1e4, -2e4}, majorP, ratio, 0.2, -0.2, true}};
+    const Offset reversedInward = offsetOf(reversedArc, kRight, 0.9 * cuspRadius, 0.1 * (0.9 * cuspRadius));
+    CHECK(reversedInward.status == LC_CurveOffsetStatus::Ok);
+    CHECK(reversedInward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    checkOffset(reversedInward, curveOf(reversedArc), 0.9 * cuspRadius, {true});
+    for (const double distance : {cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto options = LC_CurveOffset::makeDirectOptions(reversedArc, distance, 0.1 * distance);
+        const auto branches = LC_CurveOffset::buildDirectBranches(
+            reversedArc, LC_CurveOffset::makeSideRequest(kRight, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        const Offset result = offsetOf(reversedArc, kRight, distance, 0.1 * distance);
+        CHECK(branches.status == LC_CurveOffsetStatus::Ok);
+        CHECK(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE_FALSE(branches.branches.empty());
+            CHECK(result.entities.empty());
+            CHECK(result.chains.empty());
+            continue;
+        }
+        CHECK_FALSE(result.entities.empty());
+        checkOffset(result, curveOf(reversedArc), distance, {true});
+    }
+}
+
+TEST_CASE("Large-origin near-contact is not an exact sampled crossing", "[curve-offset][ellipse][precision]") {
+    // Samples and consecutive Bezier controls from the rejected exact-cusp bound experiment.
+    const LC_OffsetSegment first{false, {1000086.6025390244, -999950.00000031327},
+                                 {1000086.6025390258, -999950.00000031362}};
+    const LC_OffsetSegment second{false, {1000086.6025390271, -999950.00000031386},
+                                  {1000086.6025390285, -999950.00000031409}};
+    REQUIRE(first.b.x < second.a.x);
+    CHECK(segmentsIntersect(first, second, 2e-9)); // An explicit near-contact tolerance is conservative.
+
+    const std::array<double, 7> controls{{1000086.6025390003, 1000086.6025390106,
+                                          1000086.6025390205, 1000086.6025390304,
+                                          1000086.6025390341, 1000086.6025390377,
+                                          1000086.6025390414}};
+    for (std::size_t i = 1; i < controls.size(); ++i) {
+        CHECK(controls[i - 1] < controls[i]);
+    }
+}
+
+TEST_CASE("Rotated 10-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-1;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        const RS_Ellipse normalizedSource{nullptr, RS_EllipseData{{0.0, 0.0}, majorP, ratio, -0.2, 0.2, false}};
+        const double workerTolerance = LC_CurveOffset::toleranceFor(normalizedSource, distance, 1e-4);
+        const auto workerOptions = LC_CurveOffset::makeDirectOptions(normalizedSource, distance, workerTolerance);
+        const auto workerGeometry = LC_CurveOffset::buildDirectBranches(normalizedSource, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        workerOptions, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(workerGeometry.status == LC_CurveOffsetStatus::Ok);
+        const auto workerMaterialized =
+            LC_CurveOffset::materializeBranches(normalizedSource, workerGeometry, workerOptions, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(workerMaterialized.status == LC_CurveOffsetStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 3-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1.0 / 3.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 2-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 0.5;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 3);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.5-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 2.0 / 3.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::None);
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.25-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 0.8;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.1-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 10.0 / 11.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.05-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 20.0 / 21.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.025-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 40.0 / 41.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.0125-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 80.0 / 81.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.00625-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 160.0 / 161.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.003125-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 320.0 / 321.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.0015625-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 640.0 / 641.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Rotated 1.00078125-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1280.0 / 1281.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
+TEST_CASE("Circular-limit elliptic arcs handle collapse and reversal at the radius", "[curve-offset][ellipse][cusp][circle-limit]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        if (distance == cuspRadius) {
+            CHECK(inward.status == LC_CurveOffsetStatus::SingularOffset);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            continue;
+        }
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        checkOffset(inward, curveOf(source), distance, {false});
+    }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -671,12 +1846,8 @@ TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[c
     // the first resolution's own splice and wrongly reported AmbiguousTopology.
     // Each corner sits at the closed form sqrt(a^2-b^2)*sqrt(1-(d/b)^2).
     const std::vector<std::tuple<double, double, double>> cases{
-        {20.0, 2.0, 1.8}, {20.0, 2.0, 1.9}, {20.0, 2.0, 1.99},
-        {100.0, 1.0, 0.98},
-        {10.0, 3.0, 2.95}, {10.0, 3.0, 2.998},
-        {10.0, 2.5, 2.49}, {10.0, 2.5, 2.498},
-        {10.0, 4.0, 3.99}, {10.0, 4.0, 3.998},
-        {10.0, 2.0, 1.95},
+        {20.0, 2.0, 1.8},  {20.0, 2.0, 1.9},   {20.0, 2.0, 1.99}, {100.0, 1.0, 0.98}, {10.0, 3.0, 2.95}, {10.0, 3.0, 2.998},
+        {10.0, 2.5, 2.49}, {10.0, 2.5, 2.498}, {10.0, 4.0, 3.99}, {10.0, 4.0, 3.998}, {10.0, 2.0, 1.95},
     };
     for (const auto& [a, b, d] : cases) {
         INFO("a = " << a << ", b = " << b << ", d = " << d);

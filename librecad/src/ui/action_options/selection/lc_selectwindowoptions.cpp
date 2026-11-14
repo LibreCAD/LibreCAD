@@ -197,6 +197,7 @@ void LC_SelectWindowOptionsWidget::onTypeToggled([[maybe_unused]]bool value) con
     }
     if (ui->cbSpline->isChecked()){
         entityTypes << RS2::EntitySpline;
+        entityTypes << RS2::EntityOffsetCurve;
         entityTypes << RS2::EntitySplinePoints;
         entityTypes << RS2::EntityParabola;
     }
@@ -281,6 +282,7 @@ void LC_SelectWindowOptionsWidget::setEntityTypesToActinAndView(QList<RS2::Entit
                 ui->cbHatch->setChecked(true);
                 break;
             case RS2::EntitySpline:
+            case RS2::EntityOffsetCurve:
             case RS2::EntitySplinePoints:
             case RS2::EntityParabola:
                 ui->cbSpline->setChecked(true);

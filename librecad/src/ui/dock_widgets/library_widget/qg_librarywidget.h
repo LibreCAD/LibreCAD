@@ -27,8 +27,11 @@
 #define QG_LIBRARYWIDGET_H
 
 #include <QModelIndex>
+#include <QPersistentModelIndex>
+#include <QPointer>
 #include <memory>
 #include <QIcon>
+#include <vector>
 
 #include "lc_graphicviewawarewidget.h"
 
@@ -38,6 +41,8 @@ class QPushButton;
 class QStandardItemModel;
 class QStandardItem;
 class QTreeView;
+class LC_OffsetImportSession;
+class RS_Graphic;
 
 class QG_LibraryWidget : public LC_GraphicViewAwareWidget{
     Q_OBJECT
@@ -65,11 +70,20 @@ signals:
 protected:
     QLayout* getTopLevelLayout() const override;
 private:
+    friend class QG_LibraryWidgetTestAccess;
     QPushButton *m_bInsert=nullptr;
     QString getItemDir(const QStandardItem * item );
     QString getItemPath(const QStandardItem * item );
-    QIcon getIcon( const QString & dir, const QString & dxfFile, const QString & dxfPath );
     QString getPathToPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
+    QString getThumbnailOutputPath(const QString& dir, const QString& dxfPath) const;
+    void processNextThumbnail();
+    bool renderThumbnail(const QString& path, RS_Graphic& graphic);
+    struct ThumbnailRequest {
+        QString sourcePath;
+        QString outputPath;
+        QPersistentModelIndex item;
+        quint64 generation = 0;
+    };
     const QG_ActionHandler* m_actionHandler = nullptr;
     std::unique_ptr<QStandardItemModel> m_dirModel;
     std::unique_ptr<QStandardItemModel> m_iconModel;
@@ -77,6 +91,11 @@ private:
     QListView *m_ivPreview = nullptr;
     QPushButton *m_bRefresh = nullptr;
     QPushButton *m_bRebuild = nullptr;
+    std::vector<ThumbnailRequest> m_pendingThumbnails;
+    std::size_t m_nextThumbnail = 0;
+    quint64 m_thumbnailGeneration = 0;
+    QPointer<LC_OffsetImportSession> m_thumbnailSession;
+    QString m_thumbnailCacheRoot;
 };
 
 #endif

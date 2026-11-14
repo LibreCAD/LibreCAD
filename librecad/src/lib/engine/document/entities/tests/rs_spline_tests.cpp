@@ -26,6 +26,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <cmath>
+#include <limits>
 #include <memory>
 #include <vector>
 
@@ -61,9 +62,12 @@ TEST_CASE("RS_Spline Basic Functionality", "[RS_Spline]")
     {
         spline.setDegree(2);
         REQUIRE(spline.getDegree() == 2);
+        spline.setDegree(4);
+        REQUIRE(spline.getDegree() == 4);
 
         REQUIRE_THROWS_AS(spline.setDegree(0), std::invalid_argument);
-        REQUIRE_THROWS_AS(spline.setDegree(4), std::invalid_argument);
+        REQUIRE_THROWS_AS(spline.setDegree(RS_Spline::MaxSupportedDegree + 1),
+                          std::invalid_argument);
     }
 }
 
@@ -111,6 +115,55 @@ TEST_CASE("RS_Spline transforms rebuild the lines it is drawn with", "[RS_Spline
     requireRebuilt(*spline);
     spline->shear(0.3);
     requireRebuilt(*spline);
+}
+
+TEST_CASE("RS_Spline transforms fit tangent vectors without translating them", "[RS_Spline]")
+{
+    RS_SplineData data{1, false};
+    data.controlPoints = {{0.0, 0.0}, {4.0, 2.0}};
+    data.knotslist = {0.0, 0.0, 1.0, 1.0};
+    data.fitTangentsConstrained = true;
+    data.fitStartTangent = {1.0, 2.0, 0.0};
+    data.fitEndTangent = {-2.0, 3.0, 0.0};
+    RS_Spline spline{nullptr, data};
+
+    spline.move({10.0, -7.0});
+    CHECK(spline.getData().fitStartTangent.x == 1.0);
+    CHECK(spline.getData().fitStartTangent.y == 2.0);
+
+    spline.rotate({3.0, 4.0}, M_PI_2);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 2.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 1.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y + 2.0) < 1e-12);
+
+    spline.scale({100.0, 100.0}, {2.0, 3.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 6.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y + 6.0) < 1e-12);
+
+    spline.mirror({0.0, 0.0}, {1.0, 0.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 6.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y - 6.0) < 1e-12);
+
+    spline.shear(0.5);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 5.5) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 3.0) < 1e-12);
+
+    spline.revertDirection();
+    CHECK(std::abs(spline.getData().fitStartTangent.x - 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 6.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x - 5.5) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y - 3.0) < 1e-12);
+    CHECK(spline.getData().fitTangentsConstrained);
+
+    spline.setControlPoint(0, {20.0, 20.0});
+    CHECK_FALSE(spline.getData().fitTangentsConstrained);
+    CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
+    CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
 }
 
 TEST_CASE("RS_Spline::setDegree keeps the spline drawable", "[RS_Spline]")
@@ -298,6 +351,32 @@ TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline
     }
 }
 
+TEST_CASE("RS_Spline::setKnotVector preserves repeated knots and rejects invalid input",
+          "[RS_Spline][nonuniform][knots]") {
+    RS_SplineData data{3, false};
+    data.controlPoints = {{0, 0}, {10, 15}, {20, -5}, {30, 20}, {40, 0}, {50, 10}};
+    data.weights.assign(data.controlPoints.size(), 1.0);
+    RS_Spline spline{nullptr, data};
+
+    const std::vector<double> repeatedKnots{
+        0, 0, 0, 0, 1, 1, 2, 2, 2, 2};
+    spline.setKnotVector(repeatedKnots);
+    CHECK(spline.validate());
+    CHECK(spline.getData().knotslist == repeatedKnots);
+
+    auto descendingKnots = repeatedKnots;
+    descendingKnots[5] = 0.5;
+    spline.setKnotVector(descendingKnots);
+    CHECK(spline.validate());
+    CHECK(spline.getData().knotslist == repeatedKnots);
+
+    auto nonFiniteKnots = repeatedKnots;
+    nonFiniteKnots[4] = std::numeric_limits<double>::infinity();
+    spline.setKnotVector(nonFiniteKnots);
+    CHECK(spline.validate());
+    CHECK(spline.getData().knotslist == repeatedKnots);
+}
+
 // Regression: setFitPoints with num == p+1 (single Bezier patch) used to
 // short-circuit before solving the interior system, leaving interior control
 // points as RS_Vector(false) (which read back as (0,0)).
@@ -386,6 +465,363 @@ TEST_CASE("RS_Spline::setFitPoints fills interior CPs for num == p+1",
     REQUIRE(compareVector(cps.front(), fps.front()));
     REQUIRE(compareVector(cps.back(), fps.back()));
   }
+}
+
+TEST_CASE("RS_Spline fit-point interpolation honors endpoint tangents",
+          "[RS_Spline][fitpoints][tangents]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  const RS_Vector startTangent{2.0, 1.0};
+  const RS_Vector endTangent{1.0, -3.0};
+
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  REQUIRE(spline.setFitPointsWithTangents(fitPoints, startTangent, endTangent));
+  REQUIRE(spline.validate());
+  CHECK(spline.getData().fitTangentsConstrained);
+  CHECK(spline.getData().fitStartTangent == startTangent);
+  CHECK(spline.getData().fitEndTangent == endTangent);
+  CHECK(spline.getData().fitPoints == fitPoints);
+
+  LC_CurveJet startJet;
+  LC_CurveJet endJet;
+  REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+  REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  CHECK(compareVector(startJet.point, fitPoints.front(), 1e-9));
+  CHECK(compareVector(endJet.point, fitPoints.back(), 1e-9));
+  CHECK(compareVector(startJet.first, startTangent / startTangent.magnitude(),
+                      1e-8));
+  CHECK(compareVector(endJet.first, endTangent / endTangent.magnitude(), 1e-8));
+  for (const RS_Vector &fitPoint : fitPoints) {
+    CHECK(compareVector(spline.getNearestPointOnEntity(fitPoint, true), fitPoint,
+                        1e-7));
+  }
+}
+
+TEST_CASE("RS_Spline validates constrained tangent metadata against its curve",
+          "[RS_Spline][fitpoints][tangents][consistency]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  REQUIRE(spline.setFitPointsWithTangents(fitPoints, {2.0, 1.0}, {1.0, -3.0}));
+  CHECK(spline.fitTangentsMatchCurve());
+
+  RS_SplineData misplacedFit = spline.getData();
+  misplacedFit.fitPoints[1].y += 1.0;
+  RS_Spline badFit{nullptr, misplacedFit};
+  CHECK_FALSE(badFit.fitTangentsMatchCurve());
+
+  RS_SplineData opposingTangent = spline.getData();
+  opposingTangent.fitStartTangent *= -1.0;
+  RS_Spline badTangent{nullptr, opposingTangent};
+  CHECK_FALSE(badTangent.fitTangentsMatchCurve());
+
+  RS_SplineData rational = spline.getData();
+  rational.weights[1] = 0.75;
+  rational.weights[2] = 0.8;
+  rational.fitPoints.clear();
+  rational.fitTolerance = 1e-2;
+  RS_Spline rationalCurve{nullptr, rational};
+  for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+    LC_CurveJet jet;
+    REQUIRE(rationalCurve.tryEvaluateJet(parameter,
+                                         parameter == 1.0
+                                             ? LC_CurveEvaluationSide::Left
+                                             : LC_CurveEvaluationSide::Right,
+                                         jet));
+    rational.fitPoints.push_back(jet.point);
+  }
+  rational.fitStartTangent = rational.controlPoints[1] - rational.controlPoints[0];
+  rational.fitEndTangent = rational.controlPoints.back() -
+                           rational.controlPoints[rational.controlPoints.size() - 2];
+  RS_Spline consistentRational{nullptr, rational};
+  CHECK(consistentRational.validate());
+  LC_CurveJet rationalStartJet;
+  LC_CurveJet rationalEndJet;
+  REQUIRE(consistentRational.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                            rationalStartJet));
+  REQUIRE(consistentRational.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left,
+                                           rationalEndJet));
+  CHECK((rationalStartJet.first / rationalStartJet.first.magnitude()) ==
+        (rational.fitStartTangent / rational.fitStartTangent.magnitude()));
+  CHECK((rationalEndJet.first / rationalEndJet.first.magnitude()) ==
+        (rational.fitEndTangent / rational.fitEndTangent.magnitude()));
+  double maxFitResidual = 0.0;
+  for (const auto& point : rational.fitPoints) {
+    maxFitResidual = std::max(maxFitResidual,
+        consistentRational.getNearestPointOnEntity(point, true).distanceTo(point));
+  }
+  INFO("rational fit residual=" << maxFitResidual);
+  CHECK(maxFitResidual <= rational.fitTolerance);
+  CHECK(consistentRational.fitTangentsMatchCurve());
+
+  rational.fitEndTangent *= -1.0;
+  RS_Spline inconsistentRational{nullptr, rational};
+  CHECK_FALSE(inconsistentRational.fitTangentsMatchCurve());
+
+  rational.fitEndTangent *= -1.0;
+  rational.weights[2] = std::numeric_limits<double>::quiet_NaN();
+  RS_Spline invalidWeight{nullptr, rational};
+  CHECK_FALSE(invalidWeight.fitTangentsMatchCurve());
+}
+
+TEST_CASE("RS_Spline validates rational quadratic tangent metadata",
+          "[RS_Spline][fitpoints][tangents][rational][quadratic]") {
+  RS_SplineData data{2, false};
+  data.controlPoints = {{0, 0}, {2, 3}, {5, 0}};
+  data.knotslist = {0, 0, 0, 1, 1, 1};
+  data.weights = {1.0, 0.7, 1.0};
+  data.fitTangentsConstrained = true;
+  data.fitTolerance = 1e-2;
+  data.fitStartTangent = {2, 3};
+  data.fitEndTangent = {3, -3};
+  RS_Spline evaluator{nullptr, data};
+  for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+    LC_CurveJet jet;
+    REQUIRE(evaluator.tryEvaluateJet(parameter,
+        parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                         : LC_CurveEvaluationSide::Right, jet));
+    data.fitPoints.push_back(jet.point);
+  }
+
+  RS_Spline matched{nullptr, data};
+  CHECK(matched.validate());
+  CHECK(matched.fitTangentsMatchCurve());
+  data.fitEndTangent *= -1.0;
+  RS_Spline opposing{nullptr, data};
+  CHECK_FALSE(opposing.fitTangentsMatchCurve());
+}
+
+TEST_CASE("RS_Spline validates degree-one tangent metadata",
+          "[RS_Spline][fitpoints][tangents][linear]") {
+  RS_SplineData data{1, false};
+  data.controlPoints = {{0, 0}, {4, 0}};
+  data.knotslist = {0, 0, 1, 1};
+  data.weights = {1.0, 0.5};
+  data.fitPoints = {{0, 0}, {2, 0}, {4, 0}};
+  data.fitTangentsConstrained = true;
+  data.fitTolerance = 1e-8;
+  data.fitStartTangent = {1, 0};
+  data.fitEndTangent = {3, 0};
+
+  RS_Spline matched{nullptr, data};
+  CHECK(matched.validate());
+  CHECK(matched.fitTangentsMatchCurve());
+
+  data.fitEndTangent = {-1, 0};
+  RS_Spline opposing{nullptr, data};
+  CHECK_FALSE(opposing.fitTangentsMatchCurve());
+
+  data.fitEndTangent = {1, 0};
+  data.fitPoints[1].y = 1e-3;
+  RS_Spline misplacedFit{nullptr, data};
+  CHECK_FALSE(misplacedFit.fitTangentsMatchCurve());
+
+  data = RS_SplineData{1, false};
+  data.controlPoints = {{0, 0}, {4, 2}};
+  data.knotslist = {0, 0, 1, 1};
+  data.weights = {1.0, 0.5};
+  data.fitPoints = {{0, 0}, {4, 2}};
+  data.fitTangentsConstrained = true;
+  data.fitTolerance = 1e-8;
+  data.fitStartTangent = {2, 1};
+  RS_Spline oneEnded{nullptr, data};
+  REQUIRE(oneEnded.fitTangentsMatchCurve());
+
+  oneEnded.rotate({0, 0}, 0.37);
+  oneEnded.scale({0, 0}, {2.0, 0.5});
+  CHECK(oneEnded.fitTangentsMatchCurve());
+  oneEnded.revertDirection();
+  CHECK(oneEnded.fitTangentsMatchCurve());
+  CHECK(oneEnded.getData().fitStartTangent.magnitude() == 0.0);
+  CHECK(oneEnded.getData().fitEndTangent.x < 0.0);
+}
+
+TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",
+          "[RS_Spline][fitpoints][tangents]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  for (const bool constrainStart : {true, false}) {
+    const RS_Vector requested{2.0, -1.0};
+    const RS_Vector absent{0.0, 0.0};
+    const RS_Vector start = constrainStart ? requested : absent;
+    const RS_Vector end = constrainStart ? absent : requested;
+    RS_Spline spline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(spline.setFitPointsWithTangents(fitPoints, start, end));
+    REQUIRE(spline.validate());
+    CHECK(spline.getData().fitTangentsConstrained);
+    CHECK(spline.getData().fitStartTangent == start);
+    CHECK(spline.getData().fitEndTangent == end);
+
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                  startJet));
+    REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+    const RS_Vector unit = requested / requested.magnitude();
+    if (constrainStart) {
+      CHECK(compareVector(startJet.first, unit, 1e-8));
+      CHECK(endJet.second.magnitude() < 1e-8);
+    } else {
+      CHECK(startJet.second.magnitude() < 1e-8);
+      CHECK(compareVector(endJet.first, unit, 1e-8));
+    }
+    for (const RS_Vector &fitPoint : fitPoints) {
+      CHECK(compareVector(spline.getNearestPointOnEntity(fitPoint, true),
+                          fitPoint, 1e-7));
+    }
+  }
+
+  for (const bool constrainStart : {true, false}) {
+    const RS_Vector requested{0.0, 3.0};
+    const RS_Vector absent{0.0, 0.0};
+    const RS_Vector start = constrainStart ? requested : absent;
+    const RS_Vector end = constrainStart ? absent : requested;
+    RS_Spline spline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(spline.setFitPointsWithTangents({{0.0, 0.0}, {4.0, 2.0}}, start, end));
+    REQUIRE(spline.validate());
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+    const RS_Vector unit = requested / requested.magnitude();
+    if (constrainStart) {
+      CHECK(compareVector(startJet.first, unit, 1e-8));
+      CHECK(endJet.second.magnitude() < 1e-8);
+    } else {
+      CHECK(startJet.second.magnitude() < 1e-8);
+      CHECK(compareVector(endJet.first, unit, 1e-8));
+    }
+  }
+}
+
+TEST_CASE("RS_Spline constrained fit directions survive transforms and reversal",
+          "[RS_Spline][fitpoints][tangents][transform]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  const RS_Vector requestedStart{2.0, -1.0};
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  REQUIRE(spline.setFitPointsWithTangents(fitPoints, requestedStart, {0.0, 0.0}));
+
+  constexpr double angle = 0.37;
+  RS_Vector expectedTangent = requestedStart;
+  expectedTangent.rotate({std::cos(angle), std::sin(angle)});
+  spline.rotate({0.0, 0.0}, angle);
+  expectedTangent = {2.0 * expectedTangent.x, 3.0 * expectedTangent.y};
+  spline.scale({0.0, 0.0}, {2.0, 3.0});
+
+  LC_CurveJet startJet;
+  LC_CurveJet endJet;
+  REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+  REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  CHECK(compareVector(startJet.first / startJet.first.magnitude(),
+                      expectedTangent / expectedTangent.magnitude(), 1e-8));
+  CHECK(endJet.second.magnitude() < 1e-7);
+  CHECK(spline.getData().fitStartTangent.distanceTo(expectedTangent) < 1e-12);
+  CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
+  for (const auto& point : spline.getData().fitPoints)
+    CHECK(compareVector(spline.getNearestPointOnEntity(point, true), point, 1e-7));
+
+  spline.revertDirection();
+  REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+  REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  CHECK(startJet.second.magnitude() < 1e-7);
+  CHECK(compareVector(endJet.first / endJet.first.magnitude(),
+                      -expectedTangent / expectedTangent.magnitude(), 1e-8));
+  CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
+  CHECK(spline.getData().fitEndTangent.distanceTo(-expectedTangent) < 1e-12);
+  const RS_Vector transformedLast = fitPoints.back().rotated({std::cos(angle), std::sin(angle)});
+  CHECK(spline.getData().fitPoints.front().distanceTo(
+            RS_Vector{2.0 * transformedLast.x, 3.0 * transformedLast.y}) < 1e-7);
+}
+
+TEST_CASE("RS_Spline tangent interpolation is stable at large coordinates and short spans",
+          "[RS_Spline][fitpoints][tangents][conditioning]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {1.0e-6, 2.0e-6}, {2.0, 1.0}, {4.0, 0.0}};
+  const RS_Vector offset{1.0e8, -1.0e8};
+  std::vector<RS_Vector> translatedFitPoints;
+  for (const auto& point : fitPoints) translatedFitPoints.push_back(point + offset);
+
+  RS_Spline local{nullptr, RS_SplineData{3, false}};
+  RS_Spline translated{nullptr, RS_SplineData{3, false}};
+  REQUIRE(local.setFitPointsWithTangents(fitPoints, {1.0, 0.25}, {0.0, 0.0}));
+  REQUIRE(translated.setFitPointsWithTangents(translatedFitPoints, {1.0, 0.25}, {0.0, 0.0}));
+  REQUIRE(local.validate());
+  REQUIRE(translated.validate());
+  REQUIRE(local.getData().controlPoints.size() == translated.getData().controlPoints.size());
+  for (std::size_t i = 0; i < local.getData().controlPoints.size(); ++i) {
+    CHECK((translated.getData().controlPoints[i] - local.getData().controlPoints[i])
+              .distanceTo(offset) < 1e-4);
+  }
+}
+
+TEST_CASE("RS_Spline tangent interpolation covers representable short-span grid",
+          "[RS_Spline][fitpoints][tangents][conditioning][matrix]") {
+  for (const double firstSpan : {1.0e-4, 1.0e-6, 1.0e-8}) {
+    for (const RS_Vector offset : {RS_Vector{0.0, 0.0},
+                                   RS_Vector{1.0e8, -1.0e8}}) {
+      CAPTURE(firstSpan, offset.x, offset.y);
+      std::vector<RS_Vector> fitPoints{
+          offset,
+          offset + RS_Vector{firstSpan, firstSpan * 0.25},
+          offset + RS_Vector{2.0, 1.0},
+          offset + RS_Vector{4.0, 0.0}};
+      REQUIRE(fitPoints.front().distanceTo(fitPoints[1]) > 0.0);
+
+      RS_Spline spline{nullptr, RS_SplineData{3, false}};
+      REQUIRE(spline.setFitPointsWithTangents(
+          fitPoints, {1.0, 0.25}, {0.0, 0.0}));
+      REQUIRE(spline.validate());
+      LC_CurveJet startJet;
+      LC_CurveJet endJet;
+      REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                    startJet));
+      REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left,
+                                    endJet));
+      const RS_Vector expectedDirection{1.0 / std::sqrt(1.0625),
+                                        0.25 / std::sqrt(1.0625)};
+      const RS_Vector actualDirection =
+          startJet.first / startJet.first.magnitude();
+      const double tangentHandle =
+          spline.getData().controlPoints[1].distanceTo(
+              spline.getData().controlPoints[0]);
+      const double coordinateScale = std::max(
+          {1.0, std::abs(offset.x), std::abs(offset.y)});
+      const double directionTolerance = std::max(
+          1e-7, 8.0 * std::numeric_limits<double>::epsilon() * coordinateScale /
+                    tangentHandle);
+      const double directionError = actualDirection.distanceTo(expectedDirection);
+      CAPTURE(directionTolerance, directionError);
+      CHECK(directionError <= directionTolerance);
+      CHECK(endJet.second.magnitude() < 1e-6);
+      for (const RS_Vector& fitPoint : fitPoints) {
+        CHECK(spline.getNearestPointOnEntity(fitPoint, true)
+                  .distanceTo(fitPoint) < 1e-5);
+      }
+    }
+  }
+}
+
+TEST_CASE("RS_Spline tangent interpolation rejects unsupported inputs atomically",
+          "[RS_Spline][fitpoints][tangents]") {
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  spline.setFitPoints({{0.0, 0.0}, {1.0, 2.0}, {3.0, 0.0}});
+  const RS_SplineData before = spline.getData();
+
+  CHECK_FALSE(spline.setFitPointsWithTangents(
+      {{0.0, 0.0}, {1.0, 2.0}}, {}, {}));
+  CHECK_FALSE(spline.setFitPointsWithTangents(
+      {{0.0, 0.0}, {1.0, 2.0}}, {1.0e308, 1.0e308}, {}));
+  CHECK(spline.getData().controlPoints == before.controlPoints);
+  CHECK(spline.getData().knotslist == before.knotslist);
+  CHECK(spline.getData().fitPoints == before.fitPoints);
+  CHECK_FALSE(spline.getData().fitTangentsConstrained);
+
+  CHECK_FALSE(spline.setFitPointsWithTangents(
+      {{0.0, 0.0}, {1.0, 2.0}, {1.0, 2.0}}, {1.0, 0.0}, {0.0, 1.0}));
+  CHECK(spline.getData().controlPoints == before.controlPoints);
+  CHECK(spline.getData().knotslist == before.knotslist);
+  CHECK(spline.getData().fitPoints == before.fitPoints);
 }
 
 // ---------------------------------------------------------------------------

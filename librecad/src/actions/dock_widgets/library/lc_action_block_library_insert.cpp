@@ -27,11 +27,14 @@
 #include "lc_action_block_library_insert.h"
 
 #include <QFileInfo>
+#include <QPointer>
 
 #include "lc_block_library_insert_options_filler.h"
 #include "lc_block_library_insert_options_widget.h"
 #include "lc_documentsstorage.h"
+#include "lc_offsetimportsession.h"
 #include "rs_creation.h"
+#include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
@@ -49,7 +52,8 @@ struct LC_ActionBlockLibraryInsert::RS_LibraryInsertData {
 };
 
 struct LC_ActionBlockLibraryInsert::ActionData {
-    RS_Graphic* prev;
+    std::unique_ptr<RS_Graphic> prev;
+    QPointer<LC_OffsetImportSession> importSession;
     RS_LibraryInsertData data;
 };
 
@@ -84,27 +88,85 @@ void LC_ActionBlockLibraryInsert::init(const int status) {
 }
 
 // fixme - blocks - review usage of this methods, why it's called from outside? Should it be part of the action or widget?
-void LC_ActionBlockLibraryInsert::setFile(const QString& file) const {
+void LC_ActionBlockLibraryInsert::setFile(const QString& file) {
     m_actionData->data.file = file;
-    const LC_DocumentsStorage storage;
-    delete m_actionData->prev;
-    m_actionData->prev = new RS_Graphic();
-    if (!storage.loadDocument(m_actionData->prev, file, RS2::FormatUnknown)) {
-        commandMessage(tr("Cannot open file '%1'").arg(file));
+    if (m_actionData->importSession) {
+        m_actionData->importSession->cancel();
+        delete m_actionData->importSession.data();
+        m_actionData->importSession = nullptr;
     }
+    m_actionData->prev.reset();
+    deletePreview();
+
+    const auto type = RS_FileIO::detectFormat(file);
+    if (!LC_OffsetImportSession::supportsType(type)) {
+        m_actionData->prev = std::make_unique<RS_Graphic>();
+        if (!LC_DocumentsStorage{}.loadDocument(m_actionData->prev.get(), file, type)) {
+            m_actionData->prev.reset();
+            commandMessage(tr("Cannot open file '%1'").arg(file));
+        }
+        updateActionPrompt();
+        return;
+    }
+
+    auto* session = new LC_OffsetImportSession(this);
+    m_actionData->importSession = session;
+    const QPointer<LC_ActionBlockLibraryInsert> alive(this);
+    const QPointer<LC_OffsetImportSession> pending(session);
+    if (!session->start(file, type, RS2::DxfTextEncoding::Declared, false,
+        [alive, pending, file](LC_OffsetImportSession::Outcome outcome) {
+            if (!alive || !pending || alive->m_actionData->importSession != pending) return;
+            alive->m_actionData->importSession = nullptr;
+            pending->deleteLater();
+            if (outcome.status != LC_OffsetImportSession::Status::Complete || !outcome.graphic) {
+                alive->commandMessage(alive->tr("Cannot open file '%1'").arg(file));
+                alive->updateActionPrompt();
+                return;
+            }
+            if (outcome.sourceUnverified || !outcome.sourceStamp.matches(file)) {
+                alive->commandMessage(alive->tr("The library drawing changed while it was loading; select it again."));
+                alive->updateActionPrompt();
+                return;
+            }
+            outcome.graphic->onLoadingCompleted();
+            alive->m_actionData->prev = std::move(outcome.graphic);
+            alive->updateActionPrompt();
+        })) {
+        m_actionData->importSession = nullptr;
+        delete session;
+        commandMessage(tr("Cannot start loading file '%1'").arg(file));
+    }
+    updateActionPrompt();
 }
 
 void LC_ActionBlockLibraryInsert::reset() const {
+    if (m_actionData->importSession) {
+        m_actionData->importSession->cancel();
+        delete m_actionData->importSession.data();
+        m_actionData->importSession = nullptr;
+    }
     auto& data = m_actionData->data;
     data.insertionPoint = {};
     data.factor = 1.0;
     data.angle = 0.0;
-    delete m_actionData->prev;
+    m_actionData->prev.reset();
+}
+
+bool LC_ActionBlockLibraryInsert::isSourceLoading() const noexcept {
+    return m_actionData->importSession && m_actionData->importSession->busy();
+}
+
+bool LC_ActionBlockLibraryInsert::hasSource() const noexcept {
+    return bool(m_actionData->prev);
 }
 
 bool LC_ActionBlockLibraryInsert::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    if (!m_actionData->prev) {
+        commandMessage(tr("The library drawing is not ready yet."));
+        return false;
+    }
     auto insertData = m_actionData->data;
-    insertData.graphic = m_actionData->prev;
+    insertData.graphic = m_actionData->prev.get();
     insertData.angle = toWorldAngleFromUCSBasis(m_actionData->data.angle);
     RS_Graphic* insertGraphic = insertData.graphic;
     if (insertGraphic != nullptr) {
@@ -121,6 +183,10 @@ void LC_ActionBlockLibraryInsert::doTriggerCompletion(const bool success) {
 }
 
 void LC_ActionBlockLibraryInsert::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
+    if (!m_actionData->prev) {
+        deletePreview();
+        return;
+    }
     switch (status) {
         case SetTargetPoint: {
             m_actionData->data.insertionPoint = e->snapPoint;
@@ -130,7 +196,8 @@ void LC_ActionBlockLibraryInsert::onMouseMoveEvent(const int status, const LC_Mo
             m_preview->addAllFrom(*m_actionData->prev, m_viewport);
             m_preview->move(data.insertionPoint);
             if (m_graphic != nullptr) {
-                const RS_Vector scaleFactor = LC_CopyUtils::getInterGraphicsScaleFactor(data.factor, m_actionData->prev, m_graphic);
+                const RS_Vector scaleFactor = LC_CopyUtils::getInterGraphicsScaleFactor(
+                    data.factor, m_actionData->prev.get(), m_graphic);
                 m_preview->scale(data.insertionPoint, scaleFactor);
             }
             m_preview->rotate(data.insertionPoint, toWorldAngleFromUCSBasis(data.angle));
@@ -146,6 +213,10 @@ void LC_ActionBlockLibraryInsert::onMouseMoveEvent(const int status, const LC_Mo
 }
 
 void LC_ActionBlockLibraryInsert::onMouseLeftButtonRelease([[maybe_unused]] int status, const LC_MouseEvent* e) {
+    if (!m_actionData->prev) {
+        commandMessage(tr("The library drawing is still loading or could not be opened."));
+        return;
+    }
     fireCoordinateEvent(e->snapPoint);
 }
 
@@ -154,6 +225,10 @@ void LC_ActionBlockLibraryInsert::onMouseRightButtonRelease(const int status, [[
 }
 
 void LC_ActionBlockLibraryInsert::onCoordinateEvent([[maybe_unused]] int status, [[maybe_unused]] bool isZero, const RS_Vector& pos) {
+    if (!m_actionData->prev) {
+        commandMessage(tr("The library drawing is still loading or could not be opened."));
+        return;
+    }
     m_actionData->data.insertionPoint = pos;
     trigger();
 }
@@ -227,7 +302,8 @@ QStringList LC_ActionBlockLibraryInsert::getAvailableCommands() {
 void LC_ActionBlockLibraryInsert::updateActionPrompt() {
     switch (getStatus()) {
         case SetTargetPoint:
-            updatePromptTRCancel(tr("Specify reference point"));
+            updatePromptTRCancel(isSourceLoading() ? tr("Loading library drawing...")
+                : (hasSource() ? tr("Specify reference point") : tr("Library drawing unavailable; cancel to stop")));
             break;
         case SetAngle:
             updatePrompt(tr("Enter angle:"));

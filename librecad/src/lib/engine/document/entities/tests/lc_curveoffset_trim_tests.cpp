@@ -36,6 +36,9 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
+#include "lc_offsetsource.h"
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
 
@@ -103,7 +106,11 @@ struct Checked {
  * as hidden, or at a transition.
  */
 Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, const double t0, const double t1,
-              const double d, double visibleFrom = -1.0) {
+              const double d, double visibleFrom = -1.0,
+              const std::function<double(const RS_Vector&)>& sourceDistance = {}) {
+    const auto distanceToSource = [&](const RS_Vector& point) {
+        return sourceDistance ? sourceDistance(point) : distanceTo(source, t0, t1, point);
+    };
     if (visibleFrom < 0.0) {
         visibleFrom = d * (1.0 - 1e-4);
     }
@@ -117,7 +124,7 @@ Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, 
                 chords.emplace_back(previous, p);
                 previous = p;
                 if (k % 32 == 0) {
-                    result.nearestKept = std::min(result.nearestKept, distanceTo(source, t0, t1, p));
+                    result.nearestKept = std::min(result.nearestKept, distanceToSource(p));
                 }
             }
         }
@@ -130,7 +137,7 @@ Checked check(const LC_CurveOffsetGeometryResult& trimmed, const Curve& source, 
             continue; // no normal, where the source stands still
         }
         const RS_Vector q = c.point + RS_Vector{-c.first.y, c.first.x} / c.first.magnitude() * trimmed.signedDistance;
-        if (distanceTo(source, t0, t1, q) < visibleFrom) {
+        if (distanceToSource(q) < visibleFrom) {
             continue; // hidden, or at a transition
         }
         double nearest = RS_MAXDOUBLE;
@@ -175,7 +182,685 @@ Curve curveOf(const LC_SplinePoints& s) {
     return [&s](const double t, LC_CurveJet& j) { return s.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, j); };
 }
 
+Curve curveOf(const LC_Hyperbola& hyperbola) {
+    const LC_HyperbolaData data = hyperbola.getData();
+    return [data](const double t, LC_CurveJet& jet) {
+        const double a = data.majorP.magnitude();
+        const double b = a * data.ratio;
+        const double branch = data.reversed ? -1.0 : 1.0;
+        const double angle = data.majorP.angle();
+        const auto rotate = [angle](const RS_Vector& point) { return point.rotated(angle); };
+        jet.point = data.center + rotate({branch * a * std::cosh(t), b * std::sinh(t)});
+        jet.first = rotate({branch * a * std::sinh(t), b * std::cosh(t)});
+        jet.second = rotate({branch * a * std::cosh(t), b * std::sinh(t)});
+        return std::isfinite(jet.point.x) && std::isfinite(jet.point.y) &&
+               std::isfinite(jet.first.x) && std::isfinite(jet.first.y) &&
+               std::isfinite(jet.second.x) && std::isfinite(jet.second.y);
+    };
+}
+
 } // namespace
+
+TEST_CASE("Trimmed typed parabola offsets retain exact normals on both sides",
+          "[curve-offset][trim][parabola][oracle]") {
+    const std::array<LC_Parabola, 4> sources{{
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{4, -3}, RS_Vector{15, 3}, RS_Vector{19, -5}}}},
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{7, -2}, RS_Vector{5, 7.25}, RS_Vector{-5, 0.5}}}}
+    }};
+
+    for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        const LC_Parabola& source = sources[sourceIndex];
+        CAPTURE(sourceIndex);
+        REQUIRE(source.getData().isValid());
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.25, 2.75}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, 1.0, distance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
+        }
+    }
+}
+
+TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals past the vertex cusp",
+          "[curve-offset][trim][hyperbola][oracle]") {
+    const LC_Hyperbola source{nullptr,
+        LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}};
+    REQUIRE(source.isValid());
+    const Curve evaluator = curveOf(source);
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        for (const double distance : {1.0, 4.0}) {
+            CAPTURE(side, distance);
+            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const double tolerance =
+                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+            const Checked checked = check(result, evaluator, -1.5, 1.5, distance);
+            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+            CHECK(checked.worstMissing <= 2.0 * tolerance);
+        }
+    }
+}
+
+TEST_CASE("Trimmed tangent-constrained fit-point spline-points retain exact normals",
+          "[curve-offset][trim][spline-points][fit-points][tangents][oracle]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    data.fitTangentsConstrained = true;
+    data.fitTolerance = 1e-10;
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.getData().splinePoints.size() == 4);
+    LC_CurveJet start;
+    LC_CurveJet end;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, start));
+    const double endParameter = static_cast<double>(source.getSegmentCount());
+    REQUIRE(source.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, end));
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitStartTangent = start.first;
+    source.getData().fitEndTangent = end.first;
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    for (int profileIndex = 0; profileIndex < 3; ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints profile{nullptr, source.getData()};
+        if (profileIndex == 1)
+            profile.revertDirection();
+        else if (profileIndex == 2)
+            profile.scale({0, 0}, {1.5, 0.75});
+        REQUIRE(profile.fitTangentsMatchCurve());
+        const double profileEnd = static_cast<double>(profile.getSegmentCount());
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(profile, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(profile, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(profile), 0.0, profileEnd, distance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
+        }
+    }
+}
+
+TEST_CASE("Trimmed control-point spline-points skip a stationary span",
+          "[curve-offset][trim][spline-points][stationary][oracle]") {
+    LC_SplinePointsData singleSpan{false, false};
+    singleSpan.useControlPoints = true;
+    singleSpan.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
+    LC_SplinePointsData multipleSpans{false, false};
+    multipleSpans.useControlPoints = true;
+    multipleSpans.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
+                                   {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    LC_SplinePointsData plateau{false, false};
+    plateau.useControlPoints = true;
+    plateau.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                             {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    LC_SplinePointsData leading{false, false};
+    leading.useControlPoints = true;
+    leading.controlPoints = {{0, 0}, {0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    LC_SplinePointsData trailing{false, false};
+    trailing.useControlPoints = true;
+    trailing.controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
+    const std::array<LC_SplinePointsData, 5> profiles{{
+        singleSpan, multipleSpans, plateau, leading, trailing
+    }};
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        REQUIRE(source.getSegmentCount() > 0);
+        if (profileIndex == 0) {
+            LC_CurveJet stationary;
+            REQUIRE(source.tryEvaluateJet(1.5, LC_CurveEvaluationSide::Interior, stationary));
+            CHECK(stationary.first.magnitude() == 0.0);
+        }
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
+        }
+    }
+}
+
+TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
+          "[curve-offset][trim][spline-points][fit-points][stationary][oracle]") {
+    const auto makeProfile = [](std::vector<RS_Vector> fitPoints) {
+        LC_SplinePointsData data{false, false};
+        data.splinePoints = std::move(fitPoints);
+        return data;
+    };
+    std::array<LC_SplinePointsData, 8> profiles{{
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}}),
+        makeProfile({{3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}}),
+        makeProfile({{4, 0}, {3, 1}, {3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}}),
+        makeProfile({{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{3, 1}, {2, 0}, {1, 1}, {1, 1}, {1, 1}, {0, 0}})
+    }};
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        if (profileIndex == 2 || profileIndex == 3 || profileIndex == 7) {
+            const std::size_t forwardIndex = profileIndex == 2 ? 0 : profileIndex == 3 ? 1 : 6;
+            LC_SplinePoints forward{nullptr, profiles[forwardIndex]};
+            double maxReverseError = 0.0;
+            const double end = static_cast<double>(forward.getSegmentCount());
+            for (int sample = 0; sample <= 100; ++sample) {
+                LC_CurveJet a;
+                LC_CurveJet b;
+                REQUIRE(forward.tryEvaluateJet(end * sample / 100.0, LC_CurveEvaluationSide::Interior, a));
+                REQUIRE(source.tryEvaluateJet(end * (100 - sample) / 100.0,
+                                              LC_CurveEvaluationSide::Interior, b));
+                maxReverseError = std::max(maxReverseError, a.point.distanceTo(b.point));
+            }
+            double maxControlReverseError = 0.0;
+            REQUIRE(forward.getData().controlPoints.size() == source.getData().controlPoints.size());
+            for (std::size_t i = 0; i < forward.getData().controlPoints.size(); ++i) {
+                maxControlReverseError = std::max(
+                    maxControlReverseError,
+                    forward.getData().controlPoints[i].distanceTo(
+                        source.getData().controlPoints[forward.getData().controlPoints.size() - 1 - i]));
+            }
+            CHECK(maxReverseError <= 1e-10);
+            CHECK(maxControlReverseError <= 1e-10);
+        }
+        REQUIRE_FALSE(source.getData().controlPoints.empty());
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance,
+                                              -1.0, sourceDistance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
+        }
+    }
+}
+
+TEST_CASE("Near-coincident distinct fit points remain distinct through trimming",
+          "[curve-offset][trim][spline-points][fit-points][near-coincident][oracle]") {
+    constexpr double gap = 1e-4;
+    const std::array<std::vector<RS_Vector>, 2> profiles{{
+        {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}},
+        {{3, 1}, {2, 0}, {1 + gap, 1 + gap}, {1, 1}, {0, 0}}
+    }};
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        LC_SplinePointsData data{false, false};
+        data.splinePoints = profiles[profileIndex];
+        LC_SplinePoints source{nullptr, data};
+        CAPTURE(profileIndex);
+        REQUIRE(source.getData().splinePoints.size() == profiles[profileIndex].size());
+        REQUIRE(source.getData().splinePoints[1].distanceTo(source.getData().splinePoints[2]) > 0.0);
+        REQUIRE(source.getData().controlPoints.size() >= 3);
+        CHECK(std::all_of(source.getData().controlPoints.begin(), source.getData().controlPoints.end(),
+                          [](const RS_Vector& point) {
+                              return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+                          }));
+
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.02, 0.05}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance,
+                                              -1.0, sourceDistance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
+        }
+    }
+}
+
+TEST_CASE("Ill-conditioned near-coincident fit points succeed accurately or refuse atomically",
+          "[curve-offset][trim][spline-points][fit-points][near-coincident][conditioning]") {
+    const std::array<double, 9> gaps{{1e-3, 5.1e-4, 1e-4, 5.1e-5, 1e-5, 1e-6, 1e-8, 1e-10, 1e-12}};
+    for (const bool closed : {false, true}) {
+        for (const double gap : gaps) {
+            CAPTURE(closed, gap);
+            LC_SplinePointsData data{closed, false};
+            if (closed) {
+                data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+            }
+            else {
+                data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+            }
+            LC_SplinePoints source{nullptr, data};
+            REQUIRE(source.getData().splinePoints.size() == data.splinePoints.size());
+            REQUIRE(source.getData().splinePoints[1].distanceTo(source.getData().splinePoints[2]) > 0.0);
+            const auto captured = LC_OffsetSourceGeometry::capture(source);
+            const bool expectedCapture = closed ? gap >= 5.1e-4 : gap >= 5.1e-5;
+            CHECK(captured.has_value() == expectedCapture);
+            const double distance = std::max(gap * 10.0, 1e-8);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                CAPTURE(side, distance);
+                const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                if (result.status == LC_CurveOffsetStatus::Ok) {
+                    REQUIRE(captured);
+                    REQUIRE_FALSE(result.branches.empty());
+                    const Checked checked = check(result, curveOf(source), 0.0,
+                                                  static_cast<double>(source.getSegmentCount()), distance,
+                                                  -1.0, [&source](const RS_Vector& point) {
+                                                      return source.getDistanceToPoint(point);
+                                                  });
+                    CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+                    CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+                }
+                else {
+                    CHECK_FALSE(captured.has_value());
+                    CHECK(result.branches.empty());
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Fit-point conditioning admission is stable under scale and placement",
+          "[curve-offset][trim][spline-points][fit-points][conditioning][transform]") {
+    const std::array<double, 3> scales{{1e-4, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> origins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    for (const bool closed : {false, true}) {
+        const double admittedGap = closed ? 5.1e-4 : 5.1e-5;
+        const double refusedGap = closed ? 1e-4 : 1e-5;
+        for (const double gap : {admittedGap, refusedGap}) {
+            for (std::size_t transformIndex = 0; transformIndex < scales.size(); ++transformIndex) {
+                const double scale = scales[transformIndex];
+                RS_Vector origin = origins[transformIndex] * scale;
+                const bool reflected = transformIndex == 2;
+                CAPTURE(closed, gap, scale, origin.x, origin.y, reflected);
+
+                LC_SplinePointsData data{closed, false};
+                if (closed) {
+                    data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+                }
+                else {
+                    data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+                }
+                for (RS_Vector& point : data.splinePoints) {
+                    point.x = origin.x + scale * point.x;
+                    point.y = origin.y + scale * (reflected ? -point.y : point.y);
+                }
+
+                LC_SplinePoints source{nullptr, data};
+                const bool expectedAdmitted = gap == admittedGap;
+                const auto captured = LC_OffsetSourceGeometry::capture(source);
+                CHECK(captured.has_value() == expectedAdmitted);
+
+                const double distance = std::max(10.0 * gap * scale, 1e-10);
+                for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                    CAPTURE(side, distance);
+                    const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                    const auto result = LC_CurveOffset::buildDirectBranches(
+                        source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                        LC_CurveOffset::makeDirectSourceBudget());
+                    if (!expectedAdmitted) {
+                        CHECK(result.status == LC_CurveOffsetStatus::InvalidSource);
+                        CHECK(result.branches.empty());
+                        continue;
+                    }
+
+                    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                    REQUIRE_FALSE(result.branches.empty());
+                    const Checked checked = check(result, curveOf(source), 0.0,
+                                                  static_cast<double>(source.getSegmentCount()), distance,
+                                                  -1.0, [&source](const RS_Vector& point) {
+                                                      return source.getDistanceToPoint(point);
+                                                  });
+                    CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+                    CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("Fit-point conditioning is independent of short-chord placement",
+          "[curve-offset][trim][spline-points][fit-points][conditioning][placement]") {
+    const double openGap = 2e-4;
+    const double closedGap = 2e-3;
+    std::array<LC_SplinePointsData, 8> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {openGap, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {1 + openGap, 1 + openGap}, {2, 0}, {3, 1}};
+    profiles[2] = LC_SplinePointsData{false, false};
+    profiles[2].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3 + openGap, 1}};
+    profiles[3] = profiles[1];
+    profiles[4] = LC_SplinePointsData{true, false};
+    profiles[4].splinePoints = {{0, 0}, {closedGap, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[5] = LC_SplinePointsData{true, false};
+    profiles[5].splinePoints = {{0, 0}, {10, 0}, {10 + closedGap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[6] = LC_SplinePointsData{true, false};
+    profiles[6].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {13 + closedGap, 8}, {4, 13}, {-3, 8}};
+    profiles[7] = LC_SplinePointsData{true, false};
+    profiles[7].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, closedGap}};
+    for (std::size_t i = 0; i < 4; ++i) profiles[i].fitTolerance = 1e-8;
+    for (std::size_t i = 4; i < profiles.size(); ++i) profiles[i].fitTolerance = 1e-8;
+    std::reverse(profiles[3].splinePoints.begin(), profiles[3].splinePoints.end());
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        CAPTURE(profileIndex);
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+        const double gap = profileIndex < 4 ? openGap : closedGap;
+        const double distance = 10.0 * gap;
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side, distance);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const Checked checked = check(result, curveOf(source), 0.0,
+                                          static_cast<double>(source.getSegmentCount()), distance,
+                                          -1.0, sourceDistance);
+            CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+            CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+        }
+    }
+}
+
+TEST_CASE("All-coincident fit points fail closed for trimming",
+          "[curve-offset][trim][spline-points][fit-points][stationary][refusal]") {
+    const RS_Spline validReference = unitParabola();
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(validReference, 0.2);
+    LC_SplinePointsData degenerate{false, false};
+    degenerate.splinePoints = {{1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1}};
+    LC_SplinePoints source{nullptr, degenerate};
+    REQUIRE(LC_OffsetSourceGeometry::capture(source));
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.2), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status != LC_CurveOffsetStatus::Ok);
+    CHECK(result.branches.empty());
+}
+
+TEST_CASE("Self-crossing closed fit-point loops trim to accurate separate branches",
+          "[curve-offset][trim][spline-points][fit-points][self-intersection][oracle]") {
+    std::array<LC_SplinePointsData, 5> profiles;
+    profiles[0] = LC_SplinePointsData{true, false};
+    profiles[0].splinePoints = {{-5, -3}, {5, 3}, {-5, 3}, {5, -3}};
+    profiles[1] = profiles[0];
+    for (RS_Vector& point : profiles[1].splinePoints) {
+        const double reflectedY = -point.y;
+        point = {-18.0 + 0.5 * (point.x * std::cos(0.41) - reflectedY * std::sin(0.41)),
+                 27.0 + 0.5 * (point.x * std::sin(0.41) + reflectedY * std::cos(0.41))};
+    }
+    std::reverse(profiles[1].splinePoints.begin(), profiles[1].splinePoints.end());
+    profiles[2] = LC_SplinePointsData{true, false};
+    constexpr double starRadius = 8.0;
+    constexpr double pi = 3.14159265358979323846;
+    for (const std::size_t vertex : {0U, 2U, 4U, 1U, 3U}) {
+        const double angle = -pi / 2.0 + 2.0 * pi * static_cast<double>(vertex) / 5.0;
+        profiles[2].splinePoints.emplace_back(starRadius * std::cos(angle),
+                                              starRadius * std::sin(angle));
+    }
+    profiles[3] = profiles[2];
+    const RS_Vector repeatedStarPoint = profiles[3].splinePoints[1];
+    profiles[3].splinePoints.insert(profiles[3].splinePoints.begin() + 2,
+                                    repeatedStarPoint);
+    profiles[4] = profiles[2];
+    for (RS_Vector& point : profiles[4].splinePoints) {
+        const double reflectedY = -point.y;
+        point = {1.0e6 + 1.25 * (point.x * std::cos(0.73) - reflectedY * std::sin(0.73)),
+                 -2.0e6 + 1.25 * (point.x * std::sin(0.73) + reflectedY * std::cos(0.73))};
+    }
+    std::reverse(profiles[4].splinePoints.begin(), profiles[4].splinePoints.end());
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        const LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        REQUIRE(source.isClosed());
+        REQUIRE(source.getSegmentCount() >= 3);
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+
+        std::array<RS_Vector, 257> samples;
+        for (std::size_t i = 0; i < samples.size(); ++i) {
+            LC_CurveJet jet;
+            REQUIRE(source.tryEvaluateJet(static_cast<double>(source.getSegmentCount()) * i /
+                                          static_cast<double>(samples.size() - 1),
+                                          LC_CurveEvaluationSide::Interior, jet));
+            samples[i] = jet.point;
+            REQUIRE(samples[i].valid);
+        }
+        const auto orient = [](const RS_Vector& a, const RS_Vector& b, const RS_Vector& c) {
+            return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+        };
+        bool hasProperCrossing = false;
+        const std::size_t segments = samples.size() - 1;
+        for (std::size_t i = 0; i < segments && !hasProperCrossing; ++i) {
+            for (std::size_t j = i + 2; j < segments; ++j) {
+                if (i == 0 && j + 1 == segments) continue;
+                const double o1 = orient(samples[i], samples[i + 1], samples[j]);
+                const double o2 = orient(samples[i], samples[i + 1], samples[j + 1]);
+                const double o3 = orient(samples[j], samples[j + 1], samples[i]);
+                const double o4 = orient(samples[j], samples[j + 1], samples[i + 1]);
+                if (o1 * o2 < 0.0 && o3 * o4 < 0.0) {
+                    hasProperCrossing = true;
+                    break;
+                }
+            }
+        }
+        REQUIRE(hasProperCrossing);
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+            options.mode = LC_CurveOffsetMode::Trimmed;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, 0.25), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.branches.size() >= 2);
+            const auto sourceDistance = [&source](const RS_Vector& point) {
+                return source.getDistanceToPoint(point);
+            };
+            const Checked checked = check(result, curveOf(source), 0.0,
+                                          static_cast<double>(source.getSegmentCount()), 0.25,
+                                          -1.0, sourceDistance);
+            CHECK(checked.nearestKept >= 0.25 - 2.0 * options.tolerance.requestedGeometry);
+            CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+        }
+    }
+}
+
+TEST_CASE("Three-point closed fit splines trim to the requested signed distance",
+          "[curve-offset][trim][spline-points][fit-points][closed][three-point][oracle]") {
+    std::array<LC_SplinePointsData, 10> profiles;
+    profiles[0] = LC_SplinePointsData{true, false};
+    profiles[0].splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
+    profiles[1] = profiles[0];
+    for (RS_Vector& point : profiles[1].splinePoints) {
+        const double reflectedY = -point.y;
+        point = {35.0 + 1.5 * (point.x * std::cos(0.63) - reflectedY * std::sin(0.63)),
+                 -21.0 + 1.5 * (point.x * std::sin(0.63) + reflectedY * std::cos(0.63))};
+    }
+    std::reverse(profiles[1].splinePoints.begin(), profiles[1].splinePoints.end());
+    profiles[2] = LC_SplinePointsData{true, false};
+    constexpr double twoPi = 6.2831853071795864769;
+    for (unsigned i = 0; i < 11; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 11.0;
+        const double radius = 4.0 + 0.3 * std::cos(3.0 * angle) + 0.1 * std::sin(2.0 * angle);
+        profiles[2].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.85 * radius * std::sin(angle));
+    }
+    profiles[3] = LC_SplinePointsData{true, false};
+    for (unsigned i = 0; i < 13; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 13.0;
+        const double radius = 4.2 + 0.25 * std::cos(4.0 * angle) - 0.12 * std::sin(3.0 * angle);
+        profiles[3].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.9 * radius * std::sin(angle));
+    }
+    profiles[4] = LC_SplinePointsData{true, false};
+    profiles[4].fitTolerance = 3e-4;
+    for (unsigned i = 0; i < 14; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 14.0;
+        const double radius = 4.1 + 0.22 * std::cos(5.0 * angle) + 0.09 * std::sin(3.0 * angle);
+        profiles[4].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.88 * radius * std::sin(angle));
+    }
+    profiles[5] = LC_SplinePointsData{true, false};
+    profiles[5].fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 15; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 15.0;
+        const double radius = 4.3 + 0.18 * std::cos(5.0 * angle) + 0.14 * std::sin(3.0 * angle);
+        profiles[5].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.9 * radius * std::sin(angle));
+    }
+    profiles[6] = LC_SplinePointsData{true, false};
+    profiles[6].fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 32; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 32.0;
+        const double radius = 5.0 + 0.15 * std::cos(5.0 * angle) + 0.06 * std::sin(7.0 * angle);
+        profiles[6].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.92 * radius * std::sin(angle));
+    }
+    profiles[7] = LC_SplinePointsData{true, false};
+    profiles[7].fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 64; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 64.0;
+        const double radius = 5.5 + 0.12 * std::cos(7.0 * angle) + 0.05 * std::sin(13.0 * angle);
+        profiles[7].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.94 * radius * std::sin(angle));
+    }
+    profiles[8] = LC_SplinePointsData{true, false};
+    profiles[8].fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 128; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 128.0;
+        const double radius = 6.0 + 0.1 * std::cos(5.0 * angle) + 0.04 * std::sin(9.0 * angle);
+        profiles[8].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.96 * radius * std::sin(angle));
+    }
+    profiles[9] = LC_SplinePointsData{true, false};
+    profiles[9].fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 256; ++i) {
+        const double angle = twoPi * static_cast<double>(i) / 256.0;
+        const double radius = 6.5 + 0.08 * std::cos(7.0 * angle) + 0.03 * std::sin(13.0 * angle);
+        profiles[9].splinePoints.emplace_back(radius * std::cos(angle),
+                                              0.97 * radius * std::sin(angle));
+    }
+
+    for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
+        CAPTURE(profile);
+        const LC_SplinePoints source{nullptr, profiles[profile]};
+        REQUIRE(source.isClosed());
+        REQUIRE(source.getSegmentCount() == profiles[profile].splinePoints.size());
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            for (const double distance : {0.1, 0.25, 0.5}) {
+                CAPTURE(distance);
+                auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                options.mode = LC_CurveOffsetMode::Trimmed;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const Checked checked = check(result, curveOf(source), 0.0,
+                                              static_cast<double>(source.getSegmentCount()), distance,
+                                              -1.0, sourceDistance);
+                CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+                CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
+TEST_CASE("High-count open fit splines trim to the requested signed distance",
+          "[curve-offset][trim][spline-points][fit-points][open][oracle]") {
+    LC_SplinePointsData data{false, false};
+    data.fitTolerance = 1e-4;
+    for (unsigned i = 0; i < 256; ++i) {
+        const double t = static_cast<double>(i) / 255.0;
+        const double x = -8.0 + 16.0 * t;
+        const double y = 1.8 * std::sin(0.42 * x) + 0.24 * std::sin(1.1 * x) + 0.04 * x;
+        data.splinePoints.emplace_back(x, y);
+    }
+
+    const LC_SplinePoints source{nullptr, data};
+    REQUIRE_FALSE(source.isClosed());
+    REQUIRE(source.getSegmentCount() == source.getData().controlPoints.size() - 2);
+    REQUIRE(LC_OffsetSourceGeometry::capture(source));
+    const auto sourceDistance = [&source](const RS_Vector& point) {
+        return source.getDistanceToPoint(point);
+    };
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        for (const double distance : {0.1, 0.25, 0.5}) {
+            CAPTURE(distance);
+            auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            options.mode = LC_CurveOffsetMode::Trimmed;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const Checked checked = check(result, curveOf(source), 0.0,
+                                          static_cast<double>(source.getSegmentCount()), distance,
+                                          -1.0, sourceDistance);
+            CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+            CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+        }
+    }
+}
 
 TEST_CASE("Trimming removes a local loop and keeps the offset around it", "[curve-offset][trim]") {
     // Inside y = x^2 at distance 1: the swallowtail between the cusps, and the
@@ -648,16 +1333,36 @@ TEST_CASE("A point in a wide corner's wedge takes the corner's outer side", "[cu
     CHECK(side.distance == Approx(std::sqrt(2.0)).epsilon(1e-9));
 }
 
-TEST_CASE("A region still refuses a source with a corner", "[curve-offset][region][kink]") {
-    const RS_Spline square = polylineSpline({{0, 0}, {10, 0}, {10, 10}, {0, 10}}, true);
-    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(square, 1.0);
-    options.mode = LC_CurveOffsetMode::RegionBoundary;
-    const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
-        square, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 1.0), options,
-        LC_CurveOffset::makeDirectSourceBudget());
-    // it rounds no corner of its own: refused, whichever step finds the corner first
-    CHECK(result.status != LC_CurveOffsetStatus::Ok);
-    CHECK(result.branches.empty());
+TEST_CASE("A convex square shrinks to its mitered region boundary", "[curve-offset][region][kink]") {
+    for (const bool reversed : {false, true}) {
+        CAPTURE(reversed);
+        std::vector<RS_Vector> points{{0, 0}, {10, 0}, {10, 10}, {0, 10}};
+        if (reversed) {
+            std::reverse(points.begin(), points.end());
+        }
+        const RS_Spline square = polylineSpline(points, true);
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(square, 1.0);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            square, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(result.status), static_cast<int>(result.intersectionDiagnostics.stage));
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const LC_OffsetBranch& boundary = result.branches.front();
+        CHECK(boundary.closed);
+        CHECK(boundary.cubicPieces.size() == 4);
+        const std::array<RS_Vector, 4> expected{{{1, 1}, {9, 1}, {9, 9}, {1, 9}}};
+        for (const LC_OffsetCubicPiece& piece : boundary.cubicPieces) {
+            CHECK_FALSE(piece.provenance.arcCentre.valid);
+        }
+        for (const RS_Vector& corner : expected) {
+            CHECK(std::any_of(boundary.cubicPieces.begin(), boundary.cubicPieces.end(), [&](const auto& piece) {
+                return piece.bezier[3].distanceTo(corner) <=
+                       options.tolerance.requestedGeometry + options.tolerance.nodeMerge;
+            }));
+        }
+    }
 }
 
 namespace {
@@ -934,7 +1639,8 @@ TEST_CASE("A corner only roughly an arc of radius d is trimmed at d, not taken f
         CHECK(checked.worstMissing <= 2.0 * tolerance);
     }
     else {
-        CHECK(result.status == LC_CurveOffsetStatus::SingularOffset);
+        CHECK((result.status == LC_CurveOffsetStatus::SingularOffset ||
+               result.status == LC_CurveOffsetStatus::AmbiguousTopology));
     }
 }
 

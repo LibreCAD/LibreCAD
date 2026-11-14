@@ -25,6 +25,8 @@
 #include "lc_interval.h"
 #include "rs_vector.h"
 
+#include <limits>
+
 /**
  * Which one-sided limit a curve evaluation takes at a parameter where its
  * derivatives may jump: a knot of an RS_Spline or a segment join of an
@@ -42,20 +44,22 @@ enum class LC_CurveEvaluationSide {
 };
 
 /**
- * A curve point with its first and second derivatives, all with respect to the
- * curve's own parameter. A failed evaluation leaves the three vectors invalid;
- * it never reports zero derivatives in place of an error.
+ * A curve point with its first three derivatives, all with respect to the
+ * curve's own parameter. A curve may leave the optional third derivative
+ * invalid; a failed evaluation leaves the required three vectors invalid.
  */
 struct LC_CurveJet {
     RS_Vector point{false};
     RS_Vector first{false};
     RS_Vector second{false};
+    RS_Vector third{false};
 };
 
 /**
  * Conservative enclosures of a curve's point and first two derivatives over a
- * parameter box, component by component. Each interval contains every value the
- * quantity takes on the box; it may be wider.
+ * parameter box, component by component. The third derivative is optional.
+ * Each valid interval contains every value the quantity takes on the box; it
+ * may be wider.
  */
 struct LC_CurveJetBounds {
     LC_Interval x;
@@ -73,6 +77,21 @@ struct LC_CurveJetBounds {
      */
     LC_Interval speedSquaredProduct;
     LC_Interval crossProduct;
+    /** Optional conservative enclosure of C''' for certified root isolation. */
+    LC_Interval dddx;
+    LC_Interval dddy;
+    /** Optional rational-spline Bernstein bounds for a positive-scaled g' numerator. */
+    LC_Interval rationalFactorDerivativeBase;
+    LC_Interval rationalFactorDerivativeDistanceTerm;
+    /** Tighter rational offset-factor bound, with the exact distance it uses. */
+    LC_Interval rationalCuspFactorNumerator;
+    double rationalCuspBoundDistance{std::numeric_limits<double>::quiet_NaN()};
+    /** Set only by the explicit rational cusp-bound query when a no-root proof succeeds. */
+    bool rationalCuspNoRootCertified{false};
+    /** Sign variations of the strict Bernstein net for the squared cusp polynomial, or -1 if unresolved. */
+    int rationalCuspRootVariationUpperBound{-1};
+    /** Conservative variation bound allowing any signs admitted by interval Bernstein coefficients. */
+    int rationalCuspIntervalVariationUpperBound{-1};
 
     bool isValid() const {
         return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&
@@ -98,6 +117,39 @@ struct LC_CurveJetBounds {
     LC_Interval offsetFactorNumerator(const double signedDistance) const {
         const LC_Interval s2 = speedSquared();
         return s2 * sqrt(s2) - LC_Interval::point(signedDistance) * cross();
+    }
+
+    /** A potentially tighter conservative enclosure for offset path-length bounds. */
+    LC_Interval offsetFactorNumeratorForMotionBound(const double signedDistance) const {
+        const LC_Interval ordinary = offsetFactorNumerator(signedDistance);
+        return signedDistance == rationalCuspBoundDistance
+                   ? narrowest(ordinary, rationalCuspFactorNumerator)
+                   : ordinary;
+    }
+
+    /** Derivative of |C'|^3 - d(C' x C'') on boxes with a C''' enclosure. */
+    LC_Interval offsetFactorDerivativeNumerator(const double signedDistance) const {
+        if (!dddx.isValid() || !dddy.isValid()) return {};
+        const LC_Interval s2 = speedSquared();
+        if (!s2.isPositive()) return {};
+        const LC_Interval tangentAcceleration = dx * ddx + dy * ddy;
+        const LC_Interval tangentJerkCross = dx * dddy - dy * dddx;
+        return LC_Interval::point(3.0) * sqrt(s2) * tangentAcceleration -
+               LC_Interval::point(signedDistance) * tangentJerkCross;
+    }
+
+    /**
+     * An enclosure with the same sign as g' for use in monotonicity proofs.
+     * Rational spline bounds store W^6 g' as Bernstein products to avoid the
+     * dependency growth of quotient component intervals; W is positive.
+     */
+    LC_Interval offsetFactorDerivativeSignNumerator(const double signedDistance) const {
+        if (rationalFactorDerivativeBase.isValid() &&
+            rationalFactorDerivativeDistanceTerm.isValid()) {
+            return rationalFactorDerivativeBase -
+                   LC_Interval::point(signedDistance) * rationalFactorDerivativeDistanceTerm;
+        }
+        return offsetFactorDerivativeNumerator(signedDistance);
     }
 
 private:

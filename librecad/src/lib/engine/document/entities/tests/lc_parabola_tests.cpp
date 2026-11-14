@@ -27,6 +27,7 @@
 
 #include <array>
 #include <cmath>
+#include <limits>
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
@@ -92,6 +93,34 @@ TEST_CASE("LC_Parabola: CalculatePrimitives derives focus/vertex/axis",
     REQUIRE(d.isValid());
     REQUIRE(d.m_axis.magnitude() == Approx(50.0).margin(1e-6));
   }
+}
+
+TEST_CASE("LC_Parabola: primitive construction is scale-relative near degeneracy",
+          "[parabola][primitives][scale]") {
+  for (const double scale : {1e-160, 1e-12, 1e-6, 1.0, 1e6, 1e12, 1e155}) {
+    CAPTURE(scale);
+    const LC_ParabolaData sourceData{{RS_Vector{-scale, scale / 4.0}, RS_Vector{0.0, -scale / 4.0},
+                                      RS_Vector{scale, scale / 4.0}}};
+    const LC_Parabola parabola{nullptr, sourceData};
+    const auto& data = parabola.getData();
+    REQUIRE(data.isValid());
+    CHECK(std::abs(data.m_vertex.x / scale) <= 1e-10);
+    CHECK(std::abs(data.m_vertex.y / scale) <= 1e-10);
+    CHECK(std::abs(data.m_focus.y / scale - 1.0) <= 1e-10);
+    CHECK(std::abs(std::hypot(data.m_axis.x, data.m_axis.y) / scale - 1.0) <= 1e-10);
+    CHECK(std::isfinite(data.m_focus.x));
+    CHECK(std::isfinite(data.m_focus.y));
+  }
+
+  const LC_ParabolaData almostStraight{{
+      RS_Vector{0, 0}, RS_Vector{5, 1e-14}, RS_Vector{10, 0}}};
+  REQUIRE(almostStraight.isValid());
+  CHECK(std::isfinite(almostStraight.m_focus.x));
+  CHECK(std::isfinite(almostStraight.m_focus.y));
+
+  const LC_ParabolaData straight{{
+      RS_Vector{0, 0}, RS_Vector{5, 0}, RS_Vector{10, 0}}};
+  CHECK_FALSE(straight.isValid());
 }
 
 TEST_CASE("LC_Parabola: getQuadratic vanishes on sampled curve points",
@@ -176,6 +205,22 @@ TEST_CASE("LC_Parabola: getNearestOrthTan onEntity check uses point coords",
   REQUIRE(tp.y == Approx(0.0).margin(1e-12));
 }
 
+TEST_CASE("LC_Parabola: endpoint-tangent construction rejects degenerate inputs",
+          "[parabola][tangent][validation]") {
+  const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
+  const auto parallel = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{1.0, 0.0}, {2.0, 0.0}}});
+  CHECK_FALSE(parallel.isValid());
+
+  const auto zeroStartTangent = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{0.0, 0.0}, {1.0, -1.0}}});
+  CHECK_FALSE(zeroStartTangent.isValid());
+
+  const auto nonFiniteTangent = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{std::numeric_limits<double>::infinity(), 0.0}, {1.0, -1.0}}});
+  CHECK_FALSE(nonFiniteTangent.isValid());
+}
+
 TEST_CASE("LC_Parabola: From4Points reconstructs at realistic scale",
           "[parabola][reconstruction][regression]") {
   // Construct a parabola, sample 4 points spread over a 200-unit span,
@@ -205,6 +250,106 @@ TEST_CASE("LC_Parabola: From4Points reconstructs at realistic scale",
     }
   }
   REQUIRE(foundMatch);
+}
+
+TEST_CASE("LC_Parabola: From4Points is stable for small translated geometry",
+          "[parabola][reconstruction][scale]") {
+  const auto original = makeCanonicalParabola(100.0, 50.0);
+  const auto& controlPoints = original.getData().m_controlPoints;
+  constexpr double scale = 1e-6;
+  constexpr double angle = 0.37;
+  const RS_Vector translation{10.0, -20.0};
+  const auto transform = [=](const RS_Vector& point) {
+    RS_Vector mapped = point * scale;
+    mapped.rotate(angle);
+    return mapped + translation;
+  };
+  std::vector<RS_Vector> samples;
+  for (const double t : {0.0, 0.3, 0.7, 1.0})
+    samples.push_back(transform(bezierAt(controlPoints, t)));
+
+  const auto candidates = LC_ParabolaData::From4Points(samples);
+  REQUIRE_FALSE(candidates.empty());
+  const double fitTolerance = 1e-8 * scale;
+  const bool reconstructed = std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
+    return candidate.isValid() && std::all_of(samples.begin(), samples.end(), [&](const RS_Vector& sample) {
+      return candidate.fromX(candidate.findX(sample)).distanceTo(sample) <= fitTolerance;
+    });
+  });
+  CHECK(reconstructed);
+}
+
+TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
+          "[parabola][reconstruction][matrix]") {
+  const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+  const auto pointAt = [&](const double t) {
+    const double mt = 1.0 - t;
+    return controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) + controls[2] * (t * t);
+  };
+  const std::array<std::array<double, 4>, 3> layouts{{
+      {{0.0, 0.3, 0.7, 1.0}},
+      {{0.05, 0.2, 0.65, 0.95}},
+      {{0.0, 0.1, 0.4, 1.0}},
+  }};
+
+  for (const double scale : {1e-6, 1.0, 1e6}) {
+    CAPTURE(scale);
+    for (const auto& layout : layouts) {
+      CAPTURE(layout);
+      const double angle = 0.37;
+      const RS_Vector translation{123.0 * scale, -87.0 * scale};
+      const auto transform = [&](const RS_Vector& point) {
+        RS_Vector mapped = point * scale;
+        mapped.rotate(angle);
+        return mapped + translation;
+      };
+      std::vector<RS_Vector> samples;
+      for (const double t : layout)
+        samples.push_back(transform(pointAt(t)));
+      const std::array<RS_Vector, 3> independent{{
+          transform(pointAt(0.15)), transform(pointAt(0.5)), transform(pointAt(0.85))}};
+      const double tolerance = scale * 1e-7;
+      const double controlTolerance = scale * 1e-6;
+      std::array<RS_Vector, 3> expectedControls;
+      std::transform(controls.begin(), controls.end(), expectedControls.begin(), transform);
+
+      for (const bool reverseInput : {false, true}) {
+        CAPTURE(reverseInput);
+        auto orderedSamples = samples;
+        if (reverseInput)
+          std::reverse(orderedSamples.begin(), orderedSamples.end());
+        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+        const auto matches = [&](const LC_ParabolaData& candidate) {
+          if (!candidate.isValid())
+            return false;
+          const auto liesOnCandidate = [&](const RS_Vector& point) {
+            return candidate.fromX(candidate.findX(point)).distanceTo(point) <= tolerance;
+          };
+          if (!std::all_of(samples.begin(), samples.end(), liesOnCandidate) ||
+              !std::all_of(independent.begin(), independent.end(), liesOnCandidate))
+            return false;
+          return true;
+        };
+        CHECK(std::any_of(candidates.begin(), candidates.end(), matches));
+        if (layout.front() == 0.0 && layout.back() == 1.0) {
+          const auto controlsMatch = [&](const LC_ParabolaData& candidate) {
+            if (!candidate.isValid())
+              return false;
+            const bool forward = std::equal(candidate.m_controlPoints.begin(), candidate.m_controlPoints.end(),
+                expectedControls.begin(), [controlTolerance](const RS_Vector& actual, const RS_Vector& expected) {
+                return actual.distanceTo(expected) <= controlTolerance;
+                });
+            const bool reverse = std::equal(candidate.m_controlPoints.begin(), candidate.m_controlPoints.end(),
+                expectedControls.rbegin(), [controlTolerance](const RS_Vector& actual, const RS_Vector& expected) {
+                return actual.distanceTo(expected) <= controlTolerance;
+                });
+            return forward || reverse;
+          };
+          CHECK(std::any_of(candidates.begin(), candidates.end(), controlsMatch));
+        }
+      }
+    }
+  }
 }
 
 TEST_CASE("LC_Parabola: getLength matches numerical integration",

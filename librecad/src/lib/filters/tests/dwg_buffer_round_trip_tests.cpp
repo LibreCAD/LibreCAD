@@ -33,6 +33,7 @@
 #include <filesystem>
 #include <fstream>
 #include <limits>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -54,6 +55,21 @@ std::vector<std::uint8_t> snapshot(const dwgBufferW& w) {
 }
 
 } // namespace
+
+TEST_CASE("DWG stream buffer honors a nonzero origin and independent cursors", "[dwg-read][buffer][stream]") {
+    const std::string prefix = "prefix";
+    const std::string data("\x11\x22\x33\x44", 4);
+    std::istringstream input(prefix + data, std::ios::in | std::ios::binary);
+    input.seekg(static_cast<std::streamoff>(prefix.size())); REQUIRE(input.good());
+    dwgBuffer original(&input); REQUIRE(original.isGood()); CHECK(original.size() == data.size());
+    CHECK(original.getRawChar8() == 0x11);
+    auto fork = original.forkIndependent();
+    CHECK(original.getRawChar8() == 0x22); CHECK(original.getRawChar8() == 0x33);
+    CHECK(fork.getRawChar8() == 0x22); CHECK(fork.getRawChar8() == 0x33);
+    CHECK(original.getRawChar8() == 0x44); CHECK(fork.getRawChar8() == 0x44);
+    CHECK_FALSE(fork.setPosition(5)); CHECK_FALSE(fork.isGood()); CHECK(original.isGood());
+    REQUIRE(original.setPosition(0)); CHECK(original.getRawChar8() == 0x11);
+}
 
 TEST_CASE("dwgBufferW: putBit round-trips", "[dwg-write][primitives]") {
     dwgBufferW w;

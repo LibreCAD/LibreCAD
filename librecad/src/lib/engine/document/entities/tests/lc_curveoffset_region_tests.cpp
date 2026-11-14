@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {
@@ -103,6 +104,7 @@ std::vector<std::pair<RS_Vector, RS_Vector>> regionEdges(const std::vector<RS_Ve
 struct CycleCheck {
     /** Largest | distance to the region's boundary - d | over the output. */
     double worstDistance{0.0};
+    RS_Vector worstPoint;
     /** Output points on the wrong side of the region (inside when growing, outside when shrinking). */
     int wrongSide{0};
     /** Signed areas of the cycles, positive counter-clockwise. */
@@ -135,7 +137,10 @@ CycleCheck checkCycles(const LC_CurveOffsetGeometryResult& result, const std::ve
             for (const auto& [a, b] : edges) {
                 nearest = std::min(nearest, distanceToSegment(points[i], a, b));
             }
-            check.worstDistance = std::max(check.worstDistance, std::abs(nearest - d));
+            if (std::abs(nearest - d) > check.worstDistance) {
+                check.worstDistance = std::abs(nearest - d);
+                check.worstPoint = points[i];
+            }
             if (includedBy(winding(polygon, points[i]), rule) == grow) {
                 ++check.wrongSide;
             }
@@ -158,6 +163,7 @@ LC_CurveOffsetGeometryResult region(const RS_Spline& source, const double d, con
 // waist at the origin, and a limacon whose inner loop is wound twice.
 const std::vector<RS_Vector> g_ring{{0, 0}, {40, -10}, {60, 30}, {20, 50}, {-15, 25}};
 const std::vector<RS_Vector> g_bowTie{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}};
+const std::vector<RS_Vector> g_bowTieNoded{{20, 10}, {20, -10}, {0, 0}, {-20, 10}, {-20, -10}, {0, 0}};
 
 std::vector<RS_Vector> limacon() {
     std::vector<RS_Vector> points;
@@ -211,6 +217,76 @@ TEST_CASE("A bow tie shrinks into its two lobes and grows into one region", "[cu
         CHECK(out.worstDistance < 0.02);
         CHECK(out.wrongSide == 0);
         CHECK(out.areas.front() > 0.0);
+    }
+}
+
+TEST_CASE("Self-crossing polyline regions grow and erode under both fill rules",
+          "[curve-offset][region][polyline][self-crossing]") {
+    struct Transform {
+        const char* name;
+        double scale;
+        double angle;
+        bool reflectX;
+        RS_Vector translation;
+        bool reverse;
+    };
+    const std::vector<Transform> transforms{
+        {"identity", 1.0, 0.0, false, {0, 0}, false},
+        {"rotated translated reverse", 3.0, 0.63, false, {100000, -250000}, true},
+        {"reflected scaled", 0.4, -0.3, true, {-100000, 200000}, false},
+    };
+    for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+        for (const Transform& transform : transforms) {
+            const auto apply = [&](const RS_Vector& point) {
+                const double x = transform.scale * (transform.reflectX ? -point.x : point.x);
+                const double y = transform.scale * point.y;
+                const double cosine = std::cos(transform.angle);
+                const double sine = std::sin(transform.angle);
+                return RS_Vector{transform.translation.x + cosine * x - sine * y,
+                                 transform.translation.y + sine * x + cosine * y};
+            };
+            std::vector<RS_Vector> sourcePoints;
+            std::vector<RS_Vector> referencePoints;
+            sourcePoints.reserve(g_bowTie.size());
+            referencePoints.reserve(g_bowTieNoded.size());
+            for (const RS_Vector& point : g_bowTie) sourcePoints.push_back(apply(point));
+            for (const RS_Vector& point : g_bowTieNoded) referencePoints.push_back(apply(point));
+            if (transform.reverse) {
+                std::reverse(sourcePoints.begin(), sourcePoints.end());
+                std::reverse(referencePoints.begin(), referencePoints.end());
+            }
+            RS_Polyline source;
+            for (const RS_Vector& point : sourcePoints) source.addVertex(point);
+            source.setClosed(true);
+            source.endPolyline();
+
+            const double distance = transform.scale;
+            for (const bool grow : {true, false}) {
+                LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+                options.mode = LC_CurveOffsetMode::RegionBoundary;
+                options.fillRule = rule;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source,
+                    LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                                    distance),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(transform.name, rule, grow, static_cast<int>(result.status),
+                        static_cast<int>(result.intersectionDiagnostics.status),
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB,
+                        result.intersectionDiagnostics.failureDepth);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(result.sourceIntersections == 1);
+                REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+                const CycleCheck check = checkCycles(result, referencePoints, rule, distance, grow);
+                CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
+                CHECK(check.closed);
+                CHECK(check.worstDistance < 0.02 * transform.scale);
+                CHECK(check.wrongSide == 0);
+                REQUIRE(check.areas.size() == result.branches.size());
+                for (const double area : check.areas) CHECK(area > 0.0);
+            }
+        }
     }
 }
 
@@ -455,4 +531,146 @@ TEST_CASE("A boundary fragment across the seam is one stretch of the source", "[
             CHECK(check.wrongSide == 0);
         }
     }
+}
+
+TEST_CASE("A high-segment convex polyline has an exact inward region boundary", "[curve-offset][region][high-segment]") {
+    constexpr unsigned segmentCount = 256;
+    constexpr double radius = 10.0;
+    constexpr double distance = 0.15;
+    for (const bool reverse : {false, true}) {
+        RS_Polyline source;
+        std::vector<RS_Vector> vertices;
+        for (unsigned i = 0; i < segmentCount; ++i) {
+            const unsigned index = reverse ? segmentCount - i : i;
+            const double angle = 2.0 * M_PI * static_cast<double>(index % segmentCount) / segmentCount;
+            const RS_Vector point{radius * std::cos(angle), radius * std::sin(angle)};
+            source.addVertex(point);
+            vertices.push_back(point);
+        }
+        source.setClosed(true);
+        source.endPolyline();
+
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(reverse, static_cast<int>(result.status), result.sourceIntersections,
+                result.intersectionDiagnostics.work.totalBoxPairs);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const LC_OffsetBranch& cycle = result.branches.front();
+        REQUIRE(cycle.closed);
+        REQUIRE(cycle.cubicPieces.size() == segmentCount);
+        CHECK(cycle.cubicPieces.front().bezier[0] == cycle.cubicPieces.back().bezier[3]);
+        CHECK(cycle.cubicPieces.front().provenance.signedDistance == (reverse ? -distance : distance));
+
+        long double twiceArea = 0.0L;
+        for (std::size_t i = 0; i < cycle.cubicPieces.size(); ++i) {
+            const LC_OffsetCubicPiece& piece = cycle.cubicPieces[i];
+            const std::size_t span = piece.provenance.sourceSpan;
+            REQUIRE(span < vertices.size());
+            const RS_Vector start = vertices[span];
+            const RS_Vector direction = vertices[(span + 1) % vertices.size()] - start;
+            const double length = direction.magnitude();
+            REQUIRE(length > 0.0);
+            for (const RS_Vector& point : {piece.bezier[0], piece.bezier[3]}) {
+                CHECK(std::abs(RS_Vector::crossP(direction, point - start).z) / length ==
+                      Catch::Approx(distance).margin(1e-10));
+                const double projection = RS_Vector::dotP(point - start, direction) / direction.squared();
+                CHECK(projection >= -1e-10);
+                CHECK(projection <= 1.0 + 1e-10);
+            }
+            const RS_Vector a = piece.bezier[0];
+            const RS_Vector b = piece.bezier[3];
+            twiceArea += static_cast<long double>(a.x) * b.y - static_cast<long double>(a.y) * b.x;
+        }
+        CHECK(twiceArea > 0.0L);
+    }
+
+    RS_Polyline collapsedSource;
+    for (unsigned i = 0; i < segmentCount; ++i) {
+        const double angle = 2.0 * M_PI * static_cast<double>(i) / segmentCount;
+        collapsedSource.addVertex({radius * std::cos(angle), radius * std::sin(angle)});
+    }
+    collapsedSource.setClosed(true);
+    collapsedSource.endPolyline();
+    LC_CurveOffsetOptions collapsedOptions = LC_CurveOffset::makeDirectOptions(collapsedSource, 10.1);
+    collapsedOptions.mode = LC_CurveOffsetMode::RegionBoundary;
+    const LC_CurveOffsetGeometryResult collapsed = LC_CurveOffset::buildDirectBranches(
+        collapsedSource, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 10.1), collapsedOptions,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(collapsed.status == LC_CurveOffsetStatus::SingularOffset);
+    CHECK(collapsed.branches.empty());
+}
+
+TEST_CASE("A concave polyline region grows and shrinks through its reflex corners",
+          "[curve-offset][region][polyline][concave]") {
+    const std::vector<RS_Vector> vertices{{0, 0}, {8, 0}, {8, 8}, {6, 8},
+                                          {6, 2}, {2, 2}, {2, 8}, {0, 8}};
+    RS_Polyline source;
+    for (const RS_Vector& point : vertices) {
+        source.addVertex(point);
+    }
+    source.setClosed(true);
+    source.endPolyline();
+
+    constexpr double distance = 0.5;
+    for (const bool grow : {true, false}) {
+        CAPTURE(grow);
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                            distance),
+            options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+                result.intersectionDiagnostics.work.totalBoxPairs);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        std::size_t circularCorners = 0;
+        for (const LC_OffsetCubicPiece& piece : result.branches.front().cubicPieces) {
+            circularCorners += piece.provenance.arcCentre.valid;
+        }
+        CAPTURE(result.branches.front().cubicPieces.size(), circularCorners);
+        CHECK(circularCorners > 0);
+        const CycleCheck check = checkCycles(result, vertices, LC_CurveFillRule::NonZero, distance, grow);
+        CHECK(check.closed);
+        CHECK(check.worstDistance < 1e-7);
+        CHECK(check.wrongSide == 0);
+        CHECK(check.areas.front() > 0.0);
+    }
+}
+
+TEST_CASE("A concave polyline erosion separates lobes after its neck collapses",
+          "[curve-offset][region][polyline][concave][components]") {
+    const std::vector<RS_Vector> vertices{{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5},
+                                          {8, 0}, {12, 0}, {12, 4}, {8, 4},
+                                          {8, 2.5}, {4, 2.5}, {4, 4}, {0, 4}};
+    RS_Polyline source;
+    for (const RS_Vector& point : vertices) {
+        source.addVertex(point);
+    }
+    source.setClosed(true);
+    source.endPolyline();
+
+    constexpr double distance = 0.6;
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+    options.mode = LC_CurveOffsetMode::RegionBoundary;
+    const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+            result.intersectionDiagnostics.work.totalBoxPairs,
+            result.intersectionDiagnostics.work.generatedLeaves);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.branches.size() == 2);
+    const CycleCheck check = checkCycles(result, vertices, LC_CurveFillRule::NonZero, distance, false);
+    CHECK(check.closed);
+    CHECK(check.worstDistance < 1e-7);
+    CHECK(check.wrongSide == 0);
+    REQUIRE(check.areas.size() == 2);
+    CHECK(check.areas[0] > 0.0);
+    CHECK(check.areas[1] > 0.0);
 }

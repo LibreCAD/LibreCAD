@@ -163,7 +163,7 @@ RS_EntityContainer::OwnedReplacement RS_EntityContainer::replaceOwnedEntities(
     for (auto &entry:selections)
         if (entry.selection->commitRemoval(std::move(entry.prepared))) notification.m_changed.push_back(entry.selection);
     for (auto *entity:oldNodes) entity->RS_Entity::setSelectionFlag(false);
-    m_entities.swap(prepared);m_entIdx=-1;m_subContainer=nullptr;
+    m_entities.swap(prepared);markEntityListChanged();m_entIdx=-1;m_subContainer=nullptr;
     for (auto &entity:incoming) { entity->setParent(this);entity.release(); }
     m_minV=minimum;m_maxV=maximum;
     for (auto *entity:std::as_const(prepared)) delete entity;
@@ -369,6 +369,7 @@ void RS_EntityContainer::addEntity(const RS_Entity* entity) {
     else {
         m_entities.append(ent);
     }
+    markEntityListChanged();
     adjustBordersIfNeeded(entity);
 }
 
@@ -382,6 +383,7 @@ void RS_EntityContainer::appendEntity(RS_Entity* entity) {
     }
     debugEntityAlreadyPresentExists(entity);
     m_entities.append(entity);
+    markEntityListChanged();
     adjustBordersIfNeeded(entity);
 }
 
@@ -395,6 +397,7 @@ void RS_EntityContainer::prependEntity(RS_Entity* entity) {
     }
     debugEntityAlreadyPresentExists(entity);
     m_entities.prepend(entity);
+    markEntityListChanged();
     adjustBordersIfNeeded(entity);
 }
 
@@ -435,6 +438,7 @@ void RS_EntityContainer::moveEntity(const int index, QList<RS_Entity*>& entList)
     for (const auto e : entList) {
         m_entities.insert(ci++, e);
     }
+    if (!entList.isEmpty()) markEntityListChanged();
 }
 
 void RS_EntityContainer::adjustBordersIfNeeded(const RS_Entity* entity) {
@@ -453,6 +457,7 @@ void RS_EntityContainer::insertEntity(const int index, RS_Entity* entity) {
     }
     debugEntityAlreadyPresentExists(entity);
     m_entities.insert(index, entity);
+    markEntityListChanged();
     adjustBordersIfNeeded(entity);
 }
 
@@ -464,6 +469,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
     if (entity != nullptr) {
         const bool ret = m_entities.removeOne(entity);
         if (ret) {
+            markEntityListChanged();
             // actually was contained in container
             const bool mayAffectBorders = entity->isVisible();
             // A selected child may be owned by a transient container such as
@@ -487,6 +493,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
  * Erases all entities in this container and resets the borders..
  */
 void RS_EntityContainer::clear() {
+    if (!m_entities.isEmpty()) markEntityListChanged();
     if (m_autoDelete) {
         while (!m_entities.isEmpty()) {
             RS_Entity* en = m_entities.takeFirst();
@@ -502,6 +509,7 @@ void RS_EntityContainer::clear() {
 
 std::vector<std::unique_ptr<RS_Entity>> RS_EntityContainer::takeEntities() {
     std::vector<std::unique_ptr<RS_Entity>> taken;
+    if (!m_entities.isEmpty()) markEntityListChanged();
     taken.reserve(static_cast<std::size_t>(m_entities.size()));
     for (RS_Entity* entity : std::as_const(m_entities)) {
         if (entity != nullptr) {
@@ -752,7 +760,7 @@ void RS_EntityContainer::updateSplines() {
     RS_DEBUG->print("RS_EntityContainer::updateSplines()");
     for (RS_Entity* e : *this) {
         //// Only update our own inserts and not inserts of inserts
-        if (e->rtti() == RS2::EntitySpline /*&& e->getParent()==this*/) {
+        if (e->rtti() == RS2::EntitySpline || e->rtti() == RS2::EntityOffsetCurve) {
             e->update();
         }
         else if (e->isContainer() && e->rtti() != RS2::EntityHatch) {
@@ -1135,6 +1143,7 @@ void RS_EntityContainer::setEntityAt(const int index, RS_Entity* en) {
     }
     debugEntityAlreadyPresentExists(en);
     m_entities[index] = en;
+    markEntityListChanged();
 }
 
 /**
@@ -1886,6 +1895,7 @@ void RS_EntityContainer::moveSelectedRef(const RS_Vector& ref, const RS_Vector& 
 
 void RS_EntityContainer::revertDirection() {
     // revert entity order in the container
+    if (m_entities.size() > 1) markEntityListChanged();
     for (int k = 0; k < m_entities.size() / 2; ++k) {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
         m_entities.swapItemsAt(k, m_entities.size() - 1 - k);

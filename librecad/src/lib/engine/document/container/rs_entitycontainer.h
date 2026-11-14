@@ -27,6 +27,7 @@
 #ifndef RS_ENTITYCONTAINER_H
 #define RS_ENTITYCONTAINER_H
 
+#include <cstdint>
 #include <QList>
 
 #include "rs_entity.h"
@@ -142,6 +143,9 @@ public:
     size_t size() const {
         return m_entities.size();
     }
+
+    /** Changes whenever the direct entity list membership or order changes. */
+    std::uint64_t entityListRevision() const noexcept { return m_entityListRevision; }
 
     /**
      * Enables / disables automatic update of borders on entity removals
@@ -310,10 +314,13 @@ protected:
     mutable RS_EntityContainer* m_subContainer = nullptr;
 
 private:
+    friend class LC_OffsetCurvePublication;
     void debugEntityAlreadyPresentExists(const RS_Entity* entity) const;
+    void markEntityListChanged() noexcept { ++m_entityListRevision; }
 
     /** m_entities in the container */
     QList<RS_Entity*> m_entities;
+    std::uint64_t m_entityListRevision = 0;
     /**
      * Automatically update the borders of the container when entities
      * are added or removed.

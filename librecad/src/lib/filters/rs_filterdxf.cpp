@@ -360,7 +360,7 @@ void RS_FilterDXF::addSpline(const DL_SplineData& data) {
         return;
     }
 
-    if (data.degree >= 1 && data.degree <= 3) {
+    if (data.degree >= 1 && data.degree <= RS_Spline::MaxSupportedDegree) {
         RS_SplineData d(data.degree, ((data.flags & 0x1) == 0x1));
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, attributes);
@@ -369,7 +369,7 @@ void RS_FilterDXF::addSpline(const DL_SplineData& data) {
         splinePoints = NULL;
     }
     else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addSpline: Invalid degree for spline: %d. " "Accepted values are 1..3.",
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addSpline: Invalid degree for spline: %d. " "Accepted values are 1..6.",
                         data.degree);
     }
 }
@@ -1373,6 +1373,11 @@ void RS_FilterDXF::writeEntity(DL_WriterA& dw, RS_Entity* e, const DL_Attributes
             break;
         case RS2::EntitySpline:
             writeSpline(dw, (RS_Spline*)e, attrib);
+            break;
+        case RS2::EntityOffsetCurve:
+            // This legacy SPLINE writer regenerates knots. Keep the visible
+            // cache as ordinary primitives instead, including for R12.
+            writeAtomicEntities(dw, static_cast<RS_Spline*>(e), attrib, RS2::ResolveNone);
             break;
         case RS2::EntitySplinePoints:
             writeSplinePoints(dw, (LC_SplinePoints*)e, attrib);

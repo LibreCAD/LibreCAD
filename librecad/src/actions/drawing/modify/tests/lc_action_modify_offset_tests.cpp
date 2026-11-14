@@ -27,6 +27,7 @@
 
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include <QSettings>
 #include <QStringList>
@@ -34,6 +35,7 @@
 #include "lc_action_draw_line_parallel_through.h"
 #include "lc_action_modify_offset.h"
 #include "lc_actiontestsupport.h"
+#include "lc_offsetcurveactiontestsupport.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
@@ -51,6 +53,22 @@
 #include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_spline.h"
+#include "lc_offsetcurve.h"
+#include "lc_graphicviewport.h"
+#include <QEventLoop>
+#include <QTimer>
+#include <QKeyEvent>
+#include <QMouseEvent>
+
+#include "qg_graphicview.h"
+
+class LC_OffsetCreationActionTestAccess final {
+public:
+    static bool busy(const LC_ActionModifyOffset& action) { return action.m_worker->busy(); }
+    static void timeout(LC_ActionModifyOffset& action, bool enabled) {
+        action.m_worker->m_commitLimit = enabled ? 1 : LC_OffsetWorkerClient::Deadlines::commit;
+    }
+};
 
 namespace {
 
@@ -76,11 +94,13 @@ public:
     explicit OffsetProbe(LC_ActionContext* context) : LC_ActionModifyOffset(context) {}
 
     using LC_ActionModifyOffset::SetReferencePoint;
+    using LC_ActionModifyOffset::SetPosition;
     using LC_ActionModifyOffset::doProcessCommand;
     using LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected;
     using LC_ActionModifyOffset::onMouseMoveEventSelected;
     using LC_ActionModifyOffset::updateActionPromptForSelected;
     using LC_ActionModifyOffset::updateActionPromptForSelection;
+    using LC_ActionModifyOffset::onMouseRightButtonReleaseSelected;
     using LC_ActionPreSelectionAwareBase::m_selectedEntities;
     using LC_ActionPreSelectionAwareBase::m_selectionComplete;
     using RS_ActionSelectBase::m_catchForSelectionEntityTypes;
@@ -89,6 +109,13 @@ public:
     using RS_PreviewActionInterface::drawPreviewAndHighlights;
     using RS_PreviewActionInterface::m_preview;
     using RS_Snapper::m_infoCursorOverlayData;
+    const LC_OffsetBatchOutcome& workerReport() const { REQUIRE(m_workerReport); return *m_workerReport; }
+};
+
+class Graphic final : public RS_Graphic {
+public:
+    using RS_Graphic::countUndoCycles;
+    using RS_Graphic::countRedoCycles;
 };
 
 class ParallelThroughProbe final : public LC_ActionDrawLineParallelThrough {
@@ -104,7 +131,7 @@ public:
 
 struct OffsetFixture {
     const bool m_qtReady{lc::test::application() != nullptr};
-    RS_Graphic m_graphic;
+    Graphic m_graphic;
     lc::test::TestGraphicView m_view;
     CapturingContext m_context;
     std::unique_ptr<OffsetProbe> m_action;
@@ -204,6 +231,7 @@ struct OffsetFixture {
     void clickAt(const double x, const double y) const {
         const LC_MouseEvent e = eventAt(x, y);
         m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &e);
+        lc::test::awaitCreation(*m_action);
     }
 
     /** A mouse move, as RS_PreviewActionInterface::mouseMoveEvent() runs it. */
@@ -211,7 +239,24 @@ struct OffsetFixture {
         m_action->deletePreviewAndHighlights();
         const LC_MouseEvent e = eventAt(x, y);
         m_action->onMouseMoveEventSelected(OffsetProbe::SetReferencePoint, &e);
+        lc::test::awaitCreation(*m_action);
         m_action->drawPreviewAndHighlights();
+    }
+
+    void submit(bool preview, const RS_Vector& point = {3, 0}) const {
+        const auto event = eventAt(point.x, point.y);
+        if (preview) m_action->onMouseMoveEventSelected(OffsetProbe::SetReferencePoint, &event);
+        else m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &event);
+    }
+    RS_Ellipse* ellipse() {
+        auto* result = add(new RS_Ellipse(&m_graphic, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}));
+        result->setLayer(m_graphic.getActiveLayer()); return result;
+    }
+    LC_OffsetCurve* native() {
+        auto* basis = ellipse();
+        auto result = LC_OffsetCurve::create(*basis, .25, false, {}, .01); REQUIRE(result);
+        auto* entity = result.entity.get(); entity->setParent(&m_graphic); entity->setLayer(m_graphic.getActiveLayer());
+        add(entity); result.entity.release(); return entity;
     }
 
     /** Live entities of the drawing with this type. */
@@ -239,6 +284,522 @@ struct OffsetFixture {
 };
 
 } // namespace
+
+namespace {
+void observeCreation(const std::function<bool()>& ready) {
+    if (ready()) return;
+    QEventLoop loop; QTimer poll, watchdog; bool expired = false;
+    QObject::connect(&poll, &QTimer::timeout, &loop, [&] { if (ready()) loop.quit(); });
+    QObject::connect(&watchdog, &QTimer::timeout, &loop, [&] { expired = true; loop.quit(); });
+    watchdog.setSingleShot(true); watchdog.start(3500); poll.start(1); loop.exec(); REQUIRE_FALSE(expired);
+}
+}
+
+TEST_CASE("Offset creation worker preview cache is reused by a one-cycle native publication",
+          "[lc-offsetcurve][creation-worker][cache][gui]") {
+    OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, true);
+    f.m_action->setEditableOffsetCurve(true);
+    int heartbeats = 0; QTimer heartbeat;
+    QObject::connect(&heartbeat, &QTimer::timeout, [&] { ++heartbeats; }); heartbeat.start(0);
+    f.submit(true); REQUIRE(f.m_action->isPreparing()); CHECK(f.m_graphic.count() == 1);
+    lc::test::awaitCreation(*f.m_action); heartbeat.stop(); CHECK(heartbeats > 0);
+    REQUIRE_FALSE(f.m_action->m_preview->isEmpty()); CHECK(f.m_graphic.countUndoCycles() == 0);
+    const auto start = f.m_action->m_preview->entityAt(0)->getStartpoint();
+    const auto end = f.m_action->m_preview->entityAt(0)->getEndpoint();
+    REQUIRE(f.m_action->workerReport().sources.size() == 1);
+    CHECK(f.m_action->workerReport().sources.front().cacheEngineRuns == 1);
+    f.submit(false); REQUIRE(f.m_action->isPreparing()); CHECK(f.m_graphic.count() == 1);
+    lc::test::awaitCreation(*f.m_action);
+    REQUIRE(f.liveCount(RS2::EntityOffsetCurve) == 1); CHECK(f.m_graphic.countUndoCycles() == 1);
+    CHECK(f.m_action->workerReport().sources.front().cacheEngineRuns == 0);
+    CHECK(f.m_action->workerReport().sources.front().reusedCacheCopies == 1);
+    auto* made = dynamic_cast<LC_OffsetCurve*>(f.m_graphic.lastEntity()); REQUIRE(made);
+    CHECK(made->hasEditableDefinition()); CHECK(made->getStartpoint().distanceTo(start) < 1e-10);
+    CHECK(made->getEndpoint().distanceTo(end) < 1e-10); CHECK_FALSE(source->isDeleted());
+    REQUIRE(f.m_graphic.undo()); CHECK(made->isDeleted()); CHECK_FALSE(source->isDeleted());
+    REQUIRE(f.m_graphic.redo()); CHECK_FALSE(made->isDeleted());
+}
+
+TEST_CASE("Offset creation worker repeats a native definition and preserves zero-sum plain fallback",
+          "[lc-offsetcurve][creation-worker][repeat][gui]") {
+    OffsetFixture f; auto* source = f.native(); f.select({source}); f.start(.125, true);
+    f.m_action->setEditableOffsetCurve(true);
+    SECTION("native composition") {
+        f.submit(true); lc::test::awaitCreation(*f.m_action);
+        f.submit(false); lc::test::awaitCreation(*f.m_action);
+        auto* made = dynamic_cast<LC_OffsetCurve*>(f.m_graphic.lastEntity()); REQUIRE(made);
+        CHECK(made != source); CHECK(made->definition().distance == Catch::Approx(.375));
+        CHECK(f.m_action->workerReport().sources.front().rebaseEngineRuns == 1);
+    }
+    SECTION("zero sum uses stored cache") {
+        f.m_action->setDistance(.25); f.submit(false, {0, 0}); lc::test::awaitCreation(*f.m_action);
+        CHECK(f.m_graphic.lastEntity()->rtti() != RS2::EntityOffsetCurve);
+        const auto& result = f.m_action->workerReport().sources.front();
+        REQUIRE(result.succeeded()); CHECK(result.copiesKeptPlain == 1);
+        REQUIRE(result.keptPlain.size() == 1); CHECK(result.keptPlain.front().reason == LC_OffsetPlainReason::ZeroSum);
+        CHECK_FALSE(f.m_context.messages.isEmpty()); CHECK(f.m_context.messages.join(" ").contains("kept plain"));
+    }
+    CHECK_FALSE(source->isDeleted()); CHECK(f.m_graphic.countUndoCycles() == 1);
+}
+
+TEST_CASE("Offset creation worker preserves mixed-source ordering copies attributes and failed selection",
+          "[lc-offsetcurve][creation-worker][mixed][gui]") {
+    OffsetFixture f;
+    auto* line = f.add(new RS_Line(&f.m_graphic, RS_Vector{0, -2}, RS_Vector{2, -2}));
+    auto* ellipse = f.ellipse(); auto* polyline = f.add(new RS_Polyline(&f.m_graphic));
+    polyline->addVertex({0, -4}); polyline->addVertex({2, -4}); polyline->addVertex({2, -6});
+    auto* failed = f.add(new RS_Line(&f.m_graphic, RS_Vector{0, -8}, RS_Vector{2, -8}));
+    auto* layer = new RS_Layer("offset source"); f.m_graphic.addLayer(layer); ellipse->setLayer(layer);
+    auto pen = ellipse->getPen(false); pen.setWidth(RS2::Width07); ellipse->setPen(pen);
+    auto* locked = new RS_Layer("failed source"); f.m_graphic.addLayer(locked); failed->setLayer(locked);
+    f.select({line, ellipse, polyline, failed});
+    f.start(.125, false); f.m_action->setEditableOffsetCurve(true);
+    locked->lock(true);
+    f.m_action->setUseCurrentLayer(false); f.m_action->setUseCurrentAttributes(false);
+    f.m_action->setUseMultipleCopies(true); f.m_action->setCopiesNumber(2);
+    f.submit(false); lc::test::awaitCreation(*f.m_action);
+    const auto& report = f.m_action->workerReport(); REQUIRE(report.sources.size() == 4);
+    CHECK(report.sources[0].source == line); CHECK(report.sources[1].source == ellipse); CHECK(report.sources[2].source == polyline);
+    CHECK(line->isDeleted()); CHECK(ellipse->isDeleted()); CHECK(polyline->isDeleted());
+    CHECK(report.sources[3].status == LC_OffsetSourceStatus::NotVisibleOrLocked);
+    CHECK_FALSE(failed->isDeleted()); CHECK(failed->isSelected());
+    REQUIRE(report.sources[1].createdEntities.size() == 2);
+    for (const auto* made : report.sources[1].createdEntities) {
+        CHECK(made->getLayer(false) == layer); CHECK(made->getPen(false).getWidth() == RS2::Width07);
+        CHECK(made->getParent() == &f.m_graphic);
+    }
+    CHECK(f.m_graphic.countUndoCycles() == 1); REQUIRE(f.m_graphic.undo());
+    CHECK_FALSE(line->isDeleted()); CHECK_FALSE(ellipse->isDeleted()); CHECK_FALSE(polyline->isDeleted());
+    REQUIRE(f.m_graphic.redo()); CHECK(ellipse->isDeleted());
+}
+
+TEST_CASE("Offset creation worker rejects input option selection layer and UCS changes before publication",
+          "[lc-offsetcurve][creation-worker][stale][gui]") {
+    OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, false);
+    f.m_action->setEditableOffsetCurve(true); f.submit(false); REQUIRE(f.m_action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*f.m_action); });
+    SECTION("geometry") { source->setRatio(.75); }
+    SECTION("option") { f.m_action->setCopiesNumber(2); }
+    SECTION("selection") { const RS_Selection s(&f.m_graphic, f.m_view.getViewPort()); s.deselectAll(); }
+    SECTION("layer") { source->getLayer(false)->lock(true); }
+    SECTION("UCS") { f.m_view.getViewPort()->createUCS({1, 2}, .1); }
+    SECTION("pan") { f.m_view.getViewPort()->zoomPan(10, 5); }
+    SECTION("relative zero") { f.m_view.getViewPort()->setRelativeZero({1, 2}); }
+    lc::test::awaitCreation(*f.m_action);
+    CHECK(f.m_graphic.count() == 1); CHECK(f.m_graphic.countUndoCycles() == 0); CHECK_FALSE(source->isDeleted());
+    CHECK_FALSE(f.m_context.messages.isEmpty());
+}
+
+TEST_CASE("Offset creation worker cancels Escape suspension and right click without a late publication",
+          "[lc-offsetcurve][creation-worker][cancel][gui]") {
+    OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, false);
+    f.submit(false); observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*f.m_action); });
+    SECTION("Escape") { QKeyEvent event(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier); f.m_action->keyPressEvent(&event); }
+    SECTION("suspend") { f.m_action->suspend(); }
+    SECTION("right click") { const auto e = eventAt(3, 0); f.m_action->onMouseRightButtonReleaseSelected(OffsetProbe::SetReferencePoint, &e); }
+    CHECK_FALSE(f.m_action->isPreparing());
+    observeCreation([&] { return !LC_OffsetCreationActionTestAccess::busy(*f.m_action); });
+    CHECK(f.m_graphic.count() == 1); CHECK_FALSE(source->isDeleted()); CHECK(f.m_graphic.countUndoCycles() == 0);
+    f.start(.125, true); f.submit(false); lc::test::awaitCreation(*f.m_action);
+    CHECK(f.m_graphic.countUndoCycles() == 1);
+}
+
+TEST_CASE("Offset preview Escape cancels a held-drag through the view event pipeline",
+          "[lc-offsetcurve][creation-worker][cancel][event-pipeline][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>();
+    graphic->initForNewDocument();
+    CapturingContext context;
+    auto view = std::make_unique<QG_GraphicView>(nullptr, graphic.get(), &context);
+    view->resize(640, 480);
+    view->initView();
+
+    auto* source = new RS_Ellipse(graphic.get(),
+                                  RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    source->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(source);
+    const RS_Selection selection(graphic.get(), view->getViewPort());
+    selection.selectSingle(source);
+
+    RS_SnapMode snapMode;
+    snapMode.snapFree = true;
+    view->setDefaultSnapMode(snapMode);
+
+    auto action = std::make_shared<OffsetProbe>(&context);
+    action->setDistanceFixed(false);
+    action->setKeepOriginals(true);
+    REQUIRE(view->setCurrentAction(action));
+    REQUIRE(view->getCurrentAction() == action.get());
+    REQUIRE(action->m_selectionComplete);
+
+    const auto uiPoint = [&](const RS_Vector& world) {
+        double x = 0.0;
+        double y = 0.0;
+        view->getViewPort()->toUI(world, x, y);
+        return QPoint(qRound(x), qRound(y));
+    };
+    const auto sendMouse = [&](const QEvent::Type type, const RS_Vector& world,
+                               const Qt::MouseButton button, const Qt::MouseButtons buttons) {
+        const QPoint position = uiPoint(world);
+        QMouseEvent event(type, QPointF(position), QPointF(view->mapToGlobal(position)), button, buttons,
+                          Qt::NoModifier);
+        QApplication::sendEvent(view.get(), &event);
+    };
+
+    const RS_Vector reference{3.0, 0.0};
+    sendMouse(QEvent::MouseButtonPress, reference, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, reference, Qt::LeftButton, Qt::NoButton);
+    CHECK(view->getCurrentAction() == action.get());
+    REQUIRE(action->getStatus() == OffsetProbe::SetPosition);
+
+    const RS_Vector side{3.0, 2.0};
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::LeftButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    REQUIRE(action->isPreparing());
+
+    QKeyEvent escape(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+    QApplication::sendEvent(view.get(), &escape);
+    CHECK(escape.isAccepted());
+    CHECK(action->isFinished());
+    CHECK(view->getCurrentAction() != action.get());
+    observeCreation([&] { return !LC_OffsetCreationActionTestAccess::busy(*action); });
+
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    QCoreApplication::processEvents();
+    CHECK(graphic->count() == 1);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(view->getCurrentAction() != action.get());
+    view->beginClose();
+}
+
+TEST_CASE("Offset preview through the view matches the released worker commit",
+          "[lc-offsetcurve][creation-worker][preview-parity][event-pipeline][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>();
+    graphic->initForNewDocument();
+    CapturingContext context;
+    auto view = std::make_unique<QG_GraphicView>(nullptr, graphic.get(), &context);
+    view->resize(640, 480);
+    view->initView();
+
+    auto* source = new RS_Ellipse(graphic.get(),
+                                  RS_EllipseData{{0, 0}, {2, 0}, .5, 0, M_PI_2, false});
+    source->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(source);
+    const RS_Selection selection(graphic.get(), view->getViewPort());
+    selection.selectSingle(source);
+
+    RS_SnapMode snapMode;
+    snapMode.snapFree = true;
+    view->setDefaultSnapMode(snapMode);
+
+    auto action = std::make_shared<OffsetProbe>(&context);
+    action->setDistanceFixed(false);
+    action->setKeepOriginals(true);
+    action->setEditableOffsetCurve(false);
+    REQUIRE(view->setCurrentAction(action));
+
+    const auto uiPoint = [&](const RS_Vector& world) {
+        double x = 0.0;
+        double y = 0.0;
+        view->getViewPort()->toUI(world, x, y);
+        return QPoint(qRound(x), qRound(y));
+    };
+    const auto sendMouse = [&](const QEvent::Type type, const RS_Vector& world,
+                               const Qt::MouseButton button, const Qt::MouseButtons buttons) {
+        const QPoint position = uiPoint(world);
+        QMouseEvent event(type, QPointF(position), QPointF(view->mapToGlobal(position)), button, buttons,
+                          Qt::NoModifier);
+        QApplication::sendEvent(view.get(), &event);
+    };
+
+    struct Shape {
+        RS2::EntityType type;
+        std::vector<RS_Vector> points;
+        std::vector<double> values;
+    };
+    const auto shapeOf = [](const RS_Entity& entity) {
+        Shape shape{entity.rtti(), {entity.getStartpoint(), entity.getEndpoint(), entity.getMin(), entity.getMax()}, {}};
+        if (entity.rtti() == RS2::EntityEllipse) {
+            const auto& ellipse = static_cast<const RS_Ellipse&>(entity);
+            const auto& data = ellipse.getData();
+            shape.points.push_back(data.center);
+            shape.points.push_back(data.majorP);
+            shape.values = {data.ratio, data.angle1, data.angle2, data.reversed ? 1.0 : 0.0};
+        }
+        else if (entity.rtti() == RS2::EntitySpline) {
+            const auto& data = static_cast<const RS_Spline&>(entity).getData();
+            shape.points.insert(shape.points.end(), data.controlPoints.begin(), data.controlPoints.end());
+            shape.points.insert(shape.points.end(), data.fitPoints.begin(), data.fitPoints.end());
+            shape.values = {static_cast<double>(data.degree), static_cast<double>(data.type),
+                            static_cast<double>(data.savedOpenType), data.m_closedFlag ? 1.0 : 0.0,
+                            data.m_periodicFlag ? 1.0 : 0.0};
+            shape.values.insert(shape.values.end(), data.knotslist.begin(), data.knotslist.end());
+            shape.values.insert(shape.values.end(), data.weights.begin(), data.weights.end());
+            shape.values.insert(shape.values.end(), data.savedOpenKnots.begin(), data.savedOpenKnots.end());
+        }
+        else if (entity.rtti() == RS2::EntityPolyline) {
+            const auto& polyline = static_cast<const RS_Polyline&>(entity);
+            shape.values.push_back(polyline.isClosed() ? 1.0 : 0.0);
+            for (const RS_Entity* segment : polyline) {
+                shape.values.push_back(static_cast<double>(segment->rtti()));
+                shape.points.push_back(segment->getStartpoint());
+                shape.points.push_back(segment->getEndpoint());
+                if (segment->rtti() == RS2::EntityArc) {
+                    shape.points.push_back(segment->getCenter());
+                    shape.values.push_back(segment->getRadius());
+                }
+            }
+        }
+        return shape;
+    };
+    const auto capture = [&](const auto& entities, const RS_Entity* excluded) {
+        std::vector<Shape> shapes;
+        for (const RS_Entity* entity : entities) {
+            if (entity != excluded && !entity->isDeleted()) shapes.push_back(shapeOf(*entity));
+        }
+        return shapes;
+    };
+    const auto samePoint = [](const RS_Vector& a, const RS_Vector& b) {
+        return a.valid == b.valid && (!a.valid || a.distanceTo(b) <= 1e-9);
+    };
+    const auto sameShapes = [&](const std::vector<Shape>& a, const std::vector<Shape>& b) {
+        if (a.size() != b.size()) return false;
+        for (std::size_t i = 0; i < a.size(); ++i) {
+            if (a[i].type != b[i].type || a[i].points.size() != b[i].points.size() ||
+                a[i].values.size() != b[i].values.size()) return false;
+            for (std::size_t j = 0; j < a[i].points.size(); ++j) {
+                if (!samePoint(a[i].points[j], b[i].points[j])) return false;
+            }
+            for (std::size_t j = 0; j < a[i].values.size(); ++j) {
+                if (!std::isfinite(a[i].values[j]) || !std::isfinite(b[i].values[j]) ||
+                    std::abs(a[i].values[j] - b[i].values[j]) > 1e-9) return false;
+            }
+        }
+        return true;
+    };
+
+    const RS_Vector reference{4.0, 0.0};
+    const RS_Vector side{4.0, 1.0};
+    sendMouse(QEvent::MouseButtonPress, reference, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, reference, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->getStatus() == OffsetProbe::SetPosition);
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::LeftButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    const std::vector<Shape> preview = capture(*action->m_preview, nullptr);
+    REQUIRE_FALSE(preview.empty());
+    const int undoCyclesBefore = graphic->countUndoCycles();
+
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    const std::vector<Shape> committed = capture(*graphic, source);
+    CHECK(sameShapes(preview, committed));
+    CHECK(graphic->countUndoCycles() == undoCyclesBefore + 1);
+    CHECK_FALSE(source->isDeleted());
+    REQUIRE(action->workerReport().sources.size() == 1);
+    CHECK(action->workerReport().sources.front().cacheEngineRuns == 0);
+    CHECK(action->workerReport().sources.front().reusedCacheCopies == preview.size());
+    view->beginClose();
+}
+
+TEST_CASE("Offset view refuses a stale peer edit and recovers on a fresh preview",
+          "[lc-offsetcurve][creation-worker][stale-peer][event-pipeline][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>();
+    graphic->initForNewDocument();
+    CapturingContext context;
+    auto view = std::make_unique<QG_GraphicView>(nullptr, graphic.get(), &context);
+    view->resize(640, 480);
+    view->initView();
+
+    auto* source = new RS_Ellipse(graphic.get(),
+                                  RS_EllipseData{{0, 0}, {2, 0}, .5, 0, M_PI_2, false});
+    source->setLayer(graphic->getActiveLayer());
+    graphic->addEntity(source);
+    const RS_Selection selection(graphic.get(), view->getViewPort());
+    selection.selectSingle(source);
+
+    RS_SnapMode snapMode;
+    snapMode.snapFree = true;
+    view->setDefaultSnapMode(snapMode);
+
+    auto action = std::make_shared<OffsetProbe>(&context);
+    action->setDistanceFixed(false);
+    action->setKeepOriginals(true);
+    REQUIRE(view->setCurrentAction(action));
+
+    const auto uiPoint = [&](const RS_Vector& world) {
+        double x = 0.0;
+        double y = 0.0;
+        view->getViewPort()->toUI(world, x, y);
+        return QPoint(qRound(x), qRound(y));
+    };
+    const auto sendMouse = [&](const QEvent::Type type, const RS_Vector& world,
+                               const Qt::MouseButton button, const Qt::MouseButtons buttons) {
+        const QPoint position = uiPoint(world);
+        QMouseEvent event(type, QPointF(position), QPointF(view->mapToGlobal(position)), button, buttons,
+                          Qt::NoModifier);
+        QApplication::sendEvent(view.get(), &event);
+    };
+
+    const RS_Vector reference{4.0, 0.0};
+    const RS_Vector side{4.0, 1.0};
+    sendMouse(QEvent::MouseButtonPress, reference, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, reference, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->getStatus() == OffsetProbe::SetPosition);
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::LeftButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    source->setRatio(.75);
+    lc::test::awaitCreation(*action);
+    CHECK_FALSE(action->isPreparing());
+    CHECK(graphic->count() == 1);
+    CHECK(graphic->countUndoCycles() == 0);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(source->getRatio() == Catch::Approx(.75));
+    CHECK(action->m_preview->isEmpty());
+    CHECK(context.messages.join(" ").contains("inputs changed"));
+    CHECK_FALSE(action->isFinished());
+
+    sendMouse(QEvent::MouseMove, side, Qt::NoButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+    REQUIRE_FALSE(action->m_preview->isEmpty());
+    sendMouse(QEvent::MouseButtonPress, side, Qt::LeftButton, Qt::LeftButton);
+    sendMouse(QEvent::MouseButtonRelease, side, Qt::LeftButton, Qt::NoButton);
+    REQUIRE(action->isPreparing());
+    observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    lc::test::awaitCreation(*action);
+
+    CHECK(graphic->count() > 1);
+    CHECK(graphic->countUndoCycles() == 1);
+    CHECK_FALSE(source->isDeleted());
+    CHECK(source->getRatio() == Catch::Approx(.75));
+    view->beginClose();
+}
+
+TEST_CASE("Offset creation worker supersedes previews and recovers after an actual process timeout",
+          "[lc-offsetcurve][creation-worker][timeout][gui]") {
+    OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, true);
+    f.submit(true); REQUIRE(f.m_action->isPreparing());
+    f.m_action->setDistance(.25); f.submit(true); lc::test::awaitCreation(*f.m_action);
+    REQUIRE_FALSE(f.m_action->m_preview->isEmpty()); CHECK(f.m_graphic.countUndoCycles() == 0);
+    LC_OffsetCreationActionTestAccess::timeout(*f.m_action, true);
+    f.submit(false); lc::test::awaitCreation(*f.m_action);
+    CHECK(f.m_graphic.count() == 1); CHECK(f.m_graphic.countUndoCycles() == 0);
+    REQUIRE_FALSE(f.m_context.messages.isEmpty());
+    LC_OffsetCreationActionTestAccess::timeout(*f.m_action, false);
+    f.submit(false); lc::test::awaitCreation(*f.m_action);
+    CHECK(f.m_graphic.countUndoCycles() == 1); CHECK(f.m_graphic.count() > 1);
+}
+
+TEST_CASE("Offset creation worker applies current attributes only to private outputs",
+          "[lc-offsetcurve][creation-worker][attributes][gui]") {
+    OffsetFixture f; auto* source = f.ellipse();
+    auto* originalLayer = new RS_Layer("original offset layer"); f.m_graphic.addLayer(originalLayer);
+    source->setLayer(originalLayer); const auto before = source->getPen(false);
+    auto active = f.m_graphic.getActivePen(); active.setWidth(RS2::Width09); f.m_graphic.setActivePen(active);
+    f.select({source}); f.start(.125, true); f.m_action->setEditableOffsetCurve(true);
+    f.submit(false); lc::test::awaitCreation(*f.m_action);
+    auto* made = f.m_graphic.lastEntity(); REQUIRE(made != source);
+    CHECK(made->getLayer(false) == f.m_graphic.getActiveLayer()); CHECK(made->getPen(false) == active);
+    CHECK(source->getLayer(false) == originalLayer); CHECK(source->getPen(false) == before);
+    CHECK(made->sourceHandle() == 0); CHECK(f.m_graphic.countUndoCycles() == 1);
+}
+
+TEST_CASE("Offset creation worker context and action destruction cannot publish late output",
+          "[lc-offsetcurve][creation-worker][lifetime][asan][gui]") {
+    REQUIRE(lc::test::application());
+    auto graphic = std::make_unique<Graphic>(); graphic->initForNewDocument();
+    auto view = std::make_unique<lc::test::TestGraphicView>(); view->setDocument(graphic.get());
+    CapturingContext context; context.setDocumentAndView(graphic.get(), view.get());
+    auto* source = new RS_Ellipse(graphic.get(), RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    source->setLayer(graphic->getActiveLayer()); graphic->addEntity(source); graphic->select(QList<RS_Entity*>{source});
+    auto action = std::make_unique<OffsetProbe>(&context); action->setDistanceFixed(true); action->setDistance(.125);
+    action->setKeepOriginals(true); action->init(OffsetProbe::SetReferencePoint);
+    const auto event = eventAt(3, 0); action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &event);
+    REQUIRE(action->isPreparing()); observeCreation([&] { return LC_OffsetCreationActionTestAccess::busy(*action); });
+    SECTION("document") { graphic.reset(); }
+    SECTION("view") { view.reset(); }
+    SECTION("action") { action.reset(); }
+    if (action) { CHECK_FALSE(action->isPreparing()); CHECK(action->isFinished()); action.reset(); }
+    if (graphic) { CHECK(graphic->count() == 1); CHECK(graphic->countUndoCycles() == 0); CHECK_FALSE(source->isDeleted()); }
+    else {
+        RS_Graphic fallback; fallback.initForNewDocument(); view->setDocument(&fallback);
+        context.setDocumentAndView(&fallback, view.get()); view.reset();
+    }
+}
+
+TEST_CASE("Offset creation publication tolerates an observer destroying its action after ownership handoff",
+          "[lc-offsetcurve][creation-worker][lifetime][asan][gui]") {
+    struct Observer final : LC_DocumentModificationListener {
+        std::unique_ptr<OffsetProbe>* action = nullptr;
+        void graphicModified(const RS_Graphic*, bool) override { action->reset(); }
+        void undoStateChanged(const RS_Document*, bool, bool) override {}
+    } observer;
+    OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, true);
+    observer.action = &f.m_action; f.m_graphic.setModificationListener(&observer, true);
+    f.submit(false); observeCreation([&] { return !f.m_action; });
+    f.m_graphic.setModificationListener(&observer, false);
+    CHECK(f.m_graphic.count() > 1); CHECK(f.m_graphic.countUndoCycles() == 1); CHECK_FALSE(source->isDeleted());
+    REQUIRE(f.m_graphic.undo()); REQUIRE(f.m_graphic.redo());
+}
+
+TEST_CASE("Offset creation worker retains two-click ellipse side distance and relative-zero undo",
+          "[lc-offsetcurve][creation-worker][two-click][gui]") {
+    OffsetFixture f; auto* source = f.ellipse(); f.select({source}); f.start(.125, true);
+    f.m_action->setEditableOffsetCurve(true); f.m_action->setDistanceFixed(false);
+    const auto before = f.m_view.getViewPort()->getMarkedRelativeZero();
+    const auto reference = eventAt(1, 0), side = eventAt(1.2, 0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetReferencePoint, &reference);
+    CHECK(f.m_action->getStatus() == OffsetProbe::SetPosition); CHECK_FALSE(f.m_action->isPreparing());
+    f.m_action->onMouseMoveEventSelected(OffsetProbe::SetPosition, &side); lc::test::awaitCreation(*f.m_action);
+    CHECK(f.m_action->getDistance() == Catch::Approx(.2)); CHECK(f.m_graphic.countUndoCycles() == 0);
+    f.m_action->onMouseLeftButtonReleaseSelected(OffsetProbe::SetPosition, &side); lc::test::awaitCreation(*f.m_action);
+    auto* made = dynamic_cast<LC_OffsetCurve*>(f.m_graphic.lastEntity()); REQUIRE(made);
+    CHECK(made->definition().distance == Catch::Approx(.2)); CHECK(f.m_graphic.countUndoCycles() == 1);
+    CHECK(f.m_view.getViewPort()->getRelativeZero() == RS_Vector(1, 0));
+    REQUIRE(f.m_graphic.undo()); CHECK(f.m_view.getViewPort()->getRelativeZero() == before);
+    REQUIRE(f.m_graphic.redo()); CHECK(f.m_view.getViewPort()->getRelativeZero() == RS_Vector(1, 0));
+}
+
+TEST_CASE("Offset creation worker follows existing per-copy DWG identity and owner-lineage policy",
+          "[lc-offsetcurve][creation-worker][provenance][gui]") {
+    for (bool keep : {false, true}) {
+        OffsetFixture f;
+        auto* source = f.add(new RS_Line(&f.m_graphic, RS_Vector{0, -2}, RS_Vector{2, -2}));
+        auto* ellipse = f.ellipse(); source->setSourceHandle(77);
+        const auto lineage = RS_Entity::newLineage(), owner = RS_Entity::newLineage();
+        source->setLineage(lineage); source->setOwnerLineage(owner);
+        f.select({source, ellipse}); f.start(.125, keep); f.m_action->setEditableOffsetCurve(true);
+        f.m_action->setUseMultipleCopies(true); f.m_action->setCopiesNumber(2);
+        f.submit(false); lc::test::awaitCreation(*f.m_action);
+        const auto& made = f.m_action->workerReport().sources.front().createdEntities; REQUIRE(made.size() == 2);
+        CHECK(made[0]->sourceHandle() == (keep ? 0 : 77)); CHECK(made[1]->sourceHandle() == 0);
+        CHECK((made[0]->lineage() == lineage) == !keep); CHECK((made[0]->ownerLineage() == owner) == !keep);
+        CHECK(made[1]->lineage() != lineage); CHECK(made[1]->ownerLineage() != owner);
+        CHECK(made[1]->lineage() != made[0]->lineage()); CHECK(made[1]->ownerLineage() != made[0]->ownerLineage());
+        CHECK(source->lineage() == lineage); CHECK(source->ownerLineage() == owner);
+        const auto& native = f.m_action->workerReport().sources.at(1).createdEntities; REQUIRE(native.size() == 2);
+        for (const auto* entity : native) { CHECK(entity->sourceHandle() == 0); CHECK(entity->ownerLineage() == 0); }
+    }
+}
 
 TEST_CASE("Modify Offset admits both spline types", "[curve-offset][action]") {
     OffsetFixture f;

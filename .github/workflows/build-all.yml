@@ -180,7 +180,9 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
-    runs-on: macos-14
+    # Use the explicit runner label already used by the Pixi matrix. The
+    # macos-14 alias currently resolves to an unsupported arm64 pool here.
+    runs-on: macos-15-intel
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -215,21 +217,27 @@ jobs:
       # ttf2lff links Freetype, but Homebrew's is thin (single-arch), so build a
       # minimal universal static Freetype for the universal ttf2lff to link.
       - name: Build universal Freetype
+        env:
+          MACOSX_DEPLOYMENT_TARGET: '14.4'
         run: |
-          scripts/build-universal-freetype-macos.sh "$RUNNER_TEMP/freetype"
+          scripts/build-universal-freetype-macos.sh "$RUNNER_TEMP/freetype" "$MACOSX_DEPLOYMENT_TARGET"
           echo "FREETYPE_DIR=$RUNNER_TEMP/freetype" >> "$GITHUB_ENV"
 
       # Build a single universal (arm64 + x86_64) binary. The clang_64 Qt is a
       # universal package, so one job covers both Apple Silicon and Intel Macs.
       - name: Build and packaging
         env:
+          MACOSX_DEPLOYMENT_TARGET: '14.4'
           QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64 QMAKE_APPLE_DEVICE_ARCHS+=x86_64
         run: |
           DMG_NAME="LibreCAD-$(git describe --always)-universal.dmg"
           scripts/build-osx.sh \
+            --deployment-target="$MACOSX_DEPLOYMENT_TARGET" \
             --sign-mode=adhoc \
             --architectures=arm64,x86_64 \
             --output="$DMG_NAME"
+
+          scripts/test-osx-dmg-runtime.sh --dmg "$DMG_NAME"
 
           scripts/test-osx-package.sh \
             --app LibreCAD.app \

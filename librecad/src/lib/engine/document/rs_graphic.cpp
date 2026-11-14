@@ -295,7 +295,9 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 /**
  * Destructor.
  */
-RS_Graphic::~RS_Graphic() = default;
+RS_Graphic::~RS_Graphic() {
+    invalidateLifetime();
+}
 
 void RS_Graphic::onLoadingCompleted() {
     m_layerList.settleActiveLayer();
@@ -515,6 +517,7 @@ std::vector<QString> RS_Graphic::referencedLineTypeNames() const {
 void RS_Graphic::initForNewDocument() {
     RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
     m_dwgAdvancedMetadata.clear();
+    clearSourceFileIdentity();
     m_dxfRecoverySourceFile.clear();
     m_lineTypeList.clear();
     clear();

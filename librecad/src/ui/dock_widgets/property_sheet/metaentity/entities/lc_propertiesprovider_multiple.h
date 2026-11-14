@@ -25,6 +25,7 @@
 #define LC_PROPERTIESPROVIDERMULTIPLE_H
 
 #include "lc_entity_type_propertiesprovider.h"
+#include "lc_propertiesprovider_offsetcurve.h"
 
 class LC_PropertiesProviderMultiple : public LC_EntityTypePropertiesProvider {
     Q_OBJECT
@@ -33,6 +34,10 @@ public:
         : LC_EntityTypePropertiesProvider(RS2::EntityUnknown, actionContext, widget) {
     }
 protected:
+    void doCreateSelectedSetCommands(LC_PropertyContainer* container, const QList<RS_Entity*>& list) override {
+        LC_EntityTypePropertiesProvider::doCreateSelectedSetCommands(container, list);
+        LC_PropertiesProviderOffsetCurve::createSourceActionLinks(container, m_widget, m_actionContext, list, false);
+    }
     void doCreateEntitySpecificProperties([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& list) override{}
     void fillComputedProperites([[maybe_unused]]LC_PropertyContainer* container, [[maybe_unused]]const QList<RS_Entity*>& entitiesList) override {}
 };

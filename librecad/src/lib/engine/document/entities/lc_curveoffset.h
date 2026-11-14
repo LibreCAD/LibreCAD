@@ -195,6 +195,10 @@ struct LC_OffsetBranchProvenance {
      * down), instead of the offset of a source interval.
      */
     RS_Vector arcCentre{false};
+    /** Original noded offset branch, retained when Trimmed mode splits or joins branches. */
+    std::size_t nodingBranch{std::numeric_limits<std::size_t>::max()};
+    /** Source corner parameter for a rounded join arc; NaN for other pieces. */
+    double sourceCornerParameter{std::numeric_limits<double>::quiet_NaN()};
 };
 
 /**
@@ -253,11 +257,91 @@ struct LC_CurveOffsetGeometryResult {
     std::size_t sourceIntersections{0};
     std::size_t offsetIntersections{0};
     std::size_t removedIntervals{0};
+    /** Last intersection query, including its bounded work, for failure triage. */
+    struct IntersectionDiagnostics {
+        enum class Stage { None, OffsetSelfNoding, SourceSelfNoding, TrimBoundary, RegionBoundary, MaterializedOutput };
+        Stage stage{Stage::None};
+        LC_IntersectionStatus status{LC_IntersectionStatus::Ok};
+        LC_IntersectionWorkStats work{};
+        bool hasFailureDomain{false};
+        LC_IntersectionDomain failureDomain{};
+        unsigned failureDepth{0};
+        /** Materialized crossing-to-node comparisons, sharing maxIntersectionPairs with work.totalBoxPairs. */
+        std::size_t nodeMatchComparisons{0};
+    } intersectionDiagnostics;
     /**
      * With nodeIntersections: where the exact offset meets itself, by branch and
      * source parameter; each is a shared end of the pieces incident to it.
      */
     std::vector<LC_ParametricIntersection> intersections;
+};
+
+enum class LC_CurveOffsetCuspFailureStage {
+    None,
+    CuspCandidateLimit,
+    CuspBisection,
+    SpeedUnproved,
+    UnresolvedRunBudget,
+    SeamRunBudget,
+    RunResolution,
+    IsolationWorkLimit
+};
+
+struct LC_CurveOffsetTinyReversalCollapse {
+    double sourceT0{std::numeric_limits<double>::quiet_NaN()};
+    double sourceT1{std::numeric_limits<double>::quiet_NaN()};
+    double extent{std::numeric_limits<double>::quiet_NaN()};
+    RS_Vector startPoint;
+    RS_Vector endPoint;
+    RS_Vector replacementPoint;
+    bool boundedByCusps{false};
+};
+
+enum class LC_CurveOffsetCuspCandidateKind {
+    CertifiedUniqueBracket, ///< interval/root-count bounds prove one simple root in the box
+    SampledSignChange,      ///< a sampled sign change was bisected; uniqueness is unproved
+    ExactSample             ///< floating evaluation hit zero; this alone is not a proof
+};
+
+/** Test-only bracket and source-span provenance for one isolated cusp candidate. */
+struct LC_CurveOffsetCuspCandidateBox {
+    /** Index into the source's unique break parameters, or max() if the box crosses a span. */
+    std::size_t span{std::numeric_limits<std::size_t>::max()};
+    double t0{std::numeric_limits<double>::quiet_NaN()};
+    double t1{std::numeric_limits<double>::quiet_NaN()};
+    double parameter{std::numeric_limits<double>::quiet_NaN()};
+    LC_CurveOffsetCuspCandidateKind kind{LC_CurveOffsetCuspCandidateKind::ExactSample};
+};
+
+/** One-sided floating-point evidence for a closed boundary not owned by a cusp/stall event. */
+struct LC_CurveOffsetUnclassifiedBoundary {
+    double parameter{std::numeric_limits<double>::quiet_NaN()};
+    double leftFactor{std::numeric_limits<double>::quiet_NaN()};
+    double rightFactor{std::numeric_limits<double>::quiet_NaN()};
+    double leftRoundoffBound{std::numeric_limits<double>::quiet_NaN()};
+    double rightRoundoffBound{std::numeric_limits<double>::quiet_NaN()};
+};
+
+/** Test-only snapshot of cusp-isolation progress; candidates may be partial on failure. */
+struct LC_CurveOffsetCuspIsolationDiagnostics {
+    LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
+    std::vector<double> candidateParameters;
+    std::vector<LC_CurveOffsetCuspCandidateBox> candidateBoxes;
+    std::vector<std::pair<double, double>> stallIntervals;
+    /** Closed-source boundaries numerically near zero but not owned by a candidate or stall. */
+    std::vector<LC_CurveOffsetUnclassifiedBoundary> unclassifiedBoundaries;
+    std::vector<LC_CurveOffsetTinyReversalCollapse> collapsedTinyReversals;
+    std::size_t spansVisited{0};
+    std::size_t isolationBoxesVisited{0};
+    std::size_t failureSpan{std::numeric_limits<std::size_t>::max()};
+    double failureT0{std::numeric_limits<double>::quiet_NaN()};
+    double failureT1{std::numeric_limits<double>::quiet_NaN()};
+    LC_CurveOffsetCuspFailureStage failureStage{LC_CurveOffsetCuspFailureStage::None};
+    std::size_t failingRunBoxes{0};
+    std::size_t failingRunSignChanges{0};
+    double failingRunExtent{std::numeric_limits<double>::quiet_NaN()};
+    bool failingRunObserved{false};
+    bool complete{false};
 };
 
 /** Fresh output entities, owned here until the caller releases them. Move-only. */
@@ -268,6 +352,12 @@ struct LC_CurveOffsetMaterializationResult {
     LC_OffsetValidationLevel validationLevel{LC_OffsetValidationLevel::None};
     double maxObservedError{std::numeric_limits<double>::quiet_NaN()};
     double maxCertifiedError{std::numeric_limits<double>::quiet_NaN()};
+    /** Producer/materializer sample-budget demand, including a refused unit at exhaustion. */
+    std::size_t sampleUnits{0};
+    /** Completed fitted pieces, constructed roots, and bounded observed leaves, even on failure. */
+    LC_OffsetOutputUsage attemptedOutputUsage{};
+    bool attemptedDeepCountComplete = true;
+    LC_CurveOffsetGeometryResult::IntersectionDiagnostics intersectionDiagnostics;
 };
 
 /**
@@ -309,6 +399,10 @@ inline constexpr std::size_t kDefaultMaxIntersectionPairs = std::size_t{1} << 20
  *  (an unbounded hyperbola is then refused as a source). */
 bool isSupportedSource(const RS_Entity& source);
 
+double relativeOffsetTolerance(const RS_Entity& source);
+/** Geometry tolerance including the numeric floor; NaN for invalid source/distance/factor. */
+double toleranceFor(const RS_Entity& source, double distanceMagnitude, double relativeFactor);
+
 /**
  * Direct-mode options with tolerances derived from the source's scale and the
  * distance. @p requestedTolerance, if positive, replaces the default relative
@@ -348,7 +442,8 @@ LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& di
  */
 LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
                                                  const LC_CurveOffsetOptions& options,
-                                                 const LC_OffsetSourceBudget& budget);
+                                                 const LC_OffsetSourceBudget& budget,
+                                                 LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics = nullptr);
 
 /**
  * Fresh, parentless entities for @p geometry, a successful result of
@@ -386,7 +481,8 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
  * its neighbour across the seam. Exposed for the tests: an offset request
  * cannot put a chosen branch at a chosen place in the ring.
  */
-void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, double merge);
+void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, double merge,
+                           std::vector<LC_CurveOffsetTinyReversalCollapse>* diagnostics = nullptr);
 
 std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
 

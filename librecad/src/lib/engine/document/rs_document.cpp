@@ -46,6 +46,7 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 }
 
 RS_Document::~RS_Document() {
+    invalidateLifetime();
 }
 
 void RS_Document::addEntity(const RS_Entity* entity) {
@@ -70,8 +71,8 @@ void RS_Document::endUndoCycle(){
 }
 
 void RS_Document::startUndoCycle() {
-    m_selectedSet->disableListeners();
     RS_Undo::startUndoCycle();
+    m_selectedSet->disableListeners();
     m_savedAutoUpdateBorders = getAutoUpdateBorders();
     setAutoUpdateBorders(false);
 }

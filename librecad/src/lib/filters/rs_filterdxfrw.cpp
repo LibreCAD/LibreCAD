@@ -41,9 +41,11 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <new>
 #include <optional>
 #include <set>
 #include <sstream>
+#include <streambuf>
 #include <stack>
 #include <type_traits>
 #include <utility>
@@ -70,6 +72,11 @@
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
+#include "intern/drw_textcodec.h"
+#include "lc_offsetcurve.h"
+#include "lc_offsetcurvecarrier.h"
+#include "lc_offsetimportsession.h"
+#include "../offset_worker/lc_offsetworkertolerance.h"
 #include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
@@ -129,6 +136,7 @@
 #include "lc_ucs.h"
 #include "lc_view.h"
 #include "libdwgr.h"
+#include "intern/dwgreader.h"
 #include "rs_debug.h"
 #endif // DWGSUPPORT
 
@@ -900,6 +908,121 @@ bool restoreTableEntryExtData(DRW_TableEntry &destination,
   return true;
 }
 
+// DIMTALN is the only generated XDATA on a DIMSTYLE with a saved source
+// record (the linetype producer below deliberately excludes such records).
+// Replace its owned top-level 392/value pair, not the application's foreign
+// payload. Keep one application delimiter even when repairing an older save
+// that appended several copies. Other applications retain their exact order.
+bool restoreDimStyleExtData(DRW_Dimstyle &destination,
+                            const std::vector<DRW_Variant *> &source) {
+  const auto isDimtaln = [](const DRW_Variant *value) {
+    constexpr char app[] = "ACAD_DSTYLE_DIMTALN";
+    return value != nullptr && value->code() == 1001 &&
+           value->type() == DRW_Variant::STRING && value->content.s != nullptr &&
+           value->content.s->size() == sizeof(app) - 1 &&
+           std::equal(value->content.s->begin(), value->content.s->end(), app,
+                      [](unsigned char a, unsigned char b) {
+                        return std::toupper(a) == std::toupper(b);
+                      });
+  };
+  const auto isOwnedPair = [](const DRW_Variant *key,
+                              const DRW_Variant *value) {
+    return key != nullptr && key->code() == 1070 &&
+           key->type() == DRW_Variant::INTEGER && key->i_val() == 392 &&
+           value != nullptr && value->code() == 1070 &&
+           value->type() == DRW_Variant::INTEGER;
+  };
+  try {
+    constexpr auto cap = DRW_TableEntry::kMaxExtendedDataItems;
+    if (destination.extData.size() > cap ||
+        source.size() > cap - destination.extData.size())
+      return false;
+    if (destination.extData.empty())
+      return restoreTableEntryExtData(destination, source);
+    // Refuse an unexpected producer layout rather than silently dropping it.
+    if (destination.extData.size() != 3 || !isDimtaln(destination.extData[0]) ||
+        !isOwnedPair(destination.extData[1], destination.extData[2]))
+      return false;
+
+    // Each source APPID is an independent brace scope. Validate owned scopes
+    // before combining them, and reject null/orphan items before any copies.
+    bool owned = false;
+    std::size_t depth = 0;
+    for (std::size_t i = 0; i < source.size(); ++i) {
+      const DRW_Variant *value = source[i];
+      if (value == nullptr || (i == 0 && value->code() != 1001))
+        return false;
+      if (value->code() == 1001) {
+        if (depth != 0 || value->type() != DRW_Variant::STRING ||
+            value->content.s == nullptr || value->content.s->empty())
+          return false;
+        owned = isDimtaln(value);
+      } else if (owned && value->code() == 1002) {
+        if (value->type() != DRW_Variant::STRING || value->content.s == nullptr)
+          return false;
+        if (*value->content.s == "{") {
+          ++depth;
+        } else if (*value->content.s == "}" && depth != 0) {
+          --depth;
+        } else {
+          return false;
+        }
+      }
+    }
+    if (depth != 0)
+      return false;
+
+    DRW_Dimstyle merged;
+    if (!restoreTableEntryExtData(merged, destination.extData))
+      return false;
+    // First collect foreign tails of DIMTALN under the generated delimiter;
+    // then replay every other application without changing any of its items.
+    for (const bool ownedPass : {true, false}) {
+      owned = false;
+      depth = 0;
+      for (std::size_t i = 0; i < source.size(); ++i) {
+        const DRW_Variant *value = source[i];
+        if (value->code() == 1001) {
+          owned = isDimtaln(value);
+          depth = 0;
+          if (owned)
+            continue;
+        }
+        if (owned != ownedPass)
+          continue;
+        if (owned && depth == 0 && i + 1 < source.size() &&
+            (value->code() == 1070 || value->code() == 1071) &&
+            (value->type() == DRW_Variant::INTEGER ||
+             value->type() == DRW_Variant::INTEGER64) &&
+            source[i + 1]->code() != 1001 && source[i + 1]->code() != 1002) {
+          // Keep unknown pairs atomic: a foreign pair's value can itself be
+          // 392, and is not the key of the following pair.
+          if (!isOwnedPair(value, source[i + 1]) &&
+              (!merged.addExtData(std::make_unique<DRW_Variant>(*value)) ||
+               !merged.addExtData(std::make_unique<DRW_Variant>(*source[i + 1]))))
+            return false;
+          ++i;
+          continue;
+        }
+        if (owned && value->code() == 1002) {
+          if (*value->content.s == "{")
+            ++depth;
+          else
+            --depth;
+        }
+        if (!merged.addExtData(std::make_unique<DRW_Variant>(*value)))
+          return false;
+      }
+    }
+    // Both are fresh write-only entries, with no parser cursor. The temporary
+    // takes ownership of the old generated items; saved metadata is untouched.
+    destination.extData.swap(merged.extData);
+    return true;
+  } catch (...) {
+    return false;
+  }
+}
+
 bool sameDxfClassDefinition(const DRW_Class &lhs, const DRW_Class &rhs) {
   // instanceCount is recomputed from emitted records, while DWG-only fields
   // do not participate in the DXF CLASS record. Compare only values that can
@@ -913,6 +1036,34 @@ bool sameDxfClassDefinition(const DRW_Class &lhs, const DRW_Class &rhs) {
 template <typename T> bool hasNormalizedAxialExtrusion(const T &entity) {
   return entity.extPoint.x == 0.0 && entity.extPoint.y == 0.0 &&
          (entity.extPoint.z == 1.0 || entity.extPoint.z == -1.0);
+}
+
+bool projectPolylineOcsPoint(const DRW_Coord &normal, double elevation,
+                             double x, double y, DRW_Coord &projected) {
+  const double length = std::hypot(normal.x, normal.y, normal.z);
+  if (!std::isfinite(length) || length == 0.0 || !std::isfinite(elevation) ||
+      !std::isfinite(x) || !std::isfinite(y))
+    return false;
+
+  const DRW_Coord n{normal.x / length, normal.y / length, normal.z / length};
+  DRW_Coord axisX;
+  if (std::abs(n.x) < 0.015625 && std::abs(n.y) < 0.015625)
+    axisX = {n.z, 0.0, -n.x};
+  else
+    axisX = {-n.y, n.x, 0.0};
+
+  const double axisLength = std::hypot(axisX.x, axisX.y, axisX.z);
+  if (!std::isfinite(axisLength) || axisLength == 0.0) return false;
+  axisX = {axisX.x / axisLength, axisX.y / axisLength,
+           axisX.z / axisLength};
+  const DRW_Coord axisY{n.y * axisX.z - n.z * axisX.y,
+                        n.z * axisX.x - n.x * axisX.z,
+                        n.x * axisX.y - n.y * axisX.x};
+  projected = {axisX.x * x + axisY.x * y + n.x * elevation,
+               axisX.y * x + axisY.y * y + n.y * elevation,
+               axisX.z * x + axisY.z * y + n.z * elevation};
+  return std::isfinite(projected.x) && std::isfinite(projected.y) &&
+         std::isfinite(projected.z);
 }
 
 bool layerExtStringEmpty(const DRW_Variant *v) {
@@ -1211,7 +1362,7 @@ std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
   RS_SplineData data(source.degree, false);
   const double knotTolerance = (source.tolknot > 0.0) ? source.tolknot : 1e-7;
   for (const double k : source.knotslist)
-    data.knotslist.push_back(RS_Math::round(k, knotTolerance));
+    data.knotslist.push_back(k);
   for (size_t i = 0; i < source.controllist.size(); ++i) {
     if (const auto &control = source.controllist[i]) {
       data.controlPoints.emplace_back(control->x, control->y);
@@ -1221,8 +1372,8 @@ std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
   const size_t count = data.controlPoints.size();
   if (data.knotslist.empty() && count > data.degree)
     data.knotslist = LC_SplineHelper::knot(count, data.degree + 1);
-  // whether the file's curve closes, from its knots before rounding: rounding
-  // moves the ends of a periodic curve apart
+  // Determine closure from the source knots using the declared tolerance, but
+  // keep the original knot values: rounding changes the curve itself.
   RS_SplineData unrounded = data;
   if (!source.knotslist.empty())
     unrounded.knotslist = source.knotslist;
@@ -4137,6 +4288,9 @@ static QString dwgVersionDisplay(DRW::Version v) {
 // fixme - sand - non informative error message (mixed file format which is
 // known)
 QString RS_FilterDXFRW::lastError() const {
+  if (m_sourceChangedDuringRead)
+    return QObject::tr("The source file changed while it was being read.",
+                       "RS_FilterDXFRW");
   switch (m_errorCode) {
   case DRW::BAD_NONE:
     return (QObject::tr("no DXF/DWG error", "RS_FilterDXFRW"));
@@ -4184,36 +4338,22 @@ QString RS_FilterDXFRW::lastError() const {
 
 namespace {
 
-// Pre-R13 DWG files often omit $ACADVER from the table snapshot delivered to
-// addHeader(), leaving m_version at the 1021 fallback during entity import.
-// Sniff the on-disk magic so import-time guards can key off AC1009 et al.
-int versionIdFromDwgMagic(const QString &filePath) {
-  QFile file(filePath);
-  if (!file.open(QIODevice::ReadOnly))
-    return 0;
-  const QByteArray magic = file.read(6);
-  if (magic.size() < 6)
-    return 0;
-  if (magic == "AC1009")
-    return 1009;
-  if (magic == "AC1012")
-    return 1012;
-  if (magic == "AC1014")
-    return 1014;
-  if (magic == "AC1015")
-    return 1015;
-  if (magic == "AC1018")
-    return 1018;
-  if (magic == "AC1021")
-    return 1021;
-  if (magic == "AC1024")
-    return 1024;
-  if (magic == "AC1027")
-    return 1027;
-  if (magic == "AC1032")
-    return 1032;
-  return 0;
+#ifdef DWGSUPPORT
+int versionIdForDwg(DRW::Version version) noexcept {
+  switch (version) {
+  case DRW::AC1009: return 1009;
+  case DRW::AC1012: return 1012;
+  case DRW::AC1014: return 1014;
+  case DRW::AC1015: return 1015;
+  case DRW::AC1018: return 1018;
+  case DRW::AC1021: return 1021;
+  case DRW::AC1024: return 1024;
+  case DRW::AC1027: return 1027;
+  case DRW::AC1032: return 1032;
+  default: return 0;
+  }
 }
+#endif
 
 // Expand NoUpdate INSERTs even after a failed read, which the caller may keep.
 void updateImportedInserts(RS_Graphic &graphic) {
@@ -4243,6 +4383,91 @@ void updateImportedInserts(RS_Graphic &graphic) {
 
 } // namespace
 
+namespace {
+class QFileInputBuffer final : public std::streambuf {
+public:
+  explicit QFileInputBuffer(QFile &file) : m_file(file) {
+    setg(m_buffer.data(), m_buffer.data(), m_buffer.data());
+  }
+
+protected:
+  int_type underflow() override {
+    if (gptr() < egptr())
+      return traits_type::to_int_type(*gptr());
+    const qint64 read = m_file.read(m_buffer.data(), m_buffer.size());
+    if (read <= 0)
+      return traits_type::eof();
+    setg(m_buffer.data(), m_buffer.data(), m_buffer.data() + read);
+    return traits_type::to_int_type(*gptr());
+  }
+
+  pos_type seekoff(off_type offset, std::ios_base::seekdir direction,
+                   std::ios_base::openmode mode) override {
+    if (!(mode & std::ios_base::in) || (mode & std::ios_base::out))
+      return pos_type(off_type(-1));
+    const qint64 size = m_file.size();
+    const qint64 current = m_file.pos() - (egptr() - gptr());
+    const qint64 origin = direction == std::ios_base::beg ? 0 :
+        direction == std::ios_base::cur ? current :
+        direction == std::ios_base::end ? size : -1;
+    if (origin < 0 || offset < -origin || offset > size - origin)
+      return pos_type(off_type(-1));
+    const qint64 position = origin + offset;
+    if (!m_file.seek(position))
+      return pos_type(off_type(-1));
+    setg(m_buffer.data(), m_buffer.data(), m_buffer.data());
+    return pos_type(position);
+  }
+
+  pos_type seekpos(pos_type position, std::ios_base::openmode mode) override {
+    return seekoff(off_type(position), std::ios_base::beg, mode);
+  }
+
+private:
+  QFile &m_file;
+  std::array<char, 64 * 1024> m_buffer{};
+};
+
+class ByteArrayInputBuffer final : public std::streambuf {
+public:
+  explicit ByteArrayInputBuffer(const QByteArray &bytes)
+      : empty('\0'), begin(const_cast<char *>(bytes.constData())), size(bytes.size()) {
+    // streambuf requires mutable get pointers; this buffer has no output area.
+    if (!begin)
+      begin = &empty;
+    setg(begin, begin, begin + size);
+  }
+
+protected:
+  pos_type seekoff(off_type offset, std::ios_base::seekdir direction,
+                   std::ios_base::openmode mode) override {
+    if (!(mode & std::ios_base::in) || (mode & std::ios_base::out))
+      return pos_type(off_type(-1));
+    const off_type origin = direction == std::ios_base::beg ? 0 :
+        direction == std::ios_base::cur ? gptr() - eback() :
+        direction == std::ios_base::end ? size : -1;
+    if (origin < 0 || offset < -origin || offset > size - origin)
+      return pos_type(off_type(-1));
+    const auto position = origin + offset;
+    setg(begin, begin + position, begin + size);
+    return pos_type(position);
+  }
+
+  pos_type seekpos(pos_type position, std::ios_base::openmode mode) override {
+    return seekoff(off_type(position), std::ios_base::beg, mode);
+  }
+
+private:
+  char empty;
+  char *begin;
+  off_type size;
+};
+} // namespace
+
+void RS_FilterDXFRW::refreshDeferredOffsetInserts(RS_Graphic &graphic) {
+  updateImportedInserts(graphic);
+}
+
 /**
  * Implementation of the method used for RS_Import to communicate
  * with this filter.
@@ -4252,13 +4477,143 @@ void updateImportedInserts(RS_Graphic &graphic) {
  * taken to be stored in a m_file.
  */
 bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
-                                [[maybe_unused]] RS2::FormatType type) {
+                                RS2::FormatType type) {
+  m_sourceChangedDuringRead = false;
+  if (file.startsWith(QLatin1Char(':')))
+    return fileImportImpl(g, file, type, nullptr);
+
+  const bool ownsImportContext = !m_directImportContext;
+  if (ownsImportContext)
+    m_directImportContext = std::make_shared<DirectImportContext>();
+  const auto importContext = m_directImportContext;
+  const auto resetImportContext = qScopeGuard([this, ownsImportContext] {
+    if (ownsImportContext)
+      m_directImportContext.reset();
+  });
+
+  const LC_FileIdentity sourceIdentity = LC_FileIdentity::capture(file);
+  QFile inputFile(file);
+  if (!sourceIdentity.valid || !inputFile.open(QIODevice::ReadOnly) ||
+      inputFile.isSequential()) {
+    m_errorCode = DRW::BAD_OPEN;
+    return false;
+  }
+#if defined(Q_OS_UNIX) || defined(Q_OS_WIN)
+  if (sourceIdentity.native.valid &&
+      !sourceIdentity.matchesDescriptor(inputFile.handle())) {
+    importContext->sourceChanged = true;
+    m_sourceChangedDuringRead = true;
+    m_errorCode = DRW::BAD_OPEN;
+    return false;
+  }
+#endif
+  importContext->sources.push_back({file, sourceIdentity});
+  QFileInputBuffer buffer(inputFile);
+  std::istream stream(&buffer);
+  const bool imported = fileImportImpl(g, file, type, &stream);
+  if (inputFile.error() != QFileDevice::NoError ||
+      (sourceIdentity.native.valid &&
+       !sourceIdentity.matchesDescriptor(inputFile.handle()))) {
+    importContext->sourceChanged = true;
+  }
+  if (ownsImportContext) {
+    for (const auto &source : importContext->sources) {
+      if (!source.identity.matches(source.path)) {
+        importContext->sourceChanged = true;
+        break;
+      }
+    }
+  }
+  if (importContext->sourceChanged) {
+    m_sourceChangedDuringRead = true;
+    m_errorCode = DRW::BAD_READ_FILE_HEADER;
+    return false;
+  }
+  return imported;
+}
+
+bool RS_FilterDXFRW::fileImportStream(RS_Graphic &g, const QString &logicalFile,
+                                      RS2::FormatType type, std::istream &input) {
+  return fileImportImpl(g, logicalFile, type, &input);
+}
+
+bool RS_FilterDXFRW::fileImportBytes(RS_Graphic &g, const QString &logicalFile,
+                                     RS2::FormatType type, const QByteArray &bytes) {
+  ByteArrayInputBuffer buffer(bytes);
+  std::istream input(&buffer);
+  return fileImportStream(g, logicalFile, type, input);
+}
+
+bool RS_FilterDXFRW::fileImportImpl(RS_Graphic &g, const QString &file,
+                                    [[maybe_unused]] RS2::FormatType type, std::istream *input) {
+  if (m_deferOffsetAdmission || m_offsetCurveCacheOnlyImport)
+    return fileImportImplBody(g, file, type, input);
+
+  std::shared_ptr<LC_OffsetImportBudget> budget;
+  try {
+    budget = std::make_shared<LC_OffsetImportBudget>();
+  } catch (const std::bad_alloc &) {
+    const bool previousCacheOnly = m_offsetCurveCacheOnlyImport;
+    m_offsetCurveCacheOnlyImport = true;
+    try {
+      const bool imported = fileImportImplBody(g, file, type, input);
+      m_offsetCurveCacheOnlyImport = previousCacheOnly;
+      return imported;
+    } catch (...) {
+      m_offsetCurveCacheOnlyImport = previousCacheOnly;
+      throw;
+    }
+  }
+
+  const bool previousDefer = m_deferOffsetAdmission;
+  const auto previousBudget = m_offsetImportBudget;
+  m_deferOffsetAdmission = true;
+  m_offsetImportBudget = budget;
+  bool imported = false;
+  try {
+    imported = fileImportImplBody(g, file, type, input);
+  } catch (...) {
+    m_deferOffsetAdmission = previousDefer;
+    m_offsetImportBudget = previousBudget;
+    throw;
+  }
+  m_deferOffsetAdmission = previousDefer;
+  m_offsetImportBudget = previousBudget;
+
+  LC_OffsetImportSession::Outcome validation;
+  const bool needsValidation = budget->carriers != 0;
+  if (needsValidation)
+    validation = LC_OffsetImportSession::validateExistingGraphic(g, std::move(budget));
+  if (needsValidation && validation.downgraded != 0)
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: %zu offset carrier(s) retained as ordinary spline geometry",
+        validation.downgraded);
+  if (needsValidation && validation.status != LC_OffsetImportSession::Status::Complete)
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: bounded worker validation did not complete; editable carriers were downgraded");
+  refreshDeferredOffsetInserts(g);
+  return imported;
+}
+
+bool RS_FilterDXFRW::fileImportImplBody(RS_Graphic &g, const QString &file,
+                                    [[maybe_unused]] RS2::FormatType type, std::istream *input) {
   RS_DEBUG->print("RS_FilterDXFRW::fileImport");
+  m_sourceChangedDuringRead = false;
   RS_DEBUG->print("DXFRW Filter: importing file '%s'...",
                   (const char *)QFile::encodeName(file));
 
   m_graphic = &g;
   m_currentContainer = m_graphic;
+  m_offsetInputKind = OffsetInputKind::None;
+  m_offsetInputVersion = DRW::UNKNOWNV;
+  m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  m_version = 0;
+  m_versionStr.clear();
+  const auto offsetInputGuard = qScopeGuard([this] {
+    m_offsetInputKind = OffsetInputKind::None;
+    m_offsetInputVersion = DRW::UNKNOWNV;
+    m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  });
   m_dummyContainer = new RS_EntityContainer(nullptr, true);
   // RAII: free the scratch container on every return path (success and the
   // BAD_VERSION / parse-failure early returns), not just the success path.
@@ -4314,16 +4669,23 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   if (type == RS2::FormatDWG || type == RS2::FormatDWG2004 ||
       type == RS2::FormatDWG2007 || type == RS2::FormatDWG2010 ||
       type == RS2::FormatDWG2013 || type == RS2::FormatDWG2018) {
-    const int magicVersion = versionIdFromDwgMagic(file);
-    if (magicVersion != 0)
-      m_version = magicVersion;
-
+    if (m_testBeforeDwgOpen) {
+      auto hook = std::move(m_testBeforeDwgOpen);
+      m_testBeforeDwgOpen = {};
+      hook();
+    }
     dwgR dwgr(QFile::encodeName(file));
+    m_offsetInputKind = OffsetInputKind::Dwg;
+    dwgr.setReadVersionObserver([](DRW::Version version, void* context) {
+      auto* filter = static_cast<RS_FilterDXFRW*>(context);
+      filter->m_offsetInputVersion = version;
+      filter->m_version = versionIdForDwg(version);
+    }, this);
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
     if (RS_DEBUG->getLevel() == RS_Debug::D_DEBUGGING)
       dwgr.setDebug(DRW::DebugLevel::Debug);
     const auto dwgReadStart = std::chrono::steady_clock::now();
-    bool success = dwgr.read(this, true);
+    bool success = input ? dwgr.readStream(*input, this, true) : dwgr.read(this, true);
     if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
       const auto dwgReadMs =
           std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -4442,7 +4804,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open DWG file '%s'.",
                       (const char *)QFile::encodeName(file));
       m_errorCode = dwgr.getError();
-      updateImportedInserts(*m_graphic);
+      if (!m_deferOffsetAdmission) updateImportedInserts(*m_graphic);
       return false;
     }
     m_graphic->dwgAdvancedMetadata().markVportsImported();
@@ -4454,6 +4816,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     if (m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8)
       m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
+    m_offsetInputKind = OffsetInputKind::Dxf;
     m_dxfR->setDxfTextEncoding(
         m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8
             ? DRW::DxfTextEncoding::LegacyLibreCadUtf8
@@ -4464,7 +4827,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       m_dxfR->setDebug(DRW::DebugLevel::Debug);
     }
     bool success{false};
-    if (file.startsWith(":")) {
+    if (input) {
+      success = m_dxfR->readStream(this, true, *input);
+    } else if (file.startsWith(":")) {
       // load content from resources. It SHOULD be present in resource!
       QFile resourceFile(file);
       if (resourceFile.open(QIODevice::ReadOnly)) {
@@ -4496,7 +4861,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                       (const char *)QFile::encodeName(file));
       m_errorCode = m_dxfR->getError();
       delete m_dxfR;
-      updateImportedInserts(*m_graphic);
+      if (!m_deferOffsetAdmission) updateImportedInserts(*m_graphic);
       return false;
     } else {
       delete m_dxfR;
@@ -4513,7 +4878,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   }
   RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
   const auto updateInsertsStart = std::chrono::steady_clock::now();
-  updateImportedInserts(*m_graphic);
+  if (!m_deferOffsetAdmission) updateImportedInserts(*m_graphic);
   if (std::getenv("LC_IMPORT_BENCH") != nullptr) {
     const auto updateInsertsMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -5037,6 +5402,10 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
 
   const QString resolved = resolveXrefPath(xrefPath);
   if (resolved.isEmpty()) {
+    if (m_xrefSnapshotProvider) {
+      QByteArray ignored;
+      m_xrefSnapshotProvider(QString{}, ignored);
+    }
     RS_DIALOGFACTORY->commandMessage(
         QObject::tr("XREF not resolved for block \"%1\": %2 (file not found in "
                     "host directory). The block will render as empty.")
@@ -5057,11 +5426,23 @@ bool RS_FilterDXFRW::embedXref(RS_Block *block, const QString &xrefPath,
 
   RS_Graphic ext;
   RS_FilterDXFRW xrefFilter;
+  xrefFilter.m_deferOffsetAdmission = m_deferOffsetAdmission;
+  xrefFilter.m_offsetCurveCacheOnlyImport = m_offsetCurveCacheOnlyImport;
+  xrefFilter.m_offsetImportBudget = m_offsetImportBudget;
+  xrefFilter.m_xrefSnapshotProvider = m_xrefSnapshotProvider;
+  xrefFilter.m_directImportContext = m_directImportContext;
+#ifdef DWGSUPPORT
+  xrefFilter.m_testBeforeDwgOpen = m_testBeforeDwgOpen;
+#endif
   xrefFilter.m_xrefStack = m_xrefStack; // propagate cycle guard
   const bool isDwg =
       resolved.endsWith(QStringLiteral(".dwg"), Qt::CaseInsensitive);
   const RS2::FormatType fmt = isDwg ? RS2::FormatDWG : RS2::FormatDXFRW;
-  const bool ok = xrefFilter.fileImport(ext, resolved, fmt);
+  QByteArray xrefSnapshot;
+  const bool ok = m_xrefSnapshotProvider
+      ? m_xrefSnapshotProvider(resolved, xrefSnapshot) &&
+            xrefFilter.fileImportBytes(ext, resolved, fmt, xrefSnapshot)
+      : xrefFilter.fileImport(ext, resolved, fmt);
 
   m_xrefStack.erase(resolved);
 
@@ -5243,6 +5624,9 @@ constexpr const char *kCircleOcsMarker = "LibreCAD_CIRCLE_OCS";
 // ARC center and angles are OCS data. Keep its plane metadata separately so
 // the editable 2D arc can be transformed back to the source OCS on export.
 constexpr const char *kArcOcsMarker = "LibreCAD_ARC_OCS";
+// Arbitrary-plane conics are projected to XY for display; unlike the axial
+// sidecars above, this marker denotes geometry that is not a native 2D source.
+constexpr const char *kConicOcsProjectionMarker = "LibreCAD_CONIC_OCS";
 // 3DLINE is distinct from LINE even when its normal and thickness are default.
 constexpr const char *k3DLineMarker = "LibreCAD_3DLINE";
 // HATCH boundary coordinates remain raw OCS in libdxfrw. Preserve the
@@ -7025,12 +7409,266 @@ bool canCreatePlanarEntity(const T &entity, const char *typeName) {
                   "RS_FilterDXFRW::%s: skipped non-axial extrusion", typeName);
   return false;
 }
+
+void appendTypeSidecar(RS_Entity *entity, const char *marker,
+                       std::vector<std::shared_ptr<DRW_Variant>> payload);
+
+bool projectConicToEllipse(const DRW_Coord &center, const DRW_Coord &axisU,
+                           const DRW_Coord &axisV, const double start,
+                           const double end, const bool full,
+                           const bool sourceReversed,
+                           RS_EllipseData &result) {
+  const double values[]{center.x, center.y, center.z, axisU.x, axisU.y,
+                        axisU.z, axisV.x, axisV.y, axisV.z, start, end};
+  if (!std::all_of(std::begin(values), std::end(values),
+                   [](double value) { return std::isfinite(value); }))
+    return false;
+
+  const double sxx = axisU.x * axisU.x + axisV.x * axisV.x;
+  const double sxy = axisU.x * axisU.y + axisV.x * axisV.y;
+  const double syy = axisU.y * axisU.y + axisV.y * axisV.y;
+  const double majorEigenvalue =
+      (sxx + syy + std::hypot(sxx - syy, 2.0 * sxy)) / 2.0;
+  if (!std::isfinite(majorEigenvalue) || majorEigenvalue <= 0.0)
+    return false;
+
+  const double majorRadius = std::sqrt(majorEigenvalue);
+  const double determinant = axisU.x * axisV.y - axisV.x * axisU.y;
+  const double minorRadius = std::abs(determinant) / majorRadius;
+  constexpr double relativeRankTolerance =
+      1024.0 * std::numeric_limits<double>::epsilon();
+  if (!std::isfinite(minorRadius) ||
+      minorRadius <= relativeRankTolerance * majorRadius)
+    return false;
+
+  const double rotation = 0.5 * std::atan2(2.0 * sxy, sxx - syy);
+  const double cosine = std::cos(rotation);
+  const double sine = std::sin(rotation);
+  const auto parameterAt = [&](double parameter) {
+    const double x = axisU.x * std::cos(parameter) +
+                     axisV.x * std::sin(parameter);
+    const double y = axisU.y * std::cos(parameter) +
+                     axisV.y * std::sin(parameter);
+    const double majorCoordinate = (x * cosine + y * sine) / majorRadius;
+    const double minorCoordinate = (-x * sine + y * cosine) / minorRadius;
+    return std::atan2(minorCoordinate, majorCoordinate);
+  };
+
+  result = {RS_Vector{center.x, center.y},
+            RS_Vector{majorRadius * cosine, majorRadius * sine},
+            minorRadius / majorRadius, full ? 0.0 : parameterAt(start),
+            full ? 0.0 : parameterAt(end),
+            (determinant < 0.0) != sourceReversed};
+  return std::isfinite(result.ratio) && result.ratio > 0.0 &&
+         std::isfinite(result.angle1) && std::isfinite(result.angle2);
+}
+
+bool ocsBasis(const DRW_Coord &normal, DRW_Coord &axisX,
+              DRW_Coord &axisY) {
+  DRW_Coord x, y;
+  if (!projectPolylineOcsPoint(normal, 0.0, 1.0, 0.0, x) ||
+      !projectPolylineOcsPoint(normal, 0.0, 0.0, 1.0, y))
+    return false;
+  axisX = x;
+  axisY = y;
+  return true;
+}
+
+bool unprojectPolylineOcsPoint(const DRW_Coord &normal, double elevation,
+                               double x, double y, DRW_Coord &source) {
+  DRW_Coord axisX, axisY;
+  if (!ocsBasis(normal, axisX, axisY) || !std::isfinite(elevation) ||
+      !std::isfinite(x) || !std::isfinite(y))
+    return false;
+  const double length = std::hypot(normal.x, normal.y, normal.z);
+  if (!std::isfinite(length) || length == 0.0) return false;
+  const double nx = normal.x / length;
+  const double ny = normal.y / length;
+  const double determinant = axisX.x * axisY.y - axisY.x * axisX.y;
+  if (!std::isfinite(determinant) ||
+      std::abs(determinant) <= 1024.0 *
+          std::numeric_limits<double>::epsilon())
+    return false;
+  const double projectedX = x - nx * elevation;
+  const double projectedY = y - ny * elevation;
+  source.x = (projectedX * axisY.y - axisY.x * projectedY) / determinant;
+  source.y = (axisX.x * projectedY - projectedX * axisX.y) / determinant;
+  source.z = 0.0;
+  return std::isfinite(source.x) && std::isfinite(source.y);
+}
+
+void appendConicProjectionMarker(RS_Entity *entity, int sourceKind,
+                                 const DRW_Coord &normal,
+                                 const DRW_Coord &center,
+                                 const DRW_Coord &axisU,
+                                 const DRW_Coord &axisV,
+                                 double start, double end) {
+  std::vector<std::shared_ptr<DRW_Variant>> payload;
+  payload.push_back(std::make_shared<DRW_Variant>(1070, sourceKind));
+  payload.push_back(std::make_shared<DRW_Variant>(1010, normal));
+  payload.push_back(std::make_shared<DRW_Variant>(1011, center));
+  payload.push_back(std::make_shared<DRW_Variant>(1012, axisU));
+  payload.push_back(std::make_shared<DRW_Variant>(1013, axisV));
+  payload.push_back(std::make_shared<DRW_Variant>(1040, start));
+  payload.push_back(std::make_shared<DRW_Variant>(1041, end));
+  appendTypeSidecar(entity, kConicOcsProjectionMarker, std::move(payload));
+}
+
+struct ProjectedPolylineSegment {
+  std::unique_ptr<RS_Entity> entity;
+  std::size_t ordinal = 0;
+  double bulge = 0.0;
+  bool conic = false;
+  DRW_Coord center{};
+  DRW_Coord axisU{};
+  DRW_Coord axisV{};
+  double start = 0.0;
+  double end = 0.0;
+};
+
+struct PolylineVertexInput {
+  double x = 0.0;
+  double y = 0.0;
+  double bulge = 0.0;
+};
+
+std::optional<std::vector<ProjectedPolylineSegment>>
+projectBulgedPolylineOcs(const DRW_Coord &normal, double elevation,
+                        const std::vector<PolylineVertexInput> &vertices,
+                        bool closed, bool verticesAreProjected,
+                        RS_EntityContainer *parent) {
+  if (vertices.size() < 2 || vertices.size() > 65536 ||
+      !std::isfinite(elevation))
+    return std::nullopt;
+
+  DRW_Coord axisX, axisY;
+  if (!ocsBasis(normal, axisX, axisY)) return std::nullopt;
+  std::vector<PolylineVertexInput> sourceVertices;
+  sourceVertices.reserve(vertices.size());
+  for (const auto &vertex : vertices) {
+    if (!std::isfinite(vertex.x) || !std::isfinite(vertex.y) ||
+        !std::isfinite(vertex.bulge))
+      return std::nullopt;
+    if (!verticesAreProjected) {
+      sourceVertices.push_back(vertex);
+      continue;
+    }
+    DRW_Coord source;
+    if (!unprojectPolylineOcsPoint(normal, elevation, vertex.x, vertex.y,
+                                   source))
+      return std::nullopt;
+    sourceVertices.push_back({source.x, source.y, vertex.bulge});
+  }
+  const std::size_t segmentCount = closed ? vertices.size() : vertices.size() - 1;
+  std::vector<ProjectedPolylineSegment> result;
+  result.reserve(segmentCount);
+
+  for (std::size_t i = 0; i < segmentCount; ++i) {
+    const auto &first = sourceVertices[i];
+    const auto &second = sourceVertices[(i + 1) % sourceVertices.size()];
+    if (!std::isfinite(first.x) || !std::isfinite(first.y) ||
+        !std::isfinite(first.bulge) || !std::isfinite(second.x) ||
+        !std::isfinite(second.y))
+      return std::nullopt;
+
+    const double dx = second.x - first.x;
+    const double dy = second.y - first.y;
+    const double chord = std::hypot(dx, dy);
+    if (!std::isfinite(chord) || chord == 0.0) return std::nullopt;
+
+    ProjectedPolylineSegment segment;
+    segment.ordinal = i;
+    segment.bulge = first.bulge;
+    if (first.bulge == 0.0) {
+      DRW_Coord start, end;
+      if (!projectPolylineOcsPoint(normal, elevation, first.x, first.y, start) ||
+          !projectPolylineOcsPoint(normal, elevation, second.x, second.y, end))
+        return std::nullopt;
+      const double projectedLength = std::hypot(end.x - start.x, end.y - start.y);
+      if (!std::isfinite(projectedLength) || projectedLength == 0.0)
+        return std::nullopt;
+      segment.entity = std::make_unique<RS_Line>(
+          parent, RS_LineData{RS_Vector{start.x, start.y},
+                              RS_Vector{end.x, end.y}});
+    } else {
+      const double inverseBulge = 1.0 / first.bulge;
+      const double radius = 0.25 * chord *
+                            (std::abs(first.bulge) + std::abs(inverseBulge));
+      const double centerOffset = 0.25 * chord *
+                                  (inverseBulge - first.bulge);
+      const double startX = (first.x + second.x) / 2.0 - (dy / chord) * centerOffset;
+      const double startY = (first.y + second.y) / 2.0 + (dx / chord) * centerOffset;
+      if (!std::isfinite(radius) || radius <= 0.0 ||
+          !std::isfinite(startX) || !std::isfinite(startY))
+        return std::nullopt;
+
+      DRW_Coord center;
+      if (!projectPolylineOcsPoint(normal, elevation, startX, startY, center))
+        return std::nullopt;
+      segment.center = center;
+      segment.axisU = {axisX.x * radius, axisX.y * radius, axisX.z * radius};
+      segment.axisV = {axisY.x * radius, axisY.y * radius, axisY.z * radius};
+      segment.start = std::atan2(first.y - startY, first.x - startX);
+      segment.end = segment.start + 4.0 * std::atan(first.bulge);
+      RS_EllipseData projected;
+      if (!projectConicToEllipse(center, segment.axisU, segment.axisV,
+                                 segment.start, segment.end, false,
+                                 first.bulge < 0.0, projected))
+        return std::nullopt;
+      segment.entity = std::make_unique<RS_Ellipse>(parent, projected);
+      segment.conic = true;
+    }
+    result.push_back(std::move(segment));
+  }
+  return result;
+}
+
+void appendPolylineProjectionMarker(RS_Entity *entity,
+                                    const DRW_Coord &normal,
+                                    double elevation,
+                                    std::size_t ordinal,
+                                    std::size_t segmentCount,
+                                    double bulge) {
+  auto ext = entity->getDrwExtData();
+  ext.push_back(std::make_shared<DRW_Variant>(
+      1001, std::string("LibreCAD_POLYLINE_OCS")));
+  ext.push_back(std::make_shared<DRW_Variant>(
+      1071, static_cast<std::int32_t>(ordinal)));
+  ext.push_back(std::make_shared<DRW_Variant>(
+      1071, static_cast<std::int32_t>(segmentCount)));
+  ext.push_back(std::make_shared<DRW_Variant>(1010, normal));
+  ext.push_back(std::make_shared<DRW_Variant>(1040, elevation));
+  ext.push_back(std::make_shared<DRW_Variant>(1041, bulge));
+  entity->setDrwExtData(std::move(ext));
+}
 } // namespace
 
 void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
   RS_DEBUG->print("RS_FilterDXF::addCircle");
-  if (!canCreatePlanarEntity(data, "addCircle"))
+  if (!hasNormalizedAxialExtrusion(data)) {
+    DRW_Coord axisX, axisY;
+    if (!ocsBasis(data.extPoint, axisX, axisY) ||
+        !std::isfinite(data.radious) || data.radious <= 0.0) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addCircle: invalid non-axial conic");
+      return;
+    }
+    axisX.x *= data.radious; axisX.y *= data.radious; axisX.z *= data.radious;
+    axisY.x *= data.radious; axisY.y *= data.radious; axisY.z *= data.radious;
+    RS_EllipseData projection;
+    if (!projectConicToEllipse(data.basePoint, axisX, axisY, 0.0,
+                               2.0 * M_PI, true, false, projection)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addCircle: degenerate XY projection");
+      return;
+    }
+    auto *entity = new RS_Ellipse(m_currentContainer, projection);
+    setEntityAttributes(entity, &data);
+    appendConicProjectionMarker(entity, 0, data.extPoint, data.basePoint,
+                                axisX, axisY, 0.0, 2.0 * M_PI);
+    m_currentContainer->addEntity(entity);
     return;
+  }
 
   RS_Vector v{data.basePoint.x, data.basePoint.y};
   const auto entity = new RS_Circle(m_currentContainer, {v, data.radious});
@@ -7053,8 +7691,31 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
  */
 void RS_FilterDXFRW::addArc(const DRW_Arc &data) {
   RS_DEBUG->print("RS_FilterDXF::addArc");
-  if (!canCreatePlanarEntity(data, "addArc"))
+  if (!hasNormalizedAxialExtrusion(data)) {
+    DRW_Coord axisX, axisY;
+    if (!ocsBasis(data.extPoint, axisX, axisY) ||
+        !std::isfinite(data.radious) || data.radious <= 0.0 ||
+        !std::isfinite(data.staangle) || !std::isfinite(data.endangle)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addArc: invalid non-axial conic");
+      return;
+    }
+    axisX.x *= data.radious; axisX.y *= data.radious; axisX.z *= data.radious;
+    axisY.x *= data.radious; axisY.y *= data.radious; axisY.z *= data.radious;
+    RS_EllipseData projection;
+    if (!projectConicToEllipse(data.basePoint, axisX, axisY, data.staangle,
+                               data.endangle, false, false, projection)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addArc: degenerate XY projection");
+      return;
+    }
+    auto *entity = new RS_Ellipse(m_currentContainer, projection);
+    setEntityAttributes(entity, &data);
+    appendConicProjectionMarker(entity, 1, data.extPoint, data.basePoint,
+                                axisX, axisY, data.staangle, data.endangle);
+    m_currentContainer->addEntity(entity);
     return;
+  }
   const RS_Vector v(data.basePoint.x, data.basePoint.y);
   const RS_ArcData d(v, data.radious, data.staangle, data.endangle, false);
   const auto entity = new RS_Arc(m_currentContainer, d);
@@ -7077,8 +7738,40 @@ void RS_FilterDXFRW::addArc(const DRW_Arc &data) {
  */
 void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
   RS_DEBUG->print("RS_FilterDXFRW::addEllipse");
-  if (!canCreatePlanarEntity(data, "addEllipse"))
+  if (!hasNormalizedAxialExtrusion(data)) {
+    const double normalLength = std::hypot(data.extPoint.x, data.extPoint.y,
+                                           data.extPoint.z);
+    if (!std::isfinite(normalLength) || normalLength == 0.0 ||
+        !std::isfinite(data.ratio) || data.ratio <= 0.0) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addEllipse: invalid non-axial conic");
+      return;
+    }
+    DRW_Coord normal{data.extPoint.x / normalLength,
+                     data.extPoint.y / normalLength,
+                     data.extPoint.z / normalLength};
+    DRW_Coord axisU = data.secPoint;
+    const double minorScale = data.ratio;
+    DRW_Coord axisV{(normal.y * axisU.z - normal.z * axisU.y) * minorScale,
+                    (normal.z * axisU.x - normal.x * axisU.z) * minorScale,
+                    (normal.x * axisU.y - normal.y * axisU.x) * minorScale};
+    const bool full = std::abs(data.endparam - data.staparam) >=
+                          2.0 * M_PI - 128.0 * std::numeric_limits<double>::epsilon() ||
+                      data.endparam == data.staparam;
+    RS_EllipseData projection;
+    if (!projectConicToEllipse(data.basePoint, axisU, axisV, data.staparam,
+                               data.endparam, full, false, projection)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addEllipse: degenerate XY projection");
+      return;
+    }
+    auto *entity = new RS_Ellipse(m_currentContainer, projection);
+    setEntityAttributes(entity, &data);
+    appendConicProjectionMarker(entity, 2, data.extPoint, data.basePoint,
+                                axisU, axisV, data.staparam, data.endparam);
+    m_currentContainer->addEntity(entity);
     return;
+  }
 
   const RS_Vector v1(data.basePoint.x, data.basePoint.y);
   const RS_Vector v2(data.secPoint.x, data.secPoint.y);
@@ -7455,19 +8148,67 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
     return;
   }
 
-  // libdxfrw has already applied the OCS frame before this callback. A
-  // LibreCAD polyline is strictly 2D, so only the two normalized axial
-  // frames can be represented without retaining a second coordinate space.
-  if (!hasNormalizedAxialExtrusion(data)) {
-    RS_DEBUG->print(
-        RS_Debug::D_WARNING,
-        "RS_FilterDXFRW::addLWPolyline: skipped non-axial extrusion");
+  const double extrusionMagnitude =
+      std::hypot(data.extPoint.x, data.extPoint.y, data.extPoint.z);
+  if (!std::isfinite(extrusionMagnitude) || extrusionMagnitude == 0.0) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW::addLWPolyline: invalid extrusion normal");
+    return;
+  }
+
+  // libdxfrw has already applied the OCS frame before this callback. Keep a
+  // visible XY projection for non-axial planes, but mark it as lossy so it
+  // cannot be edited as a native offset source or mistaken for source OCS.
+  const bool projectedOcs = !hasNormalizedAxialExtrusion(data);
+  if (projectedOcs && std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
+                                  [](const auto& vertex) {
+                                    return vertex && vertex->bulge != 0.0;
+                                  })) {
+    std::vector<PolylineVertexInput> vertices;
+    vertices.reserve(data.vertlist.size());
+    for (const auto &vertex : data.vertlist) {
+      if (!vertex) return;
+      vertices.push_back({vertex->x, vertex->y, vertex->bulge});
+    }
+    auto projected = projectBulgedPolylineOcs(
+        data.extPoint, data.elevation, vertices, (data.flags & 0x1) != 0,
+        true,
+        m_currentContainer);
+    if (!projected) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addLWPolyline: invalid bulged OCS projection");
+      return;
+    }
+    const auto segmentCount = projected->size();
+    for (auto &segment : *projected) {
+      setEntityAttributes(segment.entity.get(), &data);
+      segment.entity->setSourceHandle(0);
+      segment.entity->setReactorHandles({});
+      segment.entity->setXDictHandle(0);
+      if (segment.conic)
+        appendConicProjectionMarker(segment.entity.get(), 3, data.extPoint,
+                                    segment.center, segment.axisU,
+                                    segment.axisV, segment.start, segment.end);
+      appendPolylineProjectionMarker(segment.entity.get(), data.extPoint,
+                                     data.elevation, segment.ordinal,
+                                     segmentCount, segment.bulge);
+      m_currentContainer->addEntity(segment.entity.release());
+    }
     return;
   }
   const bool reflectedOcs = data.extPoint.z < 0.0;
   RS_PolylineData d(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
   auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, d);
   setEntityAttributes(polyline.get(), &data);
+  if (projectedOcs) {
+    auto ext = polyline->getDrwExtData();
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("LibreCAD_POLYLINE_OCS")));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord{data.extPoint.x, data.extPoint.y, data.extPoint.z}));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data.elevation));
+    polyline->setDrwExtData(std::move(ext));
+  }
 
   std::vector<std::pair<RS_Vector, double>> verList;
   for (const auto &v : data.vertlist) {
@@ -7476,7 +8217,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
   }
 
   polyline->appendVertexs(verList);
-  const bool defaultExtrusion = !reflectedOcs;
+  const bool defaultExtrusion = !projectedOcs && !reflectedOcs;
   bool hasVertexMetadata = false;
   for (const auto &v : data.vertlist) {
     if (v && (v->stawidth != 0.0 || v->endwidth != 0.0 || v->identifier != 0)) {
@@ -7491,9 +8232,11 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.elevation : data.elevation));
+        1040, projectedOcs ? 0.0
+                           : (reflectedOcs ? -data.elevation : data.elevation)));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.thickness : data.thickness));
+        1040, projectedOcs ? 0.0
+                           : (reflectedOcs ? -data.thickness : data.thickness)));
     ext.push_back(
         std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
     ext.push_back(std::make_shared<DRW_Variant>(
@@ -7993,17 +8736,103 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
     return;
   }
 
-  RS_PolylineData pd(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
   const bool is2dPolyline = (data.flags & (8 | 16 | 64)) == 0;
-  if (is2dPolyline && !hasNormalizedAxialExtrusion(data)) {
-    RS_DEBUG->print(
-        RS_Debug::D_WARNING,
-        "RS_FilterDXFRW::addPolyline: skipped non-axial 2D extrusion");
+  const bool projectedOcs =
+      is2dPolyline && !hasNormalizedAxialExtrusion(data);
+  const bool reflectedOcs =
+      is2dPolyline && !projectedOcs && data.extPoint.z < 0.0;
+  if (projectedOcs && std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
+                                  [](const auto &vertex) {
+                                    return vertex && vertex->bulge != 0.0;
+                                  })) {
+    std::vector<PolylineVertexInput> vertices;
+    vertices.reserve(data.vertlist.size());
+    for (const auto &vertex : data.vertlist) {
+      if (!vertex) return;
+      vertices.push_back({vertex->basePoint.x, vertex->basePoint.y,
+                          vertex->bulge});
+    }
+    auto projected = projectBulgedPolylineOcs(
+        data.extPoint, data.basePoint.z, vertices, (data.flags & 0x1) != 0,
+        false,
+        m_currentContainer);
+    if (!projected) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addPolyline: invalid bulged OCS projection");
+      return;
+    }
+    const auto segmentCount = projected->size();
+    for (auto &segment : *projected) {
+      setEntityAttributes(segment.entity.get(), &data);
+      segment.entity->setSourceHandle(0);
+      segment.entity->setReactorHandles({});
+      segment.entity->setXDictHandle(0);
+      if (segment.conic)
+        appendConicProjectionMarker(segment.entity.get(), 3, data.extPoint,
+                                    segment.center, segment.axisU,
+                                    segment.axisV, segment.start, segment.end);
+      appendPolylineProjectionMarker(segment.entity.get(), data.extPoint,
+                                     data.basePoint.z, segment.ordinal,
+                                     segmentCount, segment.bulge);
+      m_currentContainer->addEntity(segment.entity.release());
+    }
     return;
   }
-  const bool reflectedOcs = is2dPolyline && data.extPoint.z < 0.0;
+  std::vector<RS_Vector> positions;
+  if (projectedOcs) {
+    if (std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
+                    [](const auto& vertex) {
+                      return !vertex || vertex->bulge != 0.0;
+                    })) {
+      RS_DEBUG->print(
+          RS_Debug::D_WARNING,
+          "RS_FilterDXFRW::addPolyline: skipped non-axial bulged projection");
+      return;
+    }
+    positions.reserve(data.vertlist.size());
+    for (const auto& vertex : data.vertlist) {
+      DRW_Coord projected;
+      if (!vertex ||
+          !projectPolylineOcsPoint(data.extPoint, data.basePoint.z,
+                                   vertex->basePoint.x, vertex->basePoint.y,
+                                   projected)) {
+        RS_DEBUG->print(
+            RS_Debug::D_WARNING,
+            "RS_FilterDXFRW::addPolyline: invalid non-axial OCS projection");
+        return;
+      }
+      positions.emplace_back(projected.x, projected.y);
+    }
+  } else {
+    positions.reserve(data.vertlist.size());
+    for (const auto& vertex : data.vertlist) {
+      if (!vertex) return;
+      positions.emplace_back(reflectedOcs ? -vertex->basePoint.x
+                                          : vertex->basePoint.x,
+                             vertex->basePoint.y);
+    }
+  }
+
+  RS_PolylineData pd(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
   auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, pd);
   setEntityAttributes(polyline.get(), &data);
+  if (projectedOcs) {
+    auto ext = polyline->getDrwExtData();
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("LibreCAD_POLYLINE_OCS")));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord{data.extPoint.x, data.extPoint.y, data.extPoint.z}));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data.basePoint.z));
+    polyline->setDrwExtData(std::move(ext));
+  }
+  if (data.flags & 8) {
+    auto ext = polyline->getDrwExtData();
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("LibreCAD_POLYLINE_3D")));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1000, std::string("projected-to-xy")));
+    polyline->setDrwExtData(std::move(ext));
+  }
 
   if (data.vertlist.empty()) {
     m_currentContainer->addEntity(polyline.release());
@@ -8011,9 +8840,9 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   }
 
   auto vert0 = data.vertlist[0];
-  RS_Vector first_pos(reflectedOcs ? -vert0->basePoint.x : vert0->basePoint.x,
-                      vert0->basePoint.y);
-  const double firstBulge = reflectedOcs ? -vert0->bulge : vert0->bulge;
+  RS_Vector first_pos = positions[0];
+  const double firstBulge =
+      projectedOcs ? 0.0 : reflectedOcs ? -vert0->bulge : vert0->bulge;
   polyline->addVertex(first_pos, firstBulge, false);
   RS_Vector prev_pos = first_pos;
 
@@ -8024,14 +8853,14 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   for (size_t i = 0; i < num_segments; ++i) {
     size_t vert_idx = (i + 1) % data.vertlist.size();
     auto vert = data.vertlist[vert_idx];
-    RS_Vector curr_pos(reflectedOcs ? -vert->basePoint.x : vert->basePoint.x,
-                       vert->basePoint.y);
+    RS_Vector curr_pos = positions[vert_idx];
 
     size_t bulge_idx = i % data.vertlist.size();
-    double segmentBulge = data.vertlist[bulge_idx]->bulge;
+    double segmentBulge =
+        projectedOcs ? 0.0 : data.vertlist[bulge_idx]->bulge;
     if (reflectedOcs)
       segmentBulge = -segmentBulge;
-    double nextBulge = vert->bulge;
+    double nextBulge = projectedOcs ? 0.0 : vert->bulge;
     if (reflectedOcs)
       nextBulge = -nextBulge;
     const auto &extData = data.vertlist[bulge_idx]->extData;
@@ -8057,16 +8886,21 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
       break;
     }
   }
-  if (is2dPolyline && (data.basePoint.z != 0.0 || data.thickness != 0.0 ||
-                       reflectedOcs || hasVertexMetadata)) {
+  if (is2dPolyline && (projectedOcs || data.basePoint.z != 0.0 ||
+                       data.thickness != 0.0 || reflectedOcs ||
+                       hasVertexMetadata)) {
     auto ext = polylineXDataWithoutSidecar(*polyline);
     ext.push_back(std::make_shared<DRW_Variant>(
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, 0.0));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.basePoint.z : data.basePoint.z));
+        1040, projectedOcs ? 0.0
+                           : reflectedOcs ? -data.basePoint.z
+                                          : data.basePoint.z));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.thickness : data.thickness));
+        1040, projectedOcs ? 0.0
+                           : reflectedOcs ? -data.thickness
+                                          : data.thickness));
     ext.push_back(
         std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
     ext.push_back(std::make_shared<DRW_Variant>(
@@ -8089,7 +8923,145 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   m_currentContainer->addEntity(polyline.release());
 }
 
-bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline *data) {
+std::optional<RS_FilterDXFRW::OffsetXDataContext>
+RS_FilterDXFRW::makeOffsetXDataContext(bool dwg, DRW::Version version,
+                                      const QString &codePage, bool binary) {
+  switch (version) {
+  case DRW::AC1009: case DRW::AC1012: case DRW::AC1014:
+  case DRW::AC1015: case DRW::AC1018: case DRW::AC1021:
+  case DRW::AC1024: case DRW::AC1027: case DRW::AC1032:
+    break;
+  default:
+    return std::nullopt;
+  }
+  OffsetXDataContext context;
+  context.codec = std::make_shared<DRW_TextCodec>();
+  context.codec->setVersion(version, !dwg);
+  auto &options = context.options;
+  options.eed = dwg;
+  options.asciiDxf = !binary;
+  options.binaryDxfR12 = binary && version == DRW::AC1009;
+  if (dwg) {
+#ifdef DWGSUPPORT
+    const QByteArray name = codePage.toUtf8();
+    const char *selected = dwgCodePageName(dwgCodePageId(name.constData()));
+    context.codec->setByteCodePage(selected ? selected : "ANSI_1252");
+#else
+    return std::nullopt;
+#endif
+  } else {
+    context.codec->setCodePage(codePage.toUtf8().toStdString(), true);
+  }
+  options.textEncoding = version <= DRW::AC1018
+      ? LC_OffsetCurveXData::TextEncoding::Legacy
+      : dwg ? LC_OffsetCurveXData::TextEncoding::Utf16
+            : LC_OffsetCurveXData::TextEncoding::Utf8;
+  if (options.textEncoding == LC_OffsetCurveXData::TextEncoding::Legacy) {
+    const auto codec = context.codec;
+    options.legacyEncodedBytes = [codec, dwg](std::string_view text)
+        -> std::optional<std::size_t> {
+      const auto encoded = dwg ? codec->fromUtf8CP8(text) : codec->fromUtf8(text);
+      const auto decoded = dwg ? codec->toUtf8CP8(encoded) : codec->toUtf8(encoded);
+      if (decoded != text) return std::nullopt;
+      return encoded.size();
+    };
+  }
+  return context;
+}
+
+std::optional<RS_FilterDXFRW::OffsetXDataContext>
+RS_FilterDXFRW::offsetInputContext() const {
+  if (m_offsetInputKind == OffsetInputKind::None ||
+      (m_offsetInputKind == OffsetInputKind::Dxf && m_dxfR == nullptr))
+    return std::nullopt;
+  // Operation-local source metadata, never the destination graphic's variables.
+  const bool dwg = m_offsetInputKind == OffsetInputKind::Dwg;
+  return makeOffsetXDataContext(dwg, m_offsetInputVersion, m_offsetInputCodePage,
+                                !dwg && m_dxfR->isBinary());
+}
+
+void RS_FilterDXFRW::reportOffsetXDataDiagnostics(
+    const char *operation, const LC_OffsetCurveXData::Diagnostics &diagnostics) {
+  for (const auto &diagnostic : diagnostics)
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: offset XDATA %s reason=%d item=%zu",
+        operation, static_cast<int>(diagnostic.reason), diagnostic.item);
+}
+
+void RS_FilterDXFRW::applyImportedSplineAttributes(
+    RS_Entity *entity, const DRW_Spline *raw,
+    const LC_OffsetCurveXData::XData *remaining) {
+  if (!entity) return;
+  setEntityAttributes(entity, raw);
+  // The common setter ignores empty raw XDATA; successful empty stripping must
+  // still replace it. Null means parsing could not safely produce a remainder.
+  if (remaining) entity->setDrwExtData(*remaining);
+}
+
+std::optional<LC_OffsetCurveXData::XData>
+RS_FilterDXFRW::mergedOffsetSplineXData(const RS_Entity &source,
+                                       bool includeDefinition) {
+  namespace xd = LC_OffsetCurveXData;
+  const auto fail = [this](xd::Reason reason = xd::Reason::Encoding) -> std::optional<xd::XData> {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+        "RS_FilterDXFRW: refusing unsafe offset spline serialization reason=%d",
+        static_cast<int>(reason));
+    m_writeFailed = true;
+    return std::nullopt;
+  };
+  if (!m_offsetOutputContext) return fail(xd::Reason::InvalidOptions);
+  try {
+    const auto &context = *m_offsetOutputContext;
+    std::optional<xd::Definition> current;
+    const auto *native = dynamic_cast<const LC_OffsetCurve *>(&source);
+    if (includeDefinition && native && native->hasGeneralizedSourceDefinition()) {
+      if (native->unknownOwnedTail().size() > xd::MaximumTailItems) return fail(xd::Reason::TailLimit);
+      xd::Definition definition;
+      definition.source = *native->sourceDefinition();
+      definition.reservedFlags = native->unknownOwnedFlags();
+      definition.tail = native->unknownOwnedTail();
+      current = std::move(definition);
+    } else if (includeDefinition && native && native->hasEditableDefinition()) {
+      if (native->unknownOwnedTail().size() > xd::MaximumTailItems) return fail(xd::Reason::TailLimit);
+      current = xd::Definition{native->definition(), native->unknownOwnedFlags(),
+                               native->unknownOwnedTail()};
+    }
+    xd::Diagnostics diagnostics;
+    auto merged = xd::forExport(source.getDrwExtData(), current,
+                                 context.options, &diagnostics);
+    reportOffsetXDataDiagnostics("export", diagnostics);
+    if (!merged) return fail();
+    if (context.options.eed &&
+        context.options.textEncoding == xd::TextEncoding::Utf16) return merged;
+    // The helper sizes the actual encoder, but sizing cannot establish a
+    // lossless inverse. Do not rewrite shared foreign tags to make them fit.
+    for (const auto &tag : *merged) {
+      if (!tag || tag->type() != DRW_Variant::STRING || !tag->content.s) continue;
+      const int code = tag->code();
+      if (code != 1000 && code != 1001 && code != 1003) continue;
+      if (context.options.eed && code == 1003) continue;
+      const auto &original = *tag->content.s;
+      std::string encodedInput;
+      const bool caret = !context.options.eed && context.options.asciiDxf && code == 1000;
+      if (caret) encodedInput = DRW_TextCodec::encodeDxfXDataString(original);
+      const std::string_view input = caret ? std::string_view(encodedInput) : std::string_view(original);
+      const auto encoded = context.options.eed
+          ? context.codec->fromUtf8CP8(input) : context.codec->fromUtf8(input);
+      auto decoded = context.options.eed
+          ? context.codec->toUtf8CP8(encoded) : context.codec->toUtf8(encoded);
+      if (caret) decoded = DRW_TextCodec::decodeDxfXDataString(decoded);
+      // The selected reader must recover the exact logical string. Literal
+      // Unicode/MIF escape spellings without a lossless inverse still refuse.
+      if (decoded != original) return fail();
+    }
+    return merged;
+  } catch (const std::bad_alloc &) {
+    return fail(xd::Reason::ResourceLimit);
+  }
+}
+
+bool RS_FilterDXFRW::handleQuadraticConicSpline(
+    const DRW_Spline *data, const LC_OffsetCurveXData::XData *remaining) {
   if (data->degree != 2 || data->controllist.size() != 3) {
     return false;
   }
@@ -8112,7 +9084,7 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline *data) {
                     "parabola or hyperbola; falling through to addSpline");
     return false;
   }
-  setEntityAttributes(en.get(), data);
+  applyImportedSplineAttributes(en.get(), data, remaining);
   en->update();
   m_currentContainer->addEntity(en.release());
 
@@ -8123,24 +9095,222 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline *data) {
  * Implementation of the method which handles splines.
  */
 void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
+  if (data == nullptr) return;
   RS_DEBUG->print("RS_FilterDXFRW::addSpline: degree: %d", data->degree);
+  namespace xd = LC_OffsetCurveXData;
+  const auto context = offsetInputContext();
+  const auto parsed = xd::parseAndStrip(data->extData,
+      context ? context->options : xd::Options{});
+  reportOffsetXDataDiagnostics("import", parsed.diagnostics);
+  if (m_deferOffsetAdmission && m_offsetImportBudget) {
+    for (const auto &diagnostic : parsed.diagnostics)
+      m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::XData,
+          int(diagnostic.reason), diagnostic.item);
+    const bool recognizedSchema = parsed.status == xd::Status::Schema1 ||
+        parsed.status == xd::Status::Schema2 || parsed.status == xd::Status::Schema3;
+    if (parsed.knownCandidates && !(context && recognizedSchema &&
+        parsed.definition && parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE))
+      ++m_offsetImportBudget->refused;
+  }
+  const xd::XData *remaining = parsed.remaining ? &*parsed.remaining : nullptr;
+  if (context && (parsed.status == xd::Status::Schema2 ||
+                  parsed.status == xd::Status::Schema3) &&
+      parsed.definition && parsed.definition->source &&
+      parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
+    const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);
+    if (m_offsetCurveCacheOnlyImport) {
+      auto display = raw
+          ? std::make_unique<RS_Spline>(m_currentContainer, *raw.data)
+          : makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+      applyImportedSplineAttributes(display.get(), data, remaining);
+      m_currentContainer->addEntity(display.release());
+      return;
+    }
+    if (raw && m_deferOffsetAdmission && m_offsetImportBudget) {
+      try {
+        auto source = parsed.definition->source->source.makeEntity();
+        const double magnitude = std::abs(parsed.definition->source->signedDistance);
+        const auto sourceOptions = source && std::isfinite(magnitude) && magnitude > RS_TOLERANCE
+            ? LC_OffsetWorkerTolerance::directOptions(*parsed.definition->source, *source)
+            : std::nullopt;
+        const double tolerance = sourceOptions
+            ? sourceOptions->tolerance.requestedGeometry
+            : std::numeric_limits<double>::quiet_NaN();
+        if (std::isfinite(tolerance) && tolerance > 0 &&
+            m_offsetImportBudget->admit(*raw.data, *parsed.definition, remaining->size(),
+                                        &data->extData)) {
+          auto fallback = makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+          applyImportedSplineAttributes(fallback.get(), data, remaining);
+          if (!fallback->cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) {
+            ++m_offsetImportBudget->refused;
+            m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 1);
+            m_currentContainer->addEntity(fallback.get()); fallback.release();
+            return;
+          }
+          auto carrier = std::make_shared<LC_OffsetImportPlaceholder::Carrier>();
+          carrier->cache = *raw.data;
+          carrier->definition = *parsed.definition;
+          carrier->fallbackXData = data->extData;
+          carrier->tolerance = tolerance;
+          auto pending = std::make_unique<LC_OffsetImportPlaceholder>(*fallback, std::move(carrier));
+          m_currentContainer->addEntity(pending.get()); pending.release();
+          return;
+        }
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier, -1);
+      } catch (const std::bad_alloc &) {
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 2);
+      }
+    } else if (!raw && m_offsetImportBudget) {
+      ++m_offsetImportBudget->refused;
+      m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier,
+          int(raw.refusal), raw.item.value_or(0));
+    }
+    // Until a joined op-8 receipt certifies the source/cache pair, preserve the
+    // exact schema-2 XDATA on ordinary fallback geometry.
+    remaining = &data->extData;
+  }
+  if (context && parsed.status == xd::Status::Schema1 && parsed.definition &&
+      parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
+    const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);
+    if (m_offsetCurveCacheOnlyImport) {
+      auto display = raw
+          ? std::make_unique<RS_Spline>(m_currentContainer, *raw.data)
+          : makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+      applyImportedSplineAttributes(display.get(), data, remaining);
+      m_currentContainer->addEntity(display.release());
+      return;
+    }
+    if (raw) {
+      const auto &definition = parsed.definition->geometry;
+      const RS_Ellipse source{nullptr, definition.basis};
+      const double tolerance = LC_CurveOffset::toleranceFor(
+          source, definition.distance, definition.relTolerance);
+      if (std::isfinite(tolerance) && tolerance > 0) {
+        if (m_deferOffsetAdmission) {
+          try {
+            if (m_offsetImportBudget && m_offsetImportBudget->admit(*raw.data, *parsed.definition, remaining->size())) {
+              auto fallback = makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+              applyImportedSplineAttributes(fallback.get(), data, remaining);
+              if (!fallback->cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) {
+                ++m_offsetImportBudget->refused;
+                m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 1);
+                m_currentContainer->addEntity(fallback.get()); fallback.release();
+                return;
+              }
+              auto carrier = std::make_shared<LC_OffsetImportPlaceholder::Carrier>();
+              carrier->cache = *raw.data; carrier->definition = *parsed.definition; carrier->tolerance = tolerance;
+              auto pending = std::make_unique<LC_OffsetImportPlaceholder>(*fallback, std::move(carrier));
+              m_currentContainer->addEntity(pending.get()); pending.release();
+              return;
+            }
+          } catch (const std::bad_alloc &) {
+            if (m_offsetImportBudget) {
+              ++m_offsetImportBudget->refused;
+              m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 2);
+            }
+          }
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: deferred offset admission refused; keeping ordinary geometry");
+        } else try {
+          RS_Spline cache{m_currentContainer, *raw.data};
+          LC_OffsetCheckResult checked;
+          LC_OffsetCurveRefusal refusal = LC_OffsetCurveRefusal::InvalidInput;
+          auto native = LC_OffsetCurve::adopt(cache, definition, tolerance,
+                                              &checked, {}, &refusal);
+          if (native) {
+            if (native->setOwnedExtensions(parsed.definition->reservedFlags,
+                                            parsed.definition->tail)) {
+              applyImportedSplineAttributes(native.get(), data, remaining);
+              m_currentContainer->addEntity(native.release());
+              return;
+            }
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "RS_FilterDXFRW: offset owned-extension storage refused; keeping ordinary geometry");
+          } else {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                "RS_FilterDXFRW: offset adoption refused native=%d check=%d",
+                static_cast<int>(refusal), static_cast<int>(checked.reason));
+          }
+        } catch (const std::bad_alloc &) {
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+              "RS_FilterDXFRW: offset adoption allocation refused");
+        }
+      } else if (m_deferOffsetAdmission && m_offsetImportBudget) {
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier, -1);
+      }
+    } else {
+      if (m_deferOffsetAdmission && m_offsetImportBudget) {
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier,
+            int(raw.refusal), raw.item.value_or(0));
+      }
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+          "RS_FilterDXFRW: raw offset carrier refused reason=%d item=%zu",
+          static_cast<int>(raw.refusal), raw.item.value_or(0));
+    }
+  }
 
   // Special case: rational quadratic conic (hyperbola or parabola)
-  if (handleQuadraticConicSpline(data)) {
+  if (handleQuadraticConicSpline(data, remaining)) {
     return; // Conic handled successfully
   }
 
   // Spline points case. Weighted degree-2 splines are exact rational conics
   // or NURBS segments; keep them on the RS_Spline path so weights survive.
-  if (data->degree == 2 && !hasRationalSplineWeights(data)) {
-    bool closed = (data->flags & 0x1) == 0x1;
+  const auto nonzeroTangent = [](const DRW_Coord &tangent) {
+    return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
+  };
+  const bool hasFitTangents = nonzeroTangent(data->tgStart) ||
+                              nonzeroTangent(data->tgEnd);
+  const bool splineClosed = (data->flags & 0x1) != 0;
+  const bool splinePeriodic = (data->flags & 0x2) != 0;
+  size_t splineControlCount = data->controllist.size();
+  bool validPeriodicControlNet = !splinePeriodic;
+  if (splinePeriodic && splineClosed && data->degree == 2 &&
+      splineControlCount > 2 &&
+      data->knotslist.size() == splineControlCount + 3) {
+    validPeriodicControlNet = true;
+    const auto samePoint = [&](size_t a, size_t b) {
+      const auto& lhs = data->controllist[a];
+      const auto& rhs = data->controllist[b];
+      if (!lhs || !rhs) return false;
+      const double scale = std::max({1.0, std::abs(lhs->x), std::abs(lhs->y),
+                                     std::abs(rhs->x), std::abs(rhs->y)});
+      return std::hypot(lhs->x - rhs->x, lhs->y - rhs->y) <= 1.0e-12 * scale;
+    };
+    for (size_t i = 0; i < 2; ++i) {
+      validPeriodicControlNet = validPeriodicControlNet &&
+          samePoint(i, splineControlCount - 2 + i);
+    }
+    if (validPeriodicControlNet) {
+      const double knotStep = data->knotslist[1] - data->knotslist[0];
+      validPeriodicControlNet = std::isfinite(knotStep) && knotStep > 0.0;
+      for (size_t i = 1; validPeriodicControlNet &&
+                          i < data->knotslist.size(); ++i) {
+        const double step = data->knotslist[i] - data->knotslist[i - 1];
+        validPeriodicControlNet = std::isfinite(step) &&
+            std::abs(step - knotStep) <= 1.0e-12 * std::max(1.0, knotStep);
+      }
+    }
+    if (validPeriodicControlNet)
+      splineControlCount -= 2;
+  }
+  const bool validSplinePointsLayout = validPeriodicControlNet &&
+      (!splineClosed || splinePeriodic || data->controllist.empty());
+  if (data->degree == 2 && !hasRationalSplineWeights(data) &&
+      validSplinePointsLayout &&
+      (!hasFitTangents || data->controllist.empty())) {
     bool controlOnly = data->nfit == 0;
 
-    const LC_SplinePointsData d(closed, controlOnly);
+    const LC_SplinePointsData d(splineClosed, controlOnly);
     const auto splinePoints = new LC_SplinePoints(m_currentContainer, d);
-    setEntityAttributes(splinePoints, data);
+    applyImportedSplineAttributes(splinePoints, data, remaining);
 
-    for (const auto &vert : data->controllist) {
+    for (size_t i = 0; i < splineControlCount; ++i) {
+      const auto& vert = data->controllist[i];
       if (vert) {
         splinePoints->addControlPoint({vert->x, vert->y});
       }
@@ -8150,20 +9320,28 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
         splinePoints->addPoint({vert->x, vert->y});
       }
     }
+    if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+      splinePoints->getData().fitTolerance = data->tolfit;
+    splinePoints->getData().fitTangentsConstrained =
+        hasFitTangents;
+    splinePoints->getData().fitStartTangent =
+        {data->tgStart.x, data->tgStart.y, data->tgStart.z};
+    splinePoints->getData().fitEndTangent =
+        {data->tgEnd.x, data->tgEnd.y, data->tgEnd.z};
 
     splinePoints->update();
     m_currentContainer->addEntity(splinePoints);
     return;
   }
 
-  // General spline (degree 1-3)
+  // General spline (degree 1-MaxSupportedDegree)
   if (data->degree < 1) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXFRW::addSpline: unsupported spline degree %d",
                     data->degree);
     return;
   }
-  if (data->degree > 3) {
+  if (data->degree > RS_Spline::MaxSupportedDegree) {
     std::unique_ptr<LC_SplinePoints> sampled =
         approximateDrwSpline(m_currentContainer, data);
     if (sampled) {
@@ -8171,7 +9349,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                       "RS_FilterDXFRW::addSpline: approximating unsupported "
                       "spline degree %d",
                       data->degree);
-      setEntityAttributes(sampled.get(), data);
+      applyImportedSplineAttributes(sampled.get(), data, remaining);
       sampled->update();
       m_currentContainer->addEntity(sampled.release());
       return;
@@ -8194,10 +9372,33 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     numCtrl, data->weightlist.size());
   }
 
+  const auto preserveFitMetadata = [data, hasFitTangents](RS_Spline *spline) {
+    RS_SplineData &target = spline->getData();
+    target.fitTangentsConstrained =
+        hasFitTangents;
+    target.fitStartTangent =
+        {data->tgStart.x, data->tgStart.y, data->tgStart.z};
+    target.fitEndTangent =
+        {data->tgEnd.x, data->tgEnd.y, data->tgEnd.z};
+    if (data->fitlist.empty())
+      return;
+    std::vector<RS_Vector> fitPoints;
+    fitPoints.reserve(data->fitlist.size());
+    for (const auto &coord : data->fitlist) {
+      if (!coord)
+        return;
+      fitPoints.emplace_back(coord->x, coord->y);
+    }
+    target.fitPoints = std::move(fitPoints);
+    if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+      target.fitTolerance = data->tolfit;
+  };
+
   if (numCtrl != 0) {
     std::unique_ptr<RS_Spline> spline =
         makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
-    setEntityAttributes(spline.get(), data);
+    preserveFitMetadata(spline.get());
+    applyImportedSplineAttributes(spline.get(), data, remaining);
     m_currentContainer->addEntity(spline.release());
     return;
   }
@@ -8209,7 +9410,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     : RS_SplineData::SplineType::ClampedOpen;
 
   const auto spline = new RS_Spline(m_currentContainer, d);
-  setEntityAttributes(spline, data);
+  applyImportedSplineAttributes(spline, data, remaining);
   m_currentContainer->addEntity(spline);
 
   if (data->degree != 2) {
@@ -8219,7 +9420,21 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                    [](const std::shared_ptr<DRW_Coord> &coord) {
                      return RS_Vector{coord->x, coord->y};
                    });
-    spline->setFitPoints(fitPoints);
+    const RS_Vector startTangent{data->tgStart.x, data->tgStart.y,
+                                 data->tgStart.z};
+    const RS_Vector endTangent{data->tgEnd.x, data->tgEnd.y,
+                               data->tgEnd.z};
+    const bool tangentInterpolationSucceeded =
+        data->degree == 3 && !isClosed && hasFitTangents &&
+        spline->setFitPointsWithTangents(fitPoints, startTangent,
+                                         endTangent);
+    if (tangentInterpolationSucceeded) {
+      if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+        spline->getData().fitTolerance = data->tolfit;
+    } else {
+      spline->setFitPoints(fitPoints);
+      preserveFitMetadata(spline);
+    }
   }
 
   if (isClosed) {
@@ -11474,6 +12689,24 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
   }
   RS_Graphic *container = static_cast<RS_Graphic *>(m_currentContainer);
 
+  // Capture origin before merging: an absent source variable must not inherit
+  // a previous drawing's version or text codec from the destination graphic.
+  if (m_offsetInputKind == OffsetInputKind::Dxf) {
+    m_offsetInputVersion = DRW::UNKNOWNV;
+    const auto incoming = data->vars.find("$ACADVER");
+    if (incoming != data->vars.end() && incoming->second &&
+        incoming->second->type() == DRW_Variant::STRING && incoming->second->content.s)
+      for (const auto &entry : DRW::dwgVersionStrings)
+        if (*incoming->second->content.s == entry.first)
+          m_offsetInputVersion = entry.second;
+  }
+  m_offsetInputCodePage = QStringLiteral("ANSI_1252");
+  auto incomingPage = data->vars.find("$DWGCODEPAGE");
+  if (incomingPage == data->vars.end()) incomingPage = data->vars.find("DWGCODEPAGE");
+  if (incomingPage != data->vars.end() && incomingPage->second &&
+      incomingPage->second->type() == DRW_Variant::STRING && incomingPage->second->content.s)
+    m_offsetInputCodePage = QString::fromUtf8(*incomingPage->second->content.s);
+
   // initialize units vars if not are present in dxf file - they will be
   // overriden if they are present
   m_graphic->addVariable("$LUNITS", 2, 70);
@@ -11546,12 +12779,11 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
   acadver.replace(QRegularExpression("[a-zA-Z]"), "");
   bool ok;
   const int parsedVersion = acadver.toInt(&ok);
-  if (ok) {
-    m_version = parsedVersion;
-  } else if (m_version == 0) {
-    // Pre-R13 DWG may omit $ACADVER; fileImport primes m_version from the
-    // on-disk magic before entities are read.
-    m_version = 1021;
+  // DWG entity layouts follow the opened file rather than an inconsistent
+  // or absent header variable.
+  if (m_offsetInputKind != OffsetInputKind::Dwg || m_version == 0) {
+    if (ok) m_version = parsedVersion;
+    else if (m_version == 0) m_version = 1021;
   }
 
   // detect if dxf lib are a old dxflib or libdxfrw < 0.5.4 (used to correct
@@ -11672,7 +12904,38 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   }
 
   this->m_graphic = &g;
+  m_activeOutputPath = QFileInfo(file).absoluteFilePath();
+  m_activeOutputSourceIdentity = g.sourceFileIdentity();
+  const QFileInfo outputIdentityInfo(file);
+  const bool targetHasSourceCanonicalPath =
+      m_activeOutputSourceIdentity.valid &&
+      outputIdentityInfo.canonicalFilePath() ==
+          m_activeOutputSourceIdentity.canonicalPath;
+  m_activeOutputTargetsSource = m_activeOutputSourceIdentity.valid &&
+      (m_activeOutputSourceIdentity.refersToPath(file) ||
+       targetHasSourceCanonicalPath ||
+       m_activeOutputSourceIdentity.refersToSameObject(file));
+  const auto activeOutputGuard = qScopeGuard([this] {
+    m_activeOutputPath.clear();
+    m_activeOutputSourceIdentity = {};
+    m_activeOutputTargetsSource = false;
+  });
+  if (m_activeOutputTargetsSource &&
+      !m_activeOutputSourceIdentity.matches(m_activeOutputPath)) {
+    m_errorCode = DRW::BAD_OPEN;
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW: refusing export over a changed source file");
+    return false;
+  }
   m_writeFailed = false;
+  m_offsetOutputContext.reset();
+  m_offsetOutputVersion = DRW::UNKNOWNV;
+  m_offsetOutputDwg = false;
+  const auto offsetOutputGuard = qScopeGuard([this] {
+    m_offsetOutputContext.reset();
+    m_offsetOutputVersion = DRW::UNKNOWNV;
+    m_offsetOutputDwg = false;
+  });
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
   m_shapeLeftOut.clear();
@@ -11719,6 +12982,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   };
   DRW::Version dwgVer = dwgVersionForFormat(type);
   if (dwgVer != DRW::UNKNOWNV) {
+    m_offsetOutputDwg = true;
+    m_offsetOutputVersion = dwgVer;
     switch (dwgVer) {
     case DRW::AC1015:
       m_version = 1015;
@@ -12068,7 +13333,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       "typed metadata identities");
       return false;
     }
-    bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
+    bool success = m_dwgW->writeGuarded(
+                       this, dwgVer, false,
+                       &RS_FilterDXFRW::outputPublishGuard, this) &&
+                   !m_writeFailed;
     m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
     m_writeLeftOut = m_dwgW->leftOut();
     m_lastDwgOptionalReferenceDropCount = dwgWriteOptionalReferenceDropCount();
@@ -12106,6 +13374,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // supported platform. Preserve the old file while committing the
     // completed staged output, and restore it if the commit fails.
     const auto commitStagedOutput = [&]() {
+      if (m_testBeforeDwgStagedPublish) {
+        auto hook = std::move(m_testBeforeDwgStagedPublish);
+        m_testBeforeDwgStagedPublish = {};
+        hook();
+      }
+      if (!verifyOutputTargetForPublication())
+        return false;
       if (!QFileInfo::exists(file))
         return QFile::rename(stagedOutputPath, file);
       // Only a file is moved aside. A directory of that name would go to the
@@ -12127,6 +13402,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (!backup.remove() || !QFile::rename(file, backupPath)) {
         QFile::remove(backupPath);
         return false;
+      }
+      if (m_testBeforeDwgStageRename) {
+        auto hook = std::move(m_testBeforeDwgStageRename);
+        m_testBeforeDwgStageRename = {};
+        hook(stagedOutputPath);
       }
       if (QFile::rename(stagedOutputPath, file)) {
         QFile::remove(backupPath);
@@ -12185,6 +13465,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_exactColor = true;
   }
   m_dxfExportVersion = exportVersion;
+  m_offsetOutputVersion = exportVersion;
   /**
    * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
@@ -12867,7 +14148,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
-      m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
+      m_dxfW->writeGuarded(this, exportVersion, binary,
+                           &RS_FilterDXFRW::outputPublishGuard, this) &&
+      !m_writeFailed; // binary
   m_writeLeftOut = m_dxfW->leftOut();
   activeWriter.reset();
 
@@ -18322,6 +19605,12 @@ void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
     //        );
     vars.insert(QString("$DWGCODEPAGE"), RS_Variable(m_codePage, 0));
   }
+  const auto codePage = vars.value("$DWGCODEPAGE");
+  m_offsetOutputContext = makeOffsetXDataContext(
+      m_offsetOutputDwg, m_offsetOutputVersion,
+      codePage.getType() == RS2::VariableString
+          ? codePage.getString() : QStringLiteral("ANSI_1252"));
+  if (!m_offsetOutputContext) m_writeFailed = true;
 
   QHash<QString, RS_Variable>::iterator it = vars.begin();
   while (it != vars.end()) {
@@ -20973,7 +22262,7 @@ void RS_FilterDXFRW::writeDimstyles() {
         m_writeFailed = true;
         continue;
       }
-      if (!restoreTableEntryExtData(dst, sourceStyle->extData)) {
+      if (!restoreDimStyleExtData(dst, sourceStyle->extData)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: cannot restore DXF "
                         "DIMSTYLE XDATA");
@@ -21416,11 +22705,9 @@ void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
   }
   // R2000/R2004 keep a style's own DIMLTYPE/DIMLTEX1/DIMLTEX2 in this XDATA
   // instead of the native groups 345-347 that prepareDRWDimStyleDimLine/
-  // ExtLine write for > AC1018. writeDimstyles() replays a source table
-  // entry's own raw extData verbatim right after this returns, byte for
-  // byte, whenever this style came from one; only add these three ourselves
-  // when there is no such source, so a style with a name a file already
-  // carried never ends up with the pair written twice.
+  // ExtLine write for > AC1018. writeDimstyles() preserves these imported
+  // linetype application sections verbatim (only DIMTALN is regenerated).
+  // Add the three sections ourselves only when there is no saved source.
   if (m_dxfW != nullptr && m_dxfW->getVersion() > DRW::AC1014 &&
       m_dxfW->getVersion() <= DRW::AC1018 &&
       m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(
@@ -27907,6 +29194,10 @@ void RS_FilterDXFRW::writeAppId() {
           emitRequired(name);
       }
     }
+    // Reuse the same collector for new foreign application groups on entities.
+    // EED lookup cannot register an APPID after the table phase has completed.
+    for (const std::string &name : dxfXDataApplications())
+      emitRequired(name);
     return;
   }
 
@@ -27921,6 +29212,22 @@ bool RS_FilterDXFRW::finalizeDxfWrite() {
   // A failure latched in any DXF write callback reaches dxfRW here, before
   // it replaces the destination.
   return !m_writeFailed;
+}
+
+bool RS_FilterDXFRW::verifyOutputTargetForPublication() {
+  if (!m_activeOutputTargetsSource)
+    return true;
+  if (m_activeOutputSourceIdentity.matches(m_activeOutputPath))
+    return true;
+  m_writeFailed = true;
+  RS_DEBUG->print(RS_Debug::D_WARNING,
+                  "RS_FilterDXFRW: source file changed during export; refusing publication");
+  return false;
+}
+
+bool RS_FilterDXFRW::outputPublishGuard(void *context) {
+  auto *filter = static_cast<RS_FilterDXFRW *>(context);
+  return filter != nullptr && filter->verifyOutputTargetForPublication();
 }
 
 bool RS_FilterDXFRW::finalizeDwgWrite() {
@@ -30842,6 +32149,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity *e) {
     writeLWPolyline(static_cast<RS_Polyline *>(e));
     break;
   case RS2::EntitySpline:
+  case RS2::EntityOffsetCurve:
     writeSpline(static_cast<RS_Spline *>(e));
     break;
   case RS2::EntitySplinePoints:
@@ -31406,15 +32714,87 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     return;
   }
 
-  if (s->getNumberOfControlPoints() < size_t(s->getDegree() + 1)) {
-    RS_DEBUG->print(RS_Debug::D_ERROR,
-                    "RS_FilterDXF::writeSpline: "
-                    "Discarding spline: not enough control points given.");
+  const auto degree = s->getDegree();
+  const auto &sourceData = s->getData();
+  bool writeTangentFitPoints = false;
+  if (m_dwgW && sourceData.fitTangentsConstrained && degree == 3 &&
+      sourceData.type == RS_SplineData::SplineType::ClampedOpen &&
+      sourceData.savedOpenType == RS_SplineData::SplineType::ClampedOpen &&
+      !sourceData.m_closedFlag && !sourceData.m_periodicFlag &&
+      sourceData.fitPoints.size() >= 3 &&
+      sourceData.weights.size() == sourceData.controlPoints.size() &&
+      std::all_of(sourceData.weights.begin(), sourceData.weights.end(),
+                  [](double weight) { return weight == 1.0; }) &&
+      sourceData.fitStartTangent.magnitude() > 0.0 &&
+      sourceData.fitEndTangent.magnitude() > 0.0 &&
+      s->fitTangentsMatchCurve()) {
+    RS_SplineData reconstructedData{3, false};
+    RS_Spline reconstructed{nullptr, reconstructedData};
+    if (reconstructed.setFitPointsWithTangents(
+            sourceData.fitPoints, sourceData.fitStartTangent,
+            sourceData.fitEndTangent)) {
+      const auto samePoints = [](const std::vector<RS_Vector> &left,
+                                 const std::vector<RS_Vector> &right) {
+        if (left.size() != right.size()) return false;
+        for (std::size_t i = 0; i < left.size(); ++i) {
+          if (!left[i].valid || !right[i].valid ||
+              left[i].distanceTo(right[i]) > 1.0e-10)
+            return false;
+        }
+        return true;
+      };
+      const auto sameNumbers = [](const std::vector<double> &left,
+                                  const std::vector<double> &right) {
+        if (left.size() != right.size()) return false;
+        for (std::size_t i = 0; i < left.size(); ++i) {
+          if (!std::isfinite(left[i]) || !std::isfinite(right[i]) ||
+              std::abs(left[i] - right[i]) > 1.0e-12)
+            return false;
+        }
+        return true;
+      };
+      const auto &regenerated = reconstructed.getData();
+      writeTangentFitPoints = reconstructed.validate() &&
+          regenerated.degree == sourceData.degree &&
+          regenerated.type == sourceData.type &&
+          samePoints(regenerated.controlPoints, sourceData.controlPoints) &&
+          sameNumbers(regenerated.knotslist, sourceData.knotslist) &&
+          sameNumbers(regenerated.weights, sourceData.weights);
+    }
+  }
+  if (m_dwgW && sourceData.fitTangentsConstrained && !writeTangentFitPoints) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW::writeSpline: refusing DWG export of a "
+                    "tangent-constrained spline without a verified "
+                    "fit-point encoding");
+    m_writeFailed = true;
     return;
   }
+  const auto invalidNativeControls = [s, &sourceData] {
+    return s->rtti() == RS2::EntityOffsetCurve &&
+        std::any_of(sourceData.controlPoints.begin(), sourceData.controlPoints.end(),
+          [](const RS_Vector &point) {
+            return !point.valid || !std::isfinite(point.x) || !std::isfinite(point.y) ||
+                !std::isfinite(point.z) || point.z != 0;
+          });
+  };
+  constexpr auto maximum = static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max());
+  if (degree < 1 || degree > RS_Spline::MaxSupportedDegree ||
+      sourceData.controlPoints.size() < static_cast<std::size_t>(degree) + 1 ||
+      sourceData.controlPoints.size() > maximum - 6 ||
+      sourceData.knotslist.size() > maximum - 6 || sourceData.weights.size() > maximum - 6 ||
+      invalidNativeControls() || !s->validate()) {
+    RS_DEBUG->print(RS_Debug::D_ERROR,
+                    "RS_FilterDXF::writeSpline: "
+                    "Refusing invalid spline geometry or counts.");
+    m_writeFailed = true;
+    return;
+  }
+  auto merged = mergedOffsetSplineXData(*s, m_offsetOutputVersion != DRW::AC1009);
+  if (!merged) return;
 
-  // R12 has no SPLINE: a polyline within its export tolerance, or the
-  // segments the spline is drawn with
+  // R12 has no SPLINE. Failure to bound its approximation is not permission
+  // to publish unrelated display segments or drop this entity.
   if (m_version == 1009) {
     // a spline read closed but kept with open ends is closed too, while its
     // ends meet: the polyline is closed and repeats no vertex
@@ -31424,24 +32804,11 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
                          splineCurveCloses(splineData));
     std::vector<RS_Vector> vertices;
     if (!r12SplineVertices(*s, closed, vertices)) {
-      // A curve the evaluator cannot bound, as a spline whose knots do not
-      // match its control points is. The file keeps what the screen shows
-      // rather than failing over one entity; a spline that draws nothing
-      // writes nothing, as it did before R12 export had a tolerance.
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW::writeSpline: no R12 polyline within "
-                      "tolerance and vertex limit; writing the drawn segments");
-      vertices.clear();
-      for (const RS_Entity *e : lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
-        vertices.push_back(e->getStartpoint());
-      }
-      if (vertices.empty()) {
-        return;
-      }
-      if (!closed) {
-        vertices.push_back(
-            lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities().back()->getEndpoint());
-      }
+                      "tolerance and vertex limit; refusing export");
+      m_writeFailed = true;
+      return;
     }
     DRW_Polyline pol;
     for (const RS_Vector &v : vertices) {
@@ -31451,6 +32818,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
       pol.flags = 1;
     }
     getEntityAttributes(&pol, s);
+    pol.extData = std::move(*merged);
     noteDxfWrite(m_dxfW->writePolyline(&pol));
     return;
   }
@@ -31464,30 +32832,127 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   // ends still meet.
   sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
   const RS_SplineData &splineData = s->getData();
-  if (!s->isClosed() && (splineData.m_closedFlag || splineData.m_periodicFlag) &&
+  if (splineData.fitTangentsConstrained) {
+    sp.tgStart = DRW_Coord{splineData.fitStartTangent.x,
+                           splineData.fitStartTangent.y,
+                           splineData.fitStartTangent.z};
+    sp.tgEnd = DRW_Coord{splineData.fitEndTangent.x,
+                         splineData.fitEndTangent.y,
+                         splineData.fitEndTangent.z};
+  }
+  if (!s->isClosed() &&
+      (splineData.m_closedFlag || splineData.m_periodicFlag) &&
       splineCurveCloses(splineData)) {
     sp.flags |= (splineData.m_closedFlag ? 0x1 : 0) |
                 (splineData.m_periodicFlag ? 0x2 : 0);
   }
 
-  // write spline control points:
-  for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
-    sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-  }
-  sp.weightlist = s->getUnwrappedWeights();
-  if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(),
-                  differsFromUnitWeight)) {
-    sp.flags |= 0x04;
+  sp.degree = static_cast<std::int32_t>(degree);
+
+  // RS_Spline keeps fit points alongside the control net derived from them.
+  // Reconstruct that net before using the fit points as file data: callers can
+  // mutate getData() directly, and control-point editing APIs do not all clear
+  // the saved fit list. A mismatch means the control net is authoritative.
+  bool writeFitPoints = false;
+  if (degree == 3 && !s->isClosed() && !splineData.m_closedFlag &&
+      !splineData.m_periodicFlag && !splineData.fitTangentsConstrained &&
+      splineData.fitPoints.size() >= 4 &&
+      splineData.fitPoints.size() <= maximum &&
+      std::all_of(splineData.fitPoints.begin(), splineData.fitPoints.end(),
+                  [](const RS_Vector &point) {
+                    return point.valid && std::isfinite(point.x) &&
+                           std::isfinite(point.y) && std::isfinite(point.z) &&
+                           point.z == 0.0;
+                  })) {
+    RS_SplineData reconstructedData(3, false);
+    RS_Spline reconstructed(nullptr, reconstructedData);
+    reconstructed.setFitPoints(splineData.fitPoints);
+    const RS_SplineData &fitData = reconstructed.getData();
+    const auto samePoints = [](const std::vector<RS_Vector> &left,
+                               const std::vector<RS_Vector> &right) {
+      if (left.size() != right.size())
+        return false;
+      for (std::size_t i = 0; i < left.size(); ++i) {
+        if (!left[i].valid || !right[i].valid ||
+            left[i].distanceTo(right[i]) > 1.0e-9)
+          return false;
+      }
+      return true;
+    };
+    const auto sameNumbers = [](const std::vector<double> &left,
+                                const std::vector<double> &right) {
+      if (left.size() != right.size())
+        return false;
+      for (std::size_t i = 0; i < left.size(); ++i) {
+        if (!std::isfinite(left[i]) || !std::isfinite(right[i]) ||
+            std::abs(left[i] - right[i]) > 1.0e-12)
+          return false;
+      }
+      return true;
+    };
+    writeFitPoints =
+        reconstructed.validate() && fitData.degree == degree &&
+        splineData.degree == fitData.degree &&
+        splineData.type == fitData.type &&
+        samePoints(splineData.controlPoints, fitData.controlPoints) &&
+        sameNumbers(splineData.knotslist, fitData.knotslist) &&
+        sameNumbers(splineData.weights, fitData.weights);
   }
 
-  sp.ncontrol = sp.controllist.size();
-  sp.degree = s->getDegree();
+  if (writeTangentFitPoints) {
+    sp.m_scenario = 2;
+    sp.flags = 0x08;
+    sp.tolfit = splineData.fitTolerance;
+    const RS_Vector start = splineData.fitStartTangent /
+                            splineData.fitStartTangent.magnitude();
+    const RS_Vector end = splineData.fitEndTangent /
+                          splineData.fitEndTangent.magnitude();
+    sp.tgStart = DRW_Coord{start.x, start.y, start.z};
+    sp.tgEnd = DRW_Coord{end.x, end.y, end.z};
+    sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
+    sp.fitlist.reserve(splineData.fitPoints.size());
+    for (const RS_Vector &point : splineData.fitPoints)
+      sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0.0));
+  } else if (writeFitPoints) {
+    sp.m_scenario = 2;
+    sp.flags = 0x08; // planar, non-rational fit-point spline
+    sp.tolfit = splineData.fitTolerance;
+    sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
+    sp.fitlist.reserve(splineData.fitPoints.size());
+    for (const RS_Vector &point : splineData.fitPoints)
+      sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0.0));
+  } else {
+    // A WrappedClosed spline is periodic: its stored control/weight tail and
+    // knot extension define the wrap. Keep that complete representation in
+    // the file instead of pairing the shortened arrays with periodic flags.
+    const std::vector<RS_Vector> controls =
+        s->isClosed() ? sourceData.controlPoints
+                      : s->getUnwrappedControlPoints();
+    for (const RS_Vector &v : controls) {
+      sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
+    sp.weightlist =
+        s->isClosed() ? sourceData.weights : s->getUnwrappedWeights();
+    if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(),
+                    differsFromUnitWeight)) {
+      sp.flags |= 0x04;
+    }
 
-  // knot vector from RS_Spline
-  sp.knotslist = s->getUnwrappedKnotVector();
-  sp.nknots = sp.knotslist.size();
+    sp.ncontrol = static_cast<std::int32_t>(sp.controllist.size());
+
+    // knot vector from RS_Spline
+    sp.knotslist =
+        s->isClosed() ? sourceData.knotslist : s->getUnwrappedKnotVector();
+    sp.nknots = static_cast<std::int32_t>(sp.knotslist.size());
+    if (splineData.fitTangentsConstrained && !m_dwgW) {
+      sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
+      for (const RS_Vector &point : splineData.fitPoints)
+        sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y));
+    }
+  }
 
   getEntityAttributes(&sp, s);
+  sp.extData = std::move(*merged);
   if (m_dwgW) {
     if (!m_dwgW->writeSpline(&sp))
       m_writeFailed = true;
@@ -31500,6 +32965,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  * Writes the given spline entity to the file.
  */
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
+  LC_SplinePointsData &data = s->getData();
+
   int nCtrls = s->getNumberOfControlPoints();
   auto const &cp = s->getControlPoints();
 
@@ -31546,37 +33013,58 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.flags = 8;
   }
 
-  LC_SplinePointsData &data = s->getData();
   auto const &fitPoints = data.splinePoints;
-  const bool writeFitScenario = !data.useControlPoints && fitPoints.size() >= 2;
+  if (data.fitTangentsConstrained) {
+    sp.tgStart = DRW_Coord{data.fitStartTangent.x, data.fitStartTangent.y,
+                           data.fitStartTangent.z};
+    sp.tgEnd = DRW_Coord{data.fitEndTangent.x, data.fitEndTangent.y,
+                         data.fitEndTangent.z};
+  }
+  const bool writeFitScenario = !data.useControlPoints && !data.cut &&
+                                fitPoints.size() >= 2 &&
+                                (!data.fitTangentsConstrained || m_dwgW) &&
+                                !s->isClosed();
   sp.degree = 2;
-  sp.nfit = static_cast<std::int32_t>(fitPoints.size());
+  sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;
 
   if (writeFitScenario) {
     sp.m_scenario = 2;
     sp.m_knotParam = 0;
     sp.ncontrol = 0;
     sp.nknots = 0;
-    sp.tolfit = 0.0000001;
-    const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
-    const RS_Vector endTangent =
-        fitPoints.back() - fitPoints[fitPoints.size() - 2];
+    sp.tolfit = std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0
+                    ? data.fitTolerance
+                    : 0.0000001;
+    const RS_Vector startTangent = data.fitTangentsConstrained
+        ? data.fitStartTangent : fitPoints[1] - fitPoints[0];
+    const RS_Vector endTangent = data.fitTangentsConstrained
+        ? data.fitEndTangent : fitPoints.back() - fitPoints[fitPoints.size() - 2];
     sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
     sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
   } else {
-    sp.ncontrol = nCtrls;
-    sp.nknots = nCtrls + 3;
+    sp.ncontrol = nCtrls + (s->isClosed() ? 2 : 0);
+    sp.nknots = sp.ncontrol + 3;
+    if (data.fitTangentsConstrained && !m_dwgW) {
+      sp.nfit = static_cast<std::int32_t>(fitPoints.size());
+      for (const RS_Vector &point : fitPoints)
+        sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y));
+    }
   }
 
   // write spline knots:
   if (!writeFitScenario) {
-    for (int i = 1; i <= sp.nknots; i++) {
-      if (i <= 3) {
-        sp.knotslist.push_back(0.0);
-      } else if (i <= nCtrls) {
-        sp.knotslist.push_back((i - 3.0) / (nCtrls - 2.0));
-      } else {
-        sp.knotslist.push_back(1.0);
+    if (s->isClosed()) {
+      for (int i = 0; i < sp.nknots; ++i)
+        sp.knotslist.push_back(static_cast<double>(i));
+    } else {
+      for (int i = 1; i <= sp.nknots; i++) {
+        if (i <= 3) {
+          sp.knotslist.push_back(0.0);
+        } else if (i <= nCtrls) {
+          sp.knotslist.push_back((i - 3.0) / (nCtrls - 2.0));
+        } else {
+          sp.knotslist.push_back(1.0);
+        }
       }
     }
   }
@@ -31586,11 +33074,21 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     for (auto const &v : cp) {
       sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
+    if (s->isClosed()) {
+      for (size_t i = 0; i < 2; ++i) {
+        const RS_Vector& point = cp.at(i);
+        sp.controllist.push_back(
+            std::make_shared<DRW_Coord>(point.x, point.y));
+      }
+    }
   }
 
-  // fit points
-  for (auto const &v : fitPoints) {
-    sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+  // Fit-point fields and tangents are one scenario; do not pair stale or
+  // unsupported fit metadata with a control-net fallback.
+  if (writeFitScenario) {
+    for (auto const &v : fitPoints) {
+      sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
   }
 
   getEntityAttributes(&sp, s);
@@ -32732,7 +34230,8 @@ void appendHatchLoopEdges(DRW_HatchLoop& loop,
   for (const RS_Entity* ed :
        lc::LC_ContainerTraverser{source, RS2::ResolveNone}.entities()) {
     if (ed == nullptr) continue;
-    if (ed->isContainer() && ed->rtti() != RS2::EntitySpline) {
+    if (ed->isContainer() && ed->rtti() != RS2::EntitySpline &&
+        ed->rtti() != RS2::EntityOffsetCurve) {
       const auto parts = lc::LC_ContainerTraverser{
           *static_cast<const RS_EntityContainer*>(ed),
           RS2::ResolveAll}.entities();
@@ -32797,7 +34296,8 @@ void appendHatchLoopEdges(DRW_HatchLoop& loop,
     } else if (ed->rtti() == RS2::EntitySplinePoints) {
       loop.objlist.push_back(makeDrwSplineFromSplinePoints(
           static_cast<const LC_SplinePoints*>(ed)));
-    } else if (ed->rtti() == RS2::EntitySpline) {
+    } else if (ed->rtti() == RS2::EntitySpline ||
+               ed->rtti() == RS2::EntityOffsetCurve) {
       loop.objlist.push_back(makeDrwSplineFromRSSpline(
           static_cast<const RS_Spline*>(ed)));
     }
