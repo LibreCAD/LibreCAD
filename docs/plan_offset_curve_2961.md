@@ -43742,3 +43742,19 @@ This checks the produced root endpoint for the tested fixtures; it does not
 replace an independent full-curve oracle or validate every retained fragment
 sample. Continue with broader scale/orientation boundaries and action-level
 geometry/persistence checks for the transformed profiles.
+
+## 1268. Cover Axis, Diagonal, and Near-axis Cutter Orientations (2026-11-13)
+
+Test commit `730ec9932` expands the section 1266-1267 fixed-origin matrix to
+six cutter directions: `(4,3)`, horizontal, vertical, `(-3,4)`, `(4,-3)`, and
+near-horizontal `(1,1e-6)`. Across three scales, linear/cubic sources, and both
+source/cutter directions, all 144 combinations retain a certified unique root,
+pass request-bound worker transport, and satisfy the independent finite-line
+endpoint/projection oracle. The focused case passes 1,872 assertions; the
+complete worker-result suite passes 469,597 assertions / 29 cases. The build
+and `git diff --check` pass on macOS arm64 CMake Release.
+
+This supersedes the earlier broad-angle gap for these six directions only. It
+does not qualify near-vertical or near-parallel limits symmetrically, arbitrary
+angles, sub-ULP features, or extreme origins/scales. Continue with those
+conditioning boundaries and ensure unsupported cases refuse atomically.
