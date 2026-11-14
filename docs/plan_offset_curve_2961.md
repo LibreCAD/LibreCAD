@@ -63,8 +63,15 @@ and ordered-family replacement tests cited in sections 1291-1293, including
 1,101 assertions across all nine kinds. Section 1342 additionally verifies
 that the current-source highlight remains visible while the replacement filter
 changes to parabola and back to line; its focused source-picker suite passes
-15,129 assertions / 44 cases. Section 1375 extends the highlight/state check
-across all nine filter kinds. No new selector implementation slice is needed
+15,129 assertions / 44 cases. Revalidation on PR head `52e65c624` passes
+15,226 assertions / 44 cases. The command was:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Section 1375 extends the highlight/state check across all nine filter kinds.
+No new selector implementation slice is needed
 unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
