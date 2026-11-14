@@ -614,6 +614,38 @@ TEST_CASE("Dense rotated and translated ellipse tangencies remain fail-closed", 
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
+TEST_CASE("Dense ellipse secants remain provable beyond the source chord sagitta", tags) {
+    const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
+    const double ratio = GENERATE(0.05, 0.1, 0.2);
+    const double sagittaScale = GENERATE(2.0, 4.0);
+    CAPTURE(segmentCount, ratio, sagittaScale);
+    constexpr double radius = 10.0;
+    const double vertexSagitta = radius * (1.0 - std::cos(pi / segmentCount));
+    const double inset = sagittaScale * vertexSagitta;
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.emplace_back(radius * std::cos(angle), radius * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    RS_Ellipse cutter{nullptr, {{20.0 - inset, 0.0}, {radius, 0.0}, ratio, 0.0, 0.0, false}};
+
+    const auto result = Trim::prepare(data, cutter, {{radius, 0.0}});
+    CAPTURE(inset, result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result);
+    equalData(data, before);
+    CHECK(coverage(result, .01) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
+}
+
 TEST_CASE("Dense nonconvex cache trims one picked conic interval among many roots", tags) {
     const std::size_t segmentCount = GENERATE(256u, 1024u, 2048u);
     CAPTURE(segmentCount);
