@@ -115,6 +115,8 @@ class TrimActionProbe final : public LC_ActionModifyTrim {
 public:
     using LC_ActionModifyTrim::LC_ActionModifyTrim;
     bool pending() const noexcept { return hasPendingNativeTrim(); }
+    RS_Entity* limit() const noexcept { return m_limitEntity; }
+    RS_Entity* target() const noexcept { return m_trimEntity; }
 };
 LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25, bool towardCentre = false) {
     const double radius = towardCentre ? distance * 2.0 : 1.0;
@@ -2119,7 +2121,10 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     TrimActionProbe trimAction(&context);
     trimAction.init(0);
     mouse(trimAction, view, mapPoint({-15.0, 0.0}), true);
+    REQUIRE(trimAction.limit() == cutter);
     mouse(trimAction, view, targetPick, true);
+    REQUIRE(trimAction.target() == replacement);
+    REQUIRE(trimAction.pending());
     QElapsedTimer trimWait;
     trimWait.start();
     while (trimAction.pending() && trimWait.elapsed() < 35000) {

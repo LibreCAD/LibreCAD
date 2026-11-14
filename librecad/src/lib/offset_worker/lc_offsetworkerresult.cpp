@@ -1053,8 +1053,12 @@ bool analyticMonotoneRoot(const Trim::RootProvenance& d, const TrimContext& c,
     }
     const auto certificate = Trim::certifyMonotoneLineRoot(
         controls, c.lineCutter->start, c.lineCutter->end);
-    if (!certificate || certificate->bezierParameter.lo() <= 0 ||
-        certificate->bezierParameter.hi() >= 1) return false;
+    if (!certificate) return false;
+    const auto& certifiedParameter = certificate->bezierParameter;
+    const bool exactSpanEndpoint =
+        (certifiedParameter.lo() == 0 && certifiedParameter.hi() == 0) ||
+        (certifiedParameter.lo() == 1 && certifiedParameter.hi() == 1);
+    if (exactSpanEndpoint) return false;
 
     const double span = double(d.isolation.segmentA);
     const auto& local = certificate->bezierParameter;

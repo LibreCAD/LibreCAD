@@ -726,8 +726,12 @@ private:
             return out;
         }
         const auto certificate = certifyMonotoneLineRoot(controls, lineStart, lineEnd);
-        if (!certificate || certificate->bezierParameter.lo() <= 0 ||
-            certificate->bezierParameter.hi() >= 1) return {};
+        if (!certificate) return {};
+        const auto& certifiedParameter = certificate->bezierParameter;
+        const bool exactSpanEndpoint =
+            (certifiedParameter.lo() == 0 && certifiedParameter.hi() == 0) ||
+            (certifiedParameter.lo() == 1 && certifiedParameter.hi() == 1);
+        if (exactSpanEndpoint) return {};
 
         const I sourceDomain = I::hull(m_segments[box.segmentA].t0, m_segments[box.segmentA].t1);
         const I lineDomain = I::hull(m_segments[box.segmentB].t0, m_segments[box.segmentB].t1);

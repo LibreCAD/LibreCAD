@@ -152,6 +152,15 @@ TEST_CASE("Monotone Bezier line certificates isolate only finite transverse cros
         CHECK(certificate->bezierParameter.lo() > 0);
         CHECK(certificate->bezierParameter.contains(nearZero));
     }
+    SECTION("interior root enclosure may touch the span endpoint") {
+        const double nearZero = std::ldexp(1., -100);
+        const auto certificate = Trim::certifyMonotoneLineRoot(
+            {{0, 0}, {1, 0}}, {nearZero, -1}, {nearZero, 1});
+        REQUIRE(certificate);
+        CHECK(certificate->bezierParameter.lo() == 0);
+        CHECK(certificate->bezierParameter.hi() > 0);
+        CHECK(certificate->bezierParameter.contains(nearZero));
+    }
     SECTION("tangent is not strictly monotone") {
         CHECK_FALSE(Trim::certifyMonotoneLineRoot(
             {{0, .25}, {.5, -.25}, {1, .25}}, {-1, 0}, {2, 0}));
