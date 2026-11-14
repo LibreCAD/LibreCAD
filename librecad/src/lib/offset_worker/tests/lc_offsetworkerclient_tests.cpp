@@ -757,24 +757,38 @@ TEST_CASE("Worker client refuses overlapping positive-bulge erosion candidates",
     CHECK_FALSE(source->isWellFormed());
     REQUIRE(source->isWellFormedForGeneration());
 
-    const LC_OffsetSourceDefinition definition{*source, 0.5, 1e-4, false};
-    const Req::Request request{token(601), Req::GenerateSource{definition, {}}};
-    const auto encoded = Req::encode(request);
-    REQUIRE(encoded);
-    const auto decoded = Req::decode(*encoded);
-    REQUIRE(decoded);
-    CHECK(Req::admitted(*decoded));
+    for (const auto [requestId, signedDistance] :
+         {std::pair<qint64, double>{601, 0.5}, {602, -0.5}}) {
+        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+        const auto encoded = Req::encode(request);
+        REQUIRE(encoded);
+        const auto decoded = Req::decode(*encoded);
+        REQUIRE(decoded);
+        CHECK(Req::admitted(*decoded));
 
-    Receipts receipts;
-    REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
-    rt.until([&] { return receipts.calls[0] != 0; });
+        Receipts receipts;
+        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
 
-    const auto& completion = completed(receipts.at(0), 601, 7);
-    const auto& result = std::get<Reply::Native>(completion.reply().result);
-    CHECK(result.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
-    CHECK(result.ordinary.empty());
-    CHECK_FALSE(result.curve);
-    CHECK_FALSE(completion.nativeSource(attributes));
+        const auto& completion = completed(receipts.at(0), requestId, 7);
+        const auto& result = std::get<Reply::Native>(completion.reply().result);
+        CHECK_FALSE(completion.nativeSource(attributes));
+        if (signedDistance > 0.0) {
+            CHECK(result.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
+            CHECK(result.ordinary.empty());
+            CHECK_FALSE(result.curve);
+            continue;
+        }
+
+        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        REQUIRE(result.ordinary.size() == 1);
+        const auto* spline = std::get_if<RS_SplineData>(&result.ordinary.front());
+        REQUIRE(spline);
+        RS_Spline materialized{nullptr, *spline};
+        CHECK(materialized.validate());
+    }
 }
 
 TEST_CASE("Worker client joins typed source generation for every modeled source family", Tags) {
