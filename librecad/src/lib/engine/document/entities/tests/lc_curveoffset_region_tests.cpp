@@ -507,6 +507,56 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
     }
 }
 
+TEST_CASE("Polyline exact-arrangement fallback shares its intersection work budget",
+          "[curve-offset][region][polyline][self-crossing][mixed-bulge][budget]") {
+    RS_Polyline source;
+    source.addVertex({20, 10});
+    source.addVertex({20, -10}, 0.5);
+    source.addVertex({-20, 10});
+    source.addVertex({-20, -10});
+    source.setClosed(true);
+    source.endPolyline();
+    source.rotate({0, 0}, M_PI / 7.0);
+    const std::vector<RS_Vector> polygon = polygonOf(source);
+
+    std::vector<std::size_t> limits{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024};
+    const auto defaultOptions = LC_CurveOffset::makeDirectOptions(source, 0.5);
+    limits.push_back(defaultOptions.maxIntersectionPairs);
+    std::sort(limits.begin(), limits.end());
+    limits.erase(std::unique(limits.begin(), limits.end()), limits.end());
+
+    for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+        std::size_t successfulLimits = 0;
+        for (const std::size_t limit : limits) {
+            CAPTURE(static_cast<int>(rule), limit);
+            auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+            options.mode = LC_CurveOffsetMode::RegionBoundary;
+            options.fillRule = rule;
+            options.maxIntersectionPairs = limit;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5),
+                options, LC_CurveOffset::makeDirectSourceBudget());
+
+            CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
+            CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
+            if (result.status == LC_CurveOffsetStatus::Ok) {
+                ++successfulLimits;
+                REQUIRE(result.branches.size() == 2);
+                const CycleCheck check = checkCycles(
+                    result, polygon, rule, 0.5, false, true);
+                CHECK(check.closed);
+                CHECK(check.worstDistance < 0.04);
+                CHECK(check.wrongSide == 0);
+            } else {
+                CHECK((result.status == LC_CurveOffsetStatus::LimitExceeded ||
+                       result.status == LC_CurveOffsetStatus::AmbiguousTopology));
+                CHECK(result.branches.empty());
+            }
+        }
+        CHECK(successfulLimits > 0);
+    }
+}
+
 TEST_CASE("Negative-bulge bow-tie frames return checked cycles or atomic refusals",
           "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
     for (const int frame : {0, 1, 2, 3}) {

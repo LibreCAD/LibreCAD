@@ -7049,7 +7049,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                                                LC_Interval::hull(0.0, 2.0 * M_PI)};
                         break;
                     }
-                    if (roots.size() > query.maxGeneratedItems - found.intersections.size()) {
+                    if (roots.size() > query.maxGeneratedItems - found.work.generatedItems) {
                         found.status = LC_IntersectionStatus::LimitExceeded;
                         break;
                     }
@@ -7105,7 +7105,24 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     // If exact primitive noding cannot classify that arrangement, let the
     // interval solver either certify it independently or refuse atomically.
     if (!usedExactArrangement || found.status == LC_IntersectionStatus::AmbiguousTopology) {
-        found = findIntersections(CompositeCurves{parts}, query);
+        const LC_IntersectionWorkStats exactWork = found.work;
+        LC_IntersectionOptions remaining = query;
+        if (usedExactArrangement) {
+            if (exactWork.totalBoxPairs >= query.maxBoxPairs ||
+                exactWork.generatedItems >= query.maxGeneratedItems) {
+                found.status = LC_IntersectionStatus::LimitExceeded;
+                found.intersections.clear();
+            } else {
+                remaining.maxBoxPairs -= exactWork.totalBoxPairs;
+                remaining.maxGeneratedItems -= exactWork.generatedItems;
+                found = findIntersections(CompositeCurves{parts}, remaining);
+                found.work.totalBoxPairs += exactWork.totalBoxPairs;
+                found.work.candidateBoxPairs += exactWork.candidateBoxPairs;
+                found.work.generatedItems += exactWork.generatedItems;
+            }
+        } else {
+            found = findIntersections(CompositeCurves{parts}, remaining);
+        }
     }
     recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
                                   LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);

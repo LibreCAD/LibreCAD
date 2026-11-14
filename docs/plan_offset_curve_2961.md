@@ -35,22 +35,18 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** The source
-curve widget must allow the user to change the requested source type while
-choosing a replacement, repeatedly and without closing the chooser or
-restarting replacement. Each change immediately refreshes eligible existing
-entities, including after the candidate list is already visible. This is a
-filter on replacement candidates, not a conversion of the current source. It
-covers every source kind supported by the offset feature, including parabola,
-not every drawable entity in LibreCAD and not a parabola-only special case.
-The canonical inventory is
+**Current source-widget requirement and status (2026-11-14):** During active
+replacement selection, the user can repeatedly change the requested source
+curve type without closing or restarting the chooser. Each change immediately
+refreshes the eligible existing-entity candidates, even after the list is
+visible. This is candidate filtering, not conversion of the current source.
+The required set is exactly the offset feature's
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
-distinct selectable and preserved type, not a spline-points alias. Changing
-the selector filters which existing entity may become the new source; it does
-not convert the current source or add unrelated drawable types. The filter
-must not mutate the committed source, cache, identity, or highlight. A selected
-candidate replaces them only after asynchronous validation succeeds; cancel,
+distinct selectable and preserved type, not a spline-points alias; unrelated
+drawable types are out of scope. Changing the filter must not mutate the
+committed source, cache, identity, selection, or highlight. A chosen candidate
+replaces them only after asynchronous validation succeeds; cancellation,
 refusal, stale input, or worker failure preserves the previous source state.
 
 Acceptance sequence: begin replacement; change the requested type while
@@ -73,8 +69,8 @@ unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
 indicated, then verify successful replacement and cancel/refusal behavior.
-This repeated request confirms the existing all-kinds contract; it adds no
-second selector or separate parabola-only implementation slice. Keep this gate
+The latest clarification confirms this all-kinds contract; it adds no second
+selector or separate parabola-only implementation slice. Keep this gate
 separate from Slice 4's per-variant capture/reconstruction,
 worker/cache, Trim, and DXF/DWG qualification; selector availability alone
 does not prove full support for every mathematical variant. The focused
@@ -46241,6 +46237,31 @@ only the stated profile, frame matrix, and generated-output file lanes.
 Other bulge layouts, wider region topologies, editable cache/Trim action,
 visible GUI, cross-platform runtime, and independent CAD acceptance remain
 open.
+
+## 1382. Share the Intersection Budget Across Exact Noding and Fallback (2026-11-14)
+
+Exact polyline primitive noding and its interval-solver fallback now share one
+`maxIntersectionPairs` allowance. The fallback receives only the remaining
+pair and generated-item budgets; diagnostics accumulate work from both phases
+instead of replacing the exact-pass counters. If the exact phase consumes the
+available budget before fallback, the operation returns `LimitExceeded` and
+clears partial intersections. This prevents ambiguous exact arrangements from
+silently receiving a second full work allowance or reporting understated work.
+
+The rotated positive-bulge bow-tie regression sweeps pair caps from 1 through
+1024 plus the default, under both fill rules. It checks reported pair work
+does not exceed the configured cap, generated-item diagnostics stay within the
+engine bound, successful results satisfy independent cycle closure/distance/
+side checks, and refusals expose no partial branches. The cap sweep is specific
+to this mixed-bulge self-crossing profile; other exact arrangements and
+fallback paths remain to be qualified.
+
+Validation on macOS arm64 CMake Release: the focused budget-filtered run passes
+122 assertions / 5 cases; the complete `[curve-offset]` suite passes 2,245,928
+assertions / 347 cases; the `librecad_tests` target builds; the qmake6
+app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0; and
+`git diff --check` passes. Visible GUI, cross-platform runtime, and independent
+CAD acceptance remain separate delivery gates.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
