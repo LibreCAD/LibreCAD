@@ -901,6 +901,162 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
     }
 }
 
+TEST_CASE("Worker client validates mixed-frame negative-bulge region outcomes",
+          "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][negative][outcomes]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-worker-negative-bulge-frames");
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_Line attributes{nullptr, RS_LineData{{0, 0}, {1, 0}}};
+
+    struct Frame {
+        const char* name;
+        bool rotate;
+        bool translate;
+    };
+    constexpr std::array<Frame, 4> frames{{
+        {"identity", false, false},
+        {"rotation-only", true, false},
+        {"translation-only", false, true},
+        {"combined", true, true},
+    }};
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+
+    qint64 requestId = 701;
+    std::size_t successfulCells = 0;
+    std::size_t refusedCells = 0;
+    for (const Frame& frame : frames) {
+        RS_Polyline sourceEntity;
+        sourceEntity.addVertex({20, 10});
+        sourceEntity.addVertex({20, -10}, -0.5);
+        sourceEntity.addVertex({-20, 10});
+        sourceEntity.addVertex({-20, -10});
+        sourceEntity.setClosed(true);
+        sourceEntity.endPolyline();
+        if (frame.rotate) sourceEntity.rotate({0, 0}, M_PI / 7.0);
+        if (frame.translate) sourceEntity.move({123.25, -2000000.5});
+        const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
+        REQUIRE(source);
+        CHECK_FALSE(source->isWellFormed());
+        REQUIRE(source->isWellFormedForGeneration());
+
+        for (const double signedDistance : {0.5, -0.5}) {
+            const qint64 currentRequestId = requestId++;
+            CAPTURE(frame.name, signedDistance);
+            const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+            const Req::Request request{token(currentRequestId), Req::GenerateSource{definition, {}}};
+            const auto encoded = Req::encode(request);
+            REQUIRE(encoded);
+            const auto decoded = Req::decode(*encoded);
+            REQUIRE(decoded);
+            CHECK(Req::admitted(*decoded));
+
+            Receipts receipts;
+            REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+
+            const auto& completion = completed(receipts.at(0), currentRequestId, 7);
+            const auto& result = std::get<Reply::Native>(completion.reply().result);
+            auto directSource = source->makeGenerationEntity();
+            REQUIRE(directSource);
+            const bool classifiedCrossing =
+                LC_OffsetWorkerTolerance::hasIntersectingPolyline(definition, *directSource);
+            CHECK(classifiedCrossing);
+            const auto directOptions = LC_OffsetWorkerTolerance::directOptions(definition, *directSource);
+            REQUIRE(directOptions);
+            const auto direct = LC_CurveOffset::buildDirectBranches(
+                *directSource,
+                LC_CurveOffset::makeSideRequest(
+                    signedDistance < 0.0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                    std::abs(signedDistance)),
+                *directOptions, LC_CurveOffset::makeDirectSourceBudget());
+            LC_CurveOffsetMaterializationResult directMaterialized;
+            LC_CurveOffsetStatus directFinalStatus = direct.status;
+            if (direct.status == LC_CurveOffsetStatus::Ok) {
+                directMaterialized = LC_CurveOffset::materializeBranches(
+                    *directSource, direct, *directOptions, LC_CurveOffset::makeDirectSourceBudget());
+                directFinalStatus = directMaterialized.status;
+            }
+
+            CAPTURE(static_cast<int>(result.refusal), result.engineRuns,
+                    result.engineStatus ? static_cast<int>(*result.engineStatus) : -1,
+                    static_cast<int>(result.ordinaryStatus),
+                    static_cast<int>(direct.status), static_cast<int>(directFinalStatus), classifiedCrossing);
+            CHECK(result.engineStatus == directFinalStatus);
+            CHECK_FALSE(completion.nativeSource(attributes));
+            if (directFinalStatus != LC_CurveOffsetStatus::Ok) {
+                ++refusedCells;
+                CHECK(result.ordinary.empty());
+                CHECK_FALSE(result.curve);
+                continue;
+            }
+
+            ++successfulCells;
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE(result.ordinary.size() == direct.branches.size());
+            REQUIRE(directMaterialized.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(directMaterialized.entities.size() == result.ordinary.size());
+
+            RS_Graphic graphic;
+            graphic.initForNewDocument();
+            auto* layer = new RS_Layer("Offset");
+            graphic.addLayer(layer);
+            std::vector<std::uint64_t> expected;
+            for (std::size_t branch = 0; branch < result.ordinary.size(); ++branch) {
+                const auto* spline = std::get_if<RS_SplineData>(&result.ordinary[branch]);
+                const auto* directSpline = dynamic_cast<const RS_Spline*>(
+                    directMaterialized.entities[branch].get());
+                REQUIRE(spline);
+                REQUIRE(directSpline);
+                RS_Spline materialized{nullptr, *spline};
+                CHECK(materialized.validate());
+                CHECK(RS_Spline::geometryFingerprint(*spline) ==
+                      RS_Spline::geometryFingerprint(directSpline->getData()));
+                auto* entity = new RS_Spline(&graphic, *spline);
+                entity->setLayer(layer);
+                graphic.addEntity(entity);
+                expected.push_back(RS_Spline::geometryFingerprint(*spline));
+            }
+
+            for (std::size_t laneIndex = 0; laneIndex < lanes.size(); ++laneIndex) {
+                const Lane& lane = lanes[laneIndex];
+                CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+                if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                    continue;
+#endif
+                const auto path = directory.file(
+                    std::to_string(currentRequestId) + "-" + lane.extension);
+                REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                std::vector<std::uint64_t> actual;
+                for (RS_Entity* entity : reopened) {
+                    if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline)
+                        continue;
+                    const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+                    REQUIRE(spline);
+                    actual.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+                }
+                CHECK(actual == expected);
+            }
+        }
+    }
+    CHECK(successfulCells > 0);
+    CHECK(refusedCells > 0);
+}
+
 TEST_CASE("Worker client joins typed source generation for every modeled source family", Tags) {
     auto& rt = runtime();
     OwnedClient owned{rt};

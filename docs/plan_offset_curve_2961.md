@@ -46218,6 +46218,29 @@ bulge profile and generated-output lanes. Other frame cells, negative-bulge
 and wider mixed-bulge arrangements, broader geometry oracles, visible GUI,
 cross-platform execution, and independent CAD acceptance remain open.
 
+## 1381. Qualify Negative-bulge Worker Results Across Frames (2026-11-14)
+
+The real-helper client matrix now sends the crossing negative-bulge bow-tie
+through identity, rotation-only, translation-only, and combined frames for both
+signed offsets. Worker status must match the production-tolerance direct path
+through both branch generation and final spline materialization; successful
+branches must match direct materialization fingerprints, while refused cells
+must expose no partial output or native cache. Every successful matrix cell is
+saved and reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with exact
+spline fingerprints. Direct RegionBoundary cycle/distance/side checks remain
+in section 1378; this worker slice does not promote the self-intersecting
+source to an editable native cache or claim Trim action support.
+
+Validation on macOS arm64 CMake Release: the focused negative-bulge matrix
+passes 1,627 assertions / 1 case; the complete `[lc-offsetcurve][worker-client]`
+suite passes 3,380,387 assertions / 45 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`; the `LibreCADOffsetWorker` and
+worker-client test targets build; and `git diff --check` passes. This closes
+only the stated profile, frame matrix, and generated-output file lanes.
+Other bulge layouts, wider region topologies, editable cache/Trim action,
+visible GUI, cross-platform runtime, and independent CAD acceptance remain
+open.
+
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
 Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
