@@ -123,6 +123,20 @@ offscreen UI tests recorded in section 1293 cover repeated in-place switching,
 candidate filtering, typed replacement, and distinct parabola identity. Do
 not reimplement this completed selector behavior or add another picker.
 
+**Latest request disposition (2026-11-14):** The source widget must let the
+user change the requested curve type while choosing a replacement, and the
+choice list must include every kind currently advertised by
+`SupportedKinds`, explicitly including parabola. This is already implemented:
+the type selector remains part of the active replacement workflow, updates
+the eligible candidate list, and preserves the target's committed source until
+replacement validation succeeds. The ordered source-family replacement test
+passes 1,101 assertions across all nine kinds, including parabola; sections
+1291-1293 record the broader picker/action evidence. No new code slice is
+required for this request. Keep the visible-desktop interaction as an open
+acceptance item, and keep per-variant generation, worker/cache, Trim, and
+DXF/DWG qualification in Slice 4; selector coverage alone does not close
+those items.
+
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
 validation, Trim, and applicable DXF/DWG save/reopen. For parabola, retain
