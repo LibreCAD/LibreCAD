@@ -346,14 +346,19 @@ following slices in order, preserving the detailed safety requirements below:
 | 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts for tested circles, ellipses, circular arcs and elliptic arcs in both traversal directions (sections 1022-1030). Exact duplicate singleton contacts can be merged; overlapping non-singleton certificates whose equality is unproved refuse atomically (section 1024). Section 1033 qualifies async action preview/commit, peer isolation, and undo/redo for both real producer-generated native components in both cache directions. Section 1034 qualifies save, low-level inspection, reopen, and second-save/reopen for those outputs in every native-capable DXF/DWG target (R12 is intentionally excluded). Sections 1117-1122 qualify selected rotated inward near/exact/post-cusp ellipse Trim Two profiles through worker action and five file lanes, at three axis ratios. Section 1170 adds one six-fit-point closed SplinePoints profile through an independent direct normal oracle, worker-backed Trim Two in both pick orders, undo/redo, and five DXF/DWG lanes; its reopened closed cut/control representation is compared by sampled geometry. Section 1201 extends the independent direct-normal oracle for closed fit-point splines to the `5.1e-4` admission-boundary chord, a `2e-3` chord, and a transformed/reflected/reversed profile. A new exact bow-tie `RS_Polyline` probe in `RegionBoundary` returned `AmbiguousTopology` while noding offset candidates; unlike the spline bow-tie evidence, self-crossing polyline growth/erosion is not qualified. Add a focused case for both fill rules and grow/shrink, diagnose exact corner-circle/offset tangencies in candidate noding, and require correct closed result cycles or an explicit atomic refusal until the geometry is supported. These qualify specific layouts and versions, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies linear circle-boundary Trim across disconnected components. Section 1023 verifies disconnected degree-3 circle-boundary branches with linear loci. Section 1024 verifies safe atomic refusal when disconnected components produce overlapping non-singleton conic-contact certificates. Section 1025 verifies disconnected ellipse-boundary contacts through direct and worker result transport. Section 1026 verifies circular-arc domain preservation in both traversal directions. Section 1027 verifies elliptic-arc domains and worker transport in both traversal directions. Section 1028 verifies genuinely curved cubic circle-boundary branches. Section 1029 verifies genuinely curved cubic branches against an eccentric ellipse through direct and worker paths. Section 1030 verifies curved cubic branches clipped to a bounded elliptic arc in both directions. Section 1033 verifies both components from the trimmed-ellipse producer through the native action path. Section 1034 verifies their native metadata across all native-capable DXF/DWG round-trip lanes. Sections 1117-1122 verify selected near/exact/post-cusp full-ellipse profiles at three axis ratios in Trim Two and file lanes; section 1170 verifies one closed fit-point spline profile through Trim Two and five lanes. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly after candidates are displayed but before choosing; verify list refresh, active chooser state, and unchanged current source/cache/identity/highlight; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. The full qmake6 application/plugin build passes at the source revision recorded in section 1332; this does not include a qmake test executable. Visible GUI and cross-platform delivery gates remain open until actually exercised. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. |
 
-**Slice 4 status addendum (section 1365):** the all-straight bow-tie polyline
-now passes direct `RegionBoundary` growth and erosion for both fill rules under
-identity, rotation, reflection, reversal, scaling, and translated-coordinate
-profiles, with analytic line/circle candidate intersections and independent
-cycle/distance checks. Sections 1364-1365 supersede section 1363's refusal-only
-status. Mixed/bulged self-crossings, other arrangements, worker/cache
-integration, and file persistence remain open. This addendum supersedes the
-bow-tie refusal task in the Slice 4 table above.
+**Slice 4 status addendum (sections 1364-1366):** the tested all-straight
+single-crossing bow-tie polyline passes direct `RegionBoundary` growth and
+erosion for both fill rules under identity, rotation, reflection, reversal,
+scaling, and translated-coordinate profiles, with analytic line/circle
+candidate intersections and independent cycle/distance checks. Section 1366
+additionally qualifies worker `GenerateSource`, real helper-process request
+decoding, ordinary multi-branch result transport/materialization, and strict
+refusal of the single-cache native-source path. Sections 1364-1366 supersede
+section 1363's refusal-only status for this geometry. Mixed/bulged
+self-crossings, other arrangements, editable cache/action integration, file
+persistence, visible GUI, cross-platform runtime, and independent CAD
+acceptance remain open. This addendum supersedes the bow-tie refusal task in
+the Slice 4 table above.
 
 The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
@@ -45707,8 +45712,47 @@ plugin build completes, and a subsequent incremental `make -j6` exits 0; this
 does not include a qmake test executable.
 This establishes only the tested bow-tie profile, fill rules, signed distance,
 and tolerances; mixed/bulged self-crossings, other arrangements,
-worker/cache/action integration, persistence, visible GUI, cross-platform
-runtime, and independent CAD acceptance remain open.
+ordinary worker output integration for this profile is recorded in section
+1366; editable cache/action integration, persistence, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1366. Generate and Materialize Bow-tie Worker Branches (2026-11-14)
+
+Implementation commit `7e8d001e1` fixes generation-only admission and helper
+request decoding for the bounded bow-tie profile, routes both signed distances
+through the tested region-boundary geometry path, and adds kernel plus
+real-process client coverage.
+
+The generation-only source validity path now accepts the bounded, closed,
+all-straight self-crossing polyline required by the tested bow-tie arrangement,
+while ordinary source capture, native cache validation, and editable
+single-cache construction retain their strict no-self-intersection contract.
+`GenerateSource` routes the bow-tie through `RegionBoundary` for either signed
+distance and uses the corresponding inward/outward side. The request decoder
+has a generation-specific validation path; the helper previously rejected
+these requests because its shared source-definition decoder enforced the
+stricter cache invariant.
+
+Kernel coverage verifies both signed distances, expected branch counts,
+finite/transformed coordinates, generation-only source capture semantics, and
+result wire round-trip. A real worker-client test verifies helper-process
+request decoding, ordinary output transport and materialization as caller-
+owned splines, plus rejection by `nativeSource()` so this multi-branch result
+cannot masquerade as an editable single-cache offset. It also checks that the
+ordinary outputs do not mutate the owner container.
+
+Validation on macOS arm64 CMake Release: the focused worker-kernel case passes
+695 assertions / 1 case; the real worker-client case passes 1,478 assertions /
+1 case; `[curve-offset][region]` passes 27,274 assertions / 16 cases; and the
+worker request suite passes 603,644 assertions / 19 cases. The complete
+`[curve-offset]` suite passes 2,245,341 assertions / 342 cases. The CMake test
+target builds. The qmake6 Release application/plugin build in
+`/private/tmp/offset-2961-qmake-current` exits 0 and produces both
+`LibreCAD.app/Contents/MacOS/LibreCAD` and
+`LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker`. `git diff --check` passes.
+This does not qualify arbitrary crossing topologies, bulged self-crossings,
+editable cache/action integration, DXF/DWG persistence, visible GUI behavior,
+cross-platform runtime, or independent CAD acceptance.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
