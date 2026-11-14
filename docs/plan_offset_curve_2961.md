@@ -45472,3 +45472,20 @@ Validation on macOS arm64 CMake Release:
 - `[curve-offset][region]`: 27,150 assertions / 13 cases.
 
 `git diff --check` passes. Evidence is limited to these strict-convex linear layouts and test profiles. 2048 outward Trim root certification, other dense cutters/layouts, visible GUI interaction, cross-platform runtime, and independent CAD acceptance remain open; do not raise global budgets or weaken atomic refusal to close them.
+
+## 1342. Assert Source Highlight Across Family Filters (2026-11-14)
+
+Test commit `1eb1b69bb` strengthens the Properties source-family filter test by
+showing the widget and inspecting the `OffsetSourceHighlights` overlay itself.
+After replacing the source with a line, then switching the requested family to
+parabola and back to line, the overlay must continue to contain the matching
+line geometry. Existing assertions still verify drawing selection, typed
+source definition, and cache fingerprint are unchanged while browsing filters.
+
+Validation on macOS arm64 CMake Release: the focused
+`Native source picker preserves highlighted source across family filters` case
+passes 41 assertions; `[gui][dialog][offsetcurve][source]` passes 15,129
+assertions / 44 cases; `git diff --check` passes. This is headless widget and
+overlay coverage, not visible desktop acceptance. The nine-kind family/variant
+geometry and persistence matrix, physical GUI interaction, cross-platform
+runtime, and independent CAD gates remain open.
