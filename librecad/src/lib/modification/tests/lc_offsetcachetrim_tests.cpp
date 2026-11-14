@@ -88,7 +88,8 @@ RS_Vector evaluate(const RS_SplineData& data, std::size_t span, long double t) {
     return {double(net[0][0]), double(net[0][1])};
 }
 
-void geometry(const RS_SplineData& source, const Trim::Result& result) {
+void geometry(const RS_SplineData& source, const Trim::Result& result,
+              const double pointTolerance = 2e-10) {
     REQUIRE(result.refusal == Trim::Refusal::None);
     CHECK(result.fragmentCount == result.fragments.size());
     for (const auto& f : result.fragments) {
@@ -103,7 +104,8 @@ void geometry(const RS_SplineData& source, const Trim::Result& result) {
             for (int n = 0; n <= 16; ++n) {
                 const long double t = n / 16.L;
                 near(evaluate(f.data, k, t), evaluate(source, section.rawSpan,
-                    section.from + t * (static_cast<long double>(section.to) - section.from)));
+                    section.from + t * (static_cast<long double>(section.to) - section.from)),
+                    pointTolerance);
             }
         }
     }
@@ -394,6 +396,41 @@ TEST_CASE("Dense closed cache trims against a bounded eccentric ellipse arc", ta
         CHECK(coverage(result, .5) == 0);
         CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
     }
+}
+
+TEST_CASE("Dense conic Trim preserves a rotated cache at a large origin", tags) {
+    constexpr std::size_t segmentCount = 1024;
+    const RS_Vector origin{1.0e9, -2.0e9};
+    const double worldRotation = pi / 7;
+    const auto transform = [&](const double x, const double y) {
+        return RS_Vector{origin.x + x * std::cos(worldRotation) - y * std::sin(worldRotation),
+                         origin.y + x * std::sin(worldRotation) + y * std::cos(worldRotation)};
+    };
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.push_back(transform(10.0 * std::cos(angle), 10.0 * std::sin(angle)));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    const double ellipseRotation = pi / 12;
+    const RS_Vector major = transform(10.0 * std::cos(ellipseRotation),
+                                      10.0 * std::sin(ellipseRotation)) - origin;
+    RS_Ellipse cutter{nullptr, {transform(10.0, 0.0), major, .8, 1.5, 4.3, false}};
+
+    const auto result = Trim::prepare(data, cutter, {transform(10.0, 0.0)});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result, 2e-6);
+    equalData(data, before);
+    CHECK(coverage(result, .5) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
 TEST_CASE("Closed cache trim canonicalizes a proved root at the old storage seam", tags) {

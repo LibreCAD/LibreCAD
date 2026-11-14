@@ -45546,3 +45546,28 @@ assertions / 3 cases; `[trim-kernel]` passes 543,461 assertions / 76 cases;
 transverse configurations and sizes. Dense tangent or near-tangent contacts,
 nonconvex caches, other arc domains, visible GUI interaction, cross-platform
 runtime, and independent CAD acceptance remain open.
+
+## 1345. Bound Dense Conic Trim Rounding at a Large Rotated Origin (2026-11-14)
+
+The dense conic endpoint certificate now treats exact source-point-to-double
+conversion as a separate allowance from root-bracket and midpoint rounding.
+This addresses the translated 1e9-origin fixture, where coordinate quantization
+is larger than the normalized arithmetic tolerance even though the intersection
+root remains uniquely certified. The allowance is computed from the exact
+rational Bezier evaluation (or the existing conservative higher-degree ULP
+bound), and is used only for conic-contracted endpoints; finite-line
+contraction behavior remains unchanged.
+
+The regression trims a 1024-span circular cache after a 1e9 translation and
+common rotation against a rotated eccentric ellipse arc, requiring two
+certified roots, one valid complement, source immutability, sampled geometry
+agreement within the input-coordinate ULP scale, and correct retained/removed
+coverage.
+
+Validation on macOS arm64: the large-origin case passes 43,557 assertions / 1
+case; the four dense conic matrices pass 545,523 assertions / 4 cases;
+`[trim-kernel]` passes 587,018 assertions / 77 cases; the CMake Release test
+target builds; qmake6 Release application/plugins `make -j6` exits 0; and
+`git diff --check` passes. Other origin/scale regimes, tangent or near-tangent
+dense contacts, nonconvex caches, visible GUI interaction, cross-platform
+runtime, and independent CAD acceptance remain open.

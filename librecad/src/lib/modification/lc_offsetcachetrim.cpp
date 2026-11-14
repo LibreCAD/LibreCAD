@@ -299,7 +299,8 @@ bool rawBound(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame,
 
 I cacheCutRootError(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame,
                     const I& rootParameter, const double cutParameter,
-                    const bool useExactRationalRounding = false) {
+                    const bool useExactRationalRounding = false,
+                    I* pointRoundingAllowance = nullptr) {
     I u = intersect(rootParameter, I::hull(0, 1));
     if (!finite(u) || !std::isfinite(cutParameter) || !u.contains(cutParameter)) { return {}; }
     Net derivative; std::size_t degree = 0;
@@ -349,6 +350,10 @@ I cacheCutRootError(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame
         roundingY = I::point(4) * I::point(ulp(roundedY)) / scale;
     }
     if (!finite(roundingX) || !finite(roundingY)) { return {}; }
+    if (pointRoundingAllowance) {
+        *pointRoundingAllowance = sqrt(sqr(roundingX) + sqr(roundingY));
+        if (!finite(*pointRoundingAllowance)) { return {}; }
+    }
     const I error = sqrt(sqr(x + roundingX) + sqr(y + roundingY));
     return finite(error) ? error : I{};
 }
@@ -1376,10 +1381,13 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                     }
                     else {
                         const double cut = mid(t);
+                        I pointRoundingAllowance;
                         const I cutError = cacheCutRootError(
-                            (*input.source)[id], input.frame, u, cut - double(id));
+                            (*input.source)[id], input.frame, u, cut - double(id), false,
+                            &pointRoundingAllowance);
                         if (finite(cutError) && finite(representableError) &&
-                            cutError.hi() <= error + representableError.hi()) {
+                            cutError.hi() <= error + representableError.hi() +
+                                pointRoundingAllowance.hi()) {
                             conicContracted = true;
                             break;
                         }
@@ -1720,15 +1728,18 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
         };
         if (root.lineContracted || root.conicContracted) {
             if (!rawBound(span, input.frame, u.lo(), u.hi(), rx, ry, dx, dy)) fail(Refusal::Arithmetic);
+            I pointRoundingAllowance;
             const I cutError = cacheCutRootError(span, input.frame, u,
                                                 boundary.cut - double(id),
-                                                root.exactRationalRounding);
+                                                root.exactRationalRounding,
+                                                root.conicContracted ? &pointRoundingAllowance : nullptr);
             const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
                                             std::max(std::abs(dy.lo()), std::abs(dy.hi())));
             const I parameterQuantum = I::point(0.5 * root.parameter.width() + ulp(boundary.cut));
             const I representableError = parameterQuantum * I::point(speed);
             if (!finite(cutError) || !finite(representableError) ||
-                cutError.hi() > allowance + representableError.hi()) {
+                cutError.hi() > allowance + representableError.hi() +
+                    (root.conicContracted ? pointRoundingAllowance.hi() : 0.0)) {
                 fail(Refusal::Arithmetic);
             }
         } else {
