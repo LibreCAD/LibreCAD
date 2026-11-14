@@ -45623,6 +45623,25 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1357. Sweep Dense Ellipse Contact Ratios (2026-11-14)
+
+Test commit `202277f01` extends the exact-tangency refusal and `0.1`-inset
+secant matrix from section 1355 across ellipse minor/major ratios `0.05`, `0.1`,
+and `0.2`, for all 128-, 512-, and 2048-span caches. The same ratio sweep is
+also exercised after the common rotation and translation in section 1356.
+Every tangent case refuses without partial output; each secant case proves two
+roots, one valid picked complement, and unchanged source geometry. Coverage
+probes track the narrowest removed interval rather than assuming a fixed-width
+cut. This remains a discrete ratio/displacement matrix, not continuous
+eccentricity coverage or a general tangency guarantee.
+
+Validation on macOS arm64 CMake Release: the three focused cases pass 980,874
+assertions; `[trim-kernel]` passes 2,804,595 assertions / 88 cases;
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests
+-j4` succeeds; and `git diff --check` passes. Other ratios and displacement
+scales, contact orientations, dense source topologies, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
 ## 1356. Transform Dense Ellipse Tangency and Near-tangent Trim (2026-11-14)
 
 Test commit `a7540ed16` applies a common rotation of `π/7` and translation
