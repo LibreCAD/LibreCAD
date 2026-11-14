@@ -43403,7 +43403,86 @@ Refined implementation steps:
    checks after the kernel slice. Commit implementation and roadmap receipts
    separately and push both to PR #3193.
 
-The endpoint control coordinates observed in one clockwise output were around
-`2.2e-16` and `4.4e-16` at the nominal axis; these measurements motivate the
-exact-rational audit but do not settle whether the represented spline crosses
-or misses `x = 0`. The symmetric root issue remains open.
+An exact-rational audit of the normalized stored cache now settles the geometry
+question for this fixture: exactly two Bezier spans have strictly monotone
+signed-distance controls with opposite endpoint signs, and their full
+Bernstein ordinate hulls lie inside the finite cutter. All other spans have
+strictly one-sided signed-distance control hulls. The represented cache
+therefore has exactly two transverse intersections with the `x = 0` cutter;
+the endpoint control coordinates around `2.2e-16` and `4.4e-16` do not explain
+the refusal as a near-miss. The bounded kernel still reaches `LimitExceeded`
+at pair-refinement depth 48 before certifying roots.
+
+## 1255. Make Active Source Picking Type-switchable (2026-11-13)
+
+Clarify the replacement interaction as an in-place workflow: while the source
+picker is active, changing its source-type control must refresh the eligible
+canvas candidates immediately. The user must be able to switch among line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline without cancelling the replacement action or reopening Properties.
+The type control filters candidate selection; it must not coerce the selected
+entity into the chosen type. The accepted replacement retains the actual
+selected entity's supported typed geometry.
+
+When the offset curve already has a live source entity, opening Properties
+must visibly identify/highlight that source and initialize the picker to its
+actual type. Switching the filter must not silently replace that source or
+clear its highlight. The highlight remains until a different valid candidate
+is accepted or the picker is cancelled; cancellation leaves the original
+source and document unchanged. Parabola is a distinct option and remains
+separate from spline-points.
+
+Extend visible acceptance beyond headless selector tests: exercise changing
+the filter during an active replacement, choosing candidates from every one
+of the nine families, confirming the resulting typed source, cancelling after
+a filter change, and verifying the existing-source highlight before and after
+filter changes. Include missing/deleted source behavior and ensure the widget
+does not claim a stale source is selected. Repeat representative source types
+through save/reopen and undo/redo; retain the larger per-family geometry
+variant matrices as separate coverage, since family-level picker support does
+not certify all generation, worker/cache, Trim, or DXF/DWG behavior.
+
+This is an acceptance refinement, not evidence that visible GUI behavior has
+passed. Complete it using the current GUI test/build route and record the
+actual platform, build, interaction method, and results before closing the
+visible Properties gate.
+
+## 1256. Isolate the Symmetric Root Certificate Before Integrating (2026-11-13)
+
+The exact-rational audit added to the closed-polyline Trim fixture passes and
+confirms two unique transverse crossings on the exact finite cutter. A first
+implementation attempt added a new analytic proof category and a bounded
+monotone Bezier/line certificate. It is not accepted: although the direct
+kernel completed for existing profiles, worker-backed Trim actions then
+reported `Offset cache trim worker failed; nothing changed`, while the new
+centerline profile still reached `LimitExceeded` at depth 48. Those results
+show the certificate was not fully propagated/validated by the worker and did
+not address the target root boxes. The production proof changes were removed;
+only the exact-geometry audit remains as a test.
+
+Revised implementation sequence:
+
+1. Add a minimal synthetic `LC_ParametricCurves` test for one cubic Bezier and
+   one finite line. Its analytic certificate must isolate an exact
+   non-dyadic crossing, a root exactly on a subdivision boundary, a tangent,
+   a finite-segment miss, and a near-miss. Assert only proven transverse roots
+   are accepted and that the other cases are excluded or refused atomically.
+2. Add round-trip/hostile validation tests for any proof token before the
+   Trim provider emits it. The token must preserve existing enum values,
+   serialize through the worker result, and be rejected if its proof
+   category, source interval, or finite-line interval is forged.
+3. Integrate the proven primitive into the Trim provider only after those
+   tests pass. Certify one root per source-span/line-span pair and ensure
+   adjacent parameter boxes cannot publish duplicate occurrences. Keep the
+   proof domain, isolations, and finite-cutter projection explicit.
+4. Run the direct kernel, worker-backed Trim action, tangency/near-miss
+   atomicity, both circle windings, undo/redo, and all five persistence lanes.
+   Existing rounded/CCW/CW action cases must remain green before extending the
+   exact-centerline case beyond AC1014 DXF.
+5. Commit the implementation slice only after direct and worker tests pass;
+   then commit a separate roadmap receipt with exact results and push both to
+   PR #3193.
+
+The exact-rational geometry audit is validated independently of the Trim
+kernel. The symmetric centerline Trim remains open, and no new analytic proof
+category is currently part of the implementation.
