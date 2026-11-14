@@ -1781,10 +1781,11 @@ TEST_CASE("partial eccentric ellipse source trims through document actions and f
 TEST_CASE("rational high-degree splines trim through document actions and file lanes",
           "[lc-offsetcurve][source-action][spline][high-degree][interior-knot][trim-action][persistence]") {
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{6});
+    const std::size_t interiorMultiplicity = GENERATE(std::size_t{1}, std::size_t{2});
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(degree, static_cast<int>(format));
+    CAPTURE(degree, interiorMultiplicity, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1802,13 +1803,14 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     splineData.degree = degree;
     splineData.type = RS_SplineData::SplineType::ClampedOpen;
     splineData.savedOpenType = splineData.type;
-    for (std::size_t i = 0; i <= splineData.degree + 1; ++i) {
-        const double t = double(i) / double(splineData.degree + 1);
+    const std::size_t controlCount = splineData.degree + interiorMultiplicity + 1;
+    for (std::size_t i = 0; i < controlCount; ++i) {
+        const double t = double(i) / double(controlCount - 1);
         splineData.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
         splineData.weights.push_back(0.75 + 0.5 * t);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), splineData.degree + 1, 0.0);
-    splineData.knotslist.push_back(0.5);
+    splineData.knotslist.insert(splineData.knotslist.end(), interiorMultiplicity, 0.5);
     splineData.knotslist.insert(splineData.knotslist.end(), splineData.degree + 1, 1.0);
     const LC_OffsetSourceGeometry expectedSource{splineData};
     REQUIRE(expectedSource.isWellFormed());
