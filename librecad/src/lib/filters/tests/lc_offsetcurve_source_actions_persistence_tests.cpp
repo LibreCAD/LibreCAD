@@ -1386,6 +1386,11 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     REQUIRE(updateAction->lastReport().updated == 1);
     auto* replacement = onlyNative(graphic);
     REQUIRE(replacement->sourceDefinition());
+    const auto capturedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(capturedSource);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedSource) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              replacement->sourceDefinition()->source));
     if (profile == 9 || profile == 10 || profile == 11 || profile == 12) {
         const double signedDistance = replacement->sourceDefinition()->signedDistance;
         double cacheStart = 0., cacheEnd = 0.;

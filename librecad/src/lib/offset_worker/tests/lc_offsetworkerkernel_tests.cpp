@@ -9524,6 +9524,107 @@ TEST_CASE("worker erodes convex mixed polyline with unequal corner radii",
     }
 }
 
+TEST_CASE("convex polyline orientation survives rotated large-origin reconstruction",
+          "[lc-offsetcurve][worker-kernel][polyline][region-boundary][tolerance]") {
+    const LC_OffsetPolylineData counterClockwise{
+        {1, 0}, {1, 0}, true,
+        {RS_LineData{{1, 0}, {12, 0}},
+         RS_ArcData{{12, 2}, 2, 3 * M_PI / 2, 2 * M_PI, false},
+         RS_LineData{{14, 2}, {14, 8.25}},
+         RS_ArcData{{13.25, 8.25}, .75, 0, M_PI / 2, false},
+         RS_LineData{{13.25, 9}, {1.5, 9}},
+         RS_ArcData{{1.5, 7.5}, 1.5, M_PI / 2, M_PI, false},
+         RS_LineData{{0, 7.5}, {0, 1}},
+         RS_ArcData{{1, 1}, 1, M_PI, 3 * M_PI / 2, false}}};
+    LC_OffsetPolylineData reversed = counterClockwise;
+    std::reverse(reversed.segments.begin(), reversed.segments.end());
+    for (auto& segment : reversed.segments) {
+        if (auto* line = std::get_if<RS_LineData>(&segment)) {
+            std::swap(line->startpoint, line->endpoint);
+        } else {
+            auto& arc = std::get<RS_ArcData>(segment);
+            std::swap(arc.angle1, arc.angle2);
+            arc.reversed = !arc.reversed;
+        }
+    }
+    std::swap(reversed.startpoint, reversed.endpoint);
+
+    constexpr double angle = .37;
+    const double cosine = std::cos(angle), sine = std::sin(angle);
+    for (const RS_Vector origin : {RS_Vector{1e6, -1e6}, RS_Vector{1e9, -1e9}}) {
+        const auto transform = [&](const RS_Vector point) {
+            return origin + RS_Vector{cosine * point.x - sine * point.y,
+                                      sine * point.x + cosine * point.y};
+        };
+        LC_OffsetPolylineData data = reversed;
+        data.startpoint = transform(data.startpoint);
+        data.endpoint = transform(data.endpoint);
+        for (auto& segment : data.segments) {
+            if (auto* line = std::get_if<RS_LineData>(&segment)) {
+                line->startpoint = transform(line->startpoint);
+                line->endpoint = transform(line->endpoint);
+            } else {
+                auto& arc = std::get<RS_ArcData>(segment);
+                arc.center = transform(arc.center);
+                arc.angle1 += angle;
+                arc.angle2 += angle;
+            }
+        }
+
+        const LC_OffsetSourceGeometry sourceGeometry{std::move(data)};
+        CAPTURE(origin.x, origin.y);
+        REQUIRE(sourceGeometry.isWellFormed());
+        auto source = sourceGeometry.makeEntity();
+        REQUIRE(source);
+        const LC_OffsetSourceDefinition inward{sourceGeometry, -.25, 1e-4, false};
+        const auto orientation = LC_OffsetWorkerTolerance::strictConvexPolylineOrientation(
+            inward, *source);
+        REQUIRE(orientation);
+        CHECK(*orientation == -1.0);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(inward, *source);
+        REQUIRE(options);
+        CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+
+        auto outward = inward;
+        outward.signedDistance = .25;
+        const auto outwardOptions = LC_OffsetWorkerTolerance::directOptions(outward, *source);
+        REQUIRE(outwardOptions);
+        CHECK(outwardOptions->mode == LC_CurveOffsetMode::Direct);
+
+        const req::Request request{token, req::GenerateSource{inward, {}}};
+        const auto reply = LC_OffsetWorkerKernel::run(request);
+        const auto& generated = native(reply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+        const RS_Spline output{nullptr, std::get<RS_SplineData>(generated.ordinary.front())};
+        const auto* polyline = std::get_if<LC_OffsetPolylineData>(&sourceGeometry.value);
+        REQUIRE(polyline);
+        double first = 0.0, last = 0.0;
+        REQUIRE(output.getParameterDomain(first, last));
+        for (const auto& segment : polyline->segments) {
+            const auto* arc = std::get_if<RS_ArcData>(&segment);
+            if (arc == nullptr) continue;
+            const double direction = arc->reversed ? -1.0 : 1.0;
+            const double radius = arc->radius - direction * inward.signedDistance;
+            REQUIRE(radius > 0.0);
+            for (const double fraction : {.25, .5, .75}) {
+                const double angleAt = arc->angle1 + direction * arc->getAngleLength() * fraction;
+                const RS_Vector expected = arc->center + RS_Vector::polar(radius, angleAt);
+                double nearest = std::numeric_limits<double>::infinity();
+                for (int sample = 0; sample <= 8192; ++sample) {
+                    const RS_Vector candidate = output.getPointAt(first +
+                        (last - first) * sample / 8192.0);
+                    if (candidate.valid) nearest = std::min(nearest, candidate.distanceTo(expected));
+                }
+                CAPTURE(origin.x, arc->radius, fraction, nearest);
+                CHECK(nearest < .02);
+            }
+        }
+    }
+}
+
 TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
     RS_Polyline polyline;

@@ -54,8 +54,8 @@ inline std::optional<double> strictConvexPolylineOrientation(
     }();
     const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
     const double angleSlack = 128.0 * std::numeric_limits<double>::epsilon();
-    const auto sameAngle = [angleSlack](const double a, const double b) {
-        return std::abs(std::remainder(a - b, 2.0 * std::acos(-1.0))) <= angleSlack;
+    const auto sameAngle = [](const double a, const double b, const double tolerance) {
+        return std::abs(std::remainder(a - b, 2.0 * std::acos(-1.0))) <= tolerance;
     };
 
     struct SegmentFrame {
@@ -91,10 +91,15 @@ inline std::optional<double> strictConvexPolylineOrientation(
         } else {
             const auto& arc = std::get<RS_ArcData>(definitionSegment);
             const auto* actualArc = std::get_if<RS_ArcData>(&actualSegment);
+            // Endpoint reconstruction at large origins loses angle precision proportional to 1/radius.
+            const double arcAngleSlack = actualArc == nullptr ? angleSlack : std::max(
+                angleSlack, pointSlack / std::min(arc.radius, actualArc->radius));
             if (actualArc == nullptr || actualArc->reversed != arc.reversed ||
                 (actualArc->center + translation).distanceTo(arc.center) > pointSlack ||
                 std::abs(actualArc->radius - arc.radius) > pointSlack ||
-                !sameAngle(actualArc->angle1, arc.angle1) || !sameAngle(actualArc->angle2, arc.angle2)) {
+                !std::isfinite(arcAngleSlack) || arcAngleSlack > 1e-3 ||
+                !sameAngle(actualArc->angle1, arc.angle1, arcAngleSlack) ||
+                !sameAngle(actualArc->angle2, arc.angle2, arcAngleSlack)) {
                 return std::nullopt;
             }
             frame.curved = true;
@@ -130,8 +135,14 @@ inline std::optional<double> strictConvexPolylineOrientation(
         if (joinDelta.magnitude() > pointSlack) return std::nullopt;
         const long double turn = static_cast<long double>(current.endTangent.x) * next.startTangent.y -
                                  static_cast<long double>(current.endTangent.y) * next.startTangent.x;
-        const long double threshold = 128.0L * std::numeric_limits<double>::epsilon() *
-            static_cast<long double>(current.endTangent.magnitude()) * next.startTangent.magnitude();
+        const double firstTangentLength = current.endTangent.magnitude();
+        const double nextTangentLength = next.startTangent.magnitude();
+        // Convert coordinate uncertainty to an angular tangent bound at the shorter adjacent segment.
+        const double tangentAngleSlack = std::max(128.0 * std::numeric_limits<double>::epsilon(),
+            pointSlack / std::min(firstTangentLength, nextTangentLength));
+        if (!std::isfinite(tangentAngleSlack) || tangentAngleSlack > 1e-3) return std::nullopt;
+        const long double threshold = static_cast<long double>(tangentAngleSlack) *
+            static_cast<long double>(firstTangentLength) * nextTangentLength;
         if (orientation * turn < -threshold) return std::nullopt;
         if (orientation * turn > threshold) hasStrictTurn = true;
         if (current.curved) {
