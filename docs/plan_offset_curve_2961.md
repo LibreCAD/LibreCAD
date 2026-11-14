@@ -44623,3 +44623,24 @@ the final passing run retains the regression. This closes one independent
 cache-locus slice, not hyperbola Trim/action/file-lane coverage or the remaining
 family-by-variant matrix. Visible Properties acceptance, cross-platform runtime,
 and external-CAD checks remain open.
+
+## 1303. Carry Bounded Hyperbola Through Native Trim and File Lanes (2026-11-14)
+
+Test commit `30d76998a` adds `bounded hyperbola source trims through document
+actions and file lanes`. It replaces an existing offset's source through the
+asynchronous Update from Source action, verifies the typed bounded-hyperbola
+definition and signed distance, then cuts the generated cache with a finite
+line. The pure Trim preparation must report two certified roots and two
+retained fragments; the document action must publish the same fragment
+fingerprints. Undo restores the original cache and redo restores both trimmed
+fragments. The final drawing is exported and reopened through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests 'bounded hyperbola source trims through document actions and file lanes' --reporter compact`
+passes 312 assertions / 1 case across five file lanes. The nine-family
+`I trimmed every typed source family to plain fragments` regression passes
+4,406 assertions / 1 case against the rebuilt test binary. This is one
+rotated bounded-hyperbola fixture and does not close cusp/asymmetric variant
+Trim coverage, visible GUI acceptance, cross-platform runtime, or external-CAD
+validation. No production-code change was made in this test slice.
