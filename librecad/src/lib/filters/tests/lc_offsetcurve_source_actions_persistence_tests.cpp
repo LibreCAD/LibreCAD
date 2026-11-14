@@ -1778,12 +1778,13 @@ TEST_CASE("partial eccentric ellipse source trims through document actions and f
     }
 }
 
-TEST_CASE("rational degree-four spline trims through document actions and file lanes",
+TEST_CASE("rational high-degree splines trim through document actions and file lanes",
           "[lc-offsetcurve][source-action][spline][high-degree][interior-knot][trim-action][persistence]") {
+    const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{6});
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(static_cast<int>(format));
+    CAPTURE(degree, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1798,7 +1799,7 @@ TEST_CASE("rational degree-four spline trims through document actions and file l
     context.setDocumentAndView(&graphic, &view);
 
     RS_SplineData splineData;
-    splineData.degree = 4;
+    splineData.degree = degree;
     splineData.type = RS_SplineData::SplineType::ClampedOpen;
     splineData.savedOpenType = splineData.type;
     for (std::size_t i = 0; i <= splineData.degree + 1; ++i) {
@@ -1852,7 +1853,7 @@ TEST_CASE("rational degree-four spline trims through document actions and file l
     CHECK(replacement->sourceDefinition()->signedDistance == 0.02);
     CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
               replacement->sourceDefinition()->source) == expectedEncoding);
-    CHECK(std::get<RS_SplineData>(replacement->sourceDefinition()->source.value).degree == 4);
+    CHECK(std::get<RS_SplineData>(replacement->sourceDefinition()->source.value).degree == degree);
     CHECK(std::get<RS_SplineData>(replacement->sourceDefinition()->source.value).knotslist ==
           splineData.knotslist);
     const auto cacheBeforeTrim = RS_Spline::geometryFingerprint(replacement->getData());
@@ -1917,7 +1918,8 @@ TEST_CASE("rational degree-four spline trims through document actions and file l
     CHECK(collectFragments(graphic) == expectedFragments);
 
     const auto output = std::filesystem::path(directory.filePath(
-        QStringLiteral("high-degree-spline-trim-%1.drawing").arg(static_cast<int>(format))).toStdString());
+        QStringLiteral("degree-%1-spline-trim-%2.drawing")
+            .arg(static_cast<qulonglong>(degree)).arg(static_cast<int>(format))).toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, format));
     RS_Graphic reopened;
     REQUIRE(lc::test::importDrawing(reopened, output, format));
