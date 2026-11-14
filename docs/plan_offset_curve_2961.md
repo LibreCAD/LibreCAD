@@ -45868,7 +45868,12 @@ worker-client targets build, the qmake6 full application/plugin/helper build
 passes, and `git diff --check` passes. The qmake6 build reports existing DWG
 metadata initializer warnings. Visible GUI, cross-platform runtime, cache
 editing/action, persistence for this mixed-bulge case, and independent CAD
-acceptance remain open.
+acceptance remain open. Follow-up test commit `36675e28c` verifies that
+operation-8 `ValidateSourceCache` requests for this generation-only
+self-intersecting source are rejected by request admission on both sides,
+including the single-branch result. This is the intentional strict-cache
+boundary, not a worker geometry failure; editable-cache promotion, action
+integration, and persistence for such crossing sources remain unsupported.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
