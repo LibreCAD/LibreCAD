@@ -9491,6 +9491,27 @@ TEST_CASE("worker erodes convex mixed polyline with unequal corner radii",
         CHECK(std::abs(maxX - 13.75) < 0.03);
         CHECK(std::abs(maxY - 8.75) < 0.03);
 
+        for (const auto& segment : data.segments) {
+            const auto* arc = std::get_if<RS_ArcData>(&segment);
+            if (!arc) continue;
+            const double orientation = arc->reversed ? -1.0 : 1.0;
+            const double expectedRadius = arc->radius - orientation * signedDistance;
+            REQUIRE(expectedRadius > 0.0);
+            for (const double fraction : {0.25, 0.5, 0.75}) {
+                const double angle = arc->angle1 + orientation * arc->getAngleLength() * fraction;
+                const RS_Vector expected = arc->center + RS_Vector::polar(expectedRadius, angle);
+                double nearest = std::numeric_limits<double>::infinity();
+                for (int sample = 0; sample <= 8192; ++sample) {
+                    const RS_Vector candidate = output.getPointAt(
+                        first + (last - first) * sample / 8192.0);
+                    if (!candidate.valid) break;
+                    nearest = std::min(nearest, candidate.distanceTo(expected));
+                }
+                CAPTURE(signedDistance, arc->radius, arc->reversed, fraction, expected, nearest);
+                CHECK(nearest < 0.02);
+            }
+        }
+
         const req::Request validationRequest{token,
             req::ValidateSourceCache{cache, definition, {}}};
         const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
