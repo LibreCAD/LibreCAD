@@ -44789,3 +44789,22 @@ oracle in section 1309, this carries the tested high-multiplicity profiles
 through document Trim and persistence. Other repeated-knot values,
 discontinuous knots, arbitrary source shapes/conditioning, visible GUI,
 cross-platform runtime, and external-CAD validation remain open.
+
+## 1311. Persist Rotated and Translated High-degree Spline Trims (2026-11-14)
+
+Test commit `ebf709ede` extends the rational degree-four/six Trim matrix with a
+rigid frame rotated by `0.37` radians and translated by `(2,-3)`, alongside
+the origin-aligned profiles. The frame is applied consistently to the source
+control points, finite cutter, and limit pick. For each frame, degree, and
+interior multiplicity (one, two, or degree-minus-one), the test performs
+Update from Source, validates the typed source, requires two certified Trim
+roots and two retained fragments, then checks actual document action output,
+undo/redo, and all five DXF/DWG save/reopen lanes.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[high-degree][interior-knot][trim-action]' --reporter compact`
+passes 4,252 assertions / 1 case across sixty frame/degree/multiplicity/format
+combinations. This adds one moderate rigid transform for these rational
+profiles; it is not arbitrary affine or large-origin conditioning coverage.
+Other spline shapes, weight distributions, knot layouts, large translations,
+visible-GUI, cross-platform, and external-CAD checks remain open.
