@@ -43458,7 +43458,9 @@ reported `Offset cache trim worker failed; nothing changed`, while the new
 centerline profile still reached `LimitExceeded` at depth 48. Those results
 show the certificate was not fully propagated/validated by the worker and did
 not address the target root boxes. The production proof changes were removed;
-only the exact-geometry audit remains as a test.
+the Trim provider still emits no such proof. Core/protocol token support and
+its isolated tests were added later in section 1258; that plumbing alone is
+not a root-isolation implementation.
 
 Revised implementation sequence:
 
@@ -43484,8 +43486,9 @@ Revised implementation sequence:
    PR #3193.
 
 The exact-rational geometry audit is validated independently of the Trim
-kernel. The symmetric centerline Trim remains open, and no new analytic proof
-category is currently part of the implementation.
+kernel. The symmetric centerline Trim remains open; only the proof category's
+core acceptance and worker value transport are implemented, not its Trim
+provider or root-isolation algorithm.
 
 ## 1257. Record Exact-crossing Audit Validation (2026-11-13)
 
@@ -43507,3 +43510,27 @@ This closes only the exact-geometry question and preserves existing Trim
 behavior. It does not implement symmetric centerline trimming or visible
 desktop source-picker acceptance. Continue with the synthetic certificate
 and hostile worker-result tests in section 1256 before production integration.
+
+## 1258. Add Monotone-transverse Proof Token Plumbing (2026-11-13)
+
+Commit `1b4829bd0` appends `AnalyticMonotoneTransverse` after the existing
+intersection proof values, accepts it only as a unique analytic certificate,
+allows contact matching to classify it as unique, and extends the Trim worker
+result's bounded enum range/root-category validation. No Trim provider emits
+this proof yet, so normal root finding and acceptance behavior are unchanged.
+
+A synthetic certified query verifies that the core retains the proof category
+on a transverse event. Worker-result coverage changes a valid Trim root to the
+new category and verifies encode, wire framing, decode, and re-encode identity.
+On macOS arm64 CMake Release, the focused core case passes 10 assertions; the
+complete `[intersection-strict]` selection passes 868 assertions / 16 cases;
+the focused worker Trim round-trip case passes 3,594 assertions; and the full
+worker-result suite passes 467,713 assertions / 27 cases. Both
+`librecad_tests` and `librecad_offset_worker_result_tests` build successfully;
+`git diff --check` passes.
+
+This implements only proof-token admission and transport. It does not prove
+the token's geometry, add the exact Bezier/line isolator, test boundary-root,
+tangent, finite miss, and near-miss certificates, or fix the centerline Trim
+failure. Add those tests before the Trim provider uses this token; then run
+worker-backed action and persistence suites before claiming the integration.
