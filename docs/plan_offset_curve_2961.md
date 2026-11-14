@@ -44523,3 +44523,26 @@ No production code changed in this revalidation slice. `git diff --check`
 passes. Continue Slice 4 with a concrete uncovered geometry/variant case and
 keep visible GUI, cross-platform, and independent-CAD gates open until they
 have direct evidence.
+
+## 1299. Qualify Both Offset Sides of Reversed Large-origin Polyline Trim (2026-11-14)
+
+Commit `8d15697ad` extends `translated reversed source action matches an
+independent worker request` to both signed distances, `-0.25` and `+0.25`, at
+origins `(1e6,-1e6)` and `(1e9,-1e9)`. Each of the four geometry combinations
+runs worker-backed Update from Source, compares the published cache with an
+independent worker request, and checks three independent locus samples on
+every source line and arc. It then requires two certified Trim roots, one
+retained fragment, undo/redo, and save/reopen through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests "translated reversed source action matches an independent worker request" --reporter compact`
+passes 1,620 assertions / 1 test case. `librecad_tests` rebuilt successfully
+for the changed source-action test, and `git diff --check` passed before the
+implementation/test commit.
+
+This supersedes section 1297's inward-only limitation for this exact reversed
+mixed line/arc profile. It is still sampled geometry evidence for one profile
+and two origins, not a global error bound or general rounded-polyline coverage.
+Other rounded-polyline topologies, cross-platform runs, visible desktop
+acceptance, and independent-CAD checks remain open.
