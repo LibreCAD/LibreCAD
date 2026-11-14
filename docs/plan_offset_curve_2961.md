@@ -359,6 +359,11 @@ save/reopen lanes; its follow-up also carries a reflected/reversed transformed
 near-coincident profile through those lanes. These are bounded layouts, not
 general fit-point topology or a completion of Slice 4.
 
+Sections 1337-1338 now extend the strict-convex regular closed-polyline fixture
+through 256, 512, and 1024 source edges in both offset directions, including
+worker generation, Trim Two, undo, and five native-capable DXF/DWG lanes. This
+is bounded linear-polyline evidence, not general closed-polyline support.
+
 Sections 1170-1171 qualify nominal and similarity-transformed six-fit-point
 closed SplinePoints sources through direct normals, worker-backed Trim Two,
 and five DXF/DWG lanes. Section 1172 adds an eight-fit-point closed profile
@@ -45360,3 +45365,35 @@ regular linear polylines through 1024 edges and the recorded horizontal-line
 cutters. Curved or concave closed regions, other dense layouts/cutters, larger
 segment counts, visible GUI interaction, and independent CAD acceptance remain
 open; do not generalize these results to arbitrary polyline Trim.
+
+## 1339. Preserve Typed-source Sample-limit Refusals (2026-11-14)
+
+Fixed a worker result-admission mismatch exposed while probing the next
+strict-convex polyline size. `LC_CurveOffset` correctly stops at one sample
+past its configured cap and reports `LimitExceeded`; the `GenerateSource`
+result validator previously rejected that bounded work counter, so the helper
+exited without a reply instead of returning the failure atomically. Typed-source
+result admission now accepts at most `sampleCap + 1`, and only when the engine
+status is `LimitExceeded`. The configured cap is unchanged, and successful
+results still cannot report work beyond it.
+
+The real-helper regression forces a one-sample budget for an elliptic source
+and verifies a normal `Native` refusal with `engineRuns == 1`,
+`engineStatus == LimitExceeded`, `sampleUnits == 2`, and no cache or ordinary
+geometry. The failed 2048-edge inward generation exposed the same 65,537 /
+65,536 boundary; it now has a representable worker refusal rather than a helper
+process failure. This does not establish that 2048-edge generation succeeds.
+The opposite-side 2048-edge cache was generated in the exploratory fixture,
+but its finite-line Trim returned `AmbiguousRoots`; keep 2048-edge Trim open
+and fail closed until that specific isolation issue is resolved.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+and
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_process_tests -j4`
+pass. The targeted real-process regression passes 67 assertions / 1 case;
+`[worker-process]` passes 2,656 assertions / 6 cases; and
+`[closed][high-segment]` passes 2,185 assertions / 1 case at the established
+256/512/1024 sizes. `git diff --check` passes. No claim is made for 2048-edge
+Trim, curved/concave regions, larger source families, visible GUI, or
+independent CAD acceptance.
