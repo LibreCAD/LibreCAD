@@ -44547,3 +44547,25 @@ still sampled geometry evidence for one profile and two origins, not a global
 error bound or general rounded-polyline coverage. Other rounded-polyline
 topologies, cross-platform runs, visible desktop acceptance, and
 independent-CAD checks remain open.
+
+## 1300. Revalidate Beyond-cusp Parabola Trim Two (2026-11-14)
+
+At test source commit `8c92cc0dc` (production code unchanged from the preceding
+roadmap head), re-ran the three current parabola cusp Trim Two action cases:
+`T Trim Two trims exact-stall and multi-branch cusp caches`,
+`T Trim Two preserves transformed beyond-cusp parabola branches`, and
+`T Trim Two trims exact and beyond-cusp asymmetric branches`. The combined
+focused command passes 45,191 assertions / 3 test cases on macOS arm64 CMake
+Release with `QT_QPA_PLATFORM=offscreen`.
+
+These cases cover the symmetric exact-stall and three-branch distance, the
+transformed/reflected/affine beyond-cusp profiles over tested scales and line,
+circle, and arc cutters, and the asymmetric exact/beyond-cusp branches. They
+exercise both Trim operand pick orders, worker-backed preview/commit, branch
+retention, undo/redo, and applicable five-lane DXF/DWG save/reopen. This
+supersedes sections 1080 and 1085's earlier beyond-cusp `LimitExceeded`
+expectation for these specific fixtures: the bounded branch-aware Trim path
+now succeeds for the tested requests. It does not establish all cusp distances,
+parabola constructions, transforms, cutters, or numerical limits, and does not
+close the family-by-variant matrix or visible-GUI, cross-platform, and
+independent-CAD gates.
