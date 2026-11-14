@@ -1976,6 +1976,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
           "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]") {
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
     const int weightProfile = GENERATE(0, 1, 2);
+    const int knotProfile = GENERATE(0, 1);
     const int transformed = GENERATE(0, 1, 2);
     const double signedDistance = GENERATE(-0.02, 0.02);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
@@ -1990,7 +1991,8 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
         return RS_Vector{cosine * point.x - sine * reflectedY + frameOrigin.x,
                          sine * point.x + cosine * reflectedY + frameOrigin.y};
     };
-    CAPTURE(degree, weightProfile, transformed, signedDistance, static_cast<int>(format));
+    CAPTURE(degree, weightProfile, knotProfile, transformed, signedDistance,
+            static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -2019,8 +2021,8 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     }
     splineData.knotslist.insert(splineData.knotslist.end(), degree + 1, 0.0);
     for (std::size_t i = 1; i <= controlCount - degree - 1; ++i)
-        splineData.knotslist.push_back(static_cast<double>(i) /
-                                       static_cast<double>(controlCount - degree));
+        splineData.knotslist.push_back(knotProfile == 1 ? 0.37 :
+            static_cast<double>(i) / static_cast<double>(controlCount - degree));
     splineData.knotslist.insert(splineData.knotslist.end(), degree + 1, 1.0);
     auto periodicOwner = std::make_unique<RS_Spline>(nullptr, splineData);
     REQUIRE(periodicOwner->validate());
@@ -2073,7 +2075,8 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
           RS_SplineData::SplineType::WrappedClosed);
     sourceLayer->freeze(true);
 
-    if (degree == 4 && weightProfile == 2 && transformed == 2 && signedDistance > 0.0) {
+    if (degree == 4 && weightProfile == 2 && knotProfile == 1 && transformed == 2 &&
+        signedDistance > 0.0) {
         double sourceStart = 0.0;
         double sourceEnd = 0.0;
         REQUIRE(source->getParameterDomain(sourceStart, sourceEnd));
@@ -2227,16 +2230,16 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     sourceLayer->freeze(false);
 
     const auto output = std::filesystem::path(directory.filePath(
-        QStringLiteral("periodic-degree-%1-trim-%2-%3.drawing")
-            .arg(static_cast<qulonglong>(degree)).arg(transformed)
+        QStringLiteral("periodic-degree-%1-trim-%2-%3-%4.drawing")
+            .arg(static_cast<qulonglong>(degree)).arg(knotProfile).arg(transformed)
             .arg(static_cast<int>(format))).toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, format));
     RS_Graphic reopened;
     REQUIRE(lc::test::importDrawing(reopened, output, format));
     CHECK(collectFragments(reopened) == expectedFragments);
     const auto secondOutput = std::filesystem::path(directory.filePath(
-        QStringLiteral("periodic-degree-%1-trim-%2-%3-second.drawing")
-            .arg(static_cast<qulonglong>(degree)).arg(transformed)
+        QStringLiteral("periodic-degree-%1-trim-%2-%3-%4-second.drawing")
+            .arg(static_cast<qulonglong>(degree)).arg(knotProfile).arg(transformed)
             .arg(static_cast<int>(format))).toStdString());
     REQUIRE(lc::test::exportDrawing(reopened, secondOutput, format));
     RS_Graphic reopenedAgain;
