@@ -35,6 +35,20 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
+**Latest user request (2026-11-14):** Keep source-family selection available
+inside the active source-replacement workflow, and include every currently
+supported offset-source kind. The accepted list is the nine entries in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
+selectable and preserved type. This reiteration does not request a new entity
+family or change the implementation scope. The picker behavior is implemented
+and headless-covered; the remaining picker acceptance is a visible desktop
+check of switching families while replacement remains active, candidate-list
+refresh, current-source indication, successful replacement, and cancel or
+refusal behavior. Geometry-variant generation, worker/cache behavior, Trim,
+and DXF/DWG persistence remain separate Slice 4 obligations and must not be
+marked complete merely because all nine choices are displayed.
+
 **Baseline.** The committed widget already has a type selector populated from
 `LC_OffsetSourceGeometry::SupportedKinds`, a filtered entity chooser, a
 temporary current-source highlight, and an explicit select-in-drawing button.
@@ -44586,3 +44600,26 @@ macOS/Windows build and analysis jobs and the DWG/DXF verification jobs were
 still in progress when recorded; no result is inferred for them here. This
 revalidation does not close family-by-variant, visible desktop,
 cross-platform-runtime, or independent-CAD acceptance.
+
+## 1302. Oracle-check Bounded Hyperbola Cache Loci (2026-11-14)
+
+Test commit `2cd0167b8` adds `bounded hyperbola caches match an independent
+analytic offset locus` to the worker-kernel suite. The fixture checks a rotated,
+translated bounded hyperbola for both branches, both parameter-bound orders,
+and both signed distances. It evaluates the exact hyperbola point and canonical
+branch tangent independently, constructs the signed normal-offset locus, and
+measures each expected point against the generated cache using a dense search
+followed by local golden-section refinement. The bound-order cases intentionally
+preserve LibreCAD's existing canonical branch-side convention: swapping the
+stored endpoints changes traversal endpoints, not the selected signed side.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests 'bounded hyperbola caches match an independent analytic offset locus' --reporter compact`
+passes 889 assertions / 1 case. The complete `[hyperbola]` worker-kernel
+selection passes 188,251 assertions / 7 cases. The first oracle attempt used
+bound traversal direction to flip the normal and failed only the reversed-bound
+rows; review against the established entity contract corrected the oracle, and
+the final passing run retains the regression. This closes one independent
+cache-locus slice, not hyperbola Trim/action/file-lane coverage or the remaining
+family-by-variant matrix. Visible Properties acceptance, cross-platform runtime,
+and external-CAD checks remain open.
