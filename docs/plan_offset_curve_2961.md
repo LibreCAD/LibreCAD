@@ -46173,11 +46173,13 @@ invariance or mixed-bulge topology support.
 
 Validation on macOS arm64 CMake Release: the focused positive-bulge frame
 matrix passes 194 assertions / 1 case; `[curve-offset][region]` passes 27,740
-assertions / 20 cases; the `librecad_tests` target builds; the incremental
+assertions / 20 cases; the dedicated mixed-frame worker-client case passes
+1,220 assertions / 1 case; the `librecad_tests` target builds; the incremental
 qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0;
-and `git diff --check` passes. Worker/cache/Trim integration for this new
-success, persistence, broader topology and frame matrices, visible GUI,
-cross-platform runtime, and independent CAD acceptance remain open.
+and `git diff --check` passes. The new result is verified through direct and
+worker routing, but native cache/Trim integration, persistence, broader
+topology and frame matrices, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
