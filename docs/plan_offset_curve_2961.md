@@ -322,9 +322,11 @@ undo/redo, and two-pass DXF/DWG persistence. A representative asymmetric
 degree-four repeated-knot profile also passes a direct-normal geometry oracle
 in every lane (section 1330). Section 1331 adds an off-center repeated interior
 knot across all degrees, weight profiles, frames, signs and file lanes, bringing
-the matrix to 540 successful combinations. Section 1332 records a successful
-full qmake6 application/plugin build at the then-current source revision;
-visible Properties workflow acceptance and cross-platform gates remain open.
+the matrix to 540 successful combinations. Section 1333 adds two distinct
+nonuniform interior knots and a direct-normal oracle for that profile, bringing
+the matrix to 810 passing combinations. Section 1332 records a successful full
+qmake6 application/plugin build at its source revision; visible Properties
+workflow acceptance and cross-platform gates remain open.
 
 Sections 1201-1202 extend the closed fit-point spline evidence. Section 1201
 adds independent direct-normal checks for the admission-boundary and larger
@@ -45194,3 +45196,22 @@ remain the test evidence for sections 1331 and earlier. This records the
 qmake6 delivery sub-gate, but does not close Slice 5: visible Properties
 interaction, candidate-family coverage in the GUI, undo/redo and GUI
 save/reopen, and cross-platform delivery remain outstanding.
+
+## 1333. Persist Periodic Rational Splines with Distinct Nonuniform Knots (2026-11-14)
+
+Extended the wrapped-periodic high-degree spline matrix with two distinct
+nonuniform interior knots at `0.23` and `0.68`, retaining the uniform simple
+and repeated-knot profiles. The 810-case matrix covers degrees four through
+six, three positive-weight profiles, identity/rotated/reflected frames, both
+signed offsets, and five R14/R2000/R2018 DXF/DWG lanes. Cases continue through
+typed worker source replacement, cache Trim, undo/redo, and two save/reopen
+passes. The sampled direct-normal oracle now also checks the asymmetric
+reflected degree-four profile with distinct nonuniform knots in each file lane.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+passes. The focused wrapped-periodic test passes 106,582 assertions / 1 case.
+This covers the recorded two-knot layouts, not arbitrary nonuniform knot
+vectors, additional interior knots, higher multiplicities, or every
+conditioning regime; those Slice 4 gaps remain open alongside visible GUI and
+independent CAD acceptance.
