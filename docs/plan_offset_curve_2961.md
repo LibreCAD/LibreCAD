@@ -45094,18 +45094,53 @@ behavior; headless coverage does not close that gate.
 
 ## 1326. Trim Wrapped Periodic Degree-five Splines (2026-11-14)
 
-Test commit `d1349144c` adds degree five to the wrapped-periodic rational
-spline action/persistence matrix, alongside degrees four and six. The matrix
-covers identity and rotated/translated frames, both signed offsets, worker-
-backed source replacement, certified two-root Trim, undo/redo, and two
+Test commit `d1349144c` adds degree five to the wrapped-periodic spline
+action/persistence matrix, alongside degrees four and six. Follow-up test
+commit `7010b3898` makes the fixture genuinely rational for degrees four and
+five using symmetric positive weights `1 + 0.01*cos(2*angle)`; all three
+degrees retain the unit-weight profile. Regression commit `2c8e61bec` probes
+that rational profile at degree six too: on the current macOS build it
+asserts bounded `LimitExceeded`, zero root/fragments, and exact preservation
+of the attached source/cache when certification does not succeed. Other
+platforms may continue into the success path if they certify it. Successful
+cases cover identity and rotated/translated frames, both signed offsets,
+worker-backed source replacement, certified two-root Trim, undo/redo, and two
 save/reopen cycles in each of the five R14 DXF, R2000 DXF/DWG, and R2018
 DXF/DWG lanes. When `dwgread` is available, the DWG lane locates a reopened
 spline matching an expected trimmed fragment before semantic inspection.
 
 Validation on macOS arm64 CMake Release: rebuilding `librecad_tests` succeeded;
-the focused wrapped-periodic Trim/persistence case passes 7,752 assertions / 1
-case across 60 degree/frame/sign/format combinations. This closes only the
-degree-five gap for the existing periodic fixture. It does not establish
-arbitrary periodic control nets, weights, knot layouts, or conditioning, and
-does not close visible-GUI, cross-platform runtime, or independent ODA/AutoCAD
-acceptance.
+the focused wrapped-periodic Trim/persistence case passes 14,753 assertions /
+1 case across the degree/weight-profile/frame/sign/format matrix, including
+the bounded degree-six rational refusal cases. This qualifies the nonuniform
+rational profile through complete persistence only for degrees four and five
+and the existing unit-weight fixture for degrees four through six. It does
+not establish arbitrary periodic control nets, weights, knot layouts, or
+conditioning, and does not close visible-GUI, cross-platform runtime, or
+independent ODA/AutoCAD acceptance.
+
+## 1327. Track the Periodic Degree-six Rational Trim Work Limit (2026-11-14)
+
+An exploratory extension of section 1326 applied the same mild positive
+nonuniform weights `1 + 0.01*cos(2*angle)` to degree six. The end-to-end Trim
+fixture reaches `LC_OffsetCacheTrim::Refusal::LimitExceeded` for the identity-
+frame, positive `0.02` offset case before producing certified roots. Test
+commit `ae5b6f829` adds detailed stage counters to the failure context. On
+macOS arm64 the refused case has 25 input spans, 275 input records, 204
+intersection-kernel generated items, and 212 box-pair examinations (80
+candidate, 82 refinement, 50 certificate). It reaches pair-refinement depth
+48 with 899 ordering comparisons, zero generated root records, and no
+ordering/root-refinement depth; this is the depth ceiling, not the global
+comparison or item budget. The current behavior refuses rather than publish
+an unproved cut.
+
+**Remaining implementation slice:** isolate which adjacent-pair refinement
+predicate keeps subdividing at depth 48 for this nearly smooth symmetric
+profile, then reduce redundant refinement or add a conservative
+proof-preserving exclusion. Do not merely raise `maxDepth` or another global
+limit. The deterministic cross-frame/sign/format regression and atomic
+refusal assertions are now in section 1326. Expand degree-six rational
+save/reopen coverage only after the representative identity-frame case is
+certified. Until then, keep nonuniform periodic degree-six geometry explicitly
+open; do not infer it from unit-weight degree-six coverage or degree-four/five
+rational coverage.
