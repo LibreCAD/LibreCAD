@@ -45623,6 +45623,24 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1358. Sweep Near-tangent Ellipse Contact Insets (2026-11-14)
+
+Test commit `02a9603a0` extends the multi-ratio tangent/secant fixtures in
+section 1357 from a single `0.1` inward displacement to `0.01` and `0.1`.
+Both insets pass for ratios `0.05`, `0.1`, and `0.2`, all three dense-cache
+sizes, and the axis-aligned and rotated/translated frames. Exact tangency
+remains the refusal control. The removed-interval probe is placed inside the
+smallest certified interval rather than using a fixed wider sample. These
+results do not cover smaller insets, arbitrary frames, or a continuum of
+ellipse shapes.
+
+Validation on macOS arm64 CMake Release: the focused contact matrix passes
+1,900,056 assertions / 3 cases; `[trim-kernel]` passes 3,723,777 assertions /
+88 cases; `cmake --build /private/tmp/offset-2961-cmake-clean --target
+librecad_tests -j4` succeeds; and `git diff --check` passes. Smaller offsets,
+other contact orientations and source topologies, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
 ## 1357. Sweep Dense Ellipse Contact Ratios (2026-11-14)
 
 Test commit `202277f01` extends the exact-tangency refusal and `0.1`-inset
