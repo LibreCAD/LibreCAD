@@ -45634,10 +45634,29 @@ it does not claim an exhaustive eccentricity sweep or an independent root
 oracle for this profile.
 
 Validation on macOS arm64 CMake Release: the focused matrix passes 143,975
-assertions / 1 case; `[trim-kernel]` passes 1,523,952 assertions / 85 cases;
+assertions / 1 case; `[trim-kernel]` at that revision passes 1,523,952
+assertions / 85 cases;
 `librecad_tests` builds; and `git diff --check` passes. Other ellipse ratios,
 near-tangent contacts, source topologies, visible GUI, cross-platform runtime,
 and independent CAD acceptance remain open.
+
+## 1354. Sweep Dense Ellipse Trim Across Eccentricity Ratios (2026-11-14)
+
+Test commit `c94d398a2` extends section 1353's 128-, 512-, and 2048-span
+closed circular-cache
+matrix to minor/major ratios `0.05`, `0.1`, and `0.2` for the rotated full-
+ellipse cutter. Every combination still requires certified contacts, one
+valid complementary fragment, sampled geometry agreement, unchanged source
+data, and the expected picked/retained interval coverage. This is a three-point
+ratio sweep for this source and cutter placement; it does not claim continuous
+eccentricity coverage, near-tangent proof, or general source-topology support.
+
+Validation on macOS arm64 CMake Release: the focused eccentricity matrix
+passes 443,744 assertions / 1 case; `[trim-kernel]` passes 1,823,721
+assertions / 85 cases; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. Other
+ellipse ratios, near-tangent contacts, source topologies, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
 
 ## 1352. Refuse Dense Near-full Ellipse-arc Trim Cutters (2026-11-14)
 
