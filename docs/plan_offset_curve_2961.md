@@ -84,6 +84,20 @@ workflow gate and Slice 4's concrete-variant geometry/worker/cache/Trim/DXF/DWG
 checks. Do not treat this scope confirmation as evidence that either gate has
 passed.
 
+**Latest clarification (2026-11-13):** The type change is part of the active
+replacement-selection interaction itself: the user must be able to change the
+requested source family while choosing a new curve, without closing the chooser
+or restarting replacement. The candidate list must then refresh to eligible
+curves of that family. Cover all nine currently supported offset-source kinds
+in this same workflow: line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. Keep parabola separately typed from
+spline-points. This restates and sharpens the existing picker contract; it does
+not add new drawable families or reopen the already-covered headless selector
+implementation. The codebase records headless coverage for repeated family
+switching and typed replacement, but visible GUI verification remains open and
+must confirm the live chooser stays active, candidates refresh in place, and
+the old source indication is retained until replacement acceptance.
+
 **Acceptance sequence:** in the Properties source widget, start replacement
 and, while replacement/candidate selection remains active, keep the type
 selector available. Change the family at least twice before choosing and
@@ -43593,3 +43607,54 @@ publication. Then exercise both windings, tangency/near-miss atomic refusal,
 worker-backed actions, undo/redo, and all native-capable persistence lanes.
 The implementation is committed locally; push it and this roadmap receipt to
 PR #3193 after review.
+
+## 1261. Reconfirm In-place Source-family Switching During Replacement (2026-11-13)
+
+The latest request restates the Properties-widget behavior: when selecting a
+replacement source curve, the user must be able to change the source type in
+the active chooser and select among every supported offset-source family.
+This is already represented by the canonical nine-kind inventory and the
+headless repeated-switching/typed-replacement coverage cited in sections 1162,
+1192-1193, and 1247. Parabola remains a distinct choice from spline-points.
+No additional selector or second picker is warranted.
+
+The live acceptance gate is still open: visibly switch types repeatedly while
+replacement selection remains active, verify the candidate list refreshes
+without leaving that workflow, and confirm the prior source highlight/state is
+preserved until asynchronous replacement succeeds. On refusal or cancellation,
+the prior source and indication must remain. Record platform, build, interaction
+route, and results when this gate is exercised. This clarification does not
+change the current in-progress Trim implementation or its validation plan.
+
+## 1262. Integrate Certified Monotone Roots for Finite-line Trim (2026-11-13)
+
+Implementation commit `9f1160fb0` connects the exact monotone Bezier/finite-line
+certificate to Trim root generation. For a genuine `RS_Line` cutter only, each
+eligible source-span/line-span pair is excluded when all exact signed-distance
+Bernstein controls lie strictly on one side, or accepted as
+`AnalyticMonotoneTransverse` when the unique root and its finite-segment
+projection are certified. Linear spans inside spline cutters are deliberately
+not promoted to this proof category; that keeps provider emission consistent
+with worker revalidation, which binds this proof to an `RS_Line` request.
+Isolation intervals must overlap the active query box, and rounded local/global
+span boundaries are kept within their established parameter domains.
+
+The exact isolator now refines non-endpoint roots to width `2^-80`, with a
+near-endpoint regression at `2^-50`. This preserves a nonzero separation from
+an exact endpoint after conversion back to floating-point intervals. The
+standalone certificate suite passes 15 assertions / 1 case, and the complete
+`[lc-offsetcurve][trim-kernel]` suite passes 41,296 assertions / 72 cases.
+`librecad_offset_worker_result_tests` passes 467,725 assertions / 28 cases,
+including hostile proof-category checks. The generated closed-polyline action
+case passes 982 assertions in one case, including the exact clockwise
+centerline crossing, worker-result encoding/decoding, action publication,
+undo/redo, and R14 DXF save/reopen checks. Other profiles in that test retain
+their existing five-format coverage; the new centerline profile is currently
+gated to R14, so this does not establish its AC1024+ persistence.
+
+This supersedes the provider-integration next step in section 1260. Remaining
+work includes extending the centerline case to other native-capable DXF/DWG
+lanes, testing further line orientations and source degrees/layouts, and
+maintaining atomic refusal for tangencies, near misses, and ambiguous roots.
+Visible Properties interaction, cross-platform validation, and the larger
+family/variant plan remain separate open gates.
