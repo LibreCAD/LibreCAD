@@ -1786,6 +1786,8 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const int transformed = GENERATE(0, 1);
     const double signedDistance = GENERATE(-0.02, 0.02);
     const double interiorKnot = GENERATE(0.37, 0.5);
+    const bool alternatingWeights = degree == 4 && transformed != 0 &&
+                                   interiorMultiplicity == 1 && interiorKnot == 0.37;
     const double frameAngle = transformed ? 0.37 : 0.0;
     const RS_Vector frameOrigin = transformed ? RS_Vector{2.0, -3.0} : RS_Vector{0.0, 0.0};
     const auto mapPoint = [frameAngle, frameOrigin](const RS_Vector& point) {
@@ -1821,7 +1823,9 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
         const double t = double(i) / double(controlCount - 1);
         splineData.controlPoints.push_back(mapPoint(
             RS_Vector{4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t}));
-        splineData.weights.push_back(0.75 + 0.5 * t);
+        splineData.weights.push_back(alternatingWeights
+                                         ? (i % 2 == 0 ? 0.7 : 1.3)
+                                         : 0.75 + 0.5 * t);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), splineData.degree + 1, 0.0);
     splineData.knotslist.insert(splineData.knotslist.end(), interiorMultiplicity, interiorKnot);
