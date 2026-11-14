@@ -44771,3 +44771,21 @@ weight profiles, origins, rotations, and signed distances. The new Trim cases
 cover multiplicities one and two only; they do not close higher-multiplicity
 action/file variants, broader spline parameterizations, visible-GUI,
 cross-platform, or external-CAD validation.
+
+## 1310. Trim and Persist Degree-minus-one Spline Knots (2026-11-14)
+
+Test commit `6308a672b` adds degree-minus-one interior-knot multiplicity to
+the same rational spline document matrix. The chosen multiplicities are three
+for degree four and five for degree six, leaving C1 continuity at the interior
+knot. Both degrees continue to use nonuniform positive weights and exercise
+source replacement, exact typed knot preservation, two-root Trim, document
+publication, undo/redo, and the five DXF/DWG save/reopen lanes.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[high-degree][interior-knot][trim-action]' --reporter compact`
+passes 2,126 assertions / 1 case across degree four/six, multiplicities one,
+two, and degree-minus-one, and all five formats. Together with the worker
+oracle in section 1309, this carries the tested high-multiplicity profiles
+through document Trim and persistence. Other repeated-knot values,
+discontinuous knots, arbitrary source shapes/conditioning, visible GUI,
+cross-platform runtime, and external-CAD validation remain open.
