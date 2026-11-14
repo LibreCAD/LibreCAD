@@ -43773,3 +43773,70 @@ This closes the specific symmetric near-axis gap from section 1268, but not
 arbitrary slopes, sub-ULP separations, extreme origin/scale limits, or every
 line/source conditioning boundary. Continue with explicit representability
 limits and atomic refusal at unresolvable inputs.
+
+## 1270. Keep Source-type Switching and Parabola in the Picker Contract (2026-11-13)
+
+The latest request reiterates that the source-curve widget must let users
+change the requested type while choosing a replacement, and asks that every
+supported source type, including parabola, be available. The current code
+already implements this contract: the Properties widget builds choices from
+`LC_OffsetSourceGeometry::SupportedKinds`, matches `LC_Parabola` separately
+from `LC_SplinePoints`, and refreshes candidates as the type changes. The
+headless test `Native source picker replaces every modeled source kind` in
+`lc_offsetcurve_propertiesdialog_tests.cpp` switches/filter-selects each
+currently modeled kind and checks that the old definition/cache remain intact
+until asynchronous replacement succeeds. This includes the distinct
+parabola choice.
+
+No additional type-specific selector or parabola-only picker should be added.
+Keep the canonical inventory as the single source of truth. Any future source
+kind must be added to that inventory and flow through candidate matching,
+capture/reconstruction, worker validation, and the Slice 4 geometry/persistence
+matrix before it is called supported. Existing picker tests establish UI
+availability and typed replacement for their fixtures; they do not establish
+all geometric variants, Trim behavior, file round-trips, or visible desktop
+behavior.
+
+**Remaining acceptance:** execute the visible Properties workflow from
+section 1162: start source replacement, change the type repeatedly without
+leaving the chooser, confirm the candidate list refreshes in place, then
+select a parabola and representative candidates from the other eight kinds.
+Confirm the displayed source/indication and committed cache stay with the old
+source until successful asynchronous publication, and remain unchanged on
+cancellation or refusal. Record platform, revision, exact interaction route,
+and result. Until that is done, mark the source-picker feature as
+headless-implemented with visible-GUI acceptance open, not wholly complete.
+
+## 1271. Revalidate Monotone Trim Proofs From Extracted Spline Spans (2026-11-13)
+
+Implementation commit `5f85f7a90` fixes worker-result admission for
+`AnalyticMonotoneTransverse` roots on splines whose knot vector requires
+Bezier extraction. The worker-side verifier previously treated a source as a
+flat Bezier chain and indexed controls with `span * degree`. The Trim provider
+instead isolates the actual Bezier span from the original knot/control arrays;
+on valid B-spline caches those are not necessarily the same control points.
+The verifier now calls the bounded `Geo::inspectCacheLayout` on the original
+request cache, selects the corresponding extracted span, checks its supported
+degree and planar controls, then independently reruns the exact-rational
+finite-line certificate and matches source/line parameter enclosures. It does
+not accept a proof label without reconstructing geometry from the request.
+
+The closed mixed-bulge polyline persistence/action case that previously caused
+the helper to exit with result-admission failure now passes 700 assertions
+across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The worker-created closed
+circle exact-knot Trim case passes 374 assertions after its interior-crossing
+expectation was updated to accept either valid transverse proof category. The
+worker-result suite passes 470,221 assertions / 29 cases, the async tangency
+refusal/atomicity case passes 33 assertions, and the mixed-bulge/high-segment
+worker-created polyline matrix passes 9,261 assertions. After correcting the
+stale proof-label expectation, the complete `[lc-offsetcurve][trim-action]`
+selector passes 167,845 assertions / 92 cases. Validation used macOS arm64
+CMake Release.
+
+This closes the discovered mismatch between provider Bezier extraction and
+worker proof revalidation for the tested knot-vector cases. It does not qualify
+every nonuniform/repeated-knot layout, arbitrary degree, or extreme numeric
+conditioning. Keep proof verification fail-closed when bounded span extraction
+or exact certification refuses. Next, add adversarial nonuniform/repeated-knot
+proof fixtures as eligible layouts are identified, then continue the roadmap's
+remaining family/variant, cross-platform, external-CAD, and visible-GUI gates.
