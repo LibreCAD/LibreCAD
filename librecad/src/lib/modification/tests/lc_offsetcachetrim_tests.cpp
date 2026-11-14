@@ -542,7 +542,8 @@ TEST_CASE("Dense cache refuses ellipse tangency at a source vertex atomically", 
 TEST_CASE("Dense cache retains two proved near-tangent ellipse crossings", tags) {
     const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
     const double ratio = GENERATE(0.05, 0.1, 0.2);
-    CAPTURE(segmentCount, ratio);
+    const double inset = GENERATE(0.01, 0.1);
+    CAPTURE(segmentCount, ratio, inset);
     constexpr double radius = 10.0;
     std::vector<RS_Vector> points;
     points.reserve(segmentCount + 1);
@@ -553,7 +554,7 @@ TEST_CASE("Dense cache retains two proved near-tangent ellipse crossings", tags)
     points.push_back(points.front());
     const auto data = cache(std::move(points));
     const auto before = data;
-    RS_Ellipse cutter{nullptr, {{19.9, 0.0}, {10.0, 0.0}, ratio, 0.0, 0.0, false}};
+    RS_Ellipse cutter{nullptr, {{20.0 - inset, 0.0}, {10.0, 0.0}, ratio, 0.0, 0.0, false}};
 
     const auto result = Trim::prepare(data, cutter, {{10.0, 0.0}});
     CAPTURE(result.rootCount, static_cast<int>(result.refusal),
@@ -564,14 +565,14 @@ TEST_CASE("Dense cache retains two proved near-tangent ellipse crossings", tags)
     REQUIRE(result.fragments.size() == 1);
     geometry(data, result);
     equalData(data, before);
-    CHECK(coverage(result, .125) == 0);
+    CHECK(coverage(result, .02) == 0);
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
 TEST_CASE("Dense rotated and translated ellipse tangencies remain fail-closed", tags) {
     const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
     const double ratio = GENERATE(0.05, 0.1, 0.2);
-    const double inset = GENERATE(0.0, 0.1);
+    const double inset = GENERATE(0.0, 0.01, 0.1);
     CAPTURE(segmentCount, ratio, inset);
     constexpr double radius = 10.0;
     const double frameRotation = pi / 7;
@@ -609,7 +610,7 @@ TEST_CASE("Dense rotated and translated ellipse tangencies remain fail-closed", 
     REQUIRE(result.fragments.size() == 1);
     geometry(data, result);
     equalData(data, before);
-    CHECK(coverage(result, .125) == 0);
+    CHECK(coverage(result, .02) == 0);
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
