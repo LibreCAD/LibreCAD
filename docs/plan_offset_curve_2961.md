@@ -46282,6 +46282,24 @@ assertions / 348 cases; the `librecad_tests` target builds; and `git diff
 in section 1382. Visible GUI, cross-platform runtime, and independent CAD
 acceptance remain open.
 
+## 1384. Qualify Positive-bulge Arrangement Work Caps Across Frames (2026-11-14)
+
+The positive-bulge bow-tie now checks the shared `RegionBoundary` work cap in
+identity, rotation-only, translation-only, and combined frames, for both fill
+rules and growth/erosion. Each frame/sign/fill cell sweeps caps 1, 64, and the
+default, checks reported pair work and generated-item diagnostics against
+their bounds, validates successful cycles for closure, distance, and fill
+side, and requires atomic empty output for explicit limit/topology refusal.
+The denser cap sweep for the rotated erosion profile remains in section 1382.
+This qualifies only the tested mixed-bulge fixture and rigid frames.
+
+Validation on macOS arm64 CMake Release: the focused `[curve-offset][budget]`
+selection passes 630 assertions / 7 cases; the complete `[curve-offset]`
+suite passes 2,246,436 assertions / 349 cases; `librecad_tests` builds; and
+`git diff --check` passes. Production build and qmake6 application validation
+are recorded in section 1382. Wider arrangements, visible GUI, cross-platform
+runtime, and independent CAD acceptance remain open.
+
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
 Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
