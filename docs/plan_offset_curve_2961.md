@@ -44662,3 +44662,24 @@ passes 1,314,188 assertions / 5 cases. This establishes the tested partial-arc
 profile and both signs only; it does not close reversed, wrapped, near-cusp,
 extreme-eccentricity, ellipse Trim/action/file, cross-platform, visible-GUI, or
 external-CAD acceptance.
+
+## 1305. Carry a Partial Eccentric Ellipse Through Trim and File Lanes (2026-11-14)
+
+Test commit `6bd2165ea` adds `partial eccentric ellipse source trims through
+document actions and file lanes`. It replaces the source through Update from
+Source using a rotated partial ellipse arc with ratio `0.25`, checks the
+published legacy ellipse definition, trims its cache at two certified roots,
+compares the document result against pure Trim preparation, and verifies
+undo/redo plus R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen.
+The definition comparison treats angles modulo `2π`: the existing ellipse
+entity stores the input start angle `-1.1`, while the editable definition
+canonicalizes it to `5.183…`; this is the same bounded arc, not lost geometry.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests 'partial eccentric ellipse source trims through document actions and file lanes' --reporter compact`
+passes 357 assertions / 1 case. The complete `[lc-offsetcurve][trim-action]`
+selection passes 171,862 assertions / 94 cases. This closes one eccentric
+partial-ellipse profile only; reversed/wrapped and near-cusp ellipse variants,
+other family/variant rows, visible Properties acceptance, cross-platform
+runtime, and external-CAD checks remain open. No production-code change was
+needed for this slice.
