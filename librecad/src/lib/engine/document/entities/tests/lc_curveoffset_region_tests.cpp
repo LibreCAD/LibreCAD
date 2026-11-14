@@ -528,3 +528,42 @@ TEST_CASE("A high-segment convex polyline has an exact inward region boundary", 
     CHECK(collapsed.status == LC_CurveOffsetStatus::SingularOffset);
     CHECK(collapsed.branches.empty());
 }
+
+TEST_CASE("A concave polyline region grows and shrinks through its reflex corners",
+          "[curve-offset][region][polyline][concave]") {
+    const std::vector<RS_Vector> vertices{{0, 0}, {8, 0}, {8, 8}, {6, 8},
+                                          {6, 2}, {2, 2}, {2, 8}, {0, 8}};
+    RS_Polyline source;
+    for (const RS_Vector& point : vertices) {
+        source.addVertex(point);
+    }
+    source.setClosed(true);
+    source.endPolyline();
+
+    constexpr double distance = 0.5;
+    for (const bool grow : {true, false}) {
+        CAPTURE(grow);
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                            distance),
+            options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+                result.intersectionDiagnostics.work.totalBoxPairs);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        std::size_t circularCorners = 0;
+        for (const LC_OffsetCubicPiece& piece : result.branches.front().cubicPieces) {
+            circularCorners += piece.provenance.arcCentre.valid;
+        }
+        CAPTURE(result.branches.front().cubicPieces.size(), circularCorners);
+        CHECK(circularCorners > 0);
+        const CycleCheck check = checkCycles(result, vertices, LC_CurveFillRule::NonZero, distance, grow);
+        CHECK(check.closed);
+        CHECK(check.worstDistance < 1e-7);
+        CHECK(check.wrongSide == 0);
+        CHECK(check.areas.front() > 0.0);
+    }
+}
