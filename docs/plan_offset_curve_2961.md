@@ -44955,3 +44955,17 @@ The focused `[high-degree][interior-knot][trim-action]` selection passes
 format combinations. Additional knot locations, alternating-weight action
 coverage, broader spline topology and conditioning, visible GUI,
 cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
+
+## 1319. Confirm the Declared Spline Degree Boundary (2026-11-14)
+
+The current offset-source contract supports spline degrees 1 through 6, as
+recorded in the capability matrix and enforced by
+`RS_Spline::MaxSupportedDegree`. An exploratory degree-eight worker-oracle
+case is rejected by `LC_OffsetSourceGeometry::isWellFormed()` before generation;
+the rejection is consistent with the declared application limit, not a
+degree-eight offset-engine regression. No production change is warranted in
+this roadmap slice. Degree-eight DWG/DXF import preservation or raising the
+native spline limit would be a separate scope decision with its own bounded
+algorithm, worker-protocol, cache-admission, performance, Trim, and persistence
+review. Continue closing coverage within degrees 1-6; do not advertise support
+above the current maximum.
