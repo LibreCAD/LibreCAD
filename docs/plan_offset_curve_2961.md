@@ -46007,8 +46007,9 @@ gates remain open.
 
 ## 1374. Persist Mixed-bulge Region Worker Branches as Ordinary Splines (2026-11-14)
 
-Test commit `6c076d4a5` takes the two successful mixed-bulge RegionBoundary
-layouts already qualified in section 1373 through the real helper process:
+Test commits `6c076d4a5` and `a376e2bdf` take the two successful mixed-bulge
+RegionBoundary layouts already qualified in section 1373 through the real
+helper process:
 identity-frame growth producing one branch and translated/rotated inward
 offset producing two branches. Both results remain ordinary splines, with no
 native editable-cache publication. The test writes each result as plain drawing
@@ -46016,11 +46017,15 @@ geometry and checks exact spline geometry fingerprints after first and second
 save/reopen in R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes where DWG support
 is enabled.
 
-On macOS arm64 CMake Release, the focused case passes 562 assertions / 1 case;
-`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests
--j4` succeeds; and `git diff --check` passes. This closes persistence only for
-these two ordinary-output layouts and listed versions. It does not establish
-editable-cache promotion, action integration, Trim, other mixed-bulge signs or
+On macOS arm64 CMake Release, `cmake --build
+/private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
+the focused case passes twice at 156 assertions / 1 case. The first test
+revision counted deadline-loop iterations as assertions, making its reported
+count scheduling-dependent; `a376e2bdf` makes the deadline bounded without
+asserting on each event-pump iteration. `git diff --check` passes. This closes
+persistence only for these two ordinary-output layouts and listed versions. It
+does not establish editable-cache promotion, action integration, Trim, other
+mixed-bulge signs or
 transforms, broader DXF/DWG interoperability, visible GUI, cross-platform
 runtime, or independent CAD acceptance. This roadmap update also records the
 latest source-widget reaffirmation at the top of the document: one in-place
