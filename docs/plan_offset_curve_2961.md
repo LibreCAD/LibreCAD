@@ -49,6 +49,15 @@ must not mutate the committed source, cache, identity, or highlight. A selected
 candidate replaces them only after asynchronous validation succeeds; cancel,
 refusal, stale input, or worker failure preserves the previous source state.
 
+Acceptance sequence: begin replacement; change the requested type while
+replacement selection remains active; verify the candidate list refreshes for
+each of the nine kinds; choose a candidate (including a distinct parabola) and
+verify its geometry type is preserved; then repeat with another type and
+exercise cancel/refusal. Changing the filter alone must never commit a source
+change or clear the existing-source indication. This sequence describes the
+selector interaction only; it does not waive the separate per-family and
+per-variant capture, worker, cache, Trim, and DXF/DWG gates below.
+
 This picker behavior is implemented and headlessly covered by the source-picker
 and ordered-family replacement tests cited in sections 1291-1293, including
 1,101 assertions across all nine kinds. Section 1342 additionally verifies
@@ -45606,6 +45615,22 @@ cases; `librecad_tests` builds; and `git diff --check` passes. This establishes
 only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1349. Trim Dense Caches Against Seam-crossing Ellipse-arc Domains (2026-11-14)
+
+Added a 128-, 512-, and 2048-span source matrix for the eccentric ellipse arc
+whose canonical stored endpoints straddle the `2π` angular seam. The same
+4.4-radian geometric cutter is tested in forward and reversed traversal using
+normalized endpoint values in `[0, 2π)` (reversed form swaps the endpoints and
+sets the reverse flag). Each case requires exactly two roots, one valid
+complement, unchanged source data, and expected picked-interval coverage.
+
+Validation on macOS arm64 CMake Release: the seam-crossing arc matrix passes
+228,587 assertions / 1 case; `[trim-kernel]` passes 1,292,971 assertions / 82
+cases; `librecad_tests` builds; and `git diff --check` passes. This closes this
+arc domain only; other seam-adjacent angles, sweep limits, near-full arcs,
+visible GUI, cross-platform runtime, and independent CAD acceptance remain
+open.
 
 ## 1348. Trim Dense Eccentric Ellipse Arcs Across Uniform Scales (2026-11-14)
 
