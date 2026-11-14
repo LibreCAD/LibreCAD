@@ -515,6 +515,57 @@ TEST_CASE("Dense cache retains a proved near-tangent conic crossing", tags) {
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
+TEST_CASE("Dense cache refuses ellipse tangency at a source vertex atomically", tags) {
+    const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
+    CAPTURE(segmentCount);
+    constexpr double radius = 10.0;
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.emplace_back(radius * std::cos(angle), radius * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    RS_Ellipse cutter{nullptr, {{20.0, 0.0}, {10.0, 0.0}, .2, 0.0, 0.0, false}};
+
+    const auto result = Trim::prepare(data, cutter, {{-5.0, 0.0}});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    refused(result);
+    equalData(data, before);
+}
+
+TEST_CASE("Dense cache retains two proved near-tangent ellipse crossings", tags) {
+    const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
+    CAPTURE(segmentCount);
+    constexpr double radius = 10.0;
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.emplace_back(radius * std::cos(angle), radius * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    RS_Ellipse cutter{nullptr, {{19.9, 0.0}, {10.0, 0.0}, .2, 0.0, 0.0, false}};
+
+    const auto result = Trim::prepare(data, cutter, {{10.0, 0.0}});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result);
+    equalData(data, before);
+    CHECK(coverage(result, .5) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
+}
+
 TEST_CASE("Dense nonconvex cache trims one picked conic interval among many roots", tags) {
     const std::size_t segmentCount = GENERATE(256u, 1024u, 2048u);
     CAPTURE(segmentCount);
