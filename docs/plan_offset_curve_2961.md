@@ -43917,3 +43917,24 @@ explicit exhaustion test if those limits become independently injectable or
 the accepted cache envelope expands. Remaining roadmap gates still include
 broader geometry/persistence variants, cross-platform validation,
 external-CAD checks, and visible GUI acceptance.
+
+## 1275. Qualify Repeated Cubic-knot Admission Boundaries (2026-11-13)
+
+Test commit `d7302d76d` pins down the normalized cache-layout boundary for
+degree-3 repeated interior knots. Nonuniform layouts with multiplicities 1
+and 2 are outside the current extractor's admitted representation and return
+`UnsupportedLayout` with no roots/fragments; their refusal results remain
+valid worker-protocol values. A nonuniform multiplicity-3 join is admitted,
+produces an `AnalyticMonotoneTransverse` root on raw span 1, and survives
+result encoding and decoding. The focused case passes 22 assertions; the full
+worker-result suite passes 470,262 assertions / 31 cases on macOS arm64 CMake
+Release. `git diff --check` is clean.
+
+This records safe refusal for lower multiplicities rather than claiming
+general B-spline knot support or silently approximating them. Keep the family
+and variant matrix explicit about the normalized cache contract: degree-1/3
+clamped-open layouts accept internal multiplicity equal to degree or degree+1;
+other layouts must remain refused until extraction, proof validation, worker
+transport, and persistence are implemented and qualified together. Broader
+valid knot-layout and geometry/persistence coverage, cross-platform lanes,
+external-CAD checks, and visible GUI acceptance remain open.
