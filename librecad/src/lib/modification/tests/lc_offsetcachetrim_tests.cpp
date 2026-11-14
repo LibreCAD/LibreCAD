@@ -366,7 +366,8 @@ TEST_CASE("Dense closed cache trims against a rotated eccentric ellipse", tags) 
 
 TEST_CASE("Dense closed cache trims against a narrow rotated ellipse", tags) {
     const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
-    CAPTURE(segmentCount);
+    const double ratio = GENERATE(0.05, 0.1, 0.2);
+    CAPTURE(segmentCount, ratio);
     constexpr double radius = 10.0;
     std::vector<RS_Vector> points;
     points.reserve(segmentCount + 1);
@@ -379,7 +380,7 @@ TEST_CASE("Dense closed cache trims against a narrow rotated ellipse", tags) {
     const auto before = data;
     const double rotation = pi / 12;
     RS_Ellipse cutter{nullptr, {{10.0, 0.0},
-        {10.0 * std::cos(rotation), 10.0 * std::sin(rotation)}, .2, 0.0, 0.0, false}};
+        {10.0 * std::cos(rotation), 10.0 * std::sin(rotation)}, ratio, 0.0, 0.0, false}};
 
     const auto result = Trim::prepare(data, cutter, {{10.0, 0.0}});
     CAPTURE(result.rootCount, static_cast<int>(result.refusal),
