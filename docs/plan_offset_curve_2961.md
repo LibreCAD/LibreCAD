@@ -110,6 +110,19 @@ Keep the nine-kind inventory as the scope boundary; every family must have an
 eligible concrete replacement candidate, and unsupported variants must refuse
 atomically.
 
+**Latest clarification (2026-11-14):** The requested control is the existing
+source-type filter inside the active replacement picker. It must remain
+interactive while the user is selecting a new source and refresh candidates
+for every supported offset-source kind, including a separately typed
+parabola. This clarification does not expand the supported-kind inventory or
+claim universal variant support. Implementation and headless coverage are
+already recorded above and in sections 1291-1293, 1342, and 1375; do not add a
+second widget or duplicate parabola-only implementation. The remaining
+picker-specific work is visible desktop acceptance in Slice 5, while Slice 4
+continues to own geometry, worker/cache, Trim, and DXF/DWG qualification for
+concrete variants. Record the visible interaction outcome and binary revision
+there when completed.
+
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
 validation, Trim, and applicable DXF/DWG save/reopen. For parabola, retain
