@@ -43658,3 +43658,19 @@ lanes, testing further line orientations and source degrees/layouts, and
 maintaining atomic refusal for tangencies, near misses, and ambiguous roots.
 Visible Properties interaction, cross-platform validation, and the larger
 family/variant plan remain separate open gates.
+
+## 1263. Round-trip Centerline Trim Across Native File Lanes (2026-11-13)
+
+Test commit `17ed61d6d` removes the temporary R14-only guard from the exact
+clockwise centerline profile. The existing end-to-end action case now runs the
+same profile across all five supported test lanes: AC1014/R14 DXF,
+AC1015/R2000 DXF and DWG, and AC1032/R2018 DXF and DWG. On macOS arm64 CMake
+Release, the focused case passes 1,310 assertions. It checks generated cache
+certificates, the analytic proof category, worker-result encode/decode, async
+Trim action, undo/redo, and each lane's save/reopen geometry fingerprints.
+
+This supersedes section 1262's R14-only persistence limitation for this exact
+profile. It does not expand the geometric domain: continue testing other line
+orientations, source span degrees/layouts, and ambiguous/tangent/near-miss
+atomic refusals. External CAD interoperability, visible GUI acceptance, and
+cross-platform runs remain unverified.
