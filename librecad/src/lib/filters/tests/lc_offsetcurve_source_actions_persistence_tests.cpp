@@ -1970,7 +1970,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
 
 TEST_CASE("wrapped periodic high-degree splines trim and persist through file lanes",
           "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]") {
-    const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{6});
+    const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
     const int transformed = GENERATE(0, 1);
     const double signedDistance = GENERATE(-0.02, 0.02);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
