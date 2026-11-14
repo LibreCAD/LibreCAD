@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-13. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-14. Project: **LibreCAD**, not LibreCAD_3.
 
 ### Source Replacement: Current Execution Checklist
 
@@ -97,6 +97,31 @@ implementation. The codebase records headless coverage for repeated family
 switching and typed replacement, but visible GUI verification remains open and
 must confirm the live chooser stays active, candidates refresh in place, and
 the old source indication is retained until replacement acceptance.
+
+**Current scope and implementation status (2026-11-14):** Keep source-family
+switching inside the active replacement workflow and offer every currently
+supported offset-source kind: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
+selectable and persisted source type, not an alias for spline-points. The
+implementation derives the selector from
+`LC_OffsetSourceGeometry::SupportedKinds`; the focused source-picker suite and
+offscreen UI tests recorded in section 1293 cover repeated in-place switching,
+candidate filtering, typed replacement, and distinct parabola identity. Do
+not reimplement this completed selector behavior or add another picker.
+
+“Support all types” also requires eligible concrete source candidates and
+qualification through capture/reconstruction, worker generation and cache
+validation, Trim, and applicable DXF/DWG save/reopen. For parabola, retain
+`LC_ParabolaData` through source capture, reconstruction, worker request/result,
+cache publication, trimming, and file round-trip; qualify representative
+orientations, traversal, scales/conditioning, and signed offsets. Unsupported
+or numerically unproved variants must be unavailable or refused without
+partial source/cache publication. Picker tests do not close this
+family-by-variant gate. Visible Properties and Update from Source acceptance
+also remains open: switch families repeatedly while selection is active,
+select parabola and other representative kinds, verify source highlighting and
+state on success and cancellation, and record platform, binary revision,
+interaction route, and outcome.
 
 **Acceptance sequence:** in the Properties source widget, start replacement
 and, while replacement/candidate selection remains active, keep the type
@@ -44474,3 +44499,27 @@ fixture at both tested origins through source action, worker parity, analytic
 cache locus, Trim, undo/redo, and five-format round-trip. Other
 rounded-polyline profiles, visible desktop interaction, and the independent
 family-by-variant matrix remain open.
+
+## 1298. Revalidate All-family Picker and Trim Lanes (2026-11-14)
+
+Re-ran the focused source-picker union on the current PR worktree:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact`.
+It passes 15,116 assertions / 44 cases, including the in-workflow family
+filter and distinct parabola selector behavior.
+
+Re-ran `I trimmed every typed source family to plain fragments` against the
+same CMake test binary. It passes 4,406 assertions / 1 test case across the
+nine modeled source kinds and five R14, R2000 DXF/DWG, and R2018 DXF/DWG
+lanes. The case checks worker-backed source replacement, one retained plain
+spline fragment after Trim, undo/redo, and save/reopen fingerprints. Together
+these runs revalidate picker availability and one bounded Trim/persistence
+fixture per family; they do not establish every variant's independent offset
+locus, conditioning/refusal boundary, worker/cache behavior, or file-lane
+interoperability. In particular, parabola's distinct typed picker and this
+representative Trim case do not close the broader parabola qualification plan
+in section 645 or visible GUI acceptance in Slice 5.
+
+No production code changed in this revalidation slice. `git diff --check`
+passes. Continue Slice 4 with a concrete uncovered geometry/variant case and
+keep visible GUI, cross-platform, and independent-CAD gates open until they
+have direct evidence.
