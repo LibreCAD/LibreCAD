@@ -1032,17 +1032,16 @@ bool encloses(const LC_Interval& outer, const LC_Interval& inner) {
 bool overlaps(const LC_Interval& a, const LC_Interval& b) {
     return admitted(a) && admitted(b) && std::max(a.lo(), b.lo()) <= std::min(a.hi(), b.hi());
 }
-bool analyticMonotoneRoot(const Trim::RootProvenance& d, const TrimContext& c) {
+bool analyticMonotoneRoot(const Trim::RootProvenance& d, const TrimContext& c,
+                          const std::vector<Geo::CacheSpan>* sourceSpans) {
     if (c.conic || c.cutter != 1 || !c.lineCutter || !c.sourceData ||
         d.isolation.parameterA.width() > 1.0 / 1099511627776.0 ||
         d.target.rawSpan != d.isolation.segmentA ||
         !encloses(d.proofDomain.parameterA, d.isolation.parameterA) ||
         !encloses(d.proofDomain.parameterB, d.isolation.parameterB)) return false;
 
-    Geo::WorkBudget budget;
-    const auto layout = Geo::inspectCacheLayout(*c.sourceData, budget);
-    if (layout.status != Geo::CacheLayoutStatus::Ok || d.isolation.segmentA >= layout.spans.size()) return false;
-    const auto& bezierSpan = layout.spans[d.isolation.segmentA];
+    if (!sourceSpans || d.isolation.segmentA >= sourceSpans->size()) return false;
+    const auto& bezierSpan = (*sourceSpans)[d.isolation.segmentA];
     const auto degree = bezierSpan.degree;
     if ((degree != 1 && degree != 3) || degree != c.sourceData->degree) return false;
     std::vector<RS_Vector> controls;
@@ -1072,7 +1071,8 @@ bool section(const Trim::Section& d, const TrimContext& c) {
     const auto domain = sourceDomain(*c.sourceData, d.rawSpan);
     return domain && d.originalDomain.lo() == domain->lo() && d.originalDomain.hi() == domain->hi();
 }
-bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c) {
+bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c,
+          const std::vector<Geo::CacheSpan>* sourceSpans) {
     if (!admitted(d) || d.id != index || !location(d.target, c)) return false;
     const auto& a = d.isolation;
     const auto& b = d.proofDomain;
@@ -1084,7 +1084,8 @@ bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c
             a.parameterB.hi() <= double(a.segmentB - c.source + 1))) &&
         (d.proof == LC_IntersectionProof::IntervalUniqueTransverse ||
          d.proof == LC_IntersectionProof::AnalyticEndpoint ||
-         (d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse && analyticMonotoneRoot(d, c)));
+         (d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse &&
+          analyticMonotoneRoot(d, c, sourceSpans)));
 }
 bool conic(const Trim::Result::ConicFragment& d, const TrimContext& c) {
     // ORIGINAL axes/ratio and rendering caches are retained, not normalized.
@@ -1120,6 +1121,15 @@ bool trimTail(const Trim::Result& d, const TrimContext& c) {
 bool trim(const Trim::Result& d, const Req::Request& r) {
     auto c = trimContext(r, d.roots.size());
     if (!trimHeader(d, d.fragments.size(), d.conicFragments.size(), d.roots.size(), r, c)) return false;
+    std::optional<Geo::CacheLayoutResult> sourceLayout;
+    if (std::any_of(d.roots.begin(), d.roots.end(), [](const auto& item) {
+            return item.proof == LC_IntersectionProof::AnalyticMonotoneTransverse;
+        })) {
+        if (!c.sourceData) return false;
+        Geo::WorkBudget budget;
+        sourceLayout = Geo::inspectCacheLayout(*c.sourceData, budget);
+        if (sourceLayout->status != Geo::CacheLayoutStatus::Ok) return false;
+    }
     for (const auto& f : d.fragments) {
         Counts n;
         if (!cache(f.data, n, c.cap.maxOutputSpans, true) || f.sourceSections.size() != n.spans ||
@@ -1127,7 +1137,9 @@ bool trim(const Trim::Result& d, const Req::Request& r) {
         for (const auto& s : f.sourceSections) if (!section(s, c)) return false;
     }
     for (const auto& f : d.conicFragments) if (!conic(f, c) || !output(c, {1, 0, 0})) return false;
-    for (std::size_t i = 0; i < d.roots.size(); ++i) if (!root(d.roots[i], i, c)) return false;
+    const auto* sourceSpans = sourceLayout ? &sourceLayout->spans : nullptr;
+    for (std::size_t i = 0; i < d.roots.size(); ++i)
+        if (!root(d.roots[i], i, c, sourceSpans)) return false;
     return trimTail(d, c);
 }
 bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool materialize) {
@@ -1140,6 +1152,21 @@ bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool 
         !read(a.at(6), d.fragmentCount) || !read(a.at(7), d.work)) return false;
     auto c = trimContext(r, std::size_t(roots.size()));
     if (!trimHeader(d, std::size_t(fragments.size()), std::size_t(conics.size()), std::size_t(roots.size()), r, c)) return false;
+    std::optional<Geo::CacheLayoutResult> sourceLayout;
+    bool hasMonotoneRoot = false;
+    for (const auto& item : roots) {
+        Trim::RootProvenance rootValue;
+        if (!read(item, rootValue)) return false;
+        hasMonotoneRoot = hasMonotoneRoot ||
+            rootValue.proof == LC_IntersectionProof::AnalyticMonotoneTransverse;
+    }
+    if (hasMonotoneRoot) {
+        if (!c.sourceData) return false;
+        Geo::WorkBudget budget;
+        sourceLayout = Geo::inspectCacheLayout(*c.sourceData, budget);
+        if (sourceLayout->status != Geo::CacheLayoutStatus::Ok) return false;
+    }
+    const auto* sourceSpans = sourceLayout ? &sourceLayout->spans : nullptr;
     if (materialize) {
         d.fragments.reserve(std::size_t(fragments.size()));
         d.conicFragments.reserve(std::size_t(conics.size()));
@@ -1179,7 +1206,7 @@ bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool 
     std::size_t i = 0;
     for (const auto& item : roots) {
         Trim::RootProvenance p;
-        if (!read(item, p) || !root(p, i++, c)) return false;
+        if (!read(item, p) || !root(p, i++, c, sourceSpans)) return false;
         if (materialize) d.roots.push_back(std::move(p));
     }
     return trimTail(d, c);

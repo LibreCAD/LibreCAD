@@ -739,27 +739,29 @@ TEST_CASE("Worker Trim revalidates monotone roots after a discontinuous cubic kn
     data.degree = 3;
     data.type = RS_SplineData::SplineType::ClampedOpen;
     data.savedOpenType = data.type;
-    data.controlPoints = {{10, 0}, {11, 0}, {13, 0}, {14, 0},
-                          {-2, 0}, {-1, 0}, {1, 0}, {2, 0}};
+    data.controlPoints = {{-20, -.75}, {-18, -.75}, {-16, -.75}, {-14, -.75},
+                          {-2, 0}, {-1, 0}, {1, 0}, {2, 0},
+                          {1, .5}, {-1, .5}, {-2, .5}};
     data.weights.assign(data.controlPoints.size(), 1.0);
 
     RS_Line cutter{nullptr, {0, -1}, {0, 1}};
     const Trim::Pick pick{{-1.5, 0}};
-    const std::array<std::array<double, 3>, 2> knotDomains{{{{0, 1, 2}}, {{0, .25, 3}}}};
+    const std::array<std::array<double, 4>, 2> knotDomains{{{{0, 1, 2, 3}}, {{0, .25, 3, 7}}}};
     for (const auto& domain : knotDomains) {
         CAPTURE(domain[1]);
         data.knotslist.clear();
-        for (const double knot : domain)
-            for (unsigned multiplicity = 0; multiplicity < 4; ++multiplicity)
-                data.knotslist.push_back(knot);
+        for (std::size_t i = 0; i < domain.size(); ++i)
+            for (unsigned multiplicity = 0; multiplicity < (i == 2 ? 3u : 4u); ++multiplicity)
+                data.knotslist.push_back(domain[i]);
 
         const auto prepared = Trim::prepare(data, cutter, pick);
-        CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount,
-                prepared.roots.empty() ? std::size_t(-1) : prepared.roots.front().target.rawSpan);
+        CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount);
         REQUIRE(prepared.refusal == Trim::Refusal::None);
-        REQUIRE(prepared.roots.size() == 1);
-        CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
-        CHECK(prepared.roots.front().target.rawSpan == 1);
+        REQUIRE(prepared.roots.size() == 2);
+        for (std::size_t i = 0; i < prepared.roots.size(); ++i) {
+            CHECK(prepared.roots[i].proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+            CHECK(prepared.roots[i].target.rawSpan == i + 1);
+        }
 
         Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), {pick}, {}}};
         const auto encoded = Reply::encode(reply(request, prepared), request);
@@ -768,9 +770,11 @@ TEST_CASE("Worker Trim revalidates monotone roots after a discontinuous cubic kn
         REQUIRE(decoded);
         const auto* received = std::get_if<Trim::Result>(&decoded->result);
         REQUIRE(received);
-        REQUIRE(received->roots.size() == 1);
-        CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
-        CHECK(received->roots.front().target.rawSpan == 1);
+        REQUIRE(received->roots.size() == 2);
+        for (std::size_t i = 0; i < received->roots.size(); ++i) {
+            CHECK(received->roots[i].proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+            CHECK(received->roots[i].target.rawSpan == i + 1);
+        }
     }
 }
 
