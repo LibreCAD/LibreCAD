@@ -43,6 +43,7 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_pen.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 // The declared friend changes deadlines only, never process paths or completion values.
@@ -619,6 +620,54 @@ TEST_CASE("Worker client materializes self-crossing polyline regions as ordinary
             }
         }
         CHECK(owner.count() == 0);
+    }
+}
+
+TEST_CASE("Worker client handles a five-crossing polyline region",
+          "[lc-offsetcurve][worker-client][polyline][region-boundary][multi-crossing]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Layer layer{QStringLiteral("five-crossing source")};
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    std::vector<RS_Vector> points;
+    for (const int index : {0, 2, 4, 1, 3}) {
+        const double angle = -0.5 * M_PI + 2.0 * M_PI * index / 5.0;
+        points.emplace_back(10.0 * std::cos(angle), 10.0 * std::sin(angle));
+    }
+    std::vector<LC_OffsetPolylineSegment> segments;
+    for (std::size_t i = 0; i < points.size(); ++i)
+        segments.emplace_back(RS_LineData{points[i], points[(i + 1) % points.size()]});
+    const LC_OffsetSourceGeometry source{LC_OffsetPolylineData{
+        points.front(), points.front(), true, std::move(segments)}};
+    CHECK_FALSE(source.isWellFormed());
+    REQUIRE(source.isWellFormedForGeneration());
+
+    for (const auto [requestId, signedDistance] :
+         {std::pair<qint64, double>{401, 0.2}, {402, -0.2}}) {
+        const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+        Receipts receipts;
+        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+
+        const auto& completion = completed(receipts.at(0), requestId, 7);
+        const auto& result = std::get<Reply::Native>(completion.reply().result);
+        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        REQUIRE(result.ordinary.size() == 1);
+        CHECK_FALSE(completion.nativeSource(attributes));
+        auto ordinary = completion.ordinary(attributes);
+        REQUIRE(ordinary);
+        REQUIRE(ordinary->size() == 1);
+        const auto* spline = dynamic_cast<const RS_Spline*>(ordinary->front().get());
+        REQUIRE(spline);
+        CHECK(spline->validate());
+        CHECK(spline->getStartpoint().distanceTo(spline->getEndpoint()) < 0.02);
+        CHECK(ordinary->front()->getParent() == &owner);
+        CHECK(ordinary->front()->getLayer(false) == &layer);
     }
 }
 

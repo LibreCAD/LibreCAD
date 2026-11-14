@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <utility>
 #include <vector>
 
 #include "lc_curveoffset.h"
@@ -286,6 +287,91 @@ TEST_CASE("Self-crossing polyline regions grow and erode under both fill rules",
                 REQUIRE(check.areas.size() == result.branches.size());
                 for (const double area : check.areas) CHECK(area > 0.0);
             }
+        }
+    }
+}
+
+TEST_CASE("Five-crossing straight polyline regions grow and erode under both fill rules",
+          "[curve-offset][region][polyline][self-crossing][multi-crossing]") {
+    std::vector<RS_Vector> points;
+    for (const int index : {0, 2, 4, 1, 3}) {
+        const double angle = -0.5 * M_PI + 2.0 * M_PI * index / 5.0;
+        points.emplace_back(10.0 * std::cos(angle), 10.0 * std::sin(angle));
+    }
+
+    RS_Polyline source;
+    for (const RS_Vector& point : points) source.addVertex(point);
+    source.setClosed(true);
+    source.endPolyline();
+
+    std::vector<std::vector<std::pair<double, RS_Vector>>> cuts(points.size());
+    for (std::size_t i = 0; i < points.size(); ++i) {
+        cuts[i].emplace_back(0.0, points[i]);
+        cuts[i].emplace_back(1.0, points[(i + 1) % points.size()]);
+    }
+    const auto cross = [](const RS_Vector& a, const RS_Vector& b) { return a.x * b.y - a.y * b.x; };
+    for (std::size_t i = 0; i < points.size(); ++i) {
+        for (std::size_t j = i + 1; j < points.size(); ++j) {
+            if ((i + 1) % points.size() == j || (j + 1) % points.size() == i) continue;
+            const RS_Vector a = points[i];
+            const RS_Vector b = points[(i + 1) % points.size()];
+            const RS_Vector c = points[j];
+            const RS_Vector d = points[(j + 1) % points.size()];
+            const RS_Vector r = b - a;
+            const RS_Vector s = d - c;
+            const double denominator = cross(r, s);
+            REQUIRE(denominator != 0.0);
+            const double t = cross(c - a, s) / denominator;
+            const double u = cross(c - a, r) / denominator;
+            if (t > 0.0 && t < 1.0 && u > 0.0 && u < 1.0) {
+                const RS_Vector point = a + r * t;
+                cuts[i].emplace_back(t, point);
+                cuts[j].emplace_back(u, point);
+            }
+        }
+    }
+    std::vector<RS_Vector> nodedReference;
+    for (auto& edgeCuts : cuts) {
+        std::sort(edgeCuts.begin(), edgeCuts.end(), [](const auto& a, const auto& b) {
+            return a.first < b.first;
+        });
+        for (std::size_t i = 0; i + 1 < edgeCuts.size(); ++i) nodedReference.push_back(edgeCuts[i].second);
+    }
+
+    for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+        for (const bool grow : {true, false}) {
+            CAPTURE(rule, grow);
+            constexpr double distance = 0.2;
+            auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            options.mode = LC_CurveOffsetMode::RegionBoundary;
+            options.fillRule = rule;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source,
+                LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                                distance),
+                options, LC_CurveOffset::makeDirectSourceBudget());
+            CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+                    static_cast<int>(result.intersectionDiagnostics.status),
+                    result.intersectionDiagnostics.failureDomain.segmentA,
+                    result.intersectionDiagnostics.failureDomain.segmentB,
+                    result.intersectionDiagnostics.failureDepth);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(result.sourceIntersections == 5);
+            const std::size_t expectedCycles = rule == LC_CurveFillRule::NonZero ? 1u : grow ? 2u : 5u;
+            REQUIRE(result.branches.size() == expectedCycles);
+
+            const CycleCheck check = checkCycles(result, nodedReference, rule, distance, grow);
+            CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
+            CHECK(check.closed);
+            CHECK(check.worstDistance < 0.02);
+            CHECK(check.wrongSide == 0);
+            REQUIRE(check.areas.size() == result.branches.size());
+            const auto positive = std::count_if(check.areas.begin(), check.areas.end(),
+                                                [](const double area) { return area > 0.0; });
+            const auto negative = std::count_if(check.areas.begin(), check.areas.end(),
+                                                [](const double area) { return area < 0.0; });
+            CHECK(positive == (rule == LC_CurveFillRule::EvenOdd && !grow ? 5 : 1));
+            CHECK(negative == (rule == LC_CurveFillRule::EvenOdd && grow ? 1 : 0));
         }
     }
 }
