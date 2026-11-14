@@ -525,6 +525,7 @@ TEST_CASE("Polyline exact-arrangement fallback shares its intersection work budg
     std::sort(limits.begin(), limits.end());
     limits.erase(std::unique(limits.begin(), limits.end()), limits.end());
 
+    std::size_t fallbackCells = 0;
     for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
         std::size_t successfulLimits = 0;
         for (const std::size_t limit : limits) {
@@ -537,6 +538,15 @@ TEST_CASE("Polyline exact-arrangement fallback shares its intersection work budg
                 source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5),
                 options, LC_CurveOffset::makeDirectSourceBudget());
 
+            const auto& phases = result.intersectionDiagnostics.regionArrangementWork;
+            if (phases.evaluated) {
+                CHECK(phases.exact.totalBoxPairs + phases.intervalSolver.totalBoxPairs ==
+                      result.intersectionDiagnostics.work.totalBoxPairs);
+                CHECK(phases.exact.generatedItems + phases.intervalSolver.generatedItems ==
+                      result.intersectionDiagnostics.work.generatedItems);
+                CHECK((phases.exactPrimitiveNoding || !phases.intervalFallback));
+                if (phases.intervalFallback) ++fallbackCells;
+            }
             CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
             CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
             if (result.status == LC_CurveOffsetStatus::Ok) {
@@ -555,6 +565,8 @@ TEST_CASE("Polyline exact-arrangement fallback shares its intersection work budg
         }
         CHECK(successfulLimits > 0);
     }
+    CAPTURE(fallbackCells);
+    CHECK(fallbackCells > 0);
 }
 
 TEST_CASE("Negative-bulge RegionBoundary obeys the shared intersection work cap",
@@ -588,6 +600,14 @@ TEST_CASE("Negative-bulge RegionBoundary obeys the shared intersection work cap"
                                     grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
                         options, LC_CurveOffset::makeDirectSourceBudget());
 
+                    const auto& phases = result.intersectionDiagnostics.regionArrangementWork;
+                    if (phases.evaluated) {
+                        CHECK(phases.exact.totalBoxPairs + phases.intervalSolver.totalBoxPairs ==
+                              result.intersectionDiagnostics.work.totalBoxPairs);
+                        CHECK(phases.exact.generatedItems + phases.intervalSolver.generatedItems ==
+                              result.intersectionDiagnostics.work.generatedItems);
+                        CHECK((phases.exactPrimitiveNoding || !phases.intervalFallback));
+                    }
                     CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
                     CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
                     if (result.status == LC_CurveOffsetStatus::Ok) {
@@ -638,6 +658,14 @@ TEST_CASE("Positive-bulge RegionBoundary obeys the shared work cap across frames
                                     grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
                         options, LC_CurveOffset::makeDirectSourceBudget());
 
+                    const auto& phases = result.intersectionDiagnostics.regionArrangementWork;
+                    if (phases.evaluated) {
+                        CHECK(phases.exact.totalBoxPairs + phases.intervalSolver.totalBoxPairs ==
+                              result.intersectionDiagnostics.work.totalBoxPairs);
+                        CHECK(phases.exact.generatedItems + phases.intervalSolver.generatedItems ==
+                              result.intersectionDiagnostics.work.generatedItems);
+                        CHECK((phases.exactPrimitiveNoding || !phases.intervalFallback));
+                    }
                     CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
                     CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
                     if (result.status == LC_CurveOffsetStatus::Ok) {

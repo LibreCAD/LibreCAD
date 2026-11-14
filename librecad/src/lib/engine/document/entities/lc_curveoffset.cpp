@@ -7104,6 +7104,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     // A rigid-frame transform can perturb exact arc tangencies by a few ulps.
     // If exact primitive noding cannot classify that arrangement, let the
     // interval solver either certify it independently or refuse atomically.
+    if (usedExactArrangement) {
+        result.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding = true;
+        result.intersectionDiagnostics.regionArrangementWork.exact = found.work;
+    }
     if (!usedExactArrangement || found.status == LC_IntersectionStatus::AmbiguousTopology) {
         const LC_IntersectionWorkStats exactWork = found.work;
         LC_IntersectionOptions remaining = query;
@@ -7116,14 +7120,18 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 remaining.maxBoxPairs -= exactWork.totalBoxPairs;
                 remaining.maxGeneratedItems -= exactWork.generatedItems;
                 found = findIntersections(CompositeCurves{parts}, remaining);
+                result.intersectionDiagnostics.regionArrangementWork.intervalFallback = true;
+                result.intersectionDiagnostics.regionArrangementWork.intervalSolver = found.work;
                 found.work.totalBoxPairs += exactWork.totalBoxPairs;
                 found.work.candidateBoxPairs += exactWork.candidateBoxPairs;
                 found.work.generatedItems += exactWork.generatedItems;
             }
         } else {
             found = findIntersections(CompositeCurves{parts}, remaining);
+            result.intersectionDiagnostics.regionArrangementWork.intervalSolver = found.work;
         }
     }
+    result.intersectionDiagnostics.regionArrangementWork.evaluated = true;
     recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
                                   LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
     if (found.status != LC_IntersectionStatus::Ok) {

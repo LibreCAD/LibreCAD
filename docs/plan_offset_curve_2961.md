@@ -49,6 +49,16 @@ committed source, cache, identity, selection, or highlight. A chosen candidate
 replaces them only after asynchronous validation succeeds; cancellation,
 refusal, stale input, or worker failure preserves the previous source state.
 
+Treat this as an active replacement workflow, not a one-time type setting: the
+user can start choosing a replacement, change the requested type while the
+chooser remains open, inspect the refreshed candidates, and choose a different
+supported curve. Every offered type must have at least one eligible existing
+entity that can be captured and reconstructed as that same type. In
+particular, choosing a parabola must produce a parabola source, not an
+`LC_SplinePoints` approximation. A menu entry alone is not evidence of family
+support; unsupported or unavailable candidates must fail without changing the
+current source, cache, selection, or highlight.
+
 Acceptance sequence: begin replacement; change the requested type while
 replacement selection remains active; verify the candidate list refreshes for
 each of the nine kinds; choose a candidate (including a distinct parabola) and
@@ -76,9 +86,9 @@ unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
 indicated, then verify successful replacement and cancel/refusal behavior.
-The latest clarification confirms this all-kinds contract; it adds no second
-selector or separate parabola-only implementation slice. Keep this gate
-separate from Slice 4's per-variant capture/reconstruction,
+The latest clarification on 2026-11-14 reconfirms this all-kinds contract; it
+adds no second selector or separate parabola-only implementation slice. Keep
+this gate separate from Slice 4's per-variant capture/reconstruction,
 worker/cache, Trim, and DXF/DWG qualification; selector availability alone
 does not prove full support for every mathematical variant. The focused
 Properties-dialog tests also verify
@@ -46306,6 +46316,35 @@ suite passes 2,246,436 assertions / 349 cases; `librecad_tests` builds; and
 `git diff --check` passes. Production build and qmake6 application validation
 are recorded in section 1382. Wider arrangements, visible GUI, cross-platform
 runtime, and independent CAD acceptance remain open.
+
+## 1386. Expose and Verify Region Arrangement Work Phases (2026-11-14)
+
+Added `regionArrangementWork` diagnostics to distinguish exact primitive
+noding from the interval solver, including when the solver is invoked as an
+ambiguity fallback. This lets budget regressions verify that reported aggregate
+work is the sum of both phases instead of merely checking an upper bound that
+could pass after diagnostics were reset. The dense rotated positive-bulge
+cap sweep now requires at least one exact-to-interval fallback cell and checks
+pair-work and generated-item accounting; the negative-bulge and all-frame
+positive-bulge sweeps check the same aggregate accounting whenever candidate
+arrangement work was evaluated. Source-crossing failures are intentionally
+excluded from these phase-sum assertions because candidate arrangement has not
+yet run.
+
+Validation on macOS arm64 CMake Release: focused `[curve-offset][budget]`
+passes 829 assertions / 7 cases, including a proven fallback cell; the full
+`[curve-offset]` suite passes 2,246,635 assertions / 349 cases; the CMake test
+target builds; qmake6 `make -j4` succeeds for the application, worker, and
+plugins; and `git diff --check` passes. This improves diagnostics and tests for
+the tested polyline arrangements only; broader topology, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
+The 2026-11-14 source-widget clarification is incorporated in the current
+execution checklist above: during replacement, changing the requested source
+type must refresh candidates in-place across all nine `SupportedKinds`, and
+each offered family must have a genuinely selectable/reconstructible candidate
+of that same type. Parabola must remain a distinct type. Existing headless
+coverage is recorded above; the visible desktop acceptance gate remains open.
 
 ## 1385. Revalidate Mixed-bulge Worker Outcomes After Budget Sharing (2026-11-14)
 

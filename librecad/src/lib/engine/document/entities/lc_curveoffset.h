@@ -260,6 +260,13 @@ struct LC_CurveOffsetGeometryResult {
     /** Last intersection query, including its bounded work, for failure triage. */
     struct IntersectionDiagnostics {
         enum class Stage { None, OffsetSelfNoding, SourceSelfNoding, TrimBoundary, RegionBoundary, MaterializedOutput };
+        struct RegionArrangementWork {
+            bool evaluated{false};
+            bool exactPrimitiveNoding{false};
+            LC_IntersectionWorkStats exact{};
+            bool intervalFallback{false};
+            LC_IntersectionWorkStats intervalSolver{};
+        } regionArrangementWork;
         enum class FailureSite {
             None,
             SourceSideClassification,
