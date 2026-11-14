@@ -36,11 +36,12 @@ not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
 **Current source-widget requirement and status (2026-11-14):** In the existing
-Properties source chooser, while replacement/candidate selection is active,
-the user can change the requested source type repeatedly without closing the
-chooser or restarting replacement; each change refreshes eligible candidates
-in place. This applies to every kind in the canonical offset-source inventory,
-not every drawable entity in LibreCAD. The canonical inventory is
+Properties source-curve widget, the user can change the requested curve type
+while choosing a replacement, repeatedly and without closing the chooser or
+restarting replacement; each change immediately refreshes the eligible source
+curve candidates in place. This applies to every kind in the canonical
+offset-source inventory, not every drawable entity in LibreCAD. The canonical
+inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
 distinct selectable and preserved type, not a spline-points alias. The filter
@@ -45314,16 +45315,48 @@ Expanded the closed strictly convex regular-polyline regression to 256, 512,
 and 1024 edges in both offset directions. All six worker source-replacement
 cases pass; at 512/1024 the published cache controls are independently checked
 against the regular outward miter radius or every inward shifted source
-half-plane. The 256-edge profile continues through both Trim operand roles,
-both pick orders, preview/commit, undo, and five R14/R2000/R2018 DXF/DWG
-round-trip lanes. Do not claim high-edge Trim from these generation checks: an
-exploratory run observed `AmbiguousRoots` at 512 and 1024 for some cache-root
-layouts, and the high-edge test intentionally keeps that stage separate.
+half-plane. The initial slice qualified Trim only at 256 edges; section 1338
+extends the same end-to-end Trim and persistence coverage to all three sizes.
 
 Validation on macOS arm64 CMake Release:
 `cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
 passes. The focused `[closed][high-segment]` regression passes 776 assertions /
-1 generated test case. High-edge Trim root certification, curved/concave
-closed-region semantics, segment counts above 1024, external CAD, and visible
-GUI remain open; this section advances only strictly convex linear worker
-generation and the 256-edge Trim/persistence slice.
+1 generated test case. This section establishes strictly convex linear worker
+generation; high-edge Trim, curved/concave closed-region semantics, segment
+counts above 1024, external CAD, and visible GUI were still open at this point.
+
+## 1338. Certify Dense-cache Line Trims (2026-11-14)
+
+Closed the 512/1024-edge Trim gap from section 1337. Finite-line root
+contraction now accounts for the spatial error introduced when a global cache
+parameter cannot represent the local root more finely: the bound is derived
+from one global-parameter ULP times an interval upper bound on source speed.
+Endpoint validation applies the corresponding representability allowance, in
+addition to the existing arithmetic error bound, only to line-contracted roots.
+This avoids rejecting geometrically certified roots solely because of global
+parameter quantization while preserving fail-closed checks on the source curve.
+
+Dense cache candidate de-duplication now indexes exact shared endpoints by
+their knot parameter instead of scanning all existing candidates. The lookup
+store is admitted through the existing item budget before allocation; exact
+coordinate equality is still required, and distinct endpoints are retained.
+This removes quadratic comparison growth for the tested high-edge layouts.
+
+The 256/512/1024-edge closed regular-polyline cases now all complete worker
+replacement and Trim Two in both operand roles and both pick orders, including
+preview, commit, undo, and five R14/R2000/R2018 DXF/DWG save/reopen lanes. The
+512/1024 published cache controls retain the independent radial/shifted
+half-plane geometry checks. The focused `[closed][high-segment]` case passes
+2,181 assertions. The broader `[lc-offsetcurve][trim-action]` suite passes
+355,959 assertions in 96 cases.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+passes. Both focused and broad test results above are from
+`QT_QPA_PLATFORM=offscreen`; the broad run used
+`/private/tmp/offset-2961-cmake-clean/librecad_tests
+'[lc-offsetcurve][trim-action]'`. Evidence is limited to strictly convex
+regular linear polylines through 1024 edges and the recorded horizontal-line
+cutters. Curved or concave closed regions, other dense layouts/cutters, larger
+segment counts, visible GUI interaction, and independent CAD acceptance remain
+open; do not generalize these results to arbitrary polyline Trim.
