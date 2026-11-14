@@ -1245,6 +1245,70 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     REQUIRE(updateAction->lastReport().updated == 1);
     auto* replacement = onlyNative(graphic);
     REQUIRE(replacement->sourceDefinition());
+    if (profile == 9) {
+        const double signedDistance = replacement->sourceDefinition()->signedDistance;
+        double cacheStart = 0., cacheEnd = 0.;
+        REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
+        const std::size_t sampleCount = std::max<std::size_t>(16384,
+            std::min<std::size_t>(65536, std::size_t(replacement->count()) * 128));
+        const auto distanceToCache = [&](const RS_Vector& point) {
+            const auto distanceSquared = [&](const double parameter) {
+                const RS_Vector evaluated = replacement->getPointAt(parameter);
+                return evaluated.valid ? (evaluated - point).squared() : INFINITY;
+            };
+            double bestParameter = cacheStart;
+            double bestDistanceSquared = INFINITY;
+            for (std::size_t sample = 0; sample <= sampleCount; ++sample) {
+                const double parameter = cacheStart + (cacheEnd - cacheStart) *
+                    (double(sample) / double(sampleCount));
+                const double candidate = distanceSquared(parameter);
+                if (candidate < bestDistanceSquared) {
+                    bestDistanceSquared = candidate;
+                    bestParameter = parameter;
+                }
+            }
+            const double step = (cacheEnd - cacheStart) / double(sampleCount);
+            double lower = std::max(cacheStart, bestParameter - step);
+            double upper = std::min(cacheEnd, bestParameter + step);
+            constexpr double inversePhi = 0.6180339887498948482;
+            double left = upper - inversePhi * (upper - lower);
+            double right = lower + inversePhi * (upper - lower);
+            double leftDistance = distanceSquared(left), rightDistance = distanceSquared(right);
+            for (int iteration = 0; iteration < 64; ++iteration) {
+                if (leftDistance < rightDistance) {
+                    upper = right; right = left; rightDistance = leftDistance;
+                    left = upper - inversePhi * (upper - lower);
+                    leftDistance = distanceSquared(left);
+                } else {
+                    lower = left; left = right; leftDistance = rightDistance;
+                    right = lower + inversePhi * (upper - lower);
+                    rightDistance = distanceSquared(right);
+                }
+            }
+            return std::sqrt(std::min({bestDistanceSquared, leftDistance, rightDistance}));
+        };
+        std::size_t arcsChecked = 0;
+        for (const auto* segment : *source) {
+            const auto* arc = dynamic_cast<const RS_Arc*>(segment);
+            REQUIRE(arc);
+            const auto& data = arc->getData();
+            const double orientation = data.reversed ? -1. : 1.;
+            const double startAngle = data.reversed ? data.angle2 : data.angle1;
+            const double middleAngle = startAngle + orientation * data.getAngleLength() * .5;
+            const RS_Vector radial = RS_Vector::polar(1., middleAngle);
+            const double expectedRadius = data.radius - orientation * signedDistance;
+            REQUIRE(expectedRadius > 0.);
+            const RS_Vector expected = data.center + radial * expectedRadius;
+            const double error = distanceToCache(expected);
+            const double oracleTolerance = std::min(replacement->checkedWorldTolerance(),
+                .1 * std::abs(signedDistance));
+            CAPTURE(arcsChecked, signedDistance, data.radius, expectedRadius, expected, error,
+                replacement->checkedWorldTolerance(), oracleTolerance);
+            CHECK(error < oracleTolerance);
+            ++arcsChecked;
+        }
+        CHECK(arcsChecked == 8);
+    }
     REQUIRE(graphic.removeEntity(source));
 
     double parameterStart = 0.0;
