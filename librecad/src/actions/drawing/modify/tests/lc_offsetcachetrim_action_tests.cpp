@@ -4551,7 +4551,7 @@ TEST_CASE("Sinusoidal Trim Two resolves multiple roots across operand roles",
 TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
           "overlapping offsets",
           "[lc-offsetcurve][trim-action][polyline][closed][high-segment]") {
-    const unsigned segmentCount = GENERATE(256u, 512u, 1024u);
+    const unsigned segmentCount = GENERATE(256u, 512u, 1024u, 2048u);
     const bool towardCentre = GENERATE(true, false);
     CAPTURE(segmentCount, towardCentre);
     Drawing<true> f;
@@ -4578,6 +4578,19 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline);
     update.use(source);
     lc::test::awaitUpdate(update);
+    if (segmentCount == 2048 && towardCentre) {
+      REQUIRE(update.lastReport().outcomes.size() == 1);
+      CHECK(update.lastReport().updated == 0);
+      CHECK(update.lastReport().refused == 1);
+      const auto& outcome = update.lastReport().outcomes.front();
+      REQUIRE(outcome.edit);
+      CHECK(outcome.edit->refusal == LC_OffsetCurveRefusal::Engine);
+      CHECK(outcome.edit->engineStatus == LC_CurveOffsetStatus::LimitExceeded);
+      CHECK_FALSE(previous->isDeleted());
+      CHECK_FALSE(source->isDeleted());
+      CHECK(live(f.graphic).size() == 2);
+      return;
+    }
     for (const auto& outcome : update.lastReport().outcomes) INFO(outcome.refusal.toStdString());
     REQUIRE(update.lastReport().updated == 1);
 
@@ -4631,7 +4644,7 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
       }
     }
 
-    constexpr double lineY = 1.337;
+    const double lineY = segmentCount == 2048 ? 1.4142135623730951 : 1.337;
     auto *line =
         new RS_Line(&f.graphic, RS_LineData{{-15, lineY}, {15, lineY}});
     f.graphic.addEntity(line);

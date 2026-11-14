@@ -325,14 +325,28 @@ I cacheCutRootError(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame
     const double roundedX = point[0][0].convert_to<double>();
     const double roundedY = point[0][1].convert_to<double>();
     if (!std::isfinite(roundedX) || !std::isfinite(roundedY)) { return {}; }
-    const auto ulp = [](const double value) {
-        const double lower = std::nextafter(value, -INFINITY);
-        const double upper = std::nextafter(value, INFINITY);
-        return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
+    const auto roundingError = [](const Q& exact, const double rounded) {
+        const Q roundedExact{rounded};
+        return enclose(exact >= roundedExact ? exact - roundedExact : roundedExact - exact);
     };
     const I scale = I::point(frame.scale());
-    const I roundingX = I::point(4) * I::point(ulp(roundedX)) / scale;
-    const I roundingY = I::point(4) * I::point(ulp(roundedY)) / scale;
+    I roundingX, roundingY;
+    if (span.degree == 1) {
+        // Linear cache spans are the dense-polyline case where global
+        // parameter quantization dominates; use the exact rational conversion
+        // error instead of charging four full coordinate ULPs.
+        roundingX = roundingError(point[0][0], roundedX) / scale;
+        roundingY = roundingError(point[0][1], roundedY) / scale;
+    } else {
+        // Keep the established conservative allowance for higher-degree spans.
+        const auto ulp = [](const double value) {
+            const double lower = std::nextafter(value, -INFINITY);
+            const double upper = std::nextafter(value, INFINITY);
+            return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
+        };
+        roundingX = I::point(4) * I::point(ulp(roundedX)) / scale;
+        roundingY = I::point(4) * I::point(ulp(roundedY)) / scale;
+    }
     if (!finite(roundingX) || !finite(roundingY)) { return {}; }
     const I error = sqrt(sqr(x + roundingX) + sqr(y + roundingY));
     return finite(error) ? error : I{};
@@ -1252,8 +1266,12 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                     c.compare();
                     const I narrowed = contractCacheRootAgainstLine((*input.source)[id], line, input.frame, u);
                     if (finite(narrowed) && narrowed.width() < u.width()) {
-                        t = global(id, narrowed);
-                        scalarContracted = lineProgress = true;
+                        scalarContracted = true;
+                        const I narrowedGlobal = global(id, narrowed);
+                        if (finite(narrowedGlobal) && narrowedGlobal.width() < t.width()) {
+                            t = narrowedGlobal;
+                            lineProgress = true;
+                        }
                     }
                 }
                 if (lineProgress) { continue; }
@@ -1263,7 +1281,9 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                 }
                 const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
                                                 std::max(std::abs(dy.lo()), std::abs(dy.hi())));
-                const I parameterQuantum = I::point(ulp(globalMiddle));
+                // Bound both the root bracket radius and rounding of its global
+                // midpoint; a local contraction may not survive span indexing.
+                const I parameterQuantum = I::point(0.5 * t.width() + ulp(globalMiddle));
                 const I representableError = parameterQuantum * I::point(speed);
                 const double cutAllowance = finite(representableError)
                     ? error + representableError.hi() : error;
@@ -1615,7 +1635,8 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
             const I cutError = cacheCutRootError(span, input.frame, u, boundary.cut - double(id));
             const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
                                             std::max(std::abs(dy.lo()), std::abs(dy.hi())));
-            const I representableError = I::point(ulp(boundary.cut)) * I::point(speed);
+            const I parameterQuantum = I::point(0.5 * root.parameter.width() + ulp(boundary.cut));
+            const I representableError = parameterQuantum * I::point(speed);
             if (!finite(cutError) || !finite(representableError) ||
                 cutError.hi() > allowance + representableError.hi()) {
                 fail(Refusal::Arithmetic);
