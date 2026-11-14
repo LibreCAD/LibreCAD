@@ -373,7 +373,11 @@ coverage, not general self-crossing support. Other arc signs/layouts and
 overlap topologies, editable cache/action integration, file persistence,
 visible GUI, cross-platform runtime, and independent CAD acceptance remain
 open. This supersedes the refusal-only evidence in section 1368 and the earlier
-bow-tie refusal text in the Slice 4 table above.
+bow-tie refusal text in the Slice 4 table above. Worker generation and ordinary
+branch materialization are covered for both signed offsets of the negative-
+bulge profile (section 1370); the real helper also verifies atomic refusal for
+the overlapping positive-bulge erosion case (section 1371). Cache promotion
+remains intentionally rejected for generation-only self-intersecting sources.
 
 The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
@@ -45874,6 +45878,26 @@ self-intersecting source are rejected by request admission on both sides,
 including the single-branch result. This is the intentional strict-cache
 boundary, not a worker geometry failure; editable-cache promotion, action
 integration, and persistence for such crossing sources remain unsupported.
+
+## 1371. Verify Mixed-bulge Worker Topology Refusal (2026-11-14)
+
+Test commit `a877a3e9e` adds a real-helper request for the positive-bulge
+crossing polyline at signed distance `+0.5`, the direct geometry profile whose
+erosion has overlapping arc candidates. The request passes bounded generation
+admission, but the worker returns `AmbiguousTopology`; the client receives no
+ordinary branches or native curve. This complements section 1370's successful
+negative-bulge worker generation and verifies that unsupported mixed-bulge
+topology is refused atomically across the process boundary. It covers this
+single profile, fill-rule default, and offset only; positive-bulge growth and
+other overlap layouts remain unqualified in the worker.
+
+Validation on macOS arm64 CMake Release: the focused mixed-bulge worker-client
+selector passes 567 assertions / 2 cases; `cmake --build
+/private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests
+-j4` succeeds; and `git diff --check` passes. The full worker-client suite and
+qmake6 application build were run in section 1370 before this test-only
+addition. Visible GUI, cross-platform runtime, and independent CAD acceptance
+remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
