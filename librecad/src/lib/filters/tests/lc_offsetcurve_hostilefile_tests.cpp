@@ -3576,21 +3576,24 @@ TEST_CASE("mixed-bulge RegionBoundary worker branches round-trip as ordinary spl
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
 
     struct Case {
+        double bulge;
         bool translated;
         double signedDistance;
         std::size_t branchCount;
     };
-    const std::array<Case, 2> cases{{
-        {false, -0.5, 1},
-        {true, 0.5, 2}}};
+    const std::array<Case, 4> cases{{
+        {0.5, false, -0.5, 1},
+        {0.5, true, 0.5, 2},
+        {-0.5, false, 0.5, 2},
+        {-0.5, false, -0.5, 1}}};
 
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
     for (const Case& test : cases) {
-        CAPTURE(test.translated, test.signedDistance);
+        CAPTURE(test.bulge, test.translated, test.signedDistance);
         RS_Polyline polyline;
         polyline.addVertex({20, 10});
-        polyline.addVertex({20, -10}, 0.5);
+        polyline.addVertex({20, -10}, test.bulge);
         polyline.addVertex({-20, 10});
         polyline.addVertex({-20, -10});
         polyline.setClosed(true);
@@ -3656,6 +3659,7 @@ TEST_CASE("mixed-bulge RegionBoundary worker branches round-trip as ordinary spl
             CAPTURE(fileFormat.suffix);
             const auto firstSave = directory.file(
                 std::string(test.translated ? "translated-" : "identity-") +
+                (test.bulge > 0.0 ? "positive-" : "negative-") +
                 fileFormat.suffix);
             REQUIRE(lc::test::exportDrawing(drawing, firstSave, format(fileFormat.lane)));
 
@@ -3673,6 +3677,7 @@ TEST_CASE("mixed-bulge RegionBoundary worker branches round-trip as ordinary spl
 
             const auto secondSave = directory.file(
                 std::string(test.translated ? "translated-second-" : "identity-second-") +
+                (test.bulge > 0.0 ? "positive-" : "negative-") +
                 fileFormat.suffix);
             REQUIRE(lc::test::exportDrawing(reopened, secondSave,
                                              format(fileFormat.lane)));
