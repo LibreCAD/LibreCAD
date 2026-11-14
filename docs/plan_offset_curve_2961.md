@@ -45529,3 +45529,20 @@ overlapping offsets` passes 2,970 assertions / 1 case including persistence;
 tested regular convex polygon with the listed transverse circle/ellipse
 cutters and does not establish tangent contacts, nonconvex caches, other
 ellipse-arc cutters, or visible GUI behavior.
+
+## 1344. Trim Dense Linear Caches Against Bounded Ellipse Arcs (2026-11-14)
+
+Extended dense conic-cut validation to a bounded eccentric ellipse arc whose
+domain contains both transverse source contacts. The 128-, 512-, and
+2048-span cache matrix runs with both the forward cutter and its geometrically
+equivalent reversed traversal (swapped parameter endpoints). Each case
+requires exactly two roots, a single valid complement, source immutability,
+and independently sampled retained/removed parameter coverage.
+
+Validation on macOS arm64 CMake Release: the combined dense circle, rotated
+eccentric ellipse, and bounded eccentric ellipse-arc cases pass 501,966
+assertions / 3 cases; `[trim-kernel]` passes 543,461 assertions / 76 cases;
+`librecad_tests` builds; and `git diff --check` passes. This closes only these
+transverse configurations and sizes. Dense tangent or near-tangent contacts,
+nonconvex caches, other arc domains, visible GUI interaction, cross-platform
+runtime, and independent CAD acceptance remain open.
