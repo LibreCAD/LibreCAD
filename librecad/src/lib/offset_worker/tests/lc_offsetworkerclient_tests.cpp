@@ -731,6 +731,11 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
             CHECK(spline->validate());
         }
         CHECK(owner.count() == 0);
+
+        const auto& firstBranch = std::get<RS_SplineData>(result.ordinary.front());
+        const Req::Request validationRequest{
+            token(requestId + 10), Req::ValidateSourceCache{firstBranch, definition, {}}};
+        CHECK_FALSE(Req::encode(validationRequest));
     }
 }
 
