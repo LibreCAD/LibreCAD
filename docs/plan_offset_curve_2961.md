@@ -43869,9 +43869,9 @@ Implementation commit `d495a13e6` removes repeated spline-layout extraction
 from multi-root result verification. When a Trim result contains analytic
 monotone proofs, the verifier inspects the submitted source cache once for
 that result path and supplies the extracted spans to each root check. Encoding
-does one bounded extraction; decoding validates layout once in each of its
-two `readTrim` passes (proof pre-scan and materialization), rather than once
-per root. Each root still receives independent exact-rational finite-line
+does one bounded extraction. At this point decoding still inspected the
+layout once in each of its two `readTrim` passes (proof pre-scan and
+materialization). Each root receives independent exact-rational finite-line
 revalidation against its corresponding extracted span and its own parameter
 enclosures; no proof label or cached derived geometry is trusted.
 
@@ -43888,3 +43888,32 @@ if layout inspection is unsupported or exceeds its budget. Continue with
 explicit extraction-budget exhaustion/refusal coverage and the remaining
 roadmap geometry, persistence, cross-platform, external-CAD, and visible-GUI
 gates.
+
+## 1274. Share Proof Layout Across Decode Validation Passes (2026-11-13)
+
+Implementation commit `13d1f8dc9` carries the bounded source layout extracted
+while scanning a Trim result into its materialization pass. A successful decode
+now inspects the request's source cache once for the whole two-pass payload
+validation, not once per pass and not once per analytic root. The cached
+layout remains local to that decode call and the immutable request; each root
+still undergoes its own exact-rational finite-cutter proof revalidation. A
+failed pre-scan returns before materialization, and a non-`Ok` layout cannot
+be reused as an admitted proof.
+
+The focused regression `Worker Trim refuses monotone proofs when source span
+layout is invalid` confirms that syntactically admitted requests with either a
+decreasing knot vector or an unsupported source degree are rejected by both
+result encoding and decoding when the result claims an
+`AnalyticMonotoneTransverse` proof. It passes 9 assertions. The complete
+worker-result suite passes 470,240 assertions / 30 cases. The full
+`[lc-offsetcurve][trim-action]` selector passes 186,397 assertions / 88 cases
+on macOS arm64 CMake Release; `git diff --check` is clean.
+
+This removes duplicate decode-side extraction and adds fail-closed coverage
+for invalid extracted layouts. A valid protocol request cannot currently
+force span-inspection budget exhaustion within the request and layout hard
+caps; keep the inspector's existing bounded refusal behavior and add an
+explicit exhaustion test if those limits become independently injectable or
+the accepted cache envelope expands. Remaining roadmap gates still include
+broader geometry/persistence variants, cross-platform validation,
+external-CAD checks, and visible GUI acceptance.
