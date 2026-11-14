@@ -923,12 +923,25 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
     NativeWidget widget;
     widget.setGraphicViewport(f.view.getViewPort());
     widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
 
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    auto* highlightOverlay = f.view.getViewPort()->getOverlayEntitiesContainer(
+        RS2::OverlayGraphics::OffsetSourceHighlights);
     REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+    REQUIRE(highlightOverlay);
     CHECK(typeBox->isEnabled());
+
+    const auto checkLineHighlight = [&] {
+        REQUIRE(highlightOverlay->getEntityList().size() == 1);
+        const auto* highlighted = dynamic_cast<const RS_Line*>(highlightOverlay->getEntityList().front());
+        REQUIRE(highlighted);
+        CHECK(highlighted->getData().startpoint == line->getData().startpoint);
+        CHECK(highlighted->getData().endpoint == line->getData().endpoint);
+    };
 
     const int lineType = typeBox->findData(static_cast<int>(
         LC_OffsetSourceGeometry::Kind::Line));
@@ -941,6 +954,7 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
     sourceBox->setCurrentIndex(lineIndex);
     awaitPreparation(widget);
     REQUIRE(clone->sourceDefinition());
+    checkLineHighlight();
     click(*selectSource);
     CHECK(line->getFlag(RS2::FlagSelected));
 
@@ -955,6 +969,7 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
 
     CHECK(typeBox->isEnabled());
     CHECK_FALSE(widget.isPreparing());
+    checkLineHighlight();
     CHECK(line->getFlag(RS2::FlagSelected));
     std::vector<qulonglong> parabolaCandidates;
     for (int i = 0; i < sourceBox->count(); ++i) {
@@ -970,6 +985,7 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
     CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
 
     typeBox->setCurrentIndex(lineType);
+    checkLineHighlight();
     CHECK(sourceBox->currentData().toULongLong() == line->getId());
     CHECK(line->getFlag(RS2::FlagSelected));
 }
