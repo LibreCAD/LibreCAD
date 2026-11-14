@@ -19,6 +19,7 @@
 #include <array>
 #include <catch2/catch_test_macros.hpp>
 #include <cmath>
+#include <cstdint>
 #include <cstring>
 #include <limits>
 #include <memory>
@@ -741,6 +742,9 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
 
 TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
           "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][outcomes]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-worker-positive-bulge-frames");
     auto& rt = runtime();
     OwnedClient owned{rt};
     RS_Line attributes{nullptr, RS_LineData{{0, 0}, {1, 0}}};
@@ -829,6 +833,55 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
                 REQUIRE(spline);
                 RS_Spline materialized{nullptr, *spline};
                 CHECK(materialized.validate());
+            }
+
+            if (frame.rotate && !frame.translate && signedDistance > 0.0) {
+                struct Lane {
+                    RS2::FormatType format;
+                    const char* extension;
+                };
+                const std::array<Lane, 5> lanes{{
+                    {RS2::FormatDXFRW14, "r14.dxf"},
+                    {RS2::FormatDXFRW2000, "r2000.dxf"},
+                    {RS2::FormatDWG, "r2000.dwg"},
+                    {RS2::FormatDXFRW2018, "r2018.dxf"},
+                    {RS2::FormatDWG2018, "r2018.dwg"},
+                }};
+                RS_Graphic graphic;
+                graphic.initForNewDocument();
+                auto* layer = new RS_Layer("Offset");
+                graphic.addLayer(layer);
+                std::vector<std::uint64_t> expected;
+                for (const auto& ordinary : result.ordinary) {
+                    const auto* data = std::get_if<RS_SplineData>(&ordinary);
+                    REQUIRE(data);
+                    auto* spline = new RS_Spline(&graphic, *data);
+                    spline->setLayer(layer);
+                    graphic.addEntity(spline);
+                    expected.push_back(RS_Spline::geometryFingerprint(*data));
+                }
+                for (std::size_t laneIndex = 0; laneIndex < lanes.size(); ++laneIndex) {
+                    const Lane& lane = lanes[laneIndex];
+                    CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+                    if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                        continue;
+#endif
+                    const auto path = directory.file(
+                        std::to_string(currentRequestId) + "-" + lane.extension);
+                    REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                    RS_Graphic reopened;
+                    REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                    std::vector<std::uint64_t> actual;
+                    for (RS_Entity* entity : reopened) {
+                        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline)
+                            continue;
+                        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+                        REQUIRE(spline);
+                        actual.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+                    }
+                    CHECK(actual == expected);
+                }
             }
         }
     }

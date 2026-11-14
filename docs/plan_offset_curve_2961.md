@@ -46175,11 +46175,14 @@ Validation on macOS arm64 CMake Release: the focused positive-bulge frame
 matrix passes 194 assertions / 1 case; `[curve-offset][region]` passes 27,740
 assertions / 20 cases; the dedicated worker-client matrix now covers identity,
 rotation-only, translation-only, and combined frames for both offset
-directions, matching direct engine outcomes in all cells, and passes 2,000
-assertions / 1 case; the `librecad_tests` target builds; the incremental
-qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0;
-and `git diff --check` passes. The new result is verified through direct and
-worker routing, but native cache/Trim integration, persistence, broader
+directions and matches direct engine outcomes in all cells. It also saves and
+reopens the rotation-only erosion output through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG, requiring exact spline geometry fingerprints; the expanded
+case passes with all lanes enabled. The `librecad_tests` target builds; the
+incremental qmake6 app/plugins build from
+`/private/tmp/offset2961-qmake6-current` exits 0; and `git diff --check`
+passes. This verifies only this generated output and these lanes. Native
+cache/Trim integration, other mixed-bulge persistence profiles, broader
 topology and frame matrices, visible GUI, cross-platform runtime, and
 independent CAD acceptance remain open.
 
