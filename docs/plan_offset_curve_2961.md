@@ -45623,6 +45623,24 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1356. Transform Dense Ellipse Tangency and Near-tangent Trim (2026-11-14)
+
+Test commit `a7540ed16` applies a common rotation of `π/7` and translation
+`(123.25, -45.5)` to the 128-, 512-, and 2048-span circular caches and ratio-
+`0.2` ellipse cutters from section 1355. For each size, exact vertex contact
+must refuse atomically; moving the cutter inward by `0.1` must produce two
+certified roots and one valid picked complement. Source immutability and
+retained interval coverage are checked in both cases. This qualifies only the
+stated rigid frame and contact profile, not large-origin conditioning or
+arbitrary ellipse/source orientations.
+
+Validation on macOS arm64 CMake Release: the focused transformed matrix passes
+162,949 assertions / 1 case; `[trim-kernel]` passes 2,149,619 assertions / 88
+cases; `cmake --build /private/tmp/offset-2961-cmake-clean --target
+librecad_tests -j4` succeeds; and `git diff --check` passes. Other contact
+orientations, eccentricities, dense source topologies, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
 ## 1355. Qualify Dense Ellipse Tangency and Near-tangent Trim (2026-11-14)
 
 Test commit `be7e249e0` adds paired 128-, 512-, and 2048-span closed-circle
