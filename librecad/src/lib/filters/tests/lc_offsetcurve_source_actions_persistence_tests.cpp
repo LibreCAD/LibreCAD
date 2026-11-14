@@ -1783,10 +1783,19 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{6});
     const std::size_t multiplicityCase = GENERATE(std::size_t{1}, std::size_t{2}, std::size_t{3});
     const std::size_t interiorMultiplicity = multiplicityCase == 3 ? degree - 1 : multiplicityCase;
+    const int transformed = GENERATE(0, 1);
+    const double frameAngle = transformed ? 0.37 : 0.0;
+    const RS_Vector frameOrigin = transformed ? RS_Vector{2.0, -3.0} : RS_Vector{0.0, 0.0};
+    const auto mapPoint = [frameAngle, frameOrigin](const RS_Vector& point) {
+        const double cosine = std::cos(frameAngle);
+        const double sine = std::sin(frameAngle);
+        return RS_Vector{cosine * point.x - sine * point.y + frameOrigin.x,
+                         sine * point.x + cosine * point.y + frameOrigin.y};
+    };
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(degree, interiorMultiplicity, static_cast<int>(format));
+    CAPTURE(degree, interiorMultiplicity, transformed, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1807,7 +1816,8 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const std::size_t controlCount = splineData.degree + interiorMultiplicity + 1;
     for (std::size_t i = 0; i < controlCount; ++i) {
         const double t = double(i) / double(controlCount - 1);
-        splineData.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
+        splineData.controlPoints.push_back(mapPoint(
+            RS_Vector{4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t}));
         splineData.weights.push_back(0.75 + 0.5 * t);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), splineData.degree + 1, 0.0);
@@ -1861,7 +1871,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
           splineData.knotslist);
     const auto cacheBeforeTrim = RS_Spline::geometryFingerprint(replacement->getData());
 
-    auto* cutter = new RS_Line(&graphic, {-10.0, 0.15}, {10.0, 0.15});
+    auto* cutter = new RS_Line(&graphic, mapPoint({-10.0, 0.15}), mapPoint({10.0, 0.15}));
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
     double cacheStart = 0.0;
@@ -1885,7 +1895,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     view.getViewPort()->zoomIn(10.0, targetPick);
     TrimActionProbe trimAction(&context);
     trimAction.init(0);
-    mouse(trimAction, view, {-4.0, 0.15}, true);
+    mouse(trimAction, view, mapPoint({-4.0, 0.15}), true);
     mouse(trimAction, view, targetPick, true);
     QElapsedTimer trimWait;
     trimWait.start();
@@ -1921,8 +1931,9 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     CHECK(collectFragments(graphic) == expectedFragments);
 
     const auto output = std::filesystem::path(directory.filePath(
-        QStringLiteral("degree-%1-spline-trim-%2.drawing")
-            .arg(static_cast<qulonglong>(degree)).arg(static_cast<int>(format))).toStdString());
+        QStringLiteral("degree-%1-spline-trim-%2-%3.drawing")
+            .arg(static_cast<qulonglong>(degree)).arg(transformed)
+            .arg(static_cast<int>(format))).toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, format));
     RS_Graphic reopened;
     REQUIRE(lc::test::importDrawing(reopened, output, format));
