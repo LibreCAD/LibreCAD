@@ -43843,17 +43843,18 @@ remaining family/variant, cross-platform, external-CAD, and visible-GUI gates.
 
 ## 1272. Isolate Discontinuous-knot Proof Revalidation (2026-11-13)
 
-Test commit `7c898399f` adds a focused worker-result fixture for the specific
-layout class behind section 1271. The request contains two disconnected cubic
-Bezier components encoded with an internal knot of multiplicity degree+1; the
-finite-line crossing is on the second component, whose extracted control
-offset is 4 rather than `span * degree` (3). It runs with both uniform knot
-domains `[0,1,2]` and nonuniform domains `[0,0.25,3]`. The test requires the
-kernel to emit `AnalyticMonotoneTransverse` for raw span 1 and requires the
-result encoder/decoder to independently accept the same proof from the
-submitted request. It passes 20 assertions. The complete worker-result suite
-passes 470,241 assertions / 30 cases, and `git diff --check` passes on macOS
-arm64 CMake Release.
+Test commit `7c898399f`, expanded in `30d8159ed`, covers the layout class
+behind section 1271 with a three-span cubic request: an unrelated leading
+component followed by a selected component containing two distinct crossings
+of a finite vertical line. The first join has multiplicity degree+1, the next
+has multiplicity degree, and the endpoint multiplicities are degree+1. Both
+uniform `[0,1,2,3]` and nonuniform `[0,0.25,3,7]` knot domains are checked.
+The test requires two `AnalyticMonotoneTransverse` roots on raw spans 1 and 2
+and requires the result encoder/decoder to independently accept both proofs
+from the submitted request. It passes 28 focused assertions. The complete
+worker-result suite passes 470,249 assertions / 30 cases, and the complete
+`[lc-offsetcurve][trim-action]` selector passes 181,801 assertions / 92
+cases. Validation is macOS arm64 CMake Release with `git diff --check` clean.
 
 This isolates discontinuous joins with two parameter-domain scalings, while
 section 1271 supplies the five-format application-level regression. It does
@@ -43861,3 +43862,29 @@ not cover every nonuniform or repeated-knot combination. Continue with
 bounded-but-difficult layouts, refusal behavior when span inspection exhausts
 its budget, and the remaining geometry/persistence and GUI qualification
 recorded in the roadmap.
+
+## 1273. Reuse Bounded Span Extraction Across Trim Roots (2026-11-13)
+
+Implementation commit `d495a13e6` removes repeated spline-layout extraction
+from multi-root result verification. When a Trim result contains analytic
+monotone proofs, the verifier inspects the submitted source cache once for
+that result path and supplies the extracted spans to each root check. Encoding
+does one bounded extraction; decoding validates layout once in each of its
+two `readTrim` passes (proof pre-scan and materialization), rather than once
+per root. Each root still receives independent exact-rational finite-line
+revalidation against its corresponding extracted span and its own parameter
+enclosures; no proof label or cached derived geometry is trusted.
+
+The strengthened three-span/two-root regression from section 1272 guards
+against accidental span-index assumptions and validates both uniform and
+nonuniform knot domains. The worker-result suite passes 470,249 assertions /
+30 cases, and the full Trim-action selector passes 181,801 assertions / 92
+cases on macOS arm64 CMake Release. `git diff --check` is clean.
+
+This optimization bounds expensive layout extraction by verification pass,
+not by the number of certified roots. It does not eliminate the separate
+bounded extraction in each decode validation pass, and must remain fail-closed
+if layout inspection is unsupported or exceeds its budget. Continue with
+explicit extraction-budget exhaustion/refusal coverage and the remaining
+roadmap geometry, persistence, cross-platform, external-CAD, and visible-GUI
+gates.
