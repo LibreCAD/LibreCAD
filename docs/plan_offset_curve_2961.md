@@ -41631,6 +41631,11 @@ visible GUI, cross-platform, and ODA/AutoCAD acceptance remain open.
 
 ## 1179. Assert Atomic Refusal for a Post-cusp Hyperbola Trim (2026-11-13)
 
+Historical result, superseded by section 1351. The later conic interval-Newton
+contractor proved two distinct roots for this exact profile and made the
+previous empty-preview expectation obsolete; retain this entry as evidence of
+the earlier conservative behavior, not as a current support restriction.
+
 Test commit `29dc3b092` isolates the ratio-`0.4`, major-axis-`3.5` hyperbola
 profile whose fixed editable-offset distance exceeds the vertex curvature
 radius. In the reproducible right-branch, circle-first configuration, the
@@ -45615,6 +45620,24 @@ cases; `librecad_tests` builds; and `git diff --check` passes. This establishes
 only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1351. Qualify Certified Post-cusp Hyperbola Trim Two (2026-11-14)
+
+Replaced section 1179's stale refusal assertion after direct cache preparation
+on the same ratio-`0.4`, major-axis-`3.5` profile proved two isolated circle
+contacts and two retained cache fragments. The action regression now verifies
+that the three-entity Trim Two preview agrees exactly with committed geometry,
+that previewing leaves the editable cache, circle, and undo epoch unchanged,
+and that commit, undo, and redo atomically exchange the two operands and
+ordinary output fragments. This does not imply general post-cusp hyperbola
+support; the evidence is limited to this construction, offset, circle, pick
+order, and worker/action path.
+
+Validation on macOS arm64 CMake Release: the focused case passes 190 assertions
+/ 1 case; `[lc-offsetcurve][trim-action]` passes 356,681 assertions / 96
+cases; `librecad_tests` builds; and `git diff --check` passes. This does not
+close other post-cusp hyperbola constructions, branches, cutters, picks, or
+transformations, nor visible GUI, cross-platform, and independent CAD gates.
 
 ## 1350. Trim Dense Conics Across Coupled Translation and Feature Scales (2026-11-14)
 

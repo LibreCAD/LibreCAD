@@ -1103,8 +1103,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
     }
 }
 
-TEST_CASE("T Trim Two refuses a post-cusp hyperbola pair without mutation",
-          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][post-cusp][refusal]") {
+TEST_CASE("T Trim Two commits a certified post-cusp hyperbola cache atomically",
+          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][post-cusp]") {
     Drawing<true> f;
     auto* previous = addNative(f.graphic);
     auto* hyperbola = new LC_Hyperbola(&f.graphic,
@@ -1143,17 +1143,54 @@ TEST_CASE("T Trim Two refuses a post-cusp hyperbola pair without mutation",
     const RS_Vector circlePick = circleCenter + normal;
     const RS_Vector nativePick = native->getPointAt(
         breaks.front() + (breaks[1] - breaks.front()) * .9);
+    const auto direct = LC_OffsetCacheTrim::prepare(native->getData(), *circle,
+        LC_OffsetCacheTrim::Pick{nativePick});
+    CAPTURE(direct.rootCount, static_cast<int>(direct.refusal), direct.fragments.size(),
+            direct.work.intersections.totalBoxPairs,
+            direct.work.intersections.generatedLeaves);
+    REQUIRE(direct.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(direct.rootCount == 2);
+    REQUIRE(direct.fragments.size() == 2);
+    const auto undoNativeBefore = trimGeometry(*native);
+    const auto undoCircleBefore = trimGeometry(*circle);
     f.action->click(circlePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
     const auto previewUndoEpoch = f.graphic.undoStateEpoch();
     f.action->hover(nativePick);
     REQUIRE(f.action->m_preview);
-    CHECK(trimPreview(*f.action->m_preview).empty());
+    const auto preview = trimPreview(*f.action->m_preview);
+    REQUIRE(preview.size() == 3);
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(circle->isDeleted());
     CHECK(trimGeometry(*native) == nativeBefore);
     CHECK(trimGeometry(*circle) == circleBefore);
     CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+
+    f.action->click(nativePick);
+    CHECK(native->isDeleted());
+    CHECK(circle->isDeleted());
+    std::vector<RS_Entity*> fragments;
+    std::vector<std::string> committed;
+    for (auto* entity : live(f.graphic)) {
+        if (entity == hyperbola) continue;
+        fragments.push_back(entity);
+        committed.push_back(trimGeometry(*entity));
+    }
+    std::sort(committed.begin(), committed.end());
+    auto expected = preview;
+    std::sort(expected.begin(), expected.end());
+    CHECK(committed == expected);
+
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(circle->isDeleted());
+    CHECK(trimGeometry(*native) == undoNativeBefore);
+    CHECK(trimGeometry(*circle) == undoCircleBefore);
+    for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+    REQUIRE(f.graphic.redo());
+    CHECK(native->isDeleted());
+    CHECK(circle->isDeleted());
+    for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
 }
 
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against a circle in both pick orders",
