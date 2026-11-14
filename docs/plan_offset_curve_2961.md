@@ -44310,3 +44310,28 @@ do not infer full geometric or persistence support for every variant from the
 picker-only test. Any future source kind must join `SupportedKinds` and pass
 candidate matching, capture/reconstruction, worker validation, and the
 geometry/persistence matrix before it is advertised as supported.
+
+## 1292. Revalidate Source Picker and qmake6 Delivery (2026-11-13)
+
+On the PR worktree at `bcabd3d9a`, the complete offscreen source-picker union
+`QT_QPA_PLATFORM=offscreen librecad_tests '[gui][dialog][offsetcurve][source]'`
+passes 15,116 assertions / 44 cases. The active Update from Source candidate
+filter case passes 148 assertions, and the all-family Properties filter and
+replacement case passes 285 assertions. These headless tests confirm the
+existing implementation and do not replace visible desktop interaction.
+
+The recursive macOS arm64 qmake6 Release product build
+`make -j6` in `/private/tmp/offset-2961-qmake-current` exits 0. Its shell
+startup prints the pre-existing missing optional
+`/private/tmp/libdxfrw-cargo/env` warning; no build failure results. This is a
+product build, not a qmake6 test target or a clean reconfigure. The large-origin
+inward rounded-polyline Trim profile remains separately qualified at 535
+assertions over five DXF/DWG lanes (section 1290).
+
+**Remaining delivery gate:** perform the visible Properties workflow on the
+actual LibreCAD desktop, including repeated type switches before candidate
+selection, distinct parabola selection, current-source indication, success,
+cancel/refusal, and save/reopen. Record the platform, binary revision, exact
+interaction route, and result. Continue Slice 4's family-by-variant geometry,
+worker/cache, Trim, and file-lane matrix independently; selector availability
+and qmake product compilation do not close those obligations.
