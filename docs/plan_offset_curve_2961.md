@@ -46307,6 +46307,23 @@ suite passes 2,246,436 assertions / 349 cases; `librecad_tests` builds; and
 are recorded in section 1382. Wider arrangements, visible GUI, cross-platform
 runtime, and independent CAD acceptance remain open.
 
+## 1385. Revalidate Mixed-bulge Worker Outcomes After Budget Sharing (2026-11-14)
+
+The real worker-client positive- and negative-bulge frame matrices were
+rerun after the exact-arrangement/fallback budget change. They continue to
+match the production-tolerance direct engine, materialize successful ordinary
+branches, refuse unsupported cells without partial output, and preserve the
+recorded DXF/DWG round-trip results. This is the worker integration check for
+those bounded bow-tie fixtures, not native-cache/Trim support or a general
+mixed-bulge guarantee.
+
+Validation on macOS arm64 CMake Release at PR head `11108f3ff`:
+`[polyline][region-boundary][mixed-bulge]` in
+`librecad_offset_worker_client_tests` passes 4,798 assertions / 3 cases;
+the test target builds; and `git diff --check` passes. Broader worker geometry,
+visible GUI, cross-platform runtime, and independent CAD acceptance remain
+open.
+
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
 Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
