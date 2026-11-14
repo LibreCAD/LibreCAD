@@ -43975,3 +43975,20 @@ all source layouts. Continue with transformed async action/persistence
 coverage where admitted, explicit atomic refusals near representability limits,
 and the broader family/variant, cross-platform, external-CAD, and visible-GUI
 gates.
+
+## 1278. Verify Rotated Proofs at a Large Translated Origin (2026-11-13)
+
+Test commit `806e5cb4e` adds a cubic monotone-crossing case whose finite cutter
+is rotated and translated to `(1e15,-1e15)`. Both source traversal directions
+and both cutter directions certify the single transverse root; the line
+parameter enclosure remains within the finite segment, and worker-result
+encoding/decoding revalidates the proof against the original request. The
+focused case passes 48 assertions; the complete worker-result suite passes
+470,458 assertions / 34 cases on macOS arm64 CMake Release. `git diff --check`
+is clean.
+
+This complements section 1277's axis-aligned extreme-origin cases and
+section 1264's moderate-origin orientation matrix. It does not cover arbitrary
+angles at extreme origins, sub-ULP conditioning, or asynchronous action/file
+round-trips for these transformed fixtures; retain those as open Slice 4
+coverage, along with cross-platform, external-CAD, and visible-GUI acceptance.
