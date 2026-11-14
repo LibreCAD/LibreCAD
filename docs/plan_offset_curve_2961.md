@@ -43674,3 +43674,21 @@ profile. It does not expand the geometric domain: continue testing other line
 orientations, source span degrees/layouts, and ambiguous/tangent/near-miss
 atomic refusals. External CAD interoperability, visible GUI acceptance, and
 cross-platform runs remain unverified.
+
+## 1264. Validate Rotated Monotone Roots Through Worker Admission (2026-11-13)
+
+Test commit `7638154e8` adds a worker-result matrix for translated and rotated
+finite-line cutters against degree-1 and degree-3 Bezier source spans. It
+exercises both source traversal directions and both cutter directions (eight
+combinations), requires one `AnalyticMonotoneTransverse` root per case, and
+checks encode/decode admission against the request geometry. On macOS arm64
+CMake Release, the focused case passes 64 assertions; the complete
+`librecad_offset_worker_result_tests` suite passes 467,789 assertions / 29
+cases. `git diff --check` passes.
+
+This qualifies one rotated geometry and the two supported polynomial degrees
+through worker admission; it is not a broad orientation/conditioning matrix or
+a save/reopen test for these transformed fixtures. Exact-profile cross-lane
+persistence remains recorded in section 1263. Continue with further numerical
+scales/orientations, smooth tangent and near-miss atomic-refusal cases, and
+cross-platform validation.
