@@ -840,6 +840,36 @@ TEST_CASE("Worker Trim handles supported and unsupported repeated cubic knots", 
     }
 }
 
+TEST_CASE("Worker Trim transports later-span roots across nonuniform linear knot joins", tags) {
+    const std::array<std::vector<double>, 2> knotVectors{{
+        {0, 0, .25, 3, 3, 9, 9},
+        {0, 0, .25, .25, 3, 9, 9}}};
+    RS_Line cutter{nullptr, {3.5, -1}, {3.5, 1}};
+
+    for (const auto& knots : knotVectors) {
+        auto data = cache({{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}}, 1);
+        data.knotslist = knots;
+        const Trim::Pick pick{{3.8, 0}};
+        const auto prepared = Trim::prepare(data, cutter, pick);
+        CAPTURE(knots[2], knots[3], prepared.refusal, prepared.rootCount);
+        REQUIRE(prepared.refusal == Trim::Refusal::None);
+        REQUIRE(prepared.roots.size() == 1);
+        CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(prepared.roots.front().target.rawSpan == 2);
+
+        Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), pick, {}}};
+        const auto encoded = Reply::encode(reply(request, prepared), request);
+        REQUIRE(encoded);
+        const auto decoded = Reply::decode(*encoded, request);
+        REQUIRE(decoded);
+        const auto* received = std::get_if<Trim::Result>(&decoded->result);
+        REQUIRE(received);
+        REQUIRE(received->roots.size() == 1);
+        CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(received->roots.front().target.rawSpan == 2);
+    }
+}
+
 TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cubic sources", tags) {
     const RS_Vector origin{10000, -70000};
     const std::array<RS_Vector, 8> directions{{
