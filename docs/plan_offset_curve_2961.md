@@ -45616,6 +45616,24 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1350. Trim Dense Conics Across Coupled Translation and Feature Scales (2026-11-14)
+
+Added a 512-span circular cache and eccentric ellipse-arc cutter in a rotated
+frame at feature scales `1e-6`, `1`, and `1e6`. The frame origin scales with
+the geometry at a fixed `1e5` feature-to-origin ratio, so each case combines
+uniform scaling, nonzero translation, and rotation rather than isolating those
+operations. Each case requires two certified contacts, one valid complementary
+fragment, unchanged source data, correct picked-interval coverage, and
+scale-relative sampled geometry agreement.
+
+Validation on macOS arm64 CMake Release: the coupled matrix passes 65,379
+assertions / 1 case; `[trim-kernel]` passes 1,358,350 assertions / 83 cases;
+`librecad_tests` builds; and `git diff --check` passes. This qualifies only
+the stated eccentric arc, source topology, rotation, and fixed origin ratio;
+extreme origins, other feature-to-origin ratios, near-tangent contacts,
+sub-ULP features, visible GUI, cross-platform runtime, and independent CAD
+acceptance remain open.
+
 ## 1349. Trim Dense Caches Against Seam-crossing Ellipse-arc Domains (2026-11-14)
 
 Added a 128-, 512-, and 2048-span source matrix for the eccentric ellipse arc
@@ -45644,6 +45662,6 @@ translation or geometry-family changes.
 Validation on macOS arm64 CMake Release: the scale matrix passes 65,379
 assertions / 1 case; `[trim-kernel]` passes 1,064,384 assertions / 81 cases;
 `librecad_tests` builds; and `git diff --check` passes. These three scales do
-not qualify extreme subnormal/overflow coordinates, translated scale
-combinations, other conic ratios, or arbitrary source topologies; visible GUI,
+not qualify extreme subnormal/overflow coordinates, other translated-scale
+ratios, other conic ratios, or arbitrary source topologies; visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.

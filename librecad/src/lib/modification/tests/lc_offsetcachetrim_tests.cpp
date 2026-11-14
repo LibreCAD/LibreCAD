@@ -581,6 +581,48 @@ TEST_CASE("Dense eccentric-ellipse arc Trim scales across normalized coordinates
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
+TEST_CASE("Dense conic Trim is covariant across translated feature scales", tags) {
+    const double scale = GENERATE(1e-6, 1.0, 1e6);
+    CAPTURE(scale);
+    constexpr std::size_t segmentCount = 512;
+    const double frameRotation = .37;
+    const double cosine = std::cos(frameRotation), sine = std::sin(frameRotation);
+    const RS_Vector origin{1e6 * scale, -2e6 * scale};
+    const auto transform = [&](RS_Vector point) {
+        return RS_Vector{origin.x + cosine * point.x - sine * point.y,
+                         origin.y + sine * point.x + cosine * point.y};
+    };
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.push_back(transform({10.0 * scale * std::cos(angle),
+                                    10.0 * scale * std::sin(angle)}));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    const double ellipseRotation = pi / 12;
+    const RS_Vector localMajor{10.0 * scale * std::cos(ellipseRotation),
+                               10.0 * scale * std::sin(ellipseRotation)};
+    const RS_Vector major{cosine * localMajor.x - sine * localMajor.y,
+                          sine * localMajor.x + cosine * localMajor.y};
+    RS_Ellipse cutter{nullptr, {transform({10.0 * scale, 0.0}), major,
+                                .8, 1.5, 4.3, false}};
+
+    const auto result = Trim::prepare(data, cutter, {transform({10.0 * scale, 0.0})});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result, 5e-10 * scale);
+    equalData(data, before);
+    CHECK(coverage(result, .5) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
+}
+
 TEST_CASE("Dense cache trims against an eccentric ellipse arc crossing its angular seam", tags) {
     const std::size_t segmentCount = GENERATE(128u, 512u, 2048u);
     CAPTURE(segmentCount);
