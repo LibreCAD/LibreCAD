@@ -683,10 +683,12 @@ public:
             if (!child) return nullptr;
             auto source = makeSource(*child);
             if (!source || source->breaks().size() < 2) return nullptr;
+            LC_OffsetSegment primitive;
+            const bool hasPrimitive = makeOffsetSegment(*child, primitive);
             const auto& local = source->breaks();
             const double span = local.back() - local.front();
             if (!std::isfinite(span) || !(span > 0.0) || !std::isfinite(cursor + span)) return nullptr;
-            result->m_pieces.push_back({std::move(source), cursor, span});
+            result->m_pieces.push_back({std::move(source), cursor, span, primitive, hasPrimitive});
             for (std::size_t i = 0; i < local.size(); ++i) {
                 const double global = cursor + (local[i] - local.front());
                 if (result->m_breaks.empty() || global > result->m_breaks.back()) result->m_breaks.push_back(global);
@@ -797,6 +799,31 @@ public:
         }
         return true;
     }
+    bool circularOffsetSpan(const double a, const double b, const double signedDistance,
+                            LC_OffsetSegment& segment) const {
+        if (!(a < b) || !std::isfinite(signedDistance)) return false;
+        const auto index = pieceAt(a + (b - a) * 0.5, LC_CurveEvaluationSide::Interior);
+        if (!index) return false;
+        const Piece& piece = m_pieces[*index];
+        if (!piece.hasPrimitive || !piece.primitive.arc) return false;
+        const double pieceEnd = piece.offset + piece.span;
+        if (a < piece.offset || b > pieceEnd) return false;
+        const auto localA = localParameter(piece, a);
+        const auto localB = localParameter(piece, b);
+        if (!localA || !localB || !(*localA < *localB)) return false;
+        const double orientation = std::copysign(1.0, piece.primitive.sweep);
+        const double radius = piece.primitive.radius - orientation * signedDistance;
+        if (!(radius > 0.0) || !std::isfinite(radius)) return false;
+        segment = piece.primitive;
+        segment.radius = radius;
+        segment.startAngle += orientation * *localA;
+        segment.sweep = orientation * (*localB - *localA);
+        segment.a = segment.centre + RS_Vector{std::cos(segment.startAngle), std::sin(segment.startAngle)} * radius;
+        const double endAngle = segment.startAngle + segment.sweep;
+        segment.b = segment.centre + RS_Vector{std::cos(endAngle), std::sin(endAngle)} * radius;
+        return std::isfinite(segment.startAngle) && std::isfinite(segment.sweep) &&
+               segment.sweep != 0.0 && isFinite(segment.a) && isFinite(segment.b);
+    }
     bool cubicSpans() const override {
         return std::all_of(m_pieces.begin(), m_pieces.end(),
             [](const Piece& piece) { return piece.source->cubicSpans(); });
@@ -807,6 +834,8 @@ private:
         std::unique_ptr<OffsetSource> source;
         double offset;
         double span;
+        LC_OffsetSegment primitive;
+        bool hasPrimitive;
     };
     explicit PolylineSource(const bool closed) : m_closed{closed} {}
 
@@ -6674,7 +6703,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
 
     // 5. node all candidates together, and split them there
     LC_IntersectionResult found;
-    bool usedStraightArrangement = false;
+    bool usedExactArrangement = false;
     if (dynamic_cast<const PolylineSource*>(&source) != nullptr) {
         struct Primitive {
             LC_OffsetSegment segment;
@@ -6685,12 +6714,37 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         };
         std::vector<Primitive> primitives;
         bool eligible = true;
+        const auto* polyline = dynamic_cast<const PolylineSource*>(&source);
         for (std::size_t c = 0; c < candidates.size() && eligible; ++c) {
-            if (candidates[c].branches.size() != 1 || candidates[c].branches.front().cubicPieces.empty()) {
+            if (candidates[c].branches.size() != 1 || candidates[c].branches.front().closed ||
+                candidates[c].branches.front().cubicPieces.empty() || polyline == nullptr) {
                 eligible = false;
                 break;
             }
             const LC_OffsetBranch& branch = candidates[c].branches.front();
+            const auto& segments = offsetCurves[c]->segments();
+            if (segments.empty() || std::any_of(segments.begin(), segments.end(), [](const auto& segment) {
+                    return segment.branch != 0;
+                })) {
+                eligible = false;
+                break;
+            }
+            LC_OffsetSegment circular;
+            const auto& candidateBreaks = candidates[c].part->breaks();
+            if (candidateBreaks.size() == 2 &&
+                polyline->circularOffsetSpan(candidateBreaks.front(), candidateBreaks.back(),
+                                            candidates[c].signedDistance, circular)) {
+                const RS_Vector start = branch.cubicPieces.front().bezier[0];
+                const RS_Vector end = branch.cubicPieces.back().bezier[3];
+                if (start.distanceTo(circular.a) > options.tolerance.nodeMerge ||
+                    end.distanceTo(circular.b) > options.tolerance.nodeMerge) {
+                    eligible = false;
+                    break;
+                }
+                primitives.push_back({circular, firstBranch[c], segments.front().t0,
+                                      segments.back().t1, false});
+                continue;
+            }
             const RS_Vector a = branch.cubicPieces.front().bezier[0];
             const RS_Vector b = branch.cubicPieces.back().bezier[3];
             const RS_Vector axis = b - a;
@@ -6711,7 +6765,6 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 if (!eligible) break;
             }
             if (!eligible) break;
-            const auto& segments = offsetCurves[c]->segments();
             if (segments.size() != 1 || segments.front().branch != 0) {
                 eligible = false;
                 break;
@@ -6742,6 +6795,21 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     parameter = angle;
                     fraction = angle / (2.0 * M_PI);
                     return std::isfinite(angle);
+                }
+                if (primitive.segment.arc) {
+                    double along = std::remainder(
+                        std::atan2(point.y - primitive.segment.centre.y,
+                                   point.x - primitive.segment.centre.x) - primitive.segment.startAngle,
+                        2.0 * M_PI);
+                    if (primitive.segment.sweep > 0.0 && along < 0.0) along += 2.0 * M_PI;
+                    if (primitive.segment.sweep < 0.0 && along > 0.0) along -= 2.0 * M_PI;
+                    fraction = along / primitive.segment.sweep;
+                    const double slack = 128.0 * std::numeric_limits<double>::epsilon() *
+                                         std::max(1.0, std::abs(primitive.segment.sweep));
+                    if (!std::isfinite(fraction) || fraction < -slack || fraction > 1.0 + slack) return false;
+                    fraction = std::clamp(fraction, 0.0, 1.0);
+                    parameter = primitive.parameter0 + (primitive.parameter1 - primitive.parameter0) * fraction;
+                    return std::isfinite(parameter);
                 }
                 const RS_Vector axis = primitive.segment.b - primitive.segment.a;
                 const double lengthSquared = dot(axis, axis);
@@ -6802,11 +6870,13 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                             break;
                         }
                         LC_ParametricIntersection::Kind kind = LC_ParametricIntersection::Kind::Transverse;
-                        const RS_Vector tangentA = primitives[i].circle
-                            ? RS_Vector{-(point.y - first.centre.y), point.x - first.centre.x}
+                        const RS_Vector tangentA = first.arc
+                            ? RS_Vector{-(point.y - first.centre.y), point.x - first.centre.x} *
+                                  std::copysign(1.0, first.sweep)
                             : first.b - first.a;
-                        const RS_Vector tangentB = primitives[j].circle
-                            ? RS_Vector{-(point.y - second.centre.y), point.x - second.centre.x}
+                        const RS_Vector tangentB = second.arc
+                            ? RS_Vector{-(point.y - second.centre.y), point.x - second.centre.x} *
+                                  std::copysign(1.0, second.sweep)
                             : second.b - second.a;
                         const double tangentScale = tangentA.magnitude() * tangentB.magnitude();
                         if ((fractionA == 0.0 || fractionA == 1.0 || fractionB == 0.0 || fractionB == 1.0)) {
@@ -6830,10 +6900,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     if (found.status != LC_IntersectionStatus::Ok) break;
                 }
             }
-            usedStraightArrangement = true;
+            usedExactArrangement = true;
         }
     }
-    if (!usedStraightArrangement) {
+    if (!usedExactArrangement) {
         found = findIntersections(CompositeCurves{parts}, query);
     }
     recordIntersectionDiagnostics(result.intersectionDiagnostics, found,

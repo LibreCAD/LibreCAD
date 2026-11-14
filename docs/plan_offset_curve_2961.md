@@ -362,13 +362,16 @@ strict refusal of the single-cache native-source path for the bow-tie and one
 five-crossing pentagram profile. The pentagram direct oracle covers both fill
 rules, growth/erosion, and the even-odd 1-to-5-cycle topology change. These
 sections supersede section 1363's refusal-only status for the tested layouts.
-Section 1368 adds a mixed line/arc bow-tie refusal regression for both grow and
-shrink: the solver reports `AmbiguousTopology`, emits no branches, and leaves
-the source vertices unchanged. This is explicit atomic-refusal evidence, not
-mixed-bulge support. Other mixed/bulged self-crossings, arrangements, editable
-cache/action integration, file persistence, visible GUI, cross-platform
-runtime, and independent CAD acceptance remain open. This addendum supersedes
-the earlier bow-tie refusal text in the Slice 4 table above.
+Section 1369 extends the exact candidate arrangement to line, circular-arc,
+and corner-circle primitives. A crossing negative-bulge bow-tie passes direct
+growth and erosion under both fill rules with independent cycle, side, and
+distance checks. A positive-bulge profile whose eroded candidates overlap
+still returns `AmbiguousTopology` atomically. This is bounded mixed-bulge
+coverage, not general self-crossing support. Other arc signs/layouts and
+overlap topologies, editable cache/action integration, file persistence,
+visible GUI, cross-platform runtime, and independent CAD acceptance remain
+open. This supersedes the refusal-only evidence in section 1368 and the earlier
+bow-tie refusal text in the Slice 4 table above.
 
 The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
@@ -45798,20 +45801,44 @@ GUI behavior, cross-platform runtime, or independent CAD acceptance.
 ## 1368. Make Mixed-bulge Region Refusal Explicit (2026-11-14)
 
 Added a closed mixed line/arc bow-tie `RS_Polyline` probe to `RegionBoundary`
-for both growth and erosion. The current arrangement noder returns
-`AmbiguousTopology` while intersecting offset candidates; the regression now
-requires that refusal, verifies that no output branches are published, and
-checks the source vertices remain unchanged. The focused case passes 18
-assertions / 1 case on macOS arm64 CMake Release, and the `librecad_tests`
-target builds.
+for both growth and erosion. At this revision the arrangement noder returned
+`AmbiguousTopology` while intersecting offset candidates; the regression
+required that refusal, verified no output branches were published, and checked
+the source vertices remained unchanged. The focused case passed 18 assertions
+/ 1 case on macOS arm64 CMake Release. This refusal-only state is superseded by
+the exact circular-arc candidate implementation and qualification in section
+1369.
 
-This records safe behavior for one mixed-bulge profile only. It does not
-implement mixed-bulge self-crossing offsets or prove the exact cause of the
-candidate-noding ambiguity. The next geometry slice must isolate and support
-the needed line/arc candidate intersections with certified or exact parameter
-mapping, then validate closed cycles against an independent fill/distance
-oracle for both fill rules and grow/shrink. Do not weaken this refusal test or
-claim mixed-bulge support based on ordinary mixed-bulge Trim coverage.
+## 1369. Node Exact Circular Offsets in Mixed-bulge Regions (2026-11-14)
+
+The RegionBoundary analytic arrangement now retains exact source primitives
+for polyline children and can represent a candidate wholly within one
+circular-arc span as its exact concentric offset arc. The radius and sweep are
+derived from the original `RS_Arc` plus signed offset; the specialization is
+used only when the candidate stays inside one polyline child, the radius stays
+positive, and exact arc endpoints agree with generated branch endpoints
+within the configured node tolerance. Arc intersections reuse the existing
+line/arc/arc analytic kernel and map each contact back to the candidate's
+parameter interval. Unsupported spans continue through the general
+intersector; coincident overlapping same-circle candidates remain an explicit
+atomic refusal.
+
+The crossing negative-bulge bow-tie passes both fill rules and both signed
+offsets. An independent dense-source oracle checks the expected one-cycle
+growth/two-cycle erosion, closure, positive orientation, included side, and
+0.5 boundary distance; source vertices remain unchanged. A positive-bulge
+crossing profile passes growth but erosion produces overlapping arc candidates
+and is required to refuse with `AmbiguousTopology`, no branches, and unchanged
+source vertices. This bounds behavior for two bulge orientations; it does not
+close other sweep/scale/crossing layouts or coincident-arc overlap handling.
+
+Validation on macOS arm64 CMake Release: the focused mixed-bulge tests pass 96
+assertions / 2 cases; `[curve-offset][region]` passes 27,411 assertions / 19
+cases; the full `[curve-offset]` suite passes 2,245,478 assertions / 345
+cases; and the `librecad_tests` target builds. The qmake6 full application and
+plugin build also succeeds. Worker-process, editable-cache/action, persistence,
+visible GUI, cross-platform runtime, and independent CAD checks remain
+separate gates.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
