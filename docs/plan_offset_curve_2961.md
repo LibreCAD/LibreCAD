@@ -44085,3 +44085,20 @@ applicable file lanes; keep qmake6, cross-platform, external-CAD, and visible
 Properties acceptance as separate open gates. The local qmake6 product build
 is now qualified at `b35cf48bb`; broader platform/build and test gates remain
 open.
+
+## 1283. Qualify a Larger All-arc Feature at a Larger Origin (2026-11-13)
+
+Test commit `4cc7f2f75` adds a clockwise four-arc circle of radius `2e3`
+centered at `(1e9,-1e9)`, rotated by `0.37` radians and cut by the same
+separately oriented finite line. It exercises the worker-backed source update,
+certified two-root Trim, output validation, undo/redo and all five DXF/DWG
+save/reopen lanes. The focused large-origin/scale profile passes 190
+assertions; the complete nine-profile/five-format persistence case passes
+1,880 assertions on macOS arm64 CMake Release. `git diff --check` passes.
+
+This adds one coupled origin/feature-scale point with this source and cutter;
+it is not a general scale covariance proof and does not fill the other source
+families or non-circular polyline matrix. Continue independent geometry
+oracles, both traversal directions where meaningful, worker/cache admission,
+Trim and exact file lanes for remaining variants. Cross-platform/qmake6 test
+coverage, external CAD and visible Properties acceptance remain separate.
