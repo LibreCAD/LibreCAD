@@ -346,13 +346,14 @@ following slices in order, preserving the detailed safety requirements below:
 | 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts for tested circles, ellipses, circular arcs and elliptic arcs in both traversal directions (sections 1022-1030). Exact duplicate singleton contacts can be merged; overlapping non-singleton certificates whose equality is unproved refuse atomically (section 1024). Section 1033 qualifies async action preview/commit, peer isolation, and undo/redo for both real producer-generated native components in both cache directions. Section 1034 qualifies save, low-level inspection, reopen, and second-save/reopen for those outputs in every native-capable DXF/DWG target (R12 is intentionally excluded). Sections 1117-1122 qualify selected rotated inward near/exact/post-cusp ellipse Trim Two profiles through worker action and five file lanes, at three axis ratios. Section 1170 adds one six-fit-point closed SplinePoints profile through an independent direct normal oracle, worker-backed Trim Two in both pick orders, undo/redo, and five DXF/DWG lanes; its reopened closed cut/control representation is compared by sampled geometry. Section 1201 extends the independent direct-normal oracle for closed fit-point splines to the `5.1e-4` admission-boundary chord, a `2e-3` chord, and a transformed/reflected/reversed profile. A new exact bow-tie `RS_Polyline` probe in `RegionBoundary` returned `AmbiguousTopology` while noding offset candidates; unlike the spline bow-tie evidence, self-crossing polyline growth/erosion is not qualified. Add a focused case for both fill rules and grow/shrink, diagnose exact corner-circle/offset tangencies in candidate noding, and require correct closed result cycles or an explicit atomic refusal until the geometry is supported. These qualify specific layouts and versions, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies linear circle-boundary Trim across disconnected components. Section 1023 verifies disconnected degree-3 circle-boundary branches with linear loci. Section 1024 verifies safe atomic refusal when disconnected components produce overlapping non-singleton conic-contact certificates. Section 1025 verifies disconnected ellipse-boundary contacts through direct and worker result transport. Section 1026 verifies circular-arc domain preservation in both traversal directions. Section 1027 verifies elliptic-arc domains and worker transport in both traversal directions. Section 1028 verifies genuinely curved cubic circle-boundary branches. Section 1029 verifies genuinely curved cubic branches against an eccentric ellipse through direct and worker paths. Section 1030 verifies curved cubic branches clipped to a bounded elliptic arc in both directions. Section 1033 verifies both components from the trimmed-ellipse producer through the native action path. Section 1034 verifies their native metadata across all native-capable DXF/DWG round-trip lanes. Sections 1117-1122 verify selected near/exact/post-cusp full-ellipse profiles at three axis ratios in Trim Two and file lanes; section 1170 verifies one closed fit-point spline profile through Trim Two and five lanes. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly after candidates are displayed but before choosing; verify list refresh, active chooser state, and unchanged current source/cache/identity/highlight; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. The full qmake6 application/plugin build passes at the source revision recorded in section 1332; this does not include a qmake test executable. Visible GUI and cross-platform delivery gates remain open until actually exercised. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. |
 
-**Slice 4 status addendum (section 1364):** the exact all-straight bow-tie
-polyline case now succeeds in direct `RegionBoundary` growth and erosion for
-both fill rules, with analytic line/circle candidate intersections and
-independent cycle and distance checks. This supersedes section 1363's refusal-
-only status for this fixture. It does not qualify mixed/bulged self-crossings,
-other arrangements, worker/cache integration, or file persistence. This
-addendum also supersedes the bow-tie refusal task in the Slice 4 table above.
+**Slice 4 status addendum (section 1365):** the all-straight bow-tie polyline
+now passes direct `RegionBoundary` growth and erosion for both fill rules under
+identity, rotation, reflection, reversal, scaling, and translated-coordinate
+profiles, with analytic line/circle candidate intersections and independent
+cycle/distance checks. Sections 1364-1365 supersede section 1363's refusal-only
+status. Mixed/bulged self-crossings, other arrangements, worker/cache
+integration, and file persistence remain open. This addendum supersedes the
+bow-tie refusal task in the Slice 4 table above.
 
 The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
@@ -45661,6 +45662,25 @@ Validation on macOS arm64 CMake Release: the focused case passes 12 assertions
 `librecad_tests` target builds; and `git diff --check` passes. This does not
 qualify other self-intersection arrangements, bulged self-crossing polylines,
 visible GUI behavior, cross-platform runtime, or independent CAD acceptance.
+
+## 1365. Qualify Transformed Bow-tie Polyline Regions (2026-11-14)
+
+Test commit `0df50c450` expands the bow-tie regression to three geometry
+frames: identity; rotation by `0.63` radians, scale `3`, translation
+`(100000,-250000)`, and reversed traversal; and x-reflection, rotation by
+`-0.3` radians, scale `0.4`, and translation `(-100000,200000)`. Both fill
+rules and both growth/erosion operations use a distance proportional to scale.
+The independent cycle oracle transforms and splits the reference boundary at
+the crossing, then checks closed positive-area cycles, fill-rule side, and
+boundary distance below `0.02 * scale`.
+
+Validation on macOS arm64 CMake Release: the transformed bow-tie case passes
+102 assertions / 1 case; `[curve-offset][region]` passes 27,274 assertions /
+16 cases; and `git diff --check` passes. This qualifies only these three
+transforms of the same single-crossing all-straight topology. Other crossing
+arrangements, bulged self-crossings, worker/cache/action integration,
+persistence, visible GUI, cross-platform runtime, and independent CAD
+acceptance remain open.
 
 ## 1364. Support All-straight Bow-tie Polyline Region Offsets (2026-11-14)
 
