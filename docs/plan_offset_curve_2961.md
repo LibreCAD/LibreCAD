@@ -46202,14 +46202,15 @@ The worker-client matrix now builds its direct oracle from the same canonical
 generation source and production tolerance used by the worker, compares
 engine statuses in identity, rotation-only, translation-only, and combined
 frames for both offset directions, and compares successful worker spline
-fingerprints with direct materialization. The rotation-only erosion output
-also round-trips through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with exact
-spline fingerprints. This self-crossing source remains ordinary output, not a
-native editable cache; no native-cache or source-cache Trim claim is implied.
+fingerprints with direct materialization. Every successful positive-bulge
+matrix cell round-trips through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with
+exact spline fingerprints; refused cells remain empty. This self-crossing
+source remains ordinary output, not a native editable cache; no native-cache
+or source-cache Trim claim is implied.
 
 Validation on macOS arm64 CMake Release: `[curve-offset][region]` passes
 27,758 assertions / 20 cases; the focused mixed-frame worker-client case
-passes 1,588 assertions / 1 case with the full frame and persistence matrix;
+passes 1,678 assertions / 1 case with persistence for every successful cell;
 the complete `[curve-offset]` suite passes 2,245,825 assertions / 346 cases;
 the `librecad_tests` and worker-client targets build;
 the qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current`

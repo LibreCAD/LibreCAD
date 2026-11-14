@@ -849,7 +849,7 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
                       RS_Spline::geometryFingerprint(directSpline->getData()));
             }
 
-            if (frame.rotate && !frame.translate && signedDistance > 0.0) {
+            if (expectedSuccess) {
                 struct Lane {
                     RS2::FormatType format;
                     const char* extension;
