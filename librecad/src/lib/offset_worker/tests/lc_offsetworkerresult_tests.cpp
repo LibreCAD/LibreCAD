@@ -735,9 +735,10 @@ TEST_CASE("Worker Trim revalidates monotone proof categories and both root inter
 }
 
 TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cubic sources", tags) {
-    const RS_Vector origin{10, -7}, direction{4, 3}, normal{-3, 4};
-    for (std::size_t degree : {1u, 3u}) for (bool reverseSource : {false, true})
-        for (bool reverseLine : {false, true}) {
+    const RS_Vector origin{10000, -70000};
+    for (double scale : {.01, 1., 100.}) for (std::size_t degree : {1u, 3u})
+        for (bool reverseSource : {false, true}) for (bool reverseLine : {false, true}) {
+            const RS_Vector direction{4 * scale, 3 * scale}, normal{-3 * scale, 4 * scale};
             const std::vector<double> along = degree == 1
                 ? std::vector<double>{.25, .75}
                 : std::vector<double>{.2, .4, .6, .8};
@@ -757,7 +758,7 @@ TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cub
                     pickNet[i] = pickNet[i] * .9 + pickNet[i + 1] * .1;
             const auto pick = Trim::Pick{pickNet.front()};
             const auto result = Trim::prepare(data, cutter, pick);
-            CAPTURE(degree, reverseSource, reverseLine, result.refusal, result.rootCount);
+            CAPTURE(scale, degree, reverseSource, reverseLine, result.refusal, result.rootCount);
             REQUIRE(result.refusal == Trim::Refusal::None);
             REQUIRE(result.roots.size() == 1);
             CHECK(result.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
