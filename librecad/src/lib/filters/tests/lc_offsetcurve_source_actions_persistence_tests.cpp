@@ -1976,7 +1976,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
           "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]") {
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
     const int weightProfile = GENERATE(0, 1, 2);
-    const int knotProfile = GENERATE(0, 1, 2);
+    const int knotProfile = GENERATE(0, 1, 2, 3);
     const int transformed = GENERATE(0, 1, 2);
     const double signedDistance = GENERATE(-0.02, 0.02);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
@@ -2010,7 +2010,8 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     splineData.degree = degree;
     splineData.type = RS_SplineData::SplineType::ClampedOpen;
     splineData.savedOpenType = splineData.type;
-    const std::size_t controlCount = degree + 3;
+    const std::size_t interiorKnotCount = knotProfile == 3 ? 4 : 2;
+    const std::size_t controlCount = degree + interiorKnotCount + 1;
     for (std::size_t i = 0; i < controlCount; ++i) {
         const double angle = 2.0 * M_PI * static_cast<double>(i) / static_cast<double>(controlCount);
         splineData.controlPoints.push_back(mapPoint({10.0 * std::cos(angle), 7.0 * std::sin(angle)}));
@@ -2020,11 +2021,13 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
         splineData.weights.push_back(weight);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), degree + 1, 0.0);
+    const std::array<double, 4> nonuniformKnots{0.12, 0.31, 0.62, 0.88};
     for (std::size_t i = 1; i <= controlCount - degree - 1; ++i) {
         const double uniformKnot = static_cast<double>(i) /
                                    static_cast<double>(controlCount - degree);
         const double knot = knotProfile == 1 ? 0.37 :
-            knotProfile == 2 ? (i == 1 ? 0.23 : 0.68) : uniformKnot;
+            knotProfile == 2 ? (i == 1 ? 0.23 : 0.68) :
+            knotProfile == 3 ? nonuniformKnots[i - 1] : uniformKnot;
         splineData.knotslist.push_back(knot);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), degree + 1, 1.0);
