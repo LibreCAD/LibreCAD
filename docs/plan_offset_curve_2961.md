@@ -43539,8 +43539,9 @@ worker-result suite passes 467,713 assertions / 27 cases. Both
 This implements only proof-token admission and transport. It does not prove
 the token's geometry or fix the centerline Trim failure. The standalone exact
 Bezier/line isolator and its direct geometry tests are recorded in section
-1259; worker hostile-result validation and production provider integration
-remain required before the Trim provider may emit this token.
+1259; worker hostile-result geometry revalidation is recorded in section
+1260. Production provider integration remains required before the Trim
+provider may emit this token.
 
 ## 1259. Add a Standalone Exact Monotone Bezier/Line Isolator (2026-11-13)
 
@@ -43559,16 +43560,36 @@ proof. The helper is not connected to the production Trim provider.
 On macOS arm64 CMake Release, `librecad_tests` builds successfully. The direct
 five-section isolator case passes 10 assertions, and the full
 `[lc-offsetcurve][trim-kernel]` selection passes 41,291 assertions across 72
-cases. `git diff --check` passes. These are direct-core tests only; the worker
-does not yet consume this certificate, and hostile token validation,
-worker-backed actions, symmetric centerline Trim, undo/redo, and persistence
-lanes remain open.
+cases. `git diff --check` passes. These are direct-core tests only; worker
+proof revalidation is recorded in section 1260, while production provider
+integration, symmetric centerline Trim, undo/redo, and persistence lanes remain
+open.
 
-The next implementation slice is to test this certificate's proof category
-against worker-result constraints, including forged category and interval
-payloads, before any Trim provider integration. Then integrate the primitive
-for one source-span/finite-line pair at a time, prove root occurrence identity
-and duplicate suppression across adjacent boxes, and validate both winding
-directions, tangent/near-miss atomic refusal, actions, undo/redo, and all five
-native-capable persistence lanes. The implementation commit is local at this
-receipt; push it and this roadmap update to PR #3193 after review.
+## 1260. Revalidate Monotone Root Claims Against Worker Requests (2026-11-13)
+
+Implementation commit `9a20aeab1` hardens Trim result admission for
+`AnalyticMonotoneTransverse`. The category is accepted only for a single
+straight-line cutter, a unit-weight 2D Bezier source span, an interior source
+parameter, and a narrow source interval. Admission independently reruns the
+exact-rational monotone Bezier/finite-line certificate against the original
+request and requires the returned source, target, and line intervals to
+overlap that certificate; the proof domain must enclose the isolation. This
+keeps a worker from turning an enum value into an unchecked proof capability.
+
+Hostile tests reject broad and displaced source intervals, out-of-range and
+wrong in-range line intervals, a shifted request cutter, a rationally weighted
+source, and the new proof category on a conic request. The matching line
+result still round-trips through the worker protocol. On macOS arm64 CMake
+Release, the focused hostile case passes 12 assertions; the complete
+`librecad_offset_worker_result_tests` suite passes 467,725 assertions / 28
+cases, and `git diff --check` passes.
+
+This closes structural and request-geometry revalidation for the new worker
+proof category, not production root generation. The Trim provider still emits
+no `AnalyticMonotoneTransverse` events. Next, integrate the isolator for
+source-span/finite-line pairs, ensure adjacent boxes cannot duplicate a root,
+and prove the full event's world enclosure and finite-cutter membership before
+publication. Then exercise both windings, tangency/near-miss atomic refusal,
+worker-backed actions, undo/redo, and all native-capable persistence lanes.
+The implementation is committed locally; push it and this roadmap receipt to
+PR #3193 after review.
