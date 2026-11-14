@@ -377,8 +377,11 @@ coverage, not general self-crossing support. Other arc signs/layouts and
 overlap topologies, editable cache/action integration, file persistence,
 visible GUI, cross-platform runtime, and independent CAD acceptance remain
 open. This supersedes the refusal-only evidence in section 1368 and the earlier
-bow-tie refusal text in the Slice 4 table above. Worker generation and ordinary
-branch materialization are covered for both signed offsets of the negative-
+bow-tie refusal text in the Slice 4 table above. Section 1376 separates the
+positive-bulge outcome by identity, rotation-only, translation-only, and
+combined rotation/translation frames, and asserts atomic refusal for every
+unsupported cell. Worker generation and ordinary branch materialization are
+covered for both signed offsets of the negative-
 bulge profile (section 1370); the real helper also verifies one valid
 positive-bulge growth branch and atomic refusal for the overlapping erosion
 case (section 1371). Cache promotion remains intentionally rejected for
@@ -45978,15 +45981,16 @@ promotion remains refused for these generation-only self-intersections.
 
 For the positive-bulge bow-tie rotated by `pi/7` and translated by
 `(123.25, -2000000.5)`, both fill rules are checked against the independent
-dense-source winding/distance oracle. The translated inward operation returns
-two valid closed cycles; its opposite-side operation refuses atomically.
-At the identity frame, growth still returns one valid cycle and erosion still
-refuses atomically. The real helper-process regression sends both signed
-requests for identity and transformed sources and checks worker/direct status
-parity, branch counts, valid ordinary splines, and absence of native-cache
-publication. This adds one translated erosion layout; it does not establish
-translation invariance across signs or general mixed-bulge/self-crossing
-support. Other arc signs, distances, transforms, and overlap arrangements,
+dense-source winding/distance oracle. The combined transform's inward
+operation returns two valid closed cycles; its opposite-side operation refuses
+atomically. At the identity frame, growth returns one valid cycle and erosion
+refuses. Section 1376 additionally isolates rotation-only and translation-only
+frames; both sides refuse in those cases. The real helper-process regression
+sends both signed requests for identity and the combined transform and checks
+worker/direct status parity, branch counts, valid ordinary splines, and absence
+of native-cache publication. This does not establish rigid-transform
+invariance or general mixed-bulge/self-crossing support. Other arc signs,
+distances, transforms, and overlap arrangements,
 editable cache/action integration and Trim remain open. Section 1374 adds
 ordinary-geometry file persistence for the two successful layouts; other
 layouts, visible GUI, cross-platform runtime, and independent CAD acceptance
@@ -46050,6 +46054,28 @@ On macOS arm64 CMake Release, `cmake --build
 `Native source picker preserves highlighted source across family filters`
 passes 138 assertions / 1 case. `git diff --check` passes. The visible GUI
 switching/indication and cross-platform acceptance gates remain open.
+
+## 1376. Isolate Positive-bulge Results Across Rigid Frames (2026-11-14)
+
+Test commit `d0277c883` expands section 1373's positive-bulge bow-tie probe to
+four explicit frames: identity, rotation only, translation only, and the
+previously tested combined rotation/translation. It runs both fill rules and
+both offset directions. Identity growth succeeds with one checked cycle;
+combined-transform erosion succeeds with two cycles. Rotation-only and
+translation-only cases, plus the opposite direction in each successful frame,
+return `AmbiguousTopology` with no branches. Successful cycles retain the
+independent closure, winding/side, distance, positive-area, and source-
+immutability checks. This exposes a transform-sensitive topology boundary; it
+does not claim rigid-transform-invariant geometry or a successful result for
+the refusal cells.
+
+On macOS arm64 CMake Release, `cmake --build
+/private/tmp/offset-2961-cmake-clean --target librecad_tests -j4` succeeds and
+`Positive-bulge bow-tie mixed-frame successes are independently checked`
+passes 154 assertions / 1 case. `git diff --check` passes. Resolving the
+transform-sensitive topology results remains an open geometry feature; worker
+parity, persistence, visible GUI, cross-platform, and independent CAD gates
+remain separate.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
