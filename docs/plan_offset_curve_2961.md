@@ -51,17 +51,20 @@ refusal, stale input, or worker failure preserves the previous source state.
 
 This picker behavior is implemented and headlessly covered by the source-picker
 and ordered-family replacement tests cited in sections 1291-1293, including
-1,101 assertions across all nine kinds. No new selector implementation slice
-is needed unless a regression is found. The remaining picker acceptance is a
-visible desktop check in Slice 5: switch types repeatedly during active
-selection, verify candidate refresh and source indication, then verify
-successful replacement and cancel/refusal behavior. Keep this gate separate
-from Slice 4's per-variant capture/reconstruction, worker/cache, Trim, and
-DXF/DWG qualification; selector availability alone does not prove full support
-for every mathematical variant. The focused Properties-dialog tests also
-verify the selector inventory and eligible candidate filtering against all
-nine kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`,
-source chooser tests). Do not add unrelated drawable families or a second type
+1,101 assertions across all nine kinds. Section 1342 additionally verifies
+that the current-source highlight remains visible while the replacement filter
+changes to parabola and back to line; its focused source-picker suite passes
+15,129 assertions / 44 cases. No new selector implementation slice is needed
+unless a regression is found. The remaining picker acceptance is a visible
+desktop check in Slice 5: switch types repeatedly during active selection,
+verify candidate refresh and source indication, then verify successful
+replacement and cancel/refusal behavior. Keep this gate separate from Slice
+4's per-variant capture/reconstruction, worker/cache, Trim, and DXF/DWG
+qualification; selector availability alone does not prove full support for
+every mathematical variant. The focused Properties-dialog tests also verify
+the selector inventory and eligible candidate filtering against all nine
+kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`, source
+chooser tests). Do not add unrelated drawable families or a second type
 selector. The latest request (2026-11-14) reconfirms two distinct obligations:
 the user can change the requested source family while replacement selection is
 active, and eligible replacement candidates exist for every kind in
@@ -142,7 +145,7 @@ repeat the already-covered selector request.
    result; headless coverage does not close the visible-GUI gate.
 
 Automated picker evidence: the latest focused headless source-picker suite
-passes 15,116 assertions / 44 cases (`librecad_tests
+passes 15,129 assertions / 44 cases (`librecad_tests
 '[gui][dialog][offsetcurve][source]'`), including repeated type changes and
 candidate refresh across all nine kinds. This is not visible-GUI acceptance
 and does not establish that every geometry variant of those families works.
@@ -45461,17 +45464,19 @@ and independent CAD acceptance remain open.
 
 Implementation slice committed as `2180fcacc` (`fix(offset): bound dense convex polyline round joins`). The Direct outward path now recognizes simple strictly-convex linear polylines and constructs their exact parallel edge spans plus circular vertex joins. It retains the existing 4,096-piece and sample budgets. The materializer validates each emitted arc against its vertex circle; straight source spans use two exact offset endpoint evaluations and a Bezier-control convex-hull bound, avoiding repeated nearest-point iterations while still checking the complete candidate span against the requested geometry tolerance. Non-eligible layouts continue through the general rounded-join engine.
 
-The high-segment action matrix now completes typed worker replacement and independent radial checks for 256/512/1024/2048 edges in both directions. The 2048 `towardCentre=true` outward case now generates and publishes its cache; its finite-line `LC_OffsetCacheTrim::prepare` remains explicitly refused as `AmbiguousRoots` with zero certified roots and no drawing mutation. This replaces the former generation `LimitExceeded` boundary, but does not claim 2048 outward Trim success. The 2048 `towardCentre=false` Trim Two and five-format save/reopen path remains passing as recorded in section 1340.
+The high-segment action matrix completes typed worker replacement and independent radial checks for 256/512/1024/2048 edges in both directions. The 2048 `towardCentre=true` case now completes finite-line Trim Two, undo/redo, and all five native DXF/DWG save/reopen lanes as well as cache generation. To certify the cut endpoints when global spline parameters approach their precision limit, higher-degree cache spans may use the exact rational Bezier point-to-double conversion error only after scalar contraction when the intersection session has multiple certified roots. Linear-span behavior is unchanged, and one-root higher-degree near-cusp cases retain the conservative four-ULP bound. The 2048 `towardCentre=false` path remains passing as recorded in section 1340.
 
 Validation on macOS arm64 CMake Release:
 
-- `Closed high-segment polyline Trim Two distinguishes connected and overlapping offsets`: 2,521 assertions / 1 case, including all eight size/direction combinations and the atomic 2048 outward Trim refusal.
+- `Closed high-segment polyline Trim Two distinguishes connected and overlapping offsets`: 2,898 assertions / 1 case, including all eight size/direction combinations and 2048-edge outward Trim Two plus persistence.
+- `T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders`: 30,253 assertions / 1 case, including the near-cusp profiles that guard against broadening the exact-rounding rule.
+- `Near-tangent roots are either separated by proof or refused without output`: 7 assertions / 1 case.
 - `convex linear polyline outward offsets retain exact round joins in either orientation`: 1,080 assertions / 1 case for asymmetric convex CW and CCW polygons, sampled source-distance checks, and operation-8 cache admission.
 - `[lc-offsetcurve][polyline][worker-kernel]`: 64,207 assertions / 12 cases.
 - `[curve-offset][direct]`: 619,979 assertions / 76 cases.
 - `[curve-offset][region]`: 27,150 assertions / 13 cases.
 
-`git diff --check` passes. Evidence is limited to these strict-convex linear layouts and test profiles. 2048 outward Trim root certification, other dense cutters/layouts, visible GUI interaction, cross-platform runtime, and independent CAD acceptance remain open; do not raise global budgets or weaken atomic refusal to close them.
+`git diff --check` passes. A broad `[lc-offsetcurve][trim-action]` run was interrupted before producing a summary and is not reported as passing. Evidence is limited to these strict-convex linear layouts and test profiles. Other dense cutters/layouts, visible GUI interaction, cross-platform runtime, and independent CAD acceptance remain open; do not raise global budgets or weaken atomic refusal to close them.
 
 ## 1342. Assert Source Highlight Across Family Filters (2026-11-14)
 
