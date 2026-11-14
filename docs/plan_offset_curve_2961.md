@@ -44899,3 +44899,21 @@ combinations. This closes the missing opposite-sign case for these exact
 profiles only; additional spline layouts, broader family/topology coverage,
 visible GUI, cross-platform runtime, and independent ODA/AutoCAD validation
 remain open.
+
+## 1316. Oracle-check an Alternating Rational Spline Weight Profile (2026-11-14)
+
+Test commit `eeffaa271` extends the independent repeated-knot worker oracle
+with a second positive weight distribution. The origin-aligned cases retain
+the smoothly varying weights from sections 1313-1315; the rotated/translated
+cases use alternating weights `0.7` and `1.3`. Both degree-four/six splines,
+interior multiplicities one, two, and degree-minus-one, and both signed offset
+distances are checked against the high-precision source/normal oracle and
+typed cache validation.
+
+Validation on macOS arm64 CMake Release: the focused oracle case passes 744
+assertions / 1 case, and the full `[spline][high-degree]` worker selection
+passes 13,719 assertions / 11 cases. This adds independent generation and
+cache evidence for one alternating-weight layout, but does not qualify that
+weight profile through document Trim, undo/redo, or DXF/DWG persistence; those
+end-to-end variants remain open, as do broader control nets, weight ranges,
+conditioning, visible GUI, cross-platform runtime, and ODA/AutoCAD acceptance.
