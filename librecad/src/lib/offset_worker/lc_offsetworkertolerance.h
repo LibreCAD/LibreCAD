@@ -153,15 +153,12 @@ inline std::optional<double> strictConvexPolylineOrientation(
     return hasStrictTurn ? std::optional<double>{orientation} : std::nullopt;
 }
 
-inline bool hasIntersectingLinearPolyline(const LC_OffsetSourceDefinition& definition,
-                                          const RS_Entity& source) {
+inline bool hasIntersectingPolyline(const LC_OffsetSourceDefinition& definition,
+                                    const RS_Entity& source) {
     const auto* data = std::get_if<LC_OffsetPolylineData>(&definition.source.value);
     const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
     if (data == nullptr || !data->closed || data->segments.size() < 4 || polyline == nullptr ||
-        !polyline->isClosed() ||
-        !std::all_of(data->segments.begin(), data->segments.end(), [](const auto& segment) {
-            return std::holds_alternative<RS_LineData>(segment);
-        })) {
+        !polyline->isClosed()) {
         return false;
     }
 
@@ -172,22 +169,45 @@ inline bool hasIntersectingLinearPolyline(const LC_OffsetSourceDefinition& defin
     const RS_Vector translation = data->startpoint - liveData->startpoint;
     double coordinateScale = 1.0;
     for (const auto& segment : data->segments) {
-        const auto& line = std::get<RS_LineData>(segment);
-        coordinateScale = std::max({coordinateScale, std::abs(line.startpoint.x), std::abs(line.startpoint.y),
-                                    std::abs(line.endpoint.x), std::abs(line.endpoint.y)});
+        std::visit([&](const auto& item) {
+            using T = std::decay_t<decltype(item)>;
+            if constexpr (std::is_same_v<T, RS_LineData>) {
+                coordinateScale = std::max({coordinateScale, std::abs(item.startpoint.x),
+                    std::abs(item.startpoint.y), std::abs(item.endpoint.x), std::abs(item.endpoint.y)});
+            } else {
+                coordinateScale = std::max({coordinateScale, std::abs(item.center.x),
+                    std::abs(item.center.y), item.radius});
+            }
+        }, segment);
     }
     const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
     if ((liveData->startpoint + translation).distanceTo(data->startpoint) > pointSlack ||
         (liveData->endpoint + translation).distanceTo(data->endpoint) > pointSlack) {
         return false;
     }
+    const auto sameTranslatedSegment = [&](const LC_OffsetPolylineSegment& expected,
+                                           const LC_OffsetPolylineSegment& actual) {
+        if (expected.valueless_by_exception() || actual.valueless_by_exception()) return false;
+        return std::visit([&](const auto& wanted) {
+            using T = std::decay_t<decltype(wanted)>;
+            const auto* found = std::get_if<T>(&actual);
+            if (found == nullptr) return false;
+            if constexpr (std::is_same_v<T, RS_LineData>) {
+                return (found->startpoint + translation).distanceTo(wanted.startpoint) <= pointSlack &&
+                       (found->endpoint + translation).distanceTo(wanted.endpoint) <= pointSlack;
+            } else {
+                const double angleSlack = 128.0 * std::numeric_limits<double>::epsilon() *
+                    std::max({1.0, std::abs(wanted.angle1), std::abs(wanted.angle2)});
+                return (found->center + translation).distanceTo(wanted.center) <= pointSlack &&
+                       std::abs(found->radius - wanted.radius) <= pointSlack &&
+                       std::abs(found->angle1 - wanted.angle1) <= angleSlack &&
+                       std::abs(found->angle2 - wanted.angle2) <= angleSlack &&
+                       found->reversed == wanted.reversed;
+            }
+        }, expected);
+    };
     for (std::size_t i = 0; i < data->segments.size(); ++i) {
-        const auto& expected = std::get<RS_LineData>(data->segments[i]);
-        const auto* actual = std::get_if<RS_LineData>(&liveData->segments[i]);
-        if (actual == nullptr || (actual->startpoint + translation).distanceTo(expected.startpoint) > pointSlack ||
-            (actual->endpoint + translation).distanceTo(expected.endpoint) > pointSlack) {
-            return false;
-        }
+        if (!sameTranslatedSegment(data->segments[i], liveData->segments[i])) return false;
     }
     return !LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data);
 }
@@ -220,7 +240,7 @@ inline std::optional<LC_CurveOffsetOptions> directOptions(
     auto options = directOptions(source, definition.signedDistance, definition.relativeTolerance);
     const auto orientation = strictConvexPolylineOrientation(definition, source);
     if (options && ((orientation && definition.signedDistance * *orientation > 0.0) ||
-                    hasIntersectingLinearPolyline(definition, source))) {
+                    hasIntersectingPolyline(definition, source))) {
         options->mode = LC_CurveOffsetMode::RegionBoundary;
     }
     return options;

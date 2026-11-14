@@ -82,9 +82,9 @@ struct LC_OffsetSourceGeometry {
 
 private:
     static std::optional<LC_OffsetSourceGeometry> captureImpl(
-        const RS_Entity& entity, bool allowSelfIntersectingLinearPolyline);
+        const RS_Entity& entity, bool allowSelfIntersectingPolyline);
     std::unique_ptr<RS_Entity> makeEntityImpl(RS_EntityContainer* parent) const;
-    bool isWellFormedImpl(bool allowSelfIntersectingLinearPolyline) const noexcept;
+    bool isWellFormedImpl(bool allowSelfIntersectingPolyline) const noexcept;
 };
 
 /** Source plus the common signed left-normal distance and native cache options. */
@@ -291,12 +291,12 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::captureFo
 }
 
 inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::captureImpl(
-    const RS_Entity& entity, const bool allowSelfIntersectingLinearPolyline) {
+    const RS_Entity& entity, const bool allowSelfIntersectingPolyline) {
     if (LC_OffsetSourceDetail::hasUnsupportedProjectionProvenance(entity))
         return std::nullopt;
-    const auto wellFormed = [allowSelfIntersectingLinearPolyline](const LC_OffsetSourceGeometry& geometry) {
-        return allowSelfIntersectingLinearPolyline ? geometry.isWellFormedForGeneration()
-                                                   : geometry.isWellFormed();
+    const auto wellFormed = [allowSelfIntersectingPolyline](const LC_OffsetSourceGeometry& geometry) {
+        return allowSelfIntersectingPolyline ? geometry.isWellFormedForGeneration()
+                                             : geometry.isWellFormed();
     };
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         LC_OffsetSourceGeometry result{ellipse->getData()};
@@ -415,10 +415,10 @@ inline bool LC_OffsetSourceGeometry::isWellFormedForGeneration() const noexcept 
 }
 
 inline bool LC_OffsetSourceGeometry::isWellFormedImpl(
-    const bool allowSelfIntersectingLinearPolyline) const noexcept {
+    const bool allowSelfIntersectingPolyline) const noexcept {
     using namespace LC_OffsetSourceDetail;
     if (value.valueless_by_exception()) return false;
-    return std::visit([allowSelfIntersectingLinearPolyline](const auto& data) noexcept {
+    return std::visit([allowSelfIntersectingPolyline](const auto& data) noexcept {
         using T = std::decay_t<decltype(data)>;
         if constexpr (std::is_same_v<T, RS_EllipseData>) {
             const double majorLength = std::hypot(data.majorP.x, data.majorP.y);
@@ -526,11 +526,7 @@ inline bool LC_OffsetSourceGeometry::isWellFormedImpl(
                 if (!insertUniqueVertex(uniqueVertices, lastEnd) ||
                     !sameEndpoint(lastEnd, data.endpoint, lastScale)) return false;
             }
-            return hasNoNonAdjacentSegmentIntersections(data) ||
-                (allowSelfIntersectingLinearPolyline && data.closed &&
-                 std::all_of(data.segments.begin(), data.segments.end(), [](const auto& segment) {
-                     return std::holds_alternative<RS_LineData>(segment);
-                 }));
+            return hasNoNonAdjacentSegmentIntersections(data) || (allowSelfIntersectingPolyline && data.closed);
         }
     }, value);
 }

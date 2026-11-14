@@ -256,10 +256,10 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         options.maxIntersectionPairs = input.limits.maxIntersectionPairs;
     options.maxOutputBranches = std::min(options.maxOutputBranches,
         input.limits.outputBudget.maxOutputEntities);
-    const bool selfIntersectingLinearPolyline =
-        LC_OffsetWorkerTolerance::hasIntersectingLinearPolyline(definition, *source);
+    const bool selfIntersectingPolyline =
+        LC_OffsetWorkerTolerance::hasIntersectingPolyline(definition, *source);
     const LC_CurveOffsetSide side = options.mode == LC_CurveOffsetMode::RegionBoundary
-        ? (selfIntersectingLinearPolyline && definition.signedDistance < 0.0
+        ? (selfIntersectingPolyline && definition.signedDistance < 0.0
                ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left)
         : definition.signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
 

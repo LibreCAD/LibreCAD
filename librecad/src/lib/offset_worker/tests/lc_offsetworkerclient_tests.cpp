@@ -39,6 +39,7 @@
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_entitycontainer.h"
+#include "rs_arc.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -668,6 +669,68 @@ TEST_CASE("Worker client handles a five-crossing polyline region",
         CHECK(spline->getStartpoint().distanceTo(spline->getEndpoint()) < 0.02);
         CHECK(ordinary->front()->getParent() == &owner);
         CHECK(ordinary->front()->getLayer(false) == &layer);
+    }
+}
+
+TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
+          "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Layer layer{QStringLiteral("mixed-bulge source")};
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    RS_Polyline sourceEntity;
+    sourceEntity.addVertex({20, 10});
+    sourceEntity.addVertex({20, -10}, -0.5);
+    sourceEntity.addVertex({-20, 10});
+    sourceEntity.addVertex({-20, -10});
+    sourceEntity.setClosed(true);
+    sourceEntity.endPolyline();
+    const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
+    REQUIRE(source);
+    CHECK_FALSE(source->isWellFormed());
+    REQUIRE(source->isWellFormedForGeneration());
+
+    for (const auto [requestId, signedDistance] :
+         {std::pair<qint64, double>{501, 0.5}, {502, -0.5}}) {
+        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+        const auto encoded = Req::encode(request);
+        REQUIRE(encoded);
+        const auto decoded = Req::decode(*encoded);
+        REQUIRE(decoded);
+        CHECK(Req::admitted(*decoded));
+        Receipts receipts;
+        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+
+        const auto& completion = completed(receipts.at(0), requestId, 7);
+        REQUIRE(std::holds_alternative<Reply::Native>(completion.reply().result));
+        const auto& result = std::get<Reply::Native>(completion.reply().result);
+        INFO("signedDistance=" << signedDistance << " status="
+                                 << (result.engineStatus ? static_cast<int>(*result.engineStatus) : -1));
+        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(result.ordinary.empty());
+        CHECK(result.ordinary.size() == (signedDistance > 0.0 ? 2u : 1u));
+        CHECK_FALSE(result.curve);
+        CHECK_FALSE(completion.nativeSource(attributes));
+
+        auto ordinary = completion.ordinary(attributes);
+        REQUIRE(ordinary);
+        REQUIRE(ordinary->size() == result.ordinary.size());
+        for (const auto& entity : *ordinary) {
+            REQUIRE(entity);
+            REQUIRE(entity->rtti() == RS2::EntitySpline);
+            CHECK(entity->getParent() == &owner);
+            CHECK(entity->getLayer(false) == &layer);
+            const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+            REQUIRE(spline);
+            CHECK(spline->validate());
+        }
+        CHECK(owner.count() == 0);
     }
 }
 
