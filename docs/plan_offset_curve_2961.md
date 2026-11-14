@@ -44732,3 +44732,22 @@ the chosen family. No production change was required for that UI request.
 Other spline degrees/rational profiles, the remaining source-family and
 parameterization matrix, visible-GUI acceptance, cross-platform runtime, and
 external-CAD checks remain open.
+
+## 1308. Extend Rational Spline Trim Through Degree Six (2026-11-14)
+
+Test commit `0f1fbdd61` extends the end-to-end rational spline Trim fixture
+from section 1307 to cover both degree four and degree six. Each degree uses a
+clamped layout, nonuniform positive weights, and one interior knot. Both
+variants run Update from Source, verify that the typed source retains its
+degree and knot vector, prepare a two-root cache Trim, compare the published
+fragments to pure preparation, check undo/redo, and export/reopen R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[high-degree][interior-knot][trim-action]' --reporter compact`
+passes 682 assertions / 1 case across both degrees and all five file lanes.
+The existing asymmetric degree-four/six worker test passes 64 assertions / 1
+case. Degree six therefore now has action, Trim, undo/redo and file-lane
+evidence for this exact profile. Other rational layouts, knot multiplicities,
+translated/conditioned profiles, visible-GUI acceptance, cross-platform
+runtime, and external-CAD validation remain open.
