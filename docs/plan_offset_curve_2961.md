@@ -45623,6 +45623,23 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1355. Qualify Dense Ellipse Tangency and Near-tangent Trim (2026-11-14)
+
+Test commit `be7e249e0` adds paired 128-, 512-, and 2048-span closed-circle
+cache cases against a ratio-`0.2` ellipse. At exact contact with the source
+vertex, Trim must refuse without roots, fragments, removal, or source
+mutation. Shifting the ellipse inward by `0.1` must instead isolate two
+crossings, return the single valid complement containing the picked source
+interval, and preserve the source cache. This qualifies the specified vertex
+contact and displacement only; it is not a general ellipse tangency proof.
+
+Validation on macOS arm64 CMake Release: the focused pair passes 162,949
+assertions / 2 cases; `[trim-kernel]` passes 1,986,670 assertions / 87 cases;
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests
+-j4` succeeds; and `git diff --check` passes. Other contact orientations,
+eccentricities, dense source topologies, visible GUI, cross-platform runtime,
+and independent CAD acceptance remain open.
+
 ## 1353. Trim Dense Caches Against a Narrow Rotated Ellipse (2026-11-14)
 
 Added a full-ellipse cutter with minor/major ratio `0.2`, rotated by `π/12`,
