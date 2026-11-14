@@ -549,6 +549,38 @@ TEST_CASE("Dense nonconvex cache trims one picked conic interval among many root
     CHECK(coverage(result, static_cast<double>(segmentCount / 10) + .5) == 1);
 }
 
+TEST_CASE("Dense eccentric-ellipse arc Trim scales across normalized coordinates", tags) {
+    const double scale = GENERATE(1e-6, 1.0, 1e6);
+    CAPTURE(scale);
+    constexpr std::size_t segmentCount = 512;
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        points.emplace_back(10.0 * scale * std::cos(angle),
+                            10.0 * scale * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    const double rotation = pi / 12;
+    RS_Ellipse cutter{nullptr, {{10.0 * scale, 0.0},
+        {10.0 * scale * std::cos(rotation), 10.0 * scale * std::sin(rotation)},
+        .8, 1.5, 4.3, false}};
+
+    const auto result = Trim::prepare(data, cutter, {{10.0 * scale, 0.0}});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result, 2e-10 * scale);
+    equalData(data, before);
+    CHECK(coverage(result, .5) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
+}
+
 TEST_CASE("Closed cache trim canonicalizes a proved root at the old storage seam", tags) {
     for (bool reverse : {false, true}) {
         auto data = cache({{0, -2}, {2, -2}, {2, 2}, {-2, 2}, {-2, -2}, {0, -2}});

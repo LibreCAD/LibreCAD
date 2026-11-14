@@ -45606,3 +45606,19 @@ cases; `librecad_tests` builds; and `git diff --check` passes. This establishes
 only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1348. Trim Dense Eccentric Ellipse Arcs Across Uniform Scales (2026-11-14)
+
+Added a 512-span cache matrix at uniform scales `1e-6`, `1`, and `1e6`, using
+the same eccentric ellipse arc, relative cutter placement, pick, and root
+topology at each scale. Each run requires two roots, one valid complementary
+fragment, unchanged input data, and sampled source/output agreement within a
+scale-relative tolerance. This checks reference-frame normalization without
+translation or geometry-family changes.
+
+Validation on macOS arm64 CMake Release: the scale matrix passes 65,379
+assertions / 1 case; `[trim-kernel]` passes 1,064,384 assertions / 81 cases;
+`librecad_tests` builds; and `git diff --check` passes. These three scales do
+not qualify extreme subnormal/overflow coordinates, translated scale
+combinations, other conic ratios, or arbitrary source topologies; visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
