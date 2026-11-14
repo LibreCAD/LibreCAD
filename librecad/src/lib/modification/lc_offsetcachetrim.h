@@ -122,6 +122,8 @@ struct MonotoneLineRootCertificate {
 std::optional<MonotoneLineRootCertificate> certifyMonotoneLineRoot(
     const std::vector<RS_Vector>& bezierControlPoints,
     const RS_Vector& lineStart, const RS_Vector& lineEnd);
+bool strictlySeparatedBezierFromLine(const std::vector<RS_Vector>& bezierControlPoints,
+                                     const RS_Vector& lineStart, const RS_Vector& lineEnd);
 
 struct Result {
     struct ConicFragment {

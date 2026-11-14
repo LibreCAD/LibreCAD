@@ -42,6 +42,9 @@ I intersect(const I& a, const I& b) {
     return finite(a) && finite(b) && std::max(a.lo(), b.lo()) <= std::min(a.hi(), b.hi())
         ? I::hull(std::max(a.lo(), b.lo()), std::min(a.hi(), b.hi())) : I{};
 }
+bool overlaps(const I& a, const I& b) {
+    return finite(a) && finite(b) && std::max(a.lo(), b.lo()) <= std::min(a.hi(), b.hi());
+}
 I enclose(const Q& q) {
     const double v = q.convert_to<double>();
     if (!std::isfinite(v)) { return {}; }
@@ -105,7 +108,7 @@ std::optional<MonotoneLineRootCertificate> certifyMonotoneLineRootExact(
                                      const ExactNet& restricted,
                                      bool exactRoot, const ExactPoint& rootPoint)
             -> std::optional<MonotoneLineRootCertificate> {
-        if (!exactRoot && parameterHi - parameterLo > Q{1} / Q{std::uint64_t{1} << 48}) {
+        if (!exactRoot && parameterHi - parameterLo > Q{std::ldexp(1., -80)}) {
             return {};
         }
         Q projectionLo, projectionHi;
@@ -503,9 +506,10 @@ class Curves final : public LC_ParametricCurves {
 public:
     Curves(Geo::ReferenceFrame frame, std::shared_ptr<const Spans> source,
            std::shared_ptr<const Spans> cutter, std::optional<Conic> conic,
-           bool closed, bool cutterClosed, Cancellation cancel)
+           bool closed, bool cutterClosed, bool finiteLineCutter, Cancellation cancel)
         : m_frame(std::move(frame)), m_source(std::move(source)), m_cutter(std::move(cutter)),
-          m_conic(std::move(conic)), m_closed(closed), m_cutterClosed(cutterClosed), m_cancel(std::move(cancel)) {
+          m_conic(std::move(conic)), m_closed(closed), m_cutterClosed(cutterClosed),
+          m_finiteLineCutter(finiteLineCutter), m_cancel(std::move(cancel)) {
         m_segments.reserve(m_source->size() + (m_conic ? 8 : m_cutter->size()));
         for (std::size_t k = 0; k < m_source->size(); ++k) {
             m_segments.push_back({0, double(k), double(k + 1)});
@@ -670,7 +674,13 @@ public:
                 excluded = join(last, b.lo(), first, a.hi());
             }
         }
-        if (!excluded) { return endpoint(box); }
+        if (!excluded) {
+            const auto endpointProof = endpoint(box);
+            if (endpointProof.outcome == LC_AnalyticIntersectionCertificate::Outcome::Unique) return endpointProof;
+            const auto lineProof = monotoneLine(box);
+            if (lineProof.outcome != LC_AnalyticIntersectionCertificate::Outcome::Unavailable) return lineProof;
+            return endpointProof;
+        }
         LC_AnalyticIntersectionCertificate out;
         out.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
         out.proof = LC_IntersectionProof::AnalyticExclusion; out.proofDomain = box;
@@ -695,10 +705,54 @@ public:
     }
 
 private:
+    LC_AnalyticIntersectionCertificate monotoneLine(const LC_IntersectionDomain& box) const {
+        using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+        if (!m_finiteLineCutter || box.segmentA >= m_source->size() ||
+            box.segmentB < m_source->size() || m_conic) return {};
+        const auto* curve = raw(box.segmentA);
+        const auto* line = raw(box.segmentB);
+        if (!curve || !line || line->degree != 1) return {};
+        std::vector<RS_Vector> controls;
+        controls.reserve(curve->degree + 1);
+        for (std::size_t i = 0; i <= curve->degree; ++i) controls.emplace_back(curve->controls[i].x, curve->controls[i].y);
+        const RS_Vector lineStart{line->controls[0].x, line->controls[0].y};
+        const RS_Vector lineEnd{line->controls[1].x, line->controls[1].y};
+
+        LC_AnalyticIntersectionCertificate out;
+        out.proofDomain = box;
+        if (strictlySeparatedBezierFromLine(controls, lineStart, lineEnd)) {
+            out.outcome = Outcome::Excluded;
+            out.proof = LC_IntersectionProof::AnalyticExclusion;
+            return out;
+        }
+        const auto certificate = certifyMonotoneLineRoot(controls, lineStart, lineEnd);
+        if (!certificate || certificate->bezierParameter.lo() <= 0 ||
+            certificate->bezierParameter.hi() >= 1) return {};
+
+        const I sourceDomain = I::hull(m_segments[box.segmentA].t0, m_segments[box.segmentA].t1);
+        const I lineDomain = I::hull(m_segments[box.segmentB].t0, m_segments[box.segmentB].t1);
+        const I sourceParameter = intersect(certificate->bezierParameter + I::point(m_segments[box.segmentA].t0), sourceDomain);
+        const I lineParameter = intersect(certificate->lineParameter + I::point(m_segments[box.segmentB].t0), lineDomain);
+        if (!overlaps(sourceParameter, box.parameterA) || !overlaps(lineParameter, box.parameterB)) {
+            out.outcome = Outcome::Excluded;
+            out.proof = LC_IntersectionProof::AnalyticExclusion;
+            return out;
+        }
+        if (!contains(box.segmentA, sourceParameter) || !contains(box.segmentB, lineParameter) ||
+            sourceParameter.lo() < box.parameterA.lo() || sourceParameter.hi() > box.parameterA.hi() ||
+            lineParameter.lo() < box.parameterB.lo() || lineParameter.hi() > box.parameterB.hi()) return {};
+        out.outcome = Outcome::Unique;
+        out.proof = LC_IntersectionProof::AnalyticMonotoneTransverse;
+        out.isolationA = sourceParameter;
+        out.isolationB = lineParameter;
+        out.kind = LC_ParametricIntersection::Kind::Transverse;
+        return out;
+    }
+
     Geo::ReferenceFrame m_frame;
     std::shared_ptr<const Spans> m_source, m_cutter;
     std::optional<Conic> m_conic;
-    bool m_closed, m_cutterClosed;
+    bool m_closed, m_cutterClosed, m_finiteLineCutter;
     Cancellation m_cancel;
     std::vector<LC_ParametricSegment> m_segments;
 };
@@ -1007,7 +1061,9 @@ Location location(const I& t, std::size_t count) {
 
 I global(std::size_t span, const I& u) {
     if (singleton(u) && (u.lo() == 0 || u.lo() == 1)) { return I::point(double(span) + u.lo()); }
-    return u + I::point(double(span));
+    // The local interval is already proved to lie in [0, 1]; clipping removes
+    // only outward-rounding spill at the integer span boundary.
+    return intersect(u + I::point(double(span)), I::hull(double(span), double(span + 1)));
 }
 
 // Arithmetic allowance in the common LOCAL frame, independent of world origin
@@ -1141,6 +1197,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
         if (!snapshot || snapshot->event.branchA != 0 || snapshot->event.branchB != 1) { fail(Refusal::AmbiguousRoots); }
         if (snapshot->event.kind == LC_ParametricIntersection::Kind::Tangent ||
             (snapshot->event.proof != LC_IntersectionProof::IntervalUniqueTransverse &&
+             snapshot->event.proof != LC_IntersectionProof::AnalyticMonotoneTransverse &&
              snapshot->event.proof != LC_IntersectionProof::AnalyticEndpoint)) { fail(Refusal::TangencyOrOverlap); }
         auto t = snapshot->event.isolation.parameterA;
         bool lineContracted = false;
@@ -1160,8 +1217,11 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                 const double upper = std::nextafter(value, INFINITY);
                 return std::isfinite(upper) ? std::max(value - lower, upper - value) : value - lower;
             };
+            // A finite-line scalar contraction can certify the local root even
+            // when its global midpoint rounds onto an integer span boundary.
+            const bool roundedToKnot = !singleton(t) && globalMiddle == std::floor(globalMiddle);
             const bool globalParameterLosesLocalPrecision = std::isfinite(globalMiddle) &&
-                ulp(globalMiddle) > 128 * ulp(localMiddle);
+                (ulp(globalMiddle) > 128 * ulp(localMiddle) || roundedToKnot);
             const bool lineCutter = globalParameterLosesLocalPrecision && input.cutter &&
                 cutterId >= input.source->size() &&
                 cutterId - input.source->size() < input.cutter->size() &&
@@ -1221,7 +1281,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
         }
         double cut = mid(t);
         if (!std::isfinite(cut) || !t.contains(cut) ||
-            (!singleton(t) && cut == std::floor(cut))) { fail(Refusal::AmbiguousRoots); }
+            (!singleton(t) && cut == std::floor(cut) && !lineContracted)) { fail(Refusal::AmbiguousRoots); }
         // Only exact closure transports the certified end occurrence to zero.
         if (input.closed && exactParameter(t, double(input.source->size()))) { t = I::point(0); cut = 0; }
         // Only equal singleton parameter isolations identify the same occurrence.
@@ -1635,7 +1695,7 @@ std::vector<Root> rootsAcrossCutterComponents(Context& c, const Input& input,
         local.cutterClosed = part.closed;
         c.items(1);
         auto provider = std::make_unique<Curves>(local.frame, local.source, local.cutter,
-            local.conic, local.closed, local.cutterClosed, c.cancellation);
+            local.conic, local.closed, local.cutterClosed, false, c.cancellation);
         const auto* view = provider.get();
         auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
         auto partRoots = roots(c, local, *view, *session);
@@ -1802,6 +1862,26 @@ std::optional<MonotoneLineRootCertificate> certifyMonotoneLineRoot(
     catch (...) { return {}; }
 }
 
+bool strictlySeparatedBezierFromLine(const std::vector<RS_Vector>& controls,
+                                     const RS_Vector& lineStart, const RS_Vector& lineEnd) {
+    if (controls.size() < 2 || controls.size() > 4 ||
+        !std::isfinite(lineStart.x) || !std::isfinite(lineStart.y) ||
+        !std::isfinite(lineEnd.x) || !std::isfinite(lineEnd.y)) return false;
+    try {
+        const ExactPoint origin{Q{lineStart.x}, Q{lineStart.y}};
+        const Q dx = Q{lineEnd.x} - origin.x, dy = Q{lineEnd.y} - origin.y;
+        if (dx == 0 && dy == 0) return false;
+        bool positive = true, negative = true;
+        for (const auto& control : controls) {
+            if (!std::isfinite(control.x) || !std::isfinite(control.y)) return false;
+            const Q distance = signedDistance({Q{control.x}, Q{control.y}}, origin, dx, dy);
+            positive = positive && distance > 0;
+            negative = negative && distance < 0;
+        }
+        return positive || negative;
+    } catch (...) { return false; }
+}
+
 namespace {
 static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, const Pick& pick,
                const std::optional<Pick>& conicPick, bool emitCache,
@@ -1842,7 +1922,7 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
                 local.closed = part.closed;
                 c.items(1);
                 auto provider = std::make_unique<Curves>(local.frame, local.source, local.cutter,
-                    local.conic, local.closed, local.cutterClosed, c.cancellation);
+                    local.conic, local.closed, local.cutterClosed, false, c.cancellation);
                 const auto* view = provider.get();
                 auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
                 auto contacts = roots(c, local, *view, *session);
@@ -1904,7 +1984,8 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
             } else {
                 c.items(1);
                 auto provider = std::make_unique<Curves>(input.frame, input.source, input.cutter, input.conic,
-                    input.closed, input.cutterClosed, c.cancellation);
+                    input.closed, input.cutterClosed, dynamic_cast<const RS_Line*>(&cutter) != nullptr,
+                    c.cancellation);
                 const auto* view = provider.get(); // Owned by the session throughout root preparation.
                 session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
                 contacts = roots(c, input, *view, *session);

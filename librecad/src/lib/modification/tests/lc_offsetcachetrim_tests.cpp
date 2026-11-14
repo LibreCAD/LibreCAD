@@ -133,7 +133,9 @@ TEST_CASE("Monotone Bezier line certificates isolate only finite transverse cros
         REQUIRE(certificate);
         CHECK(certificate->bezierParameter.contains(.3));
         CHECK(certificate->lineParameter.contains(.5));
-        CHECK(certificate->bezierParameter.width() < 1e-12);
+        CHECK(certificate->bezierParameter.width() < 1e-15);
+        CHECK_FALSE(Trim::strictlySeparatedBezierFromLine(
+            {{0, 0}, {1. / 3, 0}, {2. / 3, 0}, {1, 0}}, {.3, -1}, {.3, 1}));
     }
     SECTION("root exactly at a subdivision boundary") {
         const auto certificate = Trim::certifyMonotoneLineRoot(
@@ -141,6 +143,14 @@ TEST_CASE("Monotone Bezier line certificates isolate only finite transverse cros
         REQUIRE(certificate);
         CHECK(certificate->bezierParameter.contains(.5));
         CHECK(certificate->lineParameter.contains(.5));
+    }
+    SECTION("near-endpoint root remains separated from its exact endpoint") {
+        const double nearZero = std::ldexp(1., -50);
+        const auto certificate = Trim::certifyMonotoneLineRoot(
+            {{0, 0}, {1, 0}}, {nearZero, -1}, {nearZero, 1});
+        REQUIRE(certificate);
+        CHECK(certificate->bezierParameter.lo() > 0);
+        CHECK(certificate->bezierParameter.contains(nearZero));
     }
     SECTION("tangent is not strictly monotone") {
         CHECK_FALSE(Trim::certifyMonotoneLineRoot(
@@ -151,8 +161,9 @@ TEST_CASE("Monotone Bezier line certificates isolate only finite transverse cros
             {{0, 2}, {1, 2}}, {.5, -1}, {.5, 1}));
     }
     SECTION("strict near miss has no crossing certificate") {
-        CHECK_FALSE(Trim::certifyMonotoneLineRoot(
-            {{-1, 2}, {1, 2}}, {0, -1}, {0, 1}));
+        const std::vector<RS_Vector> controls{{-1, 2}, {1, 2}};
+        CHECK_FALSE(Trim::certifyMonotoneLineRoot(controls, {-1, 0}, {1, 0}));
+        CHECK(Trim::strictlySeparatedBezierFromLine(controls, {-1, 0}, {1, 0}));
     }
 }
 

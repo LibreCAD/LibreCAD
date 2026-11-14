@@ -35,6 +35,7 @@
 #include "lc_offsetcurveactiontestsupport.h"
 #include "lc_filtertestsupport.h"
 #include "../../offset_worker/lc_offsetworkerrequest.h"
+#include "../../offset_worker/lc_offsetworkerresult.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetcachetrim.h"
 #include "lc_ellipseoffsetgeometry.h"
@@ -1227,9 +1228,11 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         for (const auto& span : layout.spans) {
             std::array<Rational, 4> signedDistance;
             std::array<Rational, 4> ordinate;
+            std::vector<RS_Vector> controls;
             for (std::size_t control = 0; control <= span.degree; ++control) {
                 signedDistance[control] = Rational(span.controls[control].x);
                 ordinate[control] = Rational(span.controls[control].y);
+                controls.emplace_back(span.controls[control].x, span.controls[control].y);
             }
             bool increasing = true, decreasing = true;
             for (std::size_t control = 0; control < span.degree; ++control) {
@@ -1248,12 +1251,15 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
                 ++certifiedCrossings;
                 for (std::size_t control = 0; control <= span.degree; ++control)
                     CHECK((ordinate[control] >= -20 && ordinate[control] <= 20));
+                CHECK(LC_OffsetCacheTrim::certifyMonotoneLineRoot(
+                    controls, {cutterX, -20}, {cutterX, 20}));
             } else {
                 CHECK(sameSide);
+                CHECK(LC_OffsetCacheTrim::strictlySeparatedBezierFromLine(
+                    controls, {cutterX, -20}, {cutterX, 20}));
             }
         }
         CHECK(certifiedCrossings == 2);
-        return;
     }
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);
@@ -1261,6 +1267,18 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
             kernel.work.intersections.deepestRootRefinement, kernel.work.intersections.generatedItems);
     REQUIRE(kernel.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(kernel.fragments.size() == 1);
+    if (profile == 5) {
+        CHECK(kernel.rootCount == 2);
+        CHECK(std::count_if(kernel.roots.begin(), kernel.roots.end(), [](const auto& root) {
+            return root.proof == LC_IntersectionProof::AnalyticMonotoneTransverse;
+        }) == 2);
+        LC_OffsetWorkerRequest::Request request{{1, 0, 0, 0}, LC_OffsetWorkerRequest::TrimCache{
+            replacement->getData(), LC_OffsetWorkerRequest::Segment{{cutterX, -20}, {cutterX, 20}}, {targetPick}, {}}};
+        LC_OffsetWorkerResult::Reply reply{request.token, 2, LC_OffsetWorkerResult::Failure::None, kernel};
+        const auto encoded = LC_OffsetWorkerResult::encode(reply, request);
+        REQUIRE(encoded);
+        CHECK(LC_OffsetWorkerResult::decode(*encoded, request));
+    }
     const auto expectedOutputCount = kernel.fragments.size();
     std::vector<std::uint64_t> expectedTrimmed;
     for (const auto& fragment : kernel.fragments)
