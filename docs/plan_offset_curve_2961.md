@@ -46334,10 +46334,12 @@ yet run.
 Validation on macOS arm64 CMake Release: focused `[curve-offset][budget]`
 passes 829 assertions / 7 cases, including a proven fallback cell; the full
 `[curve-offset]` suite passes 2,246,635 assertions / 349 cases; the CMake test
-target builds; qmake6 `make -j4` succeeds for the application, worker, and
-plugins; and `git diff --check` passes. This improves diagnostics and tests for
-the tested polyline arrangements only; broader topology, visible GUI,
-cross-platform runtime, and independent CAD acceptance remain open.
+target builds; and qmake6 `make -j4` succeeds for the application, worker, and
+plugins. After implementation commit `0f9c32769`, the rebuilt CMake worker
+client suite also passes 3,406,694 assertions / 45 cases. `git diff --check`
+passes. This improves diagnostics and tests for the tested polyline
+arrangements only; broader topology, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
 
 The 2026-11-14 source-widget clarification is incorporated in the current
 execution checklist above: during replacement, changing the requested source
