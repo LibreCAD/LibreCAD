@@ -79,15 +79,20 @@ Properties-dialog tests also verify
 the selector inventory and eligible candidate filtering against all nine
 kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`, source
 chooser tests). Do not add unrelated drawable families or a second type
-selector. The latest request (2026-11-14) reconfirms two distinct obligations:
-the user can change the requested source family while replacement selection is
-active, and eligible replacement candidates exist for every kind in
-`SupportedKinds`, with parabola represented distinctly. The former is
-implemented and headlessly tested; the latter is not satisfied by selector
-entries alone and remains subject to Slice 4's concrete-family/variant checks.
-No duplicate selector implementation slice is needed. Slice 5 still owns the
-visible interaction gate, while Slice 4 owns end-to-end source geometry,
-worker/cache, Trim, and file-format qualification.
+selector. The latest repeated request (2026-11-14) confirms the same two
+obligations, not a narrower parabola-only change: the user can change the
+requested source family while replacement selection is active, and eligible
+replacement candidates exist for every kind in `SupportedKinds`, with
+parabola represented as a distinct type. The in-place selector/filter
+behavior is implemented and headlessly tested; adding a family to the selector
+is not sufficient evidence that its source geometry is supported. Do not
+create a duplicate selector or parabola-only implementation slice. Slice 5
+owns visible verification of the interactive picker and source indication.
+Slice 4 owns concrete-family and variant qualification through source
+capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG save/reopen.
+Keep the nine-kind inventory as the scope boundary; every family must have an
+eligible concrete replacement candidate, and unsupported variants must refuse
+atomically.
 
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
@@ -357,10 +362,13 @@ strict refusal of the single-cache native-source path for the bow-tie and one
 five-crossing pentagram profile. The pentagram direct oracle covers both fill
 rules, growth/erosion, and the even-odd 1-to-5-cycle topology change. These
 sections supersede section 1363's refusal-only status for the tested layouts.
-Mixed/bulged self-crossings, other arrangements, editable cache/action
-integration, file persistence, visible GUI, cross-platform runtime, and
-independent CAD acceptance remain open. This addendum supersedes the earlier
-bow-tie refusal text in the Slice 4 table above.
+Section 1368 adds a mixed line/arc bow-tie refusal regression for both grow and
+shrink: the solver reports `AmbiguousTopology`, emits no branches, and leaves
+the source vertices unchanged. This is explicit atomic-refusal evidence, not
+mixed-bulge support. Other mixed/bulged self-crossings, arrangements, editable
+cache/action integration, file persistence, visible GUI, cross-platform
+runtime, and independent CAD acceptance remain open. This addendum supersedes
+the earlier bow-tie refusal text in the Slice 4 table above.
 
 The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
@@ -45786,6 +45794,24 @@ watchdog assertion); the two relevant self-crossing process cases pass when
 run directly. This does not qualify arbitrary crossing layouts, bulged
 self-crossings, editable cache/action integration, file persistence, visible
 GUI behavior, cross-platform runtime, or independent CAD acceptance.
+
+## 1368. Make Mixed-bulge Region Refusal Explicit (2026-11-14)
+
+Added a closed mixed line/arc bow-tie `RS_Polyline` probe to `RegionBoundary`
+for both growth and erosion. The current arrangement noder returns
+`AmbiguousTopology` while intersecting offset candidates; the regression now
+requires that refusal, verifies that no output branches are published, and
+checks the source vertices remain unchanged. The focused case passes 18
+assertions / 1 case on macOS arm64 CMake Release, and the `librecad_tests`
+target builds.
+
+This records safe behavior for one mixed-bulge profile only. It does not
+implement mixed-bulge self-crossing offsets or prove the exact cause of the
+candidate-noding ambiguity. The next geometry slice must isolate and support
+the needed line/arc candidate intersections with certified or exact parameter
+mapping, then validate closed cycles against an independent fill/distance
+oracle for both fill rules and grow/shrink. Do not weaken this refusal test or
+claim mixed-bulge support based on ordinary mixed-bulge Trim coverage.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 

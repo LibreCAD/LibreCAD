@@ -376,6 +376,38 @@ TEST_CASE("Five-crossing straight polyline regions grow and erode under both fil
     }
 }
 
+TEST_CASE("Mixed line and arc bow-tie region offsets are diagnosed",
+          "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
+    RS_Polyline source;
+    source.addVertex({20, 10});
+    source.addVertex({20, -10});
+    source.addVertex({-20, 10}, 0.5);
+    source.addVertex({-20, -10});
+    source.setClosed(true);
+    source.endPolyline();
+    const QList<RS_Vector> originalVertices = source.getVertexes();
+
+    for (const bool grow : {true, false}) {
+        auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
+            options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(grow, static_cast<int>(result.status), result.sourceIntersections,
+                static_cast<int>(result.intersectionDiagnostics.status),
+                result.intersectionDiagnostics.failureDomain.segmentA,
+                result.intersectionDiagnostics.failureDomain.segmentB,
+                result.intersectionDiagnostics.failureDepth);
+        CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+        CHECK(result.sourceIntersections == 1);
+        CHECK(result.branches.empty());
+        CHECK(source.getVertexes().size() == originalVertices.size());
+        for (int i = 0; i < originalVertices.size(); ++i) {
+            CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
+        }
+    }
+}
+
 TEST_CASE("The fill rule decides whether a doubly wound lobe is a hole", "[curve-offset][region]") {
     const RS_Spline source = closedSpline(limacon());
     const std::vector<RS_Vector> polygon = polygonOf(source);
