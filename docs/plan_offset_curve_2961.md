@@ -173,6 +173,11 @@ passes 15,129 assertions / 44 cases (`librecad_tests
 '[gui][dialog][offsetcurve][source]'`), including repeated type changes and
 candidate refresh across all nine kinds. This is not visible-GUI acceptance
 and does not establish that every geometry variant of those families works.
+On the current tree, the focused typed replacement case passes 285 assertions
+/ 1 case and the all-filter current-source highlight case passes 138 assertions
+/ 1 case. A visible launch was attempted from the SSH session, but LaunchServices
+could not open the configured app bundle and direct startup terminated on
+pasteboard/XPC errors; this is an environment limitation, not a GUI pass.
 Slice 4 remains responsible for variant-level generation, worker/cache,
 trimming and applicable DXF/DWG persistence; Slice 5 remains responsible for
 visible interaction and delivery validation. Picker availability alone closes
@@ -46078,9 +46083,12 @@ passes 170 assertions / 1 case. The result now includes a failure-site
 classification for refused cells (source-side classification, candidate
 generation/arrangement/splitting/classification, or cycle assembly), so future
 geometry work can target the stage that refuses without weakening the atomic
-failure behavior. `git diff --check` passes. Resolving the transform-sensitive
-topology results remains an open geometry feature; worker parity, persistence,
-visible GUI, cross-platform, and independent CAD gates remain separate.
+failure behavior. The full qmake6 app/plugins build also succeeds from
+`/private/tmp/offset2961-qmake6-current` with `make -j4` (exit 0; existing
+aggregate-initializer warnings only). `git diff --check` passes. Resolving the
+transform-sensitive topology results remains an open geometry feature; worker
+parity, persistence, visible GUI, cross-platform, and independent CAD gates
+remain separate.
 
 ## 1377. Persist Negative-bulge Region Worker Branches (2026-11-14)
 
