@@ -43758,3 +43758,18 @@ This supersedes the earlier broad-angle gap for these six directions only. It
 does not qualify near-vertical or near-parallel limits symmetrically, arbitrary
 angles, sub-ULP features, or extreme origins/scales. Continue with those
 conditioning boundaries and ensure unsupported cases refuse atomically.
+
+## 1269. Balance Near-axis Orientation Coverage (2026-11-13)
+
+Test commit `01857291d` adds near-vertical `(1e-6,1)` and opposite
+near-horizontal `(-1,1e-6)` directions to the matrix. The eight-direction,
+three-scale, two-degree, bidirectional worker/persistence-proof matrix now
+passes 2,496 focused assertions; the complete worker-result suite passes
+470,221 assertions / 29 cases. The near-axis results also pass the independent
+finite-cutter endpoint oracle. Validation is macOS arm64 CMake Release, with
+`git diff --check` clean.
+
+This closes the specific symmetric near-axis gap from section 1268, but not
+arbitrary slopes, sub-ULP separations, extreme origin/scale limits, or every
+line/source conditioning boundary. Continue with explicit representability
+limits and atomic refusal at unresolvable inputs.
