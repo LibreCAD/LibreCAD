@@ -1120,13 +1120,14 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
 }
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7);
     const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    const std::array<const char*, 7> profileNames{{
+    const std::array<const char*, 8> profileNames{{
         "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw",
-        "all-arc-circle-cw-centerline-audit", "all-arc-circle-cw-rotated-translated"}};
+        "all-arc-circle-cw-centerline-audit", "all-arc-circle-cw-rotated-translated",
+        "all-arc-circle-ccw-rotated-translated"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -1143,7 +1144,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     const RS_Vector transformedYAxis{-transformedXAxis.y, transformedXAxis.x};
     constexpr double transformedCutterAngle = .61;
     const RS_Vector transformedCutterAxis{std::cos(transformedCutterAngle), std::sin(transformedCutterAngle)};
-    if (profile == 6)
+    if (profile == 6 || profile == 7)
         view.getViewPort()->setOffsetAndFactor(qRound(200. - transformedCenter.x * 30.),
                                               qRound(200. - transformedCenter.y * 30.), 30.);
     Context context;
@@ -1193,6 +1194,12 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         sourceOwner->addVertex(transformedCenter - transformedYAxis * 2., -quarterArcBulge);
         sourceOwner->addVertex(transformedCenter - transformedXAxis * 2., -quarterArcBulge);
         sourceOwner->addVertex(transformedCenter + transformedYAxis * 2., -quarterArcBulge);
+    } else if (profile == 7) {
+        sourcePick = transformedCenter + transformedXAxis * 2.;
+        sourceOwner->addVertex(sourcePick, quarterArcBulge);
+        sourceOwner->addVertex(transformedCenter + transformedYAxis * 2., quarterArcBulge);
+        sourceOwner->addVertex(transformedCenter - transformedXAxis * 2., quarterArcBulge);
+        sourceOwner->addVertex(transformedCenter - transformedYAxis * 2., quarterArcBulge);
     } else {
         sourceOwner->addVertex({0, 0});
         sourceOwner->addVertex({10, 0});
@@ -1230,7 +1237,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         parameterStart + .7 * (parameterEnd - parameterStart));
     REQUIRE(targetPick.valid);
     RS_Vector cutterStart{cutterX, -20}, cutterEnd{cutterX, 20};
-    if (profile == 6) {
+    if (profile == 6 || profile == 7) {
         cutterStart = transformedCenter - transformedCutterAxis * 20.;
         cutterEnd = transformedCenter + transformedCutterAxis * 20.;
     }
@@ -1298,7 +1305,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         REQUIRE(encoded);
         CHECK(LC_OffsetWorkerResult::decode(*encoded, request));
     }
-    if (profile == 6) {
+    if (profile == 6 || profile == 7) {
         CHECK(kernel.rootCount == 2);
         CHECK(std::count_if(kernel.roots.begin(), kernel.roots.end(), [](const auto& root) {
             return root.proof == LC_IntersectionProof::AnalyticMonotoneTransverse;
