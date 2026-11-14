@@ -168,21 +168,23 @@ repeat the already-covered selector request.
    successful validation. Record platform, revision, exact command, and
    result; headless coverage does not close the visible-GUI gate.
 
-Automated picker evidence: the latest focused headless source-picker suite
-passes 15,129 assertions / 44 cases (`librecad_tests
-'[gui][dialog][offsetcurve][source]'`), including repeated type changes and
-candidate refresh across all nine kinds. This is not visible-GUI acceptance
-and does not establish that every geometry variant of those families works.
-On the current tree, the focused typed replacement case passes 285 assertions
-/ 1 case and the all-filter current-source highlight case passes 138 assertions
-/ 1 case. A visible launch was attempted from the SSH session, but LaunchServices
-could not open the configured app bundle and direct startup terminated on
-pasteboard/XPC errors; this is an environment limitation, not a GUI pass.
-Slice 4 remains responsible for variant-level generation, worker/cache,
-trimming and applicable DXF/DWG persistence; Slice 5 remains responsible for
-visible interaction and delivery validation. Picker availability alone closes
-neither gate. The prior audit's typed-source Trim admission correction is
-recorded in section 1013.
+Automated picker evidence on the current implementation: the focused headless
+source-picker suite passes 15,129 assertions / 44 cases (`librecad_tests
+'[gui][dialog][offsetcurve][source]'`), including repeated in-workflow type
+changes and candidate refresh across all nine kinds. The focused typed
+replacement case passes 285 assertions / 1 case, and the all-filter
+current-source highlight case passes 138 assertions / 1 case. This fulfills
+the picker implementation and headless selector/filter contract; do not plan a
+second selector or another picker implementation slice unless a regression is
+found. It does not establish that every geometry variant works or count as
+visible-GUI acceptance. A visible launch was attempted from the SSH session,
+but LaunchServices could not open the configured app bundle and direct startup
+terminated on pasteboard/XPC errors; the visible workflow remains unverified
+for that environment reason, not passed. Slice 4 remains responsible for
+variant-level generation, worker/cache, trimming and applicable DXF/DWG
+persistence; Slice 5 remains responsible for visible interaction and delivery
+validation. Picker availability alone closes neither gate. The prior audit's
+typed-source Trim admission correction is recorded in section 1013.
 
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
@@ -46155,6 +46157,27 @@ On macOS arm64, the focused positive- and negative-bulge matrices pass 182 and
 passes. Broader polyline arrangements, worker/cache/Trim integration for these
 results, persistence, visible GUI, cross-platform runtime, and independent CAD
 acceptance remain open.
+
+## 1379. Recenter Rotated Mixed-bulge Region Inputs (2026-11-14)
+
+Rotated closed bulged polylines now translate to their first source point before
+the nearest-cardinal rotation is removed. This keeps rotated local profiles in
+a stable local frame and avoids carrying world-origin rounding through exact
+line/arc candidate arrangement. The positive-bulge bow-tie's rotation-only
+erosion now returns two checked cycles for both fill rules; the independent
+closure, boundary-distance, fill-side, and positive-area assertions pass. The
+source remains unchanged. This does not close rotation-only growth, identity
+erosion, translation-only growth, combined-frame growth, or the still-refusing
+negative-bulge frame cells, and it does not establish general transform
+invariance or mixed-bulge topology support.
+
+Validation on macOS arm64 CMake Release: the focused positive-bulge frame
+matrix passes 194 assertions / 1 case; `[curve-offset][region]` passes 27,740
+assertions / 20 cases; the `librecad_tests` target builds; the incremental
+qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0;
+and `git diff --check` passes. Worker/cache/Trim integration for this new
+success, persistence, broader topology and frame matrices, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 

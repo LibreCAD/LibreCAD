@@ -479,6 +479,7 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
                 const bool expectedSuccess = (frame == 0 && grow) ||
+                    (frame == 1 && !grow) ||
                     (frame == 2 && !grow) || (frame == 3 && !grow);
                 if (expectedSuccess) {
                     CHECK(result.intersectionDiagnostics.failureSite ==
