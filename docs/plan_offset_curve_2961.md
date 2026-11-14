@@ -46263,6 +46263,25 @@ app/plugins build from `/private/tmp/offset2961-qmake6-current` exits 0; and
 `git diff --check` passes. Visible GUI, cross-platform runtime, and independent
 CAD acceptance remain separate delivery gates.
 
+## 1383. Qualify Negative-bulge Arrangement Work Caps (2026-11-14)
+
+The negative-bulge self-crossing polyline now exercises the shared
+`RegionBoundary` intersection cap in identity, rotation-only, translation-only,
+and combined frames, for both fill rules and both signed offset directions.
+Each run sweeps caps 1, 16, 256, and the default, verifies reported pair and
+generated-item work remain bounded, and requires any successful output to pass
+independent cycle closure, boundary-distance, and fill-side checks. Refusals
+must be `LimitExceeded` or `AmbiguousTopology` with no partial branches. This
+extends the budget invariant to the tested negative-bulge profile; other
+bulge layouts and self-crossing arrangements remain unqualified.
+
+Validation on macOS arm64 CMake Release: the focused budget-filtered run passes
+418 assertions / 6 cases; the complete `[curve-offset]` suite passes 2,246,224
+assertions / 348 cases; the `librecad_tests` target builds; and `git diff
+--check` passes. The production implementation and qmake6 build were verified
+in section 1382. Visible GUI, cross-platform runtime, and independent CAD
+acceptance remain open.
+
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
 Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
