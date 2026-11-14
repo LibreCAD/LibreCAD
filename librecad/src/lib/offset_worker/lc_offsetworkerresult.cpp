@@ -1142,7 +1142,8 @@ bool trim(const Trim::Result& d, const Req::Request& r) {
         if (!root(d.roots[i], i, c, sourceSpans)) return false;
     return trimTail(d, c);
 }
-bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool materialize) {
+bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool materialize,
+              std::optional<Geo::CacheLayoutResult>* sharedSourceLayout = nullptr) {
     QCborArray a, fragments, conics, roots;
     const auto cap = trimLimits(r);
     // Admit the outer collections together, before any reserve or cache copy.
@@ -1152,7 +1153,8 @@ bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool 
         !read(a.at(6), d.fragmentCount) || !read(a.at(7), d.work)) return false;
     auto c = trimContext(r, std::size_t(roots.size()));
     if (!trimHeader(d, std::size_t(fragments.size()), std::size_t(conics.size()), std::size_t(roots.size()), r, c)) return false;
-    std::optional<Geo::CacheLayoutResult> sourceLayout;
+    std::optional<Geo::CacheLayoutResult> localSourceLayout;
+    auto& sourceLayout = sharedSourceLayout ? *sharedSourceLayout : localSourceLayout;
     bool hasMonotoneRoot = false;
     for (const auto& item : roots) {
         Trim::RootProvenance rootValue;
@@ -1162,8 +1164,10 @@ bool readTrim(const QCborValue& v, Trim::Result& d, const Req::Request& r, bool 
     }
     if (hasMonotoneRoot) {
         if (!c.sourceData) return false;
-        Geo::WorkBudget budget;
-        sourceLayout = Geo::inspectCacheLayout(*c.sourceData, budget);
+        if (!sourceLayout) {
+            Geo::WorkBudget budget;
+            sourceLayout = Geo::inspectCacheLayout(*c.sourceData, budget);
+        }
         if (sourceLayout->status != Geo::CacheLayoutStatus::Ok) return false;
     }
     const auto* sourceSpans = sourceLayout ? &sourceLayout->spans : nullptr;
@@ -1476,7 +1480,9 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
         d.result = std::move(value);
     } else {
         Trim::Result scan, value;
-        if (!readTrim(a.at(4), scan, r, false) || !readTrim(a.at(4), value, r, true)) return std::nullopt;
+        std::optional<Geo::CacheLayoutResult> sourceLayout;
+        if (!readTrim(a.at(4), scan, r, false, &sourceLayout) ||
+            !readTrim(a.at(4), value, r, true, &sourceLayout)) return std::nullopt;
         d.result = std::move(value);
     }
     return d;

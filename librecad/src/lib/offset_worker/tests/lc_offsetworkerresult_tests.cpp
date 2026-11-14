@@ -734,6 +734,25 @@ TEST_CASE("Worker Trim revalidates monotone proof categories and both root inter
     CHECK_FALSE(Reply::encode(reply(conicRequest, conicResult), conicRequest));
 }
 
+TEST_CASE("Worker Trim refuses monotone proofs when source span layout is invalid", tags) {
+    auto [request, result] = trimLine();
+    REQUIRE_FALSE(result.roots.empty());
+    result.roots.front().proof = LC_IntersectionProof::AnalyticMonotoneTransverse;
+    const auto validPayload = Reply::encode(reply(request, result), request);
+    REQUIRE(validPayload);
+
+    for (const int malformed : {0, 1}) {
+        auto badRequest = request;
+        auto& data = std::get<Req::TrimCache>(badRequest.operation).cache;
+        if (malformed == 0) data.knotslist[2] = -1;
+        else data.degree = 2;
+        CAPTURE(malformed);
+        CHECK(Req::admitted(badRequest));
+        CHECK_FALSE(Reply::encode(reply(badRequest, result), badRequest));
+        CHECK_FALSE(Reply::decode(*validPayload, badRequest));
+    }
+}
+
 TEST_CASE("Worker Trim revalidates monotone roots after a discontinuous cubic knot join", tags) {
     RS_SplineData data;
     data.degree = 3;
