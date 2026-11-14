@@ -43840,3 +43840,22 @@ conditioning. Keep proof verification fail-closed when bounded span extraction
 or exact certification refuses. Next, add adversarial nonuniform/repeated-knot
 proof fixtures as eligible layouts are identified, then continue the roadmap's
 remaining family/variant, cross-platform, external-CAD, and visible-GUI gates.
+
+## 1272. Isolate Discontinuous-knot Proof Revalidation (2026-11-13)
+
+Test commit `7c898399f` adds a focused worker-result fixture for the specific
+layout class behind section 1271. The request contains two disconnected cubic
+Bezier components encoded with an internal knot of multiplicity degree+1; the
+finite-line crossing is on the second component, whose extracted control
+offset is 4 rather than `span * degree` (3). The test requires the kernel to
+emit `AnalyticMonotoneTransverse` for raw span 1 and requires the result
+encoder/decoder to independently accept the same proof from the submitted
+request. It passes 10 assertions. The complete worker-result suite passes
+470,231 assertions / 30 cases, and `git diff --check` passes on macOS arm64
+CMake Release.
+
+This isolates the discontinuous-join case, while section 1271 supplies the
+five-format application-level regression. It does not cover every nonuniform
+or repeated-knot combination. Continue with bounded-but-difficult layouts,
+refusal behavior when span inspection exhausts its budget, and the remaining
+geometry/persistence and GUI qualification recorded in the roadmap.
