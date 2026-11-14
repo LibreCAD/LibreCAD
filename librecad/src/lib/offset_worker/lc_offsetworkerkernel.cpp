@@ -190,7 +190,7 @@ result::Native LC_OffsetWorkerKernel::generate(const req::Generate& input, Trace
 result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& input, Trace& trace) {
     result::Native output;
     output.refusal = LC_OffsetCurveRefusal::InvalidInput;
-    if (!input.definition.isWellFormed()) return output;
+    if (!input.definition.isWellFormedForGeneration()) return output;
 
     LC_OffsetSourceDefinition definition = input.definition;
     RS_Vector outputTranslation{0, 0};
@@ -235,12 +235,12 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         // Validate and construct in the original frame first. Rechecking
         // rounded arc joins after translation to the local frame would apply
         // a smaller coordinate-relative tolerance and can reject valid input.
-        source = definition.source.makeEntity();
+        source = definition.source.makeGenerationEntity();
         if (!source) return output;
         source->move({-outputTranslation.x, -outputTranslation.y});
     }
 
-    if (!source) source = definition.source.makeEntity();
+    if (!source) source = definition.source.makeGenerationEntity();
     if (!source) return output;
     const double magnitude = std::abs(definition.signedDistance);
     if (!std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) {
@@ -256,8 +256,11 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         options.maxIntersectionPairs = input.limits.maxIntersectionPairs;
     options.maxOutputBranches = std::min(options.maxOutputBranches,
         input.limits.outputBudget.maxOutputEntities);
+    const bool selfIntersectingLinearPolyline =
+        LC_OffsetWorkerTolerance::hasIntersectingLinearPolyline(definition, *source);
     const LC_CurveOffsetSide side = options.mode == LC_CurveOffsetMode::RegionBoundary
-        ? LC_CurveOffsetSide::Left
+        ? (selfIntersectingLinearPolyline && definition.signedDistance < 0.0
+               ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left)
         : definition.signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
 
     trace.nativePrepareEntered = true;

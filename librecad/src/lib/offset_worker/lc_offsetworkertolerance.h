@@ -153,6 +153,45 @@ inline std::optional<double> strictConvexPolylineOrientation(
     return hasStrictTurn ? std::optional<double>{orientation} : std::nullopt;
 }
 
+inline bool hasIntersectingLinearPolyline(const LC_OffsetSourceDefinition& definition,
+                                          const RS_Entity& source) {
+    const auto* data = std::get_if<LC_OffsetPolylineData>(&definition.source.value);
+    const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
+    if (data == nullptr || !data->closed || data->segments.size() < 4 || polyline == nullptr ||
+        !polyline->isClosed() ||
+        !std::all_of(data->segments.begin(), data->segments.end(), [](const auto& segment) {
+            return std::holds_alternative<RS_LineData>(segment);
+        })) {
+        return false;
+    }
+
+    const auto liveGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+    const auto* liveData = liveGeometry
+        ? std::get_if<LC_OffsetPolylineData>(&liveGeometry->value) : nullptr;
+    if (liveData == nullptr || liveData->segments.size() != data->segments.size()) return false;
+    const RS_Vector translation = data->startpoint - liveData->startpoint;
+    double coordinateScale = 1.0;
+    for (const auto& segment : data->segments) {
+        const auto& line = std::get<RS_LineData>(segment);
+        coordinateScale = std::max({coordinateScale, std::abs(line.startpoint.x), std::abs(line.startpoint.y),
+                                    std::abs(line.endpoint.x), std::abs(line.endpoint.y)});
+    }
+    const double pointSlack = 128.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
+    if ((liveData->startpoint + translation).distanceTo(data->startpoint) > pointSlack ||
+        (liveData->endpoint + translation).distanceTo(data->endpoint) > pointSlack) {
+        return false;
+    }
+    for (std::size_t i = 0; i < data->segments.size(); ++i) {
+        const auto& expected = std::get<RS_LineData>(data->segments[i]);
+        const auto* actual = std::get_if<RS_LineData>(&liveData->segments[i]);
+        if (actual == nullptr || (actual->startpoint + translation).distanceTo(expected.startpoint) > pointSlack ||
+            (actual->endpoint + translation).distanceTo(expected.endpoint) > pointSlack) {
+            return false;
+        }
+    }
+    return !LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*data);
+}
+
 inline std::optional<LC_CurveOffsetOptions> directOptions(
     const RS_Entity& source, double distance, double relativeFactor) {
     if (!std::isfinite(relativeFactor) || relativeFactor < 0.0 || !std::isfinite(distance)) {
@@ -180,7 +219,8 @@ inline std::optional<LC_CurveOffsetOptions> directOptions(
     const LC_OffsetSourceDefinition& definition, const RS_Entity& source) {
     auto options = directOptions(source, definition.signedDistance, definition.relativeTolerance);
     const auto orientation = strictConvexPolylineOrientation(definition, source);
-    if (options && orientation && definition.signedDistance * *orientation > 0.0) {
+    if (options && ((orientation && definition.signedDistance * *orientation > 0.0) ||
+                    hasIntersectingLinearPolyline(definition, source))) {
         options->mode = LC_CurveOffsetMode::RegionBoundary;
     }
     return options;

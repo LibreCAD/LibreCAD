@@ -2305,7 +2305,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData
                 staged->remaining = requestDeepLeft;
                 return outcome; // Owned numeric prefixes remain staged, never published or recomputed.
             } else if (staged) {
-                auto typedSource = LC_OffsetSourceGeometry::capture(*target);
+                auto typedSource = LC_OffsetSourceGeometry::captureForGeneration(*target);
                 const bool deferSimpleLine = dynamic_cast<const RS_Line *>(target) && entitiesList.size() > 1;
                 const bool deferPolyline = dynamic_cast<const RS_Polyline *>(target) != nullptr;
                 if (typedSource && !deferSimpleLine && !deferPolyline) {

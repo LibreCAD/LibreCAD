@@ -122,6 +122,7 @@ LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
     const auto* generate = std::get_if<LC_OffsetWorkerRequest::Generate>(&m_request.operation);
     const auto* sourceGenerate = std::get_if<LC_OffsetWorkerRequest::GenerateSource>(&m_request.operation);
     if ((!generate && !sourceGenerate) || (generate && generate->throughPoint) || !result ||
+        (sourceGenerate && !sourceGenerate->definition.isWellFormedForGeneration()) ||
         result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::Complete)
         return std::nullopt;
     if (!attributes.cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) return std::nullopt;

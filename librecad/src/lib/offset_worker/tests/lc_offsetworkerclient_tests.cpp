@@ -24,6 +24,7 @@
 #include <memory>
 #include <optional>
 #include <type_traits>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -558,6 +559,66 @@ TEST_CASE("Worker ordinary completions materialize exact plain output with fresh
         }
         CHECK(owner.count() == 0); CHECK(attributes.sourceHandle() == 91);
         CHECK(LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData()).knownCandidates == 1);
+    }
+}
+
+TEST_CASE("Worker client materializes self-crossing polyline regions as ordinary output only",
+          "[lc-offsetcurve][worker-client][polyline][region-boundary]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Layer layer{QStringLiteral("bow-tie source")};
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    const RS_Vector origin{100000, -250000};
+    const LC_OffsetSourceGeometry source{LC_OffsetPolylineData{
+        origin + RS_Vector{20, 10}, origin + RS_Vector{20, 10}, true,
+        {RS_LineData{origin + RS_Vector{20, 10}, origin + RS_Vector{20, -10}},
+         RS_LineData{origin + RS_Vector{20, -10}, origin + RS_Vector{-20, 10}},
+         RS_LineData{origin + RS_Vector{-20, 10}, origin + RS_Vector{-20, -10}},
+         RS_LineData{origin + RS_Vector{-20, -10}, origin + RS_Vector{20, 10}}}}};
+    CHECK_FALSE(source.isWellFormed());
+    REQUIRE(source.isWellFormedForGeneration());
+
+    for (const auto [requestId, signedDistance, expectedOutputs] :
+         {std::tuple<qint64, double, std::size_t>{301, 0.5, 2}, {302, -0.5, 1}}) {
+        const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+        Receipts receipts;
+        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+
+        const auto& completion = completed(receipts.at(0), requestId, 7);
+        REQUIRE(std::holds_alternative<Reply::Native>(completion.reply().result));
+        const auto& result = std::get<Reply::Native>(completion.reply().result);
+        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        REQUIRE(result.ordinary.size() == expectedOutputs);
+        CHECK_FALSE(result.curve);
+        CHECK_FALSE(completion.nativeSource(attributes));
+
+        auto ordinary = completion.ordinary(attributes);
+        REQUIRE(ordinary);
+        REQUIRE(ordinary->size() == expectedOutputs);
+        for (const auto& entity : *ordinary) {
+            REQUIRE(entity);
+            CHECK(entity->rtti() == RS2::EntitySpline);
+            CHECK(entity->getParent() == &owner);
+            CHECK(entity->getLayer(false) == &layer);
+            const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+            REQUIRE(spline);
+            CHECK(spline->validate());
+            for (const RS_Vector& point : spline->getData().controlPoints) {
+                CHECK(std::isfinite(point.x));
+                CHECK(std::isfinite(point.y));
+                CHECK(point.x > origin.x - 100.0);
+                CHECK(point.x < origin.x + 100.0);
+                CHECK(point.y > origin.y - 100.0);
+                CHECK(point.y < origin.y + 100.0);
+            }
+        }
+        CHECK(owner.count() == 0);
     }
 }
 

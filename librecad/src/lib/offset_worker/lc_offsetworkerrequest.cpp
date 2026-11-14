@@ -195,8 +195,8 @@ bool read(const QCborValue& value, RS_SplineData& d) {
 bool readSourceSpline(const QCborValue& value, RS_SplineData& d) {
     return readSpline(value, d, true);
 }
-bool valid(const LC_OffsetSourceGeometry& source) {
-    if (!source.isWellFormed()) return false;
+bool validSourceGeometry(const LC_OffsetSourceGeometry& source, const bool forGeneration) {
+    if (!(forGeneration ? source.isWellFormedForGeneration() : source.isWellFormed())) return false;
     return std::visit([](const auto& data) {
         using T = std::decay_t<decltype(data)>;
         if constexpr (std::is_same_v<T, RS_SplineData>) {
@@ -214,7 +214,11 @@ bool valid(const LC_OffsetSourceGeometry& source) {
         return true;
     }, source.value);
 }
+bool valid(const LC_OffsetSourceGeometry& source) { return validSourceGeometry(source, false); }
 bool valid(const LC_OffsetSourceDefinition& definition) { return definition.isWellFormed(); }
+bool validGeneration(const LC_OffsetSourceDefinition& definition) {
+    return definition.isWellFormedForGeneration() && validSourceGeometry(definition.source, true);
+}
 bool read(const QCborValue& value, LC_SplinePointsData& data) {
     QCborArray a, splinePoints, controlPoints;
     if (!value.isArray()) return false;
@@ -246,7 +250,8 @@ bool read(const QCborValue& value, LC_HyperbolaData& data) {
         number(a.at(2), data.ratio) && number(a.at(3), data.angle1) && number(a.at(4), data.angle2) &&
         boolean(a.at(5), data.reversed);
 }
-bool readGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source, const bool produced) {
+bool readGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source, const bool produced,
+                  const bool generation = false) {
     QCborArray a;
     qint64 tag;
     if (!array(value, 2, a) || !integer(a.at(0), tag)) return false;
@@ -262,10 +267,14 @@ bool readGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source, cons
     case 8: { LC_OffsetPolylineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     default: return false;
     }
-    return produced ? source.isWellFormedOutput() : valid(source);
+    return produced ? source.isWellFormedOutput()
+                    : generation ? validSourceGeometry(source, true) : valid(source);
 }
 bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
     return readGeometry(value, source, false);
+}
+bool readGenerationGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source) {
+    return readGeometry(value, source, false, true);
 }
 bool readProducedGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source) {
     return readGeometry(value, source, true);
@@ -275,6 +284,12 @@ bool read(const QCborValue& value, LC_OffsetSourceDefinition& definition) {
     return array(value, 4, a) && read(a.at(0), definition.source) &&
         number(a.at(1), definition.signedDistance) && number(a.at(2), definition.relativeTolerance) &&
         boolean(a.at(3), definition.cacheReversed) && valid(definition);
+}
+bool readGenerationDefinition(const QCborValue& value, LC_OffsetSourceDefinition& definition) {
+    QCborArray a;
+    return array(value, 4, a) && readGenerationGeometry(a.at(0), definition.source) &&
+        number(a.at(1), definition.signedDistance) && number(a.at(2), definition.relativeTolerance) &&
+        boolean(a.at(3), definition.cacheReversed) && validGeneration(definition);
 }
 bool valid(const LC_EllipseOffsetDefinition& d) {
     return valid(d.basis) && d.basis.ratio > 0 && std::isfinite(d.distance) && d.distance > 0 &&
@@ -401,7 +416,7 @@ bool valid(const Generate& op) {
     return valid(op.definition) && valid(op.limits) && (!op.throughPoint || valid(*op.throughPoint));
 }
 bool valid(const GenerateSource& op) {
-    return valid(op.definition) && valid(op.limits);
+    return validGeneration(op.definition) && valid(op.limits);
 }
 bool valid(const ValidateSourceCache& op) {
     return valid(op.cache) && valid(op.definition) && valid(op.limits);
@@ -994,7 +1009,8 @@ std::optional<Request> decode(const QCborArray& a) {
     }
     case 7: {
         GenerateSource op;
-        if (body.size() == 2 && read(body.at(0), op.definition) && read(body.at(1), op.limits))
+        if (body.size() == 2 && readGenerationDefinition(body.at(0), op.definition) &&
+            read(body.at(1), op.limits))
             return Request{token, std::move(op)};
         break;
     }

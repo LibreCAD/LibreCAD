@@ -72,10 +72,19 @@ struct LC_OffsetSourceGeometry {
     }
 
     static std::optional<LC_OffsetSourceGeometry> capture(const RS_Entity& entity);
+    static std::optional<LC_OffsetSourceGeometry> captureForGeneration(const RS_Entity& entity);
     std::unique_ptr<RS_Entity> makeEntity(RS_EntityContainer* parent = nullptr) const;
+    std::unique_ptr<RS_Entity> makeGenerationEntity(RS_EntityContainer* parent = nullptr) const;
     bool isWellFormed() const noexcept;
+    bool isWellFormedForGeneration() const noexcept;
     bool isWellFormedOutput() const noexcept;
     std::unique_ptr<RS_Entity> makeOutputEntity(RS_EntityContainer* parent = nullptr) const;
+
+private:
+    static std::optional<LC_OffsetSourceGeometry> captureImpl(
+        const RS_Entity& entity, bool allowSelfIntersectingLinearPolyline);
+    std::unique_ptr<RS_Entity> makeEntityImpl(RS_EntityContainer* parent) const;
+    bool isWellFormedImpl(bool allowSelfIntersectingLinearPolyline) const noexcept;
 };
 
 /** Source plus the common signed left-normal distance and native cache options. */
@@ -87,6 +96,11 @@ struct LC_OffsetSourceDefinition {
 
     bool isWellFormed() const noexcept {
         return source.isWellFormed() && std::isfinite(signedDistance) &&
+               std::isfinite(relativeTolerance) && relativeTolerance >= 0.0;
+    }
+
+    bool isWellFormedForGeneration() const noexcept {
+        return source.isWellFormedForGeneration() && std::isfinite(signedDistance) &&
                std::isfinite(relativeTolerance) && relativeTolerance >= 0.0;
     }
 };
@@ -268,47 +282,61 @@ inline bool endpoints(const LC_OffsetPolylineSegment& segment, RS_Vector& start,
 }
 
 inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(const RS_Entity& entity) {
+    return captureImpl(entity, false);
+}
+
+inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::captureForGeneration(
+    const RS_Entity& entity) {
+    return captureImpl(entity, true);
+}
+
+inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::captureImpl(
+    const RS_Entity& entity, const bool allowSelfIntersectingLinearPolyline) {
     if (LC_OffsetSourceDetail::hasUnsupportedProjectionProvenance(entity))
         return std::nullopt;
+    const auto wellFormed = [allowSelfIntersectingLinearPolyline](const LC_OffsetSourceGeometry& geometry) {
+        return allowSelfIntersectingLinearPolyline ? geometry.isWellFormedForGeneration()
+                                                   : geometry.isWellFormed();
+    };
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         LC_OffsetSourceGeometry result{ellipse->getData()};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
         const auto& data = spline->getData();
         if (!LC_OffsetSourceDetail::boundedSourceSize(data)) return std::nullopt;
         LC_OffsetSourceGeometry result{data};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     // LC_Parabola derives from LC_SplinePoints, so preserve its exact identity first.
     if (const auto* parabola = dynamic_cast<const LC_Parabola*>(&entity)) {
         LC_OffsetSourceGeometry result{parabola->getData()};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity)) {
         const auto& data = points->getData();
         if (!LC_OffsetSourceDetail::boundedSourceSize(data)) return std::nullopt;
         LC_OffsetSourceGeometry result{data};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
         if (hyperbola->isInfinite()) {
             return std::nullopt;
         }
         LC_OffsetSourceGeometry result{hyperbola->getData()};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) {
         LC_OffsetSourceGeometry result{RS_LineData{line->getStartpoint(), line->getEndpoint()}};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) {
         LC_OffsetSourceGeometry result{arc->getData()};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* circle = dynamic_cast<const RS_Circle*>(&entity)) {
         LC_OffsetSourceGeometry result{circle->getData()};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
         if (polyline->size() > LC_OffsetSourceDetail::MaximumSourceItems) return std::nullopt;
@@ -325,13 +353,24 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
             else return std::nullopt;
         }
         LC_OffsetSourceGeometry result{std::move(data)};
-        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+        return wellFormed(result) ? std::optional{std::move(result)} : std::nullopt;
     }
     return std::nullopt;
 }
 
 inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntity(RS_EntityContainer* parent) const {
     if (!isWellFormed()) return nullptr;
+    return makeEntityImpl(parent);
+}
+
+inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeGenerationEntity(
+    RS_EntityContainer* parent) const {
+    if (!isWellFormedForGeneration()) return nullptr;
+    return makeEntityImpl(parent);
+}
+
+inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntityImpl(
+    RS_EntityContainer* parent) const {
     return std::visit([parent](const auto& data) -> std::unique_ptr<RS_Entity> {
         using T = std::decay_t<decltype(data)>;
         if constexpr (std::is_same_v<T, RS_EllipseData>) return std::make_unique<RS_Ellipse>(parent, data);
@@ -368,9 +407,18 @@ inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntity(RS_EntityC
 }
 
 inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
+    return isWellFormedImpl(false);
+}
+
+inline bool LC_OffsetSourceGeometry::isWellFormedForGeneration() const noexcept {
+    return isWellFormedImpl(true);
+}
+
+inline bool LC_OffsetSourceGeometry::isWellFormedImpl(
+    const bool allowSelfIntersectingLinearPolyline) const noexcept {
     using namespace LC_OffsetSourceDetail;
     if (value.valueless_by_exception()) return false;
-    return std::visit([](const auto& data) noexcept {
+    return std::visit([allowSelfIntersectingLinearPolyline](const auto& data) noexcept {
         using T = std::decay_t<decltype(data)>;
         if constexpr (std::is_same_v<T, RS_EllipseData>) {
             const double majorLength = std::hypot(data.majorP.x, data.majorP.y);
@@ -478,7 +526,11 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                 if (!insertUniqueVertex(uniqueVertices, lastEnd) ||
                     !sameEndpoint(lastEnd, data.endpoint, lastScale)) return false;
             }
-            return hasNoNonAdjacentSegmentIntersections(data);
+            return hasNoNonAdjacentSegmentIntersections(data) ||
+                (allowSelfIntersectingLinearPolyline && data.closed &&
+                 std::all_of(data.segments.begin(), data.segments.end(), [](const auto& segment) {
+                     return std::holds_alternative<RS_LineData>(segment);
+                 }));
         }
     }, value);
 }

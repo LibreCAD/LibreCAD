@@ -9949,6 +9949,70 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
     }
 }
 
+TEST_CASE("worker generates and transports self-crossing linear polyline regions",
+          "[lc-offsetcurve][worker-kernel][source-generation][polyline][region-boundary]") {
+    const RS_Vector origin{100000, -250000};
+    const LC_OffsetPolylineData bowTie{
+        origin + RS_Vector{20, 10}, origin + RS_Vector{20, 10}, true,
+        {RS_LineData{origin + RS_Vector{20, 10}, origin + RS_Vector{20, -10}},
+         RS_LineData{origin + RS_Vector{20, -10}, origin + RS_Vector{-20, 10}},
+         RS_LineData{origin + RS_Vector{-20, 10}, origin + RS_Vector{-20, -10}},
+         RS_LineData{origin + RS_Vector{-20, -10}, origin + RS_Vector{20, 10}}}};
+    const LC_OffsetSourceGeometry sourceGeometry{bowTie};
+    CHECK_FALSE(sourceGeometry.isWellFormed());
+    REQUIRE(sourceGeometry.isWellFormedForGeneration());
+    const auto source = sourceGeometry.makeGenerationEntity();
+    REQUIRE(source);
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*source));
+    const auto capturedForGeneration = LC_OffsetSourceGeometry::captureForGeneration(*source);
+    REQUIRE(capturedForGeneration);
+    CHECK_FALSE(capturedForGeneration->isWellFormed());
+    CHECK(capturedForGeneration->isWellFormedForGeneration());
+
+    for (const double signedDistance : {0.5, -0.5}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceDefinition definition{sourceGeometry, signedDistance, 1e-4, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
+        REQUIRE(options);
+        CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+
+        const req::Request request{token, req::GenerateSource{definition, {}}};
+        LC_OffsetWorkerKernel::Trace trace;
+        const auto reply = LC_OffsetWorkerKernel::run(request, &trace);
+        const auto& generated = native(reply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        CHECK(generated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+        CHECK(generated.engineRuns == 1);
+        CHECK(trace.nativePrepareEntered);
+        CHECK(trace.computationCompleted);
+        REQUIRE(generated.ordinary.size() == (signedDistance < 0.0 ? 1u : 2u));
+        for (const auto& output : generated.ordinary) {
+            const auto* spline = std::get_if<RS_SplineData>(&output);
+            REQUIRE(spline);
+            REQUIRE_FALSE(spline->controlPoints.empty());
+            for (const RS_Vector& point : spline->controlPoints) {
+                CHECK(std::isfinite(point.x));
+                CHECK(std::isfinite(point.y));
+                CHECK(point.x > origin.x - 100.0);
+                CHECK(point.x < origin.x + 100.0);
+                CHECK(point.y > origin.y - 100.0);
+                CHECK(point.y < origin.y + 100.0);
+            }
+        }
+
+        const auto wire = result::encode(reply, request);
+        REQUIRE(wire);
+        const auto decoded = result::decode(*wire, request);
+        REQUIRE(decoded);
+        const auto& transported = native(*decoded, 7);
+        CHECK(transported.engineStatus == LC_CurveOffsetStatus::Ok);
+        CHECK(transported.ordinaryStatus == result::OrdinaryStatus::Complete);
+        CHECK(transported.ordinary.size() == generated.ordinary.size());
+        CHECK(transported.ordinaryUsage.outputEntities == generated.ordinaryUsage.outputEntities);
+    }
+}
+
 TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
     RS_Polyline polyline;
