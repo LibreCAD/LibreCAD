@@ -3615,11 +3615,12 @@ TEST_CASE("mixed-bulge RegionBoundary worker branches round-trip as ordinary spl
                               }));
         QElapsedTimer elapsed;
         elapsed.start();
-        while (!completion) {
-            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+        while (!completion &&
+               elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000) {
             QCoreApplication::processEvents(QEventLoop::AllEvents);
             QThread::msleep(1);
         }
+        REQUIRE(completion);
         REQUIRE(completion->status == LC_OffsetWorkerClient::Status::Completed);
         REQUIRE(completion->completed);
         REQUIRE(completion->completed->isJoined());
