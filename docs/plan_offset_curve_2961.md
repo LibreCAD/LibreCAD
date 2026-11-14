@@ -44055,3 +44055,22 @@ coverage. Continue the remaining source-family/geometry-variant worker, cache,
 Trim, DXF/DWG matrix, qmake6 and cross-platform checks, external-CAD review,
 and visible Properties workflow acceptance. Do not infer those gates from
 this persistence matrix.
+
+## 1282. Qualify the Opposite Transformed All-arc Traversal (2026-11-13)
+
+Test commit `0f30f7486` adds the counterclockwise counterpart of section
+1281's translated/rotated four-arc circle. It uses the same center and scale,
+but reverses vertex order and bulge signs while retaining the oblique finite
+cutter. Both roots must again carry `AnalyticMonotoneTransverse`; the actual
+Trim action, undo/redo checks, and all five DXF/DWG save/reopen lanes execute.
+The focused counterclockwise profile passes 190 assertions, and the complete
+eight-profile/five-format persistence matrix passes 1,690 assertions on macOS
+arm64 CMake Release. `git diff --check` passes.
+
+Sections 1281-1282 now cover both traversal directions for this one
+transformed all-arc-circle geometry and this cutter orientation. They do not
+establish arbitrary rotations, translations, scales, non-circular rounded
+polylines, or other source families. Continue those family/variant cases
+through the direct geometry oracle, worker/cache and Trim actions, and
+applicable file lanes; keep qmake6, cross-platform, external-CAD, and visible
+Properties acceptance as separate open gates.
