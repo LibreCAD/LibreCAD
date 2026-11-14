@@ -44167,3 +44167,24 @@ unequal-radius profile. It does not independently verify the joins, all
 parameter locations, other bulge arrangements, or arbitrary scales/origins.
 Retain those as remaining direct-oracle work alongside other source families,
 cross-platform tests, external-CAD review and visible Properties acceptance.
+
+## 1286. Check Rounded Polyline Arc Endpoints Against the Cache (2026-11-14)
+
+Test commit `1eb7ed936` extends section 1285's independent geometric oracle to
+both endpoints of each of the profile's eight source arcs. It computes the
+expected normal-offset endpoint from the source arc center, traversal
+orientation, radius, and stored signed distance, then measures directly
+against the emitted native cache using the same dense parameter search and
+local golden-section refinement. Each of the 16 endpoint errors must remain
+below both the recorded cache world tolerance and 10% of the offset distance.
+
+On macOS arm64 CMake Release, the focused transformed rounded-polyline profile
+passes 405 assertions across all five DXF/DWG lanes. The complete ten-profile,
+five-format persistence matrix passes 2,285 assertions; `git diff --check`
+passes. This verifies source-arc endpoint loci for this one transformed
+unequal-radius profile. It does not validate the full shape of any connector
+or join transition, global maximum deviation between oracle samples, other
+bulge layouts, the inward signed side, arbitrary transforms, or the remaining
+source-family variants. Continue those independent geometry checks and keep
+cross-platform, qmake6 test, external-CAD, and visible Properties acceptance
+as separate gates.
