@@ -4658,14 +4658,6 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
             native->getData().controlPoints.size(),
             native->getData().knotslist.size(), cacheEndpointGap);
     CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
-    if (segmentCount == 2048 && towardCentre) {
-      CHECK(byCurve.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
-      CHECK(byCurve.rootCount == 0);
-      CHECK_FALSE(native->isDeleted());
-      CHECK_FALSE(line->isDeleted());
-      CHECK(live(f.graphic).size() == 3);
-      return;
-    }
     REQUIRE(byCurve.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(byCurve.rootCount == 2);
     const auto overlaps = [](const LC_Interval &a, const LC_Interval &b) {

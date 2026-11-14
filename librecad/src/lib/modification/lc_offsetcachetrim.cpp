@@ -298,7 +298,8 @@ bool rawBound(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame,
 }
 
 I cacheCutRootError(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame,
-                    const I& rootParameter, const double cutParameter) {
+                    const I& rootParameter, const double cutParameter,
+                    const bool useExactRationalRounding = false) {
     I u = intersect(rootParameter, I::hull(0, 1));
     if (!finite(u) || !std::isfinite(cutParameter) || !u.contains(cutParameter)) { return {}; }
     Net derivative; std::size_t degree = 0;
@@ -331,10 +332,10 @@ I cacheCutRootError(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame
     };
     const I scale = I::point(frame.scale());
     I roundingX, roundingY;
-    if (span.degree == 1) {
-        // Linear cache spans are the dense-polyline case where global
-        // parameter quantization dominates; use the exact rational conversion
-        // error instead of charging four full coordinate ULPs.
+    if (span.degree == 1 || useExactRationalRounding) {
+        // Linear spans use the exact rational conversion bound. A higher-degree
+        // span opts in only after scalar contraction when multiple boundary
+        // roots are isolated; one-root near-cusp cases remain conservative.
         roundingX = roundingError(point[0][0], roundedX) / scale;
         roundingY = roundingError(point[0][1], roundedY) / scale;
     } else {
@@ -1211,6 +1212,7 @@ struct Root {
     double cut = 0;
     std::size_t provenanceId = 0;
     bool lineContracted = false;
+    bool exactRationalRounding = false;
 };
 
 std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
@@ -1227,6 +1229,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
              snapshot->event.proof != LC_IntersectionProof::AnalyticEndpoint)) { fail(Refusal::TangencyOrOverlap); }
         auto t = snapshot->event.isolation.parameterA;
         bool lineContracted = false;
+        bool exactRationalRounding = false;
         bool scalarContracted = false;
         for (unsigned round = 0;; ++round) {
             const auto id = snapshot->event.isolation.segmentA;
@@ -1259,7 +1262,9 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
             bool lineProgress = false;
             if (lineCutter) {
                 const double cut = mid(t);
-                const I cutError = cacheCutRootError((*input.source)[id], input.frame, u, cut - double(id));
+                const bool exactRoundingEligible = scalarContracted && session.rootCount() >= 2;
+                const I cutError = cacheCutRootError((*input.source)[id], input.frame, u,
+                                                     cut - double(id), exactRoundingEligible);
                 if (round < c.limits.maxDepth) {
                     const auto& line = (*input.cutter)[cutterId - input.source->size()];
                     c.items(1);
@@ -1289,6 +1294,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                     ? error + representableError.hi() : error;
                 if (finite(cutError) && cutError.hi() <= cutAllowance) {
                     lineContracted = scalarContracted;
+                    exactRationalRounding = exactRoundingEligible;
                     break;
                 }
                 if (!lineContracted) {
@@ -1346,7 +1352,10 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
             c.compare();
             if (singleton(t) && singleton(previous.parameter) && t.lo() == previous.parameter.lo()) { duplicate = true; break; }
         }
-        if (!duplicate) { out.push_back({handle, *snapshot, t, cut, 0, lineContracted}); }
+        if (!duplicate) {
+            out.push_back({handle, *snapshot, t, cut, 0, lineContracted,
+                           exactRationalRounding});
+        }
     }
     // Insertion sort is bounded by the shared comparison allowance; never use
     // numeric seed order when actual certified isolations overlap.
@@ -1632,7 +1641,9 @@ Endpoint endpoint(const Input& input, const std::vector<Root>& roots, const Boun
         };
         if (root.lineContracted) {
             if (!rawBound(span, input.frame, u.lo(), u.hi(), rx, ry, dx, dy)) fail(Refusal::Arithmetic);
-            const I cutError = cacheCutRootError(span, input.frame, u, boundary.cut - double(id));
+            const I cutError = cacheCutRootError(span, input.frame, u,
+                                                boundary.cut - double(id),
+                                                root.exactRationalRounding);
             const double speed = std::hypot(std::max(std::abs(dx.lo()), std::abs(dx.hi())),
                                             std::max(std::abs(dy.lo()), std::abs(dy.hi())));
             const I parameterQuantum = I::point(0.5 * root.parameter.width() + ulp(boundary.cut));
