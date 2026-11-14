@@ -674,7 +674,17 @@ private:
 
 std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity);
 
-class PolylineSource final : public OffsetSource {
+class PolylineOffsetSource {
+public:
+    virtual ~PolylineOffsetSource() = default;
+    virtual bool straightSpan(std::size_t span) const = 0;
+    virtual bool straightVertices(std::vector<RS_Vector>& vertices) const = 0;
+    virtual bool circularOffsetSpan(double a, double b, double signedDistance,
+                                    LC_OffsetSegment& segment) const = 0;
+    virtual bool hasCircularSegment() const = 0;
+};
+
+class PolylineSource final : public OffsetSource, public PolylineOffsetSource {
 public:
     static std::unique_ptr<OffsetSource> make(const RS_Polyline& polyline) {
         auto result = std::unique_ptr<PolylineSource>{new PolylineSource{polyline.isClosed()}};
@@ -755,7 +765,7 @@ public:
         if (m_closed || m_pieces.size() != 1) return false;
         return m_pieces.front().source->straightSegment(start, end);
     }
-    bool straightSpan(const std::size_t span) const {
+    bool straightSpan(const std::size_t span) const override {
         if (span + 1 >= m_breaks.size()) return false;
         const double middle = m_breaks[span] + (m_breaks[span + 1] - m_breaks[span]) * 0.5;
         const auto index = pieceAt(middle, LC_CurveEvaluationSide::Interior);
@@ -770,7 +780,7 @@ public:
         return localStart && localEnd && *localStart == localBreaks.front() &&
                *localEnd == localBreaks.back();
     }
-    bool straightVertices(std::vector<RS_Vector>& vertices) const {
+    bool straightVertices(std::vector<RS_Vector>& vertices) const override {
         vertices.clear();
         if (!m_closed || m_pieces.size() < 3) return false;
         RS_Vector previousEnd;
@@ -800,7 +810,7 @@ public:
         return true;
     }
     bool circularOffsetSpan(const double a, const double b, const double signedDistance,
-                            LC_OffsetSegment& segment) const {
+                            LC_OffsetSegment& segment) const override {
         if (!(a < b) || !std::isfinite(signedDistance)) return false;
         const auto index = pieceAt(a + (b - a) * 0.5, LC_CurveEvaluationSide::Interior);
         if (!index) return false;
@@ -824,7 +834,7 @@ public:
         return std::isfinite(segment.startAngle) && std::isfinite(segment.sweep) &&
                segment.sweep != 0.0 && isFinite(segment.a) && isFinite(segment.b);
     }
-    bool hasCircularSegment() const {
+    bool hasCircularSegment() const override {
         return std::any_of(m_pieces.begin(), m_pieces.end(),
             [](const Piece& piece) { return piece.hasPrimitive && piece.primitive.arc; });
     }
@@ -4021,7 +4031,7 @@ private:
         if (p.arcCentre.valid) {
             return validateArc(w);
         }
-        const auto* polyline = dynamic_cast<const PolylineSource*>(&m_source);
+        const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&m_source);
         const auto& sourceBreaks = m_source.breaks();
         if (polyline != nullptr && sourceBreaks.size() >= 2 &&
             p.sourceSpan < sourceBreaks.size() - 1 &&
@@ -6458,10 +6468,11 @@ private:
     bool m_wraps{false};
 };
 
-class LocalFrameOffsetSource final : public OffsetSource {
+class LocalFrameOffsetSource final : public OffsetSource, public PolylineOffsetSource {
 public:
     LocalFrameOffsetSource(const OffsetSource& source, const RS_Vector& origin, const double angle)
-        : m_source{source}, m_origin{origin}, m_cos{std::cos(angle)}, m_sin{std::sin(angle)} {
+        : m_source{source}, m_polyline{dynamic_cast<const PolylineOffsetSource*>(&source)},
+          m_origin{origin}, m_cos{std::cos(angle)}, m_sin{std::sin(angle)}, m_angle{angle} {
         const double rotationLength = std::hypot(m_cos, m_sin);
         m_cos /= rotationLength;
         m_sin /= rotationLength;
@@ -6503,6 +6514,31 @@ public:
         end = toLocalPoint(end);
         return isFinite(start) && isFinite(end);
     }
+    bool straightSpan(const std::size_t span) const override {
+        return m_polyline != nullptr && m_polyline->straightSpan(span);
+    }
+    bool straightVertices(std::vector<RS_Vector>& vertices) const override {
+        if (m_polyline == nullptr || !m_polyline->straightVertices(vertices)) return false;
+        for (RS_Vector& point : vertices) point = toLocalPoint(point);
+        const bool finite = std::all_of(vertices.begin(), vertices.end(),
+                                        [](const RS_Vector& point) { return isFinite(point); });
+        if (!finite) vertices.clear();
+        return finite;
+    }
+    bool circularOffsetSpan(const double a, const double b, const double signedDistance,
+                            LC_OffsetSegment& segment) const override {
+        if (m_polyline == nullptr || !m_polyline->circularOffsetSpan(a, b, signedDistance, segment))
+            return false;
+        segment.a = toLocalPoint(segment.a);
+        segment.b = toLocalPoint(segment.b);
+        segment.centre = toLocalPoint(segment.centre);
+        segment.startAngle -= m_angle;
+        return isFinite(segment.a) && isFinite(segment.b) && isFinite(segment.centre) &&
+               std::isfinite(segment.startAngle);
+    }
+    bool hasCircularSegment() const override {
+        return m_polyline != nullptr && m_polyline->hasCircularSegment();
+    }
     RS_Vector toWorldPoint(const RS_Vector& point) const {
         return {(m_cos * point.x - m_sin * point.y) / m_rotationNorm + m_origin.x,
                 (m_sin * point.x + m_cos * point.y) / m_rotationNorm + m_origin.y};
@@ -6540,9 +6576,11 @@ private:
     }
 
     const OffsetSource& m_source;
+    const PolylineOffsetSource* m_polyline;
     RS_Vector m_origin;
     double m_cos;
     double m_sin;
+    double m_angle;
     double m_rotationNorm{1.0};
     std::vector<RS_Vector> m_hull;
 };
@@ -6644,7 +6682,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     // non-adjacent segment test; do not make its eligibility depend on the
     // general curve intersection solver's endpoint noding behavior.
     if (!dilate) {
-        if (const auto* polyline = dynamic_cast<const PolylineSource*>(&source)) {
+        if (const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&source)) {
             std::vector<RS_Vector> vertices;
             if (polyline->straightVertices(vertices)) {
                 LC_OffsetPolylineData polygon;
@@ -6864,7 +6902,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     // 5. node all candidates together, and split them there
     LC_IntersectionResult found;
     bool usedExactArrangement = false;
-    if (dynamic_cast<const PolylineSource*>(&source) != nullptr) {
+    if (dynamic_cast<const PolylineOffsetSource*>(&source) != nullptr) {
         struct Primitive {
             LC_OffsetSegment segment;
             std::size_t branch;
@@ -6874,7 +6912,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         };
         std::vector<Primitive> primitives;
         bool eligible = true;
-        const auto* polyline = dynamic_cast<const PolylineSource*>(&source);
+        const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&source);
         for (std::size_t c = 0; c < candidates.size() && eligible; ++c) {
             if (candidates[c].branches.size() != 1 || candidates[c].branches.front().closed ||
                 candidates[c].branches.front().cubicPieces.empty() || polyline == nullptr) {
@@ -7063,7 +7101,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             usedExactArrangement = true;
         }
     }
-    if (!usedExactArrangement) {
+    // A rigid-frame transform can perturb exact arc tangencies by a few ulps.
+    // If exact primitive noding cannot classify that arrangement, let the
+    // interval solver either certify it independently or refuse atomically.
+    if (!usedExactArrangement || found.status == LC_IntersectionStatus::AmbiguousTopology) {
         found = findIntersections(CompositeCurves{parts}, query);
     }
     recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
@@ -7597,7 +7638,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     // offset line spans and circular vertex joins. Build those exact primitives
     // directly; the materializer independently checks each emitted piece.
     if (!trimmed) {
-        if (const auto* polyline = dynamic_cast<const PolylineSource*>(&curve)) {
+        if (const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&curve)) {
             std::vector<RS_Vector> vertices;
             if (polyline->straightVertices(vertices)) {
                 long double twiceArea = 0.0L;

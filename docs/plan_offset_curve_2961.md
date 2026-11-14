@@ -35,16 +35,14 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** The latest
-request reaffirms the complete source-replacement contract: while selecting a
-new source curve in the existing Properties widget, the user can change the
-requested source type in place, repeatedly and without closing the chooser or
-restarting replacement. Each type change immediately refreshes eligible
-replacement candidates. The type control remains usable after replacement
-selection has started and candidates are visible; it filters which existing
-entity can be selected, rather than converting the current source entity. This
-covers all source types supported by the offset feature, not every drawable
-entity in LibreCAD, and is not a parabola-only request.
+**Current source-widget requirement and status (2026-11-14):** The source
+curve widget must allow the user to change the requested source type while
+choosing a replacement, repeatedly and without closing the chooser or
+restarting replacement. Each change immediately refreshes eligible existing
+entities, including after the candidate list is already visible. This is a
+filter on replacement candidates, not a conversion of the current source. It
+covers every source kind supported by the offset feature, including parabola,
+not every drawable entity in LibreCAD and not a parabola-only special case.
 The canonical inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
@@ -46185,6 +46183,40 @@ passes. This verifies only this generated output and these lanes. Native
 cache/Trim integration, other mixed-bulge persistence profiles, broader
 topology and frame matrices, visible GUI, cross-platform runtime, and
 independent CAD acceptance remain open.
+
+## 1380. Preserve Exact Polyline Primitives Through Local Frames (2026-11-14)
+
+The local rigid-frame adapter now preserves the exact-polyline capabilities
+needed by region generation: straight spans/vertices and circular offset
+primitives are transformed into the local frame and remain eligible for exact
+candidate noding. If exact noding reports `AmbiguousTopology`, the bounded
+interval arrangement gets a chance to certify the candidates; it still
+returns an atomic refusal when neither path can prove the arrangement. This
+restores the rotated positive-bulge erosion success without weakening the
+refusal contract. Under the worker's production-derived tolerance, the
+identity profile also succeeds in erosion; the engine-default direct-options
+matrix still records identity erosion as a refusal, so those two tolerance
+contracts must remain distinguished in future changes.
+
+The worker-client matrix now builds its direct oracle from the same canonical
+generation source and production tolerance used by the worker, compares
+engine statuses in identity, rotation-only, translation-only, and combined
+frames for both offset directions, and compares successful worker spline
+fingerprints with direct materialization. The rotation-only erosion output
+also round-trips through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with exact
+spline fingerprints. This self-crossing source remains ordinary output, not a
+native editable cache; no native-cache or source-cache Trim claim is implied.
+
+Validation on macOS arm64 CMake Release: `[curve-offset][region]` passes
+27,758 assertions / 20 cases; the focused mixed-frame worker-client case
+passes 1,588 assertions / 1 case with the full frame and persistence matrix;
+the complete `[curve-offset]` suite passes 2,245,825 assertions / 346 cases;
+the `librecad_tests` and worker-client targets build;
+the qmake6 app/plugins build from `/private/tmp/offset2961-qmake6-current`
+exits 0; and `git diff --check` passes. This closes only the stated positive-
+bulge profile and generated-output lanes. Other frame cells, negative-bulge
+and wider mixed-bulge arrangements, broader geometry oracles, visible GUI,
+cross-platform execution, and independent CAD acceptance remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
