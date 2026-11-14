@@ -43955,3 +43955,23 @@ regression for unsupported degree-3 multiplicities 1 and 2. It does not
 qualify arbitrary source geometry or every knot domain; continue the family
 and variant matrix through geometry oracles and applicable file lanes, with
 cross-platform, external-CAD, and visible-GUI acceptance still open.
+
+## 1277. Validate Monotone Proofs at Extreme Origins and Scales (2026-11-13)
+
+Test commit `a44d8c1ba` extends finite-line proof transport beyond the prior
+fixed-origin scale matrix. Degree-1 and degree-3 monotone sources are checked
+at scales `1e-100` and `1e100`, and at translated origins `(1e12,-1e12)` and
+`(1e15,-1e15)` with representable feature sizes. Every case certifies one
+`AnalyticMonotoneTransverse` root; its world enclosure contains the expected
+center intersection, its finite-cutter parameter stays in `[0,1]`, and
+worker-result encode/decode admits the proof against the original request. The
+focused case passes 128 assertions; the full worker-result suite passes
+470,410 assertions / 33 cases on macOS arm64 CMake Release; `git diff --check`
+is clean.
+
+This qualifies these representable combinations only, not all exponents,
+sub-ULP features, overflow/subnormal boundaries, arbitrary translations, or
+all source layouts. Continue with transformed async action/persistence
+coverage where admitted, explicit atomic refusals near representability limits,
+and the broader family/variant, cross-platform, external-CAD, and visible-GUI
+gates.
