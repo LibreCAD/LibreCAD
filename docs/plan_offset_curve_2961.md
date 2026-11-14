@@ -45053,3 +45053,17 @@ degree/multiplicity/knot/frame/sign/format combinations. This closes the
 degree-five gap for these exact clamped profiles only; other source families,
 variants, visible GUI, cross-platform runtime, and ODA/AutoCAD acceptance
 remain open.
+
+## 1324. Independently Inspect Trimmed Periodic DWG Splines (2026-11-14)
+
+Test commit `9280cb9f4` strengthens section 1321's conditional LibreDWG check.
+When `dwgread` is available, each generated DWG lane now locates an imported
+spline whose exact geometry fingerprint matches one of the expected trimmed
+fragments, then passes that fragment's spline data to the semantic reader.
+This avoids accidentally validating only the untouched source spline.
+
+Validation on macOS arm64 CMake Release, with `/opt/homebrew/bin/dwgread`
+available: the focused wrapped-periodic Trim/persistence case passes 5,168
+assertions / 1 case. This validates one matching Trim fragment in each DWG
+lane for the bounded degree/frame/sign profiles; it is not general DWG
+interoperability or ODA/AutoCAD acceptance.
