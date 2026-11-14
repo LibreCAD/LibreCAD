@@ -45455,3 +45455,19 @@ stopped after extended execution without a test summary; it is not reported as
 passing. `git diff --check` passes. Curved/concave high-edge regions, the
 opposite 2048 generation direction, other dense layouts/cutters, visible GUI,
 and independent CAD acceptance remain open.
+
+## 1341. Generate Dense Convex Outward Polyline Offsets Within the Existing Budget (2026-11-14)
+
+Implementation slice committed as `2180fcacc` (`fix(offset): bound dense convex polyline round joins`). The Direct outward path now recognizes simple strictly-convex linear polylines and constructs their exact parallel edge spans plus circular vertex joins. It retains the existing 4,096-piece and sample budgets. The materializer validates each emitted arc against its vertex circle; straight source spans use two exact offset endpoint evaluations and a Bezier-control convex-hull bound, avoiding repeated nearest-point iterations while still checking the complete candidate span against the requested geometry tolerance. Non-eligible layouts continue through the general rounded-join engine.
+
+The high-segment action matrix now completes typed worker replacement and independent radial checks for 256/512/1024/2048 edges in both directions. The 2048 `towardCentre=true` outward case now generates and publishes its cache; its finite-line `LC_OffsetCacheTrim::prepare` remains explicitly refused as `AmbiguousRoots` with zero certified roots and no drawing mutation. This replaces the former generation `LimitExceeded` boundary, but does not claim 2048 outward Trim success. The 2048 `towardCentre=false` Trim Two and five-format save/reopen path remains passing as recorded in section 1340.
+
+Validation on macOS arm64 CMake Release:
+
+- `Closed high-segment polyline Trim Two distinguishes connected and overlapping offsets`: 2,521 assertions / 1 case, including all eight size/direction combinations and the atomic 2048 outward Trim refusal.
+- `convex linear polyline outward offsets retain exact round joins in either orientation`: 1,080 assertions / 1 case for asymmetric convex CW and CCW polygons, sampled source-distance checks, and operation-8 cache admission.
+- `[lc-offsetcurve][polyline][worker-kernel]`: 64,207 assertions / 12 cases.
+- `[curve-offset][direct]`: 619,979 assertions / 76 cases.
+- `[curve-offset][region]`: 27,150 assertions / 13 cases.
+
+`git diff --check` passes. Evidence is limited to these strict-convex linear layouts and test profiles. 2048 outward Trim root certification, other dense cutters/layouts, visible GUI interaction, cross-platform runtime, and independent CAD acceptance remain open; do not raise global budgets or weaken atomic refusal to close them.
