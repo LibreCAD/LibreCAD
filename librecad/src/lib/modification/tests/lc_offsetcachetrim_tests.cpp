@@ -640,6 +640,49 @@ TEST_CASE("Dense ellipse secants remain provable beyond the source chord sagitta
     REQUIRE(result.refusal == Trim::Refusal::None);
     REQUIRE(result.rootCount == 2);
     REQUIRE(result.fragments.size() == 1);
+    struct ExpectedRoot {
+        std::size_t span;
+        double parameter;
+        RS_Vector point;
+    };
+    std::vector<ExpectedRoot> expectedRoots;
+    const long double majorSquared = static_cast<long double>(radius) * radius;
+    const long double minor = static_cast<long double>(radius) * ratio;
+    const long double minorSquared = minor * minor;
+    const long double cutterCenter = 2 * static_cast<long double>(radius) - inset;
+    for (std::size_t span = 0; span < segmentCount; ++span) {
+        const auto& start = data.controlPoints[span];
+        const auto& end = data.controlPoints[span + 1];
+        const long double dx = static_cast<long double>(end.x) - start.x;
+        const long double dy = static_cast<long double>(end.y) - start.y;
+        const long double x = static_cast<long double>(start.x) - cutterCenter;
+        const long double y = start.y;
+        const long double a = dx * dx / majorSquared + dy * dy / minorSquared;
+        const long double b = 2 * (x * dx / majorSquared + y * dy / minorSquared);
+        const long double c = x * x / majorSquared + y * y / minorSquared - 1;
+        const long double discriminant = b * b - 4 * a * c;
+        if (discriminant <= 0) { continue; }
+        const long double squareRoot = std::sqrt(discriminant);
+        for (const long double t : {(-b - squareRoot) / (2 * a),
+                                    (-b + squareRoot) / (2 * a)}) {
+            if (0 <= t && t <= 1) {
+                expectedRoots.push_back({span, static_cast<double>(t),
+                    {static_cast<double>(start.x + t * dx),
+                     static_cast<double>(start.y + t * dy)}});
+            }
+        }
+    }
+    REQUIRE(expectedRoots.size() == 2);
+    for (const auto& expected : expectedRoots) {
+        const auto found = std::find_if(result.roots.begin(), result.roots.end(),
+            [&](const auto& actual) {
+                return actual.target.rawSpan == expected.span &&
+                       actual.target.localParameter.contains(expected.parameter);
+            });
+        REQUIRE(found != result.roots.end());
+        CHECK(found->worldX.contains(expected.point.x));
+        CHECK(found->worldY.contains(expected.point.y));
+    }
     geometry(data, result);
     equalData(data, before);
     CHECK(coverage(result, .01) == 0);
