@@ -45019,9 +45019,10 @@ Test commit `2f500aa41` carries the independent worker-oracle alternating
 positive weights `0.7/1.3` into document source replacement, Trim, undo/redo,
 and two save/reopen cycles. The added end-to-end profile is degree four, a
 simple off-center knot at `0.37`, the rotated/translated frame, and both
-signed distances across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The
-existing degree-four/six, repeated-knot, centered/off-center, both-sign
-Trim/persistence matrix remains in place with smoothly varying weights.
+signed distances across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. At that
+commit the existing degree-four/six, repeated-knot, centered/off-center,
+both-sign Trim/persistence matrix used smoothly varying weights; section 1323
+subsequently extends that matrix to degree five.
 
 Validation on macOS arm64 CMake Release:
 `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
@@ -45032,3 +45033,23 @@ profiles are refused by cache Trim root certification; those combinations
 remain unqualified end to end and are not to be represented as passing. The
 committed slice adds no broader rational-spline guarantee, visible-GUI,
 cross-platform, or independent ODA/AutoCAD evidence.
+
+## 1323. Qualify Degree-five Rational Spline Trim (2026-11-14)
+
+Test commit `b2d66eacc` extends the smooth-positive-weight rational spline
+Trim/persistence matrix to degree five, alongside degrees four and six. The
+full matrix covers simple, repeated, and degree-minus-one interior-knot
+multiplicities; centered and off-center knots; identity and rotated/
+translated frames; both signed distances; worker-backed source replacement;
+certified Trim, undo/redo, and two save/reopen cycles in all five R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG lanes. The degree-four alternating-weight
+profile from section 1322 remains separately bounded and unchanged.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'rational high-degree splines trim through document actions and file lanes'
+--abortx 1 --reporter compact` passes 26,592 assertions / 1 case across 360
+degree/multiplicity/knot/frame/sign/format combinations. This closes the
+degree-five gap for these exact clamped profiles only; other source families,
+variants, visible GUI, cross-platform runtime, and ODA/AutoCAD acceptance
+remain open.
