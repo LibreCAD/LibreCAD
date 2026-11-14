@@ -44246,3 +44246,23 @@ translation point for this inward profile; it does not establish translation
 covariance generally, other origins/scales/rotations or bulge layouts, global
 deviation bounds, remaining source families, cross-platform/qmake6 execution,
 visible GUI, or external-CAD interoperability.
+
+## 1290. Qualify Inward Rounded-polyline Trim at a Large Origin (2026-11-14)
+
+Test commit `408d4a9b8` adds the inward rounded-polyline profile centered at
+`(1e9,-1e9)`, retaining the rotated unequal-radius arcs, signed offset,
+component-aware cutter/pick, exact-locus samples, eight-piece Trim, undo/redo,
+and five-format save/reopen checks. The test uses viewport zoom 2 with integer
+offsets to keep both the large drawing origin representable and the finite
+cutter endpoints distinct after pixel rounding. At a much smaller zoom the
+kernel had certified a root but the simulated UI clicks collapsed the cutter
+endpoints, correctly leaving the Trim action unchanged; this was a test-view
+resolution issue, not a production kernel failure.
+
+On macOS arm64 CMake Release, the focused large-origin inward profile passes
+535 assertions and the full thirteen-profile/five-format matrix passes 3,970
+assertions. `git diff --check` passes. This qualifies one large origin for
+this small-feature inward profile and a resolvable view setup; it does not
+prove arbitrary origin/scale combinations, subpixel UI picking, global
+deviation bounds, other source families, cross-platform/qmake6 behavior,
+visible desktop Properties acceptance, or external-CAD interoperability.
