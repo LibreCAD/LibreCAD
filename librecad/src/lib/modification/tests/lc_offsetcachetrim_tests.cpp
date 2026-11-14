@@ -1067,6 +1067,35 @@ TEST_CASE("A V-shaped cache corner touching a line is not a crossing", tags) {
     }
 }
 
+TEST_CASE("Monotone finite-line certificates keep smooth tangencies and near misses atomic", tags) {
+    RS_Line cutter{nullptr, {-1, 0}, {2, 0}};
+    SECTION("strictly separated cubic near miss") {
+        auto data = cache({{0, 1}, {1. / 3, 1}, {2. / 3, 1}, {1, 1}}, 3);
+        const auto before = data;
+        CHECK(Trim::strictlySeparatedBezierFromLine(data.controlPoints, cutter.getStartpoint(), cutter.getEndpoint()));
+        const auto result = Trim::prepare(data, cutter, {{.1, 1}});
+        refused(result);
+        CHECK(result.refusal == Trim::Refusal::NoUsableRoots);
+        CHECK(result.rootCount == 0);
+        equalData(data, before);
+    }
+    SECTION("smooth cubic tangent") {
+        auto data = cache({{0, 3}, {1. / 3, -1}, {2. / 3, -1}, {1, 3}}, 3);
+        const auto before = data;
+        CHECK_FALSE(Trim::certifyMonotoneLineRoot(
+            data.controlPoints, cutter.getStartpoint(), cutter.getEndpoint()));
+        const auto result = Trim::prepare(data, cutter, {{.1, 2.43}});
+        refused(result);
+        CHECK((result.refusal == Trim::Refusal::TangencyOrOverlap ||
+               result.refusal == Trim::Refusal::AmbiguousRoots ||
+               result.refusal == Trim::Refusal::LimitExceeded));
+        CHECK(std::none_of(result.roots.begin(), result.roots.end(), [](const auto& root) {
+            return root.proof == LC_IntersectionProof::AnalyticMonotoneTransverse;
+        }));
+        equalData(data, before);
+    }
+}
+
 TEST_CASE("Cache trim does not complete a near-full conic cutter or its missing half", tags) {
     const auto data = cache({{-3, -1}, {3, -1}});
     RS_Arc upper{nullptr, {{0, 0}, 2, 0, pi, false}};
