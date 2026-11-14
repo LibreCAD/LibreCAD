@@ -44644,3 +44644,21 @@ passes 312 assertions / 1 case across five file lanes. The nine-family
 rotated bounded-hyperbola fixture and does not close cusp/asymmetric variant
 Trim coverage, visible GUI acceptance, cross-platform runtime, or external-CAD
 validation. No production-code change was made in this test slice.
+
+## 1304. Oracle-check a Rotated Partial Eccentric Ellipse Cache (2026-11-14)
+
+Test commit `3e1ecbf61` adds `partial eccentric ellipse caches match an
+independent analytic offset locus` to the worker-kernel suite. The profile is
+a rotated partial ellipse arc at a translated origin with axis ratio `0.25`.
+For both signed offset distances, the test evaluates the ellipse and its
+analytic tangent from the source definition, constructs exact normal-offset
+samples, and compares them against a dense independent sampling of the
+generated spline cache.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests 'partial eccentric ellipse caches match an independent analytic offset locus' --reporter compact`
+passes 126 assertions / 1 case. The full `[ellipse]` worker-kernel selection
+passes 1,314,188 assertions / 5 cases. This establishes the tested partial-arc
+profile and both signs only; it does not close reversed, wrapped, near-cusp,
+extreme-eccentricity, ellipse Trim/action/file, cross-platform, visible-GUI, or
+external-CAD acceptance.
