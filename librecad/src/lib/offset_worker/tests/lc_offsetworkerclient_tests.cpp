@@ -739,6 +739,44 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     }
 }
 
+TEST_CASE("Worker client refuses overlapping positive-bulge erosion candidates",
+          "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][refusal]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_Line attributes{nullptr, RS_LineData{{0, 0}, {1, 0}}};
+
+    RS_Polyline sourceEntity;
+    sourceEntity.addVertex({20, 10});
+    sourceEntity.addVertex({20, -10}, 0.5);
+    sourceEntity.addVertex({-20, 10});
+    sourceEntity.addVertex({-20, -10});
+    sourceEntity.setClosed(true);
+    sourceEntity.endPolyline();
+    const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
+    REQUIRE(source);
+    CHECK_FALSE(source->isWellFormed());
+    REQUIRE(source->isWellFormedForGeneration());
+
+    const LC_OffsetSourceDefinition definition{*source, 0.5, 1e-4, false};
+    const Req::Request request{token(601), Req::GenerateSource{definition, {}}};
+    const auto encoded = Req::encode(request);
+    REQUIRE(encoded);
+    const auto decoded = Req::decode(*encoded);
+    REQUIRE(decoded);
+    CHECK(Req::admitted(*decoded));
+
+    Receipts receipts;
+    REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+
+    const auto& completion = completed(receipts.at(0), 601, 7);
+    const auto& result = std::get<Reply::Native>(completion.reply().result);
+    CHECK(result.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(result.ordinary.empty());
+    CHECK_FALSE(result.curve);
+    CHECK_FALSE(completion.nativeSource(attributes));
+}
+
 TEST_CASE("Worker client joins typed source generation for every modeled source family", Tags) {
     auto& rt = runtime();
     OwnedClient owned{rt};
