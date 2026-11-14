@@ -44751,3 +44751,23 @@ case. Degree six therefore now has action, Trim, undo/redo and file-lane
 evidence for this exact profile. Other rational layouts, knot multiplicities,
 translated/conditioned profiles, visible-GUI acceptance, cross-platform
 runtime, and external-CAD validation remain open.
+
+## 1309. Persist Repeated-knot Rational Spline Trims (2026-11-14)
+
+Test commit `7d2b3bd39` extends the rational high-degree spline Trim matrix to
+interior-knot multiplicities one and two for both degree four and degree six.
+All four source layouts retain nonuniform positive weights and run through
+Update from Source, typed degree/knot preservation, two-root Trim, fragment
+comparison, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen. The synthetic viewport zoom remains necessary to make the
+off-grid target pick resolvable at integer-pixel event coordinates.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[high-degree][interior-knot][trim-action]' --reporter compact`
+passes 1,384 assertions / 1 case across twenty degree/multiplicity/format
+combinations. The existing independent degree-minus-one repeated-knot worker
+oracle passes 10,080 assertions / 1 case across its degrees, knot positions,
+weight profiles, origins, rotations, and signed distances. The new Trim cases
+cover multiplicities one and two only; they do not close higher-multiplicity
+action/file variants, broader spline parameterizations, visible-GUI,
+cross-platform, or external-CAD validation.
