@@ -44120,3 +44120,22 @@ topologies, bulge signs, radii, transforms, or source families. Add direct
 geometry cross-checks and broader mixed-arc/line and non-circular variants as
 separate slices; continue qmake6 test, cross-platform, external-CAD, and
 visible Properties acceptance gates independently.
+
+## 1285. Add an Independent Arc-offset Oracle to the Rounded Trim Fixture (2026-11-13)
+
+Test commit `7b6954e6f` strengthens profile 9 from section 1284 with a
+geometry oracle independent of Trim's own fragment fingerprints. For each of
+the eight exact source arcs, it evaluates the radial offset point at the arc
+midpoint using the stored signed left-normal distance, then searches the
+materialized native cache directly: at least 16,384 uniform parameter samples
+followed by a local golden-section refinement. Every measured deviation must
+be below both the cache's recorded world tolerance and 10% of the requested
+offset magnitude. The focused profile passes 320 assertions across all five
+DXF/DWG lanes; the full ten-profile/five-format persistence matrix passes
+2,200 assertions on macOS arm64 CMake Release. `git diff --check` passes.
+
+This independently checks the eight arc interiors for this one transformed
+unequal-radius profile. It does not independently verify the joins, all
+parameter locations, other bulge arrangements, or arbitrary scales/origins.
+Retain those as remaining direct-oracle work alongside other source families,
+cross-platform tests, external-CAD review and visible Properties acceptance.
