@@ -1785,6 +1785,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const std::size_t interiorMultiplicity = multiplicityCase == 3 ? degree - 1 : multiplicityCase;
     const int transformed = GENERATE(0, 1);
     const double signedDistance = GENERATE(-0.02, 0.02);
+    const double interiorKnot = GENERATE(0.37, 0.5);
     const double frameAngle = transformed ? 0.37 : 0.0;
     const RS_Vector frameOrigin = transformed ? RS_Vector{2.0, -3.0} : RS_Vector{0.0, 0.0};
     const auto mapPoint = [frameAngle, frameOrigin](const RS_Vector& point) {
@@ -1796,7 +1797,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(degree, interiorMultiplicity, transformed, signedDistance,
+    CAPTURE(degree, interiorMultiplicity, transformed, signedDistance, interiorKnot,
             static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -1823,7 +1824,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
         splineData.weights.push_back(0.75 + 0.5 * t);
     }
     splineData.knotslist.insert(splineData.knotslist.end(), splineData.degree + 1, 0.0);
-    splineData.knotslist.insert(splineData.knotslist.end(), interiorMultiplicity, 0.5);
+    splineData.knotslist.insert(splineData.knotslist.end(), interiorMultiplicity, interiorKnot);
     splineData.knotslist.insert(splineData.knotslist.end(), splineData.degree + 1, 1.0);
     const LC_OffsetSourceGeometry expectedSource{splineData};
     REQUIRE(expectedSource.isWellFormed());
