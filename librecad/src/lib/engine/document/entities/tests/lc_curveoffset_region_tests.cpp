@@ -222,36 +222,70 @@ TEST_CASE("A bow tie shrinks into its two lobes and grows into one region", "[cu
 
 TEST_CASE("Self-crossing polyline regions grow and erode under both fill rules",
           "[curve-offset][region][polyline][self-crossing]") {
-    RS_Polyline source;
-    for (const RS_Vector& point : g_bowTie) source.addVertex(point);
-    source.setClosed(true);
-    source.endPolyline();
+    struct Transform {
+        const char* name;
+        double scale;
+        double angle;
+        bool reflectX;
+        RS_Vector translation;
+        bool reverse;
+    };
+    const std::vector<Transform> transforms{
+        {"identity", 1.0, 0.0, false, {0, 0}, false},
+        {"rotated translated reverse", 3.0, 0.63, false, {100000, -250000}, true},
+        {"reflected scaled", 0.4, -0.3, true, {-100000, 200000}, false},
+    };
     for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
-        for (const bool grow : {true, false}) {
-            constexpr double distance = 1.0;
-            LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
-            options.mode = LC_CurveOffsetMode::RegionBoundary;
-            options.fillRule = rule;
-            const auto result = LC_CurveOffset::buildDirectBranches(
-                source,
-                LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
-                                                distance),
-                options, LC_CurveOffset::makeDirectSourceBudget());
-            CAPTURE(rule, grow, static_cast<int>(result.status),
-                    static_cast<int>(result.intersectionDiagnostics.status),
-                    result.intersectionDiagnostics.failureDomain.segmentA,
-                    result.intersectionDiagnostics.failureDomain.segmentB,
-                    result.intersectionDiagnostics.failureDepth);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            CHECK(result.sourceIntersections == 1);
-            REQUIRE(result.branches.size() == (grow ? 1u : 2u));
-            const CycleCheck check = checkCycles(result, g_bowTieNoded, rule, distance, grow);
-            CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
-            CHECK(check.closed);
-            CHECK(check.worstDistance < 0.02);
-            CHECK(check.wrongSide == 0);
-            REQUIRE(check.areas.size() == result.branches.size());
-            for (const double area : check.areas) CHECK(area > 0.0);
+        for (const Transform& transform : transforms) {
+            const auto apply = [&](const RS_Vector& point) {
+                const double x = transform.scale * (transform.reflectX ? -point.x : point.x);
+                const double y = transform.scale * point.y;
+                const double cosine = std::cos(transform.angle);
+                const double sine = std::sin(transform.angle);
+                return RS_Vector{transform.translation.x + cosine * x - sine * y,
+                                 transform.translation.y + sine * x + cosine * y};
+            };
+            std::vector<RS_Vector> sourcePoints;
+            std::vector<RS_Vector> referencePoints;
+            sourcePoints.reserve(g_bowTie.size());
+            referencePoints.reserve(g_bowTieNoded.size());
+            for (const RS_Vector& point : g_bowTie) sourcePoints.push_back(apply(point));
+            for (const RS_Vector& point : g_bowTieNoded) referencePoints.push_back(apply(point));
+            if (transform.reverse) {
+                std::reverse(sourcePoints.begin(), sourcePoints.end());
+                std::reverse(referencePoints.begin(), referencePoints.end());
+            }
+            RS_Polyline source;
+            for (const RS_Vector& point : sourcePoints) source.addVertex(point);
+            source.setClosed(true);
+            source.endPolyline();
+
+            const double distance = transform.scale;
+            for (const bool grow : {true, false}) {
+                LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+                options.mode = LC_CurveOffsetMode::RegionBoundary;
+                options.fillRule = rule;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source,
+                    LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                                    distance),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(transform.name, rule, grow, static_cast<int>(result.status),
+                        static_cast<int>(result.intersectionDiagnostics.status),
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB,
+                        result.intersectionDiagnostics.failureDepth);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(result.sourceIntersections == 1);
+                REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+                const CycleCheck check = checkCycles(result, referencePoints, rule, distance, grow);
+                CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
+                CHECK(check.closed);
+                CHECK(check.worstDistance < 0.02 * transform.scale);
+                CHECK(check.wrongSide == 0);
+                REQUIRE(check.areas.size() == result.branches.size());
+                for (const double area : check.areas) CHECK(area > 0.0);
+            }
         }
     }
 }
