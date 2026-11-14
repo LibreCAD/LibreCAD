@@ -6664,6 +6664,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     for (RS_Vector& point : piece.bezier) point = localSource.toWorldPoint(point);
                     if (piece.provenance.arcCentre.valid) {
                         piece.provenance.arcCentre = localSource.toWorldPoint(piece.provenance.arcCentre);
+                        piece.provenance.sourceT0 += angle;
+                        piece.provenance.sourceT1 += angle;
                     }
                 }
             }

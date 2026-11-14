@@ -818,12 +818,11 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
                                                        LC_CurveOffset::makeDirectSourceBudget())
                 : LC_CurveOffsetMaterializationResult{};
             const bool combinedGrowth = frame.rotate && frame.translate && signedDistance < 0.0;
-            const bool rotationGrowth = frame.rotate && !frame.translate && signedDistance < 0.0;
             const LC_CurveOffsetStatus expectedGeometryStatus = combinedGrowth
                 ? LC_CurveOffsetStatus::AmbiguousTopology : LC_CurveOffsetStatus::Ok;
             const LC_CurveOffsetStatus expectedStatus = combinedGrowth
                 ? LC_CurveOffsetStatus::AmbiguousTopology
-                : rotationGrowth ? LC_CurveOffsetStatus::ToleranceNotMet : LC_CurveOffsetStatus::Ok;
+                : LC_CurveOffsetStatus::Ok;
             CHECK(direct.status == expectedGeometryStatus);
             if (direct.status == LC_CurveOffsetStatus::Ok)
                 CHECK(directMaterialized.status == expectedStatus);
