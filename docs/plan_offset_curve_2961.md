@@ -45476,6 +45476,12 @@ Validation on macOS arm64 CMake Release:
 - `[curve-offset][direct]`: 619,979 assertions / 76 cases.
 - `[curve-offset][region]`: 27,150 assertions / 13 cases.
 
+The qmake6 Release application and plugin build also passes after this slice:
+`make -j6` in `/private/tmp/offset-2961-qmake-current` (Qt 6.12.0, macOS
+arm64). The log confirms `lc_offsetcachetrim.cpp` was recompiled for both the
+application and worker-linked target. qmake6 does not provide a Catch2 test
+executable in this build tree.
+
 `git diff --check` passes. A broad `[lc-offsetcurve][trim-action]` run was interrupted before producing a summary and is not reported as passing. Evidence is limited to these strict-convex linear layouts and test profiles. Other dense cutters/layouts, visible GUI interaction, cross-platform runtime, and independent CAD acceptance remain open; do not raise global budgets or weaken atomic refusal to close them.
 
 ## 1342. Assert Source Highlight Across Family Filters (2026-11-14)
