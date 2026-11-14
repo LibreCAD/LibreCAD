@@ -824,6 +824,10 @@ public:
         return std::isfinite(segment.startAngle) && std::isfinite(segment.sweep) &&
                segment.sweep != 0.0 && isFinite(segment.a) && isFinite(segment.b);
     }
+    bool hasCircularSegment() const {
+        return std::any_of(m_pieces.begin(), m_pieces.end(),
+            [](const Piece& piece) { return piece.hasPrimitive && piece.primitive.arc; });
+    }
     bool cubicSpans() const override {
         return std::all_of(m_pieces.begin(), m_pieces.end(),
             [](const Piece& piece) { return piece.source->cubicSpans(); });
@@ -6454,6 +6458,62 @@ private:
     bool m_wraps{false};
 };
 
+class TranslatedOffsetSource final : public OffsetSource {
+public:
+    TranslatedOffsetSource(const OffsetSource& source, const RS_Vector& origin)
+        : m_source{source}, m_origin{origin} {
+        m_hull.reserve(source.hull().size());
+        for (const RS_Vector& point : source.hull()) m_hull.push_back(point - origin);
+    }
+
+    bool closed() const override { return m_source.closed(); }
+    const std::vector<double>& breaks() const override { return m_source.breaks(); }
+    bool jet(const double t, const LC_CurveEvaluationSide side, LC_CurveJet& out) const override {
+        if (!m_source.jet(t, side, out)) return false;
+        out.point -= m_origin;
+        return isFinite(out.point) && isFinite(out.first) && isFinite(out.second);
+    }
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        if (!m_source.boundJet(a, b, out)) return false;
+        translate(out);
+        return out.isValid();
+    }
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
+        if (!m_source.boundJetWithProducts(a, b, out)) return false;
+        translate(out);
+        return out.isValid();
+    }
+    bool boundJetForCusp(const double a, const double b, const double signedDistance,
+                         LC_CurveJetBounds& out) const override {
+        if (!m_source.boundJetForCusp(a, b, signedDistance, out)) return false;
+        translate(out);
+        return out.isValid();
+    }
+    const std::vector<RS_Vector>& hull() const override { return m_hull; }
+    bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
+        if (!m_source.straightSegment(start, end)) return false;
+        start -= m_origin;
+        end -= m_origin;
+        return isFinite(start) && isFinite(end);
+    }
+    bool cubicSpans() const override { return m_source.cubicSpans(); }
+    bool rationalCuspRootBounds() const override { return m_source.rationalCuspRootBounds(); }
+    bool smoothCuspKnot(const double knot) const override { return m_source.smoothCuspKnot(knot); }
+    bool shrinksAway(const double signedDistance, const double band) const override {
+        return m_source.shrinksAway(signedDistance, band);
+    }
+
+private:
+    void translate(LC_CurveJetBounds& bounds) const {
+        bounds.x = bounds.x - LC_Interval::point(m_origin.x);
+        bounds.y = bounds.y - LC_Interval::point(m_origin.y);
+    }
+
+    const OffsetSource& m_source;
+    RS_Vector m_origin;
+    std::vector<RS_Vector> m_hull;
+};
+
 bool included(const int winding, const LC_CurveFillRule rule) {
     return rule == LC_CurveFillRule::EvenOdd ? (winding % 2 != 0) : (winding != 0);
 }
@@ -6473,9 +6533,49 @@ bool included(const int winding, const LC_CurveFillRule rule) {
 LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScale& scale, const double magnitude,
                                     const bool dilate, const LC_CurveOffsetOptions& options,
                                     const LC_OffsetSourceBudget& budget, std::vector<LC_OffsetBranch>& cycles,
-                                    LC_CurveOffsetGeometryResult& result) {
+                                    LC_CurveOffsetGeometryResult& result, const bool normalized = false) {
     if (!source.closed()) {
         return LC_CurveOffsetStatus::InvalidSource; // a region needs a closed boundary
+    }
+    const auto* polylineSource = dynamic_cast<const PolylineSource*>(&source);
+    if (!normalized && polylineSource != nullptr && polylineSource->hasCircularSegment() &&
+        scale.coordinate > 8192.0 * scale.feature) {
+        RS_Vector lo = source.hull().front();
+        RS_Vector hi = lo;
+        for (const RS_Vector& point : source.hull()) {
+            lo = RS_Vector::minimum(lo, point);
+            hi = RS_Vector::maximum(hi, point);
+        }
+        const RS_Vector origin{lo.x * 0.5 + hi.x * 0.5, lo.y * 0.5 + hi.y * 0.5};
+        if (isFinite(origin) && (origin.x != 0.0 || origin.y != 0.0)) {
+            TranslatedOffsetSource localSource{source, origin};
+            SourceScale localScale = scale;
+            localScale.coordinate = std::max(scale.feature, magnitude);
+            localScale.numericFloor = 64.0 * g_eps * std::max(localScale.coordinate,
+                                                               std::numeric_limits<double>::min());
+            localScale.tangentFloor = 64.0 * g_eps * std::max(scale.feature,
+                                                              std::numeric_limits<double>::min());
+            LC_CurveOffsetOptions localOptions = options;
+            LC_CurveOffsetTolerances& tolerance = localOptions.tolerance;
+            tolerance.evaluation = std::max(8.0 * g_eps * localScale.coordinate,
+                std::min(tolerance.requestedGeometry / 8.0, tolerance.requestedGeometry * 0.05));
+            tolerance.nodeMerge = std::min(tolerance.requestedGeometry * 0.10,
+                                           tolerance.requestedGeometry - tolerance.evaluation);
+            tolerance.fit = tolerance.requestedGeometry - tolerance.evaluation - tolerance.nodeMerge;
+            tolerance.classification = std::max(tolerance.evaluation + tolerance.nodeMerge,
+                                                tolerance.requestedGeometry * 0.25);
+            tolerance.rootResidual = tolerance.evaluation;
+            const LC_CurveOffsetStatus status = regionBoundary(localSource, localScale, magnitude, dilate,
+                                                               localOptions, budget, cycles, result, true);
+            for (LC_OffsetBranch& branch : cycles) {
+                for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                    for (RS_Vector& point : piece.bezier) point += origin;
+                    if (piece.provenance.arcCentre.valid) piece.provenance.arcCentre += origin;
+                }
+            }
+            for (LC_ParametricIntersection& intersection : result.intersections) intersection.point += origin;
+            return status;
+        }
     }
     const std::vector<double>& breaks = source.breaks();
     const double t0 = breaks.front();

@@ -7,7 +7,9 @@
 #include "lc_offsetworkertolerance.h"
 #include "lc_offsetworkersourcecache.h"
 
+#include "rs_arc.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -237,7 +239,21 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         // a smaller coordinate-relative tolerance and can reject valid input.
         source = definition.source.makeGenerationEntity();
         if (!source) return output;
-        source->move({-outputTranslation.x, -outputTranslation.y});
+        const auto* polylineEntity = dynamic_cast<const RS_Polyline*>(source.get());
+        bool hasCircularSegments = false;
+        if (polylineEntity != nullptr) {
+            for (const RS_Entity* child : *polylineEntity) {
+                hasCircularSegments = hasCircularSegments || dynamic_cast<const RS_Arc*>(child) != nullptr;
+            }
+        }
+        if (hasCircularSegments && LC_OffsetWorkerTolerance::hasIntersectingPolyline(definition, *source)) {
+            // RegionBoundary performs its own bounded local-frame evaluation
+            // for large-origin crossing polylines. Keep the original frame
+            // here so its routing decision matches direct-engine callers.
+            outputTranslation = {0.0, 0.0};
+        } else {
+            source->move({-outputTranslation.x, -outputTranslation.y});
+        }
     }
 
     if (!source) source = definition.source.makeGenerationEntity();

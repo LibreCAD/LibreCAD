@@ -739,7 +739,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     }
 }
 
-TEST_CASE("Worker client refuses overlapping positive-bulge erosion candidates",
+TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
           "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][refusal]") {
     auto& rt = runtime();
     OwnedClient owned{rt};
@@ -793,7 +793,7 @@ TEST_CASE("Worker client refuses overlapping positive-bulge erosion candidates",
                     signedDistance < 0.0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
                     std::abs(signedDistance)),
                 directOptions, LC_CurveOffset::makeDirectSourceBudget());
-            const auto expectedStatus = !transformed && signedDistance < 0.0
+            const auto expectedStatus = (transformed ? signedDistance > 0.0 : signedDistance < 0.0)
                 ? LC_CurveOffsetStatus::Ok : LC_CurveOffsetStatus::AmbiguousTopology;
             CHECK(direct.status == expectedStatus);
             CHECK(result.engineStatus == direct.status);
@@ -806,11 +806,13 @@ TEST_CASE("Worker client refuses overlapping positive-bulge erosion candidates",
 
             REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-            REQUIRE(result.ordinary.size() == 1);
-            const auto* spline = std::get_if<RS_SplineData>(&result.ordinary.front());
-            REQUIRE(spline);
-            RS_Spline materialized{nullptr, *spline};
-            CHECK(materialized.validate());
+            REQUIRE(result.ordinary.size() == direct.branches.size());
+            for (const auto& ordinary : result.ordinary) {
+                const auto* spline = std::get_if<RS_SplineData>(&ordinary);
+                REQUIRE(spline);
+                RS_Spline materialized{nullptr, *spline};
+                CHECK(materialized.validate());
+            }
         }
     }
 }

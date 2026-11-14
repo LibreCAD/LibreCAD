@@ -446,47 +446,55 @@ TEST_CASE("Mixed line and arc bow-tie regions use exact arc noding",
     }
 }
 
-TEST_CASE("Overlapping positive-bulge erosion candidates refuse atomically",
+TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checked",
           "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
-    RS_Polyline source;
-    source.addVertex({20, 10});
-    source.addVertex({20, -10}, 0.5);
-    source.addVertex({-20, 10});
-    source.addVertex({-20, -10});
-    source.setClosed(true);
-    source.endPolyline();
-    const QList<RS_Vector> originalVertices = source.getVertexes();
-    const std::vector<RS_Vector> polygon = polygonOf(source);
+    for (const bool transformed : {false, true}) {
+        RS_Polyline source;
+        source.addVertex({20, 10});
+        source.addVertex({20, -10}, 0.5);
+        source.addVertex({-20, 10});
+        source.addVertex({-20, -10});
+        source.setClosed(true);
+        source.endPolyline();
+        if (transformed) {
+            source.rotate({0, 0}, M_PI / 7.0);
+            source.move({123.25, -2000000.5});
+        }
+        const QList<RS_Vector> originalVertices = source.getVertexes();
+        const std::vector<RS_Vector> polygon = polygonOf(source);
 
-    for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
-        for (const bool grow : {true, false}) {
-            auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
-            options.mode = LC_CurveOffsetMode::RegionBoundary;
-            options.fillRule = rule;
-            const auto result = LC_CurveOffset::buildDirectBranches(
-                source, LC_CurveOffset::makeSideRequest(
-                            grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
-                options, LC_CurveOffset::makeDirectSourceBudget());
-            CAPTURE(grow, static_cast<int>(rule), static_cast<int>(result.status),
-                    static_cast<int>(result.intersectionDiagnostics.stage),
-                    static_cast<int>(result.intersectionDiagnostics.status),
-                    result.intersectionDiagnostics.failureDomain.segmentA,
-                    result.intersectionDiagnostics.failureDomain.segmentB);
-            if (grow) {
-                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-                REQUIRE(result.branches.size() == 1);
-                const CycleCheck check = checkCycles(result, polygon, rule, 0.5, true, true);
-                CHECK(check.closed);
-                CHECK(check.worstDistance < 0.04);
-                CHECK(check.wrongSide == 0);
-                CHECK(check.areas.front() > 0.0);
-            } else {
-                CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-                CHECK(result.branches.empty());
-            }
-            CHECK(source.getVertexes().size() == originalVertices.size());
-            for (int i = 0; i < originalVertices.size(); ++i) {
-                CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
+        for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+            for (const bool grow : {false, true}) {
+                auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+                options.mode = LC_CurveOffsetMode::RegionBoundary;
+                options.fillRule = rule;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(
+                                grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, 0.5),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(transformed, grow, static_cast<int>(rule), static_cast<int>(result.status),
+                        static_cast<int>(result.intersectionDiagnostics.stage),
+                        static_cast<int>(result.intersectionDiagnostics.status),
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB);
+                const bool expectedSuccess = transformed ? !grow : grow;
+                if (expectedSuccess) {
+                    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                    REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+                    const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
+                    CHECK(check.closed);
+                    CHECK(check.worstDistance < 0.04);
+                    CHECK(check.wrongSide == 0);
+                    REQUIRE(check.areas.size() == result.branches.size());
+                    for (const double area : check.areas) CHECK(area > 0.0);
+                } else {
+                    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+                    CHECK(result.branches.empty());
+                }
+                CHECK(source.getVertexes().size() == originalVertices.size());
+                for (int i = 0; i < originalVertices.size(); ++i) {
+                    CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
+                }
             }
         }
     }
