@@ -44206,3 +44206,26 @@ passes. This is a finite set of 40 exact source-locus samples for one profile,
 not a global maximum-deviation proof, and does not qualify other bulge
 layouts, the inward signed side, arbitrary scales/transforms, other source
 families, or visible/external-CAD behavior. Keep those gates open.
+
+## 1288. Trim the Inward Rounded-polyline Component (2026-11-14)
+
+Test commit `e4c406878` adds the negative signed-distance counterpart to the
+transformed unequal-radius rounded-polyline fixture. At the rotated origin it
+checks all eight source-arc offset loci at endpoints, quarter points, and
+midpoints against the native cache, then finds two sampled crossings on a
+finite cutter. Because the inward cache is a chain of disconnected arc
+components, the Trim pick is placed just beyond the first sampled crossing on
+the crossed component. A pick on a different component correctly produced
+`NoUsableRoots`; with the component-aware pick the kernel returns one
+transverse root and eight fragments (the trimmed branch plus seven untouched
+components).
+
+The actual worker-backed Trim action publishes all eight outputs, and undo,
+redo, and five-format save/reopen preserve their geometry fingerprints. The
+focused inward profile passes 535 assertions; the complete eleven-profile,
+five-format persistence matrix passes 2,900 assertions on macOS arm64 CMake
+Release. `git diff --check` passes. Across the outward and inward fixtures,
+the independent oracle now checks 80 source-locus samples per file lane (400
+in total). This remains sampled fixture evidence, not a global deviation
+bound, and does not qualify other inward layouts, transforms/scales, source
+families, qmake6/cross-platform builds, visible GUI, or external CAD.
