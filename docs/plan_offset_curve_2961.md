@@ -45623,6 +45623,24 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
+
+Test commit `bc050a90c` adds transverse ellipse cuts whose inward displacement
+is two or four times the regular source polygon's vertex sagitta,
+`10 * (1 - cos(π/N))`, for `N = 128, 512, 2048`. Each displacement is crossed
+with ellipse ratios `0.05`, `0.1`, and `0.2`. Every case must isolate two roots,
+produce one valid picked complement, preserve the source, and pass sampled
+geometry and retained/removed coverage checks. This tests a mesh-relative
+near-tangent regime; it does not establish a minimum resolvable inset or
+behavior below the source chord sagitta.
+
+Validation on macOS arm64 CMake Release: the focused sagitta-scale matrix
+passes 919,818 assertions / 1 case; `[trim-kernel]` passes 4,643,595
+assertions / 89 cases; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. Smaller
+insets, other source topologies, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
+
 ## 1358. Sweep Near-tangent Ellipse Contact Insets (2026-11-14)
 
 Test commit `02a9603a0` extends the multi-ratio tangent/secant fixtures in
