@@ -744,6 +744,8 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         SourceKind::Parabola, SourceKind::BoundedHyperbola, SourceKind::Polyline);
     const unsigned fitPointVariant = kind == SourceKind::SplinePoints
         ? GENERATE(0u, 1u, 2u, 3u) : 0u;
+    const unsigned parabolaVariant = kind == SourceKind::Parabola
+        ? GENERATE(0u, 1u, 2u) : 0u;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -751,6 +753,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
     CAPTURE(kind);
     CAPTURE(fitPointVariant);
+    CAPTURE(parabolaVariant);
     CAPTURE(static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -779,6 +782,25 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     LC_OffsetSourceGeometry sourceData = kind == SourceKind::BoundedHyperbola
         ? LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {semiMajor, 0}, ratio, -.4, .4, false}}
         : sourceGeometry(kind);
+    if (kind == SourceKind::Parabola && parabolaVariant != 0) {
+        std::array<RS_Vector, 3> controls{{{-1.3, 1.0}, {0.25, -0.7}, {1.2, 1.4}}};
+        if (parabolaVariant == 2) {
+            controls = {{{-1.0, 1.0}, {0.0, -1.0}, {1.0, 1.0}}};
+            constexpr double scale = 0.7;
+            constexpr double angle = 0.41;
+            const double cosine = std::cos(angle);
+            const double sine = std::sin(angle);
+            const RS_Vector origin{-0.35, 0.2};
+            for (RS_Vector& point : controls) {
+                const double x = point.x;
+                const double y = point.y;
+                point = {origin.x + scale * (x * cosine - y * sine),
+                         origin.y + scale * (x * sine + y * cosine)};
+            }
+            std::reverse(controls.begin(), controls.end());
+        }
+        sourceData = LC_OffsetSourceGeometry{LC_ParabolaData{controls}};
+    }
     if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
         LC_SplinePointsData fitPoints{true, false};
         const double gap = fitPointVariant == 1 ? 0.0 : 5.1e-4;
@@ -817,6 +839,11 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     updateAction->setSourceKind(kind);
     RS_Vector sourcePick = kind == SourceKind::BoundedHyperbola
         ? RS_Vector{semiMajor, 0} : sourcePickPoint(kind);
+    if (kind == SourceKind::Parabola) {
+        const auto* parabola = dynamic_cast<const LC_Parabola*>(source);
+        REQUIRE(parabola);
+        sourcePick = parabola->getVertex();
+    }
     if (kind == SourceKind::SplinePoints && fitPointVariant != 0) {
         double sourceDistance = 0.0;
         RS_Vector pickTarget{10.0, 0.0};
