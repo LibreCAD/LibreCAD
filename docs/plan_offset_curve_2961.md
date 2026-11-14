@@ -45623,6 +45623,22 @@ only these simple radial profiles and circle; self-intersecting sources,
 contact multiplicity, arbitrary nonconvex component topology, visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
 
+## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
+
+Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
+neck between two wider lobes. Inward `RegionBoundary` offset by `0.6` must
+remove the neck and return exactly two positively oriented closed cycles.
+An independent winding and segment-distance check verifies both cycles stay
+inside the original region and at the requested `0.6` boundary distance.
+This covers one concave two-component transition, not arbitrary neck widths,
+component counts, or self-intersecting input.
+
+Validation on macOS arm64 CMake Release: the focused case passes 8 assertions
+/ 1 case; `[curve-offset][region]` passes 27,172 assertions / 15 cases;
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests
+-j4` succeeds; and `git diff --check` passes. Broader topology, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
 ## 1361. Grow and Shrink a Concave Polyline Region (2026-11-14)
 
 Test commit `cb98eccef` adds a simple U-shaped closed linear polyline to the
