@@ -39,9 +39,12 @@ variant from the presence of a family in a combo box.
 a new source curve in the existing Properties replacement widget, the user
 must be able to change the requested source type in place, repeatedly and
 without closing the chooser or restarting replacement. Each type change
-immediately refreshes eligible replacement candidates. The latest restatement
-confirms the full set of source types supported by the offset feature, not only
-common types or a parabola-specific addition. This applies to every kind in
+immediately refreshes eligible replacement candidates. The type control must
+remain usable after replacement selection has started and candidates are
+visible; it filters which existing entity can be selected, rather than
+converting the current source entity. The latest restatement confirms the full
+set of source types supported by the offset feature, not only common types or a
+parabola-specific addition. This applies to every kind in
 the canonical offset-source inventory, not every drawable entity in LibreCAD.
 The canonical inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
@@ -378,7 +381,24 @@ branch materialization are covered for both signed offsets of the negative-
 bulge profile (section 1370); the real helper also verifies one valid
 positive-bulge growth branch and atomic refusal for the overlapping erosion
 case (section 1371). Cache promotion remains intentionally rejected for
-generation-only self-intersecting sources.
+generation-only self-intersecting sources. Commit `1c04ec370` fixes worker
+self-intersection classification after recentering: the detector now compares
+a bounded snapshot of the live line/arc children against the trusted request
+geometry, avoiding a second coordinate-scale-sensitive topology validation;
+arc angles are compared modulo one full turn. The real helper test exercises
+the positive-bulge profile before and after rotation by `π/7` and translation
+by `(123.25, -2000000.5)`, for both signed `0.5` offsets. It verifies the
+detector recognizes the translated source, worker status agrees with an
+independent direct-engine call, successful identity-frame generation remains
+valid, and any ambiguous transformed result has no ordinary/native partial
+output. Both signed offsets of the translated profile currently return
+`AmbiguousTopology` in the direct engine as well as the worker; this is an
+atomic refusal, not a claim that the transformed geometry is supported with
+the same branch topology as the identity frame. The focused case passes 725
+assertions and the complete worker-client suite passes 3,380,718 assertions /
+44 cases on macOS arm64 CMake Release. Broader transform/topology support,
+editable cache/action integration, file persistence, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
 
 The older Slice 4 evidence summary in the table is superseded by sections
 1122-1127 for the current ellipse cusp-distance matrix and its explicit
