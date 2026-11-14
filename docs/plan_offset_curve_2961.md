@@ -44378,9 +44378,9 @@ origin is superseded by the worker and action/persistence regressions recorded
 in sections 1295-1297: both traversal directions pass the worker arc-locus
 oracle, and the reversed origin fixture passes source replacement, undo/redo,
 and all five file lanes. The translated/rotated reversed fixture now also
-passes Update from Source, Trim, undo/redo, and five file lanes (section 1297).
-Keep other rounded-polyline profiles and the `(1e9,-1e9)` action/Trim route
-open; they are not covered by that action-level matrix.
+passes Update from Source, Trim, undo/redo, and five file lanes at both
+`(1e6,-1e6)` and `(1e9,-1e9)` (section 1297). Keep other rounded-polyline
+profiles open; they are not covered by that action-level matrix.
 
 The analytic worker regression `worker erodes convex mixed polyline with
 unequal corner radii` now checks the expected concentric offset locus at three
@@ -44390,7 +44390,7 @@ nearest output point. The focused command
 passes 1,134 assertions / 1 case for both traversal directions, including
 typed cache validation and worker-result wire round-trip. The translated
 action/Trim matrix for one reversed profile is recorded separately in section
-1297.
+1297 at both tested large origins.
 
 The strict-convex classifier's translated-coordinate rejection was fixed in
 section 1296. The prior scratch action/cache discrepancy came from an invalid
@@ -44452,8 +44452,10 @@ There is no remaining action/worker divergence established for this fixture.
 
 Added `translated reversed source action matches an independent worker
 request` to `lc_offsetcurve_source_actions_persistence_tests.cpp`. It reverses
-the exact mixed line/arc typed profile, rotates it by `0.37` radians, and
-translates it to `(1e6,-1e6)`. Update from Source must retain signed distance
+the exact mixed line/arc typed profile, reverses its traversal, rotates it by
+`0.37` radians, and translates it to `(1e6,-1e6)` and `(1e9,-1e9)`. The
+viewport zoom is reduced at the larger origin to retain representable screen
+coordinates. Update from Source must retain signed distance
 `-0.25`; the captured polyline encoding must match the published source
 definition. A second joined worker-process request from that exact definition
 must produce a cache with the same geometry fingerprint as the action's
@@ -44465,11 +44467,10 @@ asserts two certified roots and one retained fragment, runs the Trim action,
 checks undo/redo, and exports/reopens R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
 The focused command
 `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests "translated reversed source action matches an independent worker request" --reporter compact`
-passes 325 assertions / 1 case across the five file formats.
+passes 650 assertions / 1 case across both origins and five file formats.
 
 **Acceptance status:** this qualifies the rotated reversed mixed line/arc
-fixture at `(1e6,-1e6)` through source action, worker parity, analytic cache
-locus, Trim, undo/redo, and five-format round-trip. The worker classifier and
-cache oracle also pass at `(1e9,-1e9)`, but action/Trim and file lanes at that
-origin remain open, as do other rounded-polyline profiles, visible desktop
-interaction, and the independent family-by-variant matrix.
+fixture at both tested origins through source action, worker parity, analytic
+cache locus, Trim, undo/redo, and five-format round-trip. Other
+rounded-polyline profiles, visible desktop interaction, and the independent
+family-by-variant matrix remain open.
