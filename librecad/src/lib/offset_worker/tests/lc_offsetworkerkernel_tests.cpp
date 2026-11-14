@@ -7776,6 +7776,72 @@ TEST_CASE("ellipse, arc, and circle source caches validate across signed distanc
     CHECK(refusedCaches > 0);
 }
 
+TEST_CASE("partial eccentric ellipse caches match an independent analytic offset locus",
+          "[lc-offsetcurve][worker-kernel][source-cache][ellipse][oracle][partial]") {
+    constexpr double axisAngle = 0.37;
+    constexpr double majorRadius = 8.0;
+    constexpr double ratio = 0.25;
+    constexpr double angle1 = 0.35;
+    constexpr double angle2 = 2.4;
+    constexpr double tolerance = 1e-4;
+    const RS_Vector center{1e4, -2e4};
+    const RS_Vector major{majorRadius * std::cos(axisAngle),
+                          majorRadius * std::sin(axisAngle)};
+    const RS_Vector minor{-major.y * ratio, major.x * ratio};
+    const LC_OffsetSourceGeometry source{RS_EllipseData{
+        center, major, ratio, angle1, angle2, false}};
+    REQUIRE(source.isWellFormed());
+    std::size_t checkedLoci = 0;
+
+    for (const double signedDistance : {-0.1, 0.1}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceDefinition definition{
+            source, signedDistance, tolerance, false};
+        const auto generatedReply = LC_OffsetWorkerKernel::run(
+            {token, req::GenerateSource{definition, {}}});
+        const auto& generated = native(generatedReply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        const auto* cacheData = std::get_if<RS_SplineData>(&generated.ordinary.front());
+        REQUIRE(cacheData);
+        const RS_Spline cache{nullptr, *cacheData};
+        double parameterStart = 0.0;
+        double parameterEnd = 0.0;
+        REQUIRE(cache.getParameterDomain(parameterStart, parameterEnd));
+
+        double maximumDeviation = 0.0;
+        for (int locusSample = 0; locusSample <= 48; ++locusSample) {
+            const double fraction = double(locusSample) / 48.0;
+            const double parameter = angle1 + (angle2 - angle1) * fraction;
+            const RS_Vector sourcePoint = center + major * std::cos(parameter) +
+                minor * std::sin(parameter);
+            RS_Vector tangent = -major * std::sin(parameter) +
+                minor * std::cos(parameter);
+            REQUIRE(tangent.magnitude() > 0.0);
+            tangent = tangent.normalized();
+            const RS_Vector expected = sourcePoint +
+                RS_Vector{-tangent.y, tangent.x} * signedDistance;
+
+            double nearest = std::numeric_limits<double>::infinity();
+            constexpr int cacheSamples = 8192;
+            for (int cacheSample = 0; cacheSample <= cacheSamples; ++cacheSample) {
+                const double cacheParameter = parameterStart +
+                    (parameterEnd - parameterStart) *
+                    (double(cacheSample) / cacheSamples);
+                const RS_Vector candidate = cache.getPointAt(cacheParameter);
+                if (candidate.valid)
+                    nearest = std::min(nearest, candidate.distanceTo(expected));
+            }
+            maximumDeviation = std::max(maximumDeviation, nearest);
+        }
+        CAPTURE(maximumDeviation);
+        CHECK(maximumDeviation <= 4.0 * tolerance * majorRadius);
+        ++checkedLoci;
+    }
+    CHECK(checkedLoci == 2);
+}
+
 TEST_CASE("bounded hyperbola caches match an independent analytic offset locus",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][oracle]") {
     const auto nearestCacheDistance = [](const RS_Spline& cache, const RS_Vector& point) {
