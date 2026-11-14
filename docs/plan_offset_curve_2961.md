@@ -316,6 +316,9 @@ now contracts finite-line roots inside the original certified session interval
 when session contraction reports `AmbiguousRoots`. All 180 Trim/persistence
 combinations in this matrix succeed; this does not establish general support
 for arbitrary rational weights, conditioning, or knot/control topologies.
+Section 1329 adds an orientation-reversing rotated/translated frame to that
+matrix; all 270 combinations now pass through worker replacement, Trim,
+undo/redo, and two-pass DXF/DWG persistence.
 
 Sections 1201-1202 extend the closed fit-point spline evidence. Section 1201
 adds independent direct-normal checks for the admission-boundary and larger
@@ -45102,3 +45105,29 @@ Validation on macOS arm64 CMake Release:
 passes 204,835 assertions / 164 cases, and the source-picker suite passes
 15,116 assertions / 44 cases. Broader rational-weight and knot/control
 topology coverage remains open under Slice 4.
+
+## 1329. Persist Reflected Periodic Rational Spline Trims (2026-11-14)
+
+Extended the wrapped-periodic degree-four-through-six rational spline matrix
+with a third coordinate frame that reflects the source across its local X axis,
+then rotates and translates it. The generated parameter direction is therefore
+reversed in world orientation while the source remains closed and periodic.
+Across three positive-weight profiles, both signed offset distances, and all
+five R14/R2000/R2018 DXF/DWG lanes, all 270 combinations now pass.
+
+Each case performs typed source replacement through the worker, verifies the
+wrapped-closed source encoding, prepares and applies cache Trim, exercises
+undo/redo, then saves/reopens and repeats the save/reopen. Trim fragments are
+checked against the prepared geometry fingerprints throughout. This broadens
+the tested affine-frame and orientation coverage; it is not an independent
+geometric oracle for arbitrary rational periodic splines.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+passes. The focused test
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'wrapped periodic high-degree splines trim and persist through file lanes'
+--reporter compact` passes 35,574 assertions / 1 case. This closes the reflected
+frame slice only; broader weight profiles, conditioning, knot/control
+topologies, visible GUI interaction, and independent CAD interoperability
+remain open under Slices 4 and 5.
