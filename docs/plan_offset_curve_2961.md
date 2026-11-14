@@ -137,6 +137,17 @@ acceptance item, and keep per-variant generation, worker/cache, Trim, and
 DXF/DWG qualification in Slice 4; selector coverage alone does not close
 those items.
 
+**Closeout gate for this request:** Do not schedule another selector
+implementation slice unless a regression is found. The remaining UI check is
+to exercise the existing Properties widget on the desktop: enter replacement
+selection, switch the family more than once without leaving that state, verify
+the candidates refresh each time, then accept and cancel/refuse replacements
+while checking source indication and committed geometry. Cover at least one
+eligible candidate for each `SupportedKinds` entry, including a parabola that
+remains distinct from spline-points. Record the tested application revision
+and outcome in Slice 5. This gate is independent of Slice 4's concrete-variant
+geometry, worker/cache, Trim, and DXF/DWG qualification.
+
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
 validation, Trim, and applicable DXF/DWG save/reopen. For parabola, retain
@@ -45098,49 +45109,50 @@ Test commit `d1349144c` adds degree five to the wrapped-periodic spline
 action/persistence matrix, alongside degrees four and six. Follow-up test
 commit `7010b3898` makes the fixture genuinely rational for degrees four and
 five using symmetric positive weights `1 + 0.01*cos(2*angle)`; all three
-degrees retain the unit-weight profile. Regression commit `2c8e61bec` probes
-that rational profile at degree six too: on the current macOS build it
-asserts bounded `LimitExceeded`, zero root/fragments, and exact preservation
-of the attached source/cache when certification does not succeed. Other
-platforms may continue into the success path if they certify it. Successful
+degrees retain the unit-weight profile. Regression commit `2c8e61bec` extends
+the same rational profile to degree six. The former depth-limit refusal was
+resolved in code commit `b9a369880`: a certified interior root is now
+admissible when its finite parameter enclosure touches a span endpoint, while
+an exact singleton endpoint remains assigned to the separate endpoint proof.
+The corresponding worker-result validator applies the same rule. Successful
 cases cover identity and rotated/translated frames, both signed offsets,
-worker-backed source replacement, certified two-root Trim, undo/redo, and two
-save/reopen cycles in each of the five R14 DXF, R2000 DXF/DWG, and R2018
-DXF/DWG lanes. When `dwgread` is available, the DWG lane locates a reopened
-spline matching an expected trimmed fragment before semantic inspection.
+worker-backed source replacement and Trim, undo/redo, and two save/reopen
+cycles in each of the five R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes.
+When `dwgread` is available, the DWG lane locates a reopened spline matching
+an expected trimmed fragment before semantic inspection.
 
-Validation on macOS arm64 CMake Release: rebuilding `librecad_tests` succeeded;
-the focused wrapped-periodic Trim/persistence case passes 14,753 assertions /
-1 case across the degree/weight-profile/frame/sign/format matrix, including
-the bounded degree-six rational refusal cases. This qualifies the nonuniform
-rational profile through complete persistence only for degrees four and five
-and the existing unit-weight fixture for degrees four through six. It does
+Validation on macOS arm64 CMake Release: the focused wrapped-periodic
+Trim/persistence matrix passes 15,564 assertions / 1 case over degrees four
+through six, unit and positive nonuniform weights, identity and transformed
+frames, both signed offsets, and all five file lanes. The complete Trim target
+passes 205,033 assertions / 164 cases; the worker-result target passes 470,833
+assertions / 36 cases. This qualifies these constructed profiles only; it does
 not establish arbitrary periodic control nets, weights, knot layouts, or
 conditioning, and does not close visible-GUI, cross-platform runtime, or
 independent ODA/AutoCAD acceptance.
 
-## 1327. Track the Periodic Degree-six Rational Trim Work Limit (2026-11-14)
+## 1327. Admit Certified Interior Roots at Periodic Span Boundaries (2026-11-14)
 
-An exploratory extension of section 1326 applied the same mild positive
-nonuniform weights `1 + 0.01*cos(2*angle)` to degree six. The end-to-end Trim
-fixture reaches `LC_OffsetCacheTrim::Refusal::LimitExceeded` for the identity-
-frame, positive `0.02` offset case before producing certified roots. Test
-commit `ae5b6f829` adds detailed stage counters to the failure context. On
-macOS arm64 the refused case has 25 input spans, 275 input records, 204
-intersection-kernel generated items, and 212 box-pair examinations (80
-candidate, 82 refinement, 50 certificate). It reaches pair-refinement depth
-48 with 899 ordering comparisons, zero generated root records, and no
-ordering/root-refinement depth; this is the depth ceiling, not the global
-comparison or item budget. The current behavior refuses rather than publish
-an unproved cut.
+The initial degree-six rational refusal was caused by a finite root enclosure
+that included local parameter zero even though the certified root was
+interior. `LC_OffsetCacheTrim` previously rejected every monotone certificate
+whose interval touched either span boundary. It now rejects only the exact
+singleton endpoint enclosures, which remain the responsibility of the
+endpoint-specific proof, and admits non-singleton finite enclosures when the
+monotone transverse-root certificate and source/cutter-domain checks succeed.
+The worker-result encoder/decoder revalidates the same certificate rule; it
+does not accept caller-provided proof metadata without recomputation. No depth
+or global work limit was raised.
 
-**Remaining implementation slice:** isolate which adjacent-pair refinement
-predicate keeps subdividing at depth 48 for this nearly smooth symmetric
-profile, then reduce redundant refinement or add a conservative
-proof-preserving exclusion. Do not merely raise `maxDepth` or another global
-limit. The deterministic cross-frame/sign/format regression and atomic
-refusal assertions are now in section 1326. Expand degree-six rational
-save/reopen coverage only after the representative identity-frame case is
-certified. Until then, keep nonuniform periodic degree-six geometry explicitly
-open; do not infer it from unit-weight degree-six coverage or degree-four/five
-rational coverage.
+Code commit `b9a369880` also strengthens the action regression to assert the
+limiting entity and trim target were actually picked. The identity-frame,
+positive-distance, degree-six rational case now runs through worker IPC,
+document publication, undo/redo, and the two-save/reopen DWG lane. The full
+degree/weight/frame/sign/format matrix passes 15,564 assertions. A focused
+certificate test covers an interior root at `2^-100` whose outward-rounded
+enclosure touches zero while still enclosing the exact root.
+
+**Status:** this specific degree-six rational periodic Trim work-limit item is
+implemented and validated for the fixture matrix above. Unusual knot/control
+layouts and other numerical boundary profiles remain open under Slice 4;
+visible desktop and independent CAD interoperability gates remain in Slice 5.
