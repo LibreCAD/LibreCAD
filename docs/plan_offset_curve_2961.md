@@ -44936,3 +44936,22 @@ cache evidence only. The off-center knot and alternating-weight combination
 still needs document Trim, undo/redo, and DXF/DWG persistence coverage; other
 knot positions, weight profiles, control nets, visible GUI, cross-platform
 runtime, and ODA/AutoCAD acceptance remain open.
+
+## 1318. Trim and Persist Off-center Rational Spline Knots (2026-11-14)
+
+Test commit `51a0ae562` extends the document-action matrix from section 1315
+with the off-center interior knot `0.37`, alongside the centered `0.5` knot.
+Both degree-four/six rational clamped splines, multiplicities one, two, and
+degree-minus-one, origin-aligned and rotated/translated frames, and both signed
+offset distances are exercised through source replacement, certified two-root
+Trim, document publication, undo/redo, and two save/reopen cycles in all five
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes. This action/persistence
+fixture uses the smoothly varying positive weight profile; it does not claim
+end-to-end Trim coverage for the alternating weights in sections 1316-1317.
+
+Validation on macOS arm64 CMake Release: rebuilding `librecad_tests` succeeded.
+The focused `[high-degree][interior-knot][trim-action]` selection passes
+17,728 assertions / 1 case across 240 knot/sign/frame/degree/multiplicity/
+format combinations. Additional knot locations, alternating-weight action
+coverage, broader spline topology and conditioning, visible GUI,
+cross-platform runtime, and independent ODA/AutoCAD acceptance remain open.
