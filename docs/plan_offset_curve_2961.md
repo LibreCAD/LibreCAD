@@ -44878,3 +44878,24 @@ also run the available conditional LibreDWG spline-reader check on the first
 export. This validates geometry stability for these fixtures; it does not
 qualify general metadata parity, all spline variants, ODA/AutoCAD acceptance,
 visible GUI, or cross-platform behavior.
+
+## 1315. Trim High-degree Rational Splines on Both Signed Sides (2026-11-14)
+
+Test commit `08b7ff3ff` extends section 1314's document-action matrix to both
+signed offset distances (`-0.02` and `+0.02`). The same degree-four/six
+rational clamped splines, interior-knot multiplicities one, two, and
+degree-minus-one, origin-aligned and rotated/translated frames, and all five
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes are exercised for each sign.
+Each case performs source replacement, validates the typed spline and signed
+distance, trims at two certified roots, checks document publication and
+undo/redo, and saves, reopens, saves again, and reopens a second time.
+
+Validation on macOS arm64 CMake Release: rebuilding `librecad_tests` in
+`/private/tmp/offset-2961-cmake-clean` succeeded. The focused selection
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'[high-degree][interior-knot][trim-action]' --reporter compact` passes 8,864
+assertions / 1 case across 120 sign/frame/degree/multiplicity/format
+combinations. This closes the missing opposite-sign case for these exact
+profiles only; additional spline layouts, broader family/topology coverage,
+visible GUI, cross-platform runtime, and independent ODA/AutoCAD validation
+remain open.
