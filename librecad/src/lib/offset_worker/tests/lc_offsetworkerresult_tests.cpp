@@ -741,29 +741,37 @@ TEST_CASE("Worker Trim revalidates monotone roots after a discontinuous cubic kn
     data.savedOpenType = data.type;
     data.controlPoints = {{10, 0}, {11, 0}, {13, 0}, {14, 0},
                           {-2, 0}, {-1, 0}, {1, 0}, {2, 0}};
-    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
     data.weights.assign(data.controlPoints.size(), 1.0);
 
     RS_Line cutter{nullptr, {0, -1}, {0, 1}};
     const Trim::Pick pick{{-1.5, 0}};
-    const auto prepared = Trim::prepare(data, cutter, pick);
-    CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount,
-            prepared.roots.empty() ? std::size_t(-1) : prepared.roots.front().target.rawSpan);
-    REQUIRE(prepared.refusal == Trim::Refusal::None);
-    REQUIRE(prepared.roots.size() == 1);
-    CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
-    CHECK(prepared.roots.front().target.rawSpan == 1);
+    const std::array<std::array<double, 3>, 2> knotDomains{{{{0, 1, 2}}, {{0, .25, 3}}}};
+    for (const auto& domain : knotDomains) {
+        CAPTURE(domain[1]);
+        data.knotslist.clear();
+        for (const double knot : domain)
+            for (unsigned multiplicity = 0; multiplicity < 4; ++multiplicity)
+                data.knotslist.push_back(knot);
 
-    Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), {pick}, {}}};
-    const auto encoded = Reply::encode(reply(request, prepared), request);
-    REQUIRE(encoded);
-    const auto decoded = Reply::decode(*encoded, request);
-    REQUIRE(decoded);
-    const auto* received = std::get_if<Trim::Result>(&decoded->result);
-    REQUIRE(received);
-    REQUIRE(received->roots.size() == 1);
-    CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
-    CHECK(received->roots.front().target.rawSpan == 1);
+        const auto prepared = Trim::prepare(data, cutter, pick);
+        CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount,
+                prepared.roots.empty() ? std::size_t(-1) : prepared.roots.front().target.rawSpan);
+        REQUIRE(prepared.refusal == Trim::Refusal::None);
+        REQUIRE(prepared.roots.size() == 1);
+        CHECK(prepared.roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(prepared.roots.front().target.rawSpan == 1);
+
+        Req::Request request{token(), Req::TrimCache{data, cutterValue(cutter), {pick}, {}}};
+        const auto encoded = Reply::encode(reply(request, prepared), request);
+        REQUIRE(encoded);
+        const auto decoded = Reply::decode(*encoded, request);
+        REQUIRE(decoded);
+        const auto* received = std::get_if<Trim::Result>(&decoded->result);
+        REQUIRE(received);
+        REQUIRE(received->roots.size() == 1);
+        CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+        CHECK(received->roots.front().target.rawSpan == 1);
+    }
 }
 
 TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cubic sources", tags) {
