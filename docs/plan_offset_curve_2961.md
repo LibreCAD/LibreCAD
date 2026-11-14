@@ -399,12 +399,14 @@ RegionBoundary identity-erosion and rotation-only-growth noding refusals by
 accepting an out-of-range arc/line parameter only when the analytic
 intersection lies within evaluation tolerance of the bounded primitive's
 endpoint. The independent cycle, fill-side, and boundary-distance checks pass
-for both fill rules. Combined-frame positive-bulge growth still refuses
-atomically during cycle assembly. Rotation-only positive-bulge growth now has
-valid direct cycles but remains unavailable through worker output because
-materialization returns `ToleranceNotMet`; no generated entity is published.
-Other unsupported cells remain open, so this does not close the
-self-crossing-polyline topology feature generally.
+for both fill rules. Its follow-up materialization fix rotates corner-arc
+angular provenance into the world frame, allowing rotated positive-bulge
+growth to pass worker materialization and round-trip through all five tested
+file lanes. Combined-frame positive-bulge growth still refuses atomically
+during cycle assembly. These tested self-crossing profiles expose ordinary
+worker branches; a single native editable cache is not claimed. Other
+unsupported cells remain open, so this does not close the self-crossing-
+polyline topology feature generally.
 
 **Slice 4 status addendum (sections 1364-1367):** the tested all-straight
 single-crossing bow-tie polyline passes direct `RegionBoundary` growth and
@@ -46342,6 +46344,7 @@ runtime, and independent CAD acceptance remain open.
 
 ## 1388. Recover Mixed-bulge Endpoint Intersections in Rotated Frames (2026-11-14)
 
+Implementation commits `0c1b06277` and follow-up `d5fecd68d`:
 Endpoint parameters derived from analytic line/arc intersections could fall
 just outside a bounded primitive after rigid-frame rotation, even when the
 intersection point coincided with that primitive's endpoint. Exact Region-
@@ -46355,23 +46358,22 @@ The positive-bulge bow-tie now produces independently checked cycles for both
 fill rules under identity, rotation-only, and translation-only frames for
 growth and erosion, and under the combined frame for erosion. Combined-frame
 growth remains an atomic `AmbiguousTopology` refusal during cycle assembly.
-The negative-bulge matrix remains unchanged. Worker tests independently pin
-the remaining rotated-growth limitation: direct geometry is valid, but
-materialization returns `ToleranceNotMet`, so the worker returns no ordinary
-geometry or native cache. Successful worker cases still compare against direct
-materialized splines and round-trip through R14 DXF, R2000 DXF/DWG, and R2018
-DXF/DWG. This is direct geometry progress, not complete worker/file support for
-that rotated-growth cell.
+The negative-bulge matrix remains unchanged. The worker test now verifies that
+every direct-success cell materializes, returns the expected ordinary spline
+branches, matches their geometry fingerprints, and round-trips through R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Self-crossing source results remain
+ordinary output rather than a single native editable cache.
 
 Validation on macOS arm64 CMake Release: `[curve-offset][region]` passes
 28,678 assertions / 23 cases; positive/negative mixed-bulge worker outcome
-tests pass 3,359 assertions / 2 cases; and the full `[curve-offset]` suite
+tests pass 3,389 assertions / 2 cases; and the full `[curve-offset]` suite
 passes 2,246,745 assertions / 349 cases. CMake test and worker-client targets
-build. qmake6 full app/worker/plugin build succeeds with `make -j4` in
-`/private/tmp/offset2961-qmake6-current`; a second incremental run exits 0.
+build. qmake6 full app/worker/plugin build
+succeeds with `make -j4` in `/private/tmp/offset2961-qmake6-current`, including
+an incremental rebuild after the provenance change.
 The qmake build reports existing warnings in DWG metadata and related files,
-but no build errors. `git diff --check` passes. Remaining direct topology cells,
-rotated-growth materialization, visible GUI, cross-platform runtime, and
+but no build errors. `git diff --check` passes. Remaining direct topology
+cells, visible GUI, cross-platform runtime, and
 independent CAD acceptance remain open.
 
 ## 1387. Preserve Proven Straight Spans in Translated Mixed-bulge Noding (2026-11-14)
