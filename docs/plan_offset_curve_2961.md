@@ -62,8 +62,15 @@ for every mathematical variant. The focused Properties-dialog tests also
 verify the selector inventory and eligible candidate filtering against all
 nine kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`,
 source chooser tests). Do not add unrelated drawable families or a second type
-selector. The latest request therefore adds no new implementation slice; it
-reaffirms the visible interaction gate and the separate family-by-variant gate.
+selector. The latest request (2026-11-14) reconfirms two distinct obligations:
+the user can change the requested source family while replacement selection is
+active, and eligible replacement candidates exist for every kind in
+`SupportedKinds`, with parabola represented distinctly. The former is
+implemented and headlessly tested; the latter is not satisfied by selector
+entries alone and remains subject to Slice 4's concrete-family/variant checks.
+No duplicate selector implementation slice is needed. Slice 5 still owns the
+visible interaction gate, while Slice 4 owns end-to-end source geometry,
+worker/cache, Trim, and file-format qualification.
 
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
@@ -45397,3 +45404,45 @@ pass. The targeted real-process regression passes 67 assertions / 1 case;
 256/512/1024 sizes. `git diff --check` passes. No claim is made for 2048-edge
 Trim, curved/concave regions, larger source families, visible GUI, or
 independent CAD acceptance.
+
+## 1340. Trim Dense Linear Caches at Global-parameter Precision Limits (2026-11-14)
+
+Implementation slice committed as `d06228877` (`fix(offset): trim dense caches
+at parameter precision limits`).
+
+Resolved the 2048-edge finite-line Trim refusal left open in section 1339. A
+finite-line scalar contractor could repeatedly narrow a root in its local
+span parameter, while adding the span index rounded the result back to the same
+global interval. The Trim loop now counts progress only when that global
+interval actually narrows. When it cannot, the certified local contraction
+can proceed to the existing residual check instead of being repeated to
+`maxDepth`. Its representability allowance bounds the global root-bracket
+radius plus midpoint rounding, scaled by the source derivative bound. Endpoint
+validation uses the same bracket-aware bound.
+
+For linear cache spans, the cutter residual now encloses the exact rational
+Bezier point-to-double conversion error rather than charging four full
+coordinate ULPs. Higher-degree spans retain the prior conservative four-ULP
+allowance; applying the tighter bound to them caused existing near-tangent
+ellipse cases to become trim-eligible, so that generalization was rejected.
+
+The closed regular-polyline matrix now covers 256, 512, 1024, and 2048 edges
+in both directions. The 2048 `towardCentre=false` case passes worker source
+replacement, independent support-clearance checks, native-first cache Trim
+Two preview/commit, undo, and all five R14/R2000/R2018 DXF/DWG save/reopen
+lanes. The 2048 `towardCentre=true` case reaches the
+configured generation sample cap and returns a typed `Engine` /
+`LimitExceeded` refusal; the existing offset and source remain live, with no
+partial update. This is a bounded refusal, not successful 2048-edge generation
+or Trim in that direction.
+
+Validation on macOS arm64 CMake Release:
+`cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4`
+passes. The focused `[closed][high-segment]` test passes 2,486 assertions / 1
+case. The typed-source ellipse Trim Two regression passes 30,192 assertions /
+1 case, including the near-tangent refusal that guards against broadening the
+linear-span precision rule. A final broad `[trim-action]` run was started but
+stopped after extended execution without a test summary; it is not reported as
+passing. `git diff --check` passes. Curved/concave high-edge regions, the
+opposite 2048 generation direction, other dense layouts/cutters, visible GUI,
+and independent CAD acceptance remain open.
