@@ -45649,6 +45649,14 @@ analytically or otherwise prove the resulting cycles, then replace the refusal
 expectation with both-fill-rule grow/shrink region oracles. Until then, the
 self-crossing polyline variant remains unsupported and must refuse atomically.
 
+A follow-up experiment pinned a nearby branch endpoint and minimized the other
+curve parameter within the depth-48 box. Although this changed the noder result
+to `Ok`, the resulting region cycles were incorrect: the independent boundary
+distance oracle reported errors of `19` for growth and about `16.764` for
+erosion. That shortcut was removed. A future fix must certify and assemble the
+full line/circle arrangement, not infer a valid region merely from a
+tolerance-close endpoint contact.
+
 Validation on macOS arm64 CMake Release: the focused case passes 12 assertions
 / 1 case; `[curve-offset][region]` passes 27,184 assertions / 16 cases; the
 `librecad_tests` target builds; and `git diff --check` passes. This does not
