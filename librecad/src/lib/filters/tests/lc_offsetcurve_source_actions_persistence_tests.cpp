@@ -1974,7 +1974,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
           "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]") {
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
     const bool nonuniformWeights = GENERATE_COPY(
-        Catch::Generators::range<int>(0, degree == 6 ? 1 : 2)) != 0;
+        Catch::Generators::range<int>(0, 2)) != 0;
     const int transformed = GENERATE(0, 1);
     const double signedDistance = GENERATE(-0.02, 0.02);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
@@ -2076,6 +2076,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     auto* cutter = new RS_Line(&graphic, mapPoint({-20.0, 0.0}), mapPoint({20.0, 0.0}));
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
+    const auto cacheBeforeTrim = RS_Spline::geometryFingerprint(replacement->getData());
     const auto prepared = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount, prepared.fragments.size());
     CAPTURE(prepared.work.inputSpans, prepared.work.inputRecords, prepared.work.rootRecords,
@@ -2092,6 +2093,19 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
             prepared.work.intersections.bvhDisjointPairs, prepared.work.intersections.bvhMonotonePathPrunes,
             prepared.work.intersections.bvhLeafCandidates, prepared.work.intersections.bvhExpandedPairs,
             prepared.work.intersections.bvhInterruptedPairs);
+    if (degree == 6 && nonuniformWeights && prepared.refusal != LC_OffsetCacheTrim::Refusal::None) {
+        CHECK(prepared.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+        CHECK(prepared.rootCount == 0);
+        CHECK(prepared.fragments.empty());
+        CHECK_FALSE(replacement->isDeleted());
+        CHECK(replacement->getParent() == &graphic);
+        CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == cacheBeforeTrim);
+        REQUIRE(replacement->sourceDefinition());
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                  replacement->sourceDefinition()->source) == expectedEncoding);
+        CHECK_FALSE(cutter->isDeleted());
+        return;
+    }
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(prepared.rootCount == 2);
     REQUIRE(prepared.fragments.size() == 1);
