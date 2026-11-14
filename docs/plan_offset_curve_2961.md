@@ -46090,6 +46090,16 @@ transform-sensitive topology results remains an open geometry feature; worker
 parity, persistence, visible GUI, cross-platform, and independent CAD gates
 remain separate.
 
+The recorded refusal cells are not all the same failure: identity erosion and
+all four rotation-only cells fail in candidate arrangement; translation-only
+erosion fails there as well, while translation-only growth and combined-frame
+growth fail in candidate classification. Fill rule does not change those
+sites. The attempted endpoint-event experiment for overlapping collinear
+candidate segments did not change the outcome and was discarded. Keep the
+arrangement and classification paths separate in the next implementation
+investigation; do not relax tolerances or weaken atomic refusal based on this
+matrix alone.
+
 ## 1377. Persist Negative-bulge Region Worker Branches (2026-11-14)
 
 Test commit `14fb7e9e7` extends section 1374's ordinary-spline save/reopen
