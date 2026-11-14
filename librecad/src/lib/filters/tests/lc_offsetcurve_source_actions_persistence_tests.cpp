@@ -2078,6 +2078,20 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     graphic.addEntity(cutter);
     const auto prepared = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount, prepared.fragments.size());
+    CAPTURE(prepared.work.inputSpans, prepared.work.inputRecords, prepared.work.rootRecords,
+            prepared.work.kernelItems, prepared.work.kernelComparisons, prepared.work.outputSpans,
+            prepared.work.outputControls, prepared.work.outputKnots);
+    CAPTURE(prepared.work.intersections.candidateBoxPairs, prepared.work.intersections.refinementBoxPairs,
+            prepared.work.intersections.certificateBoxPairs, prepared.work.intersections.totalBoxPairs,
+            prepared.work.intersections.generatedLeaves, prepared.work.intersections.generatedItems,
+            prepared.work.intersections.deepestPreparation, prepared.work.intersections.deepestPairRefinement,
+            prepared.work.intersections.deepestOrderingRefinement, prepared.work.intersections.deepestRootRefinement,
+            prepared.work.intersections.orderingComparisons,
+            prepared.work.intersections.validationSegmentVisits, prepared.work.intersections.validationNextCalls,
+            prepared.work.intersections.orientedProjectionExclusions, prepared.work.intersections.bvhUnanchoredPairs,
+            prepared.work.intersections.bvhDisjointPairs, prepared.work.intersections.bvhMonotonePathPrunes,
+            prepared.work.intersections.bvhLeafCandidates, prepared.work.intersections.bvhExpandedPairs,
+            prepared.work.intersections.bvhInterruptedPairs);
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(prepared.rootCount == 2);
     REQUIRE(prepared.fragments.size() == 1);
