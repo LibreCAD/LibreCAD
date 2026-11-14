@@ -484,6 +484,71 @@ TEST_CASE("Dense cache retains a proved near-tangent conic crossing", tags) {
     CHECK(coverage(result, static_cast<double>(segmentCount / 2) + .5) == 1);
 }
 
+TEST_CASE("Dense nonconvex cache trims one picked conic interval among many roots", tags) {
+    const std::size_t segmentCount = GENERATE(256u, 1024u, 2048u);
+    CAPTURE(segmentCount);
+    std::vector<RS_Vector> points;
+    points.reserve(segmentCount + 1);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double angle = 2 * pi * static_cast<double>(i) / segmentCount;
+        const double radius = 8.0 + 2.0 * std::cos(5 * angle + .2);
+        points.emplace_back(radius * std::cos(angle), radius * std::sin(angle));
+    }
+    points.push_back(points.front());
+    const auto data = cache(std::move(points));
+    const auto before = data;
+    RS_Circle cutter{nullptr, {{0.0, 0.0}, 8.0}};
+    struct ExpectedRoot { long double parameter, x, y; };
+    std::vector<ExpectedRoot> expectedRoots;
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const auto& start = data.controlPoints[i];
+        const auto& end = data.controlPoints[i + 1];
+        const long double dx = static_cast<long double>(end.x) - start.x;
+        const long double dy = static_cast<long double>(end.y) - start.y;
+        const long double a = dx * dx + dy * dy;
+        const long double b = 2 * (static_cast<long double>(start.x) * dx +
+                                   static_cast<long double>(start.y) * dy);
+        const long double c = static_cast<long double>(start.x) * start.x +
+                              static_cast<long double>(start.y) * start.y - 64;
+        const long double discriminant = b * b - 4 * a * c;
+        if (!(discriminant > 0)) continue;
+        for (const long double local : {(-b - std::sqrt(discriminant)) / (2 * a),
+                                        (-b + std::sqrt(discriminant)) / (2 * a)}) {
+            if (local > 0 && local < 1) {
+                expectedRoots.push_back({static_cast<long double>(i) + local,
+                    static_cast<long double>(start.x) + local * dx,
+                    static_cast<long double>(start.y) + local * dy});
+            }
+        }
+    }
+    std::sort(expectedRoots.begin(), expectedRoots.end(),
+              [](const auto& lhs, const auto& rhs) { return lhs.parameter < rhs.parameter; });
+    REQUIRE(expectedRoots.size() == 10);
+
+    const auto result = Trim::prepare(data, cutter, {data.controlPoints.front()});
+    CAPTURE(result.rootCount, static_cast<int>(result.refusal),
+            result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 10);
+    REQUIRE(result.roots.size() == expectedRoots.size());
+    REQUIRE(result.fragments.size() == 1);
+    for (std::size_t i = 0; i < expectedRoots.size(); ++i) {
+        const double parameter = static_cast<double>(expectedRoots[i].parameter);
+        const double x = static_cast<double>(expectedRoots[i].x);
+        const double y = static_cast<double>(expectedRoots[i].y);
+        const auto& root = result.roots[i];
+        CHECK(root.isolation.parameterA.lo() <= std::nextafter(parameter, INFINITY));
+        CHECK(root.isolation.parameterA.hi() >= std::nextafter(parameter, -INFINITY));
+        CHECK(root.worldX.contains(x));
+        CHECK(root.worldY.contains(y));
+    }
+    geometry(data, result);
+    equalData(data, before);
+    CHECK(coverage(result, .5) == 0);
+    CHECK(coverage(result, static_cast<double>(segmentCount / 10) + .5) == 1);
+}
+
 TEST_CASE("Closed cache trim canonicalizes a proved root at the old storage seam", tags) {
     for (bool reverse : {false, true}) {
         auto data = cache({{0, -2}, {2, -2}, {2, 2}, {-2, 2}, {-2, -2}, {0, -2}});

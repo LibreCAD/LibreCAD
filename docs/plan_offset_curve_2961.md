@@ -45588,3 +45588,21 @@ passes 16,248 assertions / 1 case; the near-tangent secant matrix passes
 cases; `librecad_tests` builds; and `git diff --check` passes. This is not a
 general tangent/cusp proof for arbitrary source and cutter geometry; other
 contact orientations, narrower gaps, and nonconvex layouts remain open.
+
+## 1347. Trim a Dense Nonconvex Cache Across Ten Conic Contacts (2026-11-14)
+
+Added 256-, 1024-, and 2048-span simple five-lobed radial polygon cases against
+a concentric circle. Each source has ten alternating circle crossings; Trim
+must isolate all ten, remove the one interval containing the source pick, and
+preserve the other intervals in one valid open complement. An independent
+long-double line-segment/circle quadratic oracle computes and sorts all ten
+expected parameter and world-point roots; every returned isolation and world
+bound must contain its corresponding independent root. Source data remains
+unchanged.
+
+Validation on macOS arm64 CMake Release: the nonconvex oracle matrix passes
+172,419 assertions / 1 case; `[trim-kernel]` passes 999,005 assertions / 80
+cases; `librecad_tests` builds; and `git diff --check` passes. This establishes
+only these simple radial profiles and circle; self-intersecting sources,
+contact multiplicity, arbitrary nonconvex component topology, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
