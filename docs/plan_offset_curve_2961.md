@@ -43992,3 +43992,21 @@ section 1264's moderate-origin orientation matrix. It does not cover arbitrary
 angles at extreme origins, sub-ULP conditioning, or asynchronous action/file
 round-trips for these transformed fixtures; retain those as open Slice 4
 coverage, along with cross-platform, external-CAD, and visible-GUI acceptance.
+
+## 1279. Refuse One-ULP Parallel Near Misses at Large Origins (2026-11-13)
+
+Test commit `591d38041` adds a finite-line near-miss case at origin
+`(1e15,-1e15)`, where the source and cutter are separated by exactly one
+representable step in Y. Both degree-1 and degree-3 sources are strictly
+separated by the exact Bernstein hull check; Trim returns `NoUsableRoots` with
+no root or fragment, and the refusal result round-trips through the worker
+protocol without manufacturing a crossing. The focused case passes 21
+assertions; the complete worker-result suite passes 470,479 assertions / 35
+cases on macOS arm64 CMake Release. `git diff --check` is clean.
+
+This checks one representable separation at this origin and these layouts; it
+does not characterize all near-ULP orientations, tangencies, or exponent
+limits. Keep exact exclusion distinct from inability to certify and preserve
+atomic refusal whenever the boundary cannot be proved. The broader async
+action/file matrix, cross-platform validation, external-CAD checks, and visible
+GUI acceptance remain open.
