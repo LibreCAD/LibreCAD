@@ -44024,3 +44024,34 @@ feature scale only. It does not cover sub-ULP directions, arbitrary
 translations/scales, or async action and file round-trips for these rotated
 fixtures. Keep those with the broader geometry/persistence, cross-platform,
 external-CAD, and visible-GUI gates.
+
+## 1281. Persist a Rotated, Translated All-arc Trim (2026-11-13)
+
+Test commit `00e7adf89` extends the closed all-arc polyline persistence matrix
+with a clockwise circle centered at `(1e6,-1e6)`, rotated by `0.37` radians,
+and cut transversely by a separately rotated finite line. Both certified roots
+are required to use `AnalyticMonotoneTransverse`; the action then trims the
+selected cache component, validates the retained output, and round-trips it
+through all five existing DXF/DWG lanes (R14, R2000, legacy DWG, DXF 2018, and
+DWG 2018). The focused transformed profile passes 190 assertions; the complete
+profile/format persistence case passes 1,500 assertions. The trim-kernel suite
+passes 41,366 assertions / 73 cases, and the full Trim-action suite passes
+174,707 assertions / 92 cases on macOS arm64 CMake Release. `git diff --check`
+passes.
+
+During fixture qualification, a cutter aligned to the rotated source produced
+a retained interval only `2.4e-11` cache-parameter units long at a translated
+origin; all restricted controls rounded to the same world point. Assembly
+correctly refused rather than dropping that retained interval or publishing a
+degenerate fragment. The accepted regression uses a distinct transverse
+orientation so it exercises transformed trim/persistence without asserting
+that an unrepresentable sub-ULP fragment is valid output. Keep the strict
+constant-span refusal regression; exact-knot-neighbor policy and broader
+sub-ULP geometry remain separate precision-qualification work.
+
+This establishes one transformed all-arc profile and these five file lanes,
+not arbitrary translations, rotations, scales, or complete rounded-polyline
+coverage. Continue the remaining source-family/geometry-variant worker, cache,
+Trim, DXF/DWG matrix, qmake6 and cross-platform checks, external-CAD review,
+and visible Properties workflow acceptance. Do not infer those gates from
+this persistence matrix.
