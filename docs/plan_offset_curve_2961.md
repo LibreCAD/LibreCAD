@@ -25,7 +25,7 @@ USA.
 
 Updated: 2026-11-14. Project: **LibreCAD**, not LibreCAD_3.
 
-### Source Replacement: Current Execution Checklist
+### Source Replacement and Type Switching: Current Execution Checklist
 
 This checklist is the current authority for the latest source-widget request;
 the numbered sections below are historical evidence, not additional completed
@@ -35,16 +35,18 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** In the existing
-Properties source-curve widget, the user can change the requested curve type
-while choosing a replacement, repeatedly and without closing the chooser or
-restarting replacement; each change immediately refreshes the eligible source
-curve candidates in place. This applies to every kind in the canonical
-offset-source inventory, not every drawable entity in LibreCAD. The canonical
-inventory is
+**Current source-widget requirement and status (2026-11-14):** While selecting
+a new source curve in the existing Properties replacement widget, the user
+must be able to change the requested source type in place, repeatedly and
+without closing the chooser or restarting replacement. Each type change
+immediately refreshes the eligible replacement candidates. This applies to
+every kind in the canonical offset-source inventory, not every drawable
+entity in LibreCAD. The canonical inventory is
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
-distinct selectable and preserved type, not a spline-points alias. The filter
+distinct selectable and preserved type, not a spline-points alias. Changing
+the selector filters which existing entity may become the new source; it does
+not convert the current source or add unrelated drawable types. The filter
 must not mutate the committed source, cache, identity, or highlight. A selected
 candidate replaces them only after asynchronous validation succeeds; cancel,
 refusal, stale input, or worker failure preserves the previous source state.
