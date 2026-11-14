@@ -2140,14 +2140,21 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
     if (dwg) {
         QString libreDwgReader = qEnvironmentVariable("DWGREAD");
         if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
-        if (!libreDwgReader.isEmpty())
+        if (!libreDwgReader.isEmpty()) {
+            bool checkedTrimFragment = false;
             for (const auto* entity : reopened) {
                 if (entity->rtti() != RS2::EntitySpline) continue;
                 const auto* spline = dynamic_cast<const RS_Spline*>(entity);
                 REQUIRE(spline);
+                const auto fingerprint = RS_Spline::geometryFingerprint(spline->getData());
+                if (std::find(expectedFragments.begin(), expectedFragments.end(), fingerprint) ==
+                    expectedFragments.end()) continue;
                 checkLibreDwgSpline(libreDwgReader, output, spline->getData());
+                checkedTrimFragment = true;
                 break;
             }
+            CHECK(checkedTrimFragment);
+        }
     }
 }
 
