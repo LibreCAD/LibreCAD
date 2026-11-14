@@ -45919,6 +45919,41 @@ qmake6 application build were run in section 1370 before this test-only
 addition. Visible GUI, cross-platform runtime, and independent CAD acceptance
 remain open.
 
+## 1372. Share Bounded Live-polyline Matching Across Worker Routing (2026-11-14)
+
+Implementation/test slice committed as `c156eed25`.
+
+The worker tolerance helper now has one bounded `matchLivePolyline` routine
+for validating a live closed line/arc polyline against trusted request
+geometry. It snapshots only supported primitive children, enforces the source
+item cap, derives translation from the start point, checks translated
+endpoints and each ordered segment, and compares arc angles modulo one full
+turn. Both strict-convex orientation detection and self-intersection routing
+use this same matcher. This removes the former strict source recapture from
+the convex-orientation path, which could reject reconstructed geometry solely
+because its local coordinate scale differs from the accepted original frame.
+
+The rotated large-origin convex regression now compares original and
+recentered direct-engine status, verifies both routes select `RegionBoundary`,
+and requires worker status parity. At the tested `1e9` origin the engine
+returns `AmbiguousTopology`; the direct, recentered, and worker results all
+contain no partial branches/native entity, and diagnostics identify the
+RegionBoundary failure domain. This is an explicit atomic refusal boundary,
+not successful `1e9` geometry support. Successful transformed and ordinary
+convex/polyline fixtures continue to be bounded by their individual matrix
+entries; this does not qualify arbitrary coordinate magnitudes, arc joins, or
+polyline topology.
+
+Validation on macOS arm64 CMake Release so far: the focused convex
+large-origin kernel case passes 75 assertions / 1 case; the worker-kernel
+`[region-boundary]` selection passes 2,535 assertions / 5 cases; and the
+focused mixed-bulge worker-client selector passes 777 assertions / 1 case.
+The complete worker-client suite passes 3,380,062 assertions / 44 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`, and `git diff --check` passes.
+This validates the current implementation slice for review/commit; it does
+not close visible GUI, cross-platform runtime, file persistence for the newly
+covered transformed cases, or independent CAD acceptance.
+
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
 Test commit `0af5ea6e5` adds a closed dumbbell polyline with a one-unit-wide
