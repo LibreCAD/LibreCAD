@@ -567,3 +567,35 @@ TEST_CASE("A concave polyline region grows and shrinks through its reflex corner
         CHECK(check.areas.front() > 0.0);
     }
 }
+
+TEST_CASE("A concave polyline erosion separates lobes after its neck collapses",
+          "[curve-offset][region][polyline][concave][components]") {
+    const std::vector<RS_Vector> vertices{{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5},
+                                          {8, 0}, {12, 0}, {12, 4}, {8, 4},
+                                          {8, 2.5}, {4, 2.5}, {4, 4}, {0, 4}};
+    RS_Polyline source;
+    for (const RS_Vector& point : vertices) {
+        source.addVertex(point);
+    }
+    source.setClosed(true);
+    source.endPolyline();
+
+    constexpr double distance = 0.6;
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+    options.mode = LC_CurveOffsetMode::RegionBoundary;
+    const LC_CurveOffsetGeometryResult result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+            result.intersectionDiagnostics.work.totalBoxPairs,
+            result.intersectionDiagnostics.work.generatedLeaves);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.branches.size() == 2);
+    const CycleCheck check = checkCycles(result, vertices, LC_CurveFillRule::NonZero, distance, false);
+    CHECK(check.closed);
+    CHECK(check.worstDistance < 1e-7);
+    CHECK(check.wrongSide == 0);
+    REQUIRE(check.areas.size() == 2);
+    CHECK(check.areas[0] > 0.0);
+    CHECK(check.areas[1] > 0.0);
+}
