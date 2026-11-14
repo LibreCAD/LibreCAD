@@ -43726,3 +43726,19 @@ features, extreme origins, overflow/subnormal limits, broad angle coverage, or
 multi-span high-degree source behavior. Continue with focused adversarial
 conditioning boundaries and the real async action path where those inputs are
 admitted; otherwise require explicit atomic refusal.
+
+## 1267. Independently Check Materialized Roots Against the Finite Cutter (2026-11-13)
+
+Test commit `d1a851c60` extends the section 1266 matrix with an independent
+geometry oracle. For each of the 24 fixed-origin scale/degree/direction
+combinations, it identifies the output fragment endpoint labeled as the
+cutter root, checks its signed line equation with an origin- and scale-aware
+roundoff bound, and verifies the projected parameter remains within the finite
+segment. The focused case passes 312 assertions; the complete
+`librecad_offset_worker_result_tests` suite passes 468,037 assertions / 29
+cases. `git diff --check` passes.
+
+This checks the produced root endpoint for the tested fixtures; it does not
+replace an independent full-curve oracle or validate every retained fragment
+sample. Continue with broader scale/orientation boundaries and action-level
+geometry/persistence checks for the transformed profiles.
