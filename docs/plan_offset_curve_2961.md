@@ -44683,3 +44683,25 @@ partial-ellipse profile only; reversed/wrapped and near-cusp ellipse variants,
 other family/variant rows, visible Properties acceptance, cross-platform
 runtime, and external-CAD checks remain open. No production-code change was
 needed for this slice.
+
+## 1306. Qualify Reversed Partial Ellipse Through Worker and File Lanes (2026-11-14)
+
+Test commit `12116b712` extends the partial eccentric ellipse oracle and
+document-action case to the opposite traversal. The reversed fixture swaps the
+stored angular bounds while setting `reversed=true`, so it represents the same
+physical arc traversed clockwise rather than the complementary arc. The
+independent worker oracle now checks both traversal directions and both signed
+distances. The document case repeats Update from Source, two-root Trim,
+undo/redo, and save/reopen through all five existing DXF/DWG lanes for both
+traversals.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests 'partial eccentric ellipse caches match an independent analytic offset locus' --reporter compact`
+passes 251 assertions / 1 case; the complete `[ellipse]` worker-kernel
+selection passes 1,314,313 assertions / 5 cases. The focused document test
+`partial eccentric ellipse source trims through document actions and file lanes`
+passes 714 assertions / 1 case across ten traversal/format combinations.
+This supersedes the reversed-traversal limitation in sections 1304-1305 for
+this exact partial-arc profile. Wrapped bounds, other eccentricities and
+near-cusp cases, other source-family variants, visible-GUI acceptance,
+cross-platform runtime, and external-CAD validation remain open.
