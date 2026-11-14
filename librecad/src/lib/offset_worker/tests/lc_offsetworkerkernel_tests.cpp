@@ -10,6 +10,7 @@
 #include "rs_arc.h"
 #include "rs_line.h"
 #include "rs_spline.h"
+#include "lc_hyperbola.h"
 #include <catch2/catch_test_macros.hpp>
 #include <algorithm>
 #include <array>
@@ -7773,6 +7774,117 @@ TEST_CASE("ellipse, arc, and circle source caches validate across signed distanc
     CHECK(acceptedCaches + refusedCaches == expectedCases);
     CHECK(acceptedCaches >= 24);
     CHECK(refusedCaches > 0);
+}
+
+TEST_CASE("bounded hyperbola caches match an independent analytic offset locus",
+          "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][oracle]") {
+    const auto nearestCacheDistance = [](const RS_Spline& cache, const RS_Vector& point) {
+        double parameterStart = 0.0;
+        double parameterEnd = 0.0;
+        if (!cache.getParameterDomain(parameterStart, parameterEnd))
+            return std::numeric_limits<double>::infinity();
+        const auto distanceSquared = [&](const double parameter) {
+            const RS_Vector candidate = cache.getPointAt(parameter);
+            return candidate.valid ? (candidate - point).squared()
+                                   : std::numeric_limits<double>::infinity();
+        };
+        constexpr int sampleCount = 2048;
+        double bestParameter = parameterStart;
+        double bestDistance = distanceSquared(bestParameter);
+        for (int i = 1; i <= sampleCount; ++i) {
+            const double parameter = parameterStart +
+                (parameterEnd - parameterStart) * double(i) / sampleCount;
+            const double candidateDistance = distanceSquared(parameter);
+            if (candidateDistance < bestDistance) {
+                bestDistance = candidateDistance;
+                bestParameter = parameter;
+            }
+        }
+        const double step = (parameterEnd - parameterStart) / sampleCount;
+        double lower = std::max(parameterStart, bestParameter - step);
+        double upper = std::min(parameterEnd, bestParameter + step);
+        constexpr double inversePhi = 0.6180339887498948482;
+        double left = upper - inversePhi * (upper - lower);
+        double right = lower + inversePhi * (upper - lower);
+        double leftDistance = distanceSquared(left);
+        double rightDistance = distanceSquared(right);
+        for (int i = 0; i < 64; ++i) {
+            if (leftDistance < rightDistance) {
+                upper = right;
+                right = left;
+                rightDistance = leftDistance;
+                left = upper - inversePhi * (upper - lower);
+                leftDistance = distanceSquared(left);
+            } else {
+                lower = left;
+                left = right;
+                leftDistance = rightDistance;
+                right = lower + inversePhi * (upper - lower);
+                rightDistance = distanceSquared(right);
+            }
+        }
+        return std::sqrt(std::min({bestDistance, leftDistance, rightDistance}));
+    };
+
+    constexpr double axisAngle = 0.37;
+    constexpr double majorRadius = 8.0;
+    constexpr double ratio = 0.5;
+    constexpr double tolerance = 1e-4;
+    const RS_Vector center{1e4, -2e4};
+    std::size_t checkedLoci = 0;
+    for (const bool oppositeBranch : {false, true}) {
+        for (const bool reverseBounds : {false, true}) {
+            const double angle1 = reverseBounds ? 0.9 : -0.7;
+            const double angle2 = reverseBounds ? -0.7 : 0.9;
+            const LC_HyperbolaData data{center,
+                {majorRadius * std::cos(axisAngle), majorRadius * std::sin(axisAngle)},
+                ratio, angle1, angle2, oppositeBranch};
+            LC_Hyperbola exactSource{nullptr, data};
+            REQUIRE(exactSource.isValid());
+            const LC_OffsetSourceGeometry source{data};
+            REQUIRE(source.isWellFormed());
+
+            for (const double signedDistance : {-0.15, 0.15}) {
+                CAPTURE(oppositeBranch, reverseBounds, signedDistance);
+                const LC_OffsetSourceDefinition definition{
+                    source, signedDistance, tolerance, false};
+                const auto generatedReply = LC_OffsetWorkerKernel::run(
+                    {token, req::GenerateSource{definition, {}}});
+                const auto& generated = native(generatedReply, 7);
+                REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+                REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+                REQUIRE_FALSE(generated.ordinary.empty());
+
+                std::vector<RS_Spline> caches;
+                for (const auto& output : generated.ordinary) {
+                    const auto* splineData = std::get_if<RS_SplineData>(&output);
+                    REQUIRE(splineData);
+                    caches.emplace_back(nullptr, *splineData);
+                }
+
+                double maximumDeviation = 0.0;
+                for (int sample = 0; sample <= 48; ++sample) {
+                    const double fraction = double(sample) / 48.0;
+                    const double parameter = angle1 + (angle2 - angle1) * fraction;
+                    const RS_Vector sourcePoint = exactSource.getPoint(parameter, oppositeBranch);
+                    RS_Vector tangent = exactSource.getTangentDirectionParam(parameter);
+                    REQUIRE(sourcePoint.valid);
+                    REQUIRE(tangent.valid);
+                    tangent = tangent.normalized();
+                    const RS_Vector leftNormal{-tangent.y, tangent.x};
+                    const RS_Vector expected = sourcePoint + leftNormal * signedDistance;
+                    double nearest = std::numeric_limits<double>::infinity();
+                    for (const auto& cache : caches)
+                        nearest = std::min(nearest, nearestCacheDistance(cache, expected));
+                    maximumDeviation = std::max(maximumDeviation, nearest);
+                }
+                CAPTURE(maximumDeviation, generated.ordinary.size());
+                CHECK(maximumDeviation <= 4.0 * tolerance * majorRadius);
+                ++checkedLoci;
+            }
+        }
+    }
+    CHECK(checkedLoci == 8);
 }
 
 TEST_CASE("parabola source caches validate across orientation and curvature distances",
