@@ -45067,3 +45067,45 @@ available: the focused wrapped-periodic Trim/persistence case passes 5,168
 assertions / 1 case. This validates one matching Trim fragment in each DWG
 lane for the bounded degree/frame/sign profiles; it is not general DWG
 interoperability or ODA/AutoCAD acceptance.
+
+## 1325. Reaffirm In-place Source-type Selection and Parabola (2026-11-14)
+
+The source-widget contract remains: once replacement candidate selection is
+active, the user can change the requested source family repeatedly without
+leaving that workflow; each change refreshes the eligible candidate list. The
+selector is driven by `LC_OffsetSourceGeometry::SupportedKinds` and currently
+covers line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. Parabola must remain a distinct supported source type,
+not be presented or reconstructed as spline-points. The committed source and
+its visual indication remain unchanged until a candidate is accepted and
+asynchronous replacement validation succeeds; cancellation, refusal, or stale
+input keeps the prior source intact.
+
+This is already implemented and headlessly covered by the source-picker and
+ordered-family replacement tests cited in sections 1291-1293 and 1320. No
+additional picker implementation is planned. “All supported types” here means
+all nine offset-source kinds with eligible candidates, not every drawable
+entity or every mathematical variant. Continue to track concrete-variant
+capture/reconstruction, worker/cache generation, Trim, and DXF/DWG round-trip
+under Slice 4. The remaining picker-specific gate is visible desktop
+verification of repeated in-workflow type changes, candidate refresh, current
+source highlighting/selection, successful acceptance, and cancel/refusal
+behavior; headless coverage does not close that gate.
+
+## 1326. Trim Wrapped Periodic Degree-five Splines (2026-11-14)
+
+Test commit `d1349144c` adds degree five to the wrapped-periodic rational
+spline action/persistence matrix, alongside degrees four and six. The matrix
+covers identity and rotated/translated frames, both signed offsets, worker-
+backed source replacement, certified two-root Trim, undo/redo, and two
+save/reopen cycles in each of the five R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG lanes. When `dwgread` is available, the DWG lane locates a reopened
+spline matching an expected trimmed fragment before semantic inspection.
+
+Validation on macOS arm64 CMake Release: rebuilding `librecad_tests` succeeded;
+the focused wrapped-periodic Trim/persistence case passes 7,752 assertions / 1
+case across 60 degree/frame/sign/format combinations. This closes only the
+degree-five gap for the existing periodic fixture. It does not establish
+arbitrary periodic control nets, weights, knot layouts, or conditioning, and
+does not close visible-GUI, cross-platform runtime, or independent ODA/AutoCAD
+acceptance.
