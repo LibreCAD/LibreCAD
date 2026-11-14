@@ -44705,3 +44705,30 @@ This supersedes the reversed-traversal limitation in sections 1304-1305 for
 this exact partial-arc profile. Wrapped bounds, other eccentricities and
 near-cusp cases, other source-family variants, visible-GUI acceptance,
 cross-platform runtime, and external-CAD validation remain open.
+
+## 1307. Carry a Rational High-degree Spline Through Trim and File Lanes (2026-11-14)
+
+Test commit `561f9c81d` adds `rational degree-four spline trims through document
+actions and file lanes`. The source fixture is a rational degree-four clamped
+spline with six control points and a nonuniform weight vector, including an
+interior knot. The case replaces an offset's source through Update from Source,
+checks the exact typed source snapshot, then trims the generated cache at two
+certified roots. It compares the published document fragments to pure Trim
+preparation, checks undo/redo, and exports/reopens R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG. The original source spline is retained and excluded from the
+trim-fragment fingerprint comparison.
+
+The synthetic click route zooms around the target before picking: the test
+event adapter quantizes UI coordinates to integer pixels, and the default view
+scale could otherwise move an off-grid spline point outside the hit tolerance.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[high-degree][interior-knot][trim-action]' --reporter compact`
+passes 329 assertions / 1 case across all five file lanes. Separately,
+`Native source replacement covers every ordered family pair` passes 1,101
+assertions, confirming that the Properties source-type selector can change
+among all nine modeled types, including parabola, and selects candidates from
+the chosen family. No production change was required for that UI request.
+Other spline degrees/rational profiles, the remaining source-family and
+parameterization matrix, visible-GUI acceptance, cross-platform runtime, and
+external-CAD checks remain open.
