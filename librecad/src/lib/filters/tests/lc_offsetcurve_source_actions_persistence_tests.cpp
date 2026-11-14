@@ -1255,13 +1255,14 @@ TEST_CASE("I replace and persist a reversed rounded polyline source",
     CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) == cacheFingerprint);
 }
 
-TEST_CASE("translated reversed source action matches an independent worker request",
-          "[lc-offsetcurve][source-action][polyline][reversed][large-origin]") {
+TEST_CASE("translated rounded polyline action matches an independent worker request",
+          "[lc-offsetcurve][source-action][polyline][large-origin]") {
     const RS_Vector origin = GENERATE(RS_Vector{1e6, -1e6}, RS_Vector{1e9, -1e9});
     const double signedDistance = GENERATE(-.25, .25);
+    const bool reversedTraversal = GENERATE(false, true);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    CAPTURE(origin.x, origin.y, signedDistance, static_cast<int>(format));
+    CAPTURE(origin.x, origin.y, signedDistance, reversedTraversal, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1291,17 +1292,19 @@ TEST_CASE("translated reversed source action matches an independent worker reque
          RS_ArcData{{1.5, 7.5}, 1.5, M_PI / 2, M_PI, false},
          RS_LineData{{0, 7.5}, {0, 1}},
          RS_ArcData{{1, 1}, 1, M_PI, 3 * M_PI / 2, false}}};
-    std::reverse(data.segments.begin(), data.segments.end());
-    for (auto& segment : data.segments) {
-        if (auto* line = std::get_if<RS_LineData>(&segment)) {
-            std::swap(line->startpoint, line->endpoint);
-        } else {
-            auto& arc = std::get<RS_ArcData>(segment);
-            std::swap(arc.angle1, arc.angle2);
-            arc.reversed = !arc.reversed;
+    if (reversedTraversal) {
+        std::reverse(data.segments.begin(), data.segments.end());
+        for (auto& segment : data.segments) {
+            if (auto* line = std::get_if<RS_LineData>(&segment)) {
+                std::swap(line->startpoint, line->endpoint);
+            } else {
+                auto& arc = std::get<RS_ArcData>(segment);
+                std::swap(arc.angle1, arc.angle2);
+                arc.reversed = !arc.reversed;
+            }
         }
+        std::swap(data.startpoint, data.endpoint);
     }
-    std::swap(data.startpoint, data.endpoint);
     data.startpoint = transform(data.startpoint);
     data.endpoint = transform(data.endpoint);
     for (auto& segment : data.segments) {
@@ -1467,8 +1470,9 @@ TEST_CASE("translated reversed source action matches an independent worker reque
     CHECK(actualTrimmed == expectedTrimmed);
 
     const auto output = std::filesystem::path(directory.filePath(
-        QStringLiteral("translated-reversed-trim-%1-%2.drawing")
+        QStringLiteral("translated-rounded-trim-%1-%2-%3.drawing")
             .arg(signedDistance < 0.0 ? QStringLiteral("inward") : QStringLiteral("outward"))
+            .arg(reversedTraversal ? QStringLiteral("reversed") : QStringLiteral("forward"))
             .arg(static_cast<int>(format)))
             .toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, format));
