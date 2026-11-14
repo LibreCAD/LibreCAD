@@ -815,6 +815,7 @@ TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
                 *directOptions, LC_CurveOffset::makeDirectSourceBudget());
             const bool identity = !frame.rotate && !frame.translate;
             const bool expectedSuccess = identity ||
+                                         (frame.translate && !frame.rotate) ||
                                          (!identity && signedDistance > 0.0);
             const auto expectedStatus = expectedSuccess
                 ? LC_CurveOffsetStatus::Ok : LC_CurveOffsetStatus::AmbiguousTopology;

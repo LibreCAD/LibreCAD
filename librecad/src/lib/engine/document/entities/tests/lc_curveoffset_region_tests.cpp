@@ -480,7 +480,7 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                         result.intersectionDiagnostics.failureDomain.segmentB);
                 const bool expectedSuccess = (frame == 0 && grow) ||
                     (frame == 1 && !grow) ||
-                    (frame == 2 && !grow) || (frame == 3 && !grow);
+                    (frame == 2) || (frame == 3 && !grow);
                 if (expectedSuccess) {
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
@@ -717,6 +717,8 @@ TEST_CASE("Negative-bulge bow-tie frames return checked cycles or atomic refusal
                         static_cast<int>(result.intersectionDiagnostics.status),
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
+                const bool expectedSuccess = frame != 3 || !grow;
+                CHECK((result.status == LC_CurveOffsetStatus::Ok) == expectedSuccess);
                 if (result.status == LC_CurveOffsetStatus::Ok) {
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);

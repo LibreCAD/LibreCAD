@@ -6913,6 +6913,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         std::vector<Primitive> primitives;
         bool eligible = true;
         const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&source);
+        const std::vector<double>& sourceBreaks = source.breaks();
         for (std::size_t c = 0; c < candidates.size() && eligible; ++c) {
             if (candidates[c].branches.size() != 1 || candidates[c].branches.front().closed ||
                 candidates[c].branches.front().cubicPieces.empty() || polyline == nullptr) {
@@ -6943,6 +6944,17 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                                       segments.back().t1, false});
                 continue;
             }
+            bool knownStraightSourceSpan = false;
+            if (candidateBreaks.size() == 2 && sourceBreaks.size() >= 2) {
+                const double middle = candidateBreaks.front() +
+                                      (candidateBreaks.back() - candidateBreaks.front()) * 0.5;
+                const auto upper = std::upper_bound(sourceBreaks.begin(), sourceBreaks.end(), middle);
+                if (upper != sourceBreaks.begin() && upper != sourceBreaks.end()) {
+                    const std::size_t span = static_cast<std::size_t>(upper - sourceBreaks.begin() - 1);
+                    knownStraightSourceSpan = candidateBreaks.front() >= sourceBreaks[span] &&
+                        candidateBreaks.back() <= sourceBreaks[span + 1] && polyline->straightSpan(span);
+                }
+            }
             const RS_Vector a = branch.cubicPieces.front().bezier[0];
             const RS_Vector b = branch.cubicPieces.back().bezier[3];
             const RS_Vector axis = b - a;
@@ -6951,8 +6963,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 eligible = false;
                 break;
             }
-            const double straightSlack = 64.0 * std::numeric_limits<double>::epsilon() *
-                std::max({1.0, length, std::abs(a.x), std::abs(a.y), std::abs(b.x), std::abs(b.y)});
+            const double straightSlack = std::max(
+                64.0 * std::numeric_limits<double>::epsilon() *
+                    std::max({1.0, length, std::abs(a.x), std::abs(a.y), std::abs(b.x), std::abs(b.y)}),
+                knownStraightSourceSpan ? options.tolerance.evaluation : 0.0);
             for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
                 for (const RS_Vector& control : piece.bezier) {
                     if (std::abs(cross(axis, control - a)) > straightSlack * length) {
@@ -6963,12 +6977,12 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 if (!eligible) break;
             }
             if (!eligible) break;
-            if (segments.size() != 1 || segments.front().branch != 0) {
+            if ((!knownStraightSourceSpan && segments.size() != 1) || segments.front().branch != 0) {
                 eligible = false;
                 break;
             }
             primitives.push_back({LC_OffsetSegment{false, a, b}, firstBranch[c],
-                                  segments.front().t0, segments.front().t1, false});
+                                  segments.front().t0, segments.back().t1, false});
         }
         if (eligible) {
             for (std::size_t n = 0; n < nodes.size(); ++n) {
