@@ -44102,3 +44102,21 @@ families or non-circular polyline matrix. Continue independent geometry
 oracles, both traversal directions where meaningful, worker/cache admission,
 Trim and exact file lanes for remaining variants. Cross-platform/qmake6 test
 coverage, external CAD and visible Properties acceptance remain separate.
+
+## 1284. Persist a Transformed Unequal-radius Rounded Polyline Trim (2026-11-13)
+
+Test commit `2872b3140` adds an unequal-radius rounded closed polyline, rotated
+by `0.37` radians and translated to `(1e6,-1e6)`. Its finite cutter crosses
+the selected offset-cache component twice; the regression exercises source
+replacement, worker-backed Trim, output publication, undo/redo, and save/reopen
+through all five existing DXF/DWG lanes. The focused profile passes 190
+assertions; the complete ten-profile/five-format persistence matrix passes
+2,070 assertions on macOS arm64 CMake Release. `git diff --check` passes.
+
+This is an action/persistence regression, not an independent offset-geometry
+oracle for every rounded segment or join. The profile complements the
+all-arc cases in sections 1281-1283 but does not qualify other rounded
+topologies, bulge signs, radii, transforms, or source families. Add direct
+geometry cross-checks and broader mixed-arc/line and non-circular variants as
+separate slices; continue qmake6 test, cross-platform, external-CAD, and
+visible Properties acceptance gates independently.
