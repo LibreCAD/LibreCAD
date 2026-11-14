@@ -43692,3 +43692,20 @@ a save/reopen test for these transformed fixtures. Exact-profile cross-lane
 persistence remains recorded in section 1263. Continue with further numerical
 scales/orientations, smooth tangent and near-miss atomic-refusal cases, and
 cross-platform validation.
+
+## 1265. Keep Smooth Tangencies and Near Misses Atomic (2026-11-13)
+
+Test commit `73a26e308` adds adversarial tests for the finite-line proof path.
+A cubic whose control hull is strictly on one side of the cutter is certified
+as a near miss, produces `NoUsableRoots`, and leaves its input unchanged. A
+smooth cubic tangent to the cutter is not admitted as a monotone transverse
+root; the Trim operation refuses without fragments or mutation. On macOS arm64
+CMake Release, the focused case passes 70 assertions / 1 case, and the complete
+`[lc-offsetcurve][trim-kernel]` suite passes 41,366 assertions / 73 cases. The
+worker-result suite passes 467,789 assertions / 29 cases; `git diff --check`
+passes.
+
+This covers one exact near-miss shape and one smooth tangent shape, not a
+general tolerance/scale matrix. Continue with translated/scaled adversarial
+variants and verify refusal remains stable through the asynchronous action
+path. Broad input conditioning and cross-platform verification remain open.
