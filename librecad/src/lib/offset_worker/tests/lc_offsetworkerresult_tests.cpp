@@ -736,7 +736,8 @@ TEST_CASE("Worker Trim revalidates monotone proof categories and both root inter
 
 TEST_CASE("Worker Trim transports rotated monotone line roots for linear and cubic sources", tags) {
     const RS_Vector origin{10000, -70000};
-    const std::array<RS_Vector, 6> directions{{{4, 3}, {1, 0}, {0, 1}, {-3, 4}, {4, -3}, {1, 1e-6}}};
+    const std::array<RS_Vector, 8> directions{{
+        {4, 3}, {1, 0}, {0, 1}, {-3, 4}, {4, -3}, {1, 1e-6}, {1e-6, 1}, {-1, 1e-6}}};
     for (const auto baseDirection : directions) for (double scale : {.01, 1., 100.})
         for (std::size_t degree : {1u, 3u}) for (bool reverseSource : {false, true})
             for (bool reverseLine : {false, true}) {
