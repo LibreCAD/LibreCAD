@@ -43486,3 +43486,24 @@ Revised implementation sequence:
 The exact-rational geometry audit is validated independently of the Trim
 kernel. The symmetric centerline Trim remains open, and no new analytic proof
 category is currently part of the implementation.
+
+## 1257. Record Exact-crossing Audit Validation (2026-11-13)
+
+Test commit `1ceee6980` adds the clockwise centerline audit without changing
+production geometry or root policy. On macOS arm64 CMake Release, the focused
+closed-polyline Trim matrix passes 942 assertions in one test case: the
+existing five source profiles and five DXF/DWG lanes still pass, and the
+centerline audit proves exactly two monotone transverse crossings whose
+ordinate hulls are inside the finite cutter. The full source-picker suite
+passes 15,116 assertions across 44 cases after the production tree is restored
+to its tested baseline. The test target builds successfully and
+`git diff --check` passes.
+
+Roadmap commit `38c5b1f37` records the failed certificate attempt and the
+revised proof/protocol-first sequence. Both commits are pushed to PR #3193;
+the verified PR head is `38c5b1f3726950aeb0d23fd781b999a5b2d4a0f1`.
+
+This closes only the exact-geometry question and preserves existing Trim
+behavior. It does not implement symmetric centerline trimming or visible
+desktop source-picker acceptance. Continue with the synthetic certificate
+and hostile worker-result tests in section 1256 before production integration.
