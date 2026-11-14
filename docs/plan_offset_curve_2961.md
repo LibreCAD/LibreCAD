@@ -45012,3 +45012,23 @@ Validation on macOS arm64 CMake Release:
 These are bounded fixture results only; they do not prove arbitrary periodic
 control nets, weight profiles, knot layouts, visible-GUI picking, other
 platforms, or ODA/AutoCAD acceptance. Those roadmap gates remain open.
+
+## 1322. Trim and Persist Alternating-weight Rational Splines (2026-11-14)
+
+Test commit `2f500aa41` carries the independent worker-oracle alternating
+positive weights `0.7/1.3` into document source replacement, Trim, undo/redo,
+and two save/reopen cycles. The added end-to-end profile is degree four, a
+simple off-center knot at `0.37`, the rotated/translated frame, and both
+signed distances across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The
+existing degree-four/six, repeated-knot, centered/off-center, both-sign
+Trim/persistence matrix remains in place with smoothly varying weights.
+
+Validation on macOS arm64 CMake Release:
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'rational high-degree splines trim through document actions and file lanes'
+--abortx 1 --reporter compact` passes 17,728 assertions / 1 case. Exploratory
+attempts showed that some degree-six or higher-multiplicity alternating-weight
+profiles are refused by cache Trim root certification; those combinations
+remain unqualified end to end and are not to be represented as passing. The
+committed slice adds no broader rational-spline guarantee, visible-GUI,
+cross-platform, or independent ODA/AutoCAD evidence.
