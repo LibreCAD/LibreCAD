@@ -1258,9 +1258,10 @@ TEST_CASE("I replace and persist a reversed rounded polyline source",
 TEST_CASE("translated reversed source action matches an independent worker request",
           "[lc-offsetcurve][source-action][polyline][reversed][large-origin]") {
     const RS_Vector origin = GENERATE(RS_Vector{1e6, -1e6}, RS_Vector{1e9, -1e9});
+    const double signedDistance = GENERATE(-.25, .25);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    CAPTURE(origin.x, origin.y, static_cast<int>(format));
+    CAPTURE(origin.x, origin.y, signedDistance, static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1326,7 +1327,7 @@ TEST_CASE("translated reversed source action matches an independent worker reque
     const RS_Vector sourcePick = source->getNearestPointOnEntity(transform({7, 0}), true);
     REQUIRE(sourcePick.valid);
 
-    auto* target = native(graphic, .25, true);
+    auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
     graphic.select(QList<RS_Entity*>{target}, true);
     auto update = LC_ActionsHandlerFactory::createActionInstance(
         RS2::ActionOffsetCurveUpdateSource, &context);
@@ -1342,7 +1343,7 @@ TEST_CASE("translated reversed source action matches an independent worker reque
     REQUIRE(action->lastReport().updated == 1);
     auto* published = onlyNative(graphic);
     REQUIRE(published->sourceDefinition());
-    CHECK(published->sourceDefinition()->signedDistance == -.25);
+    CHECK(published->sourceDefinition()->signedDistance == signedDistance);
     const auto captured = LC_OffsetSourceGeometry::capture(*source);
     REQUIRE(captured);
     const auto sourceEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*captured);
@@ -1376,23 +1377,36 @@ TEST_CASE("translated reversed source action matches an independent worker reque
     const auto& polyline = std::get<LC_OffsetPolylineData>(captured->value);
     double first = 0.0, last = 0.0;
     REQUIRE(published->getParameterDomain(first, last));
+    const auto checkNearest = [&](const RS_Vector& expected, const double fraction) {
+        double nearest = std::numeric_limits<double>::infinity();
+        for (int sample = 0; sample <= 8192; ++sample) {
+            const RS_Vector candidate = published->getPointAt(first +
+                (last - first) * sample / 8192.0);
+            if (candidate.valid) nearest = std::min(nearest, candidate.distanceTo(expected));
+        }
+        CAPTURE(fraction, expected, nearest);
+        CHECK(nearest < .02);
+    };
     for (const auto& segment : polyline.segments) {
-        const auto* arc = std::get_if<RS_ArcData>(&segment);
-        if (arc == nullptr) continue;
-        const double direction = arc->reversed ? -1.0 : 1.0;
-        const double radius = arc->radius - direction * published->sourceDefinition()->signedDistance;
+        if (const auto* line = std::get_if<RS_LineData>(&segment)) {
+            const RS_Vector tangent = line->endpoint - line->startpoint;
+            REQUIRE(tangent.magnitude() > 0.0);
+            const RS_Vector normal{-tangent.y / tangent.magnitude(),
+                                   tangent.x / tangent.magnitude()};
+            for (const double fraction : {.25, .5, .75}) {
+                checkNearest(line->startpoint + tangent * fraction +
+                             normal * signedDistance, fraction);
+            }
+            continue;
+        }
+        const auto& arc = std::get<RS_ArcData>(segment);
+        const double direction = arc.reversed ? -1.0 : 1.0;
+        const double radius = arc.radius - direction * signedDistance;
         REQUIRE(radius > 0.0);
         for (const double fraction : {.25, .5, .75}) {
-            const double angleAt = arc->angle1 + direction * arc->getAngleLength() * fraction;
-            const RS_Vector expected = arc->center + RS_Vector::polar(radius, angleAt);
-            double nearest = std::numeric_limits<double>::infinity();
-            for (int sample = 0; sample <= 8192; ++sample) {
-                const RS_Vector candidate = published->getPointAt(first +
-                    (last - first) * sample / 8192.0);
-                if (candidate.valid) nearest = std::min(nearest, candidate.distanceTo(expected));
-            }
-            CAPTURE(fraction, arc->radius, expected, nearest);
-            CHECK(nearest < .02);
+            const double angleAt = arc.angle1 + direction * arc.getAngleLength() * fraction;
+            const RS_Vector expected = arc.center + RS_Vector::polar(radius, angleAt);
+            checkNearest(expected, fraction);
         }
     }
 
@@ -1453,7 +1467,9 @@ TEST_CASE("translated reversed source action matches an independent worker reque
     CHECK(actualTrimmed == expectedTrimmed);
 
     const auto output = std::filesystem::path(directory.filePath(
-        QStringLiteral("translated-reversed-trim-%1.drawing").arg(static_cast<int>(format)))
+        QStringLiteral("translated-reversed-trim-%1-%2.drawing")
+            .arg(signedDistance < 0.0 ? QStringLiteral("inward") : QStringLiteral("outward"))
+            .arg(static_cast<int>(format)))
             .toStdString());
     REQUIRE(lc::test::exportDrawing(graphic, output, format));
     RS_Graphic reopened;
