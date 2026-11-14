@@ -74,7 +74,8 @@ bool uniqueProof(const LC_IntersectionProof proof) {
     case LC_IntersectionProof::IntervalUniqueTransverse:
     case LC_IntersectionProof::AnalyticEndpoint:
     case LC_IntersectionProof::AnalyticCusp:
-    case LC_IntersectionProof::AnalyticTangency: return true;
+    case LC_IntersectionProof::AnalyticTangency:
+    case LC_IntersectionProof::AnalyticMonotoneTransverse: return true;
     default: return false;
     }
 }

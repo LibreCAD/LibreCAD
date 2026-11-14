@@ -1598,6 +1598,39 @@ TEST_CASE("Strict transverse certificates use outward points rather than cancell
     checkWork(ordinary, options);
 }
 
+TEST_CASE("Strict intersections retain monotone transverse analytic proof tokens",
+          "[lc-offsetcurve][geometry][intersection-strict][analytic-proof]") {
+    auto curves = endpointRefineCurves({0.25});
+    curves->curves.contactProof = [](const LC_IntersectionDomain& box) {
+        LC_AnalyticIntersectionCertificate proof;
+        if (box.segmentA != 0 || box.segmentB != 1) return proof;
+        proof.proofDomain = box;
+        if (!box.parameterA.contains(0.25) || !box.parameterB.contains(0.0)) {
+            proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+            proof.proof = LC_IntersectionProof::AnalyticExclusion;
+            return proof;
+        }
+        proof.outcome = LC_AnalyticIntersectionCertificate::Outcome::Unique;
+        proof.proof = LC_IntersectionProof::AnalyticMonotoneTransverse;
+        proof.isolationA = LC_Interval::point(0.25);
+        proof.isolationB = LC_Interval::point(0.0);
+        proof.kind = Kind::Transverse;
+        return proof;
+    };
+    const auto query = findCertifiedIntersections(std::move(curves), strictOptions());
+    REQUIRE(query.status == LC_IntersectionStatus::Ok);
+    REQUIRE(query.session);
+    REQUIRE(query.session->hasValidProofs());
+    REQUIRE(query.session->rootCount() == 1);
+    const auto root = query.session->snapshot(query.session->rootHandle(0));
+    REQUIRE(root);
+    CHECK(root->event.proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
+    CHECK(root->event.kind == Kind::Transverse);
+    CHECK(root->event.isolation.parameterA.contains(0.25));
+    CHECK(root->event.isolation.parameterB.contains(0.0));
+    CHECK(root->event.point.distanceTo({0.25, 0.0}) == 0.0);
+}
+
 TEST_CASE("Strict root contraction normalizes disparate parameter scales",
           "[lc-offsetcurve][geometry][intersection-strict][curve-offset][topology][parameter-scale]") {
     constexpr double rootParameter = 127.430125;

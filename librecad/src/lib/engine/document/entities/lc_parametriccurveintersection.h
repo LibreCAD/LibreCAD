@@ -38,7 +38,9 @@ enum class LC_IntersectionProof {
     AnalyticEndpoint,
     AnalyticCusp,
     AnalyticTangency,
-    AnalyticExclusion
+    AnalyticExclusion,
+    /** Provider-proved unique transverse root on a strictly monotone curve span. */
+    AnalyticMonotoneTransverse
 };
 
 struct LC_IntersectionDomain {

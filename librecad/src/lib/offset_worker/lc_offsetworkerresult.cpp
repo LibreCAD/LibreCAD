@@ -89,7 +89,7 @@ template<class T> constexpr qint64 enumMax() {
     else if constexpr (std::is_same_v<T, Failure>) return qint64(Failure::InternalFailure);
     else if constexpr (std::is_same_v<T, OrdinaryStatus>) return qint64(OrdinaryStatus::Unsupported);
     else if constexpr (std::is_same_v<T, Trim::Refusal>) return qint64(Trim::Refusal::AllocationFailure);
-    else if constexpr (std::is_same_v<T, LC_IntersectionProof>) return qint64(LC_IntersectionProof::AnalyticExclusion);
+    else if constexpr (std::is_same_v<T, LC_IntersectionProof>) return qint64(LC_IntersectionProof::AnalyticMonotoneTransverse);
     else { static_assert(std::is_same_v<T, void>, "Missing protocol enum range"); }
 }
 bool add(std::size_t& used, std::size_t n, std::size_t cap) {
@@ -1040,7 +1040,9 @@ bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c
         a.parameterB.lo() >= 0 && a.parameterB.hi() <= (c.conic ? Tau : double(c.cutter)) &&
         (c.conic || (a.parameterB.lo() >= double(a.segmentB - c.source) &&
             a.parameterB.hi() <= double(a.segmentB - c.source + 1))) &&
-        (d.proof == LC_IntersectionProof::IntervalUniqueTransverse || d.proof == LC_IntersectionProof::AnalyticEndpoint);
+        (d.proof == LC_IntersectionProof::IntervalUniqueTransverse ||
+         d.proof == LC_IntersectionProof::AnalyticEndpoint ||
+         d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
 }
 bool conic(const Trim::Result::ConicFragment& d, const TrimContext& c) {
     // ORIGINAL axes/ratio and rendering caches are retained, not normalized.

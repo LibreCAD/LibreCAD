@@ -1862,7 +1862,8 @@ private:
         } else if (certificate.outcome == Outcome::Unique) {
             if (certificate.proof != LC_IntersectionProof::AnalyticEndpoint &&
                 certificate.proof != LC_IntersectionProof::AnalyticCusp &&
-                certificate.proof != LC_IntersectionProof::AnalyticTangency) {
+                certificate.proof != LC_IntersectionProof::AnalyticTangency &&
+                certificate.proof != LC_IntersectionProof::AnalyticMonotoneTransverse) {
                 return fail(m_retained ? LC_IntersectionStatus::InvalidInput : LC_IntersectionStatus::AmbiguousTopology);
             }
             if (!includes(certificate.proofDomain.parameterA, certificate.isolationA) ||

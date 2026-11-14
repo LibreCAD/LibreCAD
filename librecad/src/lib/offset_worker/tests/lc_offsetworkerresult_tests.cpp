@@ -694,6 +694,13 @@ TEST_CASE("Worker Trim prepare preserves polynomial sections endpoints roots rem
         RS_Line line{nullptr, {0, -3}, {0, 3}}; trimRoundtrip(data, line, {{2 * side, 0}});
         RS_Circle circle{nullptr, {{0, 0}, 2.25}}; trimRoundtrip(data, circle, {{2, 0}});
     }
+    auto [request, trim] = trimLine();
+    REQUIRE_FALSE(trim.roots.empty());
+    trim.roots.front().proof = LC_IntersectionProof::AnalyticMonotoneTransverse;
+    const auto transported = roundtrip(request, reply(request, trim));
+    const auto* received = std::get_if<Trim::Result>(&transported.result);
+    REQUIRE(received);
+    CHECK(received->roots.front().proof == LC_IntersectionProof::AnalyticMonotoneTransverse);
 }
 
 TEST_CASE("Worker Trim conic and paired results preserve original conics and all diagnostics", tags) {
