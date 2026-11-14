@@ -44229,3 +44229,20 @@ the independent oracle now checks 80 source-locus samples per file lane (400
 in total). This remains sampled fixture evidence, not a global deviation
 bound, and does not qualify other inward layouts, transforms/scales, source
 families, qmake6/cross-platform builds, visible GUI, or external CAD.
+
+## 1289. Translate the Inward Rounded-polyline Trim Profile (2026-11-14)
+
+Test commit `0fcba8672` adds the translated counterpart to section 1288's
+inward rounded-polyline case. The same rotated, unequal-radius source, signed
+distance, local cutter, and component-aware target selection are translated
+to `(1e6,-1e6)`. The direct five-sample-per-arc geometry oracle, two-crossing
+fixture check, transverse-root admission, eight-fragment Trim, undo/redo, and
+five DXF/DWG save/reopen lanes all remain required.
+
+On macOS arm64 CMake Release, the focused translated-inward profile passes 535
+assertions and the complete twelve-profile, five-format persistence matrix
+passes 3,435 assertions. `git diff --check` passes. This establishes one
+translation point for this inward profile; it does not establish translation
+covariance generally, other origins/scales/rotations or bulge layouts, global
+deviation bounds, remaining source families, cross-platform/qmake6 execution,
+visible GUI, or external-CAD interoperability.
