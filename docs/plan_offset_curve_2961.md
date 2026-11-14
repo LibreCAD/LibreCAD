@@ -371,7 +371,8 @@ Section 1369 extends the exact candidate arrangement to line, circular-arc,
 and corner-circle primitives. A crossing negative-bulge bow-tie passes direct
 growth and erosion under both fill rules with independent cycle, side, and
 distance checks. A positive-bulge profile whose eroded candidates overlap
-still returns `AmbiguousTopology` atomically. This is bounded mixed-bulge
+still returns `AmbiguousTopology` atomically at the identity frame; section
+1373 records a separately validated translated erosion result. This is bounded mixed-bulge
 coverage, not general self-crossing support. Other arc signs/layouts and
 overlap topologies, editable cache/action integration, file persistence,
 visible GUI, cross-platform runtime, and independent CAD acceptance remain
@@ -45903,13 +45904,13 @@ integration, and persistence for such crossing sources remain unsupported.
 ## 1371. Qualify Positive-bulge Worker Growth and Refusal (2026-11-14)
 
 Test commits `a877a3e9e` and `06a80cfd1` send both signed offsets for the
-positive-bulge crossing polyline through the real helper. At `-0.5`, growth
-returns one valid ordinary spline branch. At `+0.5`, erosion encounters
-overlapping arc candidates and returns `AmbiguousTopology` with no ordinary
-branches or native curve. This complements section 1370's negative-bulge
-worker generation and verifies both a successful side and fail-closed opposite
-side across the process boundary. It covers this single profile, default fill
-rule, and offset only; other overlap layouts remain unqualified in the worker.
+identity-frame positive-bulge crossing polyline through the real helper. At
+`-0.5`, growth returns one valid ordinary spline branch. At `+0.5`, erosion
+encounters overlapping arc candidates and returns `AmbiguousTopology` with no
+ordinary branches or native curve. This complements section 1370's
+negative-bulge worker generation. Section 1373 records a bounded translated
+fixture that resolves its erosion side; the identity-frame refusal remains.
+Other overlap layouts remain unqualified in the worker.
 
 Validation on macOS arm64 CMake Release: the focused mixed-bulge worker-client
 selector passes 754 assertions / 2 cases; `cmake --build
@@ -45953,6 +45954,53 @@ The complete worker-client suite passes 3,380,062 assertions / 44 cases with
 This validates the current implementation slice for review/commit; it does
 not close visible GUI, cross-platform runtime, file persistence for the newly
 covered transformed cases, or independent CAD acceptance.
+
+## 1373. Evaluate Large-origin Mixed-bulge Regions in a Local Frame (2026-11-14)
+
+Implementation/test slice committed as `3581785a6`.
+
+Large-origin closed polylines containing circular spans now run RegionBoundary
+analysis in a bounded local frame when `coordinateScale > 8192 * featureScale`.
+The source adapter translates positions, hulls, and interval bounds while
+preserving derivatives and source parameters; generated cubic geometry,
+provenance arc centers, and intersection points are translated back before
+return. The local numeric floor and positional tolerance components are
+recomputed from feature scale, while the requested geometry tolerance,
+parameter tolerance, and work/output budgets remain unchanged. This is limited
+to large-origin arc polylines so existing straight-polyline and spline
+arrangements retain their validated paths.
+
+The native worker keeps a self-intersecting arc polyline in its submitted
+world frame instead of recentering it before engine dispatch. This lets the
+same bounded RegionBoundary normalization decision run in direct and worker
+calls; generated ordinary results remain in world coordinates. Cache
+promotion remains refused for these generation-only self-intersections.
+
+For the positive-bulge bow-tie rotated by `pi/7` and translated by
+`(123.25, -2000000.5)`, both fill rules are checked against the independent
+dense-source winding/distance oracle. The translated inward operation returns
+two valid closed cycles; its opposite-side operation refuses atomically.
+At the identity frame, growth still returns one valid cycle and erosion still
+refuses atomically. The real helper-process regression sends both signed
+requests for identity and transformed sources and checks worker/direct status
+parity, branch counts, valid ordinary splines, and absence of native-cache
+publication. This adds one translated erosion layout; it does not establish
+translation invariance across signs or general mixed-bulge/self-crossing
+support. Other arc signs, distances, transforms, and overlap arrangements,
+editable cache/action integration, Trim, file persistence, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
+
+Validation on macOS arm64 CMake Release: `[curve-offset][region]` passes
+27,458 assertions / 19 cases; the focused mixed-bulge helper-process case
+passes 736 assertions / 1 case; the complete worker-client suite passes
+3,378,687 assertions / 44 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`; the `librecad_tests` and worker
+client targets build; and `git diff --check` passes. The recursive qmake6
+application/plugin/helper build exits 0. It reports sign-comparison, DWG
+metadata initializer, and macOS deployment-target/dylib warnings; no build
+failures. Implementation commit `3581785a6` is recorded here; this roadmap
+update is its follow-up commit. Visible-GUI, cross-platform runtime,
+cache/action, persistence, and independent CAD gates remain open.
 
 ## 1362. Split a Concave Polyline Region at a Collapsed Neck (2026-11-14)
 
