@@ -1128,7 +1128,6 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw",
         "all-arc-circle-cw-centerline-audit"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
-    if (profile == 5 && format != RS2::FormatDXFRW14) return;
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
