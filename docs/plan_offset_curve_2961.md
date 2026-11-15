@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`b06bfcb6c`):** The repeated request to
+`4c772e745`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -70,6 +70,8 @@ conditioning boundary and its fail-closed regression.
 Section 1479 adds verified intermediate near-parallel endpoint slopes.
 Section 1481 extends endpoint-tangent worker/cache and five-lane persistence
 coverage across the same five measured slopes and both signed offset sides.
+Section 1482 independently reads each emitted DWG with LibreDWG and confirms
+the spline entity is present; editable-source semantic validation remains open.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49329,3 +49331,29 @@ spacing, tangent directions, source constructions, Trim beyond the
 action-specific evidence in sections 1478-1479, independent CAD acceptance, or
 visible packaged-app interaction. Continue the per-family variant matrix; do
 not infer all-parabola support from these profiles.
+
+## 1482. Independently Parse Endpoint-tangent Parabola DWGs (2026-11-15)
+
+Commit `4c772e745` invokes LibreDWG's `dwgread -O minJSON` on each emitted
+R2000 and R2018 DWG in the current five-slope, two-signed-offset,
+rotated/translated endpoint-tangent matrix. The test requires a normal process
+exit, successful JSON parsing, and at least one decoded `SPLINE` entity in
+model space for every file. This adds an independent parser/entity-presence
+check to LibreCAD's own reopen assertions; it does **not** establish that
+LibreDWG interpreted the custom editable-source EED/schema correctly.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Result: 4,858 assertions / 1 case pass with both DWG readers enabled. This
+establishes parse success and SPLINE presence for these profiles only. ODA or
+AutoCAD semantic acceptance, custom EED interpretation, visible packaged-app
+interaction, and broader parabola geometry remain open.
