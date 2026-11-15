@@ -47079,6 +47079,12 @@ source and cache atomically. Record the tested platform, binary revision, and
 actual visible result; do not treat the combo-box inventory as proof of
 geometry-family support.
 
+The repeated request to change source type during replacement and cover every
+supported curve kind is therefore tracked as an acceptance clarification, not
+a new feature slice: all nine kinds are already selectable/filterable in the
+headless contract, while visible interaction and end-to-end geometry/file
+qualification remain open as stated above.
+
 ## 1405. Close Combined-frame Mixed-bulge Bow-tie Cycles (2026-11-14)
 
 Implementation commit `3bb3c9bd8` fixes the positive-bulge bow-tie growth
@@ -47136,3 +47142,21 @@ Validation on macOS arm64 CMake Release: `librecad_tests
 '[gui][dialog][offsetcurve][source]' --reporter compact` passes 15,226
 assertions / 44 cases with `QT_QPA_PLATFORM=offscreen`. This does not expand
 the concrete geometry-variant or cross-platform acceptance matrix.
+
+## 1408. Bound Endpoint-to-node Recovery Work (2026-11-14)
+
+The mixed-frame endpoint recovery added in section 1405 compares candidate
+offset endpoints against source-region nodes. This pass is now included in the
+same `maxIntersectionPairs` budget as the existing intersection work, using
+`intersectionDiagnostics.nodeMatchComparisons`; it fails closed with
+`LimitExceeded` at `CandidateArrangement` when the aggregate cap is exhausted.
+The three relevant work-cap regressions assert
+`work.totalBoxPairs + nodeMatchComparisons <= limit`, so endpoint recovery
+cannot silently add an unbounded quadratic scan beyond the public work limit.
+
+Validation on macOS arm64 CMake Release: the clean test-target rebuild
+completed; `[curve-offset][region][budget]` passes 858 assertions / 3 cases;
+`[curve-offset][region]` passes 28,700 assertions / 23 cases; and the mixed-
+bulge worker persistence case passes 312 assertions / 1 case. This constrains
+the endpoint-recovery pass but does not close broader hostile-topology,
+visible-GUI, cross-platform, or independent-CAD acceptance.
