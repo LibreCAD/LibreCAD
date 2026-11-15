@@ -383,6 +383,57 @@ TEST_CASE("LC_Parabola: Far-end clustered samples do not qualify a known large-o
   }));
 }
 
+TEST_CASE("LC_Parabola: Opposite-end clustering is measured across large-origin scales",
+          "[parabola][reconstruction][conditioning][large-origin][scale-matrix]") {
+  const std::array<RS_Vector, 3> controls{{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}};
+  constexpr double angle = 0.6435011087932844;
+  const RS_Vector translation{1e6, -2e6};
+  const double worldMagnitude = std::max(std::abs(translation.x), std::abs(translation.y));
+
+  for (const double scale : {1e-3, 1e-2, 1e-1, 1.0}) {
+    CAPTURE(scale);
+    const auto transform = [&](const RS_Vector& point) {
+      RS_Vector mapped = point * scale;
+      mapped.rotate(angle);
+      return mapped + translation;
+    };
+    const auto pointAt = [&](const double t) {
+      return transform(bezierAt(controls, t));
+    };
+    const std::vector<RS_Vector> samples{
+        pointAt(0.0), pointAt(0.98), pointAt(0.999), pointAt(1.0)};
+    const std::array<RS_Vector, 3> independent{
+        pointAt(0.15), pointAt(0.5), pointAt(0.85)};
+    const double fitTolerance = std::max(
+        scale * 1e-7,
+        256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+    const auto candidates = LC_ParabolaData::From4Points(samples);
+    const auto errorOn = [](const LC_ParabolaData& candidate, const RS_Vector& point) {
+      return candidate.fromX(candidate.findX(point)).distanceTo(point);
+    };
+    double bestIndependentError = std::numeric_limits<double>::infinity();
+    bool hasSampleFit = false;
+    for (const auto& candidate : candidates) {
+      if (!candidate.isValid())
+        continue;
+      const bool sampleFit = std::all_of(samples.begin(), samples.end(),
+          [&](const RS_Vector& point) { return errorOn(candidate, point) <= fitTolerance; });
+      hasSampleFit = hasSampleFit || sampleFit;
+      if (!sampleFit)
+        continue;
+      double maxError = 0.0;
+      for (const RS_Vector& point : independent)
+        maxError = std::max(maxError, errorOn(candidate, point));
+      bestIndependentError = std::min(bestIndependentError, maxError);
+    }
+    CAPTURE(fitTolerance, bestIndependentError, hasSampleFit);
+    REQUIRE(hasSampleFit);
+    CHECK(std::isfinite(bestIndependentError));
+    CHECK(bestIndependentError <= 64.0 * fitTolerance);
+    CHECK(bestIndependentError > fitTolerance);
+  }
+}
+
 TEST_CASE("LC_Parabola: From4Points rejects malformed and degenerate samples",
           "[parabola][reconstruction][validation]") {
   const std::vector<RS_Vector> validSamples{{0.0, 0.0}, {1.0, 1.0},
