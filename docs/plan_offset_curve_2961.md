@@ -89,6 +89,9 @@ the depth ceiling remains 48 and the complete dedicated Trim suite passes.
 Section 1494 adds a rotated-frame stress pass at that phase for the full
 endpoint-tangent slope ladder; this is additional fixture evidence, not a
 general guarantee against every root near the selected phase.
+Section 1497 carries the `{0, 0.95, 0.995, 1}` reconstructed parabola through
+Trim action and five-format persistence for the recorded test source; this
+does not qualify other clustered layouts or parabola constructions.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49790,3 +49793,30 @@ five-lane persistence cases. Expected raw DWG replay diagnostics remain
 reopen, and LibreDWG SPLINE-presence results. Continue the wider parabola
 variant/conditioning matrix and keep visible desktop and independent CAD
 acceptance open.
+
+## 1497. Trim the Reconstructed Dense-end Parabola Layout (2026-11-15)
+
+The all-source Trim action matrix now includes a parabola reconstructed from
+the four-point layout `{0, 0.95, 0.995, 1}`. Before the action uses the
+candidate, the fixture checks it against three independently evaluated points
+on the known generating parabola; a candidate that only interpolates the four
+samples is refused by the test. The reconstructed source then follows the
+existing Trim, native replacement, undo/redo, and five-format persistence
+checks. This qualifies this one construction and layout, not the full
+four-point parabola or conditioning space.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I trimmed every typed source family to plain fragments' --reporter compact
+git diff --check
+```
+
+Result: 6,138 assertions / 1 test case pass. The test includes the generated
+reconstructed-source variant in its DXF/DWG lanes; LibreDWG is used for DWG
+entity-presence checks when available. Continue broader parabola variant and
+conditioning qualification, visible picker acceptance, and independent CAD
+validation.
