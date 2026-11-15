@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`680c75131`):** The repeated request to
+`83268a7ae`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -52,8 +52,12 @@ exist; a regression now follows that user choice and carries the selected
 candidate through worker/cache and persistence. This validates the selected
 candidate, not recovery of an unobservable hidden source curve.
 Other sample distributions, parabola constructions, conditioning/domain
-limits, visible picker/highlight interaction, and independent CAD acceptance
-remain open. The second-save DWG `fixed-handle=2`
+limits, visible picker/highlight interaction, scale-extended Trim-action
+coverage, and independent CAD acceptance remain open. Section 1501 records an
+abandoned, inconclusive scale-`1e6` Trim experiment; it is not evidence of a
+product Trim defect or accepted scale coverage. Do not treat worker/cache and
+persistence scale coverage as evidence for Trim actions. The second-save DWG
+`fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
 Headless ON and OFF passed on exact head `b7d748e03`; CI for subsequent heads
@@ -109,10 +113,12 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits; (3) complete the visible Properties workflow for
-repeated type changes, candidate refresh, current-source indication,
-successful replacement, and cancellation/refusal; (4) record independent
-ODA/AutoCAD acceptance where available and keep raw DWG replay diagnostics
+and fail-closed limits; (3) design a source-, cutter-, and UI-pixel-valid
+scale-extended Trim-action fixture before claiming such scale coverage; (4)
+complete the visible Properties workflow for repeated type changes, candidate
+refresh, current-source indication, successful replacement, and
+cancellation/refusal; (5) record independent ODA/AutoCAD acceptance where
+available and keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
@@ -49906,3 +49912,38 @@ Result: 68,540 assertions / 2 cases pass. Expected DWG raw-replay
 `fixed-handle=2` diagnostics remain separate from the semantic source and
 entity-level checks. Continue other parabola scale/frame rows and preserve the
 explicit ambiguity limits for clustered four-point inputs.
+
+## 1501. Qualify Dense-end Parabola Trim Scales Separately (2026-11-15)
+
+An exploratory extension attempted to run the profile-0
+`{0, 0.95, 0.995, 1}` parabola through the Trim action at scales `1e-6` and
+`1e6`, reusing the worker/cache persistence rows from section 1500. The
+experiment was not retained: it did not establish a reliable UI-pixel pick of
+the intended target at the large scale, and the added rows failed across the
+five format variants. The ordinary three-profile, unit-scale Trim matrix
+remains green. The worker/cache and five-lane persistence results in section
+1500 remain valid for their separate pipeline. This experiment neither
+proves a production Trim defect nor qualifies Trim scale invariance.
+
+Before adding scale-extended action coverage, construct a fixture with an
+independent source/cache geometry check, proportional target/cutter geometry,
+and a click point that resolves to the target after the same UI coordinate
+conversion used by the action. Keep the test representative of a visible,
+unambiguous user click; do not bypass hit testing or weaken atomic refusal and
+complexity limits. The parabola Trim test now retains its reconstructed
+four-point candidate instead of overwriting it with the default control net.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I trimmed every typed source family to plain fragments' --reporter compact
+git diff --check
+```
+
+Result after removing the inconclusive scale rows: 6,650 assertions / 1 case
+pass for the retained unit-scale Trim matrix. Section 1500's independent
+68,540 worker/cache and persistence assertions are unchanged. The unit-scale
+Trim fixture retains the reconstructed four-point candidate (section 1501).
