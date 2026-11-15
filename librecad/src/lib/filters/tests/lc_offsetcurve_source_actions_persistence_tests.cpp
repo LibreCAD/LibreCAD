@@ -3102,7 +3102,8 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const double coordinate = GENERATE(1e6, 1e9);
     const double angle = GENERATE(0.0, 0.37);
-    CAPTURE(static_cast<int>(format), coordinate, angle);
+    const double signedDistance = GENERATE(-.5, .5);
+    CAPTURE(static_cast<int>(format), coordinate, angle, signedDistance);
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -3125,7 +3126,7 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    auto* target = native(graphic, .5);
+    auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
     graphic.select(QList<RS_Entity*>{target}, true);
     auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
     for (const RS_Vector& point : std::vector<RS_Vector>{{0, 0}, {8, 0}, {8, 8}, {6, 8},
@@ -3159,6 +3160,8 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     certified(*replacement);
     REQUIRE(replacement->sourceDefinition());
     CHECK(replacement->sourceDefinition()->source.kind() == SourceKind::Polyline);
+    CHECK(replacement->sourceDefinition()->signedDistance == signedDistance);
+    REQUIRE(graphic.removeEntity(source));
 
     auto* cutter = new RS_Line(&graphic, transform({-1, 4}), transform({9, 4}));
     cutter->setLayer(graphic.findLayer("0"));
