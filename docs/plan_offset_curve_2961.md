@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-14. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
@@ -47203,3 +47203,33 @@ intentionally disabled and no leak-free claim is made. This closes local
 Release/ASan curve-offset unit coverage for this source state, not the open
 visible-GUI, cross-platform runtime, deployed-package, or independent-CAD
 gates in Slice R.
+
+## 1412. Reconfirm Editable Source-type Picker Scope (2026-11-15)
+
+The latest request again requires the source-curve widget to let users change
+the requested source type while choosing a replacement, with eligible
+candidates for every current `LC_OffsetSourceGeometry::SupportedKinds` entry:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. Type changes must refresh the candidate filter
+without ending replacement selection or mutating the committed source.
+Parabola remains a distinct typed choice, not a spline-points approximation.
+
+This is already implemented in the existing Properties widget: its selector
+is populated from `SupportedKinds`, remains enabled during source-choice
+scanning, and updates candidate filtering in the active workflow. The fresh
+headless source-picker run at exact PR source
+`28d2cbaf95a0b57ccdab32d939230a4c9231911b` passes 15,226 assertions / 44
+cases:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+No new UI slice is needed for the repeated request. Slice 5 still owns visible
+desktop acceptance of repeated type changes during active replacement,
+candidate refresh, current-source indication, successful replacement, and
+cancel/refusal behavior. Slice 4 still owns end-to-end qualification of
+concrete variants through capture/reconstruction, worker/cache, applicable
+Trim, and DXF/DWG save/reopen. Nine selector entries or this picker suite do
+not establish complete geometric support for every variant.
