@@ -47840,3 +47840,31 @@ Result: 28,745 assertions / 25 cases passed with no AddressSanitizer report.
 This closes only the sanitizer run for the RegionBoundary selection at this
 revision. It does not replace the broader ASan action suite or close visible
 GUI, cross-platform runtime, or external CAD acceptance.
+
+## 1436. Clarify Source-type Switching and Full-family Scope (2026-11-15)
+
+Reconciled the latest source-widget request with the current implementation
+and acceptance evidence. While the user is choosing a replacement source, the
+widget must keep its source-type control available; changing it repeatedly
+must refresh eligible candidates immediately without closing or restarting
+the active replacement workflow. The supported inventory is exactly line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline from `LC_OffsetSourceGeometry::SupportedKinds`. Parabola must remain a
+distinct source type, not an `LC_SplinePoints` approximation. Other drawable
+types are outside this feature's source contract.
+
+No new selector or parabola-only implementation slice is needed: this picker
+behavior is implemented and its headless family-level checks are recorded in
+the current checklist and section 1434 (15,226 assertions / 44 cases). Keep
+the visible active-workflow interaction open in Slice 5: switch types more
+than once after candidate browsing begins, verify refreshed candidates and
+unchanged source indication, then verify replacement success and atomic
+cancellation/refusal. Separately, Slice 4 must qualify concrete variants of
+each claimed family through source capture/reconstruction, worker/cache,
+applicable Trim, and applicable DXF/DWG save/reopen. A family appearing in the
+widget is not evidence that all of its geometric variants are supported;
+unproved or unsupported variants must refuse without partial state change.
+
+This is a scope/acceptance clarification only, not evidence of additional
+visible-GUI or geometry-family coverage. Record the platform, binary revision,
+interaction route, and result when the Slice 5 check is completed.
