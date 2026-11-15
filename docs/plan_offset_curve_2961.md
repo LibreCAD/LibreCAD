@@ -91,10 +91,13 @@ Section 1494 adds a rotated-frame stress pass at that phase for the full
 endpoint-tangent slope ladder; this is additional fixture evidence, not a
 general guarantee against every root near the selected phase.
 Section 1497 carries the `{0, 0.95, 0.995, 1}` reconstructed parabola through
-Trim action and five-format persistence for the recorded test source; this
-does not qualify other clustered layouts or parabola constructions.
+Trim action and five-format persistence for three recorded control-net
+profiles (section 1499); this does not qualify other clustered layouts or
+parabola constructions.
 Section 1498 expands the dense-end worker/cache and persistence layout across
 all three control profiles at scale 1 in the recorded transformed frames.
+Section 1499 expands the same three profile shapes through the Trim action and
+five-format persistence matrix at the test frame.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -28405,6 +28408,30 @@ Result: 65,684 assertions / 2 cases pass, including available LibreDWG DWG
 entity-presence checks. The existing `fixed-handle=2` replay diagnostic is
 not semantic-source failure. Continue the family-by-variant matrix rather
 than extrapolating from these three profiles.
+
+## 1499. Trim the Dense-end Layout Across Three Parabola Profiles (2026-11-15)
+
+The Trim action matrix now runs its `{0, 0.95, 0.995, 1}` reconstructed
+parabola variant over three distinct control-net profiles. Each candidate is
+checked at independent points against its own generating profile before
+replacement, then exercised through Trim, undo/redo, and the R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG lanes. The profile coordinates are in a compact
+test frame; this is not high-origin or all-scale qualification.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I trimmed every typed source family to plain fragments' --reporter compact
+git diff --check
+```
+
+Result: 6,650 assertions / 1 test case pass, including all five file lanes
+and available LibreDWG DWG entity-presence checks. Broader sample layouts,
+profiles, conditioning, visible picker acceptance, and independent CAD review
+remain open.
 
 Validation: the focused high-degree knot worker selector passes 188 assertions
 across 3 cases; typed-source file round-trip passes 7,620 assertions; staged
