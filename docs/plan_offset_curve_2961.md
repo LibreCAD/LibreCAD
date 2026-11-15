@@ -47312,6 +47312,11 @@ both `LibreCAD.app/Contents/MacOS/LibreCAD` and
 `LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` are executable outputs.
 This is a local build receipt, not a relocated/deployed-package or visible-GUI
 check.
+The current-source headless Properties source-picker run passes 15,226
+assertions / 44 cases, reconfirming active type filtering across all nine
+`SupportedKinds`, including a distinct parabola. A visible-desktop capture
+attempt from this SSH process failed with `could not create image from display`;
+the interactive Slice 5 gate remains open and is not reported as passed.
 The macOS arm64 worker-client exhaustive typed-source test also previously passed
 2,913,696 assertions after the callback timeout was aligned with the worker's
 commit/terminate/reap deadline (section 1413). Fresh PR CI at the new commit
