@@ -47868,3 +47868,31 @@ unproved or unsupported variants must refuse without partial state change.
 This is a scope/acceptance clarification only, not evidence of additional
 visible-GUI or geometry-family coverage. Record the platform, binary revision,
 interaction route, and result when the Slice 5 check is completed.
+
+## 1437. Independently Read High-origin Trim DWGs with LibreDWG (2026-11-15)
+
+Extended the translated rounded-polyline worker/Trim matrix to independently
+inspect its R2000 and R2018 DWG outputs with LibreDWG's `dwgread -O minJSON`.
+For each generated DWG case, the test locates a reopened trimmed SPLINE by its
+geometry fingerprint and compares its degree, knots, control-point XYZ values,
+and weights with the LibreDWG JSON representation. The matrix spans two
+origins (`1e6` and `1e9`), both signed offset orientations, both traversal
+directions, and five file formats; the external reader runs for the two DWG
+formats in each applicable profile. This is independent-parser evidence for
+one matching trimmed spline per DWG file, not a full-file conformance audit.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'translated rounded polyline action matches an independent worker request' \
+  --reporter compact
+```
+
+Result: 6,772 assertions / 1 Catch2 case passed. A `/bin/false` reader probe
+fails on the DWG cases, confirming the external-reader path is executed. Test
+commit `370bd6c26`; `git diff --check` passes. Other entities, remaining
+families and variants, visible interaction, cross-platform packaging, and
+external CAD acceptance remain separate open gates.
