@@ -5880,10 +5880,11 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
         {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
         {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
     }};
-    const std::array<std::array<double, 4>, 3> layouts{{
+    const std::array<std::array<double, 4>, 4> layouts{{
         {{0.0, 0.3, 0.7, 1.0}},
         {{0.05, 0.2, 0.65, 0.95}},
         {{0.0, 0.1, 0.4, 1.0}},
+        {{0.0, 0.001, 0.02, 1.0}},
     }};
     qint64 requestId = 1;
     for (const auto& frame : fourPointParabolaFrames()) {
@@ -5979,10 +5980,11 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
         {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
         {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
     }};
-    const std::array<std::array<double, 4>, 3> layouts{{
+    const std::array<std::array<double, 4>, 4> layouts{{
         {{0.0, 0.3, 0.7, 1.0}},
         {{0.05, 0.2, 0.65, 0.95}},
         {{0.0, 0.1, 0.4, 1.0}},
+        {{0.0, 0.001, 0.02, 1.0}},
     }};
     struct Lane {
         RS2::FormatType format;
