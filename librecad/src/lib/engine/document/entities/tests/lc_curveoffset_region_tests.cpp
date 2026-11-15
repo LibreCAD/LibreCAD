@@ -218,8 +218,7 @@ TEST_CASE("A simple region grows and shrinks to one cycle each", "[curve-offset]
     }
 }
 
-TEST_CASE("Rounded polyline regions grow and shrink along curved boundaries",
-          "[curve-offset][region][polyline][curved-boundary]") {
+TEST_CASE("Rounded polyline regions grow and shrink along curved boundaries", "[curve-offset][region][polyline][curved-boundary]") {
     constexpr double quarterBulge = 0.4142135623730950488;
     constexpr double distance = 0.2;
     RS_Polyline source;
@@ -240,17 +239,13 @@ TEST_CASE("Rounded polyline regions grow and shrink along curved boundaries",
         LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
         options.mode = LC_CurveOffsetMode::RegionBoundary;
         const auto result = LC_CurveOffset::buildDirectBranches(
-            source,
-            LC_CurveOffset::makeSideRequest(
-                grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, distance),
-            options, LC_CurveOffset::makeDirectSourceBudget());
+            source, LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
         CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
-                result.intersectionDiagnostics.status,
-                result.intersectionDiagnostics.failureDepth);
+                result.intersectionDiagnostics.status, result.intersectionDiagnostics.failureDepth);
         REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.branches.size() == 1);
-        const CycleCheck check =
-            checkCycles(result, polygon, LC_CurveFillRule::NonZero, distance, grow);
+        const CycleCheck check = checkCycles(result, polygon, LC_CurveFillRule::NonZero, distance, grow);
         CHECK(check.closed);
         CHECK(check.worstDistance < 1e-5);
         CHECK(check.wrongSide == 0);
