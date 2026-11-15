@@ -48193,3 +48193,28 @@ git diff --check
 Results: 61 assertions / 1 focused case and 62,375 assertions / 8 matching
 polyline source-cache kernel cases passed. Regression-test commit
 `c03247207`.
+
+## 1448. Persist Inward Concave Mixed-bulge Native Cache (2026-11-15)
+
+Extended the simple concave mixed-bulge fixture through the helper-process
+worker and native-source completion path for the inward `RegionBoundary`
+orientation. Worker geometry matches direct RegionBoundary materialization;
+the resulting typed polyline source/cache survives two-pass save/reopen in
+R14, R2000, and R2018 DXF/DWG. The outward Direct result remains an ordinary
+output rather than an automatically promoted native offset for this profile;
+the separate operation-8 test checks both signs, but that is not evidence of
+native generation or persistence on the outward side. The tested arc bulges,
+distance, and local frame are representative only; external CAD-reader
+acceptance, transformed/high-origin cases, and other mixed-arc topologies
+remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Worker client persists inward concave mixed-bulge native offsets' --reporter compact
+git diff --check
+```
+
+Result: 284 assertions / 1 Catch2 case passed, including ten native
+DXF/DWG reopen checks. Regression-test commit `f3e6d7509`.
