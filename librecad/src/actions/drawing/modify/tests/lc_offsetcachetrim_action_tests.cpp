@@ -1840,42 +1840,74 @@ TEST_CASE("T Source update preserves opposite-side cusp topology for an asymmetr
     }
 }
 
-TEST_CASE("T Trim Two trims a four-point reconstructed parabola with undo and redo",
-          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][from-four-points][trim-two]") {
+TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
+          "with undo and redo",
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][from-"
+          "four-points][trim-two]") {
+  for (const bool transformed : {false, true}) {
+    CAPTURE(transformed);
+    const double scale = transformed ? 1e-2 : 1.0;
+    const double angle = transformed ? 0.6435011088 : 0.0;
+    const RS_Vector translation =
+        transformed ? RS_Vector{1e6, -2e6} : RS_Vector{};
+    const auto mapPoint = [&](RS_Vector point) {
+      point *= scale;
+      return RS_Vector{std::cos(angle) * point.x - std::sin(angle) * point.y,
+                       std::sin(angle) * point.x + std::cos(angle) * point.y} +
+             translation;
+    };
     Drawing<true> f;
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-    auto initial = LC_OffsetCurve::create(seed, 0.5, false);
+    const double offsetDistance = 0.5 * scale;
+    auto initial = LC_OffsetCurve::create(seed, offsetDistance, false);
     REQUIRE(initial);
-    auto* previous = initial.entity.release();
+    auto *previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
     const std::array<RS_Vector, 3> controls{{{-10, 5}, {0, -5}, {10, 5}}};
     const auto pointAt = [&](const double t) {
-        const double oneMinusT = 1.0 - t;
-        return controls[0] * (oneMinusT * oneMinusT) +
-               controls[1] * (2.0 * oneMinusT * t) + controls[2] * (t * t);
+      const double oneMinusT = 1.0 - t;
+      return mapPoint(controls[0] * (oneMinusT * oneMinusT) +
+                      controls[1] * (2.0 * oneMinusT * t) +
+                      controls[2] * (t * t));
     };
-    const std::vector<RS_Vector> samples{pointAt(0), pointAt(.3), pointAt(.7), pointAt(1)};
+    const std::vector<RS_Vector> samples =
+        transformed ? std::vector<RS_Vector>{pointAt(1), pointAt(.7),
+                                             pointAt(.3), pointAt(0)}
+                    : std::vector<RS_Vector>{pointAt(0), pointAt(.3),
+                                             pointAt(.7), pointAt(1)};
+    std::array<RS_Vector, 3> expectedControls;
+    std::transform(controls.begin(), controls.end(), expectedControls.begin(),
+                   mapPoint);
     const auto candidates = LC_ParabolaData::From4Points(samples);
     REQUIRE_FALSE(candidates.empty());
-    const auto candidate = std::find_if(candidates.begin(), candidates.end(), [&](const auto& value) {
-        if (!value.isValid()) return false;
-        const double tolerance = 1e-8;
-        const bool forward = std::equal(value.m_controlPoints.begin(), value.m_controlPoints.end(),
-            controls.begin(), [tolerance](const RS_Vector& actual, const RS_Vector& expected) {
+    const auto candidate = std::find_if(
+        candidates.begin(), candidates.end(), [&](const auto &value) {
+          if (!value.isValid())
+            return false;
+          const double tolerance = std::max(
+              1e-8 * scale,
+              16.0 * std::numeric_limits<double>::epsilon() *
+                  std::max(std::abs(translation.x), std::abs(translation.y)));
+          const bool forward = std::equal(
+              value.m_controlPoints.begin(), value.m_controlPoints.end(),
+              expectedControls.begin(),
+              [tolerance](const RS_Vector &actual, const RS_Vector &expected) {
                 return actual.distanceTo(expected) <= tolerance;
-            });
-        const bool reversed = std::equal(value.m_controlPoints.begin(), value.m_controlPoints.end(),
-            controls.rbegin(), [tolerance](const RS_Vector& actual, const RS_Vector& expected) {
+              });
+          const bool reversed = std::equal(
+              value.m_controlPoints.begin(), value.m_controlPoints.end(),
+              expectedControls.rbegin(),
+              [tolerance](const RS_Vector &actual, const RS_Vector &expected) {
                 return actual.distanceTo(expected) <= tolerance;
-            });
-        return forward || reversed;
-    });
+              });
+          return forward || reversed;
+        });
     REQUIRE(candidate != candidates.end());
 
-    auto* parabola = new LC_Parabola(&f.graphic, *candidate);
+    auto *parabola = new LC_Parabola(&f.graphic, *candidate);
     f.graphic.addEntity(parabola);
-    f.graphic.select(QList<RS_Entity*>{previous}, true);
+    f.graphic.select(QList<RS_Entity *>{previous}, true);
     UpdateSourceProbe update(&f.context);
     update.init(0);
     update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
@@ -1884,35 +1916,41 @@ TEST_CASE("T Trim Two trims a four-point reconstructed parabola with undo and re
     REQUIRE(update.lastReport().updated == 1);
     REQUIRE(previous->isDeleted());
 
-    LC_OffsetCurve* native = nullptr;
-    for (RS_Entity* entity : live(f.graphic)) {
-        if (entity->rtti() != RS2::EntityOffsetCurve) continue;
-        REQUIRE(native == nullptr);
-        native = dynamic_cast<LC_OffsetCurve*>(entity);
+    LC_OffsetCurve *native = nullptr;
+    for (RS_Entity *entity : live(f.graphic)) {
+      if (entity->rtti() != RS2::EntityOffsetCurve)
+        continue;
+      REQUIRE(native == nullptr);
+      native = dynamic_cast<LC_OffsetCurve *>(entity);
     }
     REQUIRE(native);
     REQUIRE(native->sourceDefinition());
-    REQUIRE(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
-    const auto* retainedSource = std::get_if<LC_ParabolaData>(
-        &native->sourceDefinition()->source.value);
+    REQUIRE(native->sourceDefinition()->source.kind() ==
+            LC_OffsetSourceGeometry::Kind::Parabola);
+    const auto *retainedSource =
+        std::get_if<LC_ParabolaData>(&native->sourceDefinition()->source.value);
     REQUIRE(retainedSource);
     for (std::size_t i = 0; i < retainedSource->m_controlPoints.size(); ++i)
-        CHECK(retainedSource->m_controlPoints[i].distanceTo(candidate->m_controlPoints[i]) == 0.0);
+      CHECK(retainedSource->m_controlPoints[i].distanceTo(
+                candidate->m_controlPoints[i]) == 0.0);
 
     const auto breaks = native->getBreakParameters();
     REQUIRE(breaks.size() >= 2);
     const double parameter = (breaks.front() + breaks[1]) * .5;
     const RS_Vector intersection = native->getPointAt(parameter);
     const double step = std::max(1e-7, (breaks[1] - breaks.front()) * 1e-5);
-    RS_Vector tangent = native->getPointAt(parameter + step) - native->getPointAt(parameter - step);
+    RS_Vector tangent = native->getPointAt(parameter + step) -
+                        native->getPointAt(parameter - step);
     REQUIRE(tangent.magnitude() > RS_TOLERANCE);
     tangent /= tangent.magnitude();
     const RS_Vector normal{-tangent.y, tangent.x};
-    constexpr double radius = .1;
+    const double radius = .1 * scale;
     const RS_Vector circleCenter = intersection + tangent * radius;
-    auto* cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
+    auto *cutter =
+        new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
     f.graphic.addEntity(cutter);
-    const RS_Vector nativePick = native->getPointAt(parameter + (breaks[1] - breaks.front()) * .1);
+    const RS_Vector nativePick =
+        native->getPointAt(parameter + (breaks[1] - breaks.front()) * .1);
     const RS_Vector cutterPick = circleCenter + normal * radius;
     const auto nativeBefore = trimGeometry(*native);
     const auto cutterBefore = trimGeometry(*cutter);
@@ -1931,33 +1969,37 @@ TEST_CASE("T Trim Two trims a four-point reconstructed parabola with undo and re
     f.action->click(cutterPick);
     REQUIRE(native->isDeleted());
     REQUIRE(cutter->isDeleted());
-    std::vector<RS_Entity*> fragments;
+    std::vector<RS_Entity *> fragments;
     std::vector<std::string> committed;
-    for (RS_Entity* entity : live(f.graphic)) {
-        if (entity == parabola) continue;
-        fragments.push_back(entity);
-        if (entity->rtti() == RS2::EntitySpline || entity->rtti() == RS2::EntityArc ||
-            entity->rtti() == RS2::EntityLine)
-            committed.push_back(trimGeometry(*entity));
+    for (RS_Entity *entity : live(f.graphic)) {
+      if (entity == parabola)
+        continue;
+      fragments.push_back(entity);
+      if (entity->rtti() == RS2::EntitySpline ||
+          entity->rtti() == RS2::EntityArc || entity->rtti() == RS2::EntityLine)
+        committed.push_back(trimGeometry(*entity));
     }
     auto expected = preview;
     std::sort(committed.begin(), committed.end());
     std::sort(expected.begin(), expected.end());
     CHECK(committed == expected);
-    CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
-        return entity->rtti() == RS2::EntitySpline;
-    }));
+    CHECK(std::any_of(fragments.begin(), fragments.end(),
+                      [](const RS_Entity *entity) {
+                        return entity->rtti() == RS2::EntitySpline;
+                      }));
 
     REQUIRE(f.graphic.undo());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
     CHECK(trimGeometry(*native) == nativeBefore);
     CHECK(trimGeometry(*cutter) == cutterBefore);
-    for (const RS_Entity* fragment : fragments) CHECK(fragment->isDeleted());
+    for (const RS_Entity *fragment : fragments)
+      CHECK(fragment->isDeleted());
     REQUIRE(f.graphic.redo());
     CHECK(native->isDeleted());
     CHECK(cutter->isDeleted());
     for (const RS_Entity* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+  }
 }
 
 TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
