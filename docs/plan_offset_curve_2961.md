@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, pushed PR #3193 head
-`2b3f588b3`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, local tested head
+`bc59d1e6f`, based on pushed PR #3193 head `0da5f0002`; roadmap update pending):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -43,18 +43,19 @@ The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the geometry-only matrix. The more extreme layout
 `{0, 0.98, 0.999, 1}` also runs through worker/cache and persistence matrices.
-One transformed, high-origin profile
-does not recover the known curve at independent points despite fitting the
-four input samples; the oracle rejects it and the downstream lanes skip it.
-This is a test-qualified boundary, not a production reconstruction fix.
+For one transformed, high-origin profile, no candidate recovers the hidden
+generating curve at independent points despite fitting all four input samples.
+The four-point drawing action presents an axis choice when these alternatives
+exist; a regression now follows that user choice and carries the selected
+candidate through worker/cache and persistence. This validates the selected
+candidate, not recovery of an unobservable hidden source curve.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, and independent CAD acceptance
 remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
-Headless ON and OFF passed on exact head `b7d748e03`. At the latest query,
-checks for current plan-only head `2b3f588b3` were still running across
-headless, platform builds, static analysis, and DWG/DXF workflows.
+Headless ON and OFF passed on exact head `b7d748e03`; CI for subsequent heads
+is tracked in the current PR checks.
 On `5391d809c`, the offscreen Qt dialog matrix passes 8,801 assertions / 3
 cases and the live action candidate-filter case passes 148 assertions / 1
 case; these requalify widget semantics but do not close visible desktop
@@ -48992,3 +48993,42 @@ The internal LibreDWG reads, LibreCAD reopen checks, and five-lane native-file
 tests remain valid but are not substitutes for independent semantic CAD
 validation. Do not change geometry or weaken assertions to work around these
 host/tool failures.
+
+## 1472. Carry Axis-picked Dense Parabola Through Worker and Persistence (2026-11-15)
+
+Four points clustered near one endpoint can admit multiple valid parabola
+candidates, and in the recorded high-origin profile neither candidate matches
+the hidden generating curve at independent points. This is an ambiguity of
+the four-point input, not evidence that the draw tool should guess. Its
+four-point action enters `SetAxis` when multiple candidates remain. The new
+action-level regression supplies the transformed points `{0, 0.98, 0.999, 1}`,
+confirms both candidates pass through all four picks, selects an axis, and
+checks that exactly one resulting parabola is created and still interpolates
+the picks.
+
+The worker/cache and five-lane DXF/DWG matrices now use the first valid
+sample-fitting candidate for the specific more-extreme `{0, 0.98, 0.999, 1}`
+high-origin profile instead of omitting that row. The resulting selected
+candidate is carried through both signed offsets, operation-8 validation,
+R14/R2000/R2018 DXF/DWG round-trips, second save/reopen, and LibreDWG parsing.
+This qualifies a user-selectable candidate, not reconstruction of the hidden
+source curve; do not relax the independent-point oracle or claim uniqueness.
+Sections 1468 and 1470 record the earlier skip and are historical; this
+section supersedes that end-to-end omission.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[actions][draw][parabola][four-points][conditioning]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: action-level selection passes 8 assertions / 1 case. The complete
+worker/cache and persistence matrices pass 61,058 assertions / 2 cases,
+including available LibreDWG parsing. Visible desktop and independent CAD
+acceptance remain open.
