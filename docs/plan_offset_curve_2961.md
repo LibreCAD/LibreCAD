@@ -48294,3 +48294,34 @@ Result: 2,352 assertions / 1 Catch2 case passed across eight sign/frame
 combinations and five persistence lanes, including first- and second-pass
 reopen checks. Test commit `a611601dd`; no independent CAD-reader validation
 is implied.
+
+## 1452. Persist Concave Neck-collapse Branches at High Origins (2026-11-15)
+
+Extended the closed linear dumbbell from section 1445 through worker generation
+and two-pass save/reopen at rotations `0` and `0.37` radians and origins `0`
+and `1e9`. Its inward `+0.6` erosion collapses the neck into two branches.
+Each worker branch is matched to direct RegionBoundary materialization by
+endpoints; spline degree, knots, and weights must match, while control points
+allow `0.02` tolerance for recentering and large-coordinate persistence. The
+typed native polyline cache is reconstructed from worker completion in every
+frame.
+
+R14, R2000, and R2018 DXF/DWG files are each reopened twice. With LibreDWG
+available, both DWG versions are independently parsed and must contain two
+SPLINE entities. This proves independent parsing and entity count, not full
+DWG geometry equivalence. The evidence is limited to this linear dumbbell,
+distance, four frames, and file versions; other concave/bulged topologies,
+Trim after neck collapse, broader scale/origin limits, visible GUI, and ODA/
+AutoCAD acceptance remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Worker client transports and persists concave polyline neck-collapse branches' --reporter compact
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests '[lc-offsetcurve][worker-client][polyline][region-boundary]' --reporter compact
+git diff --check
+```
+
+Results: 1,766 assertions / 1 focused case and 5,559 assertions / 5
+RegionBoundary worker-client cases passed. Test commit `ea2a42d76`.
