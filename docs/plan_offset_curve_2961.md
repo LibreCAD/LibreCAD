@@ -48422,3 +48422,36 @@ git diff --check
 Result: 18,910 assertions / 1 generated matrix case passed, including the
 independent retained-geometry oracle and existing Trim, undo/redo, two-pass
 reopen, and optional LibreDWG checks. Test commit `0cc6a43ea`.
+
+## 1456. Independently Validate an Alternate Straight Bow-tie Ordering (2026-11-15)
+
+Added a second exact all-straight `RS_Polyline` bow-tie ordering to the
+RegionBoundary matrix. Its independent reference explicitly splits both
+crossing diagonals at the origin; using the unsplit path would place each
+diagonal's midpoint on the crossing and invalidate midpoint-based fill-sector
+classification. For this profile, distance `1.0` returns one closed cycle for
+growth and two for erosion under both EvenOdd and NonZero fill rules. The
+independent oracle verifies positive orientation, requested-side membership,
+closure, and boundary distance within `1e-6`.
+
+This is another bounded positive geometry profile, not a resolution of the
+separate historical report that an exact bow-tie probe returned
+`AmbiguousTopology`: its vertex list was not recorded alongside that report,
+so equivalence cannot be established. Preserve the report as open until its
+exact input can be reproduced and classified; do not add a broad self-crossing
+refusal or infer general crossing support from this fixture.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Alternate straight bow-tie polylines produce correct region cycles' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][region]' --reporter compact
+git diff --check
+```
+
+Results: the focused case passes 26 assertions / 1 case; the full RegionBoundary
+tag passes 28,884 assertions / 28 cases. This is a test-coverage addition only;
+no production-kernel change was needed for this profile.

@@ -1318,3 +1318,47 @@ TEST_CASE("A dumbbell neck transition is bounded on both sides and refuses its s
     REQUIRE(check.areas.size() == expectedCycles);
     for (const double area : check.areas) CHECK(area > 0.0);
 }
+
+TEST_CASE("Alternate straight bow-tie polylines produce correct region cycles",
+          "[curve-offset][region][polyline][self-crossing]") {
+    const std::vector<RS_Vector> vertices{{-20, -10}, {20, 10}, {-20, 10}, {20, -10}};
+    RS_Polyline source;
+    for (const RS_Vector& point : vertices) source.addVertex(point);
+    source.setClosed(true);
+    source.endPolyline();
+    // Node the independent reference at the self-crossing; otherwise the
+    // midpoint of each diagonal lies exactly at the crossing and is not a
+    // valid point for classifying that edge's adjacent fill sectors.
+    const std::vector<RS_Vector> polygon{{-20, -10}, {0, 0}, {20, 10},
+                                         {-20, 10}, {0, 0}, {20, -10}};
+
+    constexpr double distance = 1.0;
+    for (const LC_CurveFillRule fillRule : {LC_CurveFillRule::EvenOdd, LC_CurveFillRule::NonZero}) {
+        for (const bool grow : {false, true}) {
+            CAPTURE(static_cast<int>(fillRule), grow);
+            LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+            options.mode = LC_CurveOffsetMode::RegionBoundary;
+            options.fillRule = fillRule;
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source,
+                LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                                distance),
+                options, LC_CurveOffset::makeDirectSourceBudget());
+            CAPTURE(static_cast<int>(result.status), result.branches.size(),
+                    static_cast<int>(result.intersectionDiagnostics.failureSite),
+                    static_cast<int>(result.intersectionDiagnostics.stage),
+                    result.intersectionDiagnostics.work.totalBoxPairs,
+                    result.intersectionDiagnostics.work.generatedLeaves);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+            const CycleCheck check = checkCycles(result, polygon, fillRule, distance, grow);
+            CAPTURE(check.worstPoint.x, check.worstPoint.y,
+                    result.branches.front().cubicPieces.front().bezier[0].x,
+                    result.branches.front().cubicPieces.front().bezier[0].y);
+            CHECK(check.closed);
+            CHECK(check.worstDistance < 1e-6);
+            CHECK(check.wrongSide == 0);
+            for (const double area : check.areas) CHECK(area > 0.0);
+        }
+    }
+}
