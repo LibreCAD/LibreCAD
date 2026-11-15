@@ -5773,9 +5773,6 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
-    const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
-        {{{0.0, 0.0}, {10.0, 0.0}}}, {{{1.0, 1e-14}, {1.0, -1e-14}}});
-    REQUIRE(source.isValid());
 
     struct Lane {
         RS2::FormatType format;
@@ -5787,82 +5784,89 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                                      {RS2::FormatDXFRW2018, "r2018.dxf"},
                                      {RS2::FormatDWG2018, "r2018.dwg"}}};
     qint64 requestId = 1;
-    for (const double signedDistance : {0.5, -0.5}) {
-        CAPTURE(signedDistance);
-        const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{source}, signedDistance, 1e-4, false};
-        Receipts generatedReceipts;
-        REQUIRE(owned.get().submit(
-            {token(requestId), Req::GenerateSource{definition, {}}},
-            Client::Mode::Commit, generatedReceipts.into(0)));
-        rt.until([&] { return generatedReceipts.calls[0] != 0; });
-        const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
-        const auto& result = std::get<Reply::Native>(generated.reply().result);
-        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        RS_SplineData cache;
-        REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
-        auto generatedNative = generated.nativeSource(attributes);
-        REQUIRE(generatedNative);
-        REQUIRE(generatedNative->sourceDefinition());
-        CHECK(generatedNative->sourceDefinition()->source.kind() ==
-              LC_OffsetSourceGeometry::Kind::Parabola);
-        exactCache(generatedNative->getData(), cache);
-
-        Receipts validatedReceipts;
-        REQUIRE(owned.get().submit(
-            {token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}},
-            Client::Mode::Commit, validatedReceipts.into(0)));
-        rt.until([&] { return validatedReceipts.calls[0] != 0; });
-        const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
-        auto admitted = validated.nativeValidatedSource(attributes);
-        REQUIRE(admitted);
-        REQUIRE(admitted->sourceDefinition());
-        CHECK(admitted->sourceDefinition()->source.kind() ==
-              LC_OffsetSourceGeometry::Kind::Parabola);
-        exactCache(admitted->getData(), cache);
-
-        RS_Graphic drawing;
-        drawing.initForNewDocument();
-        auto* layer = new RS_Layer("Offset");
-        drawing.addLayer(layer);
-        admitted->setLayer(layer);
-        drawing.addEntity(admitted.release());
-        const auto expectedFingerprint = RS_Spline::geometryFingerprint(cache);
-        for (const Lane& lane : lanes) {
-#ifndef DWGSUPPORT
-            if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
-                continue;
-#endif
-            CAPTURE(lane.extension);
-            const auto path = directory.file(
-                std::to_string(requestId) + "-" + lane.extension);
-            REQUIRE(lc::test::exportDrawing(drawing, path, lane.format));
-            RS_Graphic reopened;
-            REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-            LC_OffsetCurve* reopenedOffset = nullptr;
-            for (RS_Entity* entity : reopened) {
-                if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
-                    continue;
-                REQUIRE(reopenedOffset == nullptr);
-                reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
-            }
-            REQUIRE(reopenedOffset);
-            REQUIRE(reopenedOffset->sourceDefinition());
-            CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
+    for (const double tangentSlope : {0.2, 1e-8, 1e-10, 1e-12, 1e-14}) {
+        CAPTURE(tangentSlope);
+        const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
+            {{{0.0, 0.0}, {10.0, 0.0}}},
+            {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
+        REQUIRE(source.isValid());
+        for (const double signedDistance : {0.5, -0.5}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{source}, signedDistance, 1e-4, false};
+            Receipts generatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId), Req::GenerateSource{definition, {}}},
+                Client::Mode::Commit, generatedReceipts.into(0)));
+            rt.until([&] { return generatedReceipts.calls[0] != 0; });
+            const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+            const auto& result = std::get<Reply::Native>(generated.reply().result);
+            REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+            auto generatedNative = generated.nativeSource(attributes);
+            REQUIRE(generatedNative);
+            REQUIRE(generatedNative->sourceDefinition());
+            CHECK(generatedNative->sourceDefinition()->source.kind() ==
                   LC_OffsetSourceGeometry::Kind::Parabola);
-            CHECK(reopenedOffset->sourceDefinition()->signedDistance == signedDistance);
-            CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) ==
-                  expectedFingerprint);
-            const auto* reopenedSource = std::get_if<LC_ParabolaData>(
-                &reopenedOffset->sourceDefinition()->source.value);
-            REQUIRE(reopenedSource);
-            CHECK(reopenedSource->m_controlPoints[0].distanceTo(source.m_controlPoints[0]) < 1e-12);
-            CHECK(reopenedSource->m_controlPoints[2].distanceTo(source.m_controlPoints[2]) < 1e-12);
-            CHECK(std::abs(reopenedSource->m_controlPoints[1].y -
-                           source.m_controlPoints[1].y) < 5e-20);
+            exactCache(generatedNative->getData(), cache);
+
+            Receipts validatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}},
+                Client::Mode::Commit, validatedReceipts.into(0)));
+            rt.until([&] { return validatedReceipts.calls[0] != 0; });
+            const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+            auto admitted = validated.nativeValidatedSource(attributes);
+            REQUIRE(admitted);
+            REQUIRE(admitted->sourceDefinition());
+            CHECK(admitted->sourceDefinition()->source.kind() ==
+                  LC_OffsetSourceGeometry::Kind::Parabola);
+            exactCache(admitted->getData(), cache);
+
+            RS_Graphic drawing;
+            drawing.initForNewDocument();
+            auto* layer = new RS_Layer("Offset");
+            drawing.addLayer(layer);
+            admitted->setLayer(layer);
+            drawing.addEntity(admitted.release());
+            const auto expectedFingerprint = RS_Spline::geometryFingerprint(cache);
+            for (const Lane& lane : lanes) {
+#ifndef DWGSUPPORT
+                if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                    continue;
+#endif
+                CAPTURE(lane.extension);
+                const auto path = directory.file(
+                    std::to_string(requestId) + "-" + lane.extension);
+                REQUIRE(lc::test::exportDrawing(drawing, path, lane.format));
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                LC_OffsetCurve* reopenedOffset = nullptr;
+                for (RS_Entity* entity : reopened) {
+                    if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
+                        continue;
+                    REQUIRE(reopenedOffset == nullptr);
+                    reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
+                }
+                REQUIRE(reopenedOffset);
+                REQUIRE(reopenedOffset->sourceDefinition());
+                CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
+                      LC_OffsetSourceGeometry::Kind::Parabola);
+                CHECK(reopenedOffset->sourceDefinition()->signedDistance == signedDistance);
+                CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) ==
+                      expectedFingerprint);
+                const auto* reopenedSource = std::get_if<LC_ParabolaData>(
+                    &reopenedOffset->sourceDefinition()->source.value);
+                REQUIRE(reopenedSource);
+                CHECK(reopenedSource->m_controlPoints[0].distanceTo(source.m_controlPoints[0]) < 1e-12);
+                CHECK(reopenedSource->m_controlPoints[2].distanceTo(source.m_controlPoints[2]) < 1e-12);
+                CHECK(std::abs(reopenedSource->m_controlPoints[1].y -
+                               source.m_controlPoints[1].y) < 5e-20);
+            }
+            requestId += 2;
         }
-        requestId += 2;
     }
 }
 
