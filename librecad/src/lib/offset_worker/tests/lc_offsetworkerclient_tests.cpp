@@ -6025,9 +6025,11 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
 
     const std::array<RS_Vector, 3> controls{{
         {-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
-    constexpr std::array<std::array<double, 4>, 2> layouts{{
+    constexpr std::array<std::array<double, 4>, 4> layouts{{
         {{0.1, 0.3, 0.7, 0.9}},
         {{0.05, 0.2, 0.65, 0.95}},
+        {{0.02, 0.31, 0.68, 0.98}},
+        {{0.1, 0.45, 0.46, 0.9}},
     }};
     constexpr std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
     constexpr double scale = 1e-1;
