@@ -745,7 +745,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     const unsigned fitPointVariant = kind == SourceKind::SplinePoints
         ? GENERATE(0u, 1u, 2u, 3u) : 0u;
     const unsigned parabolaVariant = kind == SourceKind::Parabola
-        ? GENERATE(0u, 1u, 2u, 3u, 4u, 5u) : 0u;
+        ? GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u) : 0u;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -784,7 +784,31 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         : sourceGeometry(kind);
     if (kind == SourceKind::Parabola && parabolaVariant != 0) {
         std::array<RS_Vector, 3> controls{{{-1.3, 1.0}, {0.25, -0.7}, {1.2, 1.4}}};
-        if (parabolaVariant == 2) {
+        if (parabolaVariant == 6) {
+            const std::array<RS_Vector, 3> clusteredControls{{{-2.0, 1.0}, {0.0, -1.0}, {2.0, 1.0}}};
+            const auto pointAt = [&](const double t) {
+                const double mt = 1.0 - t;
+                return clusteredControls[0] * (mt * mt) +
+                       clusteredControls[1] * (2.0 * mt * t) +
+                       clusteredControls[2] * (t * t);
+            };
+            std::vector<RS_Vector> samples;
+            for (const double t : {0.0, 0.95, 0.995, 1.0})
+                samples.push_back(pointAt(t));
+            const auto candidates = LC_ParabolaData::From4Points(samples);
+            const std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
+            const auto candidate = std::find_if(candidates.begin(), candidates.end(),
+                [&](const LC_ParabolaData& value) {
+                    if (!value.isValid()) return false;
+                    return std::all_of(independentParameters.begin(), independentParameters.end(),
+                        [&](const double t) {
+                            const RS_Vector expected = pointAt(t);
+                            return value.fromX(value.findX(expected)).distanceTo(expected) < 1e-8;
+                        });
+                });
+            REQUIRE(candidate != candidates.end());
+            sourceData = LC_OffsetSourceGeometry{*candidate};
+        } else if (parabolaVariant == 2) {
             controls = {{{-1.0, 1.0}, {0.0, -1.0}, {1.0, 1.0}}};
             constexpr double scale = 0.7;
             constexpr double angle = 0.41;
