@@ -9919,7 +9919,7 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         auto source = sourceGeometry.makeEntity();
         REQUIRE(source);
         const LC_OffsetSourceDefinition inward{sourceGeometry, -.25, 1e-4, false};
-        const auto orientation = LC_OffsetWorkerTolerance::strictConvexPolylineOrientation(
+        const auto orientation = LC_OffsetWorkerTolerance::simpleClosedPolylineOrientation(
             inward, *source);
         REQUIRE(orientation);
         CHECK(*orientation == -1.0);
@@ -9944,7 +9944,7 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         const auto* sourceData = std::get_if<LC_OffsetPolylineData>(&sourceGeometry.value);
         REQUIRE(sourceData);
         recentered->move({-sourceData->startpoint.x, -sourceData->startpoint.y});
-        const auto recenteredOrientation = LC_OffsetWorkerTolerance::strictConvexPolylineOrientation(
+        const auto recenteredOrientation = LC_OffsetWorkerTolerance::simpleClosedPolylineOrientation(
             inward, *recentered);
         REQUIRE(recenteredOrientation);
         CHECK(*recenteredOrientation == -1.0);
