@@ -48395,3 +48395,28 @@ Results: the threshold matrix passes 17 assertions / 1 generated case; the
 concave-polyline RegionBoundary subset passes 135 assertions / 4 cases. Test
 commit `b511761b5`. Other neck widths/topologies and end-to-end qualification
 at these exact boundary distances remain open.
+
+## 1455. Independently Check Trimmed Dumbbell Fragments (2026-11-15)
+
+Strengthened section 1453's dumbbell Trim matrix with an independent local-frame
+oracle. For every prepared ordinary fragment in the `+0.6` neck-collapse case,
+64 samples must remain inside the original dumbbell and within `0.02` of the
+exact `0.6` distance to its original straight boundary. This checks retained
+Trim geometry rather than only comparing the action/export output against the
+same preparation result. The check runs across the existing two origins, two
+rotations, and five DXF/DWG version lanes. It qualifies this linear dumbbell
+profile only; other lobe/neck layouts, curved boundaries, and independent CAD
+rendering remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'High-origin concave polyline offsets trim and persist ordinary fragments' --reporter compact
+git diff --check
+```
+
+Result: 18,910 assertions / 1 generated matrix case passed, including the
+independent retained-geometry oracle and existing Trim, undo/redo, two-pass
+reopen, and optional LibreDWG checks. Test commit `0cc6a43ea`.
