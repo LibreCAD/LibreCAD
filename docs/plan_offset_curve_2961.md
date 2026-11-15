@@ -51242,3 +51242,50 @@ git diff --check
 Result: build passes; the persistence and LibreDWG inspection matrix passes
 27,849 assertions / 1 case. Other source layouts/frames, visible desktop
 acceptance, and ODA/AutoCAD acceptance remain open.
+
+## 1542. Qualify a Second Interior Parabola Sample Layout (2026-11-15)
+
+Test commit `5adc06ded` adds the second four-point layout
+`{0.05, 0.2, 0.65, 0.95}` alongside the balanced layout from sections
+1536-1541. Direct reconstruction now checks every permutation of both layouts
+across the existing three profiles and four scales in the rotated
+`(1e6,-2e6)` frame, with independent-point error checks. The worker/cache and
+five-format persistence matrix checks every permutation of both layouts for
+both signed offsets at one representative profile, scale, and frame; each
+case validates typed-source identity/cache admission, R14 DXF, R2000 DXF/DWG,
+R2018 DXF/DWG, second-save reopen, and optional LibreDWG `minJSON` reads for
+both DWG versions. This broadens measured interior sample-layout coverage but
+does not qualify arbitrary sample distributions or multiply worker/persistence
+coverage across all profiles, scales, and frames.
+
+The source-widget request is already addressed by section 1532: all nine
+supported source kinds, including parabola as a distinct selector choice, are
+selectable, and successful replacement/highlight transfer is covered for
+every kind. That headless contract remains separate from visible packaged-app
+acceptance; independent ODA/AutoCAD acceptance also remains open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][permutation]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][permutation][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+Results: build passes; focused direct permutation reconstruction passes 1,728
+assertions / 1 case; full parabola reconstruction passes 4,649 assertions / 12
+cases; worker/cache, five-format persistence, and LibreDWG inspection pass
+56,109 assertions / 1 case. DWG `fixed-handle=2` raw OBJECTS replay diagnostics
+remain unrelated to typed-source assertions. More sample layouts/frames,
+visible desktop acceptance, and ODA/AutoCAD acceptance remain open.
