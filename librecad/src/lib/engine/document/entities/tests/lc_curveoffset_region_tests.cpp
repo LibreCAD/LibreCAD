@@ -448,7 +448,6 @@ TEST_CASE("Mixed line and arc bow-tie regions use exact arc noding",
 
 TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checked",
           "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
-    std::array<LC_CurveOffsetGeometryResult, 2> identityGrowth;
     for (const int frame : {0, 1, 2, 3}) {
         RS_Polyline source;
         source.addVertex({20, 10});
@@ -479,62 +478,16 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                         static_cast<int>(result.intersectionDiagnostics.status),
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
-                const bool expectedSuccess = !(frame == 3 && grow);
-                if (expectedSuccess) {
-                    CHECK(result.intersectionDiagnostics.failureSite ==
-                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
-                    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-                    REQUIRE(result.branches.size() == (grow ? 1u : 2u));
-                    if (frame == 0 && grow) {
-                        const std::size_t ruleIndex = rule == LC_CurveFillRule::NonZero ? 0u : 1u;
-                        identityGrowth[ruleIndex] = result;
-                    }
-                    const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
-                    CHECK(check.closed);
-                    CHECK(check.worstDistance < 0.04);
-                    CHECK(check.wrongSide == 0);
-                    REQUIRE(check.areas.size() == result.branches.size());
-                    for (const double area : check.areas) CHECK(area > 0.0);
-                } else {
-                    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-                    CHECK(result.intersectionDiagnostics.failureSite ==
-                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
-                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::OpenBoundary);
-                    CAPTURE(result.intersectionDiagnostics.cycleAssemblyEndpointGap);
-                    CAPTURE(result.intersectionDiagnostics.cycleAssemblyOpenEnd);
-                    CAPTURE(result.intersectionDiagnostics.cycleAssemblyNearestStart);
-                    CAPTURE(result.intersectionDiagnostics.cycleAssemblyOpenSourceSpan);
-                    CAPTURE(result.intersectionDiagnostics.cycleAssemblyNearestSourceSpan);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyEndpointGap > 0.5);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyOpenSourceSpan == 1);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyNearestSourceSpan == 0);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyOpenEnd.y < -2000000.0);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyNearestStart.y < -2000000.0);
-                    CHECK(result.branches.empty());
-                    const std::size_t ruleIndex = rule == LC_CurveFillRule::NonZero ? 0u : 1u;
-                    REQUIRE(identityGrowth[ruleIndex].status == LC_CurveOffsetStatus::Ok);
-                    LC_CurveOffsetGeometryResult transformedReference = identityGrowth[ruleIndex];
-                    const double cosine = std::cos(M_PI / 7.0);
-                    const double sine = std::sin(M_PI / 7.0);
-                    for (LC_OffsetBranch& branch : transformedReference.branches) {
-                        for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                            for (RS_Vector& point : piece.bezier) {
-                                const double x = point.x * cosine - point.y * sine;
-                                const double y = point.x * sine + point.y * cosine;
-                                point.x = x + 123.25;
-                                point.y = y - 2000000.5;
-                            }
-                        }
-                    }
-                    const CycleCheck referenceCheck = checkCycles(
-                        transformedReference, polygon, rule, 0.5, true, true);
-                    CHECK(referenceCheck.closed);
-                    CHECK(referenceCheck.worstDistance < 0.04);
-                    CHECK(referenceCheck.wrongSide == 0);
-                    REQUIRE(referenceCheck.areas.size() == 1);
-                    CHECK(referenceCheck.areas.front() > 0.0);
-                }
+                CHECK(result.intersectionDiagnostics.failureSite ==
+                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+                const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
+                CHECK(check.closed);
+                CHECK(check.worstDistance < 0.04);
+                CHECK(check.wrongSide == 0);
+                REQUIRE(check.areas.size() == result.branches.size());
+                for (const double area : check.areas) CHECK(area > 0.0);
                 CHECK(source.getVertexes().size() == originalVertices.size());
                 for (int i = 0; i < originalVertices.size(); ++i) {
                     CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
@@ -754,8 +707,7 @@ TEST_CASE("Negative-bulge bow-tie frames return checked cycles or atomic refusal
                         static_cast<int>(result.intersectionDiagnostics.status),
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB);
-                const bool expectedSuccess = frame != 3 || !grow;
-                CHECK((result.status == LC_CurveOffsetStatus::Ok) == expectedSuccess);
+                CHECK(result.status == LC_CurveOffsetStatus::Ok);
                 if (result.status == LC_CurveOffsetStatus::Ok) {
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);

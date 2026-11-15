@@ -6853,6 +6853,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     // 4. candidates: the boundary fragments' offsets outwards or inwards, and circles about the nodes
     struct Candidate {
         std::unique_ptr<RestrictedSource> part;
+        double sourceStart{0.0};
+        double sourceEnd{0.0};
         double signedDistance;
         bool reverse; // runs with the region on its right
         std::vector<LC_OffsetBranch> branches;
@@ -6871,6 +6873,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         for (const auto& [a, b] : stretches) {
             Candidate candidate;
             candidate.part = std::make_unique<RestrictedSource>(source, a, b);
+            candidate.sourceStart = a;
+            candidate.sourceEnd = b;
             // outward is right of a boundary with the region on its left
             candidate.signedDistance = (dilate == fragment.regionOnLeft) ? -magnitude : magnitude;
             candidate.reverse = !fragment.regionOnLeft;
@@ -7197,6 +7201,44 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         place(x.branchA, x.parameterA, x.point);
         place(x.branchB, x.parameterB, x.point);
         boundaries.push_back(x.point);
+    }
+    // A boundary offset ends on the radius-|d| circle at a source node by
+    // construction. Preserve that endpoint as a circle cut even when exact
+    // primitive noding loses a near-tangent contact to round-off.
+    for (const Candidate& candidate : candidates) {
+        for (const LC_OffsetBranch& branch : candidate.branches) {
+            if (branch.cubicPieces.empty()) continue;
+            const std::array<std::pair<double, RS_Vector>, 2> endpoints{{
+                {candidate.sourceStart, branch.cubicPieces.front().bezier[0]},
+                {candidate.sourceEnd, branch.cubicPieces.back().bezier[3]}}};
+            for (const auto& [parameter, point] : endpoints) {
+                LC_CurveJet sourceJet;
+                if (!source.jet(parameter, LC_CurveEvaluationSide::Interior, sourceJet)) continue;
+                for (std::size_t n = 0; n < nodes.size(); ++n) {
+                    if (sourceJet.point.distanceTo(nodes[n]) > options.tolerance.nodeMerge ||
+                        std::abs(point.distanceTo(nodes[n]) - magnitude) > options.tolerance.nodeMerge) {
+                        continue;
+                    }
+                    const double angle = std::atan2(point.y - nodes[n].y, point.x - nodes[n].x);
+                    auto& cuts = arcCuts[n];
+                    auto nearest = cuts.end();
+                    double nearestDistance = options.tolerance.nodeMerge;
+                    for (auto at = cuts.begin(); at != cuts.end(); ++at) {
+                        const double gap = at->second.distanceTo(point);
+                        if (gap <= nearestDistance) {
+                            nearestDistance = gap;
+                            nearest = at;
+                        }
+                    }
+                    if (nearest == cuts.end()) {
+                        cuts.emplace_back(angle, point);
+                    } else if (nearestDistance > options.tolerance.evaluation) {
+                        nearest->first = angle;
+                        nearest->second = point;
+                    }
+                }
+            }
+        }
     }
     for (size_t c = 0; c < candidates.size(); ++c) {
         const LC_CurveOffsetStatus status = insertOccurrences(*candidates[c].part, *offsetCurves[c],
