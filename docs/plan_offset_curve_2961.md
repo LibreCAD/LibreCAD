@@ -175,10 +175,11 @@ Investigate the refusal/scale interaction before claiming it is trim-capable;
 do not loosen certified-intersection or fail-closed behavior to force a result.
 
 Validation on macOS arm64 CMake Release: the focused action case passes 191
-assertions / 1 case, and `git diff --check` passes. The next geometry work
-continues with additional parabola variants and conditioning limits; visible
-desktop interaction and independent CAD acceptance remain open as stated
-above.
+assertions / 1 case; the full typed-parabola Trim Two selection passes 34,196
+assertions / 5 cases, including its DXF/DWG lanes; and `git diff --check`
+passes. The next geometry work continues with additional parabola variants
+and conditioning limits; visible desktop interaction and independent CAD
+acceptance remain open as stated above.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
