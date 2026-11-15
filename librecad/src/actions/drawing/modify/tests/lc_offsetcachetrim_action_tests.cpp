@@ -1852,8 +1852,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     bool denseEnd;
     unsigned profile;
     bool expectLimitRefusal;
+    bool allowAmbiguousCandidate = false;
   };
-  const std::array<Frame, 33> frames{{
+  const std::array<Frame, 36> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1887,11 +1888,15 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e-5, 0.0, {}, false, true, 2, false},
       {1e-4, 0.0, {}, false, true, 2, false},
       {1e6, 0.0, {}, false, true, 2, false},
+      {1e-2, 0.6435011088, {1e5, -2e5}, true, true, 0, false, true},
+      {1e-2, 0.6435011088, {1e5, -2e5}, true, true, 1, false, true},
+      {1e-2, 0.6435011088, {1e5, -2e5}, true, true, 2, false, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
             frame.translation.y, frame.reversed, frame.denseEnd,
-            frame.profile, frame.expectLimitRefusal);
+            frame.profile, frame.expectLimitRefusal,
+            frame.allowAmbiguousCandidate);
     const double scale = frame.scale;
     const double angle = frame.angle;
     const RS_Vector translation = frame.translation;
@@ -1902,10 +1907,16 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
              translation;
     };
     Drawing<true> f;
-    if (translation.x == 0.0 && translation.y == 0.0) {
-      const double zoom = 15.0 / scale;
+    const double zoom = 15.0 / scale;
+    const double viewportX = 320.0 - translation.x * zoom;
+    const double viewportY = 240.0 - translation.y * zoom;
+    if (viewportX >= std::numeric_limits<int>::min() &&
+        viewportX <= std::numeric_limits<int>::max() &&
+        viewportY >= std::numeric_limits<int>::min() &&
+        viewportY <= std::numeric_limits<int>::max()) {
       f.view.getViewPort()->setSize(640, 480);
-      f.view.getViewPort()->setOffsetAndFactor(320, 240, zoom);
+      f.view.getViewPort()->setOffsetAndFactor(qRound(viewportX),
+                                                qRound(viewportY), zoom);
     }
     RS_Ellipse seed(nullptr,
                     RS_EllipseData{{0, 0}, {scale, 0}, 1, 0, .1, false});
@@ -1944,17 +1955,22 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     const auto candidates = LC_ParabolaData::From4Points(samples);
     REQUIRE_FALSE(candidates.empty());
     const std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
-    const auto candidate = std::find_if(
+    auto candidate = std::find_if(
         candidates.begin(), candidates.end(), [&](const auto &value) {
           if (!value.isValid())
             return false;
           if (frame.denseEnd) {
+            const double tolerance = std::max(
+                1e-8 * scale,
+                16.0 * std::numeric_limits<double>::epsilon() *
+                    std::max(std::abs(translation.x),
+                             std::abs(translation.y)));
             return std::all_of(
                 independentParameters.begin(), independentParameters.end(),
                 [&](const double t) {
                   const RS_Vector expected = pointAt(t);
                   return value.fromX(value.findX(expected)).distanceTo(expected) <=
-                         1e-8 * scale;
+                         tolerance;
                 });
           }
           const double tolerance = std::max(
@@ -1975,6 +1991,22 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
               });
           return forward || reversed;
         });
+    if (candidate == candidates.end() && frame.allowAmbiguousCandidate) {
+      const double tolerance = std::max(
+          1e-8 * scale,
+          16.0 * std::numeric_limits<double>::epsilon() *
+              std::max(std::abs(translation.x), std::abs(translation.y)));
+      candidate = std::find_if(
+          candidates.begin(), candidates.end(), [&](const auto &value) {
+            if (!value.isValid())
+              return false;
+            return std::all_of(samples.begin(), samples.end(),
+                [&](const RS_Vector &sample) {
+                  return value.fromX(value.findX(sample)).distanceTo(sample) <=
+                         tolerance;
+                });
+          });
+    }
     REQUIRE(candidate != candidates.end());
 
     auto *parabola = new LC_Parabola(&f.graphic, *candidate);
