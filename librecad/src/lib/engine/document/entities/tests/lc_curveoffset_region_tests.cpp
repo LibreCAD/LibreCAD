@@ -537,7 +537,8 @@ TEST_CASE("Rotated mixed-bulge endpoint recovery respects the intersection work 
                 CHECK((phases.exactPrimitiveNoding || !phases.intervalFallback));
                 if (phases.intervalFallback) ++fallbackCells;
             }
-            CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
+            CHECK(result.intersectionDiagnostics.work.totalBoxPairs +
+                      result.intersectionDiagnostics.nodeMatchComparisons <= limit);
             CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
             if (result.status == LC_CurveOffsetStatus::Ok) {
                 ++successfulLimits;
@@ -598,7 +599,8 @@ TEST_CASE("Negative-bulge RegionBoundary obeys the shared intersection work cap"
                               result.intersectionDiagnostics.work.generatedItems);
                         CHECK((phases.exactPrimitiveNoding || !phases.intervalFallback));
                     }
-                    CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
+                    CHECK(result.intersectionDiagnostics.work.totalBoxPairs +
+                              result.intersectionDiagnostics.nodeMatchComparisons <= limit);
                     CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
                     if (result.status == LC_CurveOffsetStatus::Ok) {
                         REQUIRE(result.branches.size() == (grow ? 1u : 2u));
@@ -656,7 +658,8 @@ TEST_CASE("Positive-bulge RegionBoundary obeys the shared work cap across frames
                               result.intersectionDiagnostics.work.generatedItems);
                         CHECK((phases.exactPrimitiveNoding || !phases.intervalFallback));
                     }
-                    CHECK(result.intersectionDiagnostics.work.totalBoxPairs <= limit);
+                    CHECK(result.intersectionDiagnostics.work.totalBoxPairs +
+                              result.intersectionDiagnostics.nodeMatchComparisons <= limit);
                     CHECK(result.intersectionDiagnostics.work.generatedItems <= 65536);
                     if (result.status == LC_CurveOffsetStatus::Ok) {
                         REQUIRE(result.branches.size() == (grow ? 1u : 2u));

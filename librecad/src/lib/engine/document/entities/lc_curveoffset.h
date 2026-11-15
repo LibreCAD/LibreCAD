@@ -296,7 +296,7 @@ struct LC_CurveOffsetGeometryResult {
         bool hasFailureDomain{false};
         LC_IntersectionDomain failureDomain{};
         unsigned failureDepth{0};
-        /** Materialized crossing-to-node comparisons, sharing maxIntersectionPairs with work.totalBoxPairs. */
+        /** Noding endpoint/crossing-to-node comparisons, sharing maxIntersectionPairs with work.totalBoxPairs. */
         std::size_t nodeMatchComparisons{0};
     } intersectionDiagnostics;
     /**

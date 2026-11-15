@@ -7202,6 +7202,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         place(x.branchB, x.parameterB, x.point);
         boundaries.push_back(x.point);
     }
+    result.intersectionDiagnostics.nodeMatchComparisons = 0;
     // A boundary offset ends on the radius-|d| circle at a source node by
     // construction. Preserve that endpoint as a circle cut even when exact
     // primitive noding loses a near-tangent contact to round-off.
@@ -7215,6 +7216,14 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 LC_CurveJet sourceJet;
                 if (!source.jet(parameter, LC_CurveEvaluationSide::Interior, sourceJet)) continue;
                 for (std::size_t n = 0; n < nodes.size(); ++n) {
+                    const std::size_t usedPairs = found.work.totalBoxPairs;
+                    if (usedPairs >= query.maxBoxPairs ||
+                        result.intersectionDiagnostics.nodeMatchComparisons >= query.maxBoxPairs - usedPairs) {
+                        result.intersectionDiagnostics.status = LC_IntersectionStatus::LimitExceeded;
+                        result.intersectionDiagnostics.failureSite = FailureSite::CandidateArrangement;
+                        return LC_CurveOffsetStatus::LimitExceeded;
+                    }
+                    ++result.intersectionDiagnostics.nodeMatchComparisons;
                     if (sourceJet.point.distanceTo(nodes[n]) > options.tolerance.nodeMerge ||
                         std::abs(point.distanceTo(nodes[n]) - magnitude) > options.tolerance.nodeMerge) {
                         continue;
