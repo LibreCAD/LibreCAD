@@ -23,11 +23,10 @@
 # Submits an MSIX bundle built by "Continuous build" to the Microsoft Store.
 #
 # The Store signs a submission after certification, so the bundle this takes
-# is deliberately unsigned.  Submitting is a manual dispatch: every run creates
-# a Store submission that goes through certification, which can take up to
-# three business days, and a product has only one submission in progress at a
-# time.  The first submission of a product is made by hand in Partner Center;
-# msstore only updates a product that is already published.
+# is deliberately unsigned. Each successful master build triggers a Store
+# submission, which can take up to three business days; only one submission
+# can be in progress at a time. The first submission is made by hand in
+# Partner Center.
 #
 # Setup, and what a run does to the product in Partner Center:
 # docs/development/msix-store.md.
@@ -35,6 +34,10 @@
 name: Submit MSIX to Microsoft Store
 
 on:
+  workflow_run:
+    workflows: ["Continuous build"]
+    types: [completed]
+    branches: [master]
   workflow_dispatch:
     inputs:
       run_id:
@@ -62,7 +65,14 @@ permissions:
 
 jobs:
   submit:
-    if: github.repository_owner == 'LibreCAD'
+    if: >-
+      github.repository_owner == 'LibreCAD' &&
+      ((github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.head_branch == 'master' &&
+        github.event.workflow_run.head_repository.full_name == github.repository) ||
+       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master'))
     runs-on: windows-2022
     environment: microsoft-store
     # The commit can stay at CommitStarted for over an hour (msstore-cli#29).
@@ -127,7 +137,7 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ inputs.run_id }}
+          RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
 
       - name: Check the App Certification Kit report
         run: |
@@ -308,4 +318,4 @@ jobs:
         shell: pwsh
         env:
           NO_COMMIT: ${{ inputs.no_commit }}
-          RUN_ID: ${{ inputs.run_id }}
+          RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
