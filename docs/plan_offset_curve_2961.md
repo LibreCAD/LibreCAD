@@ -48200,13 +48200,10 @@ Extended the simple concave mixed-bulge fixture through the helper-process
 worker and native-source completion path for the inward `RegionBoundary`
 orientation. Worker geometry matches direct RegionBoundary materialization;
 the resulting typed polyline source/cache survives two-pass save/reopen in
-R14, R2000, and R2018 DXF/DWG. The outward Direct result remains an ordinary
-output rather than an automatically promoted native offset for this profile;
-the separate operation-8 test checks both signs, but that is not evidence of
-native generation or persistence on the outward side. The tested arc bulges,
-distance, and local frame are representative only; external CAD-reader
-acceptance, transformed/high-origin cases, and other mixed-arc topologies
-remain open.
+R14, R2000, and R2018 DXF/DWG. This initial evidence covered only the inward
+`RegionBoundary` orientation; section 1451 supersedes that scope with both
+signed orientations and transformed/high-origin cases. Other mixed-arc
+topologies and external CAD-reader acceptance remain open.
 
 Validation on macOS arm64 CMake Release:
 
@@ -48249,14 +48246,10 @@ Results: 336 assertions / 1 eight-lane frame-matrix case and 397 assertions /
 
 ## 1450. Persist Mixed-bulge Native Offsets at Large Origins (2026-11-15)
 
-Extended section 1448's inward mixed-bulge worker/client persistence fixture
-to local and `1e9` origins, each at `0` and `0.37` radians. All four cases
-exercise helper-process generation, direct-versus-worker geometry comparison,
-native source/cache reconstruction, and two-pass R14/R2000/R2018 DXF/DWG
-save/reopen. Exact knot and weight data must match; control points allow the
-same `0.02` coordinate tolerance required by the recentered large-origin
-kernel comparison. This is inward-only for this mixed-arc profile; outward
-native generation and external CAD-reader validation remain open.
+Extended section 1448's mixed-bulge worker/client persistence fixture to local
+and `1e9` origins, each at `0` and `0.37` radians. At the time, this covered
+only inward offsets; section 1451 supersedes it with both signed distances.
+External CAD-reader validation remains open.
 
 Validation on macOS arm64 CMake Release:
 
@@ -48269,3 +48262,35 @@ git diff --check
 Result: 1,156 assertions / 1 Catch2 case passed across four transforms and
 twenty format lanes, with first- and second-pass reopen checks. Regression-test
 commit `25701057a`.
+
+## 1451. Persist Both Mixed-bulge Offset Orientations Across Frames (2026-11-15)
+
+Expanded the section 1450 persistence case to both signed distances (`-0.25`
+and `+0.25`) for each of four source frames: local, rotated, translated to
+`1e9`, and rotated at `1e9`. The inward orientation is routed through
+`RegionBoundary`; the outward orientation uses `Direct`. In every lane, worker
+completion can reconstruct a typed polyline source/cache, including the
+outward case whose initial `GenerateSource` result reports
+`NotCacheRepresentable`. This demonstrates that completion's native-source
+reconstruction is the relevant persistence contract, not that initial
+refusal code alone.
+
+The test compares worker output to direct geometry, then performs two-pass
+save/reopen for R14, R2000, and R2018 DXF/DWG. Knot and weight data are exact;
+control points allow `0.02` tolerance for large-origin recentering. This
+qualifies one low-curvature mixed-bulge topology at the tested distances and
+frames only. More mixed-arc arrangements, external CAD-reader acceptance, and
+visible GUI acceptance remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Worker client persists concave mixed-bulge native offsets' --reporter compact
+git diff --check
+```
+
+Result: 2,352 assertions / 1 Catch2 case passed across eight sign/frame
+combinations and five persistence lanes, including first- and second-pass
+reopen checks. Test commit `a611601dd`; no independent CAD-reader validation
+is implied.
