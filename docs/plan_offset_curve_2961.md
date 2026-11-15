@@ -46969,3 +46969,18 @@ assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
 --target librecad_tests -j4` succeeds; and `git diff --check` passes. Other
 hyperbola domains, visible GUI, cross-platform runtime, and independent CAD
 acceptance remain open.
+
+## 1397. Qualify Transformed Asymmetric Reversed Hyperbola Trim Two (2026-11-15)
+
+Test commit `9f612173b` expands the worker-created typed-hyperbola Trim Two
+matrix with an asymmetric reversed parameter interval `1.4` to `-0.7`, centered
+at `(12,-8)` with a major axis rotated by `0.31` radians. It runs for both
+bounded branches and both pick orders, retaining preview/commit parity,
+undo/redo, and five DXF/DWG save/reopen lanes. This is one translated, rotated,
+asymmetric reversed-domain profile; it does not establish arbitrary hyperbola
+domains, frames, cutters, or numerical limits.
+
+Validation on macOS arm64 CMake Release: the focused case passes 6,838
+assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. Visible
+GUI, cross-platform runtime, and independent CAD acceptance remain open.
