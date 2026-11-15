@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`54387f543`; exact PR head `5d7f82ba9`):** The
+`1a3fdba42`; exact PR head `41d18bb03`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -56,6 +56,16 @@ Section 1511 measures the same opposite-end clustered profile at source scales
 `1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
 across that scale matrix, while sample-fitting user-selected candidates are a
 separate worker/cache/persistence claim.
+Sections 1516-1523 now extend this exact opposite-end layout to all three
+recorded control profiles under the rotated `(1e6,-2e6)` frame. Direct
+reconstruction and worker/cache cover scales `1e-3`, `1e-2`, `1e-1`, and `1`
+for all three profiles; Trim Two, undo/redo, and five-format file round-trips
+also pass at those four scales for all three profiles. Separately, the
+real-worker typed-source persistence matrix is narrower: profiles 0 and 1 are
+persisted at `1e-1`, while profile 2 adds `1e-2` and `1e-1`; do not infer
+typed-source persistence at the other profile/scale pairs. When no candidate
+qualifies against independent points, tests select a sample-fitting
+alternative; that does not recover the hidden generating curve.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
