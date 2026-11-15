@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`2a4b111ca`):** The
+`bbcd9774c`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -76,6 +76,10 @@ nine family filters, then the visible source highlight follows a successful
 worker-backed replacement from a line to a parabola. The new cross-family
 completion gate in section 1532 extends the replacement/highlight transition
 to every supported kind; selector inventory alone is not that evidence.
+Section 1533 adds a balanced interior four-point parabola layout to direct
+reconstruction, a representative transformed worker/cache and five-format
+persistence row, and Trim Two with undo/redo. This is one additional bounded
+sample distribution, not arbitrary four-point reconstruction support.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -51005,3 +51009,52 @@ Results: build passes; the focused all-family transition passes 320 assertions
 Visible packaged-app interaction and independent CAD acceptance remain open.
 The source-widget implementation is not currently identified as missing;
 end-to-end geometry-family qualifications remain tracked separately.
+
+## 1533. Qualify a Balanced Interior Parabola Sample Layout (2026-11-15)
+
+Test commit `bbcd9774c` adds the four-point sample parameters
+`{0.1, 0.3, 0.7, 0.9}`. Direct `From4Points` reconstruction now checks the
+layout under the existing scale matrix and the rotated `(1e6,-2e6)` frame for
+all three control profiles, including reversed input order and independent
+points. The worker/cache matrix carries it at the representative large-origin
+frame for profile 0 and scale `1e-1`; the five-format source-persistence matrix
+checks both signed offsets and two save/reopen passes for that same frame.
+Trim Two adds the corresponding reversed-traversal profile at the same scale
+and frame, including preview/commit, undo/redo, and the five DXF/DWG lanes.
+This does not establish the layout across all worker frames or continuous
+scales, nor does sample fitting alone imply recovery of an unobservable source.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Four-point parabola reconstruction matrix survives worker cache validation' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Four-point parabola matrix retains typed sources across file lanes' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Results: reconstruction passes 2,921 assertions / 11 cases; worker/cache
+passes 83,399 assertions / 1 case; persistence passes 61,218 assertions / 1
+case; transformed Trim Two passes 16,344 assertions / 1 case. The persistence
+matrix exceeds the worker test executable's 150-second manual default on this
+machine, so validation uses its supported bounded timeout override; the
+project's CTest and CI recipes already set `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS`
+to 900,000 ms. Available LibreDWG reads pass. The known fixed-handle raw DWG
+replay diagnostics are not semantic source failures. Other sample
+distributions, construction/conditioning boundaries, visible GUI, and
+independent CAD acceptance remain open.
