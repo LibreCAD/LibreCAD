@@ -82,6 +82,9 @@ scales `1e-4` and `1e4`, paired with representable curvature and proportional
 offset/tolerance values.
 Section 1486 re-runs the full non-hidden Properties source-picker dialog suite
 on current head `008c927b9`; visible desktop acceptance remains separate.
+Section 1493 supersedes the earlier `+/-1e-14` parabola Trim refusal by
+moving whole-conic Trim to a deterministic non-axis-aligned parameter origin;
+the depth ceiling remains 48 and the complete dedicated Trim suite passes.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49273,8 +49276,10 @@ regressed the complete Trim suite (179/182 cases; 108 failed assertions) and
 violated established canonical-circle chart/fragment and refusal expectations.
 The production code is restored to the canonical circle chart, and the
 `+/-1e-14` endpoint-tangent case again fails closed as recorded in section
-1478. Do not claim that extreme slope supported or retry chart rotation
-without an approach that preserves all existing parameterization contracts.
+1478. This is the disposition at the time of that experiment; section 1493
+later records a distinct phase choice and full-suite validation that supersede
+the refusal status. Do not infer that the earlier failed experiment itself was
+safe to retain.
 
 The first full-suite run after restoring the chart found two stale test
 contracts from before commit `d2d26b786` (`fix(offset): trim high-origin
@@ -49306,6 +49311,50 @@ contract cases pass 630 assertions / 2 cases. The chart experiment is not in
 the worktree. Keep visible packaged-app interaction and independent CAD
 acceptance open. Further work belongs to missing per-family geometry support
 and those acceptance gates, not another source-picker selector.
+
+## 1493. Resolve the Extreme Parabola Trim Crossing at the Conic Seam (2026-11-15)
+
+Commit `1fccd53eb` records the implementation and regression coverage.
+Section 1478's `+/-1e-14` refusal was caused by a transverse source/circle
+crossing lying immediately beside the whole-circle parameter seam, not by an
+exhausted work budget. Failure-domain instrumentation exposed the unresolved
+pair interval at `segmentA=0`, `segmentB=1`, with the cutter parameter starting
+at zero; increasing the depth cap from 48 to 64 did not certify it. The depth
+increase was reverted. Trim instead assigns whole conic cutters a deterministic
+non-axis-aligned parameter origin (`0.371234567890123` radians). This changes
+only the periodic chart used for exhaustive root isolation and reconstruction;
+the represented conic, source, native frame defaults, and solver limits are
+unchanged. The fixed phase moves this measured crossing into a patch interior,
+where the existing strict solver certifies it within depth 48.
+
+The endpoint-tangent parabola Trim Two action test now requires every tested
+slope, including `+/-1e-14`, to succeed through direct preparation, preview,
+commit, undo, and redo. This supersedes the earlier fail-closed status in
+sections 1478-1479 for this exact profile. It is not a universal slope bound or
+a proof that every possible crossing is far from the selected seam. Keep the
+solver fail-closed on unresolved roots and continue testing conic parameter
+boundaries and other parabola constructions.
+
+Validation on macOS arm64 CMake Release at implementation commit `1fccd53eb`:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_trim_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[trim-kernel]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_trim_tests \
+  --reporter compact
+git diff --check
+```
+
+Results: the generated-profile action test passes 1,005 assertions / 1 case;
+the focused Trim kernel selection passes 4,643,737 assertions / 89 cases; and
+the dedicated complete Trim executable passes 4,865,139 assertions / 182
+cases. The kernel selection is part of the complete Trim executable, so these
+counts are separate runs, not additive unique coverage. Visible desktop and
+independent CAD acceptance remain open. The hard depth limit stays at 48.
 
 ## 1481. Persist the Endpoint-tangent Parabola Slope Ladder (2026-11-15)
 
@@ -49628,3 +49677,31 @@ endpoint-tangent worker/cache/persistence case passes 17,083 assertions / 1
 case with LibreDWG enabled. Visible packaged-app and ODA/AutoCAD acceptance
 remain open. Continue family-by-variant qualification without inferring
 unmeasured tangent ratios from these crossed profiles.
+
+## 1492. Reconfirm Replacement Picker Type Switching and Parabola Coverage (2026-11-15)
+
+The latest request reiterates that the source-curve widget must allow choosing
+a different source type while a replacement source is being selected, and
+that the available types must cover every offset source supported by the
+model, including parabola. This is already implemented by the existing
+in-workflow type selector: changing the filter does not commit a replacement
+or discard the current source, candidates are filtered to the selected kind,
+and parabola remains a distinct typed source rather than a spline-points
+approximation. Keep the canonical inventory aligned with
+`LC_OffsetSourceGeometry::SupportedKinds` (line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline); do not add a second
+selector or duplicate the parabola-specific UI work.
+
+Implementation readiness: no additional picker code slice is indicated by
+this request. Automated offscreen coverage is recorded in sections 1486-1487,
+including repeated type changes and filtering across all nine kinds. The
+remaining UI acceptance is a visible packaged-app workflow: change type more
+than once before choosing a candidate, verify candidate refresh and current
+source highlighting, then verify successful replacement and cancellation or
+refusal leave source/cache state coherent. Separately, “support all types” is
+not considered complete from selector coverage: continue the family-by-variant
+matrix for capture/reconstruction, worker/cache, applicable Trim, and DXF/DWG
+round trips, with explicit fail-closed outcomes for unsupported variants.
+Parabola geometry qualification remains limited to the concrete constructions,
+sample layouts, conditioning, and persistence lanes listed in prior sections;
+the recent tangent-scaling tests do not close that broader matrix.
