@@ -47620,3 +47620,23 @@ single rounded-rectangle profile and this offset distance/orientation only.
 It does not qualify other signed distances, transforms, bulge arrangements,
 concavity, self-intersections, external CAD interoperability, or visible GUI
 interaction. Keep those Slice 4/Slice 5 gates open.
+
+## 1427. Cover the Opposite Rounded-rectangle Offset Side (2026-11-15)
+
+Extended section 1426's equal-radius rounded-rectangle source-replacement and
+native Trim case to exercise both offset orientations: inward `+0.2` and
+outward `-0.2`. Both cases independently check the analytic offset radius at
+each of the four quarter-circle arcs, verify arc endpoints and all four
+straight spans, trim the native cache with the same crossing cutter, exercise
+undo/redo, and compare the persisted trimmed spline after export/reopen.
+
+Validation on macOS arm64 CMake Release: the full generated closed-polyline
+Trim matrix now passes 4,660 assertions / 1 Catch test case across all 15
+profiles and the R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes. This includes
+both rounded-rectangle orientations in all five lanes. `librecad_tests` builds
+and `git diff --check` passes. Test commit `c2e36e3c5`.
+
+This qualifies only the two recorded signed orientations at magnitude `0.2`
+for this tangent quarter-circle profile. It does not establish distance
+thresholds, transformations, other bulge arrangements, or generalized
+closed-polyline Trim support. Keep those Slice 4/Slice 5 gates open.
