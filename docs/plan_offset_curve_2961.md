@@ -74,7 +74,8 @@ and ordered-family replacement tests cited in sections 1291-1293, including
 that the current-source highlight remains visible while the replacement filter
 changes to parabola and back to line; its focused source-picker suite passes
 15,129 assertions / 44 cases. Revalidation on PR head `52e65c624` passes
-15,226 assertions / 44 cases. The command was:
+15,226 assertions / 44 cases. The latest revalidation is on PR head
+`e41eaa763b022d813dbc8c5017c208c93f322acf`. The command was:
 
 ```sh
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
@@ -46613,6 +46614,27 @@ growth. Resolve it only after an independent arrangement oracle can
 distinguish a true touching-cycle ambiguity from numerical misclassification;
 broader mixed-bulge arrangements, visible GUI, cross-platform runtime, and
 independent CAD acceptance remain open.
+
+## 1392. Revalidate Region and Source-picker Suites at the Current PR Head (2026-11-14)
+
+At PR head `e41eaa763b022d813dbc8c5017c208c93f322acf`, the complete focused
+RegionBoundary selector passes 28,678 assertions / 23 cases, including the
+exact combined-frame bow-tie `CycleAssembly` refusal added in section 1391.
+The Properties source-picker suite passes 15,226 assertions / 44 cases,
+including repeated in-workflow changes across all nine supported source kinds
+and the current-source-highlight checks. These checks run with
+`QT_QPA_PLATFORM=offscreen`; they are automated widget tests, not visible
+desktop acceptance.
+
+Commands:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[curve-offset][region]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Visible Properties interaction, broader family/variant coverage, cross-platform
+runtime, and independent CAD acceptance remain open.
 
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
