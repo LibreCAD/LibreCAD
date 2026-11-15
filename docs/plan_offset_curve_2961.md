@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, PR #3193 head
-`1b2ac2e1c3a2c2445e439dfcf872ef880cb702cf`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, tested PR #3193 code head
+`9aacfd0aa`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -36,15 +36,18 @@ parabola control nets through local-frame reconstruction, worker/cache,
 positive and negative offsets, and two save/reopen passes for the five
 R14/R2000/R2018 DXF/DWG lanes. The high-origin rotated case also fixed a
 production reconstruction failure. This closes only those recorded profiles
-and lanes: four-point parabola Trim, other parabola constructions and
+and lanes. Sections 1464-1465 exercise Trim Two and undo/redo on a reconstructed
+four-point source in ordinary and transformed/reversed high-origin frames.
+Other four-point sample layouts, parabola constructions and
 conditioning/domain limits, visible picker/highlight interaction, and
 independent CAD acceptance remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
 
-**Next implementation/validation order:** (1) completed by `b434866dc`:
-reconstructed four-point parabola source replacement now passes Trim Two
-preview/commit and undo/redo; see section 1464; (2) continue the existing
+**Next implementation/validation order:** (1) completed by `b434866dc` and
+extended by `9aacfd0aa`: reconstructed four-point parabola source replacement
+now passes Trim Two preview/commit and undo/redo in ordinary and
+transformed/reversed high-origin frames; see sections 1464-1465; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
 and fail-closed limits; (3) complete the visible Properties workflow for
@@ -48717,13 +48720,15 @@ then check successful replacement and cancellation/refusal on the desktop.
 Sections 1461-1462 add three four-point parabola control nets and a rotated,
 high-origin reconstruction case. The recorded cases pass through source
 reconstruction, worker/cache, both offset signs, and two native save/reopen
-passes across R14/R2000/R2018 DXF/DWG lanes. This evidence does not close
-four-point parabola Trim, general parabola-variant/conditioning coverage, or
-independent CAD acceptance. DWG second-save `fixed-handle=2` raw OBJECTS
-replay diagnostics remain separate from the successful entity/source checks.
+passes across R14/R2000/R2018 DXF/DWG lanes. Sections 1464-1465 now cover Trim
+Two action/undo/redo for one ordinary and one transformed/reversed high-origin
+four-point source. General parabola-variant/conditioning coverage and
+independent CAD acceptance remain open. DWG second-save `fixed-handle=2` raw
+OBJECTS replay diagnostics remain separate from the successful entity/source
+checks.
 
-The reconstructed four-point Trim/action/undo-redo gate is now closed for one
-profile by section 1464. Next, add only concrete missing parabola
+The reconstructed four-point Trim/action/undo-redo gate is now closed for two
+bounded profiles by sections 1464-1465. Next, add only concrete missing parabola
 variants/boundaries to the existing family matrix. Complete the visible
 picker/highlight workflow and record platform, binary revision, route, and
 result. Do not treat selector inventory, headless tests, or LibreDWG parse
@@ -48759,3 +48764,29 @@ The remaining parabola work is variant/conditioning boundaries not yet
 represented, visible picker/highlight acceptance, and independent CAD
 acceptance. The repeated DWG `fixed-handle=2` raw OBJECTS replay warning is
 unrelated and remains an explicit metadata limitation.
+
+## 1465. Trim Transformed and Reversed Four-point Parabola Sources (2026-11-15)
+
+Test commit `9aacfd0aa` extends section 1464's source reconstruction and
+Trim Two action path to a second frame: the same control net is scaled to
+`1e-2`, rotated by `0.6435011088` radians, translated to `(1e6,-2e6)`, and
+sampled in reversed traversal order before `From4Points` reconstruction. Both
+ordinary and transformed/reversed cases preserve the reconstructed typed
+source through asynchronous replacement, Trim preview/commit, generated
+spline/arc comparison, undo, and redo. This adds one transformed high-origin
+sample layout; it does not establish general parabola conditioning, arbitrary
+four-point profiles, other Trim cutters/topologies, or visible GUI behavior.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[from-four-points][trim-two]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[trim-action][typed-source][parabola]' --reporter compact
+git diff --check
+```
+
+Results: both reconstructed profiles pass 377 assertions / 1 case; the complete
+typed-parabola Trim action selection passes 74,725 assertions / 5 cases.
