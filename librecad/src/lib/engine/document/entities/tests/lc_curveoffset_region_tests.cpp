@@ -218,6 +218,47 @@ TEST_CASE("A simple region grows and shrinks to one cycle each", "[curve-offset]
     }
 }
 
+TEST_CASE("Rounded polyline regions grow and shrink along curved boundaries",
+          "[curve-offset][region][polyline][curved-boundary]") {
+    constexpr double quarterBulge = 0.4142135623730950488;
+    constexpr double distance = 0.2;
+    RS_Polyline source;
+    source.addVertex({0, 1}, quarterBulge);
+    source.addVertex({1, 0});
+    source.addVertex({3, 0}, quarterBulge);
+    source.addVertex({4, 1});
+    source.addVertex({4, 3}, quarterBulge);
+    source.addVertex({3, 4});
+    source.addVertex({1, 4}, quarterBulge);
+    source.addVertex({0, 3});
+    source.setClosed(true);
+    source.endPolyline();
+
+    const std::vector<RS_Vector> polygon = polygonOf(source, 2048);
+    for (const bool grow : {true, false}) {
+        CAPTURE(grow);
+        LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+        options.mode = LC_CurveOffsetMode::RegionBoundary;
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(
+                grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, distance),
+            options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+                result.intersectionDiagnostics.status,
+                result.intersectionDiagnostics.failureDepth);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        const CycleCheck check =
+            checkCycles(result, polygon, LC_CurveFillRule::NonZero, distance, grow);
+        CHECK(check.closed);
+        CHECK(check.worstDistance < 1e-5);
+        CHECK(check.wrongSide == 0);
+        REQUIRE(check.areas.size() == 1);
+        CHECK(check.areas.front() > 0.0);
+    }
+}
+
 TEST_CASE("A bow tie shrinks into its two lobes and grows into one region", "[curve-offset][region]") {
     const RS_Spline bowTie = closedSpline(g_bowTie);
     const std::vector<RS_Vector> polygon = polygonOf(bowTie);
