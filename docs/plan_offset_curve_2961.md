@@ -46549,17 +46549,40 @@ Test commits `a43c1b08b` and `ac627c4f7` add endpoint-tangent parabolas with
 opposite tangent slopes of `1e-8` and `1e-10` to the all-source-family
 Update-from-Source/Trim integration matrix. Both typed sources pass worker
 preparation, native Trim, undo/redo, and the five R14/R2000/R2018 DXF/DWG
-save/reopen lanes. The independent direct normal test covers slopes `1e-4`,
-`1e-6`, `1e-8`, `1e-9`, and `1e-10`, with a slope-relative check of the
-reconstructed control apex. This extends flatter-profile evidence only to these
+save/reopen lanes. The independent direct normal test covers slopes from
+`1e-4` through `1e-14`, with a slope-relative check of the reconstructed
+control apex; section 1390 records the robust-construction fix and explicit
+degeneracy refusals. This extends flatter-profile evidence only to these
 endpoint/tangent layouts and distances; it does not establish more extreme
 conditioning or arbitrary parabola support.
 
-Validation on macOS arm64 CMake Release: the direct endpoint-tangent case passes
-470 assertions / 1 case; `I trimmed every typed source family to plain
-fragments` passes 5,631 assertions / 1 case; rebuilding `librecad_tests`
+Validation on macOS arm64 CMake Release: `[parabola][tangent]` passes 854
+assertions / 4 cases; `I trimmed every typed source family to plain fragments`
+passes 5,631 assertions / 1 case; rebuilding `librecad_tests`
 succeeds; and `git diff --check` passes. Visible GUI and external-CAD acceptance
 remain separate gates.
+
+## 1390. Robust Endpoint-tangent Parabola Construction (2026-11-14)
+
+Commit `1519a9f22` replaces `RS_Information::getIntersection` in
+`LC_ParabolaData::FromEndPointsTangents` with a local, scale-normalized
+intersection of the two tangent lines. It rejects invalid/non-planar inputs,
+zero or exactly parallel directions, non-finite results, and unrepresentable
+control points. This removes the generic absolute parallel tolerance that
+previously rejected finite inputs at slope `1e-11`, while retaining
+`LC_ParabolaData`'s existing curvature-degeneracy validation.
+
+Direct exact-normal tests now pass for opposite endpoint-tangent slopes from
+`1e-4` through `1e-14`; parallel tangents and slope `1e-15` remain invalid.
+The `1e-8` and `1e-10` profiles pass the worker-backed typed-source replacement,
+Trim, undo/redo, and five R14/R2000/R2018 DXF/DWG save/reopen lanes. These
+results qualify these straight-profile endpoint/tangent cases only.
+
+Validation on macOS arm64 CMake Release: `[parabola][tangent]` passes 854
+assertions / 4 cases; `I trimmed every typed source family to plain fragments`
+passes 5,631 assertions / 1 case; the `librecad_tests` target builds; and
+`git diff --check` passes. Other constructions/conditioning, visible GUI,
+cross-platform runtime, and independent CAD acceptance remain open.
 
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
