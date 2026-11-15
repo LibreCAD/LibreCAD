@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest plan reconciliation (2026-11-15, tested PR #3193 code head
-`4b5e35ae8`):** The repeated request to
+`2a09c6aa9`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -39,7 +39,7 @@ production reconstruction failure. This closes only those recorded profiles
 and lanes. Sections 1464-1466 exercise Trim Two and undo/redo on a reconstructed
 four-point source in ordinary and transformed/reversed high-origin frames,
 with both results saved and reopened through the five native-capable lanes.
-Other four-point sample layouts, parabola constructions and
+More extreme sample clustering, parabola constructions and
 conditioning/domain limits, visible picker/highlight interaction, and
 independent CAD acceptance remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
@@ -48823,3 +48823,30 @@ git diff --check
 Results: the focused reconstructed-parabola case passes 460 assertions / 1
 case, including the five file lanes and LibreDWG reads; the complete
 typed-parabola Trim action selection passes 75,515 assertions / 5 cases.
+
+## 1467. Exercise Clustered Four-point Parabola Samples End to End (2026-11-15)
+
+Test commit `2a09c6aa9` adds the clustered parameter layout
+`{0, 0.001, 0.02, 1}` to both four-point parabola worker/cache and persistence
+matrices. The existing three control nets and recorded scale/rotation/origin
+frames now reconstruct from this uneven sample distribution, validate
+independent points, generate and admit worker caches on both signed sides, and
+save/reopen twice through R14/R2000/R2018 DXF/DWG lanes. The reader checks the
+resulting DWG files with LibreDWG when available. This qualifies that one
+clustered layout over the matrix fixtures; tighter clustering, clustering at
+the opposite endpoint, arbitrary profiles and broader conditioning limits
+remain unqualified.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: 78,437 assertions / 2 test cases pass, including available LibreDWG
+parsing of generated DWG files. This does not close visible picker/highlight
+acceptance, independent ODA/AutoCAD review, or the raw DWG OBJECTS replay gap.
