@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`53c5b804f`):** The source-type selector contract is implemented for all nine
+`0d2c5651a`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -52,10 +52,10 @@ save/reopen, with two reopen passes and optional LibreDWG validation. Section
 1548 aligns persistence with all three tested curvature-scaled offsets (`0.5`,
 `1.0`, `1.5` times vertex radius). Sections 1550 and 1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
-`1e-4` to `1e-14`; section 1551 persists the nine slopes except `1e-9` and
-`1e-11`, whose persistence remains open. These bounded test matrices do not
-establish arbitrary hyperbola/parabola support or visible/external-CAD
-acceptance.
+`1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
+DXF/DWG lanes. This closes that recorded endpoint-tangent slope grid only;
+broader parabola constructions, hyperbola/parabola domains, and
+visible/external-CAD acceptance remain open.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
@@ -51602,6 +51602,35 @@ git diff --check
 ```
 
 Result: all 18 signed conditioning rows pass, 465 assertions / 1 case.
+
+## 1553. Persist Every Direct-oracle Endpoint-tangent Slope (2026-11-15)
+
+Test commit `0d2c5651a` adds the missing `1e-9` and `1e-11` endpoint-tangent
+profiles to section 1551's worker/cache and five-format typed-source
+persistence matrix. Both signs now run for every slope covered by the direct
+exact-normal oracle and section 1552's worker/cache matrix (`1e-4`, `1e-6`,
+`1e-8`, `1e-9`, `1e-10`, `1e-11`, `1e-12`, `1e-13`, `1e-14`). The existing
+moderate, asymmetric, reversed, mirrored, tiny/huge tangent-vector, and
+scaled-source profiles remain included. This qualifies only the enumerated
+endpoint/tangent data and the tested offsets, not arbitrary parabola
+constructions or scales.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+Results: the full endpoint-tangent persistence matrix passes 20,736
+assertions / 1 case with DWG enabled and LibreDWG reads available. Visible GUI
+and independent ODA/AutoCAD acceptance remain open.
 
 ## 1551. Persist the Endpoint-tangent Parabola Slope Grid (2026-11-15)
 
