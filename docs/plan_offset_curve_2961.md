@@ -48600,3 +48600,35 @@ git diff --check
 Result: 13,950 assertions / 2 cases passed. Both DWG versions were parsed by
 LibreDWG after the second save. The raw replay warning remains a separate DWG
 metadata limitation.
+
+## 1461. Add a Third Four-point Parabola Control Net (2026-11-15)
+
+Expanded the `From4Points` worker/cache and persistence matrices to a third
+uneven quadratic control net `(0,0), (5,10), (11,2)`, alongside the symmetric
+and asymmetric profiles. The third net is reconstructed from each of the same
+three four-point sample layouts at scales `1e-6`, `1`, and `1e6`, after the
+existing rotation and scale-relative translation. Both offset signs pass
+worker generation and operation-8 cache validation. The file lane matrix
+checks typed source, generated geometry, both save/reopen passes, and all five
+R14/R2000/R2018 DXF/DWG targets; LibreDWG parses both DWG versions after the
+second save.
+
+This adds one more bounded quadratic source profile. It does not establish
+arbitrary four-point data, all conditioning, endpoint-tangent or focus/vertex
+limits, Trim on this reconstructed profile, or external CAD acceptance. The
+second-save `fixed-handle=2` raw OBJECTS warning remains as described in
+section 1460; successful entity/source parsing is not full raw metadata replay.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points]' --reporter compact
+git diff --check
+```
+
+Result: all three four-point cases pass, totaling 52,538 assertions. This is
+worker/cache and file-lane test expansion; no production-kernel change was
+needed.

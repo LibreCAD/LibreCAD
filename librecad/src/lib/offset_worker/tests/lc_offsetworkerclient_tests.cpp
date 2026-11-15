@@ -5852,9 +5852,10 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
 
-    const std::array<std::array<RS_Vector, 3>, 2> controlProfiles{{
+    const std::array<std::array<RS_Vector, 3>, 3> controlProfiles{{
         {{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}},
         {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
+        {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
     }};
     const std::array<std::array<double, 4>, 3> layouts{{
         {{0.0, 0.3, 0.7, 1.0}},
@@ -5862,8 +5863,9 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
         {{0.0, 0.1, 0.4, 1.0}},
     }};
     qint64 requestId = 1;
-    const std::array<std::pair<std::size_t, double>, 6> profileScales{{
-        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6}}};
+    const std::array<std::pair<std::size_t, double>, 9> profileScales{{
+        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6},
+        {2, 1e-6}, {2, 1.0}, {2, 1e6}}};
     for (const auto& profileScale : profileScales) {
         const std::size_t profileIndex = profileScale.first;
         const double scale = profileScale.second;
@@ -5951,9 +5953,10 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
 
-    const std::array<std::array<RS_Vector, 3>, 2> controlProfiles{{
+    const std::array<std::array<RS_Vector, 3>, 3> controlProfiles{{
         {{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}},
         {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
+        {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
     }};
     const std::array<std::array<double, 4>, 3> layouts{{
         {{0.0, 0.3, 0.7, 1.0}},
@@ -5976,8 +5979,9 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
 #endif
 
     qint64 requestId = 1;
-    const std::array<std::pair<std::size_t, double>, 6> profileScales{{
-        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6}}};
+    const std::array<std::pair<std::size_t, double>, 9> profileScales{{
+        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6},
+        {2, 1e-6}, {2, 1.0}, {2, 1e6}}};
     for (const auto& profileScale : profileScales) {
         const std::size_t profileIndex = profileScale.first;
         const double scale = profileScale.second;
