@@ -47764,7 +47764,11 @@ Validation on macOS arm64 CMake Release:
 - `Large-origin rounded polyline source updates and persists the editable offset`:
   640 assertions / 1 generated test case passed across both origins and all
   five file lanes.
-- `librecad_tests` builds and `git diff --check` passes. Commit `4b8c5d3db`.
+- `librecad_tests` builds; recursive qmake6 `make -j6` in
+  `/private/tmp/offset3193-qmake6-fresh` exits 0 for the application, worker,
+  and plugins; and `git diff --check` passes. The login shell reports a missing
+  optional `/private/tmp/libdxfrw-cargo/env` before the successful build.
+  Commit `4b8c5d3db`.
 
 The evidence covers only the stated small four-arc/four-line shape, angle,
 offset, and two origins. It does not establish arbitrary high-origin
