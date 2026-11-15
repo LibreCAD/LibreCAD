@@ -47799,3 +47799,23 @@ This closes only these two convex equal-radius profiles at the stated billion-
 unit frame, rotation, and offset magnitude. It does not qualify other high-
 origin scales, corner radii, bulge layouts, concavity, self-intersections,
 cross-platform runtime, visible GUI, or independent CAD acceptance.
+
+## 1434. Revalidate Source-family Switching at the Current PR Head (2026-11-15)
+
+Re-ran the focused Properties source-picker suite after the high-origin option,
+Trim-matrix, and qmake6 updates, at PR head `10e17130a`. This confirms the
+existing type-switch contract still holds: the family control remains usable
+during active candidate browsing, filtering refreshes across all nine
+`SupportedKinds`, and parabola remains distinct from spline-points. This is
+headless regression evidence only and does not close visible desktop acceptance
+or the separate per-variant geometry matrix.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Result: 15,226 assertions / 44 cases passed. Keep visible repeated type
+changes, candidate refresh, source indication, successful replacement, and
+cancel/refusal behavior open under Slice 5.
