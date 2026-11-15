@@ -47039,3 +47039,13 @@ Validation on macOS arm64 CMake Release: the focused case passes 14,111
 assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
 --target librecad_tests -j4` succeeds; and `git diff --check` passes. Visible
 GUI, cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1402. Revalidate Trim Actions With Conic Cutter Matrices (2026-11-15)
+
+Re-ran the complete `[lc-offsetcurve][trim-action]` lane against code commit
+`0593d369e`, including the typed-parabola and bounded-hyperbola eccentric
+elliptic-cutter cases in sections 1400-1401. The command
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'[lc-offsetcurve][trim-action]' --reporter compact` passes 384,607 assertions /
+96 cases. This action-lane validation does not close the remaining source
+variants, visible-GUI, cross-platform, or independent CAD gates.
