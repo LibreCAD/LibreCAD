@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest plan reconciliation (2026-11-15, local tested head `90b0667af`,
-based on pushed PR #3193 head `b3513de89`):** The repeated request to
+based on pushed PR #3193 head `d1ec8d0bc`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -167,12 +167,17 @@ and redo restore the original entities and fragments. This establishes Trim
 coverage for this endpoint-tangent construction at the recorded moderate
 slopes; it is not a blanket claim for every endpoint-tangent conditioning.
 
-An exploratory action run with endpoint slopes `+/-1e-14` produced no preview
-for the selected trim, even though that source has separate worker/cache and
-file-lane coverage in section 1466. That extreme profile therefore remains an
-open Trim conditioning case and is not represented by the passing test below.
-Investigate the refusal/scale interaction before claiming it is trim-capable;
-do not loosen certified-intersection or fail-closed behavior to force a result.
+An exploratory run with endpoint slopes `+/-1e-14` produced no preview for
+the selected trim. A direct `LC_OffsetCacheTrim::prepare` call on the same
+worker-generated cache and circle returned `Refusal::LimitExceeded`, with zero
+roots, 9 input spans, 140 examined intersection box pairs, 9 generated leaves,
+and 173 generated intersection items. Thus the refusal is in bounded geometry
+preparation as well as the action preview, even though the source has separate
+worker/cache and file-lane coverage in section 1466. That extreme profile
+remains an open Trim conditioning case and is not represented by the passing
+test below. Investigate why the certified query exhausts its limit at this
+modest recorded work count before claiming it is trim-capable; do not loosen
+certified-intersection or fail-closed behavior to force a result.
 
 Validation on macOS arm64 CMake Release: the focused action case passes 191
 assertions / 1 case; the full typed-parabola Trim Two selection passes 34,196
