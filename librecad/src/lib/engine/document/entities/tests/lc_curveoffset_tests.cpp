@@ -2474,12 +2474,12 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
 TEST_CASE("Nearly parallel endpoint tangents retain parabola offset support",
           "[curve-offset][direct][parabola][tangent][oracle]") {
     const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
-    for (const double slope : {1e-4, 1e-6, 1e-8}) {
+    for (const double slope : {1e-4, 1e-6, 1e-8, 1e-9, 1e-10}) {
         CAPTURE(slope);
         const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
             endpoints, {{{1.0, slope}, {1.0, -slope}}});
         REQUIRE(data.isValid());
-        CHECK(data.m_controlPoints[1].distanceTo({5.0, 5.0 * slope}) < 1e-7);
+        CHECK(data.m_controlPoints[1].distanceTo({5.0, 5.0 * slope}) <= 5.0 * slope * 1e-6);
 
         const LC_Parabola source{nullptr, data};
         const auto snapshot = LC_OffsetSourceGeometry::capture(source);
