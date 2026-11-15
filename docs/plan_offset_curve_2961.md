@@ -50497,3 +50497,31 @@ Result: all tests passed, 8,117 assertions / 1 case. The non-axis-aligned
 frame and source traversal reversal are covered at the new scale; visible
 Properties interaction, remaining parabola conditioning rows, and independent
 CAD acceptance remain open.
+
+## 1519. Extend Clustered-parabola Trim to the Small-scale Row (2026-11-15)
+
+Test commit `8297df109` adds the profile-2 opposite-end layout
+`{0, 0.98, 0.999, 1}` at scale `1e-3`, rotation `0.6435011087932844`,
+translation `(1e6,-2e6)`, and reversed sample traversal. As in sections
+1517-1518, it explicitly requires that no candidate matches independent points
+on the hidden generating parabola, then exercises the user-selected
+sample-fitting typed source through worker-backed replacement, Trim
+preview/commit, undo/redo, and all five DXF/DWG save/reopen lanes. The three
+measured scales `1e-3`, `1e-1`, and `1` now have Trim results for this exact
+frame/profile/layout. This does not interpolate the scale range or establish
+other translations, layouts, profiles, or parabola constructions.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 8,353 assertions / 1 case. Visible Properties
+interaction, other parabola conditioning/domain rows, and independent CAD
+acceptance remain open.
