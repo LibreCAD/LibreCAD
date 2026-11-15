@@ -48570,3 +48570,33 @@ cases; the complete four-point subset passes 27,825 assertions / 3 cases.
 Both R2000 and R2018 DWG lanes are independently parsed in the persistence
 matrix. This is a test-coverage extension; no production-kernel change was
 needed.
+
+## 1460. Verify Two-pass Four-point Parabola File Persistence (2026-11-15)
+
+The four-point parabola file matrix now performs two complete native
+save/reopen passes for each profile, scale, sampling layout, signed distance,
+and R14/R2000/R2018 DXF/DWG lane. After each reopen it verifies the typed
+parabola source, control points within the scale-relative fit tolerance,
+signed distance, and generated offset geometry fingerprint. LibreDWG inspects
+the final R2000 and R2018 DWG files when available.
+
+Second-save DWG diagnostics report two blocked raw OBJECTS replays with
+`fixed-handle=2`; these unchanged metadata records are not replayed. LibreDWG
+successfully parses the resulting files and the native offset/source checks
+pass, but this does not claim raw metadata replay or general DWG semantic
+round-trip completeness. Other parabola constructions, conditioning limits,
+Trim, and external CAD acceptance remain separate gates.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][persistence]' --reporter compact
+git diff --check
+```
+
+Result: 13,950 assertions / 2 cases passed. Both DWG versions were parsed by
+LibreDWG after the second save. The raw replay warning remains a separate DWG
+metadata limitation.

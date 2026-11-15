@@ -6054,6 +6054,32 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
                     const auto path = directory.file(
                         std::to_string(requestId) + "-" + lane.extension);
                     REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                    for (int pass = 0; pass < 2; ++pass) {
+                        RS_Graphic reopened;
+                        REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                        LC_OffsetCurve* reopenedOffset = nullptr;
+                        for (RS_Entity* entity : reopened) {
+                            if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
+                                continue;
+                            REQUIRE(reopenedOffset == nullptr);
+                            reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
+                        }
+                        REQUIRE(reopenedOffset);
+                        REQUIRE(reopenedOffset->sourceDefinition());
+                        CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
+                              LC_OffsetSourceGeometry::Kind::Parabola);
+                        CHECK(reopenedOffset->sourceDefinition()->signedDistance == signedDistance);
+                        CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) ==
+                              expectedFingerprint);
+                        const auto* reopenedParabola = std::get_if<LC_ParabolaData>(
+                            &reopenedOffset->sourceDefinition()->source.value);
+                        REQUIRE(reopenedParabola);
+                        for (std::size_t point = 0; point < candidate->m_controlPoints.size(); ++point)
+                            CHECK(reopenedParabola->m_controlPoints[point].distanceTo(
+                                      candidate->m_controlPoints[point]) <= fitTolerance);
+                        if (pass == 0)
+                            REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+                    }
 #ifdef DWGSUPPORT
                     if (!libreDwgReader.isEmpty() &&
                         (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
@@ -6072,28 +6098,6 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
                         }));
                     }
 #endif
-                    RS_Graphic reopened;
-                    REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-                    LC_OffsetCurve* reopenedOffset = nullptr;
-                    for (RS_Entity* entity : reopened) {
-                        if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
-                            continue;
-                        REQUIRE(reopenedOffset == nullptr);
-                        reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
-                    }
-                    REQUIRE(reopenedOffset);
-                    REQUIRE(reopenedOffset->sourceDefinition());
-                    CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
-                          LC_OffsetSourceGeometry::Kind::Parabola);
-                    CHECK(reopenedOffset->sourceDefinition()->signedDistance == signedDistance);
-                    CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) ==
-                          expectedFingerprint);
-                    const auto* reopenedParabola = std::get_if<LC_ParabolaData>(
-                        &reopenedOffset->sourceDefinition()->source.value);
-                    REQUIRE(reopenedParabola);
-                    for (std::size_t point = 0; point < candidate->m_controlPoints.size(); ++point)
-                        CHECK(reopenedParabola->m_controlPoints[point].distanceTo(
-                                  candidate->m_controlPoints[point]) <= fitTolerance);
                 }
                 requestId += 2;
             }
