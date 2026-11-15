@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`3f18b0a29`):** The source-type selector contract is implemented for all nine
+`936e6fe87`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -50,8 +50,12 @@ branches, reversed bounds, and both signs. Sections 1547-1548 carry
 cache-admitted cases through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
 save/reopen, with two reopen passes and optional LibreDWG validation. Section
 1548 aligns persistence with all three tested curvature-scaled offsets (`0.5`,
-`1.0`, `1.5` times vertex radius). These bounded test matrices do not establish
-arbitrary hyperbola support or visible/external-CAD acceptance.
+`1.0`, `1.5` times vertex radius). Section 1550 adds a worker/cache
+conditioning matrix for endpoint-tangent parabola constructions from slope
+`1e-4` to `1e-14`, matched to existing exact-normal tests; typed-source file
+persistence for this exact construction grid remains open. These bounded test
+matrices do not establish arbitrary hyperbola/parabola support or
+visible/external-CAD acceptance.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
@@ -51543,3 +51547,34 @@ git diff --check
 Results: the rebuilt test target passes all selected cases, 15,252 assertions
 / 42 cases, with no failures. Visible packaged-app interaction and independent
 ODA/AutoCAD acceptance remain open.
+
+## 1550. Qualify Endpoint-tangent Parabola Worker Conditioning (2026-11-15)
+
+Test commit `936e6fe87` adds a real worker-kernel matrix for parabola sources
+constructed by `LC_ParabolaData::FromEndPointsTangents`. It covers symmetric
+endpoint tangent slopes from `1e-4` through `1e-14` and both signed offsets at
+distance `0.01`. Every row must construct a well-formed typed parabola and
+produce complete, nonempty ordinary output. Operation-8 validation must either
+admit the single-fragment cache or explicitly refuse it as
+`NotCacheRepresentable`; the test accounts for all 14 rows and requires at
+least one admitted cache. This complements, but does not expand, the existing
+direct exact-normal tangent-oracle suite. Persistence for these exact slope
+rows and broader tangent/endpoint layouts remains unqualified.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[parabola][tangent][conditioning]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][oracle]' --reporter compact
+git diff --check
+```
+
+Results: the worker/cache conditioning case passes 363 assertions / 1 case;
+the direct exact-normal tangent suite passes 17,214 assertions / 4 cases.
+Typed persistence across DXF/DWG and independent CAD acceptance remain open.
