@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`d30d34122`):** The repeated request to
+`3a4933a1e`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -67,6 +67,7 @@ claimed. The focused results are 8 assertions / 1 action case and 61,058
 assertions / 2 worker/persistence cases. Section 1477 reconciles the latest
 source-picker request; section 1478 records the endpoint-tangent Trim
 conditioning boundary and its fail-closed regression.
+Section 1479 adds verified intermediate near-parallel endpoint slopes.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49190,3 +49191,33 @@ case; the broader typed-parabola Trim selection passes 75,885 assertions / 6
 cases, including its existing persistence and undo/redo checks. Visible GUI,
 other parabola conditioning profiles, and independent CAD acceptance remain
 open.
+
+## 1479. Qualify Intermediate Near-parallel Parabola Trim Slopes (2026-11-15)
+
+The endpoint-tangent Trim Two regression now covers a slope ladder of
+`+/-0.2`, `+/-1e-8`, `+/-1e-10`, `+/-1e-12`, and `+/-1e-14`. The first four
+profiles each use worker-backed typed-source replacement, direct certified
+Trim preparation, action preview and commit, then undo/redo. All four produce
+valid previews and complete the lifecycle. The `+/-1e-14` profile reaches the
+bounded pair-refinement limit recorded in section 1478 and remains an explicit
+atomic refusal with no preview or document change.
+
+This is a measured interval for one endpoint/tangent construction on the
+recorded geometry scale, not a universal slope threshold. It does not qualify
+other endpoint spacing, coordinates, signed offsets, cutter placements,
+transformations, or parabola constructions. Preserve the explicit refusal
+below the certified range; do not interpolate a general tolerance threshold
+from these five points.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]' --reporter compact
+git diff --check
+```
+
+Result: all five generated slope profiles pass the focused test matrix with
+901 assertions / 1 test case. Only the four non-extreme profiles trim; the
+`1e-14` case is specifically asserted as a fail-closed refusal.
