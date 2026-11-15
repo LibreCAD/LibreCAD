@@ -6834,6 +6834,198 @@ TEST_CASE(
   CHECK(cacheAdmissions > 0);
 }
 
+TEST_CASE(
+    "Bounded hyperbola cusp profiles persist typed sources across file lanes",
+    "[lc-offsetcurve][worker-client][hyperbola][cusp][persistence]") {
+  REQUIRE(lc::test::ensureSettings());
+  lc::test::QuietLog quiet;
+  lc::test::OutputDirectory directory("offset-hyperbola-cusp-persistence");
+  auto &rt = runtime();
+  OwnedClient client{rt};
+  RS_EntityContainer owner;
+  RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+  constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
+  constexpr std::array<double, 2> intervalHalfWidths{{0.4, 0.8}};
+  struct Lane {
+    RS2::FormatType format;
+    const char *extension;
+  };
+  const std::array<Lane, 5> lanes{{{RS2::FormatDXFRW14, "r14.dxf"},
+                                   {RS2::FormatDXFRW2000, "r2000.dxf"},
+                                   {RS2::FormatDWG, "r2000.dwg"},
+                                   {RS2::FormatDXFRW2018, "r2018.dxf"},
+                                   {RS2::FormatDWG2018, "r2018.dwg"}}};
+#ifdef DWGSUPPORT
+  QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+  if (libreDwgReader.isEmpty())
+    libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+
+  qint64 requestId = 200000;
+  std::size_t generatedRows = 0;
+  std::size_t persistedRows = 0;
+  std::size_t nativeCacheRefusals = 0;
+  for (const double ratio : ratios) {
+    constexpr double semiMajor = 10.0;
+    const double vertexRadius = semiMajor * ratio * ratio;
+    for (const bool oppositeBranch : {false, true}) {
+      for (const bool reverseBounds : {false, true}) {
+        for (const double halfWidth : intervalHalfWidths) {
+          const LC_HyperbolaData data{
+              RS_Vector{23.0, -17.0},
+              RS_Vector{semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
+              ratio,
+              reverseBounds ? halfWidth : -halfWidth,
+              reverseBounds ? -halfWidth : halfWidth,
+              oppositeBranch};
+          for (const double sign : {-1.0, 1.0}) {
+            CAPTURE(ratio, halfWidth, oppositeBranch, reverseBounds, sign);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{data}, sign * 0.5 * vertexRadius, 1e-4,
+                false};
+            const qint64 generationId = requestId++;
+            Receipts generationReceipts;
+            REQUIRE(client.get().submit(
+                {token(generationId), Req::GenerateSource{definition, {}}},
+                Client::Mode::Commit, generationReceipts.into(0)));
+            rt.until([&] { return generationReceipts.calls[0] != 0; });
+            const auto &generatedCompletion =
+                completed(generationReceipts.at(0), generationId, 7);
+            const auto &generated =
+                std::get<Reply::Native>(generatedCompletion.reply().result);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus ==
+                    Reply::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+            ++generatedRows;
+            if (generated.ordinary.size() != 1) {
+              ++nativeCacheRefusals;
+              continue;
+            }
+
+            RS_SplineData cache;
+            REQUIRE(
+                LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+            const qint64 validationId = requestId++;
+            Receipts validationReceipts;
+            REQUIRE(client.get().submit(
+                {token(validationId),
+                 Req::ValidateSourceCache{cache, definition, {}}},
+                Client::Mode::Commit, validationReceipts.into(0)));
+            rt.until([&] { return validationReceipts.calls[0] != 0; });
+            const auto &validationCompletion =
+                completed(validationReceipts.at(0), validationId, 8);
+            const auto &validated =
+                std::get<Reply::Native>(validationCompletion.reply().result);
+            if (validated.refusal != LC_OffsetCurveRefusal::None ||
+                !validated.changed) {
+              ++nativeCacheRefusals;
+              continue;
+            }
+
+            auto admitted = validationCompletion.nativeValidatedSource(attributes);
+            REQUIRE(admitted);
+            REQUIRE(admitted->sourceDefinition());
+            CHECK(admitted->sourceDefinition()->source.kind() ==
+                  LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+            exactCache(admitted->getData(), cache);
+            RS_Graphic graphic;
+            graphic.initForNewDocument();
+            auto *layer = new RS_Layer("Offset");
+            graphic.addLayer(layer);
+            admitted->setLayer(layer);
+            graphic.addEntity(admitted.release());
+            const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+
+            for (const Lane &lane : lanes) {
+              CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+              if (lane.format == RS2::FormatDWG ||
+                  lane.format == RS2::FormatDWG2018)
+                continue;
+#endif
+              const auto path = directory.file(std::to_string(generationId) +
+                                               "-" + lane.extension);
+              REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+              for (int pass = 0; pass < 2; ++pass) {
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                LC_OffsetCurve *reopenedOffset = nullptr;
+                for (RS_Entity *entity : reopened) {
+                  if (entity->isDeleted() ||
+                      entity->rtti() != RS2::EntityOffsetCurve)
+                    continue;
+                  REQUIRE(reopenedOffset == nullptr);
+                  reopenedOffset = dynamic_cast<LC_OffsetCurve *>(entity);
+                }
+                REQUIRE(reopenedOffset);
+                REQUIRE(reopenedOffset->sourceDefinition());
+                CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
+                      LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+                CHECK(reopenedOffset->sourceDefinition()->signedDistance ==
+                      definition.signedDistance);
+                CHECK(RS_Spline::geometryFingerprint(
+                          reopenedOffset->getData()) == fingerprint);
+                const auto *reopenedData = std::get_if<LC_HyperbolaData>(
+                    &reopenedOffset->sourceDefinition()->source.value);
+                REQUIRE(reopenedData);
+                CHECK(reopenedData->center.distanceTo(data.center) < 1e-9);
+                CHECK(reopenedData->majorP.distanceTo(data.majorP) < 1e-9);
+                CHECK(reopenedData->ratio == data.ratio);
+                CHECK(reopenedData->angle1 == data.angle1);
+                CHECK(reopenedData->angle2 == data.angle2);
+                CHECK(reopenedData->reversed == data.reversed);
+                if (pass == 0)
+                  REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+              }
+#ifdef DWGSUPPORT
+              if (!libreDwgReader.isEmpty() &&
+                  (lane.format == RS2::FormatDWG ||
+                   lane.format == RS2::FormatDWG2018)) {
+                QProcess reader;
+                reader.start(libreDwgReader,
+                             {"-O", "minJSON", lc::test::toQString(path)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document =
+                    QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                const QJsonArray objects =
+                    document.object().value("OBJECTS").toArray();
+                CHECK(std::any_of(
+                    objects.begin(), objects.end(),
+                    [](const QJsonValue &objectValue) {
+                      const QJsonObject object = objectValue.toObject();
+                      if (object.value("entity").toString() != "SPLINE")
+                        return false;
+                      bool offsetApp = false;
+                      bool typedSource = false;
+                      for (const QJsonValue &record :
+                           object.value("eed").toArray()) {
+                        const QString value =
+                            record.toObject().value("value").toString();
+                        offsetApp = offsetApp || value == "LC_OFFSET_CURVE";
+                        typedSource = typedSource || value == "TYPED_SOURCE";
+                      }
+                      return offsetApp && typedSource;
+                    }));
+              }
+#endif
+            }
+            ++persistedRows;
+          }
+        }
+      }
+    }
+  }
+  CHECK(generatedRows == ratios.size() * intervalHalfWidths.size() * 2 * 2 * 2);
+  CHECK(persistedRows > 0);
+  CHECK(persistedRows + nativeCacheRefusals == generatedRows);
+}
+
 TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker preparation",
           "[lc-offsetcurve][worker-client][ordered-preparation][fit-points][tangents][trim]") {
     auto& rt = runtime();
