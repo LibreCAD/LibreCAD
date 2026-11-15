@@ -46951,3 +46951,21 @@ assertions / 1 case; `[trim-kernel]` passes 1,064,384 assertions / 81 cases;
 not qualify extreme subnormal/overflow coordinates, other translated-scale
 ratios, other conic ratios, or arbitrary source topologies; visible GUI,
 cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1396. Exercise Reversed Hyperbola Source Domains Through Trim Two (2026-11-14)
+
+Test commit `ccf69f2e5` extends the typed-hyperbola Trim Two action matrix
+with a symmetric source domain stored as `1.5` to `-1.5`. It runs on both
+hyperbola branches and in both entity-pick orders, alongside the four existing
+profiles.
+It uses the native worker to create the offset cache, then checks Trim Two,
+undo/redo, and the existing five DXF/DWG persistence lanes. This adds one
+reversed-domain fixture; it does not establish unrestricted reversed-domain
+support across arbitrary hyperbola bounds, transformations, cutters, or
+offset distances.
+
+Validation on macOS arm64 CMake Release: the focused case passes 5,718
+assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. Other
+hyperbola domains, visible GUI, cross-platform runtime, and independent CAD
+acceptance remain open.
