@@ -47305,10 +47305,17 @@ convex rotated large-origin polyline case passes 75 assertions / 1 case. The
 same convex-polyline case was rebuilt and run in the current CMake
 AddressSanitizer tree with `ASAN_OPTIONS=detect_leaks=0`; it passes 75
 assertions / 1 case without an ASan diagnostic (leak detection is not claimed).
+The complete CMake Release `[curve-offset]` selector on this product source
+passes 2,247,333 assertions / 350 cases. A regenerated recursive qmake6 build
+in `/private/tmp/offset3193-qmake6-fresh` also completes with exit status zero;
+both `LibreCAD.app/Contents/MacOS/LibreCAD` and
+`LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker` are executable outputs.
+This is a local build receipt, not a relocated/deployed-package or visible-GUI
+check.
 The macOS arm64 worker-client exhaustive typed-source test also previously passed
 2,913,696 assertions after the callback timeout was aligned with the worker's
 commit/terminate/reap deadline (section 1413). Fresh PR CI at the new commit
-was queued when this checkpoint was written. Keep exact-head Linux CI, visible
-GUI acceptance, cross-platform/package and independent-CAD checks open; no
-broad portability or end-to-end variant support claim follows from these local
+was queued when this checkpoint was written. Keep exact-head CI, visible GUI
+acceptance, cross-platform/package and independent-CAD checks open; no broad
+portability or end-to-end variant support claim follows from these local
 tests.
