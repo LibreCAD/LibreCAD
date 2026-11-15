@@ -48368,3 +48368,30 @@ application/plugin build also completed from this source state, producing
 executable `LibreCAD` and `LibreCADOffsetWorker` artifacts; it does not provide
 a qmake test executable. Visible GUI acceptance and broader ODA/AutoCAD
 validation remain open.
+
+## 1454. Bound the Dumbbell Neck-collapse Transition (2026-11-15)
+
+Added a direct `RegionBoundary` matrix around the one-unit dumbbell neck's
+critical inward distance. At `0.49`, the independent cycle oracle requires one
+closed, positively oriented cycle on the correct side and at the requested
+boundary distance. At the singular `0.5` threshold, the operation must return
+`AmbiguousTopology` with no partial branches. At `0.51`, the oracle requires
+two valid cycles. This qualifies topology immediately below/at/above this
+profile's transition; it does not extend worker/cache/Trim or file-persistence
+coverage to those distances.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[neck-boundary]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][region][polyline][concave]' --reporter compact
+git diff --check
+```
+
+Results: the threshold matrix passes 17 assertions / 1 generated case; the
+concave-polyline RegionBoundary subset passes 135 assertions / 4 cases. Test
+commit `b511761b5`. Other neck widths/topologies and end-to-end qualification
+at these exact boundary distances remain open.
