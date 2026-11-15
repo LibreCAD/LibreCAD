@@ -50469,3 +50469,31 @@ Result: all tests passed, 7,838 assertions / 1 case. The previous
 worker/cache/persistence scale matrix is recorded in section 1516. Visible
 Properties interaction remains unverified in this session because macOS
 System Events returns `-10827`; keep that manual acceptance gate open.
+
+## 1518. Extend Clustered-parabola Trim to Unit Scale (2026-11-15)
+
+Test commit `659c42c53` adds the same profile-2 opposite-end source layout
+`{0, 0.98, 0.999, 1}` at unit scale, rotation `0.6435011087932844`,
+translation `(1e6,-2e6)`, and reversed sample traversal. The test continues to
+assert that no candidate matches independent points on the hidden generator
+before selecting the sample-fitting alternative. Trim Two preview/commit,
+undo/redo, and all five R14/R2000/R2018 DXF/DWG save/reopen lanes pass. Together
+with section 1517 this qualifies only scales `1e-1` and `1` for this exact
+profile, frame, and sample layout; do not infer the intermediate or smaller
+scales, different transformations, or other layouts.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 8,117 assertions / 1 case. The non-axis-aligned
+frame and source traversal reversal are covered at the new scale; visible
+Properties interaction, remaining parabola conditioning rows, and independent
+CAD acceptance remain open.
