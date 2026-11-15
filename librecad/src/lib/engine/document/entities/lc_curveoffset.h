@@ -287,6 +287,10 @@ struct LC_CurveOffsetGeometryResult {
         CycleAssemblyFailure cycleAssemblyFailure{CycleAssemblyFailure::None};
         // Nearest kept start from an open endpoint; -1 when not applicable.
         double cycleAssemblyEndpointGap{-1.0};
+        RS_Vector cycleAssemblyOpenEnd;
+        RS_Vector cycleAssemblyNearestStart;
+        std::size_t cycleAssemblyOpenSourceSpan{std::numeric_limits<std::size_t>::max()};
+        std::size_t cycleAssemblyNearestSourceSpan{std::numeric_limits<std::size_t>::max()};
         LC_IntersectionStatus status{LC_IntersectionStatus::Ok};
         LC_IntersectionWorkStats work{};
         bool hasFailureDomain{false};

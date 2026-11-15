@@ -6672,6 +6672,15 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             for (LC_ParametricIntersection& intersection : result.intersections) {
                 intersection.point = localSource.toWorldPoint(intersection.point);
             }
+            if (result.intersectionDiagnostics.failureSite ==
+                    LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly &&
+                result.intersectionDiagnostics.cycleAssemblyFailure ==
+                    LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::OpenBoundary) {
+                result.intersectionDiagnostics.cycleAssemblyOpenEnd =
+                    localSource.toWorldPoint(result.intersectionDiagnostics.cycleAssemblyOpenEnd);
+                result.intersectionDiagnostics.cycleAssemblyNearestStart =
+                    localSource.toWorldPoint(result.intersectionDiagnostics.cycleAssemblyNearestStart);
+            }
             return status;
         }
     }
@@ -7390,13 +7399,25 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 result.intersectionDiagnostics.cycleAssemblyFailure =
                     LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::OpenBoundary;
                 double nearestStart = std::numeric_limits<double>::infinity();
+                size_t nearestStartIndex = pieces.size();
                 for (const size_t k : kept) {
                     const double gap = end.distanceTo(pieces[k].pieces.front().bezier[0]);
                     if (gap < nearestStart) {
                         nearestStart = gap;
+                        nearestStartIndex = k;
                     }
                 }
+                if (nearestStartIndex == pieces.size()) {
+                    return LC_CurveOffsetStatus::AmbiguousTopology;
+                }
                 result.intersectionDiagnostics.cycleAssemblyEndpointGap = nearestStart;
+                result.intersectionDiagnostics.cycleAssemblyOpenEnd = end;
+                result.intersectionDiagnostics.cycleAssemblyNearestStart =
+                    pieces[nearestStartIndex].pieces.front().bezier[0];
+                result.intersectionDiagnostics.cycleAssemblyOpenSourceSpan =
+                    cycle.cubicPieces.back().provenance.sourceSpan;
+                result.intersectionDiagnostics.cycleAssemblyNearestSourceSpan =
+                    pieces[nearestStartIndex].pieces.front().provenance.sourceSpan;
                 return LC_CurveOffsetStatus::AmbiguousTopology; // a boundary that does not close
             }
             current = next;
