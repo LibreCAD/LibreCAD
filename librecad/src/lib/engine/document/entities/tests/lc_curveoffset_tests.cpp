@@ -2498,6 +2498,40 @@ TEST_CASE("Nearly parallel endpoint tangents retain parabola offset support",
     }
 }
 
+TEST_CASE("Reversed asymmetric endpoint-tangent parabola keeps exact offset geometry",
+          "[curve-offset][direct][parabola][tangent][reversed][oracle]") {
+    const std::array<RS_Vector, 2> endpoints{{{7.0, -2.0}, {-5.0, 0.5}}};
+    const std::array<RS_Vector, 2> tangents{{{-2.0, 9.25}, {-10.0, -6.75}}};
+    const LC_ParabolaData forwardData =
+        LC_ParabolaData::FromEndPointsTangents(endpoints, tangents);
+    REQUIRE(forwardData.isValid());
+
+    const std::array<RS_Vector, 2> reversedEndpoints{{endpoints[1], endpoints[0]}};
+    const std::array<RS_Vector, 2> reversedTangents{{-tangents[1], -tangents[0]}};
+    const LC_ParabolaData reversedData =
+        LC_ParabolaData::FromEndPointsTangents(reversedEndpoints, reversedTangents);
+    REQUIRE(reversedData.isValid());
+    CHECK(reversedData.m_controlPoints[0].distanceTo(forwardData.m_controlPoints[2]) < 1e-12);
+    CHECK(reversedData.m_controlPoints[1].distanceTo(forwardData.m_controlPoints[1]) < 1e-12);
+    CHECK(reversedData.m_controlPoints[2].distanceTo(forwardData.m_controlPoints[0]) < 1e-12);
+
+    const LC_Parabola source{nullptr, reversedData};
+    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(snapshot);
+    CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    for (const double distance : {0.25, 1.0}) {
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto result = offsetToSide(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, evaluator(source)) <=
+                  options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("Endpoint-tangent parabola construction refuses degenerate tangent pairs",
           "[curve-offset][parabola][tangent][refusal]") {
     const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};

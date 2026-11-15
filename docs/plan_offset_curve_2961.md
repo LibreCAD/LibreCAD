@@ -49497,3 +49497,37 @@ source remains highlighted until a valid replacement is accepted. Preserve
 the existing-source/cache invariants on type changes, cancellation, invalid
 candidates, and preparation failure. Do not mark the visible gate complete
 from the offscreen results in section 1486.
+
+## 1488. Qualify Reversed Asymmetric Endpoint-tangent Parabola (2026-11-15)
+
+The endpoint-tangent parabola matrix now includes the asymmetric construction
+with endpoints reversed and tangent directions negated/swapped. The direct
+geometry regression confirms the three quadratic Bezier controls reverse
+exactly and checks both signed normal sides at distances `0.25` and `1.0`
+against the independent source evaluator. The worker/cache/persistence matrix
+then carries that reversed source through both signed offsets, exact canonical
+cache validation, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen.
+LibreDWG must expose the SPLINE and both editable-offset EED markers in each
+DWG. This tests one reversed traversal of the existing asymmetric tangent
+profile; it does not qualify arbitrary endpoint order, tangent pairings,
+spacing, scales, or all endpoint-tangent parabolas.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][reversed][oracle]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Results: the focused independent geometry oracle passes 3,139 assertions / 1
+case; the full endpoint-tangent worker/cache/persistence matrix passes 12,604
+assertions / 1 case with LibreDWG enabled. This closes only the reversed
+asymmetric profile evidence. Visible packaged-app interaction and
+ODA/AutoCAD acceptance remain open; continue the parabola variant/conditioning
+matrix without treating this profile as general source-family support.
