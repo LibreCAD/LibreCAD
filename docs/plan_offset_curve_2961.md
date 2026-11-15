@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`ef60340ba`):** The repeated request to
+`6023dc2e0`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -53,16 +53,18 @@ candidate through worker/cache and persistence. This validates the selected
 candidate, not recovery of an unobservable hidden source curve.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
-the sampled profile boundaries, transformed dense-end Trim scale coverage,
-and independent CAD
-acceptance remain open. Section 1503
+the sampled profile boundaries, additional transformed/high-origin dense-end
+frames, and independent CAD acceptance remain open. Section 1503
 qualifies a separate well-conditioned reconstructed four-point parabola at
 scales `1e-6`, `1`, and `1e6`. Section 1504 qualifies all three dense-end
 control profiles across `1e-4` through `1e6` (section 1505). At `1e-5`,
 profiles 0 and 2 pass while profile 1 fails closed at the work cap; all three
 fail closed at `1e-6`. Profile 1 passes at `2e-5` and `5e-5`, bracketing its
 sampled work-cap transition to `(1e-5, 2e-5]` (section 1506). The refusal cases
-have no-mutation regressions. This
+have no-mutation regressions. Section 1507 adds rotated, translated, and
+reversed-sample dense-end Trim frames for all three profiles. Where no
+candidate recovers the hidden generating curve, the tests select a valid
+sample-fitting candidate and do not claim hidden-curve recovery. This
 does not claim that all scales or transformations succeed. Do not treat
 worker/cache and persistence scale coverage as evidence for Trim
 actions. The second-save DWG
@@ -118,8 +120,9 @@ does not establish arbitrary-translation behavior.
 Section 1503 separately qualifies reconstructed-parabola Trim at unit and
 extreme scales, plus the existing transformed/reversed high-origin frame.
 Sections 1504-1505 extend dense-end clustered Trim across all profiles and
-scales, including per-profile low-scale refusal behavior; transformed
-dense-end scale coverage remains open.
+scales, including per-profile low-scale refusal behavior. Section 1507 adds
+one bounded rotated/translated/reversed frame per profile; arbitrary frames
+and larger origins remain open.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -129,9 +132,9 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits; (3) add transformed dense-end frames with independent
-source/cache checks, retaining the existing candidate-selection ambiguity
-limits; (4)
+and fail-closed limits; (3) completed by sections 1504-1507: qualify
+scale-dependent and transformed dense-end Trim with independent source/cache
+checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
 refresh, current-source indication, successful replacement, and
 cancellation/refusal; (5) record independent ODA/AutoCAD acceptance where
@@ -50117,3 +50120,34 @@ git diff --check
 Result: 6,862 assertions / 1 case pass. All successful profile-scale rows
 retain their five-format persistence checks; transformed dense-end coverage
 and independent CAD acceptance remain open.
+
+## 1507. Trim Dense-end Parabolas in Rotated and Translated Frames (2026-11-15)
+
+Add a rotated frame (`0.6435011088` radians), scale `1e-2`, translation
+`(1e5, -2e5)`, and reversed four-point sample order for each of the three
+dense-end control profiles. The viewport is positioned and zoomed so each
+source/cutter pair remains visible in a consistent screen-space range. For
+each profile the reconstructed candidate is checked at independent points
+when the generating curve is identifiable. Where no candidate recovers that
+hidden curve, the fixture follows the drawing action's candidate-choice
+contract by selecting a valid candidate that reproduces the four supplied
+samples; this does not claim hidden-curve recovery. The selected typed source
+then passes Trim preview/commit, undo/redo, and all five DXF/DWG save/reopen
+lanes.
+
+Implementation commit `6023dc2e0` (`test(offset): cover transformed dense
+parabola trims`). Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: 7,628 assertions / 1 case pass, including available LibreDWG entity
+checks and five-format round-trips for the transformed rows. This is one
+measured frame per profile; arbitrary rotations/translations, larger origins,
+visible desktop acceptance, and external CAD acceptance remain open.
