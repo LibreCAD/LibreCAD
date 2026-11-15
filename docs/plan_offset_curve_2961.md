@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`32cb3a8f7`):** The
+`b3a9990de`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -56,7 +56,7 @@ Section 1511 measures the same opposite-end clustered profile at source scales
 `1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
 across that scale matrix, while sample-fitting user-selected candidates are a
 separate worker/cache/persistence claim.
-Sections 1516-1527 now extend these clustered layouts to all three
+Sections 1516-1529 now extend these clustered layouts to all three
 recorded control profiles under the rotated `(1e6,-2e6)` frame. Direct
 reconstruction and worker/cache cover scales `1e-3`, `1e-2`, `1e-1`, and `1`
 for all three profiles; Trim Two, undo/redo, and five-format file round-trips
@@ -65,11 +65,8 @@ typed-source persistence matrix now also passes at all four scales for all
 three profiles. When no candidate qualifies against independent points, tests
 select a sample-fitting alternative; that does not recover the hidden
 generating curve. The adjacent `{0, 0.95, 0.995, 1}` layout also passes the
-direct reconstruction oracle for all three profiles and four scales, with
-worker/cache and typed-source persistence for all three at scale `1e-1`, plus
-worker/cache and typed-source persistence for all three at all four scales.
-Trim Two and result round-trips cover all three at scale `1e-1`; its other Trim
-scales remain open.
+direct reconstruction oracle, worker/cache, typed-source persistence, and
+Trim Two/result round-trips for all three profiles at all four scales.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50786,9 +50783,10 @@ QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
 git diff --check
 ```
 
-Result: all tests passed, 11,159 assertions / 1 case. Visible Properties
-interaction, Trim at the other alternate-layout scales, other parabola
-variants, and independent CAD acceptance remain open.
+Result: all tests passed, 11,159 assertions / 1 case. At this checkpoint,
+Trim at the other alternate-layout scales remained open; section 1529 adds
+them. Visible Properties interaction, other parabola variants, and independent
+CAD acceptance remain open.
 
 ## 1528. Extend Alternate-layout Worker and Persistence Across Scales (2026-11-15)
 
@@ -50800,7 +50798,8 @@ worker/cache and typed-source persistence matrix across scales `1e-3`,
 `1e-2`, `1e-1`, and `1`. Each row checks both signed offsets, operation-8 cache
 validation, and all five R14/R2000/R2018 DXF/DWG lanes; available LibreDWG
 reads are enabled. The test uses the repository's bounded 900-second client
-suite allowance. Trim remains qualified only at scale `1e-1` in section 1527.
+suite allowance. At this checkpoint, Trim remained qualified only at scale
+`1e-1`; section 1529 adds the other scales.
 
 Validation on macOS arm64 CMake Release:
 
@@ -50814,7 +50813,34 @@ LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-Result: all tests passed, 121,544 assertions / 2 cases. This closes only the
+Result: all tests passed, 121,544 assertions / 2 cases. This closes the
 measured three profiles, four scales, one transform, and alternate sample
-layout. Other parabola variants/layouts, Trim at other scales, visible UI, and
-independent CAD acceptance remain open.
+layout for worker/cache and persistence. At this checkpoint, Trim at the other
+scales remained open; section 1529 adds them. Other parabola variants/layouts,
+visible UI, and independent CAD acceptance remain open.
+
+## 1529. Complete Alternate-layout Trim Across Scales (2026-11-15)
+
+Test commit `b3a9990de` extends the `{0, 0.95, 0.995, 1}` Trim Two matrix for
+all three recorded control profiles from scale `1e-1` to `1e-3`, `1e-2`, and
+`1`, under the same rotation `0.6435011087932844`, translation `(1e6,-2e6)`,
+and reversed sample traversal. Combined with section 1527, both this layout
+and the opposite-end layout `{0, 0.98, 0.999, 1}` now pass Trim preview/commit,
+undo/redo, and five-format DXF/DWG result save/reopen for all three profiles at
+all four measured scales. This does not imply other sample distributions,
+transforms, or parabola constructions.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 13,329 assertions / 1 case. Other parabola
+constructions/layouts, visible Properties interaction, and independent CAD
+acceptance remain open.
