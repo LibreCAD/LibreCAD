@@ -47940,3 +47940,32 @@ DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
 Result: 5,882 assertions / 1 Catch2 case passed. The family/variant matrix
 continues in Slice 4; visible picker and Update-from-Source interaction remain
 open in Slice 5.
+
+## 1440. Recheck qmake6 and Visible-desktop Delivery Gates (2026-11-15)
+
+Re-ran the recursive qmake6 build from the existing Qt 6.12 macOS arm64 build
+tree after the latest PR commits:
+
+```sh
+make -j6
+```
+
+The command exits successfully across the application, offset worker, and
+plugins, but reports `Nothing to be done` for the targets. This is an
+incremental no-op check, not a fresh compile; the fresh qmake6 build evidence
+remains section 1332.
+
+Attempted the Slice 5 visible interaction gate. The approved temporary app
+`/private/tmp/LibreCAD-PR3193-visible.app` is no longer present. The current
+CMake application bundle exists, but `screencapture` returns `could not create
+image from display`, and querying macOS System Events fails with error
+`-10827`. No usable visible desktop or accessibility tree is available in this
+session. Therefore no interactive behavior is inferred from this attempt; the
+visible picker, source-indication, success, and cancellation checks remain
+open. Resume them when a controllable macOS desktop is available.
+
+An additional broad `[parabola]` test selection was interrupted during a
+hostile-file persistence case after 36 of 37 cases and 4,327,522 assertions
+had passed. Its SIGINT result is not a test pass or a product failure and is
+not used to close any Slice 4 item; the focused typed-source Trim and picker
+receipts in sections 1438-1439 remain the applicable passing evidence.
