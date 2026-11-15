@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`189f9d71c`):** The repeated request to
+`ef60340ba`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -52,14 +52,17 @@ exist; a regression now follows that user choice and carries the selected
 candidate through worker/cache and persistence. This validates the selected
 candidate, not recovery of an unobservable hidden source curve.
 Other sample distributions, parabola constructions, conditioning/domain
-limits, visible picker/highlight interaction, lower-scale conditioning for
-profile 1, transformed dense-end Trim scale coverage, and independent CAD
+limits, visible picker/highlight interaction, lower-scale conditioning beyond
+the sampled profile boundaries, transformed dense-end Trim scale coverage,
+and independent CAD
 acceptance remain open. Section 1503
 qualifies a separate well-conditioned reconstructed four-point parabola at
 scales `1e-6`, `1`, and `1e6`. Section 1504 qualifies all three dense-end
 control profiles across `1e-4` through `1e6` (section 1505). At `1e-5`,
 profiles 0 and 2 pass while profile 1 fails closed at the work cap; all three
-fail closed at `1e-6`. The refusal cases have no-mutation regressions. This
+fail closed at `1e-6`. Profile 1 passes at `2e-5` and `5e-5`, bracketing its
+sampled work-cap transition to `(1e-5, 2e-5]` (section 1506). The refusal cases
+have no-mutation regressions. This
 does not claim that all scales or transformations succeed. Do not treat
 worker/cache and persistence scale coverage as evidence for Trim
 actions. The second-save DWG
@@ -126,9 +129,9 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits; (3) investigate profile 1's `1e-5` work-cap refusal
-against nearby scales without weakening atomic limits, then add transformed
-dense-end frames with independent source/cache checks; (4)
+and fail-closed limits; (3) add transformed dense-end frames with independent
+source/cache checks, retaining the existing candidate-selection ambiguity
+limits; (4)
 complete the visible Properties workflow for repeated type changes, candidate
 refresh, current-source indication, successful replacement, and
 cancellation/refusal; (5) record independent ODA/AutoCAD acceptance where
@@ -50088,3 +50091,29 @@ git diff --check
 Result: 6,428 assertions / 1 case pass. The section 1504 successful-cell
 file-lane and semantic checks remain enabled; external CAD acceptance and
 transformed dense-end scale rows remain open.
+
+## 1506. Bracket the Profile-1 Dense-end Trim Work Boundary (2026-11-15)
+
+Probe profile 1 between section 1505's `1e-5` refusal and `1e-4` success.
+The reconstructed parabola succeeds through Trim Two, undo/redo, and all five
+save/reopen lanes at `2e-5` and `5e-5`; its action and synchronous paths still
+refuse atomically at `1e-5`. Thus the sampled transition is bounded to
+`(1e-5, 2e-5]`, but no continuous threshold or scale-invariance guarantee is
+claimed. The profile-0 and profile-2 `1e-5` success cases and all-profile
+`1e-6` refusals remain in the same matrix.
+
+Implementation commit `ef60340ba` (`test(offset): narrow clustered trim
+refusal boundary`). Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: 6,862 assertions / 1 case pass. All successful profile-scale rows
+retain their five-format persistence checks; transformed dense-end coverage
+and independent CAD acceptance remain open.
