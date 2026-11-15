@@ -746,6 +746,8 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         ? GENERATE(0u, 1u, 2u, 3u) : 0u;
     const unsigned parabolaVariant = kind == SourceKind::Parabola
         ? GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u) : 0u;
+    const unsigned parabolaClusterProfile =
+        kind == SourceKind::Parabola && parabolaVariant == 6 ? GENERATE(0u, 1u, 2u) : 0u;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -754,6 +756,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     CAPTURE(kind);
     CAPTURE(fitPointVariant);
     CAPTURE(parabolaVariant);
+    CAPTURE(parabolaClusterProfile);
     CAPTURE(static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -785,7 +788,12 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     if (kind == SourceKind::Parabola && parabolaVariant != 0) {
         std::array<RS_Vector, 3> controls{{{-1.3, 1.0}, {0.25, -0.7}, {1.2, 1.4}}};
         if (parabolaVariant == 6) {
-            const std::array<RS_Vector, 3> clusteredControls{{{-2.0, 1.0}, {0.0, -1.0}, {2.0, 1.0}}};
+            const std::array<std::array<RS_Vector, 3>, 3> clusteredProfiles{{
+                {{{-2.0, 1.0}, {0.0, -1.0}, {2.0, 1.0}}},
+                {{{-1.6, 0.8}, {0.3, -0.7}, {2.2, 1.5}}},
+                {{{0.0, 0.0}, {1.0, 2.0}, {2.2, 0.4}}},
+            }};
+            const auto& clusteredControls = clusteredProfiles[parabolaClusterProfile];
             const auto pointAt = [&](const double t) {
                 const double mt = 1.0 - t;
                 return clusteredControls[0] * (mt * mt) +
