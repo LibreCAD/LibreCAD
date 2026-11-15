@@ -5784,6 +5784,11 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                                      {RS2::FormatDWG, "r2000.dwg"},
                                      {RS2::FormatDXFRW2018, "r2018.dxf"},
                                      {RS2::FormatDWG2018, "r2018.dwg"}}};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
     qint64 requestId = 1;
     const auto rotate = [](const RS_Vector& point) {
         constexpr double angle = 0.41;
@@ -5848,6 +5853,24 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                 const auto path = directory.file(
                     std::to_string(requestId) + "-" + lane.extension);
                 REQUIRE(lc::test::exportDrawing(drawing, path, lane.format));
+#ifdef DWGSUPPORT
+                if (!libreDwgReader.isEmpty() &&
+                    (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
+                    QProcess reader;
+                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+                    REQUIRE(reader.waitForStarted());
+                    REQUIRE(reader.waitForFinished(30000));
+                    INFO(reader.readAllStandardError().toStdString());
+                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                    REQUIRE(reader.exitCode() == 0);
+                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                    REQUIRE(document.isObject());
+                    const QJsonArray objects = document.object().value("OBJECTS").toArray();
+                    CHECK(std::any_of(objects.begin(), objects.end(), [](const QJsonValue& object) {
+                        return object.toObject().value("entity").toString() == "SPLINE";
+                    }));
+                }
+#endif
                 RS_Graphic reopened;
                 REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
                 LC_OffsetCurve* reopenedOffset = nullptr;
