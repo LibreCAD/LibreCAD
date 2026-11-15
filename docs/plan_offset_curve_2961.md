@@ -47917,3 +47917,26 @@ QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
 Result: 15,226 assertions / 44 cases passed. The active-workflow visible
 acceptance remains open in Slice 5; per-variant source/worker/cache/Trim/file
 qualification remains open in Slice 4.
+
+## 1439. Revalidate Typed-source Trim Across All Families (2026-11-15)
+
+Re-ran the worker-backed source replacement and Trim/persistence matrix at PR
+head `aafbfb049`. The generated cases cover all nine typed source families,
+including six parabola constructions/orientations/conditioning profiles,
+through Update from Source, worker result/cache handling, Trim, undo/redo, and
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. Parabola remains typed
+through source capture and cache metadata. Where `dwgread` is available, the
+DWG spline output is also compared independently. This qualifies only the
+recorded variants, not all geometry in each family.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I trimmed every typed source family to plain fragments' --reporter compact
+```
+
+Result: 5,882 assertions / 1 Catch2 case passed. The family/variant matrix
+continues in Slice 4; visible picker and Update-from-Source interaction remain
+open in Slice 5.
