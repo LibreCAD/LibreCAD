@@ -687,7 +687,10 @@ TEST_CASE("LC_Parabola: balanced interior reconstruction is sample-order indepen
       {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
       {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
   }};
-  constexpr std::array<double, 4> parameters{{0.1, 0.3, 0.7, 0.9}};
+  constexpr std::array<std::array<double, 4>, 2> layouts{{
+      {{0.1, 0.3, 0.7, 0.9}},
+      {{0.05, 0.2, 0.65, 0.95}},
+  }};
   constexpr std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
   constexpr double angle = 0.6435011087932844;
   const RS_Vector translation{1e6, -2e6};
@@ -707,51 +710,54 @@ TEST_CASE("LC_Parabola: balanced interior reconstruction is sample-order indepen
         point.rotate(angle);
         return point + translation;
       };
-      std::array<RS_Vector, 4> samples;
-      std::transform(parameters.begin(), parameters.end(), samples.begin(),
-                     [&](const double t) { return mapPoint(localPointAt(t)); });
-      std::array<RS_Vector, 3> independent;
-      std::transform(independentParameters.begin(), independentParameters.end(),
-                     independent.begin(), [&](const double t) {
-                       return mapPoint(localPointAt(t));
-                     });
-      const double worldMagnitude = std::max(std::abs(translation.x),
-                                             std::abs(translation.y));
-      const double tolerance = std::max(
-          scale * 1e-7,
-          256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
-      std::array<std::size_t, 4> order{{0, 1, 2, 3}};
-      do {
-        CAPTURE(order);
-        std::vector<RS_Vector> orderedSamples;
-        for (const std::size_t index : order)
-          orderedSamples.push_back(samples[index]);
-        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
-        const auto errorAt = [](const LC_ParabolaData& candidate,
-                                const RS_Vector& point) {
-          return candidate.fromX(candidate.findX(point)).distanceTo(point);
-        };
-        const auto sampleFit = std::find_if(
-            candidates.begin(), candidates.end(), [&](const auto& candidate) {
-              return candidate.isValid() &&
-                     std::all_of(samples.begin(), samples.end(),
-                         [&](const RS_Vector& point) {
-                           return errorAt(candidate, point) <= tolerance;
-                         });
-            });
-        REQUIRE(sampleFit != candidates.end());
-        double bestIndependentError = std::numeric_limits<double>::infinity();
-        for (const auto& candidate : candidates) {
-          if (!candidate.isValid())
-            continue;
-          for (const RS_Vector& point : independent)
-            bestIndependentError =
-                std::min(bestIndependentError, errorAt(candidate, point));
-        }
-        CAPTURE(bestIndependentError, tolerance);
-        CHECK(std::isfinite(bestIndependentError));
-        CHECK(bestIndependentError <= 64.0 * tolerance);
-      } while (std::next_permutation(order.begin(), order.end()));
+      for (const auto& parameters : layouts) {
+        CAPTURE(parameters);
+        std::array<RS_Vector, 4> samples;
+        std::transform(parameters.begin(), parameters.end(), samples.begin(),
+                       [&](const double t) { return mapPoint(localPointAt(t)); });
+        std::array<RS_Vector, 3> independent;
+        std::transform(independentParameters.begin(), independentParameters.end(),
+                       independent.begin(), [&](const double t) {
+                         return mapPoint(localPointAt(t));
+                       });
+        const double worldMagnitude = std::max(std::abs(translation.x),
+                                               std::abs(translation.y));
+        const double tolerance = std::max(
+            scale * 1e-7,
+            256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+        std::array<std::size_t, 4> order{{0, 1, 2, 3}};
+        do {
+          CAPTURE(order);
+          std::vector<RS_Vector> orderedSamples;
+          for (const std::size_t index : order)
+            orderedSamples.push_back(samples[index]);
+          const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+          const auto errorAt = [](const LC_ParabolaData& candidate,
+                                  const RS_Vector& point) {
+            return candidate.fromX(candidate.findX(point)).distanceTo(point);
+          };
+          const auto sampleFit = std::find_if(
+              candidates.begin(), candidates.end(), [&](const auto& candidate) {
+                return candidate.isValid() &&
+                       std::all_of(samples.begin(), samples.end(),
+                           [&](const RS_Vector& point) {
+                             return errorAt(candidate, point) <= tolerance;
+                           });
+              });
+          REQUIRE(sampleFit != candidates.end());
+          double bestIndependentError = std::numeric_limits<double>::infinity();
+          for (const auto& candidate : candidates) {
+            if (!candidate.isValid())
+              continue;
+            for (const RS_Vector& point : independent)
+              bestIndependentError =
+                  std::min(bestIndependentError, errorAt(candidate, point));
+          }
+          CAPTURE(bestIndependentError, tolerance);
+          CHECK(std::isfinite(bestIndependentError));
+          CHECK(bestIndependentError <= 64.0 * tolerance);
+        } while (std::next_permutation(order.begin(), order.end()));
+      }
     }
   }
 }

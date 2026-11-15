@@ -6025,7 +6025,10 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
 
     const std::array<RS_Vector, 3> controls{{
         {-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
-    constexpr std::array<double, 4> parameters{{0.1, 0.3, 0.7, 0.9}};
+    constexpr std::array<std::array<double, 4>, 2> layouts{{
+        {{0.1, 0.3, 0.7, 0.9}},
+        {{0.05, 0.2, 0.65, 0.95}},
+    }};
     constexpr std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
     constexpr double scale = 1e-1;
     constexpr double angle = 0.6435011087932844;
@@ -6040,8 +6043,6 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
         return mapPoint(controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) +
                         controls[2] * (t * t));
     };
-    std::array<RS_Vector, 4> samples;
-    std::transform(parameters.begin(), parameters.end(), samples.begin(), pointAt);
     std::array<RS_Vector, 3> independent;
     std::transform(independentParameters.begin(), independentParameters.end(),
                    independent.begin(), pointAt);
@@ -6065,131 +6066,164 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
 #endif
 
     qint64 requestId = 1;
-    std::array<std::size_t, 4> order{{0, 1, 2, 3}};
-    do {
-        CAPTURE(order, angle, translation);
-        std::vector<RS_Vector> orderedSamples;
-        for (const std::size_t index : order)
-            orderedSamples.push_back(samples[index]);
-        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
-        const auto candidate = std::find_if(candidates.begin(), candidates.end(),
-            [&](const LC_ParabolaData& value) {
-                if (!value.isValid()) return false;
-                const auto fits = [&](const RS_Vector& point) {
-                    return value.fromX(value.findX(point)).distanceTo(point) <= fitTolerance;
-                };
-                return std::all_of(samples.begin(), samples.end(), fits) &&
-                       std::all_of(independent.begin(), independent.end(), fits);
-            });
-        REQUIRE(candidate != candidates.end());
+    for (const auto& parameters : layouts) {
+        CAPTURE(parameters);
+        std::array<RS_Vector, 4> samples;
+        std::transform(parameters.begin(), parameters.end(), samples.begin(), pointAt);
+        std::array<std::size_t, 4> order{{0, 1, 2, 3}};
+        do {
+            CAPTURE(order, angle, translation);
+            std::vector<RS_Vector> orderedSamples;
+            for (const std::size_t index : order)
+                orderedSamples.push_back(samples[index]);
+            const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+            const auto candidate = std::find_if(
+                candidates.begin(), candidates.end(),
+                [&](const LC_ParabolaData &value) {
+                  if (!value.isValid())
+                    return false;
+                  const auto fits = [&](const RS_Vector &point) {
+                    return value.fromX(value.findX(point)).distanceTo(point) <=
+                           fitTolerance;
+                  };
+                  return std::all_of(samples.begin(), samples.end(), fits) &&
+                         std::all_of(independent.begin(), independent.end(),
+                                     fits);
+                });
+            REQUIRE(candidate != candidates.end());
 
-        for (const double signedDistance : {5.0 * scale, -5.0 * scale}) {
-            CAPTURE(signedDistance);
-            const LC_OffsetSourceDefinition definition{
-                LC_OffsetSourceGeometry{*candidate}, signedDistance, 1e-4, false};
-            Receipts generatedReceipts;
-            REQUIRE(owned.get().submit(
-                {token(requestId), Req::GenerateSource{definition, {}}},
-                Client::Mode::Commit, generatedReceipts.into(0)));
-            rt.until([&] { return generatedReceipts.calls[0] != 0; });
-            const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
-            const auto& result = std::get<Reply::Native>(generated.reply().result);
-            REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
-            RS_SplineData cache;
-            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
-            auto native = generated.nativeSource(attributes);
-            REQUIRE(native);
-            REQUIRE(native->sourceDefinition());
-            CHECK(native->sourceDefinition()->source.kind() ==
-                  LC_OffsetSourceGeometry::Kind::Parabola);
-            exactCache(native->getData(), cache);
+            for (const double signedDistance : {5.0 * scale, -5.0 * scale}) {
+              CAPTURE(signedDistance);
+              const LC_OffsetSourceDefinition definition{
+                  LC_OffsetSourceGeometry{*candidate}, signedDistance, 1e-4,
+                  false};
+              Receipts generatedReceipts;
+              REQUIRE(owned.get().submit(
+                  {token(requestId), Req::GenerateSource{definition, {}}},
+                  Client::Mode::Commit, generatedReceipts.into(0)));
+              rt.until([&] { return generatedReceipts.calls[0] != 0; });
+              const auto &generated =
+                  completed(generatedReceipts.at(0), requestId, 7);
+              const auto &result =
+                  std::get<Reply::Native>(generated.reply().result);
+              REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+              RS_SplineData cache;
+              REQUIRE(
+                  LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+              auto native = generated.nativeSource(attributes);
+              REQUIRE(native);
+              REQUIRE(native->sourceDefinition());
+              CHECK(native->sourceDefinition()->source.kind() ==
+                    LC_OffsetSourceGeometry::Kind::Parabola);
+              exactCache(native->getData(), cache);
 
-            Receipts validatedReceipts;
-            REQUIRE(owned.get().submit(
-                {token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}},
-                Client::Mode::Commit, validatedReceipts.into(0)));
-            rt.until([&] { return validatedReceipts.calls[0] != 0; });
-            const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
-            auto admitted = validated.nativeValidatedSource(attributes);
-            REQUIRE(admitted);
-            REQUIRE(admitted->sourceDefinition());
-            CHECK(admitted->sourceDefinition()->source.kind() ==
-                  LC_OffsetSourceGeometry::Kind::Parabola);
-            exactCache(admitted->getData(), cache);
+              Receipts validatedReceipts;
+              REQUIRE(owned.get().submit(
+                  {token(requestId + 1),
+                   Req::ValidateSourceCache{cache, definition, {}}},
+                  Client::Mode::Commit, validatedReceipts.into(0)));
+              rt.until([&] { return validatedReceipts.calls[0] != 0; });
+              const auto &validated =
+                  completed(validatedReceipts.at(0), requestId + 1, 8);
+              auto admitted = validated.nativeValidatedSource(attributes);
+              REQUIRE(admitted);
+              REQUIRE(admitted->sourceDefinition());
+              CHECK(admitted->sourceDefinition()->source.kind() ==
+                    LC_OffsetSourceGeometry::Kind::Parabola);
+              exactCache(admitted->getData(), cache);
 
-            RS_Graphic graphic;
-            graphic.initForNewDocument();
-            auto* layer = new RS_Layer("Offset");
-            graphic.addLayer(layer);
-            admitted->setLayer(layer);
-            graphic.addEntity(admitted.release());
-            const auto expectedFingerprint = RS_Spline::geometryFingerprint(cache);
-            for (const Lane& lane : lanes) {
+              RS_Graphic graphic;
+              graphic.initForNewDocument();
+              auto *layer = new RS_Layer("Offset");
+              graphic.addLayer(layer);
+              admitted->setLayer(layer);
+              graphic.addEntity(admitted.release());
+              const auto expectedFingerprint =
+                  RS_Spline::geometryFingerprint(cache);
+              for (const Lane &lane : lanes) {
                 CAPTURE(lane.extension);
 #ifndef DWGSUPPORT
-                if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
-                    continue;
+                if (lane.format == RS2::FormatDWG ||
+                    lane.format == RS2::FormatDWG2018)
+                  continue;
 #endif
-                const auto path = directory.file(
-                    std::to_string(requestId) + "-" + lane.extension);
+                const auto path = directory.file(std::to_string(requestId) +
+                                                 "-" + lane.extension);
                 REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
                 for (int pass = 0; pass < 2; ++pass) {
-                    RS_Graphic reopened;
-                    REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-                    LC_OffsetCurve* reopenedOffset = nullptr;
-                    for (RS_Entity* entity : reopened) {
-                        if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
-                            continue;
-                        REQUIRE(reopenedOffset == nullptr);
-                        reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
-                    }
-                    REQUIRE(reopenedOffset);
-                    REQUIRE(reopenedOffset->sourceDefinition());
-                    CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
-                          LC_OffsetSourceGeometry::Kind::Parabola);
-                    CHECK(reopenedOffset->sourceDefinition()->signedDistance == signedDistance);
-                    CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) ==
-                          expectedFingerprint);
-                    const auto* reopenedParabola = std::get_if<LC_ParabolaData>(
-                        &reopenedOffset->sourceDefinition()->source.value);
-                    REQUIRE(reopenedParabola);
-                    for (std::size_t point = 0; point < candidate->m_controlPoints.size(); ++point)
-                        CHECK(reopenedParabola->m_controlPoints[point].distanceTo(
-                                  candidate->m_controlPoints[point]) <= fitTolerance);
-                    if (pass == 0)
-                        REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+                  RS_Graphic reopened;
+                  REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                  LC_OffsetCurve *reopenedOffset = nullptr;
+                  for (RS_Entity *entity : reopened) {
+                    if (entity->isDeleted() ||
+                        entity->rtti() != RS2::EntityOffsetCurve)
+                      continue;
+                    REQUIRE(reopenedOffset == nullptr);
+                    reopenedOffset = dynamic_cast<LC_OffsetCurve *>(entity);
+                  }
+                  REQUIRE(reopenedOffset);
+                  REQUIRE(reopenedOffset->sourceDefinition());
+                  CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
+                        LC_OffsetSourceGeometry::Kind::Parabola);
+                  CHECK(reopenedOffset->sourceDefinition()->signedDistance ==
+                        signedDistance);
+                  CHECK(RS_Spline::geometryFingerprint(
+                            reopenedOffset->getData()) == expectedFingerprint);
+                  const auto *reopenedParabola = std::get_if<LC_ParabolaData>(
+                      &reopenedOffset->sourceDefinition()->source.value);
+                  REQUIRE(reopenedParabola);
+                  for (std::size_t point = 0;
+                       point < candidate->m_controlPoints.size(); ++point)
+                    CHECK(reopenedParabola->m_controlPoints[point].distanceTo(
+                              candidate->m_controlPoints[point]) <=
+                          fitTolerance);
+                  if (pass == 0)
+                    REQUIRE(
+                        lc::test::exportDrawing(reopened, path, lane.format));
                 }
 #ifdef DWGSUPPORT
                 if (!libreDwgReader.isEmpty() &&
-                    (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
-                    QProcess reader;
-                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
-                    REQUIRE(reader.waitForStarted());
-                    REQUIRE(reader.waitForFinished(30000));
-                    INFO(reader.readAllStandardError().toStdString());
-                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-                    REQUIRE(reader.exitCode() == 0);
-                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
-                    REQUIRE(document.isObject());
-                    const QJsonArray objects = document.object().value("OBJECTS").toArray();
-                    CHECK(std::any_of(objects.begin(), objects.end(), [](const QJsonValue& objectValue) {
+                    (lane.format == RS2::FormatDWG ||
+                     lane.format == RS2::FormatDWG2018)) {
+                  QProcess reader;
+                  reader.start(libreDwgReader,
+                               {"-O", "minJSON", lc::test::toQString(path)});
+                  REQUIRE(reader.waitForStarted());
+                  REQUIRE(reader.waitForFinished(30000));
+                  INFO(reader.readAllStandardError().toStdString());
+                  REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                  REQUIRE(reader.exitCode() == 0);
+                  const QJsonDocument document =
+                      QJsonDocument::fromJson(reader.readAllStandardOutput());
+                  REQUIRE(document.isObject());
+                  const QJsonArray objects =
+                      document.object().value("OBJECTS").toArray();
+                  CHECK(std::any_of(
+                      objects.begin(), objects.end(),
+                      [](const QJsonValue &objectValue) {
                         const QJsonObject object = objectValue.toObject();
-                        if (object.value("entity").toString() != "SPLINE") return false;
+                        if (object.value("entity").toString() != "SPLINE")
+                          return false;
                         bool hasOffsetApp = false;
                         bool hasTypedSourceTag = false;
-                        for (const QJsonValue& recordValue : object.value("eed").toArray()) {
-                            const QString value = recordValue.toObject().value("value").toString();
-                            hasOffsetApp = hasOffsetApp || value == "LC_OFFSET_CURVE";
-                            hasTypedSourceTag = hasTypedSourceTag || value == "TYPED_SOURCE";
+                        for (const QJsonValue &recordValue :
+                             object.value("eed").toArray()) {
+                          const QString value =
+                              recordValue.toObject().value("value").toString();
+                          hasOffsetApp =
+                              hasOffsetApp || value == "LC_OFFSET_CURVE";
+                          hasTypedSourceTag =
+                              hasTypedSourceTag || value == "TYPED_SOURCE";
                         }
                         return hasOffsetApp && hasTypedSourceTag;
-                    }));
+                      }));
                 }
 #endif
+              }
+              requestId += 2;
             }
-            requestId += 2;
-        }
-    } while (std::next_permutation(order.begin(), order.end()));
+        } while (std::next_permutation(order.begin(), order.end()));
+    }
 }
 
 TEST_CASE("Four-point parabola reconstruction matrix survives worker cache validation",
