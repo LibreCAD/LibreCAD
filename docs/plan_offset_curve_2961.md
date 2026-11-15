@@ -417,7 +417,13 @@ file lanes. Combined-frame positive-bulge growth still refuses atomically
 during cycle assembly. Follow-up experiments using evaluation tolerance for
 exact noding, radial-gap arc tangency classification, and bounded candidate-
 endpoint events did not resolve this cell and were discarded; the focused
-226-assertion regression continues to require an atomic refusal. These tested
+226-assertion regression continues to require an atomic refusal. The exact
+arrangement currently rejects candidate branch 5 because its control points
+deviate `9.81e-12` from a chord, above machine-scale slack, while the candidate
+interval crosses source-adapter breaks and is not certified as a straight
+span. Admitting it under evaluation tolerance enters exact noding but produces
+two outgoing kept pieces at `(-40.2236006616, 0.4472166635)`; the independent
+cycle is still unproved, so this relaxation was also discarded. These tested
 self-crossing profiles expose ordinary
 worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
