@@ -2316,18 +2316,19 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
 
 TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
           "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
     const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    const std::array<const char*, 13> profileNames{{
+    const std::array<const char*, 14> profileNames{{
         "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw",
         "all-arc-circle-cw-centerline-audit", "all-arc-circle-cw-rotated-translated",
         "all-arc-circle-ccw-rotated-translated", "all-arc-circle-cw-large-scale-translated",
         "unequal-radii-rounded-rotated-translated",
         "unequal-radii-rounded-rotated-inward",
         "unequal-radii-rounded-rotated-translated-inward",
-        "unequal-radii-rounded-rotated-large-origin-inward"}};
+        "unequal-radii-rounded-rotated-large-origin-inward",
+        "equal-radius-rounded-rectangle"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -2364,7 +2365,8 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    auto* target = native(graphic, .25, profile == 10 || profile == 11 || profile == 12);
+    auto* target = native(graphic, profile == 13 ? .2 : .25,
+                          profile == 10 || profile == 11 || profile == 12);
     auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
     RS_Vector sourcePick{5, 0};
     double cutterX = 5.0;
@@ -2420,6 +2422,17 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
                 RS_Vector{14, 8.25}, RS_Vector{13.25, 9}, RS_Vector{1.5, 9},
                 RS_Vector{0, 7.5}, RS_Vector{0, 1}})
             sourceOwner->addVertex(transformLocal(point), quarterArcBulge);
+    } else if (profile == 13) {
+        sourcePick = {2, 0};
+        cutterX = 2.5;
+        sourceOwner->addVertex({0, 1}, quarterArcBulge);
+        sourceOwner->addVertex({1, 0});
+        sourceOwner->addVertex({3, 0}, quarterArcBulge);
+        sourceOwner->addVertex({4, 1});
+        sourceOwner->addVertex({4, 3}, quarterArcBulge);
+        sourceOwner->addVertex({3, 4});
+        sourceOwner->addVertex({1, 4}, quarterArcBulge);
+        sourceOwner->addVertex({0, 3});
     } else {
         sourceOwner->addVertex({0, 0});
         sourceOwner->addVertex({10, 0});
@@ -2453,7 +2466,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedSource) ==
           LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
               replacement->sourceDefinition()->source));
-    if (profile == 9 || profile == 10 || profile == 11 || profile == 12) {
+    if (profile == 9 || profile == 10 || profile == 11 || profile == 12 || profile == 13) {
         const double signedDistance = replacement->sourceDefinition()->signedDistance;
         double cacheStart = 0., cacheEnd = 0.;
         REQUIRE(replacement->getParameterDomain(cacheStart, cacheEnd));
@@ -2497,9 +2510,14 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         };
         std::size_t arcsChecked = 0;
         std::size_t arcEndpointsChecked = 0;
+        std::size_t linesChecked = 0;
         for (const auto* segment : *source) {
             const auto* arc = dynamic_cast<const RS_Arc*>(segment);
-            REQUIRE(arc);
+            if (!arc) {
+                REQUIRE(dynamic_cast<const RS_Line*>(segment));
+                ++linesChecked;
+                continue;
+            }
             const auto& data = arc->getData();
             const double orientation = data.reversed ? -1. : 1.;
             const double startAngle = data.reversed ? data.angle2 : data.angle1;
@@ -2538,8 +2556,9 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
                 ++arcEndpointsChecked;
             }
         }
-        CHECK(arcsChecked == 8);
-        CHECK(arcEndpointsChecked == 16);
+        CHECK(arcsChecked == (profile == 13 ? 4u : 8u));
+        CHECK(arcEndpointsChecked == (profile == 13 ? 8u : 16u));
+        CHECK(linesChecked == (profile == 13 ? 4u : 0u));
     }
     REQUIRE(graphic.removeEntity(source));
 
