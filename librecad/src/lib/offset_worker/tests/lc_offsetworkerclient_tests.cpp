@@ -922,6 +922,248 @@ TEST_CASE("Worker client persists major-bulge polyline offsets",
     CHECK(matrixHasSpline);
 }
 
+TEST_CASE("Worker client persists rounded closed-polyline region offsets",
+          "[lc-offsetcurve][worker-client][polyline][curved-boundary][persistence]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-worker-rounded-region");
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Layer layer{QStringLiteral("rounded region source")};
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    constexpr double quarterBulge = 0.4142135623730950488;
+    RS_Polyline sourceEntity;
+    sourceEntity.addVertex({0, 1}, quarterBulge);
+    sourceEntity.addVertex({1, 0});
+    sourceEntity.addVertex({3, 0}, quarterBulge);
+    sourceEntity.addVertex({4, 1});
+    sourceEntity.addVertex({4, 3}, quarterBulge);
+    sourceEntity.addVertex({3, 4});
+    sourceEntity.addVertex({1, 4}, quarterBulge);
+    sourceEntity.addVertex({0, 3});
+    sourceEntity.setClosed(true);
+    sourceEntity.endPolyline();
+    const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
+    REQUIRE(source);
+    REQUIRE(source->isWellFormed());
+
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+
+    qint64 requestId = 1901;
+    for (const double signedDistance : {-0.2, 0.2}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+        Receipts receipts;
+        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+        const auto& completion = completed(receipts.at(0), requestId, 7);
+        const auto& generated = std::get<Reply::Native>(completion.reply().result);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(generated.ordinary.empty());
+        const auto workerEntities = completion.ordinary(attributes);
+        REQUIRE(workerEntities);
+
+        auto directSource = source->makeGenerationEntity();
+        REQUIRE(directSource);
+        const auto* polylineData = std::get_if<LC_OffsetPolylineData>(&source->value);
+        REQUIRE(polylineData);
+        bool hasCircularSegments = false;
+        if (const auto* polyline = dynamic_cast<const RS_Polyline*>(directSource.get())) {
+            for (const RS_Entity* child : *polyline) {
+                hasCircularSegments = hasCircularSegments || dynamic_cast<const RS_Arc*>(child) != nullptr;
+            }
+        }
+        const bool selfIntersectingPolyline = LC_OffsetWorkerTolerance::hasIntersectingPolyline(definition, *directSource);
+        const bool keepWorldFrame = hasCircularSegments && selfIntersectingPolyline;
+        const RS_Vector outputTranslation = keepWorldFrame ? RS_Vector{0, 0} : polylineData->startpoint;
+        directSource->move({-outputTranslation.x, -outputTranslation.y});
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *directSource);
+        REQUIRE(options);
+        const LC_CurveOffsetSide side = options->mode == LC_CurveOffsetMode::RegionBoundary
+            ? (selfIntersectingPolyline && signedDistance < 0.0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left)
+            : (signedDistance > 0.0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right);
+        const auto direct =
+            LC_CurveOffset::buildDirectBranches(*directSource, LC_CurveOffset::makeSideRequest(side, std::abs(signedDistance)), *options,
+                                                LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        const auto materialized =
+            LC_CurveOffset::materializeBranches(*directSource, direct, *options, LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+        for (const auto& entity : materialized.entities) {
+            REQUIRE(entity);
+            entity->move(outputTranslation);
+        }
+        REQUIRE(workerEntities->size() == materialized.entities.size());
+        REQUIRE(generated.ordinary.size() == materialized.entities.size());
+
+        RS_SplineData cache;
+        REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+        const Req::Request validation{token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}};
+        Receipts validationReceipts;
+        REQUIRE(owned.get().submit(validation, Client::Mode::Commit, validationReceipts.into(0)));
+        rt.until([&] { return validationReceipts.calls[0] != 0; });
+        const auto& validationCompletion = completed(validationReceipts.at(0), requestId + 1, 8);
+        const auto& validated = std::get<Reply::Native>(validationCompletion.reply().result);
+        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        auto* outputLayer = new RS_Layer("Offset");
+        graphic.addLayer(outputLayer);
+        struct ExpectedEntity {
+            RS2::EntityType type;
+            RS_Vector start;
+            RS_Vector end;
+            std::uint64_t splineFingerprint{};
+        };
+        std::vector<ExpectedEntity> expected;
+        for (std::size_t i = 0; i < workerEntities->size(); ++i) {
+            RS_Entity* actual = workerEntities->at(i).get();
+            RS_Entity* directEntity = materialized.entities[i].get();
+            REQUIRE(actual);
+            REQUIRE(directEntity);
+            REQUIRE(actual->rtti() == directEntity->rtti());
+            CAPTURE(signedDistance, i, actual->getStartpoint(), actual->getEndpoint(), directEntity->getStartpoint(),
+                    directEntity->getEndpoint());
+            ExpectedEntity record{actual->rtti(), {}, {}, 0};
+            if (actual->rtti() == RS2::EntityLine) {
+                const auto* line = dynamic_cast<const RS_Line*>(actual);
+                const auto* directLine = dynamic_cast<const RS_Line*>(directEntity);
+                REQUIRE(line);
+                REQUIRE(directLine);
+                record.start = line->getStartpoint();
+                record.end = line->getEndpoint();
+                CHECK(record.start.distanceTo(directLine->getStartpoint()) == 0.0);
+                CHECK(record.end.distanceTo(directLine->getEndpoint()) == 0.0);
+            }
+            else {
+                REQUIRE(actual->rtti() == RS2::EntitySpline);
+                const auto* spline = dynamic_cast<const RS_Spline*>(actual);
+                const auto* directSpline = dynamic_cast<const RS_Spline*>(directEntity);
+                REQUIRE(spline);
+                REQUIRE(directSpline);
+                REQUIRE(spline->validate());
+                record.splineFingerprint = RS_Spline::geometryFingerprint(spline->getData());
+                const auto sampleSpline = [](const RS_Spline& value) {
+                    std::vector<RS_Vector> points;
+                    double start = 0.0;
+                    double end = 0.0;
+                    if (!value.getParameterDomain(start, end))
+                        return points;
+                    constexpr int sampleCount = 1024;
+                    points.reserve(sampleCount - 1);
+                    for (int sample = 1; sample < sampleCount; ++sample) {
+                        LC_CurveJet jet;
+                        const double fraction = static_cast<double>(sample) / sampleCount;
+                        if (!value.tryEvaluateJet(start + (end - start) * fraction, LC_CurveEvaluationSide::Interior, jet)) {
+                            return std::vector<RS_Vector>{};
+                        }
+                        points.push_back(jet.point);
+                    }
+                    return points;
+                };
+                const auto directedPolylineDistance = [](const std::vector<RS_Vector>& from, const std::vector<RS_Vector>& to) {
+                    if (from.empty() || to.size() < 2)
+                        return RS_MAXDOUBLE;
+                    double maximum = 0.0;
+                    for (std::size_t i = 0; i < from.size(); i += 4) {
+                        double nearest = RS_MAXDOUBLE;
+                        for (std::size_t j = 1; j < to.size(); ++j) {
+                            const RS_Vector a = to[j - 1];
+                            const RS_Vector delta = to[j] - a;
+                            const double lengthSquared = delta.x * delta.x + delta.y * delta.y;
+                            if (!(lengthSquared > 0.0))
+                                continue;
+                            const RS_Vector offset = from[i] - a;
+                            const double projection = std::clamp((offset.x * delta.x + offset.y * delta.y) / lengthSquared, 0.0, 1.0);
+                            nearest = std::min(nearest, from[i].distanceTo(a + delta * projection));
+                        }
+                        maximum = std::max(maximum, nearest);
+                    }
+                    return maximum;
+                };
+                const auto workerSamples = sampleSpline(*spline);
+                const auto directSamples = sampleSpline(*directSpline);
+                REQUIRE(workerSamples.size() == directSamples.size());
+                const double parityTolerance = 2.0 * options->tolerance.requestedGeometry;
+                CHECK(directedPolylineDistance(workerSamples, directSamples) <= parityTolerance);
+                CHECK(directedPolylineDistance(directSamples, workerSamples) <= parityTolerance);
+            }
+            expected.push_back(record);
+
+            std::unique_ptr<RS_Entity> persisted{actual->clone()};
+            REQUIRE(persisted);
+            persisted->setParent(&graphic);
+            persisted->setLayer(outputLayer);
+            graphic.addEntity(persisted.release());
+        }
+
+        for (const Lane& lane : lanes) {
+            CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+            if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                continue;
+#endif
+            const auto path = directory.file(std::to_string(requestId) + "-" + lane.extension);
+            REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+            for (int pass = 0; pass < 2; ++pass) {
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                std::vector<ExpectedEntity> actual;
+                for (RS_Entity* entity : reopened) {
+                    if (entity->isDeleted())
+                        continue;
+                    ExpectedEntity record{entity->rtti(), {}, {}, 0};
+                    if (entity->rtti() == RS2::EntityLine) {
+                        const auto* line = dynamic_cast<const RS_Line*>(entity);
+                        REQUIRE(line);
+                        record.start = line->getStartpoint();
+                        record.end = line->getEndpoint();
+                    }
+                    else {
+                        REQUIRE(entity->rtti() == RS2::EntitySpline);
+                        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+                        REQUIRE(spline);
+                        record.splineFingerprint = RS_Spline::geometryFingerprint(spline->getData());
+                    }
+                    actual.push_back(record);
+                }
+                REQUIRE(actual.size() == expected.size());
+                for (std::size_t i = 0; i < expected.size(); ++i) {
+                    CHECK(actual[i].type == expected[i].type);
+                    if (expected[i].type == RS2::EntityLine) {
+                        CHECK(actual[i].start.distanceTo(expected[i].start) < 1e-10);
+                        CHECK(actual[i].end.distanceTo(expected[i].end) < 1e-10);
+                    }
+                    else {
+                        CHECK(actual[i].splineFingerprint == expected[i].splineFingerprint);
+                    }
+                }
+                if (pass == 0)
+                    REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+            }
+        }
+        requestId += 2;
+    }
+}
+
 TEST_CASE("Worker client validates mixed-frame positive-bulge region outcomes",
           "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge][outcomes]") {
     REQUIRE(lc::test::ensureSettings());
