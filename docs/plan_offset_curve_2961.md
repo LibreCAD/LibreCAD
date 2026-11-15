@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, tested PR #3193 code head
-`2a09c6aa9`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, tested local head
+`02bf377d7`, based on PR #3193 head `6bf772ff1`; roadmap update pending):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -39,14 +39,20 @@ production reconstruction failure. This closes only those recorded profiles
 and lanes. Sections 1464-1466 exercise Trim Two and undo/redo on a reconstructed
 four-point source in ordinary and transformed/reversed high-origin frames,
 with both results saved and reopened through the five native-capable lanes.
-More extreme sample clustering, parabola constructions and
-conditioning/domain limits, visible picker/highlight interaction, and
-independent CAD acceptance remain open. The second-save DWG `fixed-handle=2`
+An opposite-end clustered layout `{0, 0.98, 0.999, 1}` now runs through the
+worker/cache and persistence matrices. One transformed, high-origin profile
+does not recover the known curve at independent points despite fitting the
+four input samples; the oracle rejects it and the downstream lanes skip it.
+This is a test-qualified boundary, not a production reconstruction fix.
+Other sample distributions, parabola constructions, conditioning/domain
+limits, visible picker/highlight interaction, and independent CAD acceptance
+remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
-extended by `9aacfd0aa` and `4b5e35ae8`: reconstructed four-point parabola
+extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
+clustered-layout qualification recorded in section 1468: reconstructed four-point parabola
 source replacement passes Trim Two preview/commit, undo/redo, and five-lane
 save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
@@ -48850,3 +48856,41 @@ git diff --check
 Result: 78,437 assertions / 2 test cases pass, including available LibreDWG
 parsing of generated DWG files. This does not close visible picker/highlight
 acceptance, independent ODA/AutoCAD review, or the raw DWG OBJECTS replay gap.
+
+## 1468. Qualify Opposite-end Clustered Parabola Samples (2026-11-15)
+
+The four-point reconstruction matrices now also exercise the opposite-end
+clustered layout `{0, 0.98, 0.999, 1}` across the existing control nets and
+transformed frames. For most tested rows, reconstruction matches both the four
+input points and independent points, then proceeds through worker/cache,
+signed offsets, and the five DXF/DWG persistence lanes.
+
+One specific conditioning combination remains unqualified: the third control
+net at scale `1e-2`, rotation `0.6435011087932844`, translation `(1e6,-2e6)`,
+with opposite-end clustering. `From4Points` returns candidates that fit the
+four supplied points, but no candidate also fits independent points within
+the scale-and-origin-aware tolerance. The new regression records this distinction,
+and worker/cache plus persistence matrices explicitly reject and skip this
+combination. Do not treat the four-point fit alone as successful recovery or
+claim a production fix. Further work should improve numerical reconstruction
+only with an independent-geometry oracle, then remove the skip if that exact
+case qualifies; until then it is an explicit fail-closed limit.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: reconstruction passes 2,278 assertions / 7 cases. The complete
+four-point worker/cache/persistence matrix passes 103,571 assertions / 2 cases,
+including LibreDWG parsing when available. Repeated `fixed-handle=2` raw DWG
+OBJECTS replay diagnostics remain separate from entity-level persistence
+success. Visible picker interaction, independent CAD acceptance, and further
+parabola conditioning/variant coverage remain open.
