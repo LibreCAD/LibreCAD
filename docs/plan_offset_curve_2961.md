@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`055dd9a7e`):** The source-type selector contract is implemented for all nine
+`53c5b804f`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -50,12 +50,12 @@ branches, reversed bounds, and both signs. Sections 1547-1548 carry
 cache-admitted cases through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
 save/reopen, with two reopen passes and optional LibreDWG validation. Section
 1548 aligns persistence with all three tested curvature-scaled offsets (`0.5`,
-`1.0`, `1.5` times vertex radius). Section 1550 adds a worker/cache
-conditioning matrix for endpoint-tangent parabola constructions from slope
-`1e-4` to `1e-14`, matched to existing exact-normal tests; section 1551 carries
-those slopes through typed-source five-format persistence. These bounded test
-matrices do not establish arbitrary hyperbola/parabola support or
-visible/external-CAD acceptance.
+`1.0`, `1.5` times vertex radius). Sections 1550 and 1552 cover endpoint-
+tangent parabola worker/cache conditioning at the direct-oracle slopes from
+`1e-4` to `1e-14`; section 1551 persists the nine slopes except `1e-9` and
+`1e-11`, whose persistence remains open. These bounded test matrices do not
+establish arbitrary hyperbola/parabola support or visible/external-CAD
+acceptance.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
@@ -51578,6 +51578,30 @@ git diff --check
 Results: the worker/cache conditioning case passes 363 assertions / 1 case;
 the direct exact-normal tangent suite passes 17,214 assertions / 4 cases.
 Typed persistence across DXF/DWG and independent CAD acceptance remain open.
+
+## 1552. Match Worker Conditioning to Every Direct Tangent Slope (2026-11-15)
+
+Test commit `53c5b804f` adds the two intermediate slopes `1e-9` and `1e-11`
+to section 1550's operation-7/operation-8 kernel matrix, matching every slope
+in the existing direct endpoint-tangent exact-normal suite: `1e-4`, `1e-6`,
+`1e-8`, `1e-9`, `1e-10`, `1e-11`, `1e-12`, `1e-13`, and `1e-14`. Both signs
+at distance `0.01` must generate nonempty complete results and then either
+admit the single cache or explicitly refuse it as `NotCacheRepresentable`.
+This closes worker/cache evidence for those 18 rows; five-format typed-source
+persistence for `1e-9` and `1e-11` remains a follow-up.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[parabola][tangent][conditioning]' --reporter compact
+git diff --check
+```
+
+Result: all 18 signed conditioning rows pass, 465 assertions / 1 case.
 
 ## 1551. Persist the Endpoint-tangent Parabola Slope Grid (2026-11-15)
 
