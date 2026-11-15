@@ -41,7 +41,8 @@ four-point source in ordinary and transformed/reversed high-origin frames,
 with both results saved and reopened through the five native-capable lanes.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
-1}` passes the geometry-only matrix. The more extreme layout
+1}` passes the independent oracle and, for one representative profile/frame,
+the worker/cache and five-lane persistence matrix (section 1496). The more extreme layout
 `{0, 0.98, 0.999, 1}` also runs through worker/cache and persistence matrices.
 For one transformed, high-origin profile, no candidate recovers the hidden
 generating curve at independent points despite fitting all four input samples.
@@ -49759,3 +49760,33 @@ refresh and current-source highlight, then exercise successful replacement
 and cancellation/refusal. Independently, qualify each concrete source variant
 through capture/reconstruction, worker/cache, applicable Trim, and DXF/DWG
 persistence. Selector availability alone does not close geometry support.
+
+## 1496. Carry the Dense-end 0.95 Layout Through Worker and File Lanes (2026-11-15)
+
+The `{0, 0.95, 0.995, 1}` four-point parabola sample layout previously had
+independent reconstruction-oracle evidence only. The worker/cache validation
+and typed-source persistence matrices now include this layout for profile 0
+at scale 1 in its recorded rotated/translated frame. Both signed offsets are
+generated and cache-validated; the typed parabola source and offset geometry
+are then reopened twice through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Available LibreDWG parsing confirms SPLINE presence in the DWG outputs. This
+adds one concrete layout/profile/frame qualification and does not generalize
+to other control profiles, scales, or frames.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: 64,234 assertions / 2 cases pass, including the worker/cache and
+five-lane persistence cases. Expected raw DWG replay diagnostics remain
+`fixed-handle=2`; they are separate from the verified typed source, entity
+reopen, and LibreDWG SPLINE-presence results. Continue the wider parabola
+variant/conditioning matrix and keep visible desktop and independent CAD
+acceptance open.
