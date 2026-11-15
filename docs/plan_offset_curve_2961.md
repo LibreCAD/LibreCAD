@@ -47698,8 +47698,11 @@ Validation on macOS arm64 CMake Release:
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests 'Large-origin rounded polyline source refusal preserves the editable offset' --reporter compact
 ```
 
-Result: 28 assertions / 1 case passed; `librecad_tests` builds and
-`git diff --check` passes. Test commit `60e904266`. Retain high-origin
+Result: 32 assertions / 1 case passed; `librecad_tests` builds and
+`git diff --check` passes. The test now pins the edit result to
+`LC_OffsetCurveRefusal::Engine` with engine status
+`LC_CurveOffsetStatus::AmbiguousTopology`, rather than accepting any generic
+refusal. Test commits `60e904266` and `ed3e386fc`. Retain high-origin
 successful generation as an open geometry qualification; the failure test
-proves only that unsupported input does not corrupt or partially replace the
-existing offset.
+proves only that this specific unsupported input does not corrupt or partially
+replace the existing offset.
