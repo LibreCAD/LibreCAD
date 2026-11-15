@@ -151,7 +151,8 @@ replacement succeeds. Its choices must match all nine
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
 coverage satisfy the implementation portion; the focused headless
-source-picker suite passes 15,226 assertions / 44 cases on this checkout. Do
+source-picker suite passes 15,226 assertions / 44 cases on this checkout,
+revalidated at implementation head `6023dc2e0` in section 1508. Do
 not add another selector or duplicate the parabola-specific UI work. Keep
 visible interaction acceptance open. Separately, the phrase "support all
 kinds" requires end-to-end evidence, not only menu entries: for each enabled
@@ -50151,3 +50152,23 @@ Result: 7,628 assertions / 1 case pass, including available LibreDWG entity
 checks and five-format round-trips for the transformed rows. This is one
 measured frame per profile; arbitrary rotations/translations, larger origins,
 visible desktop acceptance, and external CAD acceptance remain open.
+
+## 1508. Revalidate the Source Picker at the Current Implementation Head (2026-11-15)
+
+Re-run the focused headless Properties source-picker suite after the latest
+Trim/test changes. It passes 15,226 assertions across 44 cases, reconfirming
+repeated in-workflow type switching, candidate filtering for all nine kinds,
+and current-source indication at implementation head `6023dc2e0`. This does
+not replace visible desktop acceptance.
+
+```sh
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Attempting to inspect the visible desktop from this SSH session failed before
+any UI interaction: macOS System Events returned error `-10827`. No visible
+workflow steps are claimed. Reattempt only from a session with a working,
+authorized desktop-control path; preserve the exact acceptance sequence in
+the source-widget checklist above.
