@@ -5880,9 +5880,21 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                     const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
                     REQUIRE(document.isObject());
                     const QJsonArray objects = document.object().value("OBJECTS").toArray();
-                    CHECK(std::any_of(objects.begin(), objects.end(), [](const QJsonValue& object) {
-                        return object.toObject().value("entity").toString() == "SPLINE";
-                    }));
+                    const bool hasTypedSourceEed = std::any_of(
+                        objects.begin(), objects.end(), [](const QJsonValue& objectValue) {
+                            const QJsonObject object = objectValue.toObject();
+                            if (object.value("entity").toString() != "SPLINE") return false;
+                            bool hasOffsetApp = false;
+                            bool hasTypedSourceTag = false;
+                            const QJsonArray eed = object.value("eed").toArray();
+                            for (const QJsonValue& recordValue : eed) {
+                                const QString value = recordValue.toObject().value("value").toString();
+                                hasOffsetApp = hasOffsetApp || value == "LC_OFFSET_CURVE";
+                                hasTypedSourceTag = hasTypedSourceTag || value == "TYPED_SOURCE";
+                            }
+                            return hasOffsetApp && hasTypedSourceTag;
+                        });
+                    CHECK(hasTypedSourceEed);
                 }
 #endif
                 RS_Graphic reopened;
