@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`ca5b4195c`):** The repeated request to
+`189f9d71c`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -52,14 +52,16 @@ exist; a regression now follows that user choice and carries the selected
 candidate through worker/cache and persistence. This validates the selected
 candidate, not recovery of an unobservable hidden source curve.
 Other sample distributions, parabola constructions, conditioning/domain
-limits, visible picker/highlight interaction, dense-end Trim scales outside the
-measured corridor, and independent CAD acceptance remain open. Section 1503
+limits, visible picker/highlight interaction, lower-scale conditioning for
+profile 1, transformed dense-end Trim scale coverage, and independent CAD
+acceptance remain open. Section 1503
 qualifies a separate well-conditioned reconstructed four-point parabola at
 scales `1e-6`, `1`, and `1e6`. Section 1504 qualifies all three dense-end
-control profiles at scales `1e-3`, `1`, and `1e3`; dense profile 0 at `1e-6`
-reaches the explicit intersection-work cap and has a fail-closed, no-mutation
-regression. This does not claim that all scales or transformations succeed.
-Do not treat worker/cache and persistence scale coverage as evidence for Trim
+control profiles across `1e-4` through `1e6` (section 1505). At `1e-5`,
+profiles 0 and 2 pass while profile 1 fails closed at the work cap; all three
+fail closed at `1e-6`. The refusal cases have no-mutation regressions. This
+does not claim that all scales or transformations succeed. Do not treat
+worker/cache and persistence scale coverage as evidence for Trim
 actions. The second-save DWG
 `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
@@ -111,10 +113,10 @@ persistence rows for profile 0. Section 1502 extends those scales to all three
 recorded control profiles; this remains bounded to the measured frames and
 does not establish arbitrary-translation behavior.
 Section 1503 separately qualifies reconstructed-parabola Trim at unit and
-extreme scales, plus the existing transformed/reversed high-origin frame;
-dense-end clustered Trim is qualified at `1e-3`, `1`, and `1e3` across all
-three profiles by section 1504, with explicit `1e-6` fail-closed evidence for
-profile 0. More extreme dense-end scales remain open.
+extreme scales, plus the existing transformed/reversed high-origin frame.
+Sections 1504-1505 extend dense-end clustered Trim across all profiles and
+scales, including per-profile low-scale refusal behavior; transformed
+dense-end scale coverage remains open.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -124,9 +126,9 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits; (3) probe dense-end Trim scales and frames adjacent to
-the measured section 1504 corridor, preserving the independent source/cache
-oracle and recording exact work-cap refusals atomically; (4)
+and fail-closed limits; (3) investigate profile 1's `1e-5` work-cap refusal
+against nearby scales without weakening atomic limits, then add transformed
+dense-end frames with independent source/cache checks; (4)
 complete the visible Properties workflow for repeated type changes, candidate
 refresh, current-source indication, successful replacement, and
 cancellation/refusal; (5) record independent ODA/AutoCAD acceptance where
@@ -50057,3 +50059,32 @@ Result: 3,029 assertions / 1 case pass, including all five persistence lanes
 for successful cells and atomic refusal checks for the low-scale dense-end
 case. Further scales/frames, visible GUI acceptance, and independent CAD
 acceptance remain open.
+
+## 1505. Map Dense-end Trim Scale Boundaries Per Profile (2026-11-15)
+
+Extend section 1504's dense-end Trim Two matrix to scales `1e-4`, `1e-2`,
+`1e2`, and `1e6` across all three profiles, and probe `1e-5` for each profile.
+All profiles succeed at `1e-4`, `1e-3`, `1e-2`, `1`, `1e2`, `1e3`, and
+`1e6`, including preview/commit, undo/redo, and all five save/reopen lanes.
+At `1e-5`, profiles 0 and 2 also pass, while profile 1 reaches the bounded
+intersection-work limit and is explicitly expected to refuse. All three
+profiles refuse at `1e-6`. Refusal assertions require `LimitExceeded`, empty
+output, unchanged geometry, and unchanged document count/undo epoch after the
+action path. These results map the tested profiles only; they do not prove
+continuous success between samples or across transformed frames.
+
+Implementation commit `189f9d71c` (`test(offset): map clustered trim scale
+boundaries`). Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: 6,428 assertions / 1 case pass. The section 1504 successful-cell
+file-lane and semantic checks remain enabled; external CAD acceptance and
+transformed dense-end scale rows remain open.
