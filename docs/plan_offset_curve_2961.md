@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`b3a9990de`):** The
+`a026eecef`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -56,7 +56,7 @@ Section 1511 measures the same opposite-end clustered profile at source scales
 `1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
 across that scale matrix, while sample-fitting user-selected candidates are a
 separate worker/cache/persistence claim.
-Sections 1516-1529 now extend these clustered layouts to all three
+Sections 1516-1530 now extend these sample layouts to all three
 recorded control profiles under the rotated `(1e6,-2e6)` frame. Direct
 reconstruction and worker/cache cover scales `1e-3`, `1e-2`, `1e-1`, and `1`
 for all three profiles; Trim Two, undo/redo, and five-format file round-trips
@@ -66,7 +66,11 @@ three profiles. When no candidate qualifies against independent points, tests
 select a sample-fitting alternative; that does not recover the hidden
 generating curve. The adjacent `{0, 0.95, 0.995, 1}` layout also passes the
 direct reconstruction oracle, worker/cache, typed-source persistence, and
-Trim Two/result round-trips for all three profiles at all four scales.
+Trim Two/result round-trips for all three profiles at all four scales. The
+interior-asymmetric `{0.05, 0.2, 0.65, 0.95}` layout passes direct
+reconstruction, worker/cache, typed-source persistence, and Trim Two for the
+same three profiles/scales; this layout requires an independently qualifying
+candidate in the Trim action matrix.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50842,5 +50846,46 @@ git diff --check
 ```
 
 Result: all tests passed, 13,329 assertions / 1 case. Other parabola
+constructions/layouts, visible Properties interaction, and independent CAD
+acceptance remain open.
+
+## 1530. Qualify an Interior-asymmetric Parabola Sample Layout (2026-11-15)
+
+Test commit `a026eecef` adds the `{0.05, 0.2, 0.65, 0.95}` sample layout to
+the rotated `(1e6,-2e6)` profile matrix for all three recorded control nets
+and scales `1e-3`, `1e-2`, `1e-1`, and `1`. Direct reconstruction bounds the
+best independent-point error. The real worker/cache matrix validates both
+offset signs, and the five R14/R2000/R2018 DXF/DWG lanes persist typed parabola
+sources at every profile/scale row. Trim Two requires an independently
+qualifying reconstructed candidate, then covers worker-backed source
+replacement, preview/commit, undo/redo, and result save/reopen in the same five
+lanes. This adds one non-clustered interior layout; it does not establish other
+sample layouts, parabola constructions, transforms, or continuous scale
+coverage.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][large-origin][profile-matrix]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Results: direct reconstruction 216 assertions / 1 case; worker/cache and
+typed-source persistence 141,905 assertions / 2 cases; Trim Two 16,414
+assertions / 1 case, all passing. LibreDWG reads the emitted DWG files. Known
+`fixed-handle=2` raw OBJECTS replay diagnostics are not semantic validation
+failures and remain a separate metadata limitation. Other parabola
 constructions/layouts, visible Properties interaction, and independent CAD
 acceptance remain open.
