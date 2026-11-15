@@ -1021,12 +1021,12 @@ bool endpoint(const Trim::Endpoint& d, const TrimContext& c) {
     const bool sourceStart = d.source.rawSpan == 0 && d.source.localParameter.lo() == 0 && d.source.localParameter.hi() == 0;
     const bool sourceEnd = d.source.rawSpan + 1 == c.source &&
         d.source.localParameter.lo() == 1 && d.source.localParameter.hi() == 1;
-    const bool component = d.labels & unsigned(Trim::EndLabel::ComponentBoundary);
+    // A disconnected composite cache may have a component boundary at the
+    // global spline seam; that marker is distinct from SourceStart/SourceEnd.
     return admitted(d) && d.labels > 0 && d.labels <= 15 && location(d.source, c) && rootId(d.rootId, c) &&
         bool(d.labels & unsigned(Trim::EndLabel::CutterRoot)) == bool(d.rootId) &&
         (!(d.labels & unsigned(Trim::EndLabel::SourceStart)) || sourceStart) &&
-        (!(d.labels & unsigned(Trim::EndLabel::SourceEnd)) || sourceEnd) &&
-        (!component || (!sourceStart && !sourceEnd));
+        (!(d.labels & unsigned(Trim::EndLabel::SourceEnd)) || sourceEnd);
 }
 bool encloses(const LC_Interval& outer, const LC_Interval& inner) {
     return admitted(outer) && admitted(inner) && outer.lo() <= inner.lo() && outer.hi() >= inner.hi();
@@ -1082,16 +1082,21 @@ bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c
     if (!admitted(d) || d.id != index || !location(d.target, c)) return false;
     const auto& a = d.isolation;
     const auto& b = d.proofDomain;
+    // Isolation intervals are outward-rounded and can extend one ULP across a
+    // span boundary for an exact endpoint root.
+    const double spanLower = std::nextafter(double(a.segmentA), -INFINITY);
+    const double spanUpper = std::nextafter(double(a.segmentA + 1), INFINITY);
     return a.segmentA < c.source && a.segmentB >= c.source && a.segmentB - c.source < c.cutter &&
         b.segmentA == a.segmentA && b.segmentB == a.segmentB &&
-        a.parameterA.lo() >= double(a.segmentA) && a.parameterA.hi() <= double(a.segmentA + 1) &&
+        a.parameterA.lo() >= spanLower && a.parameterA.hi() <= spanUpper &&
         a.parameterB.lo() >= 0 && a.parameterB.hi() <= (c.conic ? Tau : double(c.cutter)) &&
         (c.conic || (a.parameterB.lo() >= double(a.segmentB - c.source) &&
             a.parameterB.hi() <= double(a.segmentB - c.source + 1))) &&
         (d.proof == LC_IntersectionProof::IntervalUniqueTransverse ||
-         d.proof == LC_IntersectionProof::AnalyticEndpoint ||
-         (d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse &&
-          analyticMonotoneRoot(d, c, sourceSpans)));
+            d.proof == LC_IntersectionProof::AnalyticEndpoint ||
+            (d.proof == LC_IntersectionProof::AnalyticMonotoneTransverse &&
+             analyticMonotoneRoot(d, c, sourceSpans))) &&
+        encloses(b.parameterA, a.parameterA) && encloses(b.parameterB, a.parameterB);
 }
 bool conic(const Trim::Result::ConicFragment& d, const TrimContext& c) {
     // ORIGINAL axes/ratio and rendering caches are retained, not normalized.

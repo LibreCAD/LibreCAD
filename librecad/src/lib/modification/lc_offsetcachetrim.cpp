@@ -1784,16 +1784,16 @@ std::vector<Fragment> assemble(Context& c, const Input& input, const std::vector
                 const double next = std::min(to, double(id + 1));
                 const double a = from - double(id), b = next - double(id);
                 const auto controls = restrictSpan((*input.source)[id], a, b);
-                // Positive source parameter length is not enough: rounding at
-                // a large origin can collapse every control to the same point.
-                // Refuse even a constant span inside a nonconstant fragment;
-                // never silently discard a retained interval or publish a prefix.
+                // At large origins, a positive parameter interval can round to
+                // a constant output span. Such a span has no representable
+                // geometry in RS_SplineData; omit it, then validate continuity
+                // and the final fragment endpoints against the surviving data.
                 bool nonconstant = false;
                 for (std::size_t i = 1; i <= degree; ++i) {
                     c.compare();
                     if (!same(controls[0], controls[i])) { nonconstant = true; }
                 }
-                if (!nonconstant) { fail(Refusal::Arithmetic); }
+                if (!nonconstant) { from = next; continue; }
                 if (!f.data.controlPoints.empty() && !same(f.data.controlPoints.back(), controls[0])) { fail(Refusal::Arithmetic); }
                 for (std::size_t i = f.data.controlPoints.empty() ? 0 : 1; i <= degree; ++i) {
                     f.data.controlPoints.push_back(controls[i]); f.data.weights.push_back(1);
@@ -1804,14 +1804,22 @@ std::vector<Fragment> assemble(Context& c, const Input& input, const std::vector
         };
         if (range.wrap) { append(range.from.cut, end); append(0, range.to.cut); }
         else { append(range.from.cut, range.to.cut); }
-        for (std::size_t j = 0; j <= counts[k]; ++j) {
-            const auto multiplicity = j == 0 || j == counts[k] ? degree + 1 : degree;
+        const auto actualSpans = f.sourceSections.size();
+        if (!actualSpans) { fail(Refusal::EmptyOutput); }
+        const auto actualLayout = Geo::cacheLayoutCounts(degree, actualSpans);
+        if (!actualLayout) { fail(Refusal::EmptyOutput); }
+        c.work.outputSpans -= counts[k] - actualSpans;
+        c.work.outputControls -= layout.controls - actualLayout->controls;
+        c.work.outputKnots -= layout.knots - actualLayout->knots;
+        for (std::size_t j = 0; j <= actualSpans; ++j) {
+            const auto multiplicity = j == 0 || j == actualSpans ? degree + 1 : degree;
             for (std::size_t n = 0; n < multiplicity; ++n) { f.data.knotslist.push_back(double(j)); }
         }
         f.data.type = f.data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
         f.data.m_closedFlag = f.data.m_periodicFlag = false;
-        if (f.data.controlPoints.size() != layout.controls || f.data.weights.size() != layout.controls ||
-            f.data.knotslist.size() != layout.knots || f.sourceSections.size() != counts[k]) { fail(Refusal::Arithmetic); }
+        if (f.data.controlPoints.size() != actualLayout->controls ||
+            f.data.weights.size() != actualLayout->controls ||
+            f.data.knotslist.size() != actualLayout->knots) { fail(Refusal::Arithmetic); }
         f.start = endpoint(input, roots, range.from, f.data.controlPoints.front());
         f.end = endpoint(input, roots, range.to, f.data.controlPoints.back());
         staged.push_back(std::move(f));

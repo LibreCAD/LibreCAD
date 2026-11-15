@@ -3097,13 +3097,15 @@ TEST_CASE("High-origin concave polyline source updates and persists the editable
 }
 
 TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragments",
-          "[lc-offsetcurve][polyline][concave][high-origin][trim-action][persistence]") {
+          "[lc-offsetcurve][polyline][concave][high-origin][trim-action][persistence][neck-collapse]") {
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const double coordinate = GENERATE(1e6, 1e9);
     const double angle = GENERATE(0.0, 0.37);
-    const double signedDistance = GENERATE(-.5, .5);
-    CAPTURE(static_cast<int>(format), coordinate, angle, signedDistance);
+    const int scenario = GENERATE(0, 1, 2);
+    const bool dumbbell = scenario == 2;
+    const double signedDistance = scenario == 0 ? -.5 : (dumbbell ? .6 : .5);
+    CAPTURE(static_cast<int>(format), coordinate, angle, scenario, signedDistance);
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -3129,8 +3131,11 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
     graphic.select(QList<RS_Entity*>{target}, true);
     auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
-    for (const RS_Vector& point : std::vector<RS_Vector>{{0, 0}, {8, 0}, {8, 8}, {6, 8},
-                                                        {6, 2}, {2, 2}, {2, 8}, {0, 8}}) {
+    const std::vector<RS_Vector> vertices = dumbbell
+        ? std::vector<RS_Vector>{{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5}, {8, 0}, {12, 0},
+                                 {12, 4}, {8, 4}, {8, 2.5}, {4, 2.5}, {4, 4}, {0, 4}}
+        : std::vector<RS_Vector>{{0, 0}, {8, 0}, {8, 8}, {6, 8}, {6, 2}, {2, 2}, {2, 8}, {0, 8}};
+    for (const RS_Vector& point : vertices) {
         sourceOwner->addVertex(transform(point));
     }
     sourceOwner->setClosed(true);
@@ -3148,7 +3153,7 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
     REQUIRE(updateAction);
     updateAction->setSourceKind(SourceKind::Polyline);
-    const RS_Vector sourcePick = transform({4, 0});
+    const RS_Vector sourcePick = transform(dumbbell ? RS_Vector{2, 0} : RS_Vector{4, 0});
     mouse(*update, view, sourcePick, false);
     mouse(*update, view, sourcePick, false);
     mouse(*update, view, sourcePick, true);
@@ -3163,19 +3168,28 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     CHECK(replacement->sourceDefinition()->signedDistance == signedDistance);
     REQUIRE(graphic.removeEntity(source));
 
-    auto* cutter = new RS_Line(&graphic, transform({-1, 4}), transform({9, 4}));
+    const double cutterY = dumbbell ? 2.0 : 4.0;
+    const double cutterEndX = dumbbell ? 13.0 : 9.0;
+    auto* cutter = new RS_Line(&graphic, transform({-1.0, cutterY}),
+                               transform({cutterEndX, cutterY}));
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
     double trimDistance = 0.0;
-    const RS_Vector trimPick = replacement->getNearestPointOnEntity(transform({7.5, 6}), true,
-                                                                      &trimDistance);
+    const RS_Vector trimPick = replacement->getNearestPointOnEntity(
+        transform(dumbbell ? RS_Vector{10, 3} : RS_Vector{7.5, 6}), true, &trimDistance);
     REQUIRE(trimPick.valid);
     const auto prepared = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {trimPick});
     CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount, prepared.fragments.size(),
-            trimDistance);
+            prepared.work.kernelItems, prepared.work.kernelComparisons,
+            prepared.work.intersections.totalBoxPairs,
+            prepared.work.intersections.generatedLeaves,
+            prepared.work.intersections.generatedItems,
+            prepared.work.intersections.orderingComparisons, trimDistance);
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(prepared.rootCount == 4);
-    if (signedDistance > 0.0) {
+    REQUIRE(prepared.rootCount == (dumbbell ? 2u : 4u));
+    if (dumbbell) {
+        REQUIRE(prepared.fragments.size() >= 2);
+    } else if (signedDistance > 0.0) {
         REQUIRE(prepared.fragments.size() == 1);
     } else {
         REQUIRE(prepared.fragments.size() > 1);
@@ -3184,6 +3198,7 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     for (const auto& fragment : prepared.fragments)
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
     std::sort(expectedFragments.begin(), expectedFragments.end());
+
     const auto preTrimCache = RS_Spline::geometryFingerprint(replacement->getData());
     const auto preTrimSource = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
         *replacement->sourceDefinition());
@@ -3191,7 +3206,7 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
 
     TrimActionProbe trim(&context);
     trim.init(0);
-    mouse(trim, view, transform({-0.5, 4}), true);
+    mouse(trim, view, transform({-0.5, cutterY}), true);
     mouse(trim, view, trimPick, true);
     QElapsedTimer trimWait;
     trimWait.start();
