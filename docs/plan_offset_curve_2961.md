@@ -437,9 +437,9 @@ seed missing corner-circle cuts from candidate offset endpoints only when the
 source endpoint matches a known region node and its radial residual is within
 the node-merge budget. This produces independently checked closed cycles for
 both fill rules, without the broad tolerance relaxation or ambiguous branch
-snapping rejected by earlier experiments. Section 1405 extends the direct
-checks to positive- and negative-bulge bow-ties and validates the
-positive-bulge worker path and file lanes. These tested self-crossing profiles expose ordinary
+snapping rejected by earlier experiments. Sections 1405-1406 extend the direct
+checks to positive- and negative-bulge bow-ties and validate both worker paths
+and their file lanes. These tested self-crossing profiles expose ordinary
 worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
 polyline topology feature generally.
@@ -47103,3 +47103,20 @@ bulge region outcomes` passes 1,757 assertions / 1 case. `git diff --check`
 passes. This qualifies only these bow-tie profiles, transforms, distances, and
 file lanes; broader self-crossing topologies and unrelated delivery gates
 remain open.
+
+## 1406. Qualify Negative-bulge Worker Outcomes in Every Frame (2026-11-14)
+
+Test commit `a8f4955e3` updates the negative-bulge worker regression after the
+section 1405 endpoint-circle cuts made every tested geometry succeed. The
+matrix now requires all eight cells (four frames by both signed distances) to
+match direct generation and materialization, with zero refusals, then checks
+ordinary spline geometry fingerprints across R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG lanes where DWG support is enabled. The source remains
+self-intersecting and does not become a single native editable cache.
+
+Validation on macOS arm64 CMake Release: the combined positive- and
+negative-bulge worker outcomes selector passes 3,482 assertions / 2 cases;
+the focused negative-bulge case passes 1,727 assertions / 1 case; and
+`git diff --check` passes. This covers the stated bow-tie profiles and frames,
+not arbitrary self-crossing arrangements or the broader visible-GUI,
+cross-platform, and independent-CAD gates.
