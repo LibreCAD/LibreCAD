@@ -48660,6 +48660,8 @@ Validation on macOS arm64 CMake Release:
 cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests librecad_offset_worker_client_tests -j4
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
   '[parabola][reconstruction]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola]' --reporter compact
 QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
   /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
   '[from-four-points]' --reporter compact
@@ -48667,6 +48669,7 @@ git diff --check
 ```
 
 Results: reconstruction passes 2,275 assertions / 6 cases; the complete
+parabola-tagged regression suite passes 5,872,368 assertions / 43 cases; the
 four-point worker/cache/persistence subset passes 61,589 assertions / 3 cases.
 The repeated second-save DWG `fixed-handle=2` raw-object replay warning is
 documented in section 1460 and is not treated as complete metadata replay.
