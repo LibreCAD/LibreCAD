@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`54387f543`; exact PR head `9ef5cf763`):** The
+`54387f543`; exact PR head `5d7f82ba9`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -50339,3 +50339,27 @@ git diff --check
 
 Visible Properties verification and the family-by-variant worker/cache/Trim/
 DXF/DWG matrix remain open as listed in the current roadmap.
+
+## 1514. Revalidate Reconstructed-parabola Trim and qmake6 Delivery (2026-11-15)
+
+At the implementation in PR head `5d7f82ba9` (code change `54387f543`), the
+transformed/reversed reconstructed-parabola Trim Two action test passes again:
+7,623 assertions / 1 case, including preview/commit parity, undo/redo, and
+five DXF/DWG save/reopen lanes. The full recursive qmake6 application,
+offset-worker, and plugin build in `/private/tmp/offset3193-qmake6-fresh`
+completes with exit code 0, and a subsequent `make -j6` is up to date. The
+login shell prints the known missing optional
+`/private/tmp/libdxfrw-cargo/env` warning; it does not affect the build.
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+cd /private/tmp/offset3193-qmake6-fresh && make -j6
+```
+
+This closes only local Release Trim/action/file-lane and qmake6 build
+revalidation for the changed code. The broad `[parabola]` selector and ASan
+rebuild were interrupted as recorded in section 1512; exact-head remote CI,
+visible desktop interaction, remaining source variants, and independent CAD
+acceptance remain open.
