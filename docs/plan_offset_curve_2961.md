@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`4c772e745`):** The repeated request to
+`148d1acad`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -72,6 +72,9 @@ Section 1481 extends endpoint-tangent worker/cache and five-lane persistence
 coverage across the same five measured slopes and both signed offset sides.
 Section 1482 independently reads each emitted DWG with LibreDWG and confirms
 the spline entity is present; editable-source semantic validation remains open.
+Section 1483 extends the endpoint-tangent persistence matrix with an
+asymmetric tangent-direction construction through the same worker and file
+lanes.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49357,3 +49360,33 @@ Result: 4,858 assertions / 1 case pass with both DWG readers enabled. This
 establishes parse success and SPLINE presence for these profiles only. ODA or
 AutoCAD semantic acceptance, custom EED interpretation, visible packaged-app
 interaction, and broader parabola geometry remain open.
+
+## 1483. Cover Asymmetric Endpoint-tangent Directions (2026-11-15)
+
+Commit `148d1acad` adds the non-symmetric endpoint/tangent construction already
+used by the direct parabola geometry oracle: endpoints `{7, -2}` and
+`{-5, 0.5}` with tangent vectors `{-2, 9.25}` and `{-10, -6.75}`. It applies
+the same 0.41-radian rotation and `{37, -19}` translation as the near-parallel
+slope profiles, then carries the source through both signed offsets, real
+worker generation, exact cache validation, all five DXF/DWG lanes, and
+LibreDWG parsing of both DWGs. The reopened source definition must retain all
+three controls within `2e-14`, while the output cache fingerprint remains
+exact.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Result: the combined five-slope and asymmetric-tangent case passes 6,017
+assertions / 1 case. This adds one independently directed tangent profile; it
+does not establish all endpoint orderings, tangent direction pairs, endpoint
+spacing, or numerical scales. It also does not validate custom EED semantics
+in LibreDWG, ODA/AutoCAD acceptance, or visible GUI interaction. Continue the
+parabola family-by-variant matrix without generalizing beyond these fixtures.
