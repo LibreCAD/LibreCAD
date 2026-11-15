@@ -48325,3 +48325,42 @@ git diff --check
 
 Results: 1,766 assertions / 1 focused case and 5,559 assertions / 5
 RegionBoundary worker-client cases passed. Test commit `ea2a42d76`.
+
+## 1453. Trim High-origin Neck-collapse Caches (2026-11-15)
+
+Completed the deferred Trim gate from section 1452. The high-origin action
+fixture now includes the linear dumbbell's inward `+0.6` neck-collapse case,
+alongside the U-profile's inward and outward cases. Across origins `1e6` and
+`1e9`, rotations `0` and `0.37`, and R14/R2000/R2018 DXF/DWG lanes, Trim finds
+two cutter roots for the disconnected dumbbell cache and four for the U
+profile. It converts the retained pieces to ordinary splines and verifies
+undo/redo plus two-pass save/reopen. When `dwgread` is available, the DWG files
+are independently checked for matching spline geometry.
+
+The production fix omits a restricted cache span only when every emitted
+control point is exactly the same representable world-coordinate pair. Such a
+span would serialize as a constant spline section; surviving sections still
+have to satisfy continuity, endpoint/provenance, and nonempty-layout checks.
+This is not a general tolerance-based deletion rule. The finding was a
+positive parameter sliver near a large-origin endpoint whose entire restricted
+control polygon rounded to one point. Other unrepresentable geometry continues
+to refuse rather than publishing a partial fragment.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'High-origin concave polyline offsets trim and persist ordinary fragments' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-offsetcurve][trim]' --reporter compact
+git diff --check
+```
+
+Results: 11,070 assertions / 1 generated matrix case passed for the targeted
+high-origin persistence/Trim regression; 112,444 assertions / 8 Trim cases
+passed in the broader regression tag. The focused test covers 60
+profile/origin/rotation/version lanes and independent LibreDWG geometry checks
+for the DWG outputs. Code commit `d2d26b786`; this qualifies these profiles and
+conditions only, not every concave or collapsed-neck topology. Visible GUI
+acceptance and broader ODA/AutoCAD validation remain open.
