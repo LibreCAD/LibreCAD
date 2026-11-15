@@ -2146,7 +2146,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
-    const double tangentSlope = GENERATE(0.2, 1e-14);
+    const double tangentSlope = GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
     const LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
         {{{0.0, 0.0}, {10.0, 0.0}}},
         {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
