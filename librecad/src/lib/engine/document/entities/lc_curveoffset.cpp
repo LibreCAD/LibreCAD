@@ -7564,7 +7564,7 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
     }
     const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
     const auto* polylineAdapter = dynamic_cast<const PolylineOffsetSource*>(adapter.get());
-    if (polyline != nullptr && polylineAdapter != nullptr && polylineAdapter->hasCircularSegment() &&
+    if (polyline != nullptr && polylineAdapter != nullptr &&
         scale.coordinate > 16.0 * scale.feature &&
         std::hypot(polyline->getStartpoint().x, polyline->getStartpoint().y) > 16.0 * scale.feature) {
         const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
@@ -7731,7 +7731,6 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     const auto* polylineAdapter = dynamic_cast<const PolylineOffsetSource*>(adapter.get());
     bool localizeSimplePolyline = false;
     if (polyline != nullptr && polylineAdapter != nullptr &&
-        polylineAdapter->hasCircularSegment() &&
         scale.coordinate > 16.0 * scale.feature &&
         std::hypot(polyline->getStartpoint().x, polyline->getStartpoint().y) >
             16.0 * scale.feature) {

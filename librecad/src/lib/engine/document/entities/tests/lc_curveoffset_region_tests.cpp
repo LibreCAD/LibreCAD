@@ -1182,6 +1182,72 @@ TEST_CASE("A concave polyline region grows and shrinks through its reflex corner
     }
 }
 
+TEST_CASE("High-origin concave polyline regions preserve cycles in a local frame",
+          "[curve-offset][region][polyline][concave][large-origin]") {
+    const std::vector<RS_Vector> vertices{{0, 0}, {8, 0}, {8, 8}, {6, 8},
+                                          {6, 2}, {2, 2}, {2, 8}, {0, 8}};
+    constexpr double distance = 0.5;
+    for (const double coordinate : {1e6, 1e9}) {
+        for (const double angle : {0.0, 0.37}) {
+            const RS_Vector origin{coordinate, -coordinate};
+            const double cosine = std::cos(angle);
+            const double sine = std::sin(angle);
+            const auto transform = [&](const RS_Vector& point) {
+                return origin + RS_Vector{cosine * point.x - sine * point.y,
+                                          sine * point.x + cosine * point.y};
+            };
+            const auto toLocal = [&](const RS_Vector& point) {
+                const RS_Vector shifted = point - origin;
+                return RS_Vector{cosine * shifted.x + sine * shifted.y,
+                                 -sine * shifted.x + cosine * shifted.y};
+            };
+
+            RS_Polyline source;
+            for (const RS_Vector& point : vertices) {
+                const RS_Vector transformed = transform(point);
+                source.addVertex(transformed);
+            }
+            source.setClosed(true);
+            source.endPolyline();
+            const QList<RS_Vector> originalVertices = source.getVertexes();
+
+            for (const bool grow : {true, false}) {
+                CAPTURE(coordinate, angle, grow);
+                LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(source, distance);
+                options.mode = LC_CurveOffsetMode::RegionBoundary;
+                auto result = LC_CurveOffset::buildDirectBranches(
+                    source,
+                    LC_CurveOffset::makeSideRequest(
+                        grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, distance),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(static_cast<int>(result.status),
+                        static_cast<int>(result.intersectionDiagnostics.failureSite),
+                        static_cast<int>(result.intersectionDiagnostics.stage));
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE(result.branches.size() == 1);
+                for (LC_OffsetBranch& branch : result.branches) {
+                    for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                        for (RS_Vector& point : piece.bezier) point = toLocal(point);
+                        if (piece.provenance.arcCentre.valid)
+                            piece.provenance.arcCentre = toLocal(piece.provenance.arcCentre);
+                    }
+                }
+                const CycleCheck check = checkCycles(result, vertices, LC_CurveFillRule::NonZero,
+                                                     distance, grow);
+                CHECK(check.closed);
+                CHECK(check.worstDistance < 1e-6);
+                CHECK(check.wrongSide == 0);
+                REQUIRE(check.areas.size() == 1);
+                CHECK(check.areas.front() > 0.0);
+            }
+            REQUIRE(source.getVertexes().size() == originalVertices.size());
+            for (int i = 0; i < originalVertices.size(); ++i) {
+                CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
+            }
+        }
+    }
+}
+
 TEST_CASE("A concave polyline erosion separates lobes after its neck collapses",
           "[curve-offset][region][polyline][concave][components]") {
     const std::vector<RS_Vector> vertices{{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5},
