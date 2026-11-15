@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, local tested head `8ab1d0a0e`,
-based on pushed PR #3193 head `8717c53e7`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, local tested head `8373c291d`,
+based on pushed PR #3193 head `22b2b7406`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -138,6 +138,24 @@ four-point sample distributions, source constructions, Trim, persistence, or
 visible and independent-CAD acceptance. Continue the family/variant and
 conditioning work in the roadmap without treating rejection coverage as
 proof that every valid parabola can be reconstructed.
+
+## 1475. Qualify a More Extreme Far-end Sample Cluster (2026-11-15)
+
+Commit `8373c291d` adds `{0, 0.98, 0.999, 1}` to the independent
+`From4Points` matrix for the symmetric quadratic-Bezier profile. The matrix
+checks three coordinate scales, rotated/translated frames, both sample orders,
+all four picked points, three independent points, and endpoint-spanning control
+recovery. All rows pass. This extends geometry-only evidence for that profile;
+it does not alter or supersede the separate asymmetric high-origin case in
+section 1471, where four samples admit candidates that do not recover the
+hidden generating curve at independent points.
+
+Validation on macOS arm64 CMake Release: the reconstruction matrix passes 66
+assertions / 1 case, and the complete `[parabola][reconstruction]` selection
+passes 2,322 assertions / 8 cases. `git diff --check` passes. Worker/cache,
+Trim, file persistence for this newly added matrix row, other constructions,
+visible desktop interaction, and independent CAD validation remain unqualified
+unless covered by their separate evidence.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
