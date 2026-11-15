@@ -2969,3 +2969,129 @@ TEST_CASE("Large-origin rounded polyline source updates and persists the editabl
           LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
               replacement->sourceDefinition()->source));
 }
+
+TEST_CASE("High-origin concave polyline source updates and persists the editable offset",
+          "[lc-offsetcurve][polyline][concave][high-origin][source-update][persistence]") {
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const double coordinate = GENERATE(1e6, 1e9);
+    const double angle = GENERATE(0.0, 0.37);
+    CAPTURE(static_cast<int>(format), coordinate, angle);
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    const RS_Vector origin{coordinate, -coordinate};
+    const double viewScale = coordinate >= 1e9 ? 1.0 : 10.0;
+    const double cosine = std::cos(angle);
+    const double sine = std::sin(angle);
+    const auto transform = [&](const RS_Vector& point) {
+        return origin + RS_Vector{cosine * point.x - sine * point.y,
+                                  sine * point.x + cosine * point.y};
+    };
+    view.getViewPort()->setOffsetAndFactor(qRound(200. - origin.x * viewScale),
+                                          qRound(200. - origin.y * viewScale), viewScale);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic, .5);
+    const auto beforeDefinition = target->definition();
+    const auto beforeCache = RS_Spline::geometryFingerprint(target->getData());
+    graphic.select(QList<RS_Entity*>{target}, true);
+
+    auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
+    for (const RS_Vector& point : std::vector<RS_Vector>{{0, 0}, {8, 0}, {8, 8}, {6, 8},
+                                                        {6, 2}, {2, 2}, {2, 8}, {0, 8}}) {
+        sourceOwner->addVertex(transform(point));
+    }
+    sourceOwner->setClosed(true);
+    sourceOwner->endPolyline();
+    sourceOwner->setLayer(graphic.findLayer("0"));
+    auto* source = sourceOwner.get();
+    graphic.addEntity(source);
+    sourceOwner.release();
+
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::Polyline);
+    const RS_Vector sourcePick = transform({4, 0});
+    mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*updateAction);
+
+    REQUIRE(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
+    REQUIRE(updateAction->lastReport().outcomes.size() == 1);
+    REQUIRE(updateAction->lastReport().outcomes.front().edit);
+    CHECK(updateAction->lastReport().outcomes.front().edit->refusal == LC_OffsetCurveRefusal::None);
+    CHECK(target->isDeleted());
+    CHECK_FALSE(source->isDeleted());
+    auto* replacement = onlyNative(graphic);
+    REQUIRE(replacement);
+    certified(*replacement);
+    REQUIRE(replacement->sourceDefinition());
+    CHECK(replacement->sourceDefinition()->source.kind() == SourceKind::Polyline);
+    CHECK(replacement->definition().distance == beforeDefinition.distance);
+    CHECK(replacement->definition().towardCentre == beforeDefinition.towardCentre);
+    CHECK(RS_Spline::geometryFingerprint(replacement->getData()) != beforeCache);
+    const auto capturedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(capturedSource);
+    const auto expectedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedSource);
+    REQUIRE(expectedEncoding);
+    CHECK(expectedEncoding == LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                                  replacement->sourceDefinition()->source));
+
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(target->isDeleted());
+    CHECK(onlyNative(graphic) == target);
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == beforeCache);
+    basisEquals(target->definition().basis, beforeDefinition.basis);
+    REQUIRE(graphic.redo());
+    CHECK(target->isDeleted());
+    CHECK(onlyNative(graphic) == replacement);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("high-origin-concave-%1.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    auto* reopenedNative = onlyNative(reopened);
+    REQUIRE(reopenedNative);
+    certified(*reopenedNative);
+    REQUIRE(reopenedNative->sourceDefinition());
+    CHECK(RS_Spline::geometryFingerprint(reopenedNative->getData()) ==
+          RS_Spline::geometryFingerprint(replacement->getData()));
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              reopenedNative->sourceDefinition()->source) == expectedEncoding);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    if (dwg && !libreDwgReader.isEmpty())
+        checkLibreDwgSpline(libreDwgReader, output, reopenedNative->getData());
+#endif
+    const auto secondOutput = std::filesystem::path(directory.filePath(
+        QStringLiteral("high-origin-concave-%1-second.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(reopened, secondOutput, format));
+    RS_Graphic reopenedAgain;
+    REQUIRE(lc::test::importDrawing(reopenedAgain, secondOutput, format));
+    auto* reopenedAgainNative = onlyNative(reopenedAgain);
+    REQUIRE(reopenedAgainNative);
+    certified(*reopenedAgainNative);
+    REQUIRE(reopenedAgainNative->sourceDefinition());
+    CHECK(RS_Spline::geometryFingerprint(reopenedAgainNative->getData()) ==
+          RS_Spline::geometryFingerprint(replacement->getData()));
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              reopenedAgainNative->sourceDefinition()->source) == expectedEncoding);
+}
