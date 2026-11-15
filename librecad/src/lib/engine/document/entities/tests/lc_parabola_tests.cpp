@@ -344,6 +344,17 @@ TEST_CASE("LC_Parabola: Far-end clustered samples do not qualify a known large-o
   CHECK(std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
     return fits(candidate, samples);
   }));
+  double bestIndependentError = std::numeric_limits<double>::infinity();
+  for (const auto& candidate : candidates) {
+    double maxError = 0.0;
+    for (const RS_Vector& point : independent)
+      maxError = std::max(maxError,
+          candidate.fromX(candidate.findX(point)).distanceTo(point));
+    bestIndependentError = std::min(bestIndependentError, maxError);
+  }
+  CAPTURE(candidates.size(), fitTolerance, bestIndependentError);
+  CHECK(bestIndependentError > fitTolerance);
+  CHECK(bestIndependentError < 64.0 * fitTolerance);
   CHECK_FALSE(std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
     return fits(candidate, samples) && fits(candidate, independent);
   }));
