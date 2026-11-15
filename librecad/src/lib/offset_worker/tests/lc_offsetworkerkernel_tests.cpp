@@ -10128,6 +10128,91 @@ TEST_CASE("simple closed mixed-bulge offsets promote both source-cache sides",
     }
 }
 
+TEST_CASE("concave mixed-bulge region routing survives rigid and large-origin frames",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][tolerance]") {
+    struct Frame {
+        const char* name;
+        double angle;
+        RS_Vector translation;
+    };
+    const std::array<Frame, 4> frames{{
+        {"identity", 0.0, {0, 0}},
+        {"rotation-only", 0.37, {0, 0}},
+        {"translation-only", 0.0, {1e6, -1e6}},
+        {"combined-large-origin", 0.37, {1e9, -1e9}},
+    }};
+
+    for (const Frame& frame : frames) {
+        CAPTURE(frame.name, frame.angle, frame.translation.x, frame.translation.y);
+        RS_Polyline polyline;
+        polyline.addVertex({0, 0}, 0.2);
+        polyline.addVertex({8, 0}, -0.2);
+        polyline.addVertex({8, 6});
+        polyline.addVertex({0, 6});
+        polyline.setClosed(true);
+        polyline.endPolyline();
+        if (frame.angle != 0.0)
+            polyline.rotate({0, 0}, frame.angle);
+        if (frame.translation.squared() != 0.0)
+            polyline.move(frame.translation);
+
+        const auto source = LC_OffsetSourceGeometry::capture(polyline);
+        REQUIRE(source);
+        REQUIRE(source->isWellFormed());
+        const LC_OffsetSourceDefinition definition{*source, 0.25, 1e-4, false};
+        auto liveSource = source->makeEntity();
+        REQUIRE(liveSource);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *liveSource);
+        REQUIRE(options);
+        CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+
+        const req::Request request{token, req::GenerateSource{definition, {}}};
+        const auto reply = LC_OffsetWorkerKernel::run(request);
+        const auto& generated = native(reply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        CHECK(generated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+        REQUIRE(generated.ordinary.size() == 1);
+        const auto* generatedSpline = std::get_if<RS_SplineData>(&generated.ordinary.front());
+        REQUIRE(generatedSpline);
+        RS_Spline output{nullptr, *generatedSpline};
+        REQUIRE(output.validate());
+
+        const auto direct = LC_CurveOffset::buildDirectBranches(
+            *liveSource, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        const auto materialized = LC_CurveOffset::materializeBranches(
+            *liveSource, direct, *options, LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(materialized.entities.size() == 1);
+        const auto* directSpline =
+            dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+        REQUIRE(directSpline);
+        const RS_SplineData& directData = directSpline->getData();
+        CHECK(generatedSpline->degree == directData.degree);
+        CHECK(generatedSpline->knotslist == directData.knotslist);
+        CHECK(generatedSpline->weights == directData.weights);
+        REQUIRE(generatedSpline->controlPoints.size() == directData.controlPoints.size());
+        double maxControlPointDelta = 0.0;
+        for (std::size_t i = 0; i < generatedSpline->controlPoints.size(); ++i) {
+            maxControlPointDelta = std::max(maxControlPointDelta,
+                generatedSpline->controlPoints[i].distanceTo(directData.controlPoints[i]));
+        }
+        CAPTURE(maxControlPointDelta);
+        CHECK(maxControlPointDelta < 0.02);
+
+        RS_SplineData cache;
+        REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+        const req::Request validationRequest{token,
+            req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+        const auto& validated = native(validationReply, 8);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+    }
+}
+
 TEST_CASE("polyline source validation rejects degenerate and inconsistent chains",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const std::array<LC_OffsetPolylineData, 4> invalidVariants{
