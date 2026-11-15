@@ -1849,16 +1849,30 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     double angle;
     RS_Vector translation;
     bool reversed;
+    bool denseEnd;
+    unsigned profile;
+    bool expectLimitRefusal;
   };
-  const std::array<Frame, 4> frames{{
-      {1.0, 0.0, {}, false},
-      {1e-6, 0.0, {}, false},
-      {1e6, 0.0, {}, false},
-      {1e-2, 0.6435011088, {1e6, -2e6}, true},
+  const std::array<Frame, 14> frames{{
+      {1.0, 0.0, {}, false, false, 0, false},
+      {1e-6, 0.0, {}, false, false, 0, false},
+      {1e6, 0.0, {}, false, false, 0, false},
+      {1e-2, 0.6435011088, {1e6, -2e6}, true, false, 0, false},
+      {1.0, 0.0, {}, false, true, 0, false},
+      {1e-3, 0.0, {}, false, true, 0, false},
+      {1e3, 0.0, {}, false, true, 0, false},
+      {1e-6, 0.0, {}, false, true, 0, true},
+      {1e-3, 0.0, {}, false, true, 1, false},
+      {1.0, 0.0, {}, false, true, 1, false},
+      {1e3, 0.0, {}, false, true, 1, false},
+      {1e-3, 0.0, {}, false, true, 2, false},
+      {1.0, 0.0, {}, false, true, 2, false},
+      {1e3, 0.0, {}, false, true, 2, false},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
-            frame.translation.y, frame.reversed);
+            frame.translation.y, frame.reversed, frame.denseEnd,
+            frame.profile, frame.expectLimitRefusal);
     const double scale = frame.scale;
     const double angle = frame.angle;
     const RS_Vector translation = frame.translation;
@@ -1882,27 +1896,48 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     auto *previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
-    const std::array<RS_Vector, 3> controls{{{-10, 5}, {0, -5}, {10, 5}}};
+    std::array<RS_Vector, 3> controls{{{-10, 5}, {0, -5}, {10, 5}}};
+    if (frame.denseEnd) {
+      const std::array<std::array<RS_Vector, 3>, 3> profiles{{
+          {{{-2.0, 1.0}, {0.0, -1.0}, {2.0, 1.0}}},
+          {{{-1.6, 0.8}, {0.3, -0.7}, {2.2, 1.5}}},
+          {{{0.0, 0.0}, {1.0, 2.0}, {2.2, 0.4}}},
+      }};
+      controls = profiles[frame.profile];
+    }
     const auto pointAt = [&](const double t) {
       const double oneMinusT = 1.0 - t;
       return mapPoint(controls[0] * (oneMinusT * oneMinusT) +
                       controls[1] * (2.0 * oneMinusT * t) +
                       controls[2] * (t * t));
     };
-    const std::vector<RS_Vector> samples =
-        frame.reversed ? std::vector<RS_Vector>{pointAt(1), pointAt(.7),
-                                                pointAt(.3), pointAt(0)}
-                       : std::vector<RS_Vector>{pointAt(0), pointAt(.3),
-                                                pointAt(.7), pointAt(1)};
+    const std::array<double, 4> sampleParameters = frame.denseEnd
+        ? std::array<double, 4>{{0.0, 0.95, 0.995, 1.0}}
+        : std::array<double, 4>{{0.0, 0.3, 0.7, 1.0}};
+    std::vector<RS_Vector> samples;
+    for (const double parameter : sampleParameters)
+      samples.push_back(pointAt(parameter));
+    if (frame.reversed)
+      std::reverse(samples.begin(), samples.end());
     std::array<RS_Vector, 3> expectedControls;
     std::transform(controls.begin(), controls.end(), expectedControls.begin(),
                    mapPoint);
     const auto candidates = LC_ParabolaData::From4Points(samples);
     REQUIRE_FALSE(candidates.empty());
+    const std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
     const auto candidate = std::find_if(
         candidates.begin(), candidates.end(), [&](const auto &value) {
           if (!value.isValid())
             return false;
+          if (frame.denseEnd) {
+            return std::all_of(
+                independentParameters.begin(), independentParameters.end(),
+                [&](const double t) {
+                  const RS_Vector expected = pointAt(t);
+                  return value.fromX(value.findX(expected)).distanceTo(expected) <=
+                         1e-8 * scale;
+                });
+          }
           const double tolerance = std::max(
               1e-8 * scale,
               16.0 * std::numeric_limits<double>::epsilon() *
@@ -1959,7 +1994,8 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     const double step = std::max(1e-7, (breaks[1] - breaks.front()) * 1e-5);
     RS_Vector tangent = native->getPointAt(parameter + step) -
                         native->getPointAt(parameter - step);
-    REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+    REQUIRE(tangent.magnitude() >
+            std::numeric_limits<double>::epsilon() * scale);
     tangent /= tangent.magnitude();
     const RS_Vector normal{-tangent.y, tangent.x};
     const double radius = .1 * scale;
@@ -1972,6 +2008,34 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     const RS_Vector cutterPick = circleCenter + normal * radius;
     const auto nativeBefore = trimGeometry(*native);
     const auto cutterBefore = trimGeometry(*cutter);
+
+    if (frame.expectLimitRefusal) {
+      LC_DocumentModificationBatch refusedBatch;
+      const auto refused = RS_Modification::trimStoredCache(
+          f.graphic, *native, nativePick, *cutter, cutterPick, true,
+          refusedBatch);
+      CHECK_FALSE(refused.result);
+      REQUIRE(refused.cacheRefusal);
+      CHECK(*refused.cacheRefusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+      CHECK(refusedBatch.entitiesToAdd.empty());
+
+      f.action->click(nativePick);
+      REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+      f.action->hover(cutterPick);
+      f.action->waitForTrim();
+      CHECK(trimPreview(*f.action->m_preview).empty());
+      const auto entityCount = f.graphic.count();
+      const auto undoEpoch = f.graphic.undoStateEpoch();
+      f.action->click(cutterPick);
+      CHECK_FALSE(f.action->pending());
+      CHECK(f.graphic.count() == entityCount);
+      CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+      CHECK_FALSE(native->isDeleted());
+      CHECK_FALSE(cutter->isDeleted());
+      CHECK(trimGeometry(*native) == nativeBefore);
+      CHECK(trimGeometry(*cutter) == cutterBefore);
+      continue;
+    }
 
     f.action->click(nativePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
@@ -2103,7 +2167,11 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
           dwg ? QStringLiteral("dwg") : QStringLiteral("dxf");
       const QString fileName = directory.filePath(
           QStringLiteral("reconstructed-%1-%2.%3")
-              .arg(QStringLiteral("frame-%1").arg(&frame - frames.data()))
+              .arg(QStringLiteral("frame-%1-%2-%3")
+                       .arg(&frame - frames.data())
+                       .arg(frame.denseEnd ? QStringLiteral("dense")
+                                           : QStringLiteral("regular"))
+                       .arg(frame.profile))
               .arg(lane)
               .arg(suffix));
       const std::filesystem::path path(fileName.toStdString());
