@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`668cac7b9`; latest picker validation on code revision `670e1d24d`):** The
+`54387f543`; latest picker validation on code revision `670e1d24d`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -50218,11 +50218,13 @@ Follow-up test commit `7ba6ce8da` runs the same boundary with the input sample
 order reversed.
 For the third control net at scale `1e-2`, rotation `0.6435011087932844`,
 translation `(1e6,-2e6)`, and sample parameters `{0, 0.98, 0.999, 1}`, the
-observed best error is `1.39514812979e-6` against the scale-and-origin-aware
-acceptance tolerance `1.1368683772e-7` (about 12.3 times the tolerance). The
-test bounds this ratio to `(1, 64)` rather than requiring a platform-identical
-floating-point result. Reversing the input order retains both candidates and
-the same error band; it does not convert the refusal into a pass. Both
+pre-fix baseline's best error was `1.39514812979e-6` against the
+scale-and-origin-aware acceptance tolerance `1.1368683772e-7` (about 12.3
+times the tolerance). After the deterministic normalization fix in section
+1512, the regression continues to bound the best-candidate ratio to `(1, 64)`
+rather than requiring a platform-identical floating-point result. Reversing
+the input order retains two candidates within the same error band; it does not
+convert hidden-generator recovery into a pass. Both
 candidates still fit the four input samples, but neither qualifies against the
 independent points. This is a measured conditioning/information-loss boundary
 for rounded, translated samples, not a successful recovery or a production
@@ -50278,8 +50280,43 @@ QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
 git diff --check
 ```
 
-Results: the four-scale probe passes 16 assertions / 1 case; the full direct
-reconstruction selector passes 2,345 assertions / 9 cases. Reversed traversal
-is covered separately in section 1510. Worker/cache behavior for selected
-sample-fitting alternatives, broader parabola conditioning, visible picker
-acceptance, and independent CAD acceptance remain separate open gates.
+The initial scale-matrix result was 16 assertions / 1 case and the initial
+direct reconstruction selector was 2,345 assertions / 9 cases. Section 1512
+records post-fix revalidation. Reversed traversal is also covered separately
+in section 1510. Worker/cache behavior for selected sample-fitting
+alternatives, broader parabola conditioning, visible picker acceptance, and
+independent CAD acceptance remain separate open gates.
+
+## 1512. Stabilize Four-point Parabola Reconstruction Order (2026-11-15)
+
+Implementation commit `54387f543` removes two input-order hazards in
+`From4Points`: axis discovery now uses a deterministic lexicographic origin
+from the point set, and convex-point ordering uses a strict lexicographic
+comparator rather than a non-transitive tolerance comparator. The regression
+uses four points whose normalized ordinates straddle the old `RS_TOLERANCE`
+comparison and checks every one of their 24 input permutations. All
+permutations return the same candidate count and equivalent finite control
+nets. This addresses reproducibility and undefined `std::sort` ordering; it
+does not claim to recover the hidden source in the high-origin clustered case
+from section 1510.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: the direct reconstruction suite passes 2,627 assertions / 10 cases;
+the worker/cache and two-pass file matrix passes 77,276 assertions / 2 cases,
+including available LibreDWG reads. A broader `[parabola]` run was interrupted
+after 4,041,536 assertions with 41 of 42 cases complete; the remaining active
+case received SIGINT, so this is not a full-suite pass. A full AddressSanitizer
+rebuild was also stopped at 11% before tests because its fresh-tree rebuild was
+not a focused validation. The focused Release evidence above is complete.
