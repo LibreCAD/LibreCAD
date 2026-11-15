@@ -358,6 +358,29 @@ TEST_CASE("LC_Parabola: Far-end clustered samples do not qualify a known large-o
   CHECK_FALSE(std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
     return fits(candidate, samples) && fits(candidate, independent);
   }));
+
+  const std::vector<RS_Vector> reversedSamples(samples.rbegin(), samples.rend());
+  const auto reversedCandidates = LC_ParabolaData::From4Points(reversedSamples);
+  CHECK(reversedCandidates.size() == candidates.size());
+  CHECK(std::any_of(reversedCandidates.begin(), reversedCandidates.end(),
+                    [&](const auto& candidate) {
+    return fits(candidate, reversedSamples);
+  }));
+  double reversedBestIndependentError = std::numeric_limits<double>::infinity();
+  for (const auto& candidate : reversedCandidates) {
+    double maxError = 0.0;
+    for (const RS_Vector& point : independent)
+      maxError = std::max(maxError,
+          candidate.fromX(candidate.findX(point)).distanceTo(point));
+    reversedBestIndependentError = std::min(reversedBestIndependentError, maxError);
+  }
+  CAPTURE(reversedBestIndependentError);
+  CHECK(reversedBestIndependentError > fitTolerance);
+  CHECK(reversedBestIndependentError < 64.0 * fitTolerance);
+  CHECK_FALSE(std::any_of(reversedCandidates.begin(), reversedCandidates.end(),
+                          [&](const auto& candidate) {
+    return fits(candidate, reversedSamples) && fits(candidate, independent);
+  }));
 }
 
 TEST_CASE("LC_Parabola: From4Points rejects malformed and degenerate samples",
