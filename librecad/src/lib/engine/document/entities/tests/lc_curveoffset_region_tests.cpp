@@ -24,6 +24,7 @@
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <array>
@@ -1278,4 +1279,42 @@ TEST_CASE("A concave polyline erosion separates lobes after its neck collapses",
     REQUIRE(check.areas.size() == 2);
     CHECK(check.areas[0] > 0.0);
     CHECK(check.areas[1] > 0.0);
+}
+
+TEST_CASE("A dumbbell neck transition is bounded on both sides and refuses its singular boundary",
+          "[curve-offset][region][polyline][concave][components][neck-boundary]") {
+    const std::vector<RS_Vector> vertices{{0, 0}, {4, 0}, {4, 1.5}, {8, 1.5},
+                                          {8, 0}, {12, 0}, {12, 4}, {8, 4},
+                                          {8, 2.5}, {4, 2.5}, {4, 4}, {0, 4}};
+    const double distance = GENERATE(0.49, 0.5, 0.51);
+    CAPTURE(distance);
+    RS_Polyline source;
+    for (const RS_Vector& point : vertices) source.addVertex(point);
+    source.setClosed(true);
+    source.endPolyline();
+
+    auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+    options.mode = LC_CurveOffsetMode::RegionBoundary;
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance),
+        options, LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(static_cast<int>(result.status), result.branches.size(),
+            result.intersectionDiagnostics.stage, result.intersectionDiagnostics.failureSite);
+
+    if (distance == 0.5) {
+        CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+        CHECK(result.branches.empty());
+        return;
+    }
+
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    const std::size_t expectedCycles = distance < 0.5 ? 1 : 2;
+    REQUIRE(result.branches.size() == expectedCycles);
+    const CycleCheck check = checkCycles(result, vertices, LC_CurveFillRule::NonZero,
+                                         distance, false);
+    CHECK(check.closed);
+    CHECK(check.worstDistance < 1e-7);
+    CHECK(check.wrongSide == 0);
+    REQUIRE(check.areas.size() == expectedCycles);
+    for (const double area : check.areas) CHECK(area > 0.0);
 }
