@@ -47484,8 +47484,11 @@ passes 3,386,704 assertions / 47 cases with
 `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The same full-suite command with
 the default 150-second suite watchdog expires during the exhaustive matrix;
 it reported watchdog failures, not geometry assertion failures. Do not use
-the default timeout for this complete suite. `git diff --check` passes. Test
-commit `98fcd6309` (`test(offset): assert major-bulge cache refusal`).
+the default timeout for this complete suite. At the same worktree revision,
+the focused Properties source-picker suite also passes 15,226 assertions / 44
+cases, confirming all nine source kinds and in-workflow candidate refresh;
+this is headless evidence only. `git diff --check` passes. Test commit
+`98fcd6309` (`test(offset): assert major-bulge cache refusal`).
 
 This closes only the explicit refusal/atomic-publication contract for this
 one closed major/minor-bulge profile. It does not add editable cache or Trim
