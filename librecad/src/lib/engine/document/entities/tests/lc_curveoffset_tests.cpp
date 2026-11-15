@@ -2532,6 +2532,31 @@ TEST_CASE("Reversed asymmetric endpoint-tangent parabola keeps exact offset geom
     }
 }
 
+TEST_CASE("Mirrored endpoint-tangent parabola keeps exact offset geometry",
+          "[curve-offset][direct][parabola][tangent][mirrored][oracle]") {
+    const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
+        {{{0.0, 0.0}, {10.0, 0.0}}}, {{{1.0, -0.2}, {1.0, 0.2}}});
+    REQUIRE(data.isValid());
+    CHECK(data.m_controlPoints[1].distanceTo({5.0, -1.0}) < 1e-12);
+
+    const LC_Parabola source{nullptr, data};
+    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(snapshot);
+    CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    const EvalFn exactCurve = evaluator(source);
+    for (const double distance : {0.25, 1.0}) {
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto result = offsetToSide(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, exactCurve) <=
+                  options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("Endpoint-tangent parabola construction refuses degenerate tangent pairs",
           "[curve-offset][parabola][tangent][refusal]") {
     const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};

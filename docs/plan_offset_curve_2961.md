@@ -49531,3 +49531,35 @@ assertions / 1 case with LibreDWG enabled. This closes only the reversed
 asymmetric profile evidence. Visible packaged-app interaction and
 ODA/AutoCAD acceptance remain open; continue the parabola variant/conditioning
 matrix without treating this profile as general source-family support.
+
+## 1489. Qualify Mirrored Endpoint-tangent Parabola (2026-11-15)
+
+The endpoint-tangent matrix now includes the vertical mirror of the canonical
+shallow parabola: endpoints `(0, 0)` to `(10, 0)` and tangent vectors
+`(1, -0.2)` to `(1, 0.2)`, producing the control point `(5, -1)`. The direct
+oracle checks the distinct typed parabola and both signed normal sides at
+distances `0.25` and `1.0` against the source evaluator. The worker/cache/file
+matrix uses the translated, rotated form and verifies both signed offsets,
+exact cache admission, R14 DXF, R2000 DXF/DWG, R2018 DXF/DWG reopen, and
+LibreDWG SPLINE plus editable-offset EED-marker visibility. This adds evidence
+for one mirrored curvature profile only; it does not qualify arbitrary
+tangent directions, endpoint spacing, scales, or all parabola constructions.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][mirrored][oracle]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Results: the mirrored direct-normal case passes 676 assertions / 1 case; the
+complete endpoint-tangent worker/cache/persistence matrix passes 11,591
+assertions / 1 case with LibreDWG enabled. Visible packaged-app acceptance and
+ODA/AutoCAD semantic acceptance remain open. Continue the parabola
+variant/conditioning matrix without generalizing from this mirrored profile.
