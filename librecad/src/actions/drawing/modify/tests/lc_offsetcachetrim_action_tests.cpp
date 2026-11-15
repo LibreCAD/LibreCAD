@@ -1853,21 +1853,38 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     unsigned profile;
     bool expectLimitRefusal;
   };
-  const std::array<Frame, 14> frames{{
+  const std::array<Frame, 31> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
       {1e-2, 0.6435011088, {1e6, -2e6}, true, false, 0, false},
       {1.0, 0.0, {}, false, true, 0, false},
       {1e-3, 0.0, {}, false, true, 0, false},
+      {1e-2, 0.0, {}, false, true, 0, false},
       {1e3, 0.0, {}, false, true, 0, false},
+      {1e2, 0.0, {}, false, true, 0, false},
+      {1e-5, 0.0, {}, false, true, 0, false},
+      {1e-4, 0.0, {}, false, true, 0, false},
+      {1e6, 0.0, {}, false, true, 0, false},
       {1e-6, 0.0, {}, false, true, 0, true},
+      {1e-6, 0.0, {}, false, true, 1, true},
       {1e-3, 0.0, {}, false, true, 1, false},
+      {1e-2, 0.0, {}, false, true, 1, false},
       {1.0, 0.0, {}, false, true, 1, false},
+      {1e2, 0.0, {}, false, true, 1, false},
       {1e3, 0.0, {}, false, true, 1, false},
+      {1e-5, 0.0, {}, false, true, 1, true},
+      {1e-4, 0.0, {}, false, true, 1, false},
+      {1e6, 0.0, {}, false, true, 1, false},
+      {1e-6, 0.0, {}, false, true, 2, true},
       {1e-3, 0.0, {}, false, true, 2, false},
+      {1e-2, 0.0, {}, false, true, 2, false},
       {1.0, 0.0, {}, false, true, 2, false},
+      {1e2, 0.0, {}, false, true, 2, false},
       {1e3, 0.0, {}, false, true, 2, false},
+      {1e-5, 0.0, {}, false, true, 2, false},
+      {1e-4, 0.0, {}, false, true, 2, false},
+      {1e6, 0.0, {}, false, true, 2, false},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
