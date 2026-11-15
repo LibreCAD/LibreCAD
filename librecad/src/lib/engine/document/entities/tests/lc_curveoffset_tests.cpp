@@ -2474,7 +2474,8 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
 TEST_CASE("Nearly parallel endpoint tangents retain parabola offset support",
           "[curve-offset][direct][parabola][tangent][oracle]") {
     const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
-    for (const double slope : {1e-4, 1e-6, 1e-8, 1e-9, 1e-10}) {
+    for (const double slope : {1e-4, 1e-6, 1e-8, 1e-9, 1e-10, 1e-11,
+                               1e-12, 1e-13, 1e-14}) {
         CAPTURE(slope);
         const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
             endpoints, {{{1.0, slope}, {1.0, -slope}}});
@@ -2495,6 +2496,18 @@ TEST_CASE("Nearly parallel endpoint tangents retain parabola offset support",
             CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
         }
     }
+}
+
+TEST_CASE("Endpoint-tangent parabola construction refuses degenerate tangent pairs",
+          "[curve-offset][parabola][tangent][refusal]") {
+    const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
+    const auto parallel = LC_ParabolaData::FromEndPointsTangents(
+        endpoints, {{{1.0, 0.0}, {1.0, 0.0}}});
+    CHECK_FALSE(parallel.isValid());
+
+    const auto belowResolution = LC_ParabolaData::FromEndPointsTangents(
+        endpoints, {{{1.0, 1e-15}, {1.0, -1e-15}}});
+    CHECK_FALSE(belowResolution.isValid());
 }
 
 TEST_CASE("Four-point parabola reconstructions retain typed offset support",

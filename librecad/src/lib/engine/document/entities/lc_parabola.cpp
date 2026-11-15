@@ -253,12 +253,52 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
            const std::array<RS_Vector, 2>& endPoints,
            const std::array<RS_Vector, 2>& endTangents)
 {
-    RS_Line l0{nullptr, {endPoints.at(0), endPoints.at(0) + endTangents.at(0)}};
-    RS_Line l1{nullptr, {endPoints.at(1), endPoints.at(1) + endTangents.at(1)}};
-    auto sol = RS_Information::getIntersection(&l0, &l1);
-    if (sol.empty())
+    const auto finitePlanar = [](const RS_Vector& point) {
+        return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+               std::isfinite(point.z) && point.z == 0.0;
+    };
+    if (!finitePlanar(endPoints[0]) || !finitePlanar(endPoints[1]) ||
+        !finitePlanar(endTangents[0]) || !finitePlanar(endTangents[1]))
         return {};
-    return {{endPoints.at(0), sol.at(0), endPoints.at(1)}};
+
+    const auto unitDirection = [](const RS_Vector& tangent, RS_Vector& direction) {
+        const double scale = std::max(std::abs(tangent.x), std::abs(tangent.y));
+        if (!std::isfinite(scale) || scale == 0.0)
+            return false;
+        const double x = tangent.x / scale;
+        const double y = tangent.y / scale;
+        const double length = std::hypot(x, y);
+        if (!std::isfinite(length) || length == 0.0)
+            return false;
+        direction = {x / length, y / length};
+        return true;
+    };
+
+    RS_Vector firstDirection;
+    RS_Vector secondDirection;
+    if (!unitDirection(endTangents[0], firstDirection) ||
+        !unitDirection(endTangents[1], secondDirection))
+        return {};
+
+    const long double denominator =
+        static_cast<long double>(firstDirection.x) * secondDirection.y -
+        static_cast<long double>(firstDirection.y) * secondDirection.x;
+    if (!std::isfinite(denominator) || denominator == 0.0L)
+        return {};
+
+    const long double deltaX = static_cast<long double>(endPoints[1].x) - endPoints[0].x;
+    const long double deltaY = static_cast<long double>(endPoints[1].y) - endPoints[0].y;
+    const long double parameter =
+        (deltaX * secondDirection.y - deltaY * secondDirection.x) / denominator;
+    const long double controlX = endPoints[0].x + parameter * firstDirection.x;
+    const long double controlY = endPoints[0].y + parameter * firstDirection.y;
+    const long double maxCoordinate = std::numeric_limits<double>::max();
+    if (!std::isfinite(parameter) || !std::isfinite(controlX) || !std::isfinite(controlY) ||
+        std::abs(controlX) > maxCoordinate || std::abs(controlY) > maxCoordinate)
+        return {};
+
+    return {{endPoints[0], RS_Vector{static_cast<double>(controlX),
+                                     static_cast<double>(controlY)}, endPoints[1]}};
 }
 
 std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_Vector>& points)
