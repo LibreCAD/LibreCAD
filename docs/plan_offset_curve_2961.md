@@ -47122,3 +47122,17 @@ the full `[curve-offset]` suite passes 2,247,337 assertions / 350 cases; and
 `git diff --check` passes. This covers the stated bow-tie profiles and frames,
 not arbitrary self-crossing arrangements or the broader visible-GUI,
 cross-platform, and independent-CAD gates.
+
+## 1407. Revalidate the Nine-family Source Picker at Current PR Head (2026-11-14)
+
+Re-ran the complete source-picker suite at PR head `82e572013` after the
+mixed-bulge geometry and roadmap commits. This retains the direct evidence for
+repeated in-workflow family changes, immediate candidate filtering across all
+nine `SupportedKinds`, distinct parabola selection, typed replacement, and
+source indication during filter changes. It is headless Qt coverage; it does
+not replace the still-open visible Properties/Update from Source acceptance.
+
+Validation on macOS arm64 CMake Release: `librecad_tests
+'[gui][dialog][offsetcurve][source]' --reporter compact` passes 15,226
+assertions / 44 cases with `QT_QPA_PLATFORM=offscreen`. This does not expand
+the concrete geometry-variant or cross-platform acceptance matrix.
