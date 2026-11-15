@@ -4756,11 +4756,13 @@ TEST_CASE("Typed parabola sources use bounded worker preparation",
           "[lc-offsetcurve][worker-client][ordered-preparation][parabola]") {
     auto& rt = runtime();
     OwnedClient client{rt};
-    std::array<LC_Parabola, 4> sources{{
+    std::array<LC_Parabola, 5> sources{{
         LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
         LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
         LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{4, -3}, RS_Vector{15, 3}, RS_Vector{19, -5}}}},
-        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{7, -2}, RS_Vector{5, 7.25}, RS_Vector{-5, 0.5}}}}
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{7, -2}, RS_Vector{5, 7.25}, RS_Vector{-5, 0.5}}}},
+        LC_Parabola{nullptr, LC_ParabolaData::FromEndPointsTangents(
+            {{{0.0, 0.0}, {10.0, 0.0}}}, {{{1.0, 1e-14}, {1.0, -1e-14}}})}
     }};
     const std::array<double, 2> distances{{.5, 2.75}};
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
