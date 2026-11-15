@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`0d2c5651a`):** The source-type selector contract is implemented for all nine
+`83171435c`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -53,8 +53,10 @@ save/reopen, with two reopen passes and optional LibreDWG validation. Section
 `1.0`, `1.5` times vertex radius). Sections 1550 and 1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
 `1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
-DXF/DWG lanes. This closes that recorded endpoint-tangent slope grid only;
-broader parabola constructions, hyperbola/parabola domains, and
+DXF/DWG lanes. Section 1554 verifies protocol admission rejects degenerate
+tangent pairs and non-finite tangent data before the kernel can run. This
+closes that recorded endpoint-tangent slope grid and invalid-input boundary
+only; broader parabola constructions, hyperbola/parabola domains, and
 visible/external-CAD acceptance remain open.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
@@ -51662,3 +51664,28 @@ git diff --check
 Results: the full endpoint-tangent persistence matrix passes 20,736
 assertions / 1 case with DWG enabled and LibreDWG reads available. Visible GUI
 and independent ODA/AutoCAD acceptance remain open.
+
+## 1554. Reject Degenerate Endpoint-tangent Sources at Protocol Admission (2026-11-15)
+
+Test commit `83171435c` adds fail-closed request-boundary checks for four
+invalid endpoint-tangent parabola constructions: parallel tangent directions,
+a zero tangent, a below-resolution `1e-15` slope, and a non-finite tangent
+component. Each is rejected as an ill-formed typed source. Both operation-7
+generation and operation-8 cache-validation requests must fail `admitted()`
+and produce no serialized request bytes, so invalid geometry cannot reach the
+worker kernel or publish ordinary/native output. This supplements the direct
+constructor-refusal tests and is limited to these malformed tangent inputs.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  'worker protocol rejects degenerate endpoint-tangent parabola sources' \
+  --reporter compact
+git diff --check
+```
+
+Result: the protocol-admission refusal case passes 24 assertions / 1 case.
