@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`54387f543`; latest picker validation on code revision `670e1d24d`):** The
+`54387f543`; exact PR head `9ef5cf763`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -50320,3 +50320,22 @@ after 4,041,536 assertions with 41 of 42 cases complete; the remaining active
 case received SIGINT, so this is not a full-suite pass. A full AddressSanitizer
 rebuild was also stopped at 11% before tests because its fresh-tree rebuild was
 not a focused validation. The focused Release evidence above is complete.
+
+## 1513. Revalidate the Nine-family Picker After Parabola Reconstruction Fix (2026-11-15)
+
+At exact PR head `9ef5cf763`, reran the full offscreen Properties source-picker
+suite after the deterministic `From4Points` normalization and ordering change.
+It passes 15,226 assertions / 44 cases, confirming that the source-type filter,
+candidate refresh, typed parabola distinction, and current-source indication
+still cover all nine `SupportedKinds`. This is headless regression evidence
+only; it does not close visible interaction, geometry-variant, or independent
+CAD acceptance.
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+git diff --check
+```
+
+Visible Properties verification and the family-by-variant worker/cache/Trim/
+DXF/DWG matrix remain open as listed in the current roadmap.
