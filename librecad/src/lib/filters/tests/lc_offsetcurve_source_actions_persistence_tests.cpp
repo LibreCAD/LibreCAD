@@ -745,7 +745,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     const unsigned fitPointVariant = kind == SourceKind::SplinePoints
         ? GENERATE(0u, 1u, 2u, 3u) : 0u;
     const unsigned parabolaVariant = kind == SourceKind::Parabola
-        ? GENERATE(0u, 1u, 2u, 3u) : 0u;
+        ? GENERATE(0u, 1u, 2u, 3u, 4u) : 0u;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -799,9 +799,10 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
             }
             std::reverse(controls.begin(), controls.end());
         }
-        if (parabolaVariant == 3) {
+        if (parabolaVariant >= 3) {
+            const double slope = parabolaVariant == 3 ? 1e-8 : 1e-10;
             sourceData = LC_OffsetSourceGeometry{LC_ParabolaData::FromEndPointsTangents(
-                {{{-5.0, 0.0}, {5.0, 0.0}}}, {{{1.0, 1e-8}, {1.0, -1e-8}}})};
+                {{{-5.0, 0.0}, {5.0, 0.0}}}, {{{1.0, slope}, {1.0, -slope}}})};
         } else {
             sourceData = LC_OffsetSourceGeometry{LC_ParabolaData{controls}};
         }
