@@ -3194,6 +3194,48 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     } else {
         REQUIRE(prepared.fragments.size() > 1);
     }
+    if (dumbbell) {
+        const auto distanceToBoundary = [&vertices](const RS_Vector& point) {
+            double closest = std::numeric_limits<double>::infinity();
+            for (std::size_t i = 0; i < vertices.size(); ++i) {
+                const auto& a = vertices[i];
+                const auto& b = vertices[(i + 1) % vertices.size()];
+                const double dx = b.x - a.x, dy = b.y - a.y;
+                const double length2 = dx * dx + dy * dy;
+                const double t = std::clamp(((point.x - a.x) * dx + (point.y - a.y) * dy) /
+                                                length2,
+                                            0.0, 1.0);
+                closest = std::min(closest, std::hypot(point.x - (a.x + t * dx),
+                                                       point.y - (a.y + t * dy)));
+            }
+            return closest;
+        };
+        const auto insideSource = [&vertices](const RS_Vector& point) {
+            bool inside = false;
+            for (std::size_t i = 0, j = vertices.size() - 1; i < vertices.size(); j = i++) {
+                const auto& a = vertices[i];
+                const auto& b = vertices[j];
+                if ((a.y > point.y) != (b.y > point.y) &&
+                    point.x < (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x)
+                    inside = !inside;
+            }
+            return inside;
+        };
+        for (const auto& fragment : prepared.fragments) {
+            RS_Spline spline(nullptr, fragment.data);
+            double first = 0.0, last = 0.0;
+            REQUIRE(spline.getParameterDomain(first, last));
+            for (int sample = 0; sample <= 64; ++sample) {
+                const RS_Vector world = spline.getPointAt(first + (last - first) * sample / 64.0);
+                REQUIRE(world.valid);
+                const double dx = world.x - origin.x, dy = world.y - origin.y;
+                const RS_Vector local{cosine * dx + sine * dy, -sine * dx + cosine * dy};
+                CAPTURE(sample, local.x, local.y);
+                CHECK(insideSource(local));
+                CHECK(distanceToBoundary(local) == Catch::Approx(0.6).margin(0.02));
+            }
+        }
+    }
     std::vector<std::uint64_t> expectedFragments;
     for (const auto& fragment : prepared.fragments)
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
