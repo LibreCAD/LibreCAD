@@ -47259,3 +47259,29 @@ classified as candidate, stall, or unclassified boundaries. Their independent
 geometry-oracle assertions and diagnostics must be reviewed before adjusting
 either implementation or test expectations. Preserve these as open Slice R
 portability/correctness gates; do not waive them by broadening timeouts.
+
+## 1414. Make Periodic-spline Seam Evidence Platform-stable (2026-11-15)
+
+The three Linux spline failures from section 1413 were test assertions about
+floating-point diagnostic classification, not failures of their independent
+high-precision output checks. Periodic seam roots may be represented as a
+candidate, a bounded stall, or an explicitly unclassified near-zero boundary;
+the tests now accept those documented alternatives and still verify one-sided
+roundoff bounds and emitted geometry. Candidate ownership at the periodic end
+now allows only a `64 * epsilon * parameterScale` bracket discrepancy. The
+higher-degree profile matrix no longer requires at least one platform to take
+the unclassified branch; every profile still must report one of the permitted
+seam diagnostics, and its root/output is checked against the independent
+oracle.
+
+The polyline regression remains intentionally unmodified semantically. Extra
+captures now preserve original/recentered arrangement stage, failure site,
+intersection status, failure depth, and worker refusal data. At the current
+macOS arm64 CMake Release build, the focused four-case kernel selector passes
+all three periodic-spline cases; the convex rotated large-origin polyline
+still has two failures (875/877 assertions pass across the selector): the
+world-frame result is `AmbiguousTopology` at `RegionBoundary/CycleAssembly`,
+while the recentered result is `Ok`, and the worker does not match the direct
+world-frame result. This is a real frame-covariance/worker-consistency issue,
+not waived by the test changes. The diagnostics-enhanced test commit is
+`cbe7067a4`; exact-head Linux validation remains open.
