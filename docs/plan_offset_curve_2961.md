@@ -47049,3 +47049,14 @@ elliptic-cutter cases in sections 1400-1401. The command
 '[lc-offsetcurve][trim-action]' --reporter compact` passes 384,607 assertions /
 96 cases. This action-lane validation does not close the remaining source
 variants, visible-GUI, cross-platform, or independent CAD gates.
+
+## 1403. Revalidate Source-family Picker at the Conic-matrix Code State (2026-11-15)
+
+Re-ran the headless source-picker union against code commit `0593d369e`:
+`QT_QPA_PLATFORM=offscreen
+/private/tmp/offset-2961-cmake-clean/librecad_tests
+'[gui][dialog][offsetcurve][source]' --reporter compact` passes 15,226
+assertions / 44 cases. This reconfirms repeated in-workflow filtering across
+all nine supported source kinds and parabola's distinct type at the current
+product-code state. It remains headless coverage and does not close visible
+desktop interaction or the broader geometry-variant and delivery gates.
