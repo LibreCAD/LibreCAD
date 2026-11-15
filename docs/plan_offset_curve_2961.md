@@ -25,21 +25,23 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest implementation reconciliation (2026-11-15, latest code/test commit
-`db593d13a`):** The
-repeated request to change source type during replacement and support every
-kind in
-`LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
-requirement, not a new parabola-only UI feature. The selector already filters
-all nine kinds, including parabola as distinct from spline-points; retain the
-visible-GUI acceptance gate below. Recent work now qualifies three four-point
-parabola control nets through local-frame reconstruction, worker/cache,
-positive and negative offsets, and two save/reopen passes for the five
-R14/R2000/R2018 DXF/DWG lanes. The high-origin rotated case also fixed a
-production reconstruction failure. This closes only those recorded profiles
-and lanes. Sections 1464-1466 exercise Trim Two and undo/redo on a reconstructed
-four-point source in ordinary and transformed/reversed high-origin frames,
-with both results saved and reopened through the five native-capable lanes.
+**Latest implementation reconciliation (2026-11-15, pushed head
+`a1184540a`):** The source-type selector contract is implemented for all nine
+`LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
+spline-points; automated replacement/highlight transfer is recorded in
+section 1532, while visible packaged-app acceptance remains open. Recent
+four-point parabola evidence is tracked in sections 1533-1542: direct
+reconstruction covers the balanced and interior-asymmetric sample layouts
+across three control profiles and four scales in the rotated high-origin
+frame; every sample permutation of both layouts also passes worker/cache and
+five-format persistence for one representative profile/scale, both offset
+signs, and available LibreDWG reads. These bounded matrices do not establish
+arbitrary sample-layout, scale, frame, or external-CAD support. The high-origin
+rotated case also fixed a production reconstruction failure. This closes only
+those recorded profiles and lanes. Sections 1464-1466 exercise Trim Two and
+undo/redo on a reconstructed four-point source in ordinary and
+transformed/reversed high-origin frames, with both results saved and reopened
+through the five native-capable lanes.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
