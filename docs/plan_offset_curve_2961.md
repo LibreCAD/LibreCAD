@@ -26,16 +26,17 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`f3fd662c0`):** The source-type selector contract is implemented for all nine
+`f3172e736`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532, while visible packaged-app acceptance remains open. Recent
 four-point parabola evidence is tracked in sections 1533-1543: direct
 reconstruction covers four balanced/asymmetric sample layouts across three
 control profiles and four scales in the rotated high-origin frame; every
-sample permutation of all four layouts also passes worker/cache and five-format
-persistence for one representative profile/scale, both offset signs, and
-available LibreDWG reads. These bounded matrices do not establish
+sample permutation of all four layouts passes worker/cache across that same
+12-row profile/scale grid. Five-format persistence covers every permutation
+and both offset signs at a representative profile/scale, with available
+LibreDWG reads. These bounded matrices do not establish
 arbitrary sample-layout, scale, frame, or external-CAD support. The high-origin
 rotated case also fixed a production reconstruction failure. This closes only
 those recorded profiles and lanes. Sections 1464-1466 exercise Trim Two and
@@ -51331,3 +51332,34 @@ cases; worker/cache, five-format persistence, and LibreDWG inspection pass
 112,011 assertions / 1 case. DWG `fixed-handle=2` raw OBJECTS replay diagnostics
 remain separate from semantic source validation. Visible desktop and
 ODA/AutoCAD acceptance remain open.
+
+## 1544. Run Interior Parabola Permutations Across Worker Profiles and Scales (2026-11-15)
+
+Test commit `f3172e736` extends the worker/cache layer beyond section 1543's
+representative profile and scale. For each of the four interior sample layouts
+and all 24 orderings, it exercises three control profiles, scales `1e-3`,
+`1e-2`, `1e-1`, and `1`, the rotated `(1e6,-2e6)` frame, and both
+scale-proportional offset signs. Every row requires a sample-fitting and
+independent-point-qualified reconstruction, successful real-worker generation,
+parabola typed-source materialization, cache combination, and operation-8
+admission with exact cache equality. This closes the worker/cache
+profile-scale permutation matrix for these four layouts. The five-format
+DXF/DWG persistence plus LibreDWG matrix remains at one representative
+profile/scale per layout (section 1543); arbitrary frames and layouts remain
+unqualified.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][permutation][matrix]' \
+  --reporter compact
+git diff --check
+```
+
+Result: build passes; the worker/cache matrix passes 1,393,189 assertions / 1
+case. Visible desktop acceptance and independent ODA/AutoCAD acceptance remain
+open.
