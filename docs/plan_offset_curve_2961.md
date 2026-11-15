@@ -50589,7 +50589,37 @@ git diff --check
 ```
 
 Results: direct profile matrix 48 assertions / 1 case; worker/cache and
-persistence matrices 93,164 assertions / 2 cases, all passing. The full
-parabola family/conditioning matrix, visible Properties interaction, Trim
-coverage for profiles 0 and 1 in this transformed clustered frame, and
-independent CAD acceptance remain open.
+persistence matrices 93,164 assertions / 2 cases, all passing. Trim coverage
+for profiles 0 and 1 in this transformed frame was still open at this
+checkpoint and is now added at scale `1e-1` in section 1522; their other
+profile/scale/layout combinations, the full parabola family/conditioning
+matrix, visible Properties interaction, and independent CAD acceptance
+remain open.
+
+## 1522. Trim the Additional Large-origin Parabola Profiles (2026-11-15)
+
+Test commit `098d4d45d` adds profiles 0 and 1 to the worker-backed Trim Two
+matrix at scale `1e-1`, rotation `0.6435011087932844`, translation
+`(1e6,-2e6)`, reversed traversal, and opposite-end sample layout
+`{0, 0.98, 0.999, 1}`. Each selected source is exercised through Trim
+preview/commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen. The candidate search uses independent points when a candidate
+qualifies and otherwise uses the bounded sample-fitting alternative already
+covered by the direct/worker matrices. This adds one representative Trim
+scale for profiles 0 and 1; their other scales and layouts remain unqualified
+for Trim.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 9,114 assertions / 1 case. The complete supported
+source-family/variant matrix, visible Properties interaction, and independent
+CAD acceptance remain open.
