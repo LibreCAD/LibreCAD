@@ -10134,21 +10134,34 @@ TEST_CASE("concave mixed-bulge region routing survives rigid and large-origin fr
         const char* name;
         double angle;
         RS_Vector translation;
+        bool reversed;
     };
-    const std::array<Frame, 4> frames{{
-        {"identity", 0.0, {0, 0}},
-        {"rotation-only", 0.37, {0, 0}},
-        {"translation-only", 0.0, {1e6, -1e6}},
-        {"combined-large-origin", 0.37, {1e9, -1e9}},
+    const std::array<Frame, 8> frames{{
+        {"identity", 0.0, {0, 0}, false},
+        {"rotation-only", 0.37, {0, 0}, false},
+        {"translation-only", 0.0, {1e6, -1e6}, false},
+        {"combined-large-origin", 0.37, {1e9, -1e9}, false},
+        {"reversed-identity", 0.0, {0, 0}, true},
+        {"reversed-rotation-only", 0.37, {0, 0}, true},
+        {"reversed-translation-only", 0.0, {1e6, -1e6}, true},
+        {"reversed-combined-large-origin", 0.37, {1e9, -1e9}, true},
     }};
 
     for (const Frame& frame : frames) {
-        CAPTURE(frame.name, frame.angle, frame.translation.x, frame.translation.y);
+        CAPTURE(frame.name, frame.angle, frame.translation.x, frame.translation.y,
+                frame.reversed);
         RS_Polyline polyline;
-        polyline.addVertex({0, 0}, 0.2);
-        polyline.addVertex({8, 0}, -0.2);
-        polyline.addVertex({8, 6});
-        polyline.addVertex({0, 6});
+        if (frame.reversed) {
+            polyline.addVertex({0, 0});
+            polyline.addVertex({0, 6});
+            polyline.addVertex({8, 6}, 0.2);
+            polyline.addVertex({8, 0}, -0.2);
+        } else {
+            polyline.addVertex({0, 0}, 0.2);
+            polyline.addVertex({8, 0}, -0.2);
+            polyline.addVertex({8, 6});
+            polyline.addVertex({0, 6});
+        }
         polyline.setClosed(true);
         polyline.endPolyline();
         if (frame.angle != 0.0)
@@ -10159,7 +10172,8 @@ TEST_CASE("concave mixed-bulge region routing survives rigid and large-origin fr
         const auto source = LC_OffsetSourceGeometry::capture(polyline);
         REQUIRE(source);
         REQUIRE(source->isWellFormed());
-        const LC_OffsetSourceDefinition definition{*source, 0.25, 1e-4, false};
+        const double signedDistance = frame.reversed ? -0.25 : 0.25;
+        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
         auto liveSource = source->makeEntity();
         REQUIRE(liveSource);
         const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *liveSource);
