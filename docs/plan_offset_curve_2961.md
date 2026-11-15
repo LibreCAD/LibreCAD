@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`74cb84f66`):** The repeated request to
+`b06bfcb6c`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -49303,10 +49303,10 @@ slope ladder `0.2`, `1e-8`, `1e-10`, `1e-12`, and `1e-14`. For each slope, it
 generates both `+0.5` and `-0.5` offsets through the real native worker,
 validates the exact canonical cache, then exports and reopens R14 DXF, R2000
 DXF/DWG, and R2018 DXF/DWG. Commit `74cb84f66` rotates the endpoints and
-tangents by 0.41 radians and strengthens round-trip validation to compare all
-three source control points at `2e-14` tolerance. Reopened entities must
-retain the distinct parabola source kind, signed distance, and exact cache
-fingerprint in both the original and rotated test revisions.
+tangents by 0.41 radians; commit `b06bfcb6c` adds translation `{37, -19}`.
+Round-trip validation compares all three source control points at `2e-14`
+tolerance. Reopened entities must retain the distinct parabola source kind,
+signed distance, and exact cache fingerprint in each tested frame.
 
 Validation on macOS arm64 CMake Release:
 
@@ -49320,11 +49320,12 @@ git diff --check
 ```
 
 Results: the original axis-aligned slope matrix passes 4,894 assertions / 1
-case; the rotated-frame matrix passes 4,502 assertions / 1 case. These qualify
-only this endpoint/tangent construction, the origin-centered 0.41-radian frame,
-slope ladder, distance pair, and five file lanes. They do not qualify arbitrary
-translations/rotations, endpoint spacing, tangent directions, source
-constructions, Trim beyond the action-specific evidence in sections 1478-1479,
-independent CAD acceptance, or visible packaged-app interaction. Continue the
-per-family variant matrix; do not infer all-parabola support from these
-profiles.
+case; the rotated-frame matrix passes 4,502 assertions / 1 case; and the
+translated/rotated matrix passes 6,076 assertions / 1 case. The latest matrix
+uses angle 0.41 and translation `{37, -19}`. These qualify only this
+endpoint/tangent construction, frame, slope ladder, distance pair, and five
+file lanes. They do not qualify arbitrary translations/rotations, endpoint
+spacing, tangent directions, source constructions, Trim beyond the
+action-specific evidence in sections 1478-1479, independent CAD acceptance, or
+visible packaged-app interaction. Continue the per-family variant matrix; do
+not infer all-parabola support from these profiles.
