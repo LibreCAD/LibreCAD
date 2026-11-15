@@ -47621,6 +47621,27 @@ It does not qualify other signed distances, transforms, bulge arrangements,
 concavity, self-intersections, external CAD interoperability, or visible GUI
 interaction. Keep those Slice 4/Slice 5 gates open.
 
+## 1428. Qualify a Rotated and Translated Rounded Rectangle (2026-11-15)
+
+Added inward and outward variants of the equal-radius rounded rectangle after
+rotation by `0.37` radians and translation to `(123.25, -2000.5)`. The source
+replacement/Trim matrix independently checks all four arc radii and endpoints
+and all four straight spans, then exercises native Trim, undo/redo, and
+save/reopen in each of the five tested DXF/DWG lanes.
+
+Validation on macOS arm64 CMake Release: the full generated closed-polyline
+Trim matrix passes 5,360 assertions / 1 Catch test case across 17 profiles
+and five file lanes. The two transformed rounded-rectangle orientations both
+pass. `librecad_tests` builds and `git diff --check` passes. Test commit
+`8fec7b10f`.
+
+An additional attempt at a `1e6`-scale origin for this small rounded profile is
+refused by the existing producer with its conservative self-contact refusal;
+no change was made to that guard. That high-origin case remains open and is
+not represented by the moderate-translation result. Other transforms, scales,
+bulge layouts, and visible/external-CAD validation also remain open under
+Slices 4 and 5.
+
 ## 1427. Cover the Opposite Rounded-rectangle Offset Side (2026-11-15)
 
 Extended section 1426's equal-radius rounded-rectangle source-replacement and
