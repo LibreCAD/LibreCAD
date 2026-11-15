@@ -2821,10 +2821,15 @@ TEST_CASE("Native Trim tangency refusal preserves the curve and undo state",
     CHECK(context.messages.back().contains("nothing changed"));
 }
 
-TEST_CASE("Large-origin rounded polyline source refusal preserves the editable offset",
-          "[lc-offsetcurve][polyline][high-origin][atomic]") {
+TEST_CASE("Large-origin rounded polyline source updates and persists the editable offset",
+          "[lc-offsetcurve][polyline][high-origin][source-update][persistence]") {
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    CAPTURE(static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
     RS_Graphic graphic;
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
@@ -2875,21 +2880,61 @@ TEST_CASE("Large-origin rounded polyline source refusal preserves the editable o
     mouse(*update, view, sourcePick, true);
     lc::test::awaitUpdate(*updateAction);
 
-    CHECK(updateAction->lastReport().updated == 0);
-    CHECK(updateAction->lastReport().refused == 1);
+    REQUIRE(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
     REQUIRE(updateAction->lastReport().outcomes.size() == 1);
-    CHECK_FALSE(updateAction->lastReport().outcomes.front().refusal.isEmpty());
     REQUIRE(updateAction->lastReport().outcomes.front().edit);
-    CHECK(updateAction->lastReport().outcomes.front().edit->refusal == LC_OffsetCurveRefusal::Engine);
-    REQUIRE(updateAction->lastReport().outcomes.front().edit->engineStatus);
-    CHECK(*updateAction->lastReport().outcomes.front().edit->engineStatus ==
-          LC_CurveOffsetStatus::AmbiguousTopology);
-    CHECK_FALSE(target->isDeleted());
+    CHECK(updateAction->lastReport().outcomes.front().edit->refusal == LC_OffsetCurveRefusal::None);
+    CHECK(target->isDeleted());
     CHECK_FALSE(source->isDeleted());
+    auto* replacement = onlyNative(graphic);
+    REQUIRE(replacement);
+    CHECK(replacement != target);
+    REQUIRE(replacement->sourceDefinition());
+    CHECK(replacement->definition().distance == beforeDefinition.distance);
+    CHECK(replacement->definition().towardCentre == beforeDefinition.towardCentre);
+    CHECK(RS_Spline::geometryFingerprint(replacement->getData()) != beforeCache);
+    const auto capturedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(capturedSource);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedSource) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              replacement->sourceDefinition()->source));
+
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(target->isDeleted());
     CHECK(onlyNative(graphic) == target);
     CHECK(RS_Spline::geometryFingerprint(target->getData()) == beforeCache);
     basisEquals(target->definition().basis, beforeDefinition.basis);
-    CHECK(target->definition().distance == beforeDefinition.distance);
-    CHECK(target->definition().towardCentre == beforeDefinition.towardCentre);
-    CHECK(target->isSelected());
+    REQUIRE(graphic.redo());
+    CHECK(target->isDeleted());
+    CHECK(onlyNative(graphic) == replacement);
+
+    const auto output = std::filesystem::path(directory.filePath(
+        QStringLiteral("large-origin-rounded-%1.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, output, format));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, output, format));
+    auto* reopenedNative = onlyNative(reopened);
+    REQUIRE(reopenedNative);
+    REQUIRE(reopenedNative->sourceDefinition());
+    CHECK(RS_Spline::geometryFingerprint(reopenedNative->getData()) ==
+          RS_Spline::geometryFingerprint(replacement->getData()));
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              reopenedNative->sourceDefinition()->source) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              replacement->sourceDefinition()->source));
+    const auto secondOutput = std::filesystem::path(directory.filePath(
+        QStringLiteral("large-origin-rounded-%1-second.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(reopened, secondOutput, format));
+    RS_Graphic reopenedAgain;
+    REQUIRE(lc::test::importDrawing(reopenedAgain, secondOutput, format));
+    auto* reopenedAgainNative = onlyNative(reopenedAgain);
+    REQUIRE(reopenedAgainNative);
+    REQUIRE(reopenedAgainNative->sourceDefinition());
+    CHECK(RS_Spline::geometryFingerprint(reopenedAgainNative->getData()) ==
+          RS_Spline::geometryFingerprint(replacement->getData()));
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              reopenedAgainNative->sourceDefinition()->source) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              replacement->sourceDefinition()->source));
 }

@@ -7424,7 +7424,9 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             const RS_Vector end = cycle.cubicPieces.back().bezier[3];
             size_t next = pieces.size();
             for (const size_t k : kept) {
-                if (!used[k] && pieces[k].pieces.front().bezier[0] == end) {
+                if (used[k]) continue;
+                const double gap = end.distanceTo(pieces[k].pieces.front().bezier[0]);
+                if (gap <= options.tolerance.nodeMerge) {
                     if (next != pieces.size()) {
                         result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
                         result.intersectionDiagnostics.cycleAssemblyFailure =
@@ -7435,7 +7437,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     next = k;
                 }
             }
-            const bool closes = end == cycle.cubicPieces.front().bezier[0];
+            const double closureGap = end.distanceTo(cycle.cubicPieces.front().bezier[0]);
+            const bool closes = closureGap <= options.tolerance.nodeMerge;
             if (closes && next != pieces.size()) {
                 result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
                 result.intersectionDiagnostics.cycleAssemblyFailure =
@@ -7443,6 +7446,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 return LC_CurveOffsetStatus::AmbiguousTopology; // another cycle touches it at its start
             }
             if (closes) {
+                cycle.cubicPieces.back().bezier[3] = cycle.cubicPieces.front().bezier[0];
                 break;
             }
             if (next == pieces.size()) {
@@ -7471,6 +7475,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     pieces[nearestStartIndex].pieces.front().provenance.sourceSpan;
                 return LC_CurveOffsetStatus::AmbiguousTopology; // a boundary that does not close
             }
+            // Candidate endpoints at a shared region node can differ by
+            // floating-point construction error. Snap only a unique match
+            // already certified within the configured node-merge tolerance.
+            cycle.cubicPieces.back().bezier[3] = pieces[next].pieces.front().bezier[0];
             current = next;
         }
         cycle.closed = true;
