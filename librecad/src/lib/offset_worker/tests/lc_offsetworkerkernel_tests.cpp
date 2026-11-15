@@ -8131,8 +8131,8 @@ TEST_CASE(
     "[lc-offsetcurve][worker-kernel][source-cache][parabola][tangent]["
     "conditioning]") {
   const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
-  constexpr std::array<double, 7> slopes{
-      {1e-4, 1e-6, 1e-8, 1e-10, 1e-12, 1e-13, 1e-14}};
+  constexpr std::array<double, 9> slopes{
+      {1e-4, 1e-6, 1e-8, 1e-9, 1e-10, 1e-11, 1e-12, 1e-13, 1e-14}};
   std::size_t admittedCaches = 0;
   std::size_t explicitRefusals = 0;
 
