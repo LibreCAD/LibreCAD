@@ -78,10 +78,11 @@ struct ParabolaProfileFrame {
     RS_Vector translation;
     bool includePersistence{true};
     bool denseEndLayoutOnly{false};
+    std::array<double, 4> clusteredLayout{{0.0, 0.98, 0.999, 1.0}};
 };
 
-const std::array<ParabolaProfileFrame, 21>& fourPointParabolaFrames() {
-    static const std::array<ParabolaProfileFrame, 21> frames{{
+const std::array<ParabolaProfileFrame, 24>& fourPointParabolaFrames() {
+    static const std::array<ParabolaProfileFrame, 24> frames{{
         {0, 1e-6, 0.37, RS_Vector{123e-6, -87e-6}},
         {0, 1.0, 0.37, RS_Vector{123.0, -87.0}},
         {0, 1e6, 0.37, RS_Vector{123e6, -87e6}},
@@ -103,6 +104,12 @@ const std::array<ParabolaProfileFrame, 21>& fourPointParabolaFrames() {
         {1, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
         {1, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
         {1, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
+        {0, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {1, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {2, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
     }};
     return frames;
 }
@@ -6030,7 +6037,7 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
             scale * 1e-7, 256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
         auto frameLayouts = std::vector<std::array<double, 4>>(layouts.begin(), layouts.end());
         if (frame.denseEndLayoutOnly)
-            frameLayouts = {{{0.0, 0.98, 0.999, 1.0}}};
+            frameLayouts = {frame.clusteredLayout};
         if (scale == 1e-6 || scale == 1.0 || scale == 1e6)
             if (!frame.denseEndLayoutOnly)
                 frameLayouts.push_back({{0.0, 0.95, 0.995, 1.0}});
@@ -6053,7 +6060,7 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
             if (candidate == candidates.end() &&
                 frame.angle == 0.6435011087932844 &&
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
-                layout[1] == 0.98) {
+                layout[1] >= 0.95) {
                 CHECK(candidate == candidates.end());
                 candidate = std::find_if(candidates.begin(), candidates.end(),
                     [&](const LC_ParabolaData& value) {
@@ -6168,7 +6175,7 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
             scale * 1e-7, 256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
         auto frameLayouts = std::vector<std::array<double, 4>>(layouts.begin(), layouts.end());
         if (frame.denseEndLayoutOnly)
-            frameLayouts = {{{0.0, 0.98, 0.999, 1.0}}};
+            frameLayouts = {frame.clusteredLayout};
         if (scale == 1e-6 || scale == 1.0 || scale == 1e6)
             if (!frame.denseEndLayoutOnly)
                 frameLayouts.push_back({{0.0, 0.95, 0.995, 1.0}});
@@ -6191,7 +6198,7 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
             if (candidate == candidates.end() &&
                 frame.angle == 0.6435011087932844 &&
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
-                layout[1] == 0.98) {
+                layout[1] >= 0.95) {
                 CHECK(candidate == candidates.end());
                 candidate = std::find_if(candidates.begin(), candidates.end(),
                     [&](const LC_ParabolaData& value) {
