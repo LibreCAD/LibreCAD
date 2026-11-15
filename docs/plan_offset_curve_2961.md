@@ -35,11 +35,13 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** During active
-replacement selection, the user can repeatedly change the requested source
-curve type without closing or restarting the chooser. Each change immediately
-refreshes the eligible existing-entity candidates, even after the list is
-visible. This is candidate filtering, not conversion of the current source.
+**Current source-widget requirement and status (2026-11-14):** After the user
+starts choosing a replacement source curve, the source-type control remains
+available in that active selection workflow. The user can change the requested
+type repeatedly, including after candidate results are visible, and each change
+immediately refreshes the eligible existing-entity candidates without ending
+selection or restarting the chooser. This is candidate filtering, not
+conversion of the current source.
 The required set is exactly the offset feature's
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
@@ -59,14 +61,15 @@ particular, choosing a parabola must produce a parabola source, not an
 support; unsupported or unavailable candidates must fail without changing the
 current source, cache, selection, or highlight.
 
-Acceptance sequence: begin replacement; change the requested type while
-replacement selection remains active; verify the candidate list refreshes for
-each of the nine kinds; choose a candidate (including a distinct parabola) and
-verify its geometry type is preserved; then repeat with another type and
-exercise cancel/refusal. Changing the filter alone must never commit a source
-change or clear the existing-source indication. This sequence describes the
-selector interaction only; it does not waive the separate per-family and
-per-variant capture, worker, cache, Trim, and DXF/DWG gates below.
+Acceptance sequence: begin replacement; while selection remains active and
+candidate results are visible, change the requested type repeatedly and verify
+the candidate list refreshes for each of the nine kinds without leaving the
+workflow; choose a candidate (including a distinct parabola) and verify its
+geometry type is preserved; then repeat with another type and exercise
+cancel/refusal. Changing the filter alone must never commit a source change or
+clear the existing-source indication. This sequence describes the selector
+interaction only; it does not waive the separate per-family and per-variant
+capture, worker, cache, Trim, and DXF/DWG gates below.
 
 This picker behavior is implemented and headlessly covered by the source-picker
 and ordered-family replacement tests cited in sections 1291-1293, including
