@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, local tested head
-`1f83299b6`, based on pushed PR #3193 head `479535995`; commits pending push):** The repeated request to
+**Latest plan reconciliation (2026-11-15, pushed PR #3193 head
+`b7d748e03`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -52,6 +52,8 @@ limits, visible picker/highlight interaction, and independent CAD acceptance
 remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
+Exact-head Headless ON and OFF checks both pass on `b7d748e03`; cross-platform
+build, static-analysis, and DWG/DXF workflow jobs are still pending.
 On `5391d809c`, the offscreen Qt dialog matrix passes 8,801 assertions / 3
 cases and the live action candidate-filter case passes 148 assertions / 1
 case; these requalify widget semantics but do not close visible desktop
@@ -48961,3 +48963,22 @@ including available LibreDWG parsing. The run completes within the 150-second
 watchdog; an attempted six-layout integration expansion exceeded that bound,
 so broader layout variety is kept in the inexpensive geometry-only matrix.
 Visible desktop and independent CAD acceptance remain open.
+
+## 1471. Record Independent CAD Validation Environment Failure (2026-11-15)
+
+The generated parabola persistence fixtures were preserved under
+`/private/tmp/offset_parabola_cad` for an independent reader attempt. ODA
+FileConverter 27.1.0 is installed, but its CLI process aborts during macOS
+pasteboard/XPC initialization (`com.apple.pasteboard.clipboard` and
+`com.apple.pasteboard.find`, followed by `com.apple.hiservices-xpcservice`),
+including when launched via the logged-in GUI bootstrap. No ODA parse or
+conversion result was produced. The installed FreeCAD arm64 executable also
+cannot start its bundled Qt runtime on this host, reporting that the required
+`neon` processor feature is unavailable. Neither attempt counts as CAD
+acceptance. Keep the independent-reader gate open and retry when either a
+working ODA/FreeCAD installation or a separate supported machine is available.
+
+The internal LibreDWG reads, LibreCAD reopen checks, and five-lane native-file
+tests remain valid but are not substitutes for independent semantic CAD
+validation. Do not change geometry or weaken assertions to work around these
+host/tool failures.
