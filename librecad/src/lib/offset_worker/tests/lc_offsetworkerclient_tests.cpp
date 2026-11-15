@@ -683,8 +683,13 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
   lc::test::OutputDirectory directory("offset-worker-concave-neck-collapse");
   auto &rt = runtime();
   OwnedClient owned{rt};
+  const double rotation = GENERATE(0.0, 0.37);
+  const double origin = GENERATE(0.0, 1e9);
+  CAPTURE(rotation, origin);
 
   RS_Polyline sourceEntity;
+  const double cosine = std::cos(rotation);
+  const double sine = std::sin(rotation);
   for (const RS_Vector &point : std::vector<RS_Vector>{{0, 0},
                                                        {4, 0},
                                                        {4, 1.5},
@@ -697,7 +702,8 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
                                                        {4, 2.5},
                                                        {4, 4},
                                                        {0, 4}}) {
-    sourceEntity.addVertex(point);
+    sourceEntity.addVertex({origin + point.x * cosine - point.y * sine,
+                            -origin + point.x * sine + point.y * cosine});
   }
   sourceEntity.setClosed(true);
   sourceEntity.endPolyline();
@@ -716,6 +722,11 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
       {RS2::FormatDXFRW2018, "r2018.dxf"},
       {RS2::FormatDWG2018, "r2018.dwg"},
   }};
+#ifdef DWGSUPPORT
+  QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+  if (libreDwgReader.isEmpty())
+    libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
 
   const qint64 requestId = 2101;
   const double signedDistance = .6;
@@ -759,14 +770,52 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
   REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
   REQUIRE(materialized.entities.size() == generated.ordinary.size());
 
-  std::vector<std::uint64_t> expectedFingerprints;
+  const auto checkSplineSets = [](const std::vector<RS_SplineData> &actual,
+                                  const std::vector<RS_SplineData> &expected) {
+    REQUIRE(actual.size() == expected.size());
+    std::vector<bool> matched(actual.size(), false);
+    for (const RS_SplineData &expectedData : expected) {
+      RS_Spline expectedSpline{nullptr, expectedData};
+      std::size_t best = actual.size();
+      double bestEndpointDistance = std::numeric_limits<double>::infinity();
+      for (std::size_t i = 0; i < actual.size(); ++i) {
+        if (matched[i])
+          continue;
+        RS_Spline actualSpline{nullptr, actual[i]};
+        const double endpointDistance =
+            std::min(actualSpline.getStartpoint().distanceTo(expectedSpline.getStartpoint()) +
+                         actualSpline.getEndpoint().distanceTo(expectedSpline.getEndpoint()),
+                     actualSpline.getStartpoint().distanceTo(expectedSpline.getEndpoint()) +
+                         actualSpline.getEndpoint().distanceTo(expectedSpline.getStartpoint()));
+        if (endpointDistance < bestEndpointDistance) {
+          best = i;
+          bestEndpointDistance = endpointDistance;
+        }
+      }
+      REQUIRE(best < actual.size());
+      matched[best] = true;
+      const RS_SplineData &actualData = actual[best];
+      CHECK(actualData.degree == expectedData.degree);
+      CHECK(actualData.knotslist == expectedData.knotslist);
+      CHECK(actualData.weights == expectedData.weights);
+      REQUIRE(actualData.controlPoints.size() == expectedData.controlPoints.size());
+      double maxControlPointDelta = 0.0;
+      for (std::size_t i = 0; i < actualData.controlPoints.size(); ++i) {
+        maxControlPointDelta = std::max(
+            maxControlPointDelta,
+            actualData.controlPoints[i].distanceTo(expectedData.controlPoints[i]));
+      }
+      CHECK(maxControlPointDelta < 0.02);
+    }
+  };
+
+  std::vector<RS_SplineData> expectedSplines;
   for (const auto &entity : materialized.entities) {
     const auto *spline = dynamic_cast<const RS_Spline *>(entity.get());
     REQUIRE(spline);
-    expectedFingerprints.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    expectedSplines.push_back(spline->getData());
   }
-  std::sort(expectedFingerprints.begin(), expectedFingerprints.end());
-  std::vector<std::uint64_t> workerFingerprints;
+  std::vector<RS_SplineData> workerSplines;
   RS_Graphic graphic;
   graphic.initForNewDocument();
   RS_Layer *outputLayer = graphic.findLayer("0");
@@ -777,13 +826,12 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
     RS_Spline spline{nullptr, *data};
     REQUIRE(spline.validate());
     CHECK(spline.getStartpoint().distanceTo(spline.getEndpoint()) < 0.02);
-    workerFingerprints.push_back(RS_Spline::geometryFingerprint(spline.getData()));
+    workerSplines.push_back(spline.getData());
     auto *entity = new RS_Spline(&graphic, *data);
     entity->setLayer(outputLayer);
     graphic.addEntity(entity);
   }
-  std::sort(workerFingerprints.begin(), workerFingerprints.end());
-  CHECK(workerFingerprints == expectedFingerprints);
+  checkSplineSets(workerSplines, expectedSplines);
   auto nativeCurve = completion.nativeSource(graphic);
   REQUIRE(nativeCurve);
   CHECK(nativeCurve->isConsistent());
@@ -798,20 +846,37 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
   for (const Lane &lane : lanes) {
     const auto path = directory.file(std::to_string(requestId) + "-" + lane.extension);
     REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+#ifdef DWGSUPPORT
+    if (!libreDwgReader.isEmpty() &&
+        (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
+      QProcess reader;
+      reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+      REQUIRE(reader.waitForStarted());
+      REQUIRE(reader.waitForFinished(30000));
+      INFO(reader.readAllStandardError().toStdString());
+      REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+      REQUIRE(reader.exitCode() == 0);
+      const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+      REQUIRE(document.isObject());
+      const QJsonArray objects = document.object().value("OBJECTS").toArray();
+      CHECK(std::count_if(objects.begin(), objects.end(), [](const QJsonValue &object) {
+              return object.toObject().value("entity").toString() == "SPLINE";
+            }) == 2);
+    }
+#endif
     for (int pass = 0; pass < 2; ++pass) {
       RS_Graphic reopened;
       REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-      std::vector<std::uint64_t> reopenedFingerprints;
+      std::vector<RS_SplineData> reopenedSplines;
       for (const RS_Entity *entity : reopened) {
         if (entity->isDeleted())
           continue;
         REQUIRE(entity->rtti() == RS2::EntitySpline);
         const auto *spline = dynamic_cast<const RS_Spline *>(entity);
         REQUIRE(spline);
-        reopenedFingerprints.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+        reopenedSplines.push_back(spline->getData());
       }
-      std::sort(reopenedFingerprints.begin(), reopenedFingerprints.end());
-      CHECK(reopenedFingerprints == expectedFingerprints);
+      checkSplineSets(reopenedSplines, expectedSplines);
       if (pass == 0)
         REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
     }
