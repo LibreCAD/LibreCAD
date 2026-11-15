@@ -25,7 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, PR #3193 head `ce7167548`):** The repeated request to
+**Latest implementation reconciliation (2026-11-15, code revision
+`d30d34122`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -64,7 +65,8 @@ end-to-end worker/cache plus five-lane persistence coverage for the
 valid for the picked samples; uniqueness or hidden-curve recovery is not
 claimed. The focused results are 8 assertions / 1 action case and 61,058
 assertions / 2 worker/persistence cases. Section 1477 reconciles the latest
-source-picker request against the current PR head.
+source-picker request; section 1478 records the endpoint-tangent Trim
+conditioning boundary and its fail-closed regression.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49152,3 +49154,39 @@ This clarification is reconciled against PR #3193 head `ce7167548`. Existing
 headless dialog/action tests cover repeated filtering and all nine kinds, but
 visible packaged-app interaction and independent CAD acceptance remain open.
 Do not close those gates based on offscreen tests or source-kind enumeration.
+
+## 1478. Pin the Extreme Endpoint-tangent Parabola Trim Boundary (2026-11-15)
+
+Follow-up diagnostics to section 1476 confirmed the `+/-1e-14` endpoint-slope
+case reaches the strict intersection solver's bounded pair-refinement depth:
+9 input spans/leaves, 140 examined box pairs, 173 generated intersection
+items, and `deepestPairRefinement == Limits{}.maxDepth` (48). It does not
+exhaust the pair, leaf, or generated-item budgets. The query therefore refuses
+because it cannot certify the crossing within the numerical depth bound, not
+because the file, worker, or whole operation timed out.
+
+Commit `d30d34122` turns that observation into a regression alongside the
+existing moderate-slope `+/-0.2` success path. Both cases use worker-backed
+source replacement and the action's circle Trim Two flow. The moderate profile
+continues through preview, commit, undo, and redo; the extreme profile must
+return `LimitExceeded`, produce no preview, and leave both source and cutter
+unchanged. This records an explicit supported-boundary refusal. It does not
+raise the depth ceiling, weaken certified intersection rules, or qualify
+`+/-1e-14` for trimming.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[trim-action][typed-source][parabola]' --reporter compact
+git diff --check
+```
+
+Results: the focused generated-profile case passes 309 assertions / 1 test
+case; the broader typed-parabola Trim selection passes 75,885 assertions / 6
+cases, including its existing persistence and undo/redo checks. Visible GUI,
+other parabola conditioning profiles, and independent CAD acceptance remain
+open.
