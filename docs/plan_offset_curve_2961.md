@@ -48170,3 +48170,26 @@ git diff --check
 Result: 7,280 assertions / 1 Catch2 case passed across the 40
 origin/rotation/direction/version lanes, including independent LibreDWG spline
 inspection for DWG files. Regression-test commit `427a60556`.
+
+## 1447. Qualify Simple Concave Mixed-bulge Worker Caches (2026-11-15)
+
+Updated the closed mixed-bulge source-cache kernel case for the simple-closed-
+polyline routing contract. Its inward side now explicitly selects
+`RegionBoundary` and produces one cache-representable spline; its outward side
+remains on `Direct`. Both signed sides now pass operation-8 source-cache
+validation. This is one low-curvature mixed-bulge profile at the tested
+distance and local frame. It does not establish mixed-bulge save/reopen,
+high-origin or rotated variants, or all concave arc arrangements.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests 'simple closed mixed-bulge offsets promote both source-cache sides' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests '[lc-offsetcurve][worker-kernel][source-cache][polyline]' --reporter compact
+git diff --check
+```
+
+Results: 61 assertions / 1 focused case and 62,375 assertions / 8 matching
+polyline source-cache kernel cases passed. Regression-test commit
+`c03247207`.
