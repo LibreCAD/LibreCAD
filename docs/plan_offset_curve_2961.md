@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`3a4933a1e`):** The repeated request to
+`10f00cd69`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -68,6 +68,8 @@ assertions / 2 worker/persistence cases. Section 1477 reconciles the latest
 source-picker request; section 1478 records the endpoint-tangent Trim
 conditioning boundary and its fail-closed regression.
 Section 1479 adds verified intermediate near-parallel endpoint slopes.
+Section 1481 extends endpoint-tangent worker/cache and five-lane persistence
+coverage across the same five measured slopes and both signed offset sides.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -48625,7 +48627,7 @@ Validation on macOS arm64 CMake Release:
 
 ```sh
 cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
-QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
   '[from-four-points][matrix]' --reporter compact
 QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
@@ -49292,3 +49294,34 @@ contract cases pass 630 assertions / 2 cases. The chart experiment is not in
 the worktree. Keep visible packaged-app interaction and independent CAD
 acceptance open. Further work belongs to missing per-family geometry support
 and those acceptance gates, not another source-picker selector.
+
+## 1481. Persist the Endpoint-tangent Parabola Slope Ladder (2026-11-15)
+
+Commit `10f00cd69` extends the existing endpoint-tangent parabola worker/cache
+and persistence fixture from its single `+/-1e-14` profile to the measured
+slope ladder `0.2`, `1e-8`, `1e-10`, `1e-12`, and `1e-14`. For each slope, it
+generates both `+0.5` and `-0.5` offsets through the real native worker,
+validates the exact canonical cache, then exports and reopens R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Reopened entities must retain the distinct
+parabola source kind, source control points, signed distance, and exact cache
+fingerprint.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Result: the expanded case passes 4,894 assertions / 1 test case. This
+qualifies only this endpoint/tangent construction, coordinate frame, slope
+ladder, distance pair, and five file lanes. It does not qualify arbitrary
+translations/rotations, endpoint spacing, tangent directions, source
+constructions, Trim beyond the action-specific evidence in sections 1478-1479,
+independent CAD acceptance, or visible packaged-app interaction. Continue the
+per-family variant matrix; do not infer all-parabola support from these
+profiles.
