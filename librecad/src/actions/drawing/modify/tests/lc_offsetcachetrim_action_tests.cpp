@@ -1855,7 +1855,7 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     bool allowAmbiguousCandidate = false;
     bool oppositeEndClustered = false;
   };
-  const std::array<Frame, 40> frames{{
+  const std::array<Frame, 42> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1896,6 +1896,8 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true, true},
       {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true, true},
       {1e-3, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 0, false, true, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 1, false, true, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
