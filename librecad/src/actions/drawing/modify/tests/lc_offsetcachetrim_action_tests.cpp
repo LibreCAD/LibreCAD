@@ -2147,10 +2147,16 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     f.graphic.addEntity(previous);
 
     const double tangentSlope = GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
-    const LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
+    const double sourceRotation = GENERATE(0., 0.371234567890123);
+    LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
         {{{0.0, 0.0}, {10.0, 0.0}}},
         {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
     REQUIRE(sourceData.isValid());
+    const double cosine = std::cos(sourceRotation);
+    const double sine = std::sin(sourceRotation);
+    for (auto& point : sourceData.m_controlPoints) {
+        point = {cosine * point.x - sine * point.y, sine * point.x + cosine * point.y};
+    }
     auto* parabola = new LC_Parabola(&f.graphic, sourceData);
     f.graphic.addEntity(parabola);
     f.graphic.select(QList<RS_Entity*>{previous}, true);
