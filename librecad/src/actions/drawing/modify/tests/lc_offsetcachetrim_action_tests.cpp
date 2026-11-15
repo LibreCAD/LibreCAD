@@ -1855,8 +1855,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     bool allowAmbiguousCandidate = false;
     bool oppositeEndClustered = false;
     bool interiorAsymmetric = false;
+    bool interiorBalanced = false;
   };
-  const std::array<Frame, 72> frames{{
+  const std::array<Frame, 73> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1929,13 +1930,14 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
       {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
       {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, false, 0, false, true, false, false, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
             frame.translation.y, frame.reversed, frame.denseEnd,
             frame.profile, frame.expectLimitRefusal,
             frame.allowAmbiguousCandidate, frame.oppositeEndClustered,
-            frame.interiorAsymmetric);
+            frame.interiorAsymmetric, frame.interiorBalanced);
     const double scale = frame.scale;
     const double angle = frame.angle;
     const RS_Vector translation = frame.translation;
@@ -1982,6 +1984,8 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     };
     const std::array<double, 4> sampleParameters = frame.interiorAsymmetric
         ? std::array<double, 4>{{0.05, 0.2, 0.65, 0.95}}
+        : frame.interiorBalanced
+        ? std::array<double, 4>{{0.1, 0.3, 0.7, 0.9}}
         : frame.denseEnd
         ? (frame.oppositeEndClustered
                ? std::array<double, 4>{{0.0, 0.98, 0.999, 1.0}}
