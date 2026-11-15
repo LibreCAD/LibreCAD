@@ -104,21 +104,22 @@ ODA/AutoCAD acceptance where available and keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
-**Latest source-widget disposition (reconfirmed 2026-11-15):** The repeated
-request to change source type during replacement picking and support every
-currently supported type does not require another widget implementation
-slice. The type control stays available during active picking and filters
-eligible candidates from all nine `LC_OffsetSourceGeometry::SupportedKinds`:
-line, arc, circle, ellipse, spline, spline-points, parabola, bounded
-hyperbola, and polyline. Parabola remains a distinct kind. The focused
-headless source-picker suite passes 15,226 assertions / 44 cases on this
-checkout. Do not add a second selector or a parabola-only UI slice. Keep
-visible interaction acceptance open, and treat "support all kinds" as an
-end-to-end geometry obligation: for each enabled concrete variant, record
-candidate eligibility, capture/reconstruction, worker/cache, applicable Trim,
-and DXF/DWG persistence evidence in the family-by-variant matrix. Missing
-evidence means the variant remains unqualified; a selector entry is not
-support.
+**Latest source-widget disposition (reconfirmed 2026-11-15):** The source
+widget contract is that a user can change the requested source type while
+replacement picking is active, see candidates refresh to that type, and
+select a source without losing the currently committed source before the
+replacement succeeds. Its choices must match all nine
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
+typed source, not a spline-points alias. The existing control and offscreen
+coverage satisfy the implementation portion; the focused headless
+source-picker suite passes 15,226 assertions / 44 cases on this checkout. Do
+not add another selector or duplicate the parabola-specific UI work. Keep
+visible interaction acceptance open. Separately, the phrase "support all
+kinds" requires end-to-end evidence, not only menu entries: for each enabled
+concrete variant, record candidate eligibility, capture/reconstruction,
+worker/cache, applicable Trim, and DXF/DWG persistence in the family-by-variant
+matrix. Missing evidence leaves that variant unqualified.
 
 ## 1473. Reconcile Repeated Source-type Request with Current Head (2026-11-15)
 
@@ -49727,9 +49728,34 @@ Validation on macOS arm64 CMake Release:
 cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
   'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[trim-action][typed-source][parabola]' --reporter compact
 git diff --check
 ```
 
-Result: 2,347 assertions / 1 test case pass. Keep the solver fail-closed for
-other unresolved seam configurations; continue broader parabola construction,
-scale/frame, and source-family qualification.
+Results: the focused slope/frame case passes 2,347 assertions / 1 case; the
+complete typed-parabola Trim selection passes 107,176 assertions / 6 cases.
+The latter includes the focused case, so counts are not additive. Keep the
+solver fail-closed for other unresolved seam configurations; continue broader
+parabola construction, scale/frame, and source-family qualification.
+
+## 1495. Pin Source Replacement Type-switching Contract (2026-11-15)
+
+This request is a clarification of the existing source-picker requirement, not
+a new implementation slice. During replacement selection, the Properties
+widget must let the user change the requested curve kind repeatedly; each
+change refreshes eligible candidates while the current source remains
+identified and committed. Accepting a valid candidate replaces it, while
+cancellation or refusal preserves the source and its cache. The selector
+inventory is exactly the nine current supported kinds: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola must remain a distinct source kind.
+
+Implementation: existing selector logic and headless coverage already satisfy
+this contract; no additional UI code is planned unless visible acceptance or a
+regression demonstrates otherwise. Validation still open: on a packaged
+desktop app, change the type at least twice during one pick, verify candidate
+refresh and current-source highlight, then exercise successful replacement
+and cancellation/refusal. Independently, qualify each concrete source variant
+through capture/reconstruction, worker/cache, applicable Trim, and DXF/DWG
+persistence. Selector availability alone does not close geometry support.
