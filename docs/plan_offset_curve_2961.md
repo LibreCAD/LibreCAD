@@ -47114,9 +47114,11 @@ ordinary spline geometry fingerprints across R14 DXF, R2000 DXF/DWG, and
 R2018 DXF/DWG lanes where DWG support is enabled. The source remains
 self-intersecting and does not become a single native editable cache.
 
-Validation on macOS arm64 CMake Release: the combined positive- and
-negative-bulge worker outcomes selector passes 3,482 assertions / 2 cases;
-the focused negative-bulge case passes 1,727 assertions / 1 case; and
+Validation on macOS arm64 CMake Release at PR head `005ea55c0`: the combined
+positive- and negative-bulge worker outcomes selector passes 3,482 assertions
+/ 2 cases; the focused negative-bulge case passes 1,727 assertions / 1 case;
+the full `[curve-offset]` suite passes 2,247,337 assertions / 350 cases; and
+`[lc-offsetcurve][trim-action]` passes 384,180 assertions / 96 cases.
 `git diff --check` passes. This covers the stated bow-tie profiles and frames,
 not arbitrary self-crossing arrangements or the broader visible-GUI,
 cross-platform, and independent-CAD gates.
