@@ -47285,3 +47285,26 @@ while the recentered result is `Ok`, and the worker does not match the direct
 world-frame result. This is a real frame-covariance/worker-consistency issue,
 not waived by the test changes. The diagnostics-enhanced test commit is
 `cbe7067a4`; exact-head Linux validation remains open.
+
+## 1415. Localize Large-origin Circular Polylines (2026-11-15)
+
+Fixed the real frame-covariance failure from section 1414 in commit
+`2bbc827d2`. Direct offset generation now translates a large-origin polyline
+with circular segments to a local frame only when its captured source has no
+non-adjacent segment intersections. It recalibrates numerical tolerances for
+the translated source, translates any direction-point request into that frame,
+and translates generated Bezier points, arc centers, intersections, and
+cycle-assembly diagnostic points back to world coordinates. Self-intersecting
+inputs retain their existing world-frame path; the region suite specifically
+guards against changing their established topology behavior.
+
+Validation on this exact source state: the full CMake Release
+`offset_worker_kernel` CTest passes (1/1, 224.31 seconds); the focused
+`[curve-offset][region]` selector passes 28,700 assertions / 23 cases; and the
+convex rotated large-origin polyline case passes 75 assertions / 1 case. The
+macOS arm64 worker-client exhaustive typed-source test also previously passed
+2,913,696 assertions after the callback timeout was aligned with the worker's
+commit/terminate/reap deadline (section 1413). Fresh PR CI at the new commit
+has not yet been checked. Keep exact-head Linux CI, visible GUI acceptance,
+cross-platform/package and independent-CAD checks open; no broad portability
+or end-to-end variant support claim follows from these local tests.
