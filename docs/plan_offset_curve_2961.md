@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`11576a35d`):** The repeated request to
+`7ac1d964b`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -53,10 +53,13 @@ candidate through worker/cache and persistence. This validates the selected
 candidate, not recovery of an unobservable hidden source curve.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, scale-extended Trim-action
-coverage, and independent CAD acceptance remain open. Section 1501 records an
-abandoned, inconclusive scale-`1e6` Trim experiment; it is not evidence of a
-product Trim defect or accepted scale coverage. Do not treat worker/cache and
-persistence scale coverage as evidence for Trim actions. The second-save DWG
+coverage for clustered inputs, and independent CAD acceptance remain open.
+Section 1503 qualifies Trim Two on a separate well-conditioned reconstructed
+four-point parabola at scales `1e-6`, `1`, and `1e6`, plus the transformed and
+reversed high-origin frame. Section 1501's abandoned dense-end scale attempt
+remains inconclusive and is not evidence of a product Trim defect or accepted
+dense-cluster scale coverage. Do not treat worker/cache and persistence scale
+coverage as evidence for Trim actions. The second-save DWG
 `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
@@ -106,6 +109,9 @@ Section 1500 initially added scale `1e-6` and `1e6` worker/cache and
 persistence rows for profile 0. Section 1502 extends those scales to all three
 recorded control profiles; this remains bounded to the measured frames and
 does not establish arbitrary-translation behavior.
+Section 1503 separately qualifies reconstructed-parabola Trim at unit and
+extreme scales, plus the existing transformed/reversed high-origin frame;
+dense-end clustered Trim at extreme scales remains unqualified.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -115,8 +121,9 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits; (3) design a source-, cutter-, and UI-pixel-valid
-scale-extended Trim-action fixture before claiming such scale coverage; (4)
+and fail-closed limits; (3) carry the scale-extended Trim action from section
+1503 into the dense-end clustered layout, preserving the independent
+source/cache oracle and screen-space pick validity; (4)
 complete the visible Properties workflow for repeated type changes, candidate
 refresh, current-source indication, successful replacement, and
 cancellation/refusal; (5) record independent ODA/AutoCAD acceptance where
@@ -49927,13 +49934,15 @@ remains green. The worker/cache and five-lane persistence results in section
 1500 remain valid for their separate pipeline. This experiment neither
 proves a production Trim defect nor qualifies Trim scale invariance.
 
-Before adding scale-extended action coverage, construct a fixture with an
+For the still-open dense-end scale extension, construct a fixture with an
 independent source/cache geometry check, proportional target/cutter geometry,
 and a click point that resolves to the target after the same UI coordinate
-conversion used by the action. Keep the test representative of a visible,
+conversion used by the action. The general fixture requirement is now met by
+section 1503 for its separate well-conditioned construction; do not treat that
+as dense-end coverage. Keep follow-up tests representative of a visible,
 unambiguous user click; do not bypass hit testing or weaken atomic refusal and
-complexity limits. The parabola Trim test now retains its reconstructed
-four-point candidate instead of overwriting it with the default control net.
+complexity limits. The parabola Trim test retains its reconstructed four-point
+candidate instead of overwriting it with the default control net.
 
 Validation on macOS arm64 CMake Release:
 
@@ -49979,3 +49988,31 @@ Result: 77,266 assertions / 2 cases pass. The known DWG
 source and entity checks pass, but this is not proof of complete raw-payload
 round-trip. Trim action scale coverage remains explicitly separate under
 section 1501.
+
+## 1503. Trim Reconstructed Parabolas Across Proportional Scales (2026-11-15)
+
+Extend the reconstructed four-point parabola Trim Two fixture to proportional
+scales `1e-6`, `1`, and `1e6`, while retaining the rotated, reversed,
+high-origin frame. The source, starting native offset, and circular cutter
+scale together. The test frames local geometry at a constant screen-space
+size before dispatching target and cutter picks, then checks preview
+immutability, committed geometry, undo/redo, and R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG save/reopen. This qualifies scale behavior for this
+well-conditioned four-point construction only; it does not qualify the
+dense-end `{0, 0.95, 0.995, 1}` layout or arbitrary transformations.
+
+Implementation commit `7ac1d964b` (`test(offset): cover parabola trim across
+scales`). Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: 933 assertions / 1 case pass. All five file lanes are exercised
+where DWG support is enabled; external CAD acceptance and the dense-end
+clustered Trim scale fixture remain open.
