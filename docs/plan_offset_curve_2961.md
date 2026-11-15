@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`c69bd04cb`):** The
+`2a4b111ca`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -71,9 +71,11 @@ interior-asymmetric `{0.05, 0.2, 0.65, 0.95}` layout passes direct
 reconstruction, worker/cache, typed-source persistence, and Trim Two for the
 same three profiles/scales; this layout requires an independently qualifying
 candidate in the Trim action matrix.
-Section 1531 also proves the existing source stays highlighted while browsing
-all nine family filters, then the visible source highlight follows a successful
-worker-backed replacement from a line to a parabola.
+Section 1531 proves the existing source stays highlighted while browsing all
+nine family filters, then the visible source highlight follows a successful
+worker-backed replacement from a line to a parabola. The new cross-family
+completion gate in section 1532 extends the replacement/highlight transition
+to every supported kind; selector inventory alone is not that evidence.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -160,8 +162,9 @@ scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
 refresh, current-source indication, successful replacement, and
-cancellation/refusal; (5) record independent ODA/AutoCAD acceptance where
-available and keep raw DWG replay diagnostics
+cancellation/refusal; (5) completed by section 1532: the automated all-family
+replacement and highlight-transfer matrix; (6) record independent ODA/AutoCAD
+acceptance where available and keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
@@ -174,8 +177,9 @@ replacement succeeds. Its choices must match all nine
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
 coverage satisfy the implementation portion; the focused headless
-source-picker suite passes 15,226 assertions / 44 cases on this checkout,
-revalidated at implementation head `670e1d24d` in section 1508. Do
+source-picker suite passes 15,284 assertions / 44 cases on implementation
+commit `2a4b111ca`, which adds successful replacement/highlight transfer across
+all nine kinds. Do
 not add another selector or duplicate the parabola-specific UI work. Keep
 visible interaction acceptance open. Separately, the phrase "support all
 kinds" requires end-to-end evidence, not only menu entries: for each enabled
@@ -50922,3 +50926,82 @@ git diff --check
 Results: the focused transition case passes 161 assertions / 1 case; the full
 source-picker selector passes 15,249 assertions / 44 cases. Visible desktop
 picker acceptance and independent CAD acceptance remain open.
+
+## 1532. Qualify Source Replacement and Highlight Transfer for Every Kind (2026-11-15)
+
+The repeated source-widget request is now split into three independently
+verifiable contracts:
+
+1. The type selector exposes all nine
+   `LC_OffsetSourceGeometry::SupportedKinds` and remains usable while source
+   picking is active. This is implemented and headlessly covered; parabola is
+   a distinct option, not an alias for spline-points.
+2. Changing the requested kind refreshes candidate eligibility without
+   mutating the committed source/cache, and a successful worker-backed
+   replacement updates both the typed source definition and its highlight.
+   Section 1531 covers filter changes for all nine kinds and one successful
+   line-to-parabola transition. Extend that success transition across every
+   supported kind, preserving the previous source highlight until each
+   replacement commits and then requiring the new committed source to be the
+   highlighted entity.
+3. The family-by-variant geometry matrix establishes where each concrete
+   variant is actually usable through capture/reconstruction, worker/cache,
+   applicable Trim, and DXF/DWG persistence. A selector option is not proof of
+   geometry support; unsupported or unvalidated variants must remain explicitly
+   bounded or fail closed.
+
+Implementation/validation slice for item 2:
+
+- Use the existing picker and candidate fixtures; do not add a second widget or
+  broaden production behavior unless the matrix exposes a real mismatch.
+- For each `SupportedKinds` entry, select a valid candidate, run the ordinary
+  asynchronous preparation/commit path, and assert the stored source kind and
+  highlight both match that committed candidate. Before commit, assert the
+  previously committed source remains highlighted and the source/cache are
+  unchanged.
+- Compare canonical captured geometry for entities after their normal
+  construction/update path. Some entity data (notably derived arc painting
+  angles/length) is normalized during construction, so comparing a committed
+  entity against an unnormalized test factory value creates a false mismatch.
+  Keep serialization equality where the captured representations are
+  canonical; otherwise compare the documented source fields and stable entity
+  identity without weakening geometric equivalence checks.
+- Exercise at least one transition into and out of parabola, plus transitions
+  among line, arc, circle, ellipse, spline, spline-points, bounded hyperbola,
+  and polyline. Cover cancel and stale/refused preparation as no-mutation
+  paths; retain the current-source highlight through filter changes and
+  failures.
+- Run the focused transition case and the complete
+  `[gui][dialog][offsetcurve][source]` suite. Record assertion counts and exact
+  revision. Then attempt the visible packaged-app sequence separately; do not
+  label headless Qt coverage as visible-GUI acceptance.
+
+Test commit `2a4b111ca` implements this worktree slice. The transition test
+now captures each candidate after normal entity construction and compares the
+highlight overlay with that canonical geometry, including constructor-derived
+arc fields. Starting with the untyped offset fixture, the test successfully
+replaces its source successively with line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. It verifies the
+previous source remains highlighted during each family change, then verifies
+the newly committed typed source and highlight after worker completion. The
+existing line-to-parabola workflow test remains as a separate regression.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Native source picker filters and replaces every supported source family' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+git diff --check
+```
+
+Results: build passes; the focused all-family transition passes 320 assertions
+/ 1 case; the full source-picker suite passes 15,284 assertions / 44 cases.
+Visible packaged-app interaction and independent CAD acceptance remain open.
+The source-widget implementation is not currently identified as missing;
+end-to-end geometry-family qualifications remain tracked separately.
