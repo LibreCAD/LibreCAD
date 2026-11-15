@@ -492,8 +492,8 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                     for (const double area : check.areas) CHECK(area > 0.0);
                 } else {
                     CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-                    CHECK(result.intersectionDiagnostics.failureSite !=
-                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
+                    CHECK(result.intersectionDiagnostics.failureSite ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
                     CHECK(result.branches.empty());
                 }
                 CHECK(source.getVertexes().size() == originalVertices.size());
