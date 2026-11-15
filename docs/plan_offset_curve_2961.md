@@ -50913,8 +50913,12 @@ QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   'Native source picker preserves highlighted source across family filters' \
   --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
 git diff --check
 ```
 
-Result: all tests passed, 161 assertions / 1 case. Visible desktop picker
-acceptance and independent CAD acceptance remain open.
+Results: the focused transition case passes 161 assertions / 1 case; the full
+source-picker selector passes 15,249 assertions / 44 cases. Visible desktop
+picker acceptance and independent CAD acceptance remain open.
