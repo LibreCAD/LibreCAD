@@ -47399,3 +47399,30 @@ replacement, and cancel/refusal atomicity (Slice 5); plus Slice 4's distinct
 end-to-end geometry-variant matrix through capture/reconstruction, worker/cache,
 applicable Trim, and DXF/DWG persistence. The selector inventory and picker
 suite do not prove every variant of a family is geometrically supported.
+
+## 1419. Carry Major-bulge Polyline Through Worker and File Lanes (2026-11-15)
+
+Added a real-helper regression for the closed mixed-bulge profile already
+covered by the direct exact-normal oracle: its first arc has `bulge = 2.0`
+(major arc), its second arc has `bulge = -0.2` (minor arc), and its remaining
+segments are linear. Four signed-distance cells (`+/-0.25`, `+/-0.5`) now
+compare direct materialization with worker output and verify the returned
+native result remains ordinary mixed LINE/SPLINE geometry. The current
+geometry for these cells is not admitted as an editable native cache; this
+test does not weaken that refusal boundary.
+
+Each cell is exported, reopened, saved again, and reopened in R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Entity types and line endpoints or spline
+fingerprints are checked at both reopen steps. Both LINE and SPLINE outputs
+are required across the four-cell matrix. The focused worker test passes 1,235
+assertions / 1 case; the full Release worker-client suite passes 3,386,136
+assertions / 47 cases. The focused AddressSanitizer case passes 1,575
+assertions / 1 case with `ASAN_OPTIONS=detect_leaks=0`; no leak-free
+claim is made. The existing direct exact-normal fixture passes 19,535
+assertions / 1 case. `git diff --check` passes.
+
+This closes worker/direct parity and native-format round-trip coverage for this
+one major/minor-bulge profile only. It does not establish cache admission,
+Trim/action behavior, other major-arc arrangements, all transforms or scales,
+external CAD acceptance, or visible-GUI behavior. Continue the Slice 4
+family-by-variant matrix; Slice 5 visible acceptance remains separate.
