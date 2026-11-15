@@ -51152,3 +51152,33 @@ Result: build passes; the focused renderer matrix passes 46 assertions / 1
 case; the complete source-picker suite passes 15,284 assertions / 44 cases.
 The latter is headless UI coverage, not packaged-app interaction. Visible
 desktop acceptance and independent CAD acceptance remain open.
+
+## 1539. Pass Every Balanced-parabola Sample Order Through the Worker (2026-11-15)
+
+Test commit `8a68c98d6` extends section 1536's direct 24-permutation
+reconstruction evidence through real worker generation and native-cache
+admission. For each input ordering of `{0.1, 0.3, 0.7, 0.9}`, it selects a
+candidate that fits all four samples and independent parameters, then checks
+both signed offsets in a rotated `0.6435011088`-radian frame at scale `1e-1`
+translated to `(1e6,-2e6)`. Generated and validated outputs retain typed
+parabola source identity and exact cache data. This is one explicit
+profile/scale/frame integration cell; it does not extend every permutation to
+the worker matrix's other profiles/scales, nor to file persistence. Persistence
+remains forward/reversed-order only for this sample layout (section 1535).
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][permutation]' \
+  --reporter compact
+git diff --check
+```
+
+Result: build passes; the 24-order worker/cache case passes 21,437 assertions
+/ 1 case. Remaining work includes broader parabola sample layouts/frames,
+persistence order coverage, visible desktop acceptance, and independent CAD
+acceptance.
