@@ -6058,6 +6058,11 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
                                      {RS2::FormatDWG, "r2000.dwg"},
                                      {RS2::FormatDXFRW2018, "r2018.dxf"},
                                      {RS2::FormatDWG2018, "r2018.dwg"}}};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
 
     qint64 requestId = 1;
     std::array<std::size_t, 4> order{{0, 1, 2, 3}};
@@ -6154,6 +6159,33 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
                     if (pass == 0)
                         REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
                 }
+#ifdef DWGSUPPORT
+                if (!libreDwgReader.isEmpty() &&
+                    (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
+                    QProcess reader;
+                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+                    REQUIRE(reader.waitForStarted());
+                    REQUIRE(reader.waitForFinished(30000));
+                    INFO(reader.readAllStandardError().toStdString());
+                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                    REQUIRE(reader.exitCode() == 0);
+                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                    REQUIRE(document.isObject());
+                    const QJsonArray objects = document.object().value("OBJECTS").toArray();
+                    CHECK(std::any_of(objects.begin(), objects.end(), [](const QJsonValue& objectValue) {
+                        const QJsonObject object = objectValue.toObject();
+                        if (object.value("entity").toString() != "SPLINE") return false;
+                        bool hasOffsetApp = false;
+                        bool hasTypedSourceTag = false;
+                        for (const QJsonValue& recordValue : object.value("eed").toArray()) {
+                            const QString value = recordValue.toObject().value("value").toString();
+                            hasOffsetApp = hasOffsetApp || value == "LC_OFFSET_CURVE";
+                            hasTypedSourceTag = hasTypedSourceTag || value == "TYPED_SOURCE";
+                        }
+                        return hasOffsetApp && hasTypedSourceTag;
+                    }));
+                }
+#endif
             }
             requestId += 2;
         }
