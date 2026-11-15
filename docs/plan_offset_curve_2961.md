@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`7ba6ce8da`; latest picker validation on code revision `670e1d24d`):** The
+`668cac7b9`; latest picker validation on code revision `670e1d24d`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -52,6 +52,10 @@ The four-point drawing action presents an axis choice when these alternatives
 exist; a regression now follows that user choice and carries the selected
 candidate through worker/cache and persistence. This validates the selected
 candidate, not recovery of an unobservable hidden source curve.
+Section 1511 measures the same opposite-end clustered profile at source scales
+`1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
+across that scale matrix, while sample-fitting user-selected candidates are a
+separate worker/cache/persistence claim.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -49034,16 +49038,18 @@ transformed frames. For most tested rows, reconstruction matches both the four
 input points and independent points, then proceeds through worker/cache,
 signed offsets, and the five DXF/DWG persistence lanes.
 
-One specific conditioning combination remains unqualified: the third control
+One specific hidden-generator recovery remains unqualified: the third control
 net at scale `1e-2`, rotation `0.6435011087932844`, translation `(1e6,-2e6)`,
 with opposite-end clustering. `From4Points` returns candidates that fit the
 four supplied points, but no candidate also fits independent points within
-the scale-and-origin-aware tolerance. The new regression records this distinction,
-and worker/cache plus persistence matrices explicitly reject and skip this
-combination. Do not treat the four-point fit alone as successful recovery or
-claim a production fix. Further work should improve numerical reconstruction
-only with an independent-geometry oracle, then remove the skip if that exact
-case qualifies; until then it is an explicit fail-closed limit.
+the scale-and-origin-aware tolerance. The direct regression records this
+distinction. The worker/persistence matrix does not reject the row outright:
+after confirming hidden-generator recovery is unavailable, it uses the
+sample-fitting candidate selected by the user and validates that candidate
+through worker/cache and file lanes. Do not describe that as recovery of the
+hidden generating curve or claim a production reconstruction fix. Further
+numerical improvement requires the independent-geometry oracle; until a
+candidate passes it, keep hidden-generator recovery explicitly unqualified.
 
 Validation on macOS arm64 CMake Release:
 
@@ -50220,8 +50226,10 @@ the same error band; it does not convert the refusal into a pass. Both
 candidates still fit the four input samples, but neither qualifies against the
 independent points. This is a measured conditioning/information-loss boundary
 for rounded, translated samples, not a successful recovery or a production
-fix. Keep the worker/cache and persistence matrix refusal for this row; do not
-relax acceptance tolerance to force it through.
+fix. Keep hidden-generator recovery unqualified; worker/cache and persistence
+evidence applies to the sample-fitting candidate chosen by the user, not to
+recovery of the original curve. Do not relax acceptance tolerance to force an
+oracle pass.
 
 Validation on macOS arm64 CMake Release:
 
@@ -50241,6 +50249,37 @@ the full direct reconstruction selector passes 2,329 assertions / 8 cases.
 At commit `7fe23f714`, the worker/cache/persistence matrix passed 78,564
 assertions / 2 cases, including available LibreDWG reads; it was not rerun
 after the reversal-only test commit. The raw `fixed-handle=2` replay diagnostic
-remains distinct from semantic entity/file assertions. Other parabola constructions and
-conditioning rows, visible picker acceptance, and independent ODA/AutoCAD
-acceptance remain open.
+remains distinct from semantic entity/file assertions. Other parabola
+constructions and conditioning rows, visible picker acceptance, and
+independent ODA/AutoCAD acceptance remain open.
+
+## 1511. Map Large-origin Clustered Parabola Scale Rows (2026-11-15)
+
+Test commit `668cac7b9` extends the section 1510 independent-point probe over
+source scales `1e-3`, `1e-2`, `1e-1`, and `1` at the same rotation and
+translation `(1e6,-2e6)`, using opposite-end sample parameters
+`{0, 0.98, 0.999, 1}`. At each scale `From4Points` produces at least one
+candidate that fits all four rounded input samples, but the best candidate's
+independent-point error remains above the scale-and-origin-aware tolerance and
+below 64 times that tolerance. This shows that increasing the source scale
+alone does not restore hidden-generator recovery at this fixed large origin.
+The scale sweep is a direct reconstruction test only; it does not add worker,
+cache, Trim, or persistence coverage at the three new scales. Do not infer
+those lanes from this result.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][conditioning][large-origin][scale-matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+git diff --check
+```
+
+Results: the four-scale probe passes 16 assertions / 1 case; the full direct
+reconstruction selector passes 2,345 assertions / 9 cases. Reversed traversal
+is covered separately in section 1510. Worker/cache behavior for selected
+sample-fitting alternatives, broader parabola conditioning, visible picker
+acceptance, and independent CAD acceptance remain separate open gates.
