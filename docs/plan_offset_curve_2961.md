@@ -25,19 +25,21 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest source-widget disposition (2026-11-15):** The source-type control must
-remain usable while replacement picking is active; changing it must refresh
-eligible candidates without ending that workflow. The selector inventory is
-exactly the nine kinds in `LC_OffsetSourceGeometry::SupportedKinds`: line, arc,
-circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
-polyline. Parabola remains a distinct kind. The selector/filter has headless
-implementation and test coverage, so do not add a second selector or a
-parabola-only UI slice. Keep visible interaction acceptance open, and treat
-"support all kinds" as an end-to-end geometry obligation: for each enabled
-concrete variant, record candidate eligibility, capture/reconstruction,
-worker/cache, applicable Trim, and DXF/DWG persistence evidence in the family-
-by-variant matrix. Missing evidence means the variant remains unqualified; a
-selector entry is not support.
+**Latest source-widget disposition (reconfirmed 2026-11-15):** The repeated
+request to change source type during replacement picking and support every
+currently supported type does not require another widget implementation
+slice. The type control stays available during active picking and filters
+eligible candidates from all nine `LC_OffsetSourceGeometry::SupportedKinds`:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. Parabola remains a distinct kind. The focused
+headless source-picker suite passes 15,226 assertions / 44 cases on this
+checkout. Do not add a second selector or a parabola-only UI slice. Keep
+visible interaction acceptance open, and treat "support all kinds" as an
+end-to-end geometry obligation: for each enabled concrete variant, record
+candidate eligibility, capture/reconstruction, worker/cache, applicable Trim,
+and DXF/DWG persistence evidence in the family-by-variant matrix. Missing
+evidence means the variant remains unqualified; a selector entry is not
+support.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
