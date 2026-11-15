@@ -342,8 +342,10 @@ kinds, including distinct parabola capture, while checking that the previous
 source remains highlighted until commit. Its focused transition passes 320
 assertions / 1 case; the full source-picker suite passes 15,284 assertions /
 44 cases. These tests inspect the highlight overlay's entity and geometry;
-they do not prove that the overlay is painted visibly in a packaged desktop
-viewport. The latest focused suite command was:
+section 1537 additionally proves that the renderer paints the configured color
+along the source geometry and removes it with the highlight lease. This
+offscreen renderer test does not replace packaged-app interaction. The latest
+focused picker suite command was:
 
 ```sh
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
@@ -354,9 +356,10 @@ section 1532 supersedes it for successful all-family replacement and highlight
 transfer. No new selector implementation slice is needed unless a regression
 is found. Remaining picker acceptance is a visible desktop check in Slice 5:
 switch types repeatedly during active selection, verify eligible candidates
-refresh for every kind and the existing source is visibly rendered as
-highlighted or selected, then verify successful replacement and cancel/refusal
-behavior. Headless overlay membership is not visible-render acceptance.
+refresh for every kind and the existing source remains visibly rendered as
+highlighted or selected during the actual Properties workflow, then verify
+successful replacement and cancel/refusal behavior. The offscreen renderer
+pixel test is renderer evidence, not visible packaged-app acceptance.
 The latest clarification on 2026-11-15 reconfirms this all-kinds contract; it
 adds no second selector or separate parabola-only implementation slice. Keep
 this gate separate from Slice 4's per-variant capture/reconstruction,
@@ -392,8 +395,10 @@ distinct from spline-points. This is type selection and candidate filtering,
 not conversion of the currently committed source. The implementation and
 headless all-family transition and highlight-transfer coverage are recorded
 above and in sections 1291-1293, 1342, 1375, and 1532. Section 1532 passes the
-actual asynchronous replacement path for each kind; it checks overlay content,
-not viewport pixels. Do not add another selector or a parabola-only slice. The
+actual asynchronous replacement path for each kind and checks overlay content;
+section 1537 verifies viewport rendering at the renderer level. Neither test
+exercises the packaged Properties workflow visibly. Do not add another
+selector or a parabola-only slice. The
 remaining work is (a) Slice 5 visible desktop acceptance of repeated type
 changes, candidate refresh, visibly rendered source indication, replacement,
 and cancel/refusal behavior, and (b) Slice 4 qualification of concrete source
@@ -51092,3 +51097,27 @@ Validation: CMake Release build of `librecad_offset_worker_client_tests`; worker
 Test commit `db593d13a` checks all 24 permutations of the balanced-interior sample set `{0.1, 0.3, 0.7, 0.9}` across three control profiles and scales `1e-3`, `1e-2`, `1e-1`, and `1` in the rotated `(1e6,-2e6)` frame. Every permutation must produce a candidate fitting the supplied samples, and the best valid candidate's error at independent points must remain within 64 times the scale/origin-aware tolerance. This establishes direct reconstruction order robustness for these 12 profiles/scales; worker/cache and persistence have only forward/reversed sequence coverage (section 1535), and arbitrary layouts remain open.
 
 Validation: CMake Release build of `librecad_tests`; focused `[parabola][permutation]` passes 864 assertions / 1 case; complete `[parabola][reconstruction]` passes 3,785 assertions / 12 cases; `git diff --check` passes. The visible GUI and independent CAD gates remain open.
+
+## 1537. Assert Source-highlight Pixels in the Viewport Renderer (2026-11-15)
+
+Test commit `c2b77fdcf` strengthens the existing offset-source highlight render
+regression. It now inspects the offscreen viewport image for the configured red
+highlight pixels along the expected source-line location, then verifies that
+releasing the highlight lease removes those pixels. This closes the prior
+renderer-level pixel-evidence gap for the generic line overlay path; it does
+not exercise the packaged Properties replacement workflow or establish
+visible desktop acceptance for all source entity types.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][offsetcurve][source][highlight][render]' --reporter compact
+git diff --check
+```
+
+Result: build passes; the focused renderer regression passes 4 assertions / 1
+case. Visible packaged-app interaction and independent CAD acceptance remain
+open.
