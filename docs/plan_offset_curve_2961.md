@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, pushed PR #3193 head
-`5391d809c`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, local tested head
+`1f83299b6`, based on pushed PR #3193 head `479535995`; commits pending push):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -39,8 +39,11 @@ production reconstruction failure. This closes only those recorded profiles
 and lanes. Sections 1464-1466 exercise Trim Two and undo/redo on a reconstructed
 four-point source in ordinary and transformed/reversed high-origin frames,
 with both results saved and reopened through the five native-capable lanes.
-An opposite-end clustered layout `{0, 0.98, 0.999, 1}` now runs through the
-worker/cache and persistence matrices. One transformed, high-origin profile
+The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
+independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
+1}` passes the geometry-only matrix. The more extreme layout
+`{0, 0.98, 0.999, 1}` also runs through worker/cache and persistence matrices.
+One transformed, high-origin profile
 does not recover the known curve at independent points despite fitting the
 four input samples; the oracle rejects it and the downstream lanes skip it.
 This is a test-qualified boundary, not a production reconstruction fix.
@@ -48924,3 +48927,37 @@ candidate-filter case passes 148 assertions / 1 case. The PR checks queried at
 `5391d809c` were still running across macOS, Windows, and Linux jobs, with
 several platform jobs skipped; exact-head completion remains to be verified
 after this roadmap-only commit triggers its own checks.
+
+## 1470. Extend Dense-end Parabola Reconstruction Matrix (2026-11-15)
+
+The independent reconstruction matrix now includes end-clustered layouts
+`{0, 0.9, 0.99, 1}` and `{0, 0.95, 0.995, 1}` across its scale and reversed
+input coverage. They pass the independent-point oracle. The worker/cache and
+DXF/DWG matrices additionally qualify `{0, 0.9, 0.99, 1}` for their recorded
+control nets, scales, and transformed frames, alongside the existing
+near-start `{0, 0.001, 0.02, 1}` and extreme-end `{0, 0.98, 0.999, 1}` layouts.
+The known high-origin third-profile failure remains skipped only for the
+extreme-end layout and is still explicitly tested as unqualified in section
+1468. The slower integration matrix omits balanced and endpoint-free layouts
+to stay within its 150-second suite watchdog; those layouts remain in the
+faster independent reconstruction test. This is representative end-to-end
+conditioning evidence, not an exhaustive parameter-space guarantee.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: the independent reconstruction matrix passes 54 assertions / 1 case.
+The worker/cache and persistence matrices pass 63,376 assertions / 2 cases,
+including available LibreDWG parsing. The run completes within the 150-second
+watchdog; an attempted six-layout integration expansion exceeded that bound,
+so broader layout variety is kept in the inexpensive geometry-only matrix.
+Visible desktop and independent CAD acceptance remain open.
