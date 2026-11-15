@@ -47517,8 +47517,60 @@ with later evidence: sections 1337-1341 qualify strictly convex linear
 polylines through 2,048 edges and worker Trim/persistence; sections 1361-1362
 qualify one U-shaped concavity and one two-lobe neck collapse; sections
 1405-1406 qualify the recorded positive/negative mixed-bulge bow-tie frames.
-The new rounded-rectangle case does not yet pass through the worker/cache,
-native Trim action, or DXF/DWG save/reopen lanes. Those end-to-end checks,
-other curved/concave/self-crossing arrangements, visible GUI interaction,
+At the time of this entry, the rounded-rectangle case had only direct geometry
+coverage. Section 1424 supersedes that status with worker/cache and native-file
+round-trip evidence for this same profile. Native Trim/action, other
+curved/concave/self-crossing arrangements, visible GUI interaction,
 cross-platform runtime, and independent CAD acceptance remain open; do not
-generalize from this direct-only case.
+generalize from this one profile.
+
+## 1423. Reconfirm Source-type Changes During Replacement (2026-11-15)
+
+The latest request reconfirms that the Properties source-curve widget must
+allow changing the requested source type after replacement selection has
+started, and must offer every current kind in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola must remain
+a distinct typed choice. Changing the type filters eligible existing
+candidates in place; it does not convert or commit the current source. The
+current source, cache, identity, selection, and highlight remain unchanged
+until a valid replacement is accepted, and remain unchanged on cancellation
+or refusal.
+
+This is confirmation of the existing contract in the current checklist and
+section 1420, not a new implementation slice: selector/filter behavior and
+headless family-level coverage are recorded in sections 1416, 1418, and 1420.
+Keep visible repeated-switching, candidate-refresh, source-indication,
+replacement, and cancel/refusal checks open in Slice 5. Interpret “all
+supported types” as the nine-kind offset-source inventory, not every drawable
+entity and not proof that every geometric variant is supported. Continue
+Slice 4's separate per-variant qualification through capture/reconstruction,
+worker/cache, applicable Trim, and DXF/DWG save/reopen; unsupported variants
+must refuse atomically. Do not add another selector or a parabola-only picker
+slice.
+
+## 1424. Carry Rounded-polyline Region Through Worker and File Lanes (2026-11-15)
+
+The section 1422 rounded rectangle now has a worker-client integration case
+for erosion and growth at signed distances `-0.2` and `+0.2`. It verifies
+bounded worker completion, direct-versus-worker spline-locus agreement in both
+directions within twice the requested geometry tolerance, and successful
+combination and `ValidateSourceCache` publication for the generated native
+cache. It then exports worker-produced ordinary entities and performs two
+import/save/reopen passes for R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Entity type/count, line endpoints, and spline fingerprints are checked across
+the file lanes. DWG lanes are compiled out when `DWGSUPPORT` is disabled.
+
+Validation on macOS arm64 CMake Release: the focused
+`[curved-boundary]` worker-client case passes 903 assertions / 1 case. The
+complete worker-client executable passes 3,385,760 assertions / 48 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`; `git diff --check` and focused
+clang-format validation pass. Test commit `b21a91853`.
+
+This closes worker generation, editable-cache validation, and two-pass native
+file round-trips only for this single tangent quarter-circle rounded
+rectangle at these two distances. Section 1422 remains the independent direct
+boundary/winding oracle for the profile. Do not infer general closed-polyline
+cache or Trim support: native Trim/action/undo-redo, other bulge layouts,
+transforms and scales, visible GUI, cross-platform runtime, and external CAD
+acceptance remain open under Slice 4 and Slice 5.
