@@ -25,15 +25,19 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest source-widget disposition (2026-11-15):** The repeated request to
-change source type while choosing a replacement, across all supported offset
-source kinds, is already represented by the checklist below and has headless
-implementation/test coverage. Keep parabola as a distinct kind. Do not add a
-second selector or a parabola-only slice. The remaining UI work is visible
-acceptance of switching/filter refresh, source indication, replacement, and
-cancel/refusal; the remaining geometry work is per-variant end-to-end evidence
-through capture/reconstruction, worker/cache, Trim where applicable, and DXF/
-DWG persistence. A selector entry alone does not qualify a geometry variant.
+**Latest source-widget disposition (2026-11-15):** The source-type control must
+remain usable while replacement picking is active; changing it must refresh
+eligible candidates without ending that workflow. The selector inventory is
+exactly the nine kinds in `LC_OffsetSourceGeometry::SupportedKinds`: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola remains a distinct kind. The selector/filter has headless
+implementation and test coverage, so do not add a second selector or a
+parabola-only UI slice. Keep visible interaction acceptance open, and treat
+"support all kinds" as an end-to-end geometry obligation: for each enabled
+concrete variant, record candidate eligibility, capture/reconstruction,
+worker/cache, applicable Trim, and DXF/DWG persistence evidence in the family-
+by-variant matrix. Missing evidence means the variant remains unqualified; a
+selector entry is not support.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
