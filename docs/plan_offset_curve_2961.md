@@ -95,13 +95,15 @@ Properties-dialog tests also verify
 the selector inventory and eligible candidate filtering against all nine
 kinds, including parabola (`lc_offsetcurve_propertiesdialog_tests.cpp`, source
 chooser tests). Do not add unrelated drawable families or a second type
-selector. The latest repeated request confirms the same two obligations, not a
-narrower parabola-only change: the user can change the requested source family
-while replacement selection is active, and eligible replacement candidates
-exist for every kind in `SupportedKinds`, with parabola represented as a
-distinct type. The in-place selector/filter behavior is implemented and
-headlessly tested; adding a family to the selector is not sufficient evidence
-that its source geometry is supported. Do not
+selector. The latest repeated request confirms the same obligations, not a
+narrower parabola-only change: the source-curve widget must let the user change
+the requested family while replacement selection is active, and eligible
+replacement candidates must exist for every kind in `SupportedKinds`, with
+parabola represented as a distinct type. The type control filters candidates;
+it does not convert or replace the committed source. The in-place
+selector/filter behavior is implemented and headlessly tested; adding a family
+to the selector is not sufficient evidence that its source geometry is
+supported. Do not
 create a duplicate selector or parabola-only implementation slice. Slice 5
 owns visible verification of the interactive picker and source indication.
 Slice 4 owns concrete-family and variant qualification through source
@@ -46591,6 +46593,25 @@ round-trip case passes 1,016 assertions / 1 case; and `git diff --check` passes.
 The focused command is
 `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' --reporter compact`.
 Other constructions/conditioning, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
+
+## 1391. Pin the Mixed-bulge Bow-tie Refusal Boundary (2026-11-14)
+
+Test commit `6ace89c8e` tightens the positive-bulge bow-tie rigid-frame matrix:
+the unresolved combined-frame growth cells must fail specifically at
+`CycleAssembly` with `AmbiguousTopology` and publish no branches. Other
+positive-bulge cells continue to require independently checked closed cycles;
+source immutability is checked for every cell. This replaces the weaker
+assertion that any non-empty failure site was acceptable and pins the known
+atomic-refusal boundary without making an unproved topology guess.
+
+Validation on macOS arm64 CMake Release: the focused
+`Positive-bulge bow-tie mixed-frame successes are independently checked` case
+passes 226 assertions / 1 case; rebuilding `librecad_tests` succeeds; and
+`git diff --check` passes. This adds no geometric support for combined-frame
+growth. Resolve it only after an independent arrangement oracle can
+distinguish a true touching-cycle ambiguity from numerical misclassification;
+broader mixed-bulge arrangements, visible GUI, cross-platform runtime, and
 independent CAD acceptance remain open.
 
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
