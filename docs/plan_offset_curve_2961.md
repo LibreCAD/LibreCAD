@@ -127,6 +127,17 @@ behavior, and (b) Slice 4 qualification of concrete source variants through
 capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG round-trips.
 Record visible-test platform, binary revision, route, and result when done.
 
+**Latest request reaffirmed (2026-11-14):** During replacement selection, keep
+the source-type control usable without exiting the workflow, and refresh
+eligible candidates for every current `SupportedKinds` entry: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola remains a distinct selectable and preserved type; unrelated
+drawable entities are out of scope. This confirms the existing contract rather
+than creating a new implementation slice: headless picker/filter behavior is
+covered, visible interaction remains in Slice 5, and concrete-variant
+capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG evidence
+remain in Slice 4. A selector entry alone is not geometry support.
+
 **Request reaffirmed (2026-11-14):** The source-curve widget must let the user
 change the requested source type while choosing a replacement and offer every
 kind in `LC_OffsetSourceGeometry::SupportedKinds`, including parabola. Treat
@@ -432,6 +443,18 @@ self-crossing profiles expose ordinary
 worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
 polyline topology feature generally.
+
+**Combined-frame diagnostic update (section 1394):** the strict arrangement
+reports `CycleAssembly/OpenBoundary` with a nearest kept endpoint gap of
+approximately `0.9959593` for the tested combined rotation/translation and
+positive-bulge growth, under both fill rules. The relevant offset-arc/corner-
+circle contact is an external tangency whose computed center-distance error is
+about `5e-11`; a bounded endpoint-contact experiment recovers that root but
+then exposes multiple kept continuations at a different corner. Neither
+relaxing global intersection tolerances nor snapping endpoints is safe. Keep
+the atomic refusal until an independent face/sector topology rule proves which
+continuations form valid cycles; retain the failure subtype and endpoint-gap
+diagnostics as regression evidence.
 
 **Slice 4 status addendum (sections 1364-1367):** the tested all-straight
 single-crossing bow-tie polyline passes direct `RegionBoundary` growth and
@@ -46659,6 +46682,36 @@ Validation on macOS arm64 CMake Release: the focused mixed-frame bow-tie case
 passes 238 assertions / 1 case; the complete `[curve-offset][region]`
 selection passes 28,690 assertions / 23 cases; `librecad_tests` builds; and
 `git diff --check` passes.
+
+## 1394. Classify the Combined-frame Bow-tie Refusal (2026-11-14)
+
+Test commit `b71b4daf5` makes cycle-assembly refusal observable by identifying
+failure subtypes and recording the nearest endpoint gap for an open boundary.
+The positive-bulge combined-frame growth cells refuse as `AmbiguousTopology` at
+`CycleAssembly/OpenBoundary` for both fill rules, with a nearest kept-endpoint
+gap greater than `0.5` (measured about `0.9959593`), proving this is not a
+roundoff-sized cycle closure. Exact primitive diagnostics locate an external
+tangency between an offset arc and a corner circle; the transformed center-
+distance/radius-sum discrepancy is about `5e-11`. A bounded experiment that
+adds only the near-endpoint contact recovers the cut but exposes multiple kept
+continuations at another corner, so the experiment was discarded and no
+geometry tolerance was broadened. Preserve the atomic refusal until an
+independent arrangement/sector oracle distinguishes valid cycle routing from
+a genuinely touching or multiply incident boundary.
+
+The test also compares the result against the transformed identity-frame
+reference for closure, boundary distance, side classification, and area. That
+reference passes but does not prove the transformed source's exact contact
+topology. The tests assert empty output on refusal and pin the diagnostic
+subtype and substantial gap.
+
+Validation on macOS arm64 CMake Release: the focused mixed-frame bow-tie case
+passes 242 assertions / 1 case; `[curve-offset][region]` passes 28,694
+assertions / 23 cases; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. The
+combined-frame positive-bulge growth cell remains unsupported; visible GUI,
+other mixed-bulge arrangements, cross-platform runtime, and independent CAD
+acceptance remain open.
 
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
