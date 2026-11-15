@@ -47383,10 +47383,17 @@ source; the current source remains represented/highlighted until a valid
 replacement is committed.
 
 This is already implemented and covered by the headless source-picker suite
-(15,226 assertions / 44 cases; sections 1412 and 1415). The current PR head
-adds only documentation after that tested product-code snapshot, so this
-evidence remains applicable. No additional widget implementation slice is
-required. Keep only these related gates open: visible desktop verification of
+(15,226 assertions / 44 cases; sections 1412 and 1415). It was rerun against
+the current PR source tree after roadmap commit `158ddec222af5d3764e6cf4d7deb8a7ec97cade8`:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Result: all tests passed (15,226 assertions / 44 cases). No additional widget
+implementation slice is required. Keep only these related gates open: visible
+desktop verification of
 repeated type changes, candidate refresh, current-source indication, successful
 replacement, and cancel/refusal atomicity (Slice 5); plus Slice 4's distinct
 end-to-end geometry-variant matrix through capture/reconstruction, worker/cache,
