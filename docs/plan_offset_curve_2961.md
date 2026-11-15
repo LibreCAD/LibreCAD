@@ -47574,3 +47574,49 @@ boundary/winding oracle for the profile. Do not infer general closed-polyline
 cache or Trim support: native Trim/action/undo-redo, other bulge layouts,
 transforms and scales, visible GUI, cross-platform runtime, and external CAD
 acceptance remain open under Slice 4 and Slice 5.
+
+## 1425. Confirm In-workflow Type Switching Covers All Supported Sources (2026-11-15)
+
+The latest request restates the source-widget requirement: while choosing a
+replacement curve, users must be able to change the requested source type and
+then select a candidate of that type. “All supported types” means every entry
+in `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola
+remains a distinct typed source. The type selector filters eligible existing
+curves; it must not convert the committed source or end/restart the active
+replacement workflow.
+
+This request does not add scope beyond the source-picker contract already
+recorded at the top of this roadmap and in sections 1420 and 1423. Keep the
+implementation status unchanged: in-workflow filtering and family-level
+headless coverage are recorded as complete; visible repeated switching,
+candidate refresh across all nine kinds, source indication, accepted
+replacement, and cancel/refusal atomicity remain open in Slice 5. Independently,
+Slice 4 must continue to qualify concrete variants through capture and
+reconstruction, worker/cache generation, applicable Trim, and DXF/DWG
+save/reopen. A kind's presence in the picker is not proof that all its
+geometric variants are supported. No duplicate selector or parabola-only
+implementation slice is needed unless validation finds a regression.
+
+## 1426. Trim and Persist the Equal-radius Rounded Rectangle (2026-11-15)
+
+Extended the closed-polyline source-replacement/action matrix with the same
+equal-radius rounded rectangle used in sections 1422 and 1424: four tangent
+quarter-circle bulges alternating with four straight spans. The native offset
+cache is generated at distance `0.2`; an independent analytic check verifies
+each arc's offset radius and endpoints and confirms all four line spans remain
+present. The case then selects the offset for native Trim, verifies one output
+fragment, exercises undo and redo, and checks the trimmed spline fingerprint
+after export and reopen.
+
+Validation on macOS arm64 CMake Release: the full generated matrix with all 14
+closed-polyline profiles across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+passes 4,310 assertions / 1 Catch test case. The rounded-rectangle profile
+therefore traversed all five file lanes. `librecad_tests` builds and
+`git diff --check` passes. Test commit `14f655d9f`.
+
+This closes native Trim, undo/redo, and the tested persistence lanes for this
+single rounded-rectangle profile and this offset distance/orientation only.
+It does not qualify other signed distances, transforms, bulge arrangements,
+concavity, self-intersections, external CAD interoperability, or visible GUI
+interaction. Keep those Slice 4/Slice 5 gates open.
