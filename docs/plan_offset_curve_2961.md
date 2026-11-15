@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`c20facd16`):** The
+`3b35bb901`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -56,7 +56,7 @@ Section 1511 measures the same opposite-end clustered profile at source scales
 `1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
 across that scale matrix, while sample-fitting user-selected candidates are a
 separate worker/cache/persistence claim.
-Sections 1516-1526 now extend these clustered layouts to all three
+Sections 1516-1527 now extend these clustered layouts to all three
 recorded control profiles under the rotated `(1e6,-2e6)` frame. Direct
 reconstruction and worker/cache cover scales `1e-3`, `1e-2`, `1e-1`, and `1`
 for all three profiles; Trim Two, undo/redo, and five-format file round-trips
@@ -66,8 +66,9 @@ three profiles. When no candidate qualifies against independent points, tests
 select a sample-fitting alternative; that does not recover the hidden
 generating curve. The adjacent `{0, 0.95, 0.995, 1}` layout also passes the
 direct reconstruction oracle for all three profiles and four scales, with
-worker/cache and typed-source persistence for all three at scale `1e-1`; its
-Trim and other persistence scales remain open.
+worker/cache and typed-source persistence for all three at scale `1e-1`, plus
+Trim Two and result round-trips for all three at scale `1e-1`; its other Trim
+and persistence scales remain open.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50738,8 +50739,9 @@ The real worker/cache matrix carries all three profiles at scale `1e-1` and
 both signed offsets; when no candidate meets the independent-point oracle, the
 test explicitly chooses a sample-fitting candidate. Typed-source persistence
 passes through all five DXF/DWG lanes at this representative scale, with
-available LibreDWG reads. This layout has not yet been carried through Trim,
-and its worker/persistence evidence at the other three scales remains open.
+available LibreDWG reads. At this checkpoint the layout had not yet been
+carried through Trim; section 1527 adds Trim at scale `1e-1`. Worker and
+persistence evidence at the other three scales remains open.
 
 Validation on macOS arm64 CMake Release:
 
@@ -50759,3 +50761,30 @@ Results: direct reconstruction 144 assertions / 1 case; worker/cache and
 persistence 105,517 assertions / 2 cases, all passing. Raw DWG replay
 diagnostics remain separate from semantic source checks. Other sample layouts,
 Trim for this layout, visible UI, and independent CAD acceptance remain open.
+
+## 1527. Trim the Adjacent Clustered-parabola Layout (2026-11-15)
+
+Test commit `3b35bb901` adds the alternate `{0, 0.95, 0.995, 1}` layout to the
+Trim Two action matrix for all three recorded control profiles at scale
+`1e-1`, rotation `0.6435011087932844`, translation `(1e6,-2e6)`, and reversed
+sample traversal. A candidate that independently qualifies is used directly;
+otherwise the existing bounded sample-fitting alternative is exercised. Each
+case passes worker-backed source replacement, Trim preview/commit, undo/redo,
+and the five R14/R2000/R2018 DXF/DWG save/reopen lanes. This establishes one
+Trim scale only for the alternate layout; other scales and sample distributions
+remain open.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 11,159 assertions / 1 case. Visible Properties
+interaction, additional alternate-layout scales, other parabola variants, and
+independent CAD acceptance remain open.
