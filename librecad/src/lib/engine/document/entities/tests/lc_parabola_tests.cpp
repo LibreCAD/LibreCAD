@@ -349,6 +349,43 @@ TEST_CASE("LC_Parabola: Far-end clustered samples do not qualify a known large-o
   }));
 }
 
+TEST_CASE("LC_Parabola: From4Points rejects malformed and degenerate samples",
+          "[parabola][reconstruction][validation]") {
+  const std::vector<RS_Vector> validSamples{{0.0, 0.0}, {1.0, 1.0},
+                                             {2.0, 4.0}, {3.0, 9.0}};
+  CHECK(LC_ParabolaData::From4Points(
+            std::vector<RS_Vector>(validSamples.begin(), validSamples.begin() + 3))
+            .empty());
+  auto tooMany = validSamples;
+  tooMany.push_back({4.0, 16.0});
+  CHECK(LC_ParabolaData::From4Points(tooMany).empty());
+
+  CHECK(LC_ParabolaData::From4Points(
+            {{1.0, 1.0}, {1.0, 1.0}, {1.0, 1.0}, {1.0, 1.0}})
+            .empty());
+  CHECK(LC_ParabolaData::From4Points(
+            {{0.0, 0.0}, {1.0, 1.0}, {2.0, 2.0}, {3.0, 3.0}})
+            .empty());
+  CHECK(LC_ParabolaData::From4Points(
+            {{0.0, 0.0}, {1.0, 1.0}, {2.0, 4.0}, {3.0, 9.0, 1.0}})
+            .empty());
+
+  const double infinity = std::numeric_limits<double>::infinity();
+  const double nan = std::numeric_limits<double>::quiet_NaN();
+  CHECK(LC_ParabolaData::From4Points(
+            {{0.0, 0.0}, {1.0, 1.0}, {2.0, 4.0}, {infinity, 9.0}})
+            .empty());
+  CHECK(LC_ParabolaData::From4Points(
+            {{0.0, 0.0}, {1.0, 1.0}, {2.0, 4.0}, {nan, 9.0}})
+            .empty());
+
+  const double largest = std::numeric_limits<double>::max();
+  CHECK(LC_ParabolaData::From4Points(
+            {{largest, 0.0}, {-largest, 1.0}, {0.0, 2.0},
+             {largest / 2.0, 3.0}})
+            .empty());
+}
+
 TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
           "[parabola][reconstruction][matrix]") {
   const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
