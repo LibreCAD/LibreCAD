@@ -6014,9 +6014,10 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
 }
 
 TEST_CASE("Every balanced parabola sample permutation survives worker cache validation",
-          "[lc-offsetcurve][worker-client][parabola][from-four-points][permutation]") {
+          "[lc-offsetcurve][worker-client][parabola][from-four-points][permutation][persistence]") {
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-parabola-permutation-persistence");
     auto& rt = runtime();
     OwnedClient owned{rt};
     RS_EntityContainer owner;
@@ -6048,6 +6049,15 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
     const double fitTolerance = std::max(
         scale * 1e-7,
         256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{{RS2::FormatDXFRW14, "r14.dxf"},
+                                     {RS2::FormatDXFRW2000, "r2000.dxf"},
+                                     {RS2::FormatDWG, "r2000.dwg"},
+                                     {RS2::FormatDXFRW2018, "r2018.dxf"},
+                                     {RS2::FormatDWG2018, "r2018.dwg"}}};
 
     qint64 requestId = 1;
     std::array<std::size_t, 4> order{{0, 1, 2, 3}};
@@ -6101,6 +6111,50 @@ TEST_CASE("Every balanced parabola sample permutation survives worker cache vali
             CHECK(admitted->sourceDefinition()->source.kind() ==
                   LC_OffsetSourceGeometry::Kind::Parabola);
             exactCache(admitted->getData(), cache);
+
+            RS_Graphic graphic;
+            graphic.initForNewDocument();
+            auto* layer = new RS_Layer("Offset");
+            graphic.addLayer(layer);
+            admitted->setLayer(layer);
+            graphic.addEntity(admitted.release());
+            const auto expectedFingerprint = RS_Spline::geometryFingerprint(cache);
+            for (const Lane& lane : lanes) {
+                CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+                if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                    continue;
+#endif
+                const auto path = directory.file(
+                    std::to_string(requestId) + "-" + lane.extension);
+                REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                for (int pass = 0; pass < 2; ++pass) {
+                    RS_Graphic reopened;
+                    REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                    LC_OffsetCurve* reopenedOffset = nullptr;
+                    for (RS_Entity* entity : reopened) {
+                        if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
+                            continue;
+                        REQUIRE(reopenedOffset == nullptr);
+                        reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
+                    }
+                    REQUIRE(reopenedOffset);
+                    REQUIRE(reopenedOffset->sourceDefinition());
+                    CHECK(reopenedOffset->sourceDefinition()->source.kind() ==
+                          LC_OffsetSourceGeometry::Kind::Parabola);
+                    CHECK(reopenedOffset->sourceDefinition()->signedDistance == signedDistance);
+                    CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) ==
+                          expectedFingerprint);
+                    const auto* reopenedParabola = std::get_if<LC_ParabolaData>(
+                        &reopenedOffset->sourceDefinition()->source.value);
+                    REQUIRE(reopenedParabola);
+                    for (std::size_t point = 0; point < candidate->m_controlPoints.size(); ++point)
+                        CHECK(reopenedParabola->m_controlPoints[point].distanceTo(
+                                  candidate->m_controlPoints[point]) <= fitTolerance);
+                    if (pass == 0)
+                        REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+                }
+            }
             requestId += 2;
         }
     } while (std::next_permutation(order.begin(), order.end()));
