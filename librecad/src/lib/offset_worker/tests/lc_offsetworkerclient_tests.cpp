@@ -6401,6 +6401,8 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
         if (frame.denseEndLayoutOnly && frame.clusteredLayout[1] == 0.98) {
             frameLayouts.push_back({{0.05, 0.2, 0.65, 0.95}});
             frameLayouts.push_back({{0.1, 0.3, 0.7, 0.9}});
+            frameLayouts.push_back({{0.02, 0.31, 0.68, 0.98}});
+            frameLayouts.push_back({{0.1, 0.45, 0.46, 0.9}});
         }
         if (scale == 1e-6 || scale == 1.0 || scale == 1e6)
             if (!frame.denseEndLayoutOnly)
