@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`a026eecef`):** The
+`c69bd04cb`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -71,6 +71,9 @@ interior-asymmetric `{0.05, 0.2, 0.65, 0.95}` layout passes direct
 reconstruction, worker/cache, typed-source persistence, and Trim Two for the
 same three profiles/scales; this layout requires an independently qualifying
 candidate in the Trim action matrix.
+Section 1531 also proves the existing source stays highlighted while browsing
+all nine family filters, then the visible source highlight follows a successful
+worker-backed replacement from a line to a parabola.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50889,3 +50892,29 @@ assertions / 1 case, all passing. LibreDWG reads the emitted DWG files. Known
 failures and remain a separate metadata limitation. Other parabola
 constructions/layouts, visible Properties interaction, and independent CAD
 acceptance remain open.
+
+## 1531. Preserve Source Highlight Through Cross-family Replacement (2026-11-15)
+
+Test commit `c69bd04cb` extends the Properties source-picker workflow beyond
+filter-only checks. With an existing line source, changing among all nine
+supported family filters must preserve the committed definition/cache and
+keep the original line highlighted. Selecting a parabola candidate then runs
+the worker-backed replacement; after commit, the typed source is a parabola
+and the overlay highlights that new source geometry. This validates the
+headless Qt interaction and highlight transfer for a line-to-parabola
+replacement, not visible packaged-app behavior or every cross-family
+transition.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Native source picker preserves highlighted source across family filters' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 161 assertions / 1 case. Visible desktop picker
+acceptance and independent CAD acceptance remain open.
