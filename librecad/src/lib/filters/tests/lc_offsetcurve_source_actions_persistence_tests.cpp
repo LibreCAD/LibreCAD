@@ -2834,15 +2834,18 @@ TEST_CASE("Large-origin rounded polyline source updates and persists the editabl
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    const RS_Vector origin{1e6, -1e6};
+    const double coordinate = GENERATE(1e6, 1e9);
+    CAPTURE(coordinate);
+    const RS_Vector origin{coordinate, -coordinate};
+    const double viewScale = coordinate >= 1e9 ? 1.0 : 10.0;
     constexpr double angle = .37;
     const RS_Vector xAxis{std::cos(angle), std::sin(angle)};
     const RS_Vector yAxis{-xAxis.y, xAxis.x};
     const auto transform = [&](const RS_Vector& point) {
         return origin + xAxis * point.x + yAxis * point.y;
     };
-    view.getViewPort()->setOffsetAndFactor(qRound(200. - origin.x * 10.),
-                                          qRound(200. - origin.y * 10.), 10.);
+    view.getViewPort()->setOffsetAndFactor(qRound(200. - origin.x * viewScale),
+                                          qRound(200. - origin.y * viewScale), viewScale);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 

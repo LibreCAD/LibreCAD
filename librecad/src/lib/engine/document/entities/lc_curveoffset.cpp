@@ -7562,6 +7562,24 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
         !computeScale(*adapter, distanceMagnitude, scale) || adapter->breaks().size() < 2) {
         return {};
     }
+    const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
+    const auto* polylineAdapter = dynamic_cast<const PolylineOffsetSource*>(adapter.get());
+    if (polyline != nullptr && polylineAdapter != nullptr && polylineAdapter->hasCircularSegment() &&
+        scale.coordinate > 16.0 * scale.feature &&
+        std::hypot(polyline->getStartpoint().x, polyline->getStartpoint().y) > 16.0 * scale.feature) {
+        const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+        const auto* polylineData = sourceGeometry
+            ? std::get_if<LC_OffsetPolylineData>(&sourceGeometry->value)
+            : nullptr;
+        if (polylineData != nullptr &&
+            LC_OffsetSourceDetail::hasNoNonAdjacentSegmentIntersections(*polylineData)) {
+            std::unique_ptr<RS_Entity> localEntity{source.clone()};
+            auto* localPolyline = dynamic_cast<RS_Polyline*>(localEntity.get());
+            if (localPolyline == nullptr || !isFinite(polyline->getStartpoint())) return {};
+            localPolyline->move({-polyline->getStartpoint().x, -polyline->getStartpoint().y});
+            return makeDirectOptions(*localPolyline, distanceMagnitude, requestedTolerance);
+        }
+    }
     const double relative = dynamic_cast<const RS_Ellipse*>(&source) != nullptr ? kEllipseRelativeOffsetTolerance
                                                                                  : kDefaultRelativeOffsetTolerance;
     const double requested = (requestedTolerance > 0.0)
