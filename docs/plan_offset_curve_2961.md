@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, local tested head `8373c291d`,
-based on pushed PR #3193 head `22b2b7406`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, local tested head `90b0667af`,
+based on pushed PR #3193 head `b3513de89`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -156,6 +156,29 @@ passes 2,322 assertions / 8 cases. `git diff --check` passes. Worker/cache,
 Trim, file persistence for this newly added matrix row, other constructions,
 visible desktop interaction, and independent CAD validation remain unqualified
 unless covered by their separate evidence.
+
+## 1476. Exercise Endpoint-tangent Parabola through Trim Two (2026-11-15)
+
+Commit `90b0667af` adds an action-level Trim Two test using a parabola built by
+`FromEndPointsTangents`. It replaces an existing offset source with the typed
+parabola through the worker-backed Update from Source action, verifies the
+retained control points, previews and commits a circle trim, and checks undo
+and redo restore the original entities and fragments. This establishes Trim
+coverage for this endpoint-tangent construction at the recorded moderate
+slopes; it is not a blanket claim for every endpoint-tangent conditioning.
+
+An exploratory action run with endpoint slopes `+/-1e-14` produced no preview
+for the selected trim, even though that source has separate worker/cache and
+file-lane coverage in section 1466. That extreme profile therefore remains an
+open Trim conditioning case and is not represented by the passing test below.
+Investigate the refusal/scale interaction before claiming it is trim-capable;
+do not loosen certified-intersection or fail-closed behavior to force a result.
+
+Validation on macOS arm64 CMake Release: the focused action case passes 191
+assertions / 1 case, and `git diff --check` passes. The next geometry work
+continues with additional parabola variants and conditioning limits; visible
+desktop interaction and independent CAD acceptance remain open as stated
+above.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
