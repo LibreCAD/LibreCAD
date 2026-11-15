@@ -50606,8 +50606,9 @@ preview/commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
 save/reopen. The candidate search uses independent points when a candidate
 qualifies and otherwise uses the bounded sample-fitting alternative already
 covered by the direct/worker matrices. This adds one representative Trim
-scale for profiles 0 and 1; their other scales and layouts remain unqualified
-for Trim.
+scale for profiles 0 and 1 at this checkpoint; section 1523 extends all three
+profiles across the four measured scales for Trim. Other layouts remain
+unqualified.
 
 Validation on macOS arm64 CMake Release, with LibreDWG available:
 
@@ -50623,3 +50624,32 @@ git diff --check
 Result: all tests passed, 9,114 assertions / 1 case. The complete supported
 source-family/variant matrix, visible Properties interaction, and independent
 CAD acceptance remain open.
+
+## 1523. Complete the Three-profile Clustered Trim Scale Matrix (2026-11-15)
+
+Test commit `1a3fdba42` extends the transformed, reversed, opposite-end
+four-point parabola Trim matrix for profiles 0 and 1 from the scale-`1e-1`
+rows in section 1522 to `1e-3`, `1e-2`, and `1`. Together with profile 2's
+rows in sections 1517-1520, all three recorded control profiles now pass the
+same fixed-origin frame `(1e6,-2e6)`, rotation `0.6435011087932844`, reversed
+sample traversal, and `{0, 0.98, 0.999, 1}` layout at scales `1e-3`, `1e-2`,
+`1e-1`, and `1`. These tests select a candidate matching the samples when no
+independent-point candidate qualifies; they do not assert hidden-generator
+recovery. Each row covers worker-backed source replacement, Trim
+preview/commit, undo/redo, and the five DXF/DWG save/reopen lanes.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 10,497 assertions / 1 case. This closes only the
+three profiles, four measured scales, one transform/traversal, and one sample
+layout. Other parabola constructions/layouts, broader persistence grids,
+visible Properties interaction, and independent CAD acceptance remain open.
