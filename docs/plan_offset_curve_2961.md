@@ -25,8 +25,7 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, local tested head `90b0667af`,
-based on pushed PR #3193 head `d1ec8d0bc`):** The repeated request to
+**Latest plan reconciliation (2026-11-15, PR #3193 head `ce7167548`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -64,7 +63,8 @@ end-to-end worker/cache plus five-lane persistence coverage for the
 `{0, 0.98, 0.999, 1}` clustered parabola profile. Its selected candidate is
 valid for the picked samples; uniqueness or hidden-curve recovery is not
 claimed. The focused results are 8 assertions / 1 action case and 61,058
-assertions / 2 worker/persistence cases.
+assertions / 2 worker/persistence cases. Section 1477 reconciles the latest
+source-picker request against the current PR head.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49126,3 +49126,29 @@ Results: action-level selection passes 8 assertions / 1 case. The complete
 worker/cache and persistence matrices pass 61,058 assertions / 2 cases,
 including available LibreDWG parsing. Visible desktop and independent CAD
 acceptance remain open.
+
+## 1477. Reconcile Source-type Switching and All-modeled-type Support (2026-11-15)
+
+The latest request is a requirement for the existing replacement-source
+workflow: while selecting a new source curve, the user can change the requested
+source type and then select a matching candidate. This applies to every kind
+currently modeled by `LC_OffsetSourceGeometry::SupportedKinds`: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola remains an independent source kind; it must not be silently
+converted to spline-points. The current widget already exposes this behavior,
+so do not add another selector or a parabola-only picker slice.
+
+Keep the existing-source indication visible while browsing. A type change
+filters/refetches candidates without mutating the committed source or cache;
+only successful validation and publication replace them. Cancellation, stale
+candidate rejection, and failed preparation preserve the prior source/cache.
+The UI inventory is not a claim that every geometric variant is supported:
+retain per-family/variant evidence for capture or reconstruction, worker/cache
+processing, applicable Trim, and DXF/DWG persistence, with unsupported or
+ill-conditioned cases explicitly refused rather than approximated as a
+different source kind.
+
+This clarification is reconciled against PR #3193 head `ce7167548`. Existing
+headless dialog/action tests cover repeated filtering and all nine kinds, but
+visible packaged-app interaction and independent CAD acceptance remain open.
+Do not close those gates based on offscreen tests or source-kind enumeration.
