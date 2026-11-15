@@ -1844,12 +1844,24 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
           "with undo and redo",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][from-"
           "four-points][trim-two]") {
-  for (const bool transformed : {false, true}) {
-    CAPTURE(transformed);
-    const double scale = transformed ? 1e-2 : 1.0;
-    const double angle = transformed ? 0.6435011088 : 0.0;
-    const RS_Vector translation =
-        transformed ? RS_Vector{1e6, -2e6} : RS_Vector{};
+  struct Frame {
+    double scale;
+    double angle;
+    RS_Vector translation;
+    bool reversed;
+  };
+  const std::array<Frame, 4> frames{{
+      {1.0, 0.0, {}, false},
+      {1e-6, 0.0, {}, false},
+      {1e6, 0.0, {}, false},
+      {1e-2, 0.6435011088, {1e6, -2e6}, true},
+  }};
+  for (const Frame &frame : frames) {
+    CAPTURE(frame.scale, frame.angle, frame.translation.x,
+            frame.translation.y, frame.reversed);
+    const double scale = frame.scale;
+    const double angle = frame.angle;
+    const RS_Vector translation = frame.translation;
     const auto mapPoint = [&](RS_Vector point) {
       point *= scale;
       return RS_Vector{std::cos(angle) * point.x - std::sin(angle) * point.y,
@@ -1857,7 +1869,13 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
              translation;
     };
     Drawing<true> f;
-    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+    if (translation.x == 0.0 && translation.y == 0.0) {
+      const double zoom = 15.0 / scale;
+      f.view.getViewPort()->setSize(640, 480);
+      f.view.getViewPort()->setOffsetAndFactor(320, 240, zoom);
+    }
+    RS_Ellipse seed(nullptr,
+                    RS_EllipseData{{0, 0}, {scale, 0}, 1, 0, .1, false});
     const double offsetDistance = 0.5 * scale;
     auto initial = LC_OffsetCurve::create(seed, offsetDistance, false);
     REQUIRE(initial);
@@ -1872,10 +1890,10 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
                       controls[2] * (t * t));
     };
     const std::vector<RS_Vector> samples =
-        transformed ? std::vector<RS_Vector>{pointAt(1), pointAt(.7),
-                                             pointAt(.3), pointAt(0)}
-                    : std::vector<RS_Vector>{pointAt(0), pointAt(.3),
-                                             pointAt(.7), pointAt(1)};
+        frame.reversed ? std::vector<RS_Vector>{pointAt(1), pointAt(.7),
+                                                pointAt(.3), pointAt(0)}
+                       : std::vector<RS_Vector>{pointAt(0), pointAt(.3),
+                                                pointAt(.7), pointAt(1)};
     std::array<RS_Vector, 3> expectedControls;
     std::transform(controls.begin(), controls.end(), expectedControls.begin(),
                    mapPoint);
@@ -2085,8 +2103,7 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
           dwg ? QStringLiteral("dwg") : QStringLiteral("dxf");
       const QString fileName = directory.filePath(
           QStringLiteral("reconstructed-%1-%2.%3")
-              .arg(transformed ? QStringLiteral("transformed")
-                               : QStringLiteral("plain"))
+              .arg(QStringLiteral("frame-%1").arg(&frame - frames.data()))
               .arg(lane)
               .arg(suffix));
       const std::filesystem::path path(fileName.toStdString());
