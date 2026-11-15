@@ -71,6 +71,29 @@ namespace Req = LC_OffsetWorkerRequest;
 namespace Reply = LC_OffsetWorkerResult;
 namespace Geo = LC_EllipseOffsetGeometry;
 
+struct ParabolaProfileFrame {
+    std::size_t profile;
+    double scale;
+    double angle;
+    RS_Vector translation;
+};
+
+const std::array<ParabolaProfileFrame, 10>& fourPointParabolaFrames() {
+    static const std::array<ParabolaProfileFrame, 10> frames{{
+        {0, 1e-6, 0.37, RS_Vector{123e-6, -87e-6}},
+        {0, 1.0, 0.37, RS_Vector{123.0, -87.0}},
+        {0, 1e6, 0.37, RS_Vector{123e6, -87e6}},
+        {1, 1e-6, 0.37, RS_Vector{123e-6, -87e-6}},
+        {1, 1.0, 0.37, RS_Vector{123.0, -87.0}},
+        {1, 1e6, 0.37, RS_Vector{123e6, -87e6}},
+        {2, 1e-6, 0.37, RS_Vector{123e-6, -87e-6}},
+        {2, 1.0, 0.37, RS_Vector{123.0, -87.0}},
+        {2, 1e6, 0.37, RS_Vector{123e6, -87e6}},
+        {2, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}},
+    }};
+    return frames;
+}
+
 static_assert(!std::is_default_constructible_v<Completion>);
 static_assert(!std::is_copy_constructible_v<Completion>);
 static_assert(!std::is_copy_assignable_v<Completion>);
@@ -5863,20 +5886,15 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
         {{0.0, 0.1, 0.4, 1.0}},
     }};
     qint64 requestId = 1;
-    const std::array<std::pair<std::size_t, double>, 9> profileScales{{
-        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6},
-        {2, 1e-6}, {2, 1.0}, {2, 1e6}}};
-    for (const auto& profileScale : profileScales) {
-        const std::size_t profileIndex = profileScale.first;
-        const double scale = profileScale.second;
-        CAPTURE(profileIndex, scale);
+    for (const auto& frame : fourPointParabolaFrames()) {
+        const std::size_t profileIndex = frame.profile;
+        const double scale = frame.scale;
+        CAPTURE(profileIndex, scale, frame.angle, frame.translation);
         const auto& controls = controlProfiles[profileIndex];
-        constexpr double angle = 0.37;
-        const RS_Vector translation{123.0 * scale, -87.0 * scale};
         const auto transform = [&](const RS_Vector& point) {
             RS_Vector mapped = point * scale;
-            mapped.rotate(angle);
-            return mapped + translation;
+            mapped.rotate(frame.angle);
+            return mapped + frame.translation;
         };
         const auto pointAt = [&](const double t) {
             const double mt = 1.0 - t;
@@ -5884,7 +5902,10 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
                              controls[2] * (t * t));
         };
         const std::array<RS_Vector, 3> independent{{pointAt(0.15), pointAt(0.5), pointAt(0.85)}};
-        const double fitTolerance = scale * 1e-7;
+        const double worldMagnitude = std::max({std::abs(frame.translation.x),
+                                                std::abs(frame.translation.y), scale});
+        const double fitTolerance = std::max(
+            scale * 1e-7, 256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
         for (const auto& layout : layouts) {
             CAPTURE(layout);
             std::vector<RS_Vector> samples;
@@ -5979,20 +6000,15 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
 #endif
 
     qint64 requestId = 1;
-    const std::array<std::pair<std::size_t, double>, 9> profileScales{{
-        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6},
-        {2, 1e-6}, {2, 1.0}, {2, 1e6}}};
-    for (const auto& profileScale : profileScales) {
-        const std::size_t profileIndex = profileScale.first;
-        const double scale = profileScale.second;
-        CAPTURE(profileIndex, scale);
+    for (const auto& frame : fourPointParabolaFrames()) {
+        const std::size_t profileIndex = frame.profile;
+        const double scale = frame.scale;
+        CAPTURE(profileIndex, scale, frame.angle, frame.translation);
         const auto& controls = controlProfiles[profileIndex];
-        constexpr double angle = 0.37;
-        const RS_Vector translation{123.0 * scale, -87.0 * scale};
         const auto transform = [&](const RS_Vector& point) {
             RS_Vector mapped = point * scale;
-            mapped.rotate(angle);
-            return mapped + translation;
+            mapped.rotate(frame.angle);
+            return mapped + frame.translation;
         };
         const auto pointAt = [&](const double t) {
             const double mt = 1.0 - t;
@@ -6000,7 +6016,10 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
                              controls[2] * (t * t));
         };
         const std::array<RS_Vector, 3> independent{{pointAt(0.15), pointAt(0.5), pointAt(0.85)}};
-        const double fitTolerance = scale * 1e-7;
+        const double worldMagnitude = std::max({std::abs(frame.translation.x),
+                                                std::abs(frame.translation.y), scale});
+        const double fitTolerance = std::max(
+            scale * 1e-7, 256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
         for (const auto& layout : layouts) {
             CAPTURE(layout);
             std::vector<RS_Vector> samples;

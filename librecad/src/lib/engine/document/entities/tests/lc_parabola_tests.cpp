@@ -279,6 +279,39 @@ TEST_CASE("LC_Parabola: From4Points is stable for small translated geometry",
   CHECK(reconstructed);
 }
 
+TEST_CASE("LC_Parabola: From4Points reconstructs rotated geometry at a large origin",
+          "[parabola][reconstruction][large-origin]") {
+  const std::array<RS_Vector, 3> controls{{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}};
+  constexpr double scale = 1e-2;
+  constexpr double angle = 0.6435011087932844;
+  const RS_Vector translation{1e6, -2e6};
+  const auto transform = [&](const RS_Vector& point) {
+    RS_Vector mapped = point * scale;
+    mapped.rotate(angle);
+    return mapped + translation;
+  };
+  const auto pointAt = [&](const double t) {
+    return transform(bezierAt(controls, t));
+  };
+  std::vector<RS_Vector> samples;
+  for (const double t : {0.0, 0.3, 0.7, 1.0})
+    samples.push_back(pointAt(t));
+  const std::array<RS_Vector, 3> independent{{pointAt(0.15), pointAt(0.5), pointAt(0.85)}};
+  const double fitTolerance = 256.0 * std::numeric_limits<double>::epsilon() * 2e6;
+
+  const auto candidates = LC_ParabolaData::From4Points(samples);
+  const bool reconstructed = std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
+    if (!candidate.isValid())
+      return false;
+    const auto matches = [&](const RS_Vector& point) {
+      return candidate.fromX(candidate.findX(point)).distanceTo(point) <= fitTolerance;
+    };
+    return std::all_of(samples.begin(), samples.end(), matches) &&
+           std::all_of(independent.begin(), independent.end(), matches);
+  });
+  CHECK(reconstructed);
+}
+
 TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
           "[parabola][reconstruction][matrix]") {
   const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};

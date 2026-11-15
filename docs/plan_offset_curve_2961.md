@@ -48632,3 +48632,41 @@ git diff --check
 Result: all three four-point cases pass, totaling 52,538 assertions. This is
 worker/cache and file-lane test expansion; no production-kernel change was
 needed.
+
+## 1462. Reconstruct Four-point Parabolas in a Local Coordinate Frame (2026-11-15)
+
+The added rotated high-origin control net exposed a production defect:
+`From4Points` returned no candidates for a representable profile scaled to
+`1e-2` and translated to `(1e6,-2e6)`. Fitting already centered and normalized
+the samples, but candidate-axis discovery intersected the diagonals first in
+world coordinates. `From4Points` now validates finite planar inputs, centers
+and uniformly scales all four samples before axis discovery, fits candidates
+in that local frame, and transforms each resulting control net back to world
+coordinates. Invalid, coincident, or non-finite frames still fail closed.
+
+The regression covers the third uneven control net, a `0.6435011088` rad
+rotation, the `1e-2` scale, and `(1e6,-2e6)` translation. It verifies all
+sample and independent points, then carries the reconstructed typed source
+through worker generation, operation-8 cache validation, both signed offsets,
+five DXF/DWG lanes, two save/reopen passes, and LibreDWG parsing of both DWG
+versions. Existing scale/layout rows remain in the same matrix. This fixes
+axis discovery conditioning for the recorded profile; it does not establish
+all finite coordinate extremes, near-degenerate sample configurations, or
+arbitrary parabola domains.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points]' --reporter compact
+git diff --check
+```
+
+Results: reconstruction passes 2,275 assertions / 6 cases; the complete
+four-point worker/cache/persistence subset passes 61,589 assertions / 3 cases.
+The repeated second-save DWG `fixed-handle=2` raw-object replay warning is
+documented in section 1460 and is not treated as complete metadata replay.

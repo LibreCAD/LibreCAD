@@ -305,13 +305,41 @@ std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_V
 {
     if (points.size() != 4)
         return {};
-    std::vector<RS_Vector> axes = getAxisVectors(points);
+    if (!std::all_of(points.begin(), points.end(), [](const RS_Vector& point) {
+            return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+                   std::isfinite(point.z) && point.z == 0.0;
+        }))
+        return {};
+
+    // Axis discovery intersects diagonals, so keep it away from large world coordinates.
+    const RS_Vector origin = points.front();
+    double coordinateScale = 0.0;
+    for (const RS_Vector& point : points)
+        coordinateScale = std::max(
+            coordinateScale, std::hypot(point.x - origin.x, point.y - origin.y));
+    if (!std::isfinite(coordinateScale) || coordinateScale == 0.0)
+        return {};
+
+    std::vector<RS_Vector> localPoints;
+    localPoints.reserve(points.size());
+    for (const RS_Vector& point : points)
+        localPoints.emplace_back((point - origin) / coordinateScale);
+
+    const std::vector<RS_Vector> axes = getAxisVectors(localPoints);
 
     std::vector<LC_ParabolaData> ret;
-    std::transform(axes.cbegin(), axes.cend(), std::back_inserter(ret), [&points](const RS_Vector& axis) {
-        return fromPointsAxis(points, axis);
-    });
-    ret.erase(std::remove_if(ret.begin(), ret.end(), [](const LC_ParabolaData& d){return !d.m_valid;}), ret.end());
+    ret.reserve(axes.size());
+    for (const RS_Vector& axis : axes) {
+        LC_ParabolaData local = fromPointsAxis(localPoints, axis);
+        if (!local.isValid())
+            continue;
+        std::array<RS_Vector, 3> worldControls;
+        std::transform(local.m_controlPoints.begin(), local.m_controlPoints.end(),
+                       worldControls.begin(), [&origin, coordinateScale](const RS_Vector& point) {
+            return point * coordinateScale + origin;
+        });
+        ret.emplace_back(worldControls);
+    }
     return ret;
 }
 
