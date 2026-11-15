@@ -1857,7 +1857,7 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     bool interiorAsymmetric = false;
     bool interiorBalanced = false;
   };
-  const std::array<Frame, 73> frames{{
+  const std::array<Frame, 84> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1930,7 +1930,18 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
       {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
       {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
+      {1e-3, 0.6435011087932844, {1e6, -2e6}, true, false, 0, false, true, false, false, true},
+      {1e-2, 0.6435011087932844, {1e6, -2e6}, true, false, 0, false, true, false, false, true},
       {1e-1, 0.6435011087932844, {1e6, -2e6}, true, false, 0, false, true, false, false, true},
+      {1.0, 0.6435011087932844, {1e6, -2e6}, true, false, 0, false, true, false, false, true},
+      {1e-3, 0.6435011087932844, {1e6, -2e6}, true, false, 1, false, true, false, false, true},
+      {1e-2, 0.6435011087932844, {1e6, -2e6}, true, false, 1, false, true, false, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, false, 1, false, true, false, false, true},
+      {1.0, 0.6435011087932844, {1e6, -2e6}, true, false, 1, false, true, false, false, true},
+      {1e-3, 0.6435011087932844, {1e6, -2e6}, true, false, 2, false, true, false, false, true},
+      {1e-2, 0.6435011087932844, {1e6, -2e6}, true, false, 2, false, true, false, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, false, 2, false, true, false, false, true},
+      {1.0, 0.6435011087932844, {1e6, -2e6}, true, false, 2, false, true, false, false, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,

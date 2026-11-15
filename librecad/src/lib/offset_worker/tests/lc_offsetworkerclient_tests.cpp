@@ -6058,8 +6058,7 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
             frameLayouts = {frame.clusteredLayout};
         if (frame.denseEndLayoutOnly && frame.clusteredLayout[1] == 0.98) {
             frameLayouts.push_back({{0.05, 0.2, 0.65, 0.95}});
-            if (profileIndex == 0 && scale == 1e-1)
-                frameLayouts.push_back({{0.1, 0.3, 0.7, 0.9}});
+            frameLayouts.push_back({{0.1, 0.3, 0.7, 0.9}});
         }
         if (scale == 1e-6 || scale == 1.0 || scale == 1e6)
             if (!frame.denseEndLayoutOnly)
@@ -6201,8 +6200,7 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
             frameLayouts = {frame.clusteredLayout};
         if (frame.denseEndLayoutOnly && frame.clusteredLayout[1] == 0.98) {
             frameLayouts.push_back({{0.05, 0.2, 0.65, 0.95}});
-            if (profileIndex == 0 && scale == 1e-1)
-                frameLayouts.push_back({{0.1, 0.3, 0.7, 0.9}});
+            frameLayouts.push_back({{0.1, 0.3, 0.7, 0.9}});
         }
         if (scale == 1e-6 || scale == 1.0 || scale == 1e6)
             if (!frame.denseEndLayoutOnly)
