@@ -1853,8 +1853,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     unsigned profile;
     bool expectLimitRefusal;
     bool allowAmbiguousCandidate = false;
+    bool oppositeEndClustered = false;
   };
-  const std::array<Frame, 36> frames{{
+  const std::array<Frame, 37> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1891,12 +1892,13 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e-2, 0.6435011088, {1e5, -2e5}, true, true, 0, false, true},
       {1e-2, 0.6435011088, {1e5, -2e5}, true, true, 1, false, true},
       {1e-2, 0.6435011088, {1e5, -2e5}, true, true, 2, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
             frame.translation.y, frame.reversed, frame.denseEnd,
             frame.profile, frame.expectLimitRefusal,
-            frame.allowAmbiguousCandidate);
+            frame.allowAmbiguousCandidate, frame.oppositeEndClustered);
     const double scale = frame.scale;
     const double angle = frame.angle;
     const RS_Vector translation = frame.translation;
@@ -1942,7 +1944,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
                       controls[2] * (t * t));
     };
     const std::array<double, 4> sampleParameters = frame.denseEnd
-        ? std::array<double, 4>{{0.0, 0.95, 0.995, 1.0}}
+        ? (frame.oppositeEndClustered
+               ? std::array<double, 4>{{0.0, 0.98, 0.999, 1.0}}
+               : std::array<double, 4>{{0.0, 0.95, 0.995, 1.0}})
         : std::array<double, 4>{{0.0, 0.3, 0.7, 1.0}};
     std::vector<RS_Vector> samples;
     for (const double parameter : sampleParameters)
@@ -1991,6 +1995,8 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
               });
           return forward || reversed;
         });
+    if (frame.oppositeEndClustered)
+      CHECK(candidate == candidates.end());
     if (candidate == candidates.end() && frame.allowAmbiguousCandidate) {
       const double tolerance = std::max(
           1e-8 * scale,
