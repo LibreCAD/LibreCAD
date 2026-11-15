@@ -817,6 +817,114 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
   }
 }
 
+TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
+          "[lc-offsetcurve][worker-client][polyline][mixed-bulge][cache][persistence]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-worker-concave-mixed-bulge");
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+
+    RS_Polyline sourceEntity;
+    sourceEntity.addVertex({0, 0}, 0.2);
+    sourceEntity.addVertex({8, 0}, -0.2);
+    sourceEntity.addVertex({8, 6});
+    sourceEntity.addVertex({0, 6});
+    sourceEntity.setClosed(true);
+    sourceEntity.endPolyline();
+    const auto source = LC_OffsetSourceGeometry::capture(sourceEntity);
+    REQUIRE(source);
+    REQUIRE(source->isWellFormed());
+
+    constexpr qint64 requestId = 2110;
+    constexpr double signedDistance = .25;
+    const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+    const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+    Receipts receipts;
+    REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), requestId, 7);
+    const auto& generated = std::get<Reply::Native>(completion.reply().result);
+    REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+    CHECK(generated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+    REQUIRE(generated.ordinary.size() == 1);
+    const auto* ordinaryData = std::get_if<RS_SplineData>(&generated.ordinary.front());
+    REQUIRE(ordinaryData);
+
+    auto directSource = source->makeEntity();
+    REQUIRE(directSource);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *directSource);
+    REQUIRE(options);
+    CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+    const auto direct = LC_CurveOffset::buildDirectBranches(
+        *directSource, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, signedDistance),
+        *options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+    const auto materialized = LC_CurveOffset::materializeBranches(
+        *directSource, direct, *options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 1);
+    const auto* directSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+    REQUIRE(directSpline);
+    CHECK(RS_Spline::geometryFingerprint(*ordinaryData) ==
+          RS_Spline::geometryFingerprint(directSpline->getData()));
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* layer = graphic.findLayer("0");
+    REQUIRE(layer);
+    auto* ordinary = new RS_Spline(&graphic, *ordinaryData);
+    ordinary->setLayer(layer);
+    graphic.addEntity(ordinary);
+    auto nativeCurve = completion.nativeSource(graphic);
+    REQUIRE(nativeCurve);
+    REQUIRE(nativeCurve->isConsistent());
+    REQUIRE(nativeCurve->sourceDefinition());
+    CHECK(nativeCurve->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Polyline);
+    CHECK(nativeCurve->sourceDefinition()->signedDistance == signedDistance);
+    const auto cacheFingerprint = RS_Spline::geometryFingerprint(nativeCurve->getData());
+    nativeCurve->setLayer(layer);
+    graphic.addEntity(nativeCurve.release());
+
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+    for (const Lane& lane : lanes) {
+        const auto path = directory.file(std::to_string(requestId) + "-" + lane.extension);
+        REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+        for (int pass = 0; pass < 2; ++pass) {
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+            const LC_OffsetCurve* reopenedCurve = nullptr;
+            for (const RS_Entity* entity : reopened) {
+                if (const auto* candidate = dynamic_cast<const LC_OffsetCurve*>(entity)) {
+                    REQUIRE(reopenedCurve == nullptr);
+                    reopenedCurve = candidate;
+                }
+            }
+            REQUIRE(reopenedCurve);
+            CHECK(reopenedCurve->isConsistent());
+            REQUIRE(reopenedCurve->sourceDefinition());
+            CHECK(reopenedCurve->sourceDefinition()->source.kind() ==
+                  LC_OffsetSourceGeometry::Kind::Polyline);
+            CHECK(reopenedCurve->sourceDefinition()->signedDistance == signedDistance);
+            CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) == cacheFingerprint);
+            if (pass == 0)
+                REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+        }
+    }
+}
+
 TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
           "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge]") {
     auto& rt = runtime();
