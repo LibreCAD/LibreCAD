@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest plan reconciliation (2026-11-15, pushed PR #3193 head
-`b7d748e03`):** The repeated request to
+`2b3f588b3`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -52,8 +52,9 @@ limits, visible picker/highlight interaction, and independent CAD acceptance
 remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
-Exact-head Headless ON and OFF checks both pass on `b7d748e03`; cross-platform
-build, static-analysis, and DWG/DXF workflow jobs are still pending.
+Headless ON and OFF passed on exact head `b7d748e03`. At the latest query,
+checks for current plan-only head `2b3f588b3` were still running across
+headless, platform builds, static analysis, and DWG/DXF workflows.
 On `5391d809c`, the offscreen Qt dialog matrix passes 8,801 assertions / 3
 cases and the live action candidate-filter case passes 148 assertions / 1
 case; these requalify widget semantics but do not close visible desktop
