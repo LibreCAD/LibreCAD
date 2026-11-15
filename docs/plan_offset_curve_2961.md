@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`c4716cede`):** The
+`db593d13a`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -82,7 +82,9 @@ undo/redo for all three control profiles at scales `1e-3`, `1e-2`, `1e-1`,
 and `1` in the rotated `(1e6,-2e6)` frame (section 1534). This is one
 additional bounded sample distribution, not arbitrary four-point
 reconstruction support. Section 1535 also reconstructs this layout from
-reversed sample order across all 12 worker/cache and persistence rows.
+reversed sample order across all 12 worker/cache and persistence rows. Section
+1536 exercises all 24 permutations in the direct reconstruction oracle for
+the same profiles/scales; it does not claim all permutations through file IO.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -51073,3 +51075,9 @@ Validation: CMake Release build of `librecad_tests` and `librecad_offset_worker_
 Test commit `c4716cede` reverses the four reconstructed sample points for the balanced-interior layout `{0.1, 0.3, 0.7, 0.9}` in both the worker/cache and five-format persistence matrices. This runs all three control profiles and scales `1e-3`, `1e-2`, `1e-1`, and `1` under the rotated `(1e6,-2e6)` frame from reversed sample order, with both signed offsets, cache validation, two save/reopen passes, and available LibreDWG reads. Direct reconstruction already checks both input orders (section 1533), and Trim Two already uses reversed traversal across these 12 rows (section 1534). This is order-invariance evidence for this specific layout/profile/scale grid only.
 
 Validation: CMake Release build of `librecad_offset_worker_client_tests`; worker/cache passes 93,725 assertions / 1 case; five-format persistence passes 69,314 assertions / 1 case with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000` and `DWGREAD=/opt/homebrew/bin/dwgread`; `git diff --check` passes. No production code change was needed. Other source layouts, frames, continuous scales, visible GUI, and independent CAD acceptance remain open.
+
+## 1536. Exercise Every Balanced-interior Sample Permutation (2026-11-15)
+
+Test commit `db593d13a` checks all 24 permutations of the balanced-interior sample set `{0.1, 0.3, 0.7, 0.9}` across three control profiles and scales `1e-3`, `1e-2`, `1e-1`, and `1` in the rotated `(1e6,-2e6)` frame. Every permutation must produce a candidate fitting the supplied samples, and the best valid candidate's error at independent points must remain within 64 times the scale/origin-aware tolerance. This establishes direct reconstruction order robustness for these 12 profiles/scales; worker/cache and persistence have only forward/reversed sequence coverage (section 1535), and arbitrary layouts remain open.
+
+Validation: CMake Release build of `librecad_tests`; focused `[parabola][permutation]` passes 864 assertions / 1 case; complete `[parabola][reconstruction]` passes 3,785 assertions / 12 cases; `git diff --check` passes. The visible GUI and independent CAD gates remain open.
