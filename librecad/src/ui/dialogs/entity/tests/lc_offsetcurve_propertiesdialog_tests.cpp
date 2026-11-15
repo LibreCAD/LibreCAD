@@ -999,6 +999,33 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
     checkLineHighlight();
     CHECK(sourceBox->currentData().toULongLong() == line->getId());
     CHECK(line->getFlag(RS2::FlagSelected));
+
+    const int parabolaType = typeBox->findData(static_cast<int>(
+        LC_OffsetSourceGeometry::Kind::Parabola));
+    REQUIRE(parabolaType >= 0);
+    typeBox->setCurrentIndex(parabolaType);
+    checkLineHighlight();
+    const int parabolaIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(parabola->getId()));
+    REQUIRE(parabolaIndex >= 0);
+    sourceBox->setCurrentIndex(parabolaIndex);
+    REQUIRE(widget.isPreparing());
+    checkLineHighlight();
+    awaitPreparation(widget);
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Parabola);
+    REQUIRE(pollEventsUntil([&] {
+        if (highlightOverlay->getEntityList().size() != 1) return false;
+        return dynamic_cast<const LC_Parabola*>(
+            highlightOverlay->getEntityList().front()) != nullptr;
+    }));
+    const auto* highlightedParabola = dynamic_cast<const LC_Parabola*>(
+        highlightOverlay->getEntityList().front());
+    REQUIRE(highlightedParabola);
+    for (std::size_t i = 0; i < parabola->getData().m_controlPoints.size(); ++i)
+        CHECK(highlightedParabola->getData().m_controlPoints[i].distanceTo(
+                  parabola->getData().m_controlPoints[i]) == 0.0);
 }
 
 TEST_CASE("Native source picker filters and replaces every supported source family",
