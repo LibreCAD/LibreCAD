@@ -46994,3 +46994,15 @@ case from section 1397. The command
 '[lc-offsetcurve][trim-action]' --reporter compact` passes 384,554 assertions /
 96 cases. This broad action-lane result does not close other source-family
 variants, visible GUI, cross-platform runtime, or independent CAD acceptance.
+
+## 1399. Revalidate All-family Source Picker at the Current PR State (2026-11-15)
+
+Revalidated the headless source-picker union against code commit `9f612173b`:
+`QT_QPA_PLATFORM=offscreen
+/private/tmp/offset-2961-cmake-clean/librecad_tests
+'[gui][dialog][offsetcurve][source]' --reporter compact` passes 15,226
+assertions / 44 cases. This confirms the nine-kind family filter, repeated
+in-workflow switching, distinct parabola selection, and associated picker
+state tests at this source state. It does not close visible desktop
+interaction, cross-platform delivery, or the independent geometry-variant
+matrix.
