@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`f246d779f`):** The repeated request to
+`680c75131`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -77,6 +77,9 @@ asymmetric tangent-direction construction through the same worker and file
 lanes.
 Section 1484 requires LibreDWG's JSON output to expose both editable-offset
 EED markers on each decoded SPLINE; it does not claim schema interpretation.
+Section 1485 adds two translated/rotated endpoint-tangent stress profiles at
+scales `1e-4` and `1e4`, paired with representable curvature and proportional
+offset/tolerance values.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49418,3 +49421,32 @@ presence, not the custom payload's typed-source schema, parameter semantics,
 or round-trip equivalence. ODA FileConverter still aborts before conversion
 during macOS pasteboard/XPC initialization; no ODA result is available. Keep
 ODA/AutoCAD acceptance and visible packaged-app interaction open.
+
+## 1485. Exercise Endpoint-tangent Parabola Scale Extremes (2026-11-15)
+
+Commit `680c75131` adds two translated/rotated source profiles to the
+worker/cache/persistence matrix: a length-`1e-3` parabola at scale `1e-4` with
+tangent slope `1e-8`, and a length-`1e5` parabola at scale `1e4` with slope
+`1e-14`. Both offsets and fit tolerances scale with the source. These pairs
+keep the small-curvature feature representable after the `{37, -19}` frame
+translation; they are deliberately not a Cartesian product of every slope and
+scale. Each profile runs both signs through cache admission, R14/R2000/R2018
+DXF/DWG, LibreCAD reopen, and LibreDWG checks for the SPLINE plus
+`LC_OFFSET_CURVE` / `TYPED_SOURCE` EED markers.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Result: the complete endpoint-tangent matrix passes 7,577 assertions / 1
+case. This qualifies only the two selected scale/slope combinations and the
+previous profiles; it does not locate general numeric collapse thresholds,
+qualify all slopes at all scales, or establish semantic EED interpretation by
+LibreDWG. ODA/AutoCAD and visible-app acceptance remain open.
