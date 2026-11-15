@@ -50553,3 +50553,43 @@ git diff --check
 Result: all tests passed, 8,589 assertions / 1 case. Remaining work includes
 other parabola conditioning and construction variants, visible Properties
 interaction, and independent CAD acceptance.
+
+## 1521. Qualify the Other Parabola Profiles at Large Origin (2026-11-15)
+
+Test commit `e38b55d4b` adds direct reconstruction checks for control profiles
+0 and 1 from the worker matrix under the same rotated fixed-origin transform
+`(1e6,-2e6)`, opposite-end layout `{0, 0.98, 0.999, 1}`, and source scales
+`1e-3`, `1e-2`, `1e-1`, and `1`. Forward and reversed input orders must each
+produce a candidate fitting all supplied samples, and the best independent
+point error across candidates must remain finite and within 64 times the
+scale/origin-aware tolerance. This is a bounded reconstruction check, not a
+claim that every profile recovers the hidden curve exactly.
+
+The real worker/cache matrix carries both profiles through all four scales and
+both offset signs. For any row where no candidate matches all independent
+points, the test explicitly takes a sample-fitting candidate; otherwise it
+uses the independently matching candidate. Both choices must survive worker
+generation and cache validation. At scale `1e-1`, each profile additionally
+passes typed-source persistence through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG, with available LibreDWG parsing. Other scale/layout combinations in
+this transformed frame are not yet persisted or trimmed for these two
+profiles.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][large-origin][profile-matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: direct profile matrix 48 assertions / 1 case; worker/cache and
+persistence matrices 93,164 assertions / 2 cases, all passing. The full
+parabola family/conditioning matrix, visible Properties interaction, Trim
+coverage for profiles 0 and 1 in this transformed clustered frame, and
+independent CAD acceptance remain open.
