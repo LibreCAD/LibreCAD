@@ -46984,3 +46984,13 @@ Validation on macOS arm64 CMake Release: the focused case passes 6,838
 assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
 --target librecad_tests -j4` succeeds; and `git diff --check` passes. Visible
 GUI, cross-platform runtime, and independent CAD acceptance remain open.
+
+## 1398. Revalidate the Complete Trim Action Lane (2026-11-15)
+
+Revalidated the full `[lc-offsetcurve][trim-action]` lane against test commit
+`9f612173b`, including the transformed asymmetric reversed-domain hyperbola
+case from section 1397. The command
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'[lc-offsetcurve][trim-action]' --reporter compact` passes 384,554 assertions /
+96 cases. This broad action-lane result does not close other source-family
+variants, visible GUI, cross-platform runtime, or independent CAD acceptance.
