@@ -47189,3 +47189,17 @@ success at this exact revision. These results add local qmake6 product/helper
 and family-picker evidence; they do not close qmake6 package relocation,
 ASan, visible GUI, remaining PR platform/format jobs, or independent CAD
 acceptance.
+
+## 1411. Requalify Region and Full Curve-offset Under ASan (2026-11-14)
+
+Configured a separate AddressSanitizer CMake Release tree at
+`/private/tmp/offset-2961-asan-current` and built the complete
+`librecad_tests` target successfully from the exact PR product source. With
+`ASAN_OPTIONS=detect_leaks=0` and `QT_QPA_PLATFORM=offscreen`, the focused
+`[curve-offset][region]` selector passes 28,700 assertions / 23 cases, and
+the complete `[curve-offset]` selector passes 2,247,333 assertions / 350
+cases. Neither run reported an AddressSanitizer error. Leak detection is
+intentionally disabled and no leak-free claim is made. This closes local
+Release/ASan curve-offset unit coverage for this source state, not the open
+visible-GUI, cross-platform runtime, deployed-package, or independent-CAD
+gates in Slice R.
