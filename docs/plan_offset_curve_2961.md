@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`83268a7ae`):** The repeated request to
+`11576a35d`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -42,8 +42,8 @@ with both results saved and reopened through the five native-capable lanes.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
-persistence matrix for all three control profiles at scale 1 (sections 1496
-and 1498). The more extreme layout
+persistence matrix for all three control profiles at scales `1e-6`, `1`, and
+`1e6` (sections 1496, 1498, 1500, and 1502). The more extreme layout
 `{0, 0.98, 0.999, 1}` also runs through worker/cache and persistence matrices.
 For one transformed, high-origin profile, no candidate recovers the hidden
 generating curve at independent points despite fitting all four input samples.
@@ -102,8 +102,10 @@ Section 1498 expands the dense-end worker/cache and persistence layout across
 all three control profiles at scale 1 in the recorded transformed frames.
 Section 1499 expands the same three profile shapes through the Trim action and
 five-format persistence matrix at the test frame.
-Section 1500 adds scale `1e-6` and `1e6` worker/cache and persistence rows for
-profile 0; the other two profiles remain qualified at scale 1 only.
+Section 1500 initially added scale `1e-6` and `1e6` worker/cache and
+persistence rows for profile 0. Section 1502 extends those scales to all three
+recorded control profiles; this remains bounded to the measured frames and
+does not establish arbitrary-translation behavior.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49947,3 +49949,33 @@ Result after removing the inconclusive scale rows: 6,650 assertions / 1 case
 pass for the retained unit-scale Trim matrix. Section 1500's independent
 68,540 worker/cache and persistence assertions are unchanged. The unit-scale
 Trim fixture retains the reconstructed four-point candidate (section 1501).
+
+## 1502. Complete Dense-end Parabola Profile and Scale Matrix (2026-11-15)
+
+Extend the `{0, 0.95, 0.995, 1}` worker/cache and typed-source persistence
+layout from section 1500 so all three recorded control profiles run at scales
+`1e-6`, `1`, and `1e6`. Each row generates both signed offsets, validates the
+worker cache, and exercises two save/reopen passes across R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. The proportional rotated/translated frames remain
+the previously recorded ones. The special high-origin ambiguity profile is
+not part of this scale matrix. This closes the missing-profile rows for this
+specific sample layout only; it does not establish arbitrary frames, other
+clustered distributions, or hidden-curve uniqueness.
+
+Implementation commit `11576a35d` (`Cover dense parabola layouts at extreme
+scales`). Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: 77,266 assertions / 2 cases pass. The known DWG
+`fixed-handle=2` raw OBJECTS replay warning is diagnostic-only here; semantic
+source and entity checks pass, but this is not proof of complete raw-payload
+round-trip. Trim action scale coverage remains explicitly separate under
+section 1501.
