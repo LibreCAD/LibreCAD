@@ -36,6 +36,7 @@
 #include "lc_graphicviewrenderer.h"
 #include "lc_overlayentity.h"
 #include "lc_overlaysmanager.h"
+#include "lc_offsetsource.h"
 #include "lc_printviewportrenderer.h"
 #include "lc_printpreviewviewrenderer.h"
 #include "lc_ref_snap_mark.h"
@@ -65,6 +66,7 @@ public:
     using LC_GraphicViewRenderer::setPenForEntity;
     using LC_GraphicViewRenderer::setPenForOverlayEntity;
     using LC_GraphicViewRenderer::setupPainter;
+    void prepareBounds() { m_renderBoundingClipRect = prepareBoundingClipRect(); }
     void beginPass() { doSetupBeforeContainerDraw(); }
     void setHighlightColor(const RS_Color& color) {
         m_colorVisualSnapDocumentEntities = color;
@@ -106,15 +108,43 @@ TEST_CASE("Offset source highlight is rendered and removed with its lease",
     LC_GraphicViewport viewport;
     viewport.setSize(100, 80);
     viewport.setOffsetAndFactor(10, 40, 1.0);
-    RS_Line source{RS_Vector{0, 0}, RS_Vector{40, 0}};
-    source.setPen(testPen(RS2::SolidLine));
-    auto lease = viewport.highlightOffsetSource(source);
-    REQUIRE(lease);
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    const auto geometryFor = [](const Kind kind) {
+        switch (kind) {
+        case Kind::Line: return LC_OffsetSourceGeometry{RS_LineData{{-4, 0}, {4, 0}}};
+        case Kind::Arc: return LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 4, .2, 1.4, false}};
+        case Kind::Circle: return LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 4}};
+        case Kind::Ellipse: return LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .7, 0, 0, false}};
+        case Kind::Spline: {
+            RS_SplineData data{2, false};
+            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            data.knotslist = {0, 0, 0, 1, 1, 1};
+            data.weights = {1, 1, 1};
+            return LC_OffsetSourceGeometry{data};
+        }
+        case Kind::SplinePoints: {
+            LC_SplinePointsData data{false, false};
+            data.useControlPoints = true;
+            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            return LC_OffsetSourceGeometry{data};
+        }
+        case Kind::Parabola:
+            return LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}}};
+        case Kind::BoundedHyperbola:
+            return LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .5, -.4, .4}};
+        case Kind::Polyline:
+            return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{-4, 0}, {4, 0}, false,
+                {RS_LineData{{-4, 0}, {0, 2}}, RS_LineData{{0, 2}, {4, 0}}}}};
+        case Kind::Invalid: break;
+        }
+        return LC_OffsetSourceGeometry{RS_LineData{}};
+    };
     const auto render = [&] {
         QImage image(100, 80, QImage::Format_RGB32);
         image.fill(Qt::black);
         RS_Painter painter(&image);
         TestViewRenderer renderer(&viewport, &image);
+        renderer.prepareBounds();
         renderer.setHighlightColor(RS_Color(Qt::red));
         renderer.setupPainter(&painter);
         renderer.beginPass();
@@ -122,25 +152,41 @@ TEST_CASE("Offset source highlight is rendered and removed with its lease",
         painter.end();
         return image;
     };
-    const auto redPixels = [](const QImage& image) {
+    const auto isHighlightPixel = [](const QColor& color) {
+        return color.red() > 128 && color.green() < 128 && color.blue() < 128;
+    };
+    const auto redPixels = [&](const QImage& image) {
         int count = 0;
         for (int y = 0; y < image.height(); ++y)
             for (int x = 0; x < image.width(); ++x)
-                if (image.pixelColor(x, y) == QColor(Qt::red)) ++count;
+                if (isHighlightPixel(image.pixelColor(x, y))) ++count;
         return count;
     };
-    const QImage highlighted = render();
-    CHECK(redPixels(highlighted) > 0);
-    const int sourceY = viewport.toGuiY(0);
-    int sourcePixels = 0;
-    for (int x = viewport.toGuiX(0); x <= viewport.toGuiX(40); ++x) {
-        for (int y = sourceY - 1; y <= sourceY + 1; ++y) {
-            if (highlighted.pixelColor(x, y) == QColor(Qt::red)) ++sourcePixels;
+
+    for (const Kind kind : LC_OffsetSourceGeometry::SupportedKinds) {
+        CAPTURE(static_cast<int>(kind));
+        auto geometry = geometryFor(kind);
+        REQUIRE(geometry.isWellFormed());
+        auto source = geometry.makeEntity();
+        REQUIRE(source);
+        source->setPen(testPen(RS2::SolidLine));
+        auto lease = viewport.highlightOffsetSource(*source);
+        REQUIRE(lease);
+        const QImage highlighted = render();
+        CHECK(redPixels(highlighted) > 0);
+        if (kind == Kind::Line) {
+            const int sourceY = viewport.toGuiY(0);
+            int sourcePixels = 0;
+            for (int x = viewport.toGuiX(-4); x <= viewport.toGuiX(4); ++x) {
+                for (int y = sourceY - 1; y <= sourceY + 1; ++y) {
+                    if (isHighlightPixel(highlighted.pixelColor(x, y))) ++sourcePixels;
+                }
+            }
+            CHECK(sourcePixels > 0);
         }
+        lease.reset();
+        CHECK(redPixels(render()) == 0);
     }
-    CHECK(sourcePixels > 0);
-    lease.reset();
-    CHECK(redPixels(render()) == 0);
 }
 
 TEST_CASE("drawing, draft, preview and print keep the same model-space dash lengths",
