@@ -1198,16 +1198,17 @@ TEST_CASE("T Trim Two commits a certified post-cusp hyperbola cache atomically",
     for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
 }
 
-TEST_CASE("T Trim Two action trims a worker-created typed parabola against a circle in both pick orders",
+TEST_CASE("T Trim Two action trims a worker-created typed parabola against circular and elliptic cutters",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
     for (const bool nearCusp : {false, true})
     for (const bool asymmetric : {false, true})
     for (const double scale : {0.1, 1.0, 10.0})
     for (const bool transformed : {false, true})
     for (const bool oppositeSide : {false, true})
+    for (const unsigned cutterKind : {0u, 1u})
     for (const bool parabolaFirst : {false, true}) {
         if (nearCusp && (asymmetric || scale != 1.0 || transformed)) continue;
-        CAPTURE(nearCusp, asymmetric, scale, transformed, oppositeSide, parabolaFirst);
+        CAPTURE(nearCusp, asymmetric, scale, transformed, oppositeSide, cutterKind, parabolaFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         const double offsetDistance = scale * (nearCusp ? .45 : .05);
@@ -1266,29 +1267,37 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
         const RS_Vector normal{-tangent.y, tangent.x};
         const double circleRadius = .1 * scale;
         const RS_Vector circleCenter = intersection + tangent * circleRadius;
-        auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
-        f.graphic.addEntity(circle);
+        RS_Entity* cutter = nullptr;
+        RS_Vector cutterPick;
+        if (cutterKind == 0) {
+            cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
+            cutterPick = circleCenter + normal * circleRadius;
+        } else {
+            cutter = new RS_Ellipse(&f.graphic,
+                RS_EllipseData{circleCenter, tangent * (1.4 * circleRadius), .5, 0, 0, false});
+            cutterPick = circleCenter + normal * (.7 * circleRadius);
+        }
+        f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(
             breaks.front() + (breaks[1] - breaks.front()) * .9);
-        const RS_Vector circlePick = circleCenter + normal * circleRadius;
         const auto nativeBefore = trimGeometry(*native);
-        const auto circleBefore = trimGeometry(*circle);
+        const auto cutterBefore = trimGeometry(*cutter);
         const RS_Vector initialVertex = parabola->getData().m_controlPoints[1];
-        f.action->click(parabolaFirst ? nativePick : circlePick);
+        f.action->click(parabolaFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
-        f.action->hover(parabolaFirst ? circlePick : nativePick);
+        f.action->hover(parabolaFirst ? cutterPick : nativePick);
         const auto preview = trimPreview(*f.action->m_preview);
         REQUIRE_FALSE(preview.empty());
         CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
         CHECK(trimGeometry(*native) == nativeBefore);
-        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
         CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
 
-        f.action->click(parabolaFirst ? circlePick : nativePick);
+        f.action->click(parabolaFirst ? cutterPick : nativePick);
         REQUIRE(native->isDeleted());
-        REQUIRE(circle->isDeleted());
+        REQUIRE(cutter->isDeleted());
         std::vector<RS_Entity*> fragments;
         std::vector<std::string> committed;
         for (auto* entity : live(f.graphic)) {
@@ -1301,8 +1310,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
         CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
             return entity->rtti() == RS2::EntitySpline;
         }));
-        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
-            return entity->rtti() == RS2::EntityArc;
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [&](const RS_Entity* entity) {
+            return entity->rtti() == (cutterKind == 0 ? RS2::EntityArc : RS2::EntityEllipse);
         }));
 
         QTemporaryDir directory;
@@ -1345,6 +1354,25 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
                 return closeVector(x.center, y.center) && close(x.radius, y.radius) &&
                     close(x.angle1, y.angle1) && close(x.angle2, y.angle2) && x.reversed == y.reversed;
             }
+            if (const auto* a = dynamic_cast<const RS_Ellipse*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Ellipse*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                if (x.isArc || y.isArc) {
+                    if (!x.isArc || !y.isArc) return false;
+                    const bool sameEnds = closeVector(a->getStartpoint(), b->getStartpoint()) &&
+                        closeVector(a->getEndpoint(), b->getEndpoint());
+                    const bool reversedEnds = closeVector(a->getStartpoint(), b->getEndpoint()) &&
+                        closeVector(a->getEndpoint(), b->getStartpoint());
+                    return closeVector(x.center, y.center) && close(x.majorP.magnitude(), y.majorP.magnitude()) &&
+                        close(x.ratio, y.ratio) && close(a->getLength(), b->getLength()) &&
+                        closeVector(a->getMiddlePoint(), b->getMiddlePoint()) && (sameEnds || reversedEnds);
+                }
+                return closeVector(x.center, y.center) && closeVector(x.majorP, y.majorP) &&
+                    close(x.ratio, y.ratio) && close(x.angle1, y.angle1) && close(x.angle2, y.angle2) &&
+                    x.reversed == y.reversed;
+            }
             if (const auto* a = dynamic_cast<const LC_Parabola*>(&expected)) {
                 const auto* b = dynamic_cast<const LC_Parabola*>(&actual);
                 if (!b) return false;
@@ -1370,14 +1398,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
                 REQUIRE(reader.exitCode() == 0);
                 const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
                 REQUIRE(document.isObject());
-                unsigned splines = 0, arcs = 0;
+                unsigned splines = 0, arcs = 0, ellipses = 0;
                 for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
                     const QString entity = value.toObject().value("entity").toString();
                     splines += entity == QLatin1String("SPLINE");
                     arcs += entity == QLatin1String("ARC");
+                    ellipses += entity == QLatin1String("ELLIPSE");
                 }
                 CHECK(splines > 0);
-                CHECK(arcs > 0);
+                const bool hasCutterFragments = cutterKind == 0 ? arcs > 0 : ellipses > 0;
+                CHECK(hasCutterFragments);
             }
 #endif
             RS_Graphic reopened;
@@ -1414,18 +1444,18 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
 
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
         CHECK_FALSE(parabola->isDeleted());
         REQUIRE(native->hasGeneralizedSourceDefinition());
         REQUIRE(native->sourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
         CHECK(trimGeometry(*native) == nativeBefore);
-        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
         CHECK(parabola->getData().m_controlPoints[1] == initialVertex);
         for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
         REQUIRE(f.graphic.redo());
         CHECK(native->isDeleted());
-        CHECK(circle->isDeleted());
+        CHECK(cutter->isDeleted());
         for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
     }
 }
