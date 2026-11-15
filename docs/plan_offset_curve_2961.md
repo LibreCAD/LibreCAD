@@ -41,8 +41,9 @@ four-point source in ordinary and transformed/reversed high-origin frames,
 with both results saved and reopened through the five native-capable lanes.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
-1}` passes the independent oracle and, for one representative profile/frame,
-the worker/cache and five-lane persistence matrix (section 1496). The more extreme layout
+1}` passes the independent oracle and the worker/cache and five-lane
+persistence matrix for all three control profiles at scale 1 (sections 1496
+and 1498). The more extreme layout
 `{0, 0.98, 0.999, 1}` also runs through worker/cache and persistence matrices.
 For one transformed, high-origin profile, no candidate recovers the hidden
 generating curve at independent points despite fitting all four input samples.
@@ -92,6 +93,8 @@ general guarantee against every root near the selected phase.
 Section 1497 carries the `{0, 0.95, 0.995, 1}` reconstructed parabola through
 Trim action and five-format persistence for the recorded test source; this
 does not qualify other clustered layouts or parabola constructions.
+Section 1498 expands the dense-end worker/cache and persistence layout across
+all three control profiles at scale 1 in the recorded transformed frames.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -28375,6 +28378,33 @@ operation-7 generation, and operation-8 cache validation. Their source metadata
 also survives R14/R2000/R2018 DXF/DWG save/reopen/second-save; signed offsets
 promote from carriers through the same five format lanes after worker
 validation.
+
+## 1498. Extend Dense-end Worker and Persistence Across Parabola Profiles (2026-11-15)
+
+Section 1496 initially added the `{0, 0.95, 0.995, 1}` sample layout for one
+profile/frame. The worker/cache and typed-source persistence matrices now run
+it for all three recorded control profiles at scale 1 in their rotated and
+translated frames. Each row checks input and independent points before
+generation, both signed offsets, worker cache admission, and two
+save/reopen passes through the R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+lanes. This broadens only the measured profiles at scale 1; other scales and
+frames remain unqualified.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: 65,684 assertions / 2 cases pass, including available LibreDWG DWG
+entity-presence checks. The existing `fixed-handle=2` replay diagnostic is
+not semantic-source failure. Continue the family-by-variant matrix rather
+than extrapolating from these three profiles.
 
 Validation: the focused high-degree knot worker selector passes 188 assertions
 across 3 cases; typed-source file round-trip passes 7,620 assertions; staged
