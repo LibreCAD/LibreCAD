@@ -797,6 +797,7 @@ TEST_CASE("Worker client persists major-bulge polyline offsets",
         const auto& result = std::get<Reply::Native>(completion.reply().result);
         REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        CHECK(result.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
         REQUIRE_FALSE(result.ordinary.empty());
         CHECK_FALSE(result.curve);
 
