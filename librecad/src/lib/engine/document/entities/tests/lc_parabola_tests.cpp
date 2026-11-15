@@ -601,9 +601,10 @@ TEST_CASE("LC_Parabola: From4Points large-origin clustered profiles",
       {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
       {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
   }};
-  const std::array<std::array<double, 4>, 2> layouts{{
+  const std::array<std::array<double, 4>, 3> layouts{{
       {{0.0, 0.95, 0.995, 1.0}},
       {{0.0, 0.98, 0.999, 1.0}},
+      {{0.05, 0.2, 0.65, 0.95}},
   }};
   const std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
   constexpr double angle = 0.6435011087932844;

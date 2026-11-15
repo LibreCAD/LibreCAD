@@ -1854,8 +1854,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     bool expectLimitRefusal;
     bool allowAmbiguousCandidate = false;
     bool oppositeEndClustered = false;
+    bool interiorAsymmetric = false;
   };
-  const std::array<Frame, 60> frames{{
+  const std::array<Frame, 72> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1916,12 +1917,25 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e-3, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true},
       {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true},
       {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, true},
+      {1e-3, 0.6435011087932844, {1e6, -2e6}, true, true, 0, false, false, false, true},
+      {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 0, false, false, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 0, false, false, false, true},
+      {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 0, false, false, false, true},
+      {1e-3, 0.6435011087932844, {1e6, -2e6}, true, true, 1, false, false, false, true},
+      {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 1, false, false, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 1, false, false, false, true},
+      {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 1, false, false, false, true},
+      {1e-3, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
+      {1e-2, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
+      {1e-1, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
+      {1.0, 0.6435011087932844, {1e6, -2e6}, true, true, 2, false, false, false, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
             frame.translation.y, frame.reversed, frame.denseEnd,
             frame.profile, frame.expectLimitRefusal,
-            frame.allowAmbiguousCandidate, frame.oppositeEndClustered);
+            frame.allowAmbiguousCandidate, frame.oppositeEndClustered,
+            frame.interiorAsymmetric);
     const double scale = frame.scale;
     const double angle = frame.angle;
     const RS_Vector translation = frame.translation;
@@ -1966,7 +1980,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
                       controls[1] * (2.0 * oneMinusT * t) +
                       controls[2] * (t * t));
     };
-    const std::array<double, 4> sampleParameters = frame.denseEnd
+    const std::array<double, 4> sampleParameters = frame.interiorAsymmetric
+        ? std::array<double, 4>{{0.05, 0.2, 0.65, 0.95}}
+        : frame.denseEnd
         ? (frame.oppositeEndClustered
                ? std::array<double, 4>{{0.0, 0.98, 0.999, 1.0}}
                : std::array<double, 4>{{0.0, 0.95, 0.995, 1.0}})
