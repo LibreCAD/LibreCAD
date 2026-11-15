@@ -80,6 +80,8 @@ EED markers on each decoded SPLINE; it does not claim schema interpretation.
 Section 1485 adds two translated/rotated endpoint-tangent stress profiles at
 scales `1e-4` and `1e4`, paired with representable curvature and proportional
 offset/tolerance values.
+Section 1486 re-runs the full non-hidden Properties source-picker dialog suite
+on current head `008c927b9`; visible desktop acceptance remains separate.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49450,3 +49452,27 @@ case. This qualifies only the two selected scale/slope combinations and the
 previous profiles; it does not locate general numeric collapse thresholds,
 qualify all slopes at all scales, or establish semantic EED interpretation by
 LibreDWG. ODA/AutoCAD and visible-app acceptance remain open.
+
+## 1486. Revalidate the Properties Source Picker on the Current Head (2026-11-15)
+
+The current source-picker implementation was revalidated on PR branch head
+`008c927b9`. The offscreen dialog suite exercises repeated family changes
+during candidate browsing, all nine `SupportedKinds`, preservation of the
+committed source/cache while filters change, typed replacement, current-source
+highlighting/selection, and overlay lifetime/update behavior. The source-type
+control remains available while browsing; it is disabled only during the
+worker preparation that follows choosing a candidate.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+git diff --check
+```
+
+Result: 15,226 assertions / 44 cases pass. This is automated offscreen UI
+coverage; it does not verify visible packaged-app layout or interaction on the
+desktop. Keep visible GUI acceptance open, and do not add a duplicate selector
+or infer broader entity support from this picker result.
