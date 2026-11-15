@@ -414,10 +414,11 @@ for both fill rules. Its follow-up materialization fix rotates corner-arc
 angular provenance into the world frame, allowing rotated positive-bulge
 growth to pass worker materialization and round-trip through all five tested
 file lanes. Combined-frame positive-bulge growth still refuses atomically
-during cycle assembly. A follow-up experiment using evaluation tolerance for
-exact noding and radial-gap arc tangency classification did not resolve this
-cell and was discarded; the focused 226-assertion regression continues to
-require an atomic refusal. These tested self-crossing profiles expose ordinary
+during cycle assembly. Follow-up experiments using evaluation tolerance for
+exact noding, radial-gap arc tangency classification, and bounded candidate-
+endpoint events did not resolve this cell and were discarded; the focused
+226-assertion regression continues to require an atomic refusal. These tested
+self-crossing profiles expose ordinary
 worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
 polyline topology feature generally.
