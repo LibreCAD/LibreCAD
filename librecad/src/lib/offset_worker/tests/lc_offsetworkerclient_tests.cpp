@@ -6013,6 +6013,99 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     }
 }
 
+TEST_CASE("Every balanced parabola sample permutation survives worker cache validation",
+          "[lc-offsetcurve][worker-client][parabola][from-four-points][permutation]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+
+    const std::array<RS_Vector, 3> controls{{
+        {-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+    constexpr std::array<double, 4> parameters{{0.1, 0.3, 0.7, 0.9}};
+    constexpr std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
+    constexpr double scale = 1e-1;
+    constexpr double angle = 0.6435011087932844;
+    const RS_Vector translation{1e6, -2e6};
+    const auto mapPoint = [&](RS_Vector point) {
+        point *= scale;
+        point.rotate(angle);
+        return point + translation;
+    };
+    const auto pointAt = [&](const double t) {
+        const double mt = 1.0 - t;
+        return mapPoint(controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) +
+                        controls[2] * (t * t));
+    };
+    std::array<RS_Vector, 4> samples;
+    std::transform(parameters.begin(), parameters.end(), samples.begin(), pointAt);
+    std::array<RS_Vector, 3> independent;
+    std::transform(independentParameters.begin(), independentParameters.end(),
+                   independent.begin(), pointAt);
+    const double worldMagnitude = std::max(std::abs(translation.x), std::abs(translation.y));
+    const double fitTolerance = std::max(
+        scale * 1e-7,
+        256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+
+    qint64 requestId = 1;
+    std::array<std::size_t, 4> order{{0, 1, 2, 3}};
+    do {
+        CAPTURE(order, angle, translation);
+        std::vector<RS_Vector> orderedSamples;
+        for (const std::size_t index : order)
+            orderedSamples.push_back(samples[index]);
+        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+        const auto candidate = std::find_if(candidates.begin(), candidates.end(),
+            [&](const LC_ParabolaData& value) {
+                if (!value.isValid()) return false;
+                const auto fits = [&](const RS_Vector& point) {
+                    return value.fromX(value.findX(point)).distanceTo(point) <= fitTolerance;
+                };
+                return std::all_of(samples.begin(), samples.end(), fits) &&
+                       std::all_of(independent.begin(), independent.end(), fits);
+            });
+        REQUIRE(candidate != candidates.end());
+
+        for (const double signedDistance : {5.0 * scale, -5.0 * scale}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{*candidate}, signedDistance, 1e-4, false};
+            Receipts generatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId), Req::GenerateSource{definition, {}}},
+                Client::Mode::Commit, generatedReceipts.into(0)));
+            rt.until([&] { return generatedReceipts.calls[0] != 0; });
+            const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+            const auto& result = std::get<Reply::Native>(generated.reply().result);
+            REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+            auto native = generated.nativeSource(attributes);
+            REQUIRE(native);
+            REQUIRE(native->sourceDefinition());
+            CHECK(native->sourceDefinition()->source.kind() ==
+                  LC_OffsetSourceGeometry::Kind::Parabola);
+            exactCache(native->getData(), cache);
+
+            Receipts validatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}},
+                Client::Mode::Commit, validatedReceipts.into(0)));
+            rt.until([&] { return validatedReceipts.calls[0] != 0; });
+            const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+            auto admitted = validated.nativeValidatedSource(attributes);
+            REQUIRE(admitted);
+            REQUIRE(admitted->sourceDefinition());
+            CHECK(admitted->sourceDefinition()->source.kind() ==
+                  LC_OffsetSourceGeometry::Kind::Parabola);
+            exactCache(admitted->getData(), cache);
+            requestId += 2;
+        }
+    } while (std::next_permutation(order.begin(), order.end()));
+}
+
 TEST_CASE("Four-point parabola reconstruction matrix survives worker cache validation",
           "[lc-offsetcurve][worker-client][parabola][from-four-points][matrix]") {
     REQUIRE(lc::test::ensureSettings());
