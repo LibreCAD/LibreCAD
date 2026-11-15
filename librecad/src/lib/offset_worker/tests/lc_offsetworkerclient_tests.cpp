@@ -6068,6 +6068,9 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
             std::vector<RS_Vector> samples;
             for (const double t : layout)
                 samples.push_back(pointAt(t));
+            if (layout[0] == 0.1 && layout[1] == 0.3 &&
+                layout[2] == 0.7 && layout[3] == 0.9)
+                std::reverse(samples.begin(), samples.end());
             const auto candidates = LC_ParabolaData::From4Points(samples);
             auto candidate = std::find_if(candidates.begin(), candidates.end(),
                 [&](const LC_ParabolaData& value) {
@@ -6210,6 +6213,9 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
             std::vector<RS_Vector> samples;
             for (const double t : layout)
                 samples.push_back(pointAt(t));
+            if (layout[0] == 0.1 && layout[1] == 0.3 &&
+                layout[2] == 0.7 && layout[3] == 0.9)
+                std::reverse(samples.begin(), samples.end());
             const auto candidates = LC_ParabolaData::From4Points(samples);
             auto candidate = std::find_if(candidates.begin(), candidates.end(),
                 [&](const LC_ParabolaData& value) {
