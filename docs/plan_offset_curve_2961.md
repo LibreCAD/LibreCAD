@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`10f00cd69`):** The repeated request to
+`74cb84f66`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -49302,9 +49302,11 @@ and persistence fixture from its single `+/-1e-14` profile to the measured
 slope ladder `0.2`, `1e-8`, `1e-10`, `1e-12`, and `1e-14`. For each slope, it
 generates both `+0.5` and `-0.5` offsets through the real native worker,
 validates the exact canonical cache, then exports and reopens R14 DXF, R2000
-DXF/DWG, and R2018 DXF/DWG. Reopened entities must retain the distinct
-parabola source kind, source control points, signed distance, and exact cache
-fingerprint.
+DXF/DWG, and R2018 DXF/DWG. Commit `74cb84f66` rotates the endpoints and
+tangents by 0.41 radians and strengthens round-trip validation to compare all
+three source control points at `2e-14` tolerance. Reopened entities must
+retain the distinct parabola source kind, signed distance, and exact cache
+fingerprint in both the original and rotated test revisions.
 
 Validation on macOS arm64 CMake Release:
 
@@ -49317,9 +49319,10 @@ QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
 git diff --check
 ```
 
-Result: the expanded case passes 4,894 assertions / 1 test case. This
-qualifies only this endpoint/tangent construction, coordinate frame, slope
-ladder, distance pair, and five file lanes. It does not qualify arbitrary
+Results: the original axis-aligned slope matrix passes 4,894 assertions / 1
+case; the rotated-frame matrix passes 4,502 assertions / 1 case. These qualify
+only this endpoint/tangent construction, the origin-centered 0.41-radian frame,
+slope ladder, distance pair, and five file lanes. They do not qualify arbitrary
 translations/rotations, endpoint spacing, tangent directions, source
 constructions, Trim beyond the action-specific evidence in sections 1478-1479,
 independent CAD acceptance, or visible packaged-app interaction. Continue the
