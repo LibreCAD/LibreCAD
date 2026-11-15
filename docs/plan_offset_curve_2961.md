@@ -47368,3 +47368,27 @@ revision has the previously documented AC1021 reader gap. LibreDWG covers all
 and are not ODA/AutoCAD acceptance or arbitrary-version interoperability.
 Existing visible GUI, external CAD, exact-head CI, and family-by-variant
 geometry gates remain open.
+
+## 1418. Reconcile Latest Source-picker Request (2026-11-15)
+
+The latest request is specifically about the source-curve Properties widget:
+while replacement picking is active, the user must be able to change the
+requested source kind, and the candidate filter must cover every kind the
+offset source model currently supports. The implemented inventory is
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct kind, not a spline-points alias. Changing the requested kind refreshes
+eligible candidates without ending the pick workflow or changing the committed
+source; the current source remains represented/highlighted until a valid
+replacement is committed.
+
+This is already implemented and covered by the headless source-picker suite
+(15,226 assertions / 44 cases; sections 1412 and 1415). The current PR head
+adds only documentation after that tested product-code snapshot, so this
+evidence remains applicable. No additional widget implementation slice is
+required. Keep only these related gates open: visible desktop verification of
+repeated type changes, candidate refresh, current-source indication, successful
+replacement, and cancel/refusal atomicity (Slice 5); plus Slice 4's distinct
+end-to-end geometry-variant matrix through capture/reconstruction, worker/cache,
+applicable Trim, and DXF/DWG persistence. The selector inventory and picker
+suite do not prove every variant of a family is geometrically supported.
