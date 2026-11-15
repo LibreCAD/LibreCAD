@@ -47681,3 +47681,25 @@ Result: 15,226 assertions / 44 cases passed. Keep repeated visible switching,
 candidate refresh, source indication, accepted replacement, and
 cancel/refusal checks open in Slice 5. No new selector implementation slice
 is indicated unless this behavior regresses.
+
+## 1430. Lock Down Large-origin Rounded-source Refusal (2026-11-15)
+
+Converted the conservative `1e6`-origin refusal noted in section 1428 into a
+focused Update-from-Source regression. For the small rotated rounded
+rectangle, the producer currently refuses the generated offset as ambiguous;
+the test requires the refusal to be atomic: no native replacement is
+published, the original editable cache and definition remain unchanged, and
+the source entity and selected target remain in the document. This records a
+bounded unsupported case rather than claiming high-origin generation support.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests 'Large-origin rounded polyline source refusal preserves the editable offset' --reporter compact
+```
+
+Result: 28 assertions / 1 case passed; `librecad_tests` builds and
+`git diff --check` passes. Test commit `60e904266`. Retain high-origin
+successful generation as an open geometry qualification; the failure test
+proves only that unsupported input does not corrupt or partially replace the
+existing offset.
