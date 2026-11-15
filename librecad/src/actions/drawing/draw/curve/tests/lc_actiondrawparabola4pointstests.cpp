@@ -69,8 +69,8 @@ TEST_CASE("Four-point parabola action resolves dense-end ambiguity by axis pick"
     };
     const std::array<RS_Vector, 4> samples{{
         transform(quadraticBezier(controls, 0.0)),
-        transform(quadraticBezier(controls, 0.9)),
-        transform(quadraticBezier(controls, 0.99)),
+        transform(quadraticBezier(controls, 0.98)),
+        transform(quadraticBezier(controls, 0.999)),
         transform(quadraticBezier(controls, 1.0)),
     }};
     const auto candidates = LC_ParabolaData::From4Points(
