@@ -1053,8 +1053,8 @@ TEST_CASE("Worker client validates mixed-frame negative-bulge region outcomes",
             }
         }
     }
-    CHECK(successfulCells > 0);
-    CHECK(refusedCells > 0);
+    CHECK(successfulCells == frames.size() * 2);
+    CHECK(refusedCells == 0);
 }
 
 TEST_CASE("Worker client joins typed source generation for every modeled source family", Tags) {
