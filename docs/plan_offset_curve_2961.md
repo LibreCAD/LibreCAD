@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest implementation reconciliation (2026-11-15, code revision
-`1a3fdba42`; exact PR head `41d18bb03`):** The
+**Latest implementation reconciliation (2026-11-15, latest code/test commit
+`533cc30c5`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -56,16 +56,16 @@ Section 1511 measures the same opposite-end clustered profile at source scales
 `1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
 across that scale matrix, while sample-fitting user-selected candidates are a
 separate worker/cache/persistence claim.
-Sections 1516-1523 now extend this exact opposite-end layout to all three
+Sections 1516-1524 now extend this exact opposite-end layout to all three
 recorded control profiles under the rotated `(1e6,-2e6)` frame. Direct
 reconstruction and worker/cache cover scales `1e-3`, `1e-2`, `1e-1`, and `1`
 for all three profiles; Trim Two, undo/redo, and five-format file round-trips
 also pass at those four scales for all three profiles. Separately, the
-real-worker typed-source persistence matrix is narrower: profiles 0 and 1 are
-persisted at `1e-1`, while profile 2 adds `1e-2` and `1e-1`; do not infer
-typed-source persistence at the other profile/scale pairs. When no candidate
-qualifies against independent points, tests select a sample-fitting
-alternative; that does not recover the hidden generating curve.
+real-worker typed-source persistence matrix now covers profiles 0 and 1 at
+all four scales, and profile 2 at `1e-2` and `1e-1`; do not infer typed-source
+persistence for profile 2 at `1e-3` or `1`. When no candidate qualifies
+against independent points, tests select a sample-fitting alternative; that
+does not recover the hidden generating curve.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50579,11 +50579,11 @@ The real worker/cache matrix carries both profiles through all four scales and
 both offset signs. For any row where no candidate matches all independent
 points, the test explicitly takes a sample-fitting candidate; otherwise it
 uses the independently matching candidate. Both choices must survive worker
-generation and cache validation. At scale `1e-1`, each profile additionally
-passes typed-source persistence through R14 DXF, R2000 DXF/DWG, and R2018
-DXF/DWG, with available LibreDWG parsing. Other scale/layout combinations in
-this transformed frame are not yet persisted or trimmed for these two
-profiles.
+generation and cache validation. At the time of this checkpoint, scale
+`1e-1` additionally passed typed-source persistence through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG, with available LibreDWG parsing. Section 1524
+extends typed-source persistence for both profiles to all four measured
+scales. Other layouts in this transformed frame remain unqualified.
 
 Validation on macOS arm64 CMake Release:
 
@@ -50663,3 +50663,32 @@ Result: all tests passed, 10,497 assertions / 1 case. This closes only the
 three profiles, four measured scales, one transform/traversal, and one sample
 layout. Other parabola constructions/layouts, broader persistence grids,
 visible Properties interaction, and independent CAD acceptance remain open.
+
+## 1524. Persist the Other Clustered-parabola Profiles Across Scales (2026-11-15)
+
+Test commit `533cc30c5` extends the real-worker typed-source persistence
+matrix for profiles 0 and 1 from the scale-`1e-1` representative rows in
+section 1521 to scales `1e-3`, `1e-2`, `1e-1`, and `1`, using the same
+rotated `(1e6,-2e6)` frame and opposite-end sample layout
+`{0, 0.98, 0.999, 1}`. Each selected parabola source passes generation,
+operation-8 cache validation, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen. Available LibreDWG reads are enabled. Profile 2's typed-source
+persistence remains limited to the existing `1e-2` and `1e-1` rows; its
+`1e-3` and `1` additions are worker/cache only. This does not broaden the
+sample layouts, transformations, or independent hidden-generator recovery.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 96,380 assertions / 2 cases. The raw
+`fixed-handle=2` diagnostics remain separate from SPLINE/EED entity and typed
+source round-trip assertions. Other source variants and layouts, visible UI,
+and independent CAD acceptance remain open.
