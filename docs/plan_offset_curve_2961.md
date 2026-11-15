@@ -50363,3 +50363,80 @@ revalidation for the changed code. The broad `[parabola]` selector and ASan
 rebuild were interrupted as recorded in section 1512; exact-head remote CI,
 visible desktop interaction, remaining source variants, and independent CAD
 acceptance remain open.
+
+## 1515. Make Source-type Switching and Full-kind Coverage Authoritative (2026-11-15)
+
+The current Properties source widget contract is explicit: while choosing a
+replacement source, the user can change the requested source type repeatedly
+without ending the pick workflow. Each type change refreshes eligible source
+candidates; it does not mutate the offset's committed source or generated
+cache. The currently committed source remains identified/highlighted while
+browsing. Choosing a valid candidate replaces the source, while cancellation
+or refusal leaves the committed source and cache unchanged. This is one
+integrated picker workflow, not a separate type-selection command.
+
+The type inventory must be sourced from
+`LC_OffsetSourceGeometry::SupportedKinds`, currently nine kinds: ellipse,
+spline, spline-points, parabola, bounded hyperbola, line, arc, circle, and
+polyline. Parabola is its own typed source; it must not be represented as
+spline-points. New source kinds belong in this canonical inventory and must
+flow through the same widget filter, candidate capture, replacement action,
+worker/cache, and applicable persistence paths.
+
+Implementation status: the current widget builds its type selector directly
+from `SupportedKinds`, filters candidates by the selected kind, and preserves
+the existing embedded source while browsing. The offscreen Properties tests
+cover repeated type changes and candidate filtering across all nine kinds;
+the focused suite was rerun at the code state recorded in section 1513 and
+passed 15,226 assertions / 44 cases. No duplicate selector or further
+parabola-specific picker implementation is required absent a regression.
+
+Remaining acceptance is divided into independent gates:
+
+1. Visible packaged-app workflow: begin replacement selection, change type at
+   least twice before selecting, confirm candidate list refreshes and the
+   committed source remains highlighted, then verify successful replacement
+   and cancellation/refusal preserve coherent source/cache state.
+2. Source-family coverage: for every supported concrete source variant,
+   qualify capture/reconstruction, worker/cache, applicable Trim behavior, and
+   DXF/DWG save/reopen. Record unsupported variants as explicit fail-closed
+   outcomes; selector presence alone is not geometry support.
+3. Interoperability: retain independent ODA/AutoCAD validation as a separate
+   gate from LibreCAD's own round-trip tests.
+
+Do not mark the full source-support requirement complete based only on the
+headless selector test or the parabola-specific results. Keep visible UI,
+family-by-variant, and external CAD evidence separately tracked.
+
+## 1516. Carry Clustered Parabola Alternatives Through Worker and Persistence (2026-11-15)
+
+Test commit `33de7e64b` extends the profile-2, rotated large-origin
+opposite-end four-point layout `{0, 0.98, 0.999, 1}` across source scales
+`1e-3`, `1e-1`, and `1`. These new rows deliberately use that measured layout
+only: other layouts at those scales can have no reconstructable candidate and
+are not implied by this worker/cache result. Each row verifies that there is
+no candidate matching the independent hidden-generator points, then selects
+only a valid candidate matching all supplied samples, and carries that
+user-selected alternative through generation and cache validation. Scale
+`1e-1` additionally traverses typed-source persistence; scales `1e-3` and `1`
+are worker/cache only. Existing frame/layout coverage remains unchanged.
+
+Validation on macOS arm64 CMake Release, with `DWGREAD=/opt/homebrew/bin/dwgread`:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 83,452 assertions / 2 cases, including the five
+R14/R2000/R2018 DXF/DWG persistence lanes for the added `1e-1` row and available
+LibreDWG reads. The raw `fixed-handle=2` replay diagnostics remain distinct
+from the semantic SPLINE/source round-trip assertions. This establishes
+worker/cache and one representative persistence result for the selected
+sample-fitting alternative only; it does not recover or validate the original
+hidden generating parabola. Other construction/conditioning rows, visible
+source-picker acceptance, and independent CAD interoperability remain open.
