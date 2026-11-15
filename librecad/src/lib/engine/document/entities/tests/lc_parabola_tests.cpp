@@ -594,6 +594,82 @@ TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
   }
 }
 
+TEST_CASE("LC_Parabola: From4Points large-origin opposite-end profiles",
+          "[parabola][reconstruction][large-origin][profile-matrix]") {
+  const std::array<std::array<RS_Vector, 3>, 2> profiles{{
+      {{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}},
+      {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
+  }};
+  const std::array<double, 4> parameters{{0.0, 0.98, 0.999, 1.0}};
+  const std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
+  constexpr double angle = 0.6435011087932844;
+  const RS_Vector translation{1e6, -2e6};
+
+  for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
+    CAPTURE(profile);
+    const auto& controls = profiles[profile];
+    const auto localPointAt = [&](const double t) {
+      const double mt = 1.0 - t;
+      return controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) +
+             controls[2] * (t * t);
+    };
+    for (const double scale : {1e-3, 1e-2, 1e-1, 1.0}) {
+      CAPTURE(scale);
+      const auto mapPoint = [&](RS_Vector point) {
+        point *= scale;
+        point.rotate(angle);
+        return point + translation;
+      };
+      std::vector<RS_Vector> samples;
+      for (const double t : parameters)
+        samples.push_back(mapPoint(localPointAt(t)));
+      std::array<RS_Vector, 3> independent;
+      std::transform(independentParameters.begin(), independentParameters.end(),
+                     independent.begin(), [&](const double t) {
+                       return mapPoint(localPointAt(t));
+                     });
+      const double worldMagnitude = std::max(std::abs(translation.x),
+                                             std::abs(translation.y));
+      const double tolerance = std::max(
+          scale * 1e-7,
+          256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+
+      for (const bool reverseInput : {false, true}) {
+        CAPTURE(reverseInput);
+        auto orderedSamples = samples;
+        if (reverseInput)
+          std::reverse(orderedSamples.begin(), orderedSamples.end());
+        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+        const auto errorAt = [](const LC_ParabolaData& candidate,
+                                const RS_Vector& point) {
+          return candidate.fromX(candidate.findX(point)).distanceTo(point);
+        };
+        const auto sampleFit = std::find_if(
+            candidates.begin(), candidates.end(), [&](const auto& candidate) {
+              return candidate.isValid() &&
+                     std::all_of(samples.begin(), samples.end(),
+                         [&](const RS_Vector& point) {
+                           return errorAt(candidate, point) <= tolerance;
+                         });
+            });
+        REQUIRE(sampleFit != candidates.end());
+
+        double bestIndependentError = std::numeric_limits<double>::infinity();
+        for (const auto& candidate : candidates) {
+          if (!candidate.isValid())
+            continue;
+          for (const RS_Vector& point : independent)
+            bestIndependentError =
+                std::min(bestIndependentError, errorAt(candidate, point));
+        }
+        CAPTURE(bestIndependentError, tolerance);
+        CHECK(std::isfinite(bestIndependentError));
+        CHECK(bestIndependentError <= 64.0 * tolerance);
+      }
+    }
+  }
+}
+
 TEST_CASE("LC_Parabola: getLength matches numerical integration",
           "[parabola][length]") {
   auto p = makeCanonicalParabola(1.0, 1.0);

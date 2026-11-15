@@ -80,8 +80,8 @@ struct ParabolaProfileFrame {
     bool denseEndLayoutOnly{false};
 };
 
-const std::array<ParabolaProfileFrame, 13>& fourPointParabolaFrames() {
-    static const std::array<ParabolaProfileFrame, 13> frames{{
+const std::array<ParabolaProfileFrame, 21>& fourPointParabolaFrames() {
+    static const std::array<ParabolaProfileFrame, 21> frames{{
         {0, 1e-6, 0.37, RS_Vector{123e-6, -87e-6}},
         {0, 1.0, 0.37, RS_Vector{123.0, -87.0}},
         {0, 1e6, 0.37, RS_Vector{123e6, -87e6}},
@@ -95,6 +95,14 @@ const std::array<ParabolaProfileFrame, 13>& fourPointParabolaFrames() {
         {2, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
         {2, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
         {2, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {0, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {0, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {0, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
+        {0, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {1, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {1, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {1, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
+        {1, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
     }};
     return frames;
 }
@@ -6042,7 +6050,8 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
                     return std::all_of(samples.begin(), samples.end(), matches) &&
                            std::all_of(independent.begin(), independent.end(), matches);
                 });
-            if (profileIndex == 2 && frame.angle == 0.6435011087932844 &&
+            if (candidate == candidates.end() &&
+                frame.angle == 0.6435011087932844 &&
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
                 layout[1] == 0.98) {
                 CHECK(candidate == candidates.end());
@@ -6179,7 +6188,8 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
                     return std::all_of(samples.begin(), samples.end(), matches) &&
                            std::all_of(independent.begin(), independent.end(), matches);
                 });
-            if (profileIndex == 2 && frame.angle == 0.6435011087932844 &&
+            if (candidate == candidates.end() &&
+                frame.angle == 0.6435011087932844 &&
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
                 layout[1] == 0.98) {
                 CHECK(candidate == candidates.end());
