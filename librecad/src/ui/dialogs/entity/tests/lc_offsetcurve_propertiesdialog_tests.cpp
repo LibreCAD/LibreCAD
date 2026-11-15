@@ -1111,14 +1111,38 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         else CHECK_FALSE(clone->sourceDefinition());
     }
 
+    widget.show();
+    QApplication::processEvents();
+    auto* highlightOverlay = f.view.getViewPort()->getOverlayEntitiesContainer(
+        RS2::OverlayGraphics::OffsetSourceHighlights);
+    REQUIRE(highlightOverlay);
+    std::optional<LC_OffsetSourceGeometry> previousHighlightedGeometry;
+    if (highlightOverlay->getEntityList().size() == 1)
+        previousHighlightedGeometry = LC_OffsetSourceGeometry::capture(
+            *highlightOverlay->getEntityList().front());
+    const auto highlightMatches = [&](const LC_OffsetSourceGeometry& expected) {
+        if (highlightOverlay->getEntityList().size() != 1) return false;
+        const auto actual = LC_OffsetSourceGeometry::capture(
+            *highlightOverlay->getEntityList().front());
+        const auto expectedEncoding =
+            LC_OffsetWorkerRequest::Values::encodeSourceGeometry(expected);
+        const auto actualEncoding = actual
+            ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*actual) : std::nullopt;
+        return expectedEncoding && actualEncoding && *expectedEncoding == *actualEncoding;
+    };
+
     for (std::size_t i = 0; i < candidates.size(); ++i) {
         const Kind kind = LC_OffsetSourceGeometry::SupportedKinds[i];
         CAPTURE(static_cast<int>(kind));
+        const auto expectedGeometry = LC_OffsetSourceGeometry::capture(*candidates[i]);
+        REQUIRE(expectedGeometry);
         const int kindIndex = typeBox->findData(static_cast<int>(kind));
         REQUIRE(kindIndex >= 0);
         typeBox->setCurrentIndex(kindIndex);
         CHECK(typeBox->isEnabled());
         CHECK_FALSE(widget.isPreparing());
+        if (previousHighlightedGeometry)
+            CHECK(highlightMatches(*previousHighlightedGeometry));
 
         std::vector<qulonglong> visibleIds;
         for (int row = 0; row < sourceBox->count(); ++row) {
@@ -1137,6 +1161,8 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         REQUIRE(widget.isPreparing());
         CHECK_FALSE(typeBox->isEnabled());
         CHECK_FALSE(sourceBox->isEnabled());
+        if (previousHighlightedGeometry)
+            CHECK(highlightMatches(*previousHighlightedGeometry));
         CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
         if (sourceBefore) CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
                                     *clone->sourceDefinition()) == *sourceBefore);
@@ -1144,12 +1170,15 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         awaitPreparation(widget);
         REQUIRE(widget.lastEditResult());
         REQUIRE(*widget.lastEditResult());
+        const bool highlightUpdated =
+            pollEventsUntil([&] { return highlightMatches(*expectedGeometry); });
+        REQUIRE(highlightUpdated);
+        previousHighlightedGeometry = *expectedGeometry;
         if (kind == Kind::Ellipse) {
             CHECK_FALSE(clone->sourceDefinition());
-            const auto expected = geometryFor(kind);
             CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
                       LC_OffsetSourceGeometry{clone->definition().basis}) ==
-                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(expected));
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedGeometry));
         } else {
             REQUIRE(clone->sourceDefinition());
             CHECK(clone->sourceDefinition()->source.kind() == kind);
