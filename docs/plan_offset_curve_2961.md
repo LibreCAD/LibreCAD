@@ -335,21 +335,28 @@ This picker behavior is implemented and headlessly covered by the source-picker
 and ordered-family replacement tests cited in sections 1291-1293, including
 1,101 assertions across all nine kinds. Section 1342 additionally verifies
 that the current-source highlight remains visible while the replacement filter
-changes to parabola and back to line; its focused source-picker suite passes
-15,129 assertions / 44 cases. Revalidation on PR head `52e65c624` passes
-15,226 assertions / 44 cases. The latest revalidation is on PR head
-`e41eaa763b022d813dbc8c5017c208c93f322acf`. The command was:
+changes to parabola and back to line. The authoritative all-family replacement
+and highlight-transfer regression is now section 1532: it changes the filter
+and successfully commits a worker-backed replacement for each of the nine
+kinds, including distinct parabola capture, while checking that the previous
+source remains highlighted until commit. Its focused transition passes 320
+assertions / 1 case; the full source-picker suite passes 15,284 assertions /
+44 cases. These tests inspect the highlight overlay's entity and geometry;
+they do not prove that the overlay is painted visibly in a packaged desktop
+viewport. The latest focused suite command was:
 
 ```sh
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
 ```
 
-Section 1375 extends the highlight/state check across all nine filter kinds.
-No new selector implementation slice is needed
-unless a regression is found. Remaining picker acceptance is a visible desktop
-check in Slice 5: switch types repeatedly during active selection, verify
-eligible candidates refresh for every kind and the existing source remains
-indicated, then verify successful replacement and cancel/refusal behavior.
+Section 1375 extends the highlight/state check across all nine filter kinds;
+section 1532 supersedes it for successful all-family replacement and highlight
+transfer. No new selector implementation slice is needed unless a regression
+is found. Remaining picker acceptance is a visible desktop check in Slice 5:
+switch types repeatedly during active selection, verify eligible candidates
+refresh for every kind and the existing source is visibly rendered as
+highlighted or selected, then verify successful replacement and cancel/refusal
+behavior. Headless overlay membership is not visible-render acceptance.
 The latest clarification on 2026-11-15 reconfirms this all-kinds contract; it
 adds no second selector or separate parabola-only implementation slice. Keep
 this gate separate from Slice 4's per-variant capture/reconstruction,
@@ -376,18 +383,22 @@ Keep the nine-kind inventory as the scope boundary; every family must have an
 eligible concrete replacement candidate, and unsupported variants must refuse
 atomically.
 
-**Current decision (reconfirmed 2026-11-15):** Keep the existing source-type
-control usable throughout the active replacement workflow, including after
-the candidate list is open. Each change filters candidates immediately for
-all nine kinds in `LC_OffsetSourceGeometry::SupportedKinds`; parabola remains
+**Current decision (reconfirmed 2026-11-15, updated after section 1532):**
+Keep the existing source-type control usable throughout the active replacement
+workflow, including after the candidate list is open. Each change filters
+candidates immediately for all nine kinds in
+`LC_OffsetSourceGeometry::SupportedKinds`; parabola remains
 distinct from spline-points. This is type selection and candidate filtering,
 not conversion of the currently committed source. The implementation and
-headless family-level coverage are recorded above and in sections 1291-1293,
-1342, and 1375. Do not add another selector or a parabola-only slice. The
+headless all-family transition and highlight-transfer coverage are recorded
+above and in sections 1291-1293, 1342, 1375, and 1532. Section 1532 passes the
+actual asynchronous replacement path for each kind; it checks overlay content,
+not viewport pixels. Do not add another selector or a parabola-only slice. The
 remaining work is (a) Slice 5 visible desktop acceptance of repeated type
-changes, candidate refresh, source indication, replacement, and cancel/refusal
-behavior, and (b) Slice 4 qualification of concrete source variants through
-capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG round-trips.
+changes, candidate refresh, visibly rendered source indication, replacement,
+and cancel/refusal behavior, and (b) Slice 4 qualification of concrete source
+variants through capture/reconstruction, worker/cache, Trim, and applicable
+DXF/DWG round-trips.
 Record visible-test platform, binary revision, route, and result when done.
 
 **Latest request reaffirmed (2026-11-15):** During replacement selection, keep
