@@ -48218,3 +48218,27 @@ git diff --check
 
 Result: 284 assertions / 1 Catch2 case passed, including ten native
 DXF/DWG reopen checks. Regression-test commit `f3e6d7509`.
+
+## 1449. Qualify Mixed-bulge Routing in Rotated and Large-origin Frames (2026-11-15)
+
+Added a worker-kernel frame matrix for the simple concave mixed-bulge profile:
+identity, rotation-only (`0.37` radians), translation-only (`1e6`), and
+combined rotation plus translation at `1e9`. Every case selects inward
+`RegionBoundary`, produces one valid ordinary spline, and passes operation-8
+source-cache validation. The worker result is compared with direct
+RegionBoundary materialization: degree, knots, and weights must match exactly;
+control points must remain within `0.02` because worker generation recenters
+the large-origin source before calculation. This verifies geometry transport
+and cache admission in these frames, not DXF/DWG save/reopen there.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests 'concave mixed-bulge region routing survives rigid and large-origin frames' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests '[mixed-bulge]' --reporter compact
+git diff --check
+```
+
+Results: 168 assertions / 1 frame-matrix case and 229 assertions / 2 matching
+mixed-bulge kernel cases passed. Regression-test commit `415eb1747`.
