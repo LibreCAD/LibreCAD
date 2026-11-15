@@ -448,6 +448,7 @@ TEST_CASE("Mixed line and arc bow-tie regions use exact arc noding",
 
 TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checked",
           "[curve-offset][region][polyline][self-crossing][mixed-bulge]") {
+    std::array<LC_CurveOffsetGeometryResult, 2> identityGrowth;
     for (const int frame : {0, 1, 2, 3}) {
         RS_Polyline source;
         source.addVertex({20, 10});
@@ -484,6 +485,10 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
                     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
                     REQUIRE(result.branches.size() == (grow ? 1u : 2u));
+                    if (frame == 0 && grow) {
+                        const std::size_t ruleIndex = rule == LC_CurveFillRule::NonZero ? 0u : 1u;
+                        identityGrowth[ruleIndex] = result;
+                    }
                     const CycleCheck check = checkCycles(result, polygon, rule, 0.5, grow, true);
                     CHECK(check.closed);
                     CHECK(check.worstDistance < 0.04);
@@ -495,6 +500,28 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
                     CHECK(result.branches.empty());
+                    const std::size_t ruleIndex = rule == LC_CurveFillRule::NonZero ? 0u : 1u;
+                    REQUIRE(identityGrowth[ruleIndex].status == LC_CurveOffsetStatus::Ok);
+                    LC_CurveOffsetGeometryResult transformedReference = identityGrowth[ruleIndex];
+                    const double cosine = std::cos(M_PI / 7.0);
+                    const double sine = std::sin(M_PI / 7.0);
+                    for (LC_OffsetBranch& branch : transformedReference.branches) {
+                        for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                            for (RS_Vector& point : piece.bezier) {
+                                const double x = point.x * cosine - point.y * sine;
+                                const double y = point.x * sine + point.y * cosine;
+                                point.x = x + 123.25;
+                                point.y = y - 2000000.5;
+                            }
+                        }
+                    }
+                    const CycleCheck referenceCheck = checkCycles(
+                        transformedReference, polygon, rule, 0.5, true, true);
+                    CHECK(referenceCheck.closed);
+                    CHECK(referenceCheck.worstDistance < 0.04);
+                    CHECK(referenceCheck.wrongSide == 0);
+                    REQUIRE(referenceCheck.areas.size() == 1);
+                    CHECK(referenceCheck.areas.front() > 0.0);
                 }
                 CHECK(source.getVertexes().size() == originalVertices.size());
                 for (int i = 0; i < originalVertices.size(); ++i) {
