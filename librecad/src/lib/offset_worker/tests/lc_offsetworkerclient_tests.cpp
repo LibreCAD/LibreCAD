@@ -5839,9 +5839,10 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         double scale = 1.0;
     };
     std::vector<Profile> profiles;
-    const std::array<std::pair<const char*, double>, 8> slopeProfiles{{
+    const std::array<std::pair<const char*, double>, 10> slopeProfiles{{
         {"0.2", 0.2}, {"1e-4", 1e-4}, {"1e-6", 1e-6}, {"1e-8", 1e-8},
-        {"1e-10", 1e-10}, {"1e-12", 1e-12}, {"1e-13", 1e-13}, {"1e-14", 1e-14}}};
+        {"1e-9", 1e-9}, {"1e-10", 1e-10}, {"1e-11", 1e-11},
+        {"1e-12", 1e-12}, {"1e-13", 1e-13}, {"1e-14", 1e-14}}};
     for (const auto& [name, tangentSlope] : slopeProfiles) {
         profiles.push_back({name, LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + frameTranslation,
