@@ -47819,3 +47819,24 @@ QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[
 Result: 15,226 assertions / 44 cases passed. Keep visible repeated type
 changes, candidate refresh, source indication, successful replacement, and
 cancel/refusal behavior open under Slice 5.
+
+## 1435. Run the RegionBoundary Matrix Under AddressSanitizer (2026-11-15)
+
+Rebuilt the CMake `librecad_tests` target with the current implementation in
+`/private/tmp/offset-2961-asan-current`, then ran the complete RegionBoundary
+selection under AddressSanitizer. This rechecks the unique tolerance-bounded
+cycle stitching and high-origin option normalization in the context of the
+existing region/self-crossing/mixed-bulge suite; it is not a claim about leak
+freedom because leak detection was disabled.
+
+Validation:
+
+```sh
+cmake --build /private/tmp/offset-2961-asan-current --target librecad_tests -j4
+ASAN_OPTIONS=detect_leaks=0 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-asan-current/librecad_tests '[curve-offset][region]' --reporter compact
+```
+
+Result: 28,745 assertions / 25 cases passed with no AddressSanitizer report.
+This closes only the sanitizer run for the RegionBoundary selection at this
+revision. It does not replace the broader ASan action suite or close visible
+GUI, cross-platform runtime, or external CAD acceptance.
