@@ -2879,6 +2879,11 @@ TEST_CASE("Large-origin rounded polyline source refusal preserves the editable o
     CHECK(updateAction->lastReport().refused == 1);
     REQUIRE(updateAction->lastReport().outcomes.size() == 1);
     CHECK_FALSE(updateAction->lastReport().outcomes.front().refusal.isEmpty());
+    REQUIRE(updateAction->lastReport().outcomes.front().edit);
+    CHECK(updateAction->lastReport().outcomes.front().edit->refusal == LC_OffsetCurveRefusal::Engine);
+    REQUIRE(updateAction->lastReport().outcomes.front().edit->engineStatus);
+    CHECK(*updateAction->lastReport().outcomes.front().edit->engineStatus ==
+          LC_CurveOffsetStatus::AmbiguousTopology);
     CHECK_FALSE(target->isDeleted());
     CHECK_FALSE(source->isDeleted());
     CHECK(onlyNative(graphic) == target);
