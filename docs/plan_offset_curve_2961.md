@@ -48246,3 +48246,26 @@ Results: 336 assertions / 1 eight-lane frame-matrix case and 397 assertions /
 2 matching mixed-bulge kernel cases passed. The frame matrix is commit
 `b09fba581`; the earlier persistence and cache evidence remains in
 `f3e6d7509` and `c03247207`.
+
+## 1450. Persist Mixed-bulge Native Offsets at Large Origins (2026-11-15)
+
+Extended section 1448's inward mixed-bulge worker/client persistence fixture
+to local and `1e9` origins, each at `0` and `0.37` radians. All four cases
+exercise helper-process generation, direct-versus-worker geometry comparison,
+native source/cache reconstruction, and two-pass R14/R2000/R2018 DXF/DWG
+save/reopen. Exact knot and weight data must match; control points allow the
+same `0.02` coordinate tolerance required by the recentered large-origin
+kernel comparison. This is inward-only for this mixed-arc profile; outward
+native generation and external CAD-reader validation remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Worker client persists inward concave mixed-bulge native offsets' --reporter compact
+git diff --check
+```
+
+Result: 1,156 assertions / 1 Catch2 case passed across four transforms and
+twenty format lanes, with first- and second-pass reopen checks. Regression-test
+commit `25701057a`.
