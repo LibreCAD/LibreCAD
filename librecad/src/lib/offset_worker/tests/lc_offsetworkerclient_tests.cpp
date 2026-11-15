@@ -81,8 +81,8 @@ struct ParabolaProfileFrame {
     std::array<double, 4> clusteredLayout{{0.0, 0.98, 0.999, 1.0}};
 };
 
-const std::array<ParabolaProfileFrame, 24>& fourPointParabolaFrames() {
-    static const std::array<ParabolaProfileFrame, 24> frames{{
+const std::array<ParabolaProfileFrame, 33>& fourPointParabolaFrames() {
+    static const std::array<ParabolaProfileFrame, 33> frames{{
         {0, 1e-6, 0.37, RS_Vector{123e-6, -87e-6}},
         {0, 1.0, 0.37, RS_Vector{123.0, -87.0}},
         {0, 1e6, 0.37, RS_Vector{123e6, -87e6}},
@@ -109,6 +109,24 @@ const std::array<ParabolaProfileFrame, 24>& fourPointParabolaFrames() {
         {1, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
             {{0.0, 0.95, 0.995, 1.0}}},
         {2, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {0, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {0, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {0, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {1, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {1, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {1, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {2, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {2, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
+            {{0.0, 0.95, 0.995, 1.0}}},
+        {2, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true,
             {{0.0, 0.95, 0.995, 1.0}}},
     }};
     return frames;
