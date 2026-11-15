@@ -51182,3 +51182,34 @@ Result: build passes; the 24-order worker/cache case passes 21,437 assertions
 / 1 case. Remaining work includes broader parabola sample layouts/frames,
 persistence order coverage, visible desktop acceptance, and independent CAD
 acceptance.
+
+## 1540. Persist Every Balanced-parabola Sample Order (2026-11-15)
+
+Test commit `eb9eacf8e` extends section 1539 so each of the 24 balanced sample
+orders and both signed offsets now pass worker generation, cache admission,
+and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG export/import/second-save/reopen.
+Each reopened object must retain the typed parabola source, signed distance,
+source control points within the frame-aware tolerance, and exact generated
+cache fingerprint. This closes persistence order coverage for the single
+rotated high-origin profile/scale in section 1539 only; it does not multiply
+the order matrix across the other control profiles, scales, or sample layouts.
+LibreDWG was not enabled for this run, so these are internal-reader round trips
+and do not count as independent DWG validation. The known DWG
+`fixed-handle=2` advanced-metadata replay warning remains unrelated to these
+semantic assertions.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][permutation][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+Result: build passes; the 24-order worker/cache and five-lane persistence case
+passes 27,345 assertions / 1 case. Broader geometry variants, independent CAD,
+and visible desktop acceptance remain open.
