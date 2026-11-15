@@ -46545,18 +46545,19 @@ not claim external ODA/AutoCAD acceptance.
 
 ## 1389. Qualify Shallow Endpoint-tangent Parabola (2026-11-14)
 
-Test commit `a43c1b08b` adds an endpoint-tangent parabola with opposite tangent
-slopes of `1e-8` to the all-source-family Update-from-Source/Trim integration
-matrix. The typed source passes worker preparation, native Trim, undo/redo, and
-the five R14/R2000/R2018 DXF/DWG save/reopen lanes. The independent direct
-normal test now covers slopes `1e-4`, `1e-6`, `1e-8`, `1e-9`, and `1e-10`, with
-a slope-relative check of the reconstructed control apex. This extends the
-flatter-profile evidence only to these endpoint/tangent layouts and distances;
-it does not establish more extreme conditioning or arbitrary parabola support.
+Test commits `a43c1b08b` and `ac627c4f7` add endpoint-tangent parabolas with
+opposite tangent slopes of `1e-8` and `1e-10` to the all-source-family
+Update-from-Source/Trim integration matrix. Both typed sources pass worker
+preparation, native Trim, undo/redo, and the five R14/R2000/R2018 DXF/DWG
+save/reopen lanes. The independent direct normal test covers slopes `1e-4`,
+`1e-6`, `1e-8`, `1e-9`, and `1e-10`, with a slope-relative check of the
+reconstructed control apex. This extends flatter-profile evidence only to these
+endpoint/tangent layouts and distances; it does not establish more extreme
+conditioning or arbitrary parabola support.
 
 Validation on macOS arm64 CMake Release: the direct endpoint-tangent case passes
 470 assertions / 1 case; `I trimmed every typed source family to plain
-fragments` passes 5,356 assertions / 1 case; rebuilding `librecad_tests`
+fragments` passes 5,631 assertions / 1 case; rebuilding `librecad_tests`
 succeeds; and `git diff --check` passes. Visible GUI and external-CAD acceptance
 remain separate gates.
 
