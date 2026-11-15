@@ -2565,10 +2565,13 @@ TEST_CASE("Endpoint-tangent parabola is invariant to tangent-vector magnitude",
         LC_ParabolaData::FromEndPointsTangents(endpoints, tangents);
     REQUIRE(reference.isValid());
 
-    for (const double magnitude : {1e-150, 1e150}) {
-        CAPTURE(magnitude);
+    const std::array<std::array<double, 2>, 4> magnitudeProfiles{{
+        {{1e-150, 1e-150}}, {{1e150, 1e150}},
+        {{1e-150, 1e150}}, {{1e150, 1e-150}}}};
+    for (const auto& magnitudes : magnitudeProfiles) {
+        CAPTURE(magnitudes);
         const std::array<RS_Vector, 2> scaledTangents{{
-            tangents[0] * magnitude, tangents[1] * magnitude}};
+            tangents[0] * magnitudes[0], tangents[1] * magnitudes[1]}};
         const LC_ParabolaData data =
             LC_ParabolaData::FromEndPointsTangents(endpoints, scaledTangents);
         REQUIRE(data.isValid());

@@ -49596,3 +49596,35 @@ endpoint-tangent worker/cache/persistence matrix passes 14,109 assertions / 1
 case with LibreDWG enabled. Visible packaged-app acceptance and ODA/AutoCAD
 semantic acceptance remain open. Continue the remaining parabola and other
 source-family variant matrix without generalizing beyond the measured inputs.
+
+## 1491. Qualify Independently Scaled Endpoint Tangents (2026-11-15)
+
+Section 1490 tested applying a common scalar to both tangent vectors. This
+slice additionally scales the two direction vectors independently by crossed
+factors `(1e-150, 1e150)` and `(1e150, 1e-150)`. Each resulting parabola must
+retain the reference asymmetric control polygon and pass the independent
+normal-offset oracle. Both profiles also pass real worker generation, exact
+cache validation, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen;
+LibreDWG must report each DWG's SPLINE and editable-offset EED markers. The
+evidence covers these finite crossed scales for one tangent construction, not
+all representable magnitude ratios, arbitrary endpoint frames, or every
+parabola profile.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][magnitude][oracle]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Results: direct normal geometry passes 12,553 assertions / 1 case; the full
+endpoint-tangent worker/cache/persistence case passes 17,083 assertions / 1
+case with LibreDWG enabled. Visible packaged-app and ODA/AutoCAD acceptance
+remain open. Continue family-by-variant qualification without inferring
+unmeasured tangent ratios from these crossed profiles.
