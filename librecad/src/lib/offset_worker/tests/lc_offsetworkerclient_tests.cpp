@@ -95,14 +95,14 @@ const std::array<ParabolaProfileFrame, 21>& fourPointParabolaFrames() {
         {2, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
         {2, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
         {2, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
-        {0, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
-        {0, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {0, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
+        {0, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
         {0, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
-        {0, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
-        {1, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
-        {1, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {0, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
+        {1, 1e-3, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
+        {1, 1e-2, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
         {1, 1e-1, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
-        {1, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, false, true},
+        {1, 1.0, 0.6435011087932844, RS_Vector{1e6, -2e6}, true, true},
     }};
     return frames;
 }
