@@ -25,6 +25,16 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
+**Latest source-widget disposition (2026-11-15):** The repeated request to
+change source type while choosing a replacement, across all supported offset
+source kinds, is already represented by the checklist below and has headless
+implementation/test coverage. Keep parabola as a distinct kind. Do not add a
+second selector or a parabola-only slice. The remaining UI work is visible
+acceptance of switching/filter refresh, source indication, replacement, and
+cancel/refusal; the remaining geometry work is per-variant end-to-end evidence
+through capture/reconstruction, worker/cache, Trim where applicable, and DXF/
+DWG persistence. A selector entry alone does not qualify a geometry variant.
+
 ### Source Replacement and Type Switching: Current Execution Checklist
 
 This checklist is the current authority for the latest source-widget request;
@@ -48001,3 +48011,34 @@ polyline RegionBoundary selection passes 1,691 assertions / 13 cases. Code and
 direct-test commit `b2475e5ba`. This does not yet qualify worker/cache,
 Update-from-Source, Trim, or file round-trips for the high-origin concave
 profile; those remain Slice 4 work.
+
+## 1442. Persist High-origin Concave Polyline Worker Results (2026-11-15)
+
+Extended the previous direct-geometry slice through the real Update-from-Source
+action and worker. The closed U-shaped linear polyline is exercised at origins
+`1e6` and `1e9`, rotations `0` and `0.37` radians, and R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. Each case checks successful atomic replacement, a
+cache-consistent native offset with a typed Polyline source definition,
+unchanged source encoding, undo/redo, first save/reopen, and second
+save/reopen. When `dwgread` is available, the reopened output spline geometry
+is independently compared for each DWG lane. This does not establish Trim
+support for this high-origin concave profile.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'High-origin concave polyline source updates and persists the editable offset' \
+  --reporter compact
+```
+
+Result: 3,460 assertions / 1 Catch2 case passed. Recursive qmake6 `make -j6`
+also recompiles the changed geometry implementation and successfully links
+the application, worker, and plugins; the shell reports the missing optional
+`/private/tmp/libdxfrw-cargo/env`, and the linker warns about the installed
+QtSvg deployment target, but the build exits 0. Test commit `7e7ce49bc`.
+Direct support and worker/file persistence are now qualified for this exact
+U-shaped profile and frames; high-origin Trim, other concave layouts, broader
+variant coverage, and visible GUI remain open.
