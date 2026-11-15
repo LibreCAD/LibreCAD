@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`f3172e736`):** The source-type selector contract is implemented for all nine
+`758897249`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532, while visible packaged-app acceptance remains open. Recent
@@ -34,9 +34,9 @@ four-point parabola evidence is tracked in sections 1533-1543: direct
 reconstruction covers four balanced/asymmetric sample layouts across three
 control profiles and four scales in the rotated high-origin frame; every
 sample permutation of all four layouts passes worker/cache across that same
-12-row profile/scale grid. Five-format persistence covers every permutation
-and both offset signs at a representative profile/scale, with available
-LibreDWG reads. These bounded matrices do not establish
+12-row profile/scale grid; five-format persistence covers all four layouts
+across those 12 rows and every permutation at one representative row, both
+offset signs, and available LibreDWG reads. These bounded matrices do not establish
 arbitrary sample-layout, scale, frame, or external-CAD support. The high-origin
 rotated case also fixed a production reconstruction failure. This closes only
 those recorded profiles and lanes. Sections 1464-1466 exercise Trim Two and
@@ -51363,3 +51363,35 @@ git diff --check
 Result: build passes; the worker/cache matrix passes 1,393,189 assertions / 1
 case. Visible desktop acceptance and independent ODA/AutoCAD acceptance remain
 open.
+
+## 1545. Persist Interior Parabola Layouts Across the Profile/Scale Grid (2026-11-15)
+
+Test commit `758897249` carries the broad asymmetric layout
+`{0.02, 0.31, 0.68, 0.98}` and close-interior-pair layout
+`{0.1, 0.45, 0.46, 0.9}` through the existing 12-row transformed
+profile/scale persistence grid. For each new layout and profile/scale row,
+both offset signs are generated and checked through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG, including two reopen passes and optional independent
+LibreDWG inspection. Together, sections 1543-1545 now cover all four recorded
+interior layouts over the full 12-row worker/cache and five-format persistence
+grid, while every sample permutation is persisted at the single representative
+profile/scale row. Other sample distributions, frames, and continuous
+conditioning boundaries remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][matrix][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+Result: build passes; the five-format persistence and LibreDWG matrix passes
+75,056 assertions / 1 case. The separate all-permutation persistence matrix
+remains at its documented representative row. Visible desktop and
+ODA/AutoCAD acceptance remain open.
