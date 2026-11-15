@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, local tested head
-`bc59d1e6f`, based on pushed PR #3193 head `0da5f0002`; roadmap update pending):** The repeated request to
+**Latest plan reconciliation (2026-11-15, local tested head `8ab1d0a0e`,
+based on pushed PR #3193 head `8717c53e7`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -59,7 +59,12 @@ is tracked in the current PR checks.
 On `5391d809c`, the offscreen Qt dialog matrix passes 8,801 assertions / 3
 cases and the live action candidate-filter case passes 148 assertions / 1
 case; these requalify widget semantics but do not close visible desktop
-acceptance.
+acceptance. Section 1472 adds an action-level axis-selection regression and
+end-to-end worker/cache plus five-lane persistence coverage for the
+`{0, 0.98, 0.999, 1}` clustered parabola profile. Its selected candidate is
+valid for the picked samples; uniqueness or hidden-curve recovery is not
+claimed. The focused results are 8 assertions / 1 action case and 61,058
+assertions / 2 worker/persistence cases.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -91,6 +96,48 @@ candidate eligibility, capture/reconstruction, worker/cache, applicable Trim,
 and DXF/DWG persistence evidence in the family-by-variant matrix. Missing
 evidence means the variant remains unqualified; a selector entry is not
 support.
+
+## 1473. Reconcile Repeated Source-type Request with Current Head (2026-11-15)
+
+The repeated request to change the replacement source type in the Properties
+widget and expand it to all supported offset-source kinds does not identify a
+new implementation gap in the current tree. The existing type selector is
+available throughout candidate picking and filters the nine kinds listed
+above, including parabola as a distinct kind. The offscreen dialog/action and
+headless picker suites are recorded in the current source-widget disposition;
+they verify the filtering contract but do not substitute for interacting with
+the packaged desktop app.
+
+The source-widget check was reconciled against pushed PR head `8717c53e7`.
+Section 1472 is the latest geometry
+qualification: the four-point action exposes an axis choice for the tested
+ambiguous clustered input, and the selected candidate is carried through
+worker/cache and five DXF/DWG persistence lanes. This adds evidence for that
+specific parabola construction and sample layout only. Do not mark the full
+parabola variant/conditioning matrix complete, infer support for every
+concrete variant from the selector, or close the visible desktop and
+independent CAD acceptance gates. The next work remains the explicit order in
+the roadmap above: additional geometry variants/boundaries, visible picker
+workflow when a usable packaged app is available, then independent CAD
+acceptance when a working reader is available.
+
+## 1474. Pin Four-point Parabola Fail-closed Input Boundaries (2026-11-15)
+
+Commit `8ab1d0a0e` adds direct regression coverage for `From4Points` rejection
+boundaries: fewer or more than four samples, all-coincident and collinear
+points, a non-planar point, infinite and NaN coordinates, and a coordinate
+separation that overflows during normalization. Each case must return no
+candidates. These checks pin the existing fail-closed behavior; they do not
+change or broaden the supported reconstruction domain.
+
+Validation on macOS arm64 CMake Release: the focused validation case passes 8
+assertions / 1 case, and the complete `[parabola][reconstruction]` selection
+passes 2,310 assertions / 8 cases. `git diff --check` passes. This is a
+geometry-input validation slice only; it does not qualify additional
+four-point sample distributions, source constructions, Trim, persistence, or
+visible and independent-CAD acceptance. Continue the family/variant and
+conditioning work in the roadmap without treating rejection coverage as
+proof that every valid parabola can be reconstructed.
 
 ### Source Replacement and Type Switching: Current Execution Checklist
 
