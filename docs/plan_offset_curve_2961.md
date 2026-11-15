@@ -47022,3 +47022,20 @@ Validation on macOS arm64 CMake Release: the focused case passes 29,055
 assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
 --target librecad_tests -j4` succeeds; and `git diff --check` passes. The
 visible-GUI, cross-platform, and independent CAD gates remain open.
+
+## 1401. Trim Bounded Hyperbolas Against Eccentric Elliptic Cutters (2026-11-15)
+
+Test commit `0593d369e` extends the worker-created typed-hyperbola Trim Two
+matrix with an eccentric elliptic cutter (semiaxis ratio `0.95`) alongside
+the circular control. All six bounded-domain profiles, both branches, and
+both pick orders remain covered. Each case now requires at least two direct
+cache/cutter roots before exercising preview/commit, undo/redo, and the five
+DXF/DWG save/reopen lanes; LibreDWG minJSON also checks the expected SPLINE
+and ARC/ELLIPSE output kinds when reading the generated DWGs. The cutter is a
+slightly eccentric, locally transverse profile, not arbitrary ellipse ratios,
+domains, or tangent contacts.
+
+Validation on macOS arm64 CMake Release: the focused case passes 14,111
+assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. Visible
+GUI, cross-platform runtime, and independent CAD acceptance remain open.
