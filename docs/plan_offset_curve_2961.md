@@ -342,10 +342,10 @@ kinds, including distinct parabola capture, while checking that the previous
 source remains highlighted until commit. Its focused transition passes 320
 assertions / 1 case; the full source-picker suite passes 15,284 assertions /
 44 cases. These tests inspect the highlight overlay's entity and geometry;
-section 1537 additionally proves that the renderer paints the configured color
-along the source geometry and removes it with the highlight lease. This
-offscreen renderer test does not replace packaged-app interaction. The latest
-focused picker suite command was:
+sections 1537-1538 prove that the renderer paints the configured highlight
+color and removes it with the lease. Section 1538 exercises all nine
+`SupportedKinds` entries through that path. These offscreen tests do not
+replace packaged-app interaction. The latest focused picker suite command was:
 
 ```sh
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
@@ -396,8 +396,9 @@ not conversion of the currently committed source. The implementation and
 headless all-family transition and highlight-transfer coverage are recorded
 above and in sections 1291-1293, 1342, 1375, and 1532. Section 1532 passes the
 actual asynchronous replacement path for each kind and checks overlay content;
-section 1537 verifies viewport rendering at the renderer level. Neither test
-exercises the packaged Properties workflow visibly. Do not add another
+section 1538 verifies viewport rendering for every supported family at the
+renderer level. Neither test exercises the packaged Properties workflow
+visibly. Do not add another
 selector or a parabola-only slice. The
 remaining work is (a) Slice 5 visible desktop acceptance of repeated type
 changes, candidate refresh, visibly rendered source indication, replacement,
@@ -51119,5 +51120,31 @@ git diff --check
 ```
 
 Result: build passes; the focused renderer regression passes 4 assertions / 1
+case. Visible packaged-app interaction and independent CAD acceptance remain
+open.
+
+## 1538. Render Highlight Pixels for Every Supported Source Family (2026-11-15)
+
+Test commit `dda8101a8` expands section 1537's renderer regression across all
+nine entries in `LC_OffsetSourceGeometry::SupportedKinds`. Each canonical
+entity is created through `makeEntity()`, cloned into the offset-source
+highlight overlay, rendered with the renderer's normal world-clip setup, and
+checked for highlight-colored pixels; releasing its lease must remove those
+pixels. The line case also checks that pixels lie along its expected viewport
+path. This proves the generic offscreen renderer path for these representative
+entities; it does not qualify every entity variant or replace visible
+Properties-workflow acceptance.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][offsetcurve][source][highlight][render]' --reporter compact
+git diff --check
+```
+
+Result: build passes; the focused renderer matrix passes 46 assertions / 1
 case. Visible packaged-app interaction and independent CAD acceptance remain
 open.
