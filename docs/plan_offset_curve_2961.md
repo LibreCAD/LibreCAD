@@ -47465,3 +47465,30 @@ cancel/refusal atomicity (Slice 5). The remaining geometry gates are the
 specific variant, worker/cache, Trim/action, and persistence rows still open in
 Slice 4. A failed or unavailable visible-GUI run remains an open gate, not an
 inferred pass from headless tests.
+
+## 1421. Assert the Major-bulge Editable-cache Refusal (2026-11-15)
+
+The section 1419 major/minor-bulge worker matrix produces complete ordinary
+LINE/SPLINE geometry, but these disconnected branches are not representable as
+one editable native offset cache. The real worker-client test now asserts both
+halves of that contract for all four signed-distance cells: `ordinaryStatus`
+is `Complete` and `refusal` is `NotCacheRepresentable`, with no native `curve`
+published. This guards against treating a successful exportable geometry
+fallback as editable cache support, or accidentally publishing a partial
+cache. The output still passes direct-materialization parity, DXF/DWG
+save/reopen, and the eight-file LibreDWG checks from sections 1419 and 1420.
+
+Validation on macOS arm64 CMake Release: the focused `[major-bulge]` worker
+client case passes 1,243 assertions / 1 case. The full worker-client suite
+passes 3,386,704 assertions / 47 cases with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The same full-suite command with
+the default 150-second suite watchdog expires during the exhaustive matrix;
+it reported watchdog failures, not geometry assertion failures. Do not use
+the default timeout for this complete suite. `git diff --check` passes. Test
+commit `98fcd6309` (`test(offset): assert major-bulge cache refusal`).
+
+This closes only the explicit refusal/atomic-publication contract for this
+one closed major/minor-bulge profile. It does not add editable cache or Trim
+support for disconnected major-bulge offsets, nor generalize to other bulge
+arrangements. Keep those limitations and the remaining Slice 4 family/variant
+matrix open.
