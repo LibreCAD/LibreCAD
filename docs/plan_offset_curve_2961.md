@@ -51213,3 +51213,32 @@ git diff --check
 Result: build passes; the 24-order worker/cache and five-lane persistence case
 passes 27,345 assertions / 1 case. Broader geometry variants, independent CAD,
 and visible desktop acceptance remain open.
+
+## 1541. Read Every Permutation DWG with LibreDWG (2026-11-15)
+
+Test commit `b78794037` adds optional independent reads to section 1540's two
+DWG lanes. With `DWGREAD` configured, each of the 24 sample permutations and
+both signed offsets is read by LibreDWG's `minJSON` mode for both R2000 and
+R2018 output. The check requires a SPLINE carrying both the `LC_OFFSET_CURVE`
+and `TYPED_SOURCE` EED markers. The internal reader still performs the
+source/control/cache checks described in section 1540. This validates the
+presence of typed metadata through an independent reader for this one
+profile/scale/frame and balanced sample layout; it is not an ODA/AutoCAD
+acceptance result or coverage of other parabola variants.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][permutation][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+Result: build passes; the persistence and LibreDWG inspection matrix passes
+27,849 assertions / 1 case. Other source layouts/frames, visible desktop
+acceptance, and ODA/AutoCAD acceptance remain open.
