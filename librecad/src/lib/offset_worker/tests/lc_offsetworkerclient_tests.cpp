@@ -6015,7 +6015,10 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
                                                 std::abs(frame.translation.y), scale});
         const double fitTolerance = std::max(
             scale * 1e-7, 256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
-        for (const auto& layout : layouts) {
+        auto frameLayouts = std::vector<std::array<double, 4>>(layouts.begin(), layouts.end());
+        if (profileIndex == 0 && scale == 1.0)
+            frameLayouts.push_back({{0.0, 0.95, 0.995, 1.0}});
+        for (const auto& layout : frameLayouts) {
             CAPTURE(layout);
             std::vector<RS_Vector> samples;
             for (const double t : layout)
@@ -6144,7 +6147,10 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
                                                 std::abs(frame.translation.y), scale});
         const double fitTolerance = std::max(
             scale * 1e-7, 256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
-        for (const auto& layout : layouts) {
+        auto frameLayouts = std::vector<std::array<double, 4>>(layouts.begin(), layouts.end());
+        if (profileIndex == 0 && scale == 1.0)
+            frameLayouts.push_back({{0.0, 0.95, 0.995, 1.0}});
+        for (const auto& layout : frameLayouts) {
             CAPTURE(layout);
             std::vector<RS_Vector> samples;
             for (const double t : layout)
