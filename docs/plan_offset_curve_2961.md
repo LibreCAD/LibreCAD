@@ -47426,3 +47426,42 @@ one major/minor-bulge profile only. It does not establish cache admission,
 Trim/action behavior, other major-arc arrangements, all transforms or scales,
 external CAD acceptance, or visible-GUI behavior. Continue the Slice 4
 family-by-variant matrix; Slice 5 visible acceptance remains separate.
+
+An additional independent-reader check used LibreDWG 0.14 on the eight
+generated R2000/R2018 DWGs for these four signed-distance cells. All eight
+decode successfully. Positive-distance files contain one LINE and one SPLINE;
+negative-distance files contain two SPLINEs. Every decoded SPLINE has degree
+3, at least degree+1 control points, and knot count equal to control count plus
+degree plus one. This is independent parsing evidence for these files only,
+not AutoCAD/ODA acceptance or broad DWG interoperability.
+
+## 1420. Clarify Source-type Picker Acceptance Boundary (2026-11-15)
+
+The requested source-curve widget behavior has two separate acceptance
+contracts, which must not be conflated:
+
+1. **Picker inventory and interaction:** while replacement selection is active,
+   the user can change the requested source kind repeatedly and immediately
+   refresh eligible candidates without cancelling the pick workflow. The
+   filter is driven by `LC_OffsetSourceGeometry::SupportedKinds` and currently
+   includes line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+   hyperbola, and polyline. Parabola remains a distinct source kind. Preserve
+   the committed source/highlight until a valid replacement is accepted; cancel,
+   stale candidates, and failed preparation leave the prior source unchanged.
+   This UI contract is implemented and has headless coverage recorded in
+   sections 1416 and 1418; do not add a duplicate selector or a parabola-only
+   implementation slice.
+2. **End-to-end geometry support:** a kind appearing in the filter only means
+   the model can represent and request it. It does not assert that every
+   construction or variant in that kind is eligible, exactly captured and
+   reconstructed, worker-safe, cache-representable, trimmable, or preserved by
+   every applicable DXF/DWG lane. Continue recording those obligations in
+   Slice 4's family-by-variant matrix, including explicit unsupported/refusal
+   cases. Do not describe all nine picker entries as complete geometry support.
+
+The remaining picker gate is visible-desktop verification of repeated kind
+changes, candidate refresh, source highlighting, successful replacement, and
+cancel/refusal atomicity (Slice 5). The remaining geometry gates are the
+specific variant, worker/cache, Trim/action, and persistence rows still open in
+Slice 4. A failed or unavailable visible-GUI run remains an open gate, not an
+inferred pass from headless tests.
