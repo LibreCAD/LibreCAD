@@ -50440,3 +50440,32 @@ worker/cache and one representative persistence result for the selected
 sample-fitting alternative only; it does not recover or validate the original
 hidden generating parabola. Other construction/conditioning rows, visible
 source-picker acceptance, and independent CAD interoperability remain open.
+
+## 1517. Trim the Large-origin Opposite-end Parabola Alternative (2026-11-15)
+
+Test commit `f0bfe652a` adds the profile-2 four-point parabola at scale `1e-1`,
+rotation `0.6435011087932844`, translation `(1e6,-2e6)`, reversed input
+traversal, and opposite-end samples `{0, 0.98, 0.999, 1}` to the Trim Two
+action matrix. The test explicitly requires that no reconstructed candidate
+matches independent points on the hidden generating parabola, then accepts
+only the existing sample-fitting alternative. That typed parabola is replaced
+through the worker-backed source action and exercised through Trim preview,
+commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen.
+This result applies only to the selected alternative and measured frame; it is
+not evidence of hidden-source recovery or general large-origin conditioning.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 7,838 assertions / 1 case. The previous
+worker/cache/persistence scale matrix is recorded in section 1516. Visible
+Properties interaction remains unverified in this session because macOS
+System Events returns `-10827`; keep that manual acceptance gate open.
