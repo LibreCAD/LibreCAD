@@ -47969,3 +47969,35 @@ hostile-file persistence case after 36 of 37 cases and 4,327,522 assertions
 had passed. Its SIGINT result is not a test pass or a product failure and is
 not used to close any Slice 4 item; the focused typed-source Trim and picker
 receipts in sections 1438-1439 remain the applicable passing evidence.
+
+## 1441. Normalize Simple High-origin Concave Polylines (2026-11-15)
+
+Extended the guarded local-frame option calibration and direct-generation path
+from simple polylines containing circular segments to all captured polylines
+with no non-adjacent segment intersections. This admits line-only concave
+polylines at distant origins while retaining the existing world-coordinate
+source and returning generated geometry in that frame. Self-crossing inputs
+do not meet the guard and continue through the existing topology/refusal path.
+
+Added a direct RegionBoundary regression for the established U-shaped
+concavity at origins `1e6` and `1e9`, with rotations `0` and `0.37` radians,
+for both growth and erosion. Each result is transformed back to the source
+frame and checked with the existing independent winding/distance oracle for
+one closed positive-area cycle on the correct side, with boundary error below
+`1e-6`; the source vertices must remain unchanged.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][region][polyline][concave][large-origin]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][region][polyline]' --reporter compact
+```
+
+Results: the focused high-origin case passes 96 assertions / 1 case; the full
+polyline RegionBoundary selection passes 1,691 assertions / 13 cases. Code and
+direct-test commit `b2475e5ba`. This does not yet qualify worker/cache,
+Update-from-Source, Trim, or file round-trips for the high-origin concave
+profile; those remain Slice 4 work.
