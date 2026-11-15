@@ -5852,15 +5852,23 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
 
-    const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+    const std::array<std::array<RS_Vector, 3>, 2> controlProfiles{{
+        {{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}},
+        {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
+    }};
     const std::array<std::array<double, 4>, 3> layouts{{
         {{0.0, 0.3, 0.7, 1.0}},
         {{0.05, 0.2, 0.65, 0.95}},
         {{0.0, 0.1, 0.4, 1.0}},
     }};
     qint64 requestId = 1;
-    for (const double scale : {1e-6, 1.0, 1e6}) {
-        CAPTURE(scale);
+    const std::array<std::pair<std::size_t, double>, 6> profileScales{{
+        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6}}};
+    for (const auto& profileScale : profileScales) {
+        const std::size_t profileIndex = profileScale.first;
+        const double scale = profileScale.second;
+        CAPTURE(profileIndex, scale);
+        const auto& controls = controlProfiles[profileIndex];
         constexpr double angle = 0.37;
         const RS_Vector translation{123.0 * scale, -87.0 * scale};
         const auto transform = [&](const RS_Vector& point) {
@@ -5943,7 +5951,10 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
 
-    const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+    const std::array<std::array<RS_Vector, 3>, 2> controlProfiles{{
+        {{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}},
+        {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
+    }};
     const std::array<std::array<double, 4>, 3> layouts{{
         {{0.0, 0.3, 0.7, 1.0}},
         {{0.05, 0.2, 0.65, 0.95}},
@@ -5965,8 +5976,13 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
 #endif
 
     qint64 requestId = 1;
-    for (const double scale : {1e-6, 1.0, 1e6}) {
-        CAPTURE(scale);
+    const std::array<std::pair<std::size_t, double>, 4> profileScales{{
+        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1.0}}};
+    for (const auto& profileScale : profileScales) {
+        const std::size_t profileIndex = profileScale.first;
+        const double scale = profileScale.second;
+        CAPTURE(profileIndex, scale);
+        const auto& controls = controlProfiles[profileIndex];
         constexpr double angle = 0.37;
         const RS_Vector translation{123.0 * scale, -87.0 * scale};
         const auto transform = [&](const RS_Vector& point) {

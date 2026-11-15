@@ -48455,3 +48455,84 @@ git diff --check
 Results: the focused case passes 26 assertions / 1 case; the full RegionBoundary
 tag passes 28,884 assertions / 28 cases. This is a test-coverage addition only;
 no production-kernel change was needed for this profile.
+
+## 1457. Qualify an Asymmetric Four-point Parabola Across Worker and File Lanes (2026-11-15)
+
+Expanded the bounded `From4Points` worker matrix with a second, asymmetric
+quadratic control net `(-80,40), (15,-35), (110,75)`, in addition to the
+existing symmetric profile. Three four-point sampling layouts reconstruct
+each profile. Both signed offsets are generated and operation-8 cache
+validated at scales `1e-6`, `1`, and `1e6` after rotation and scale-relative
+translation. The asymmetric profile also passes native typed-source
+save/reopen for R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG at unit scale; the
+existing symmetric profile retains its full three-scale persistence matrix.
+LibreDWG parses the emitted DWGs when available.
+
+This extends one asymmetric construction through worker/cache and persistence;
+it does not establish arbitrary four-point conditioning, endpoint-tangent
+limits, other transforms, or the full parabola family matrix. Those remain
+open, as do visible GUI and external-CAD acceptance.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points]' --reporter compact
+git diff --check
+```
+
+Results on the current worktree: the focused matrix passes 23,568 assertions /
+2 cases; the full four-point parabola subset passes 24,431 assertions / 3
+cases. Both R2000 and R2018 DWG lanes were written and independently parsed in
+the focused matrix.
+
+## 1458. Make Source-type Changes Explicit in the Active Replacement Picker (2026-11-15)
+
+Reconciled the latest source-widget request with the existing implementation
+and acceptance criteria. When the user starts choosing a new source curve,
+the source-type control must remain available during canvas picking. Changing
+it must update eligible candidates in place, without closing/restarting the
+pick operation or changing the committed source. The candidate inventory must
+match every current `LC_OffsetSourceGeometry::SupportedKinds` entry: line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola is a separate selectable kind and must not be represented
+as spline-points. If a source already exists, it remains visibly indicated
+while browsing; replacement becomes committed only after valid preparation and
+publication. Cancel, stale-candidate rejection, and failed preparation leave
+the prior source and cache intact.
+
+This is a plan clarification, not a new widget implementation slice: the
+selector, active-workflow filter refresh, and headless typed-replacement tests
+are already implemented. The latest recorded headless source-picker run is
+15,226 assertions / 44 cases (sections 1418 and 1420); it covers all nine
+modeled kinds but is not visible-GUI evidence. Do not add a second picker or a
+parabola-only control. Preserve two independent remaining work tracks:
+
+1. **Visible interaction acceptance (Slice 5):** in Properties, start source
+   replacement; switch repeatedly among all nine types while canvas picking
+   remains active; confirm candidate refresh, existing-source indication,
+   successful replacement, and cancel/refusal atomicity. Record build,
+   platform, route, and result. Headless coverage cannot close this gate.
+2. **Geometry-family completeness (Slice 4):** for each concrete variant,
+   qualify candidate capture/reconstruction, direct and worker behavior,
+   cache admission or explicit refusal, applicable Trim behavior, and
+   applicable DXF/DWG persistence. Presence in `SupportedKinds` establishes
+   selector/model availability only; it does not claim every variant is
+   geometrically supported.
+
+Validation references:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+git diff --check
+```
+
+The focused picker result above is previously recorded evidence, not a test run
+performed for this documentation-only reconciliation. No implementation,
+geometry-completeness, or visible-GUI gate is closed by this entry.
