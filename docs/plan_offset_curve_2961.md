@@ -48123,8 +48123,8 @@ RegionBoundary materialization, verifies editable native-source/cache
 reconstruction from the multi-branch ordinary output, and checks two-pass
 DXF/DWG save/reopen for R14, R2000, and R2018. The test also asserts outward
 routing remains Direct. This evidence is specific to that linear dumbbell and
-offset magnitude; other concave and bulged profiles, high-origin concave Trim,
-broader variants, visible UI, cross-platform execution, and independent
+offset magnitude; other concave and bulged profiles, broad-profile high-origin
+neck collapse, broader variants, visible UI, cross-platform execution, and independent
 ODA/AutoCAD acceptance remain open.
 
 Validation on macOS arm64 CMake Release:
@@ -48142,3 +48142,31 @@ Results: 280 assertions / 1 new client case; 6,671 assertions / 5 matching
 worker-client cases; 110 assertions / 2 worker-kernel cases; and 1,691
 assertions / 13 direct polyline RegionBoundary cases passed. Implementation
 and regression tests are commit `1a8f83169`.
+
+## 1446. Revalidate High-origin Concave Trim after RegionBoundary Routing (2026-11-15)
+
+Re-ran the existing high-origin U-shaped polyline source-replacement, Trim,
+undo/redo, and two-pass persistence matrix after simple concave inward offsets
+began using `RegionBoundary`. The matrix spans origins `1e6` and `1e9`,
+rotations `0` and `0.37`, both signed offset orientations, and R14, R2000, and
+R2018 DXF/DWG lanes. The inward RegionBoundary result is a closed cache trimmed
+to one ordinary open spline; the outward Direct result retains multiple
+fragments. Both have four certified cutter intersections. This confirms the
+route change preserves the action and persistence contract for this U-profile;
+it does not qualify every concave profile or the separate neck-collapse
+dumbbell through high-origin Trim.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'High-origin concave polyline offsets trim and persist ordinary fragments' \
+  --reporter compact
+git diff --check
+```
+
+Result: 7,280 assertions / 1 Catch2 case passed across the 40
+origin/rotation/direction/version lanes, including independent LibreDWG spline
+inspection for DWG files. Regression-test commit `427a60556`.
