@@ -1998,7 +1998,141 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     REQUIRE(f.graphic.redo());
     CHECK(native->isDeleted());
     CHECK(cutter->isDeleted());
-    for (const RS_Entity* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    for (const RS_Entity *fragment : fragments)
+      CHECK_FALSE(fragment->isDeleted());
+
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{
+        {RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+         RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+      libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+    std::vector<const RS_Entity *> expectedGeometry;
+    for (const RS_Entity *fragment : fragments)
+      if (fragment->rtti() == RS2::EntitySpline ||
+          fragment->rtti() == RS2::EntityArc)
+        expectedGeometry.push_back(fragment);
+    REQUIRE_FALSE(expectedGeometry.empty());
+    const double geometryTolerance =
+        std::max(1e-8 * scale, 64.0 * std::numeric_limits<double>::epsilon() *
+                                   std::max(std::abs(translation.x),
+                                            std::abs(translation.y)));
+    const auto close = [geometryTolerance](const double a, const double b) {
+      return std::abs(a - b) <= geometryTolerance;
+    };
+    const auto closeVector = [&](const RS_Vector &a, const RS_Vector &b) {
+      return close(a.x, b.x) && close(a.y, b.y) && close(a.z, b.z);
+    };
+    const auto sameGeometry = [&](const RS_Entity &expectedEntity,
+                                  const RS_Entity &actualEntity) {
+      if (expectedEntity.rtti() != actualEntity.rtti())
+        return false;
+      if (const auto *expectedSpline =
+              dynamic_cast<const RS_Spline *>(&expectedEntity)) {
+        const auto *actualSpline =
+            dynamic_cast<const RS_Spline *>(&actualEntity);
+        if (!actualSpline)
+          return false;
+        const auto &expectedData = expectedSpline->getData();
+        const auto &actualData = actualSpline->getData();
+        if (expectedData.degree != actualData.degree ||
+            expectedData.m_closedFlag != actualData.m_closedFlag ||
+            expectedData.m_periodicFlag != actualData.m_periodicFlag ||
+            expectedData.controlPoints.size() !=
+                actualData.controlPoints.size() ||
+            expectedData.knotslist.size() != actualData.knotslist.size() ||
+            expectedData.weights.size() != actualData.weights.size())
+          return false;
+        for (std::size_t i = 0; i < expectedData.controlPoints.size(); ++i)
+          if (!closeVector(expectedData.controlPoints[i],
+                           actualData.controlPoints[i]))
+            return false;
+        for (std::size_t i = 0; i < expectedData.knotslist.size(); ++i)
+          if (!close(expectedData.knotslist[i], actualData.knotslist[i]))
+            return false;
+        for (std::size_t i = 0; i < expectedData.weights.size(); ++i)
+          if (!close(expectedData.weights[i], actualData.weights[i]))
+            return false;
+        return true;
+      }
+      if (const auto *expectedArc =
+              dynamic_cast<const RS_Arc *>(&expectedEntity)) {
+        const auto *actualArc = dynamic_cast<const RS_Arc *>(&actualEntity);
+        if (!actualArc)
+          return false;
+        const auto &expectedData = expectedArc->getData();
+        const auto &actualData = actualArc->getData();
+        return closeVector(expectedData.center, actualData.center) &&
+               close(expectedData.radius, actualData.radius) &&
+               close(expectedData.angle1, actualData.angle1) &&
+               close(expectedData.angle2, actualData.angle2) &&
+               expectedData.reversed == actualData.reversed;
+      }
+      return false;
+    };
+    for (std::size_t lane = 0; lane < formats.size(); ++lane) {
+      const bool dwg = formats[lane] == RS2::FormatDWG ||
+                       formats[lane] == RS2::FormatDWG2018;
+#ifndef DWGSUPPORT
+      if (dwg)
+        continue;
+#endif
+      const QString suffix =
+          dwg ? QStringLiteral("dwg") : QStringLiteral("dxf");
+      const QString fileName = directory.filePath(
+          QStringLiteral("reconstructed-%1-%2.%3")
+              .arg(transformed ? QStringLiteral("transformed")
+                               : QStringLiteral("plain"))
+              .arg(lane)
+              .arg(suffix));
+      const std::filesystem::path path(fileName.toStdString());
+      REQUIRE(lc::test::exportDrawing(f.graphic, path, formats[lane]));
+#ifdef DWGSUPPORT
+      if (dwg && !libreDwgReader.isEmpty()) {
+        QProcess reader;
+        reader.start(libreDwgReader,
+                     {"-O", "minJSON", lc::test::toQString(path)});
+        REQUIRE(reader.waitForStarted());
+        REQUIRE(reader.waitForFinished(30000));
+        INFO(reader.readAllStandardError().toStdString());
+        REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+        REQUIRE(reader.exitCode() == 0);
+        const QJsonDocument document =
+            QJsonDocument::fromJson(reader.readAllStandardOutput());
+        REQUIRE(document.isObject());
+        CHECK_FALSE(document.object().value("OBJECTS").toArray().isEmpty());
+      }
+#endif
+      RS_Graphic reopened;
+      REQUIRE(lc::test::importDrawing(reopened, path, formats[lane]));
+      const auto reopenedEntities = live(reopened);
+      CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(),
+                         [](const RS_Entity *entity) {
+                           return entity->rtti() == RS2::EntityOffsetCurve;
+                         }));
+      std::vector<const RS_Entity *> reopenedGeometry;
+      for (const RS_Entity *entity : reopenedEntities)
+        if (entity->rtti() == RS2::EntitySpline ||
+            entity->rtti() == RS2::EntityArc)
+          reopenedGeometry.push_back(entity);
+      std::vector<bool> matched(reopenedGeometry.size(), false);
+      for (const RS_Entity *expectedEntity : expectedGeometry) {
+        bool found = false;
+        for (std::size_t i = 0; i < reopenedGeometry.size(); ++i) {
+          if (matched[i] ||
+              !sameGeometry(*expectedEntity, *reopenedGeometry[i]))
+            continue;
+          matched[i] = true;
+          found = true;
+          break;
+        }
+        CHECK(found);
+      }
+    }
   }
 }
 
