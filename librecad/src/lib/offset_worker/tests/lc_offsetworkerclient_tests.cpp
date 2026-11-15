@@ -5773,6 +5773,7 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    const RS_Vector frameTranslation{37.0, -19.0};
 
     struct Lane {
         RS2::FormatType format;
@@ -5792,7 +5793,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     for (const double tangentSlope : {0.2, 1e-8, 1e-10, 1e-12, 1e-14}) {
         CAPTURE(tangentSlope);
         const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
-            {{rotate({0.0, 0.0}), rotate({10.0, 0.0})}},
+            {{rotate({0.0, 0.0}) + frameTranslation,
+              rotate({10.0, 0.0}) + frameTranslation}},
             {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}});
         REQUIRE(source.isValid());
         for (const double signedDistance : {0.5, -0.5}) {
