@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`1861bde6c`):** The source-type selector contract is implemented for all nine
+`b3246663c`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532, while visible packaged-app acceptance remains open. Recent
@@ -43,10 +43,12 @@ those recorded profiles and lanes. Sections 1464-1466 exercise Trim Two and
 undo/redo on a reconstructed four-point source in ordinary and
 transformed/reversed high-origin frames, with both results saved and reopened
 through the five native-capable lanes.
-Section 1546 extends bounded-hyperbola direct exact-normal and real-worker/cache
-cusp-boundary coverage to ratios `0.01` through `1.0` and interval half-widths
-`0.4`/`0.8`, retaining both branches, reversed bounds, and both signs. Those
-new hyperbola cells have not yet been carried through file persistence.
+Sections 1546-1547 extend bounded-hyperbola cusp-boundary coverage to ratios
+`0.01` through `1.0` and interval half-widths `0.4`/`0.8`, retaining both
+branches, reversed bounds, and both signs. Section 1547 carries cache-admitted
+cases through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen, with two
+reopen passes and optional LibreDWG validation. These bounded test matrices do
+not establish arbitrary hyperbola support or visible/external-CAD acceptance.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
@@ -51432,3 +51434,44 @@ Results: build passes; the exact-normal direct matrix passes 355,228
 assertions / 1 case; real-worker generation, transport, and cache admission or
 explicit refusal pass 82,828 assertions / 1 case. Visible GUI and external CAD
 acceptance remain separate open gates.
+
+## 1547. Persist Cache-admitted Hyperbola Cusp Profiles (2026-11-15)
+
+Test commit `b3246663c` carries section 1546's bounded cusp matrix through
+typed-source serialization. It generates all 80 combinations of five ratios
+(`0.01`, `0.05`, `0.2`, `0.5`, `1.0`), two interval half-widths (`0.4`,
+`0.8`), both branches, both bound orders, and both signed offsets, where
+distance is half the hyperbola vertex radius. Each generated result must be
+ordinary and non-empty. Single-fragment results are combined and checked by
+operation-8 source-cache validation; multi-fragment and validation-refused
+cases are explicitly counted as native-cache refusals rather than represented
+as one source cache. The test asserts every generated row is either persisted
+or refused, and requires at least one persisted row.
+
+Every admitted case is saved through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Files are reopened twice, checking the typed bounded-hyperbola source,
+signed distance, cache fingerprint, center, major axis, ratio, parameter
+bounds, and branch flag; after the first reopen, the drawing is saved again
+before the second. When `dwgread` is available, emitted DWGs are independently
+parsed and checked for the `LC_OFFSET_CURVE` / `TYPED_SOURCE` EED markers.
+This is evidence for the cache-admitted rows in this finite matrix, not a claim
+that multi-branch ordinary geometry is losslessly representable by one typed
+cache, nor that arbitrary bounded hyperbolas round-trip.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][persistence]' --reporter compact
+git diff --check
+```
+
+Results: the build passes and the persistence matrix passes 55,306 assertions
+/ 1 case with DWG enabled and LibreDWG reads available. The changing assertion
+count reflects how many matrix rows take the admitted-cache persistence path;
+the explicit partition assertion guards that no generated row is silently
+dropped. Visible GUI and independent ODA/AutoCAD acceptance remain open.
