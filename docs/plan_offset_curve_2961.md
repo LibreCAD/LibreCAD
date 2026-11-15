@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`2a4685f00`):** The
+`c20facd16`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -56,7 +56,7 @@ Section 1511 measures the same opposite-end clustered profile at source scales
 `1e-3` through `1`; independent hidden-curve recovery remains outside tolerance
 across that scale matrix, while sample-fitting user-selected candidates are a
 separate worker/cache/persistence claim.
-Sections 1516-1525 now extend this exact opposite-end layout to all three
+Sections 1516-1526 now extend these clustered layouts to all three
 recorded control profiles under the rotated `(1e6,-2e6)` frame. Direct
 reconstruction and worker/cache cover scales `1e-3`, `1e-2`, `1e-1`, and `1`
 for all three profiles; Trim Two, undo/redo, and five-format file round-trips
@@ -64,7 +64,10 @@ also pass at those four scales for all three profiles. The real-worker
 typed-source persistence matrix now also passes at all four scales for all
 three profiles. When no candidate qualifies against independent points, tests
 select a sample-fitting alternative; that does not recover the hidden
-generating curve.
+generating curve. The adjacent `{0, 0.95, 0.995, 1}` layout also passes the
+direct reconstruction oracle for all three profiles and four scales, with
+worker/cache and typed-source persistence for all three at scale `1e-1`; its
+Trim and other persistence scales remain open.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50720,3 +50723,39 @@ Result: all tests passed, 98,988 assertions / 2 cases. Raw DWG replay
 diagnostics remain distinct from semantic source/entity validation. Other
 parabola families/layouts, visible Properties interaction, and independent CAD
 acceptance remain open.
+
+## 1526. Qualify the Adjacent Clustered-parabola Layout (2026-11-15)
+
+Test commit `c20facd16` adds direct `From4Points` coverage for the adjacent
+layout `{0, 0.95, 0.995, 1}` across all three recorded control profiles and
+scales `1e-3`, `1e-2`, `1e-1`, and `1` under rotation `0.6435011087932844` and
+translation `(1e6,-2e6)`. Both input orders must return a sample-fitting
+candidate; the best independent-point error is required finite and no more
+than 64 times the scale/origin-aware tolerance. This bounds the reconstruction
+error but does not require or imply exact hidden-curve recovery.
+
+The real worker/cache matrix carries all three profiles at scale `1e-1` and
+both signed offsets; when no candidate meets the independent-point oracle, the
+test explicitly chooses a sample-fitting candidate. Typed-source persistence
+passes through all five DXF/DWG lanes at this representative scale, with
+available LibreDWG reads. This layout has not yet been carried through Trim,
+and its worker/persistence evidence at the other three scales remains open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][large-origin][profile-matrix]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: direct reconstruction 144 assertions / 1 case; worker/cache and
+persistence 105,517 assertions / 2 cases, all passing. Raw DWG replay
+diagnostics remain separate from semantic source checks. Other sample layouts,
+Trim for this layout, visible UI, and independent CAD acceptance remain open.
