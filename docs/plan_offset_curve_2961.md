@@ -123,6 +123,17 @@ continues to own geometry, worker/cache, Trim, and DXF/DWG qualification for
 concrete variants. Record the visible interaction outcome and binary revision
 there when completed.
 
+**Request reaffirmed (2026-11-14):** The source-curve widget must let the user
+change the requested source type while choosing a replacement and offer every
+kind in `LC_OffsetSourceGeometry::SupportedKinds`, including parabola. Treat
+“support” as end-to-end source support, not just a selector entry: parabola
+must remain a distinct type through candidate capture and reconstruction, and
+each claimed concrete variant must pass its applicable worker/cache, Trim,
+and DXF/DWG checks. The selector/filter implementation and headless tests are
+already complete; keep only visible picker acceptance in Slice 5 and the
+independently evidenced family/variant gaps in Slice 4 open. No new widget or
+parabola-only slice is warranted.
+
 “Support all types” also requires eligible concrete source candidates and
 qualification through capture/reconstruction, worker generation and cache
 validation, Trim, and applicable DXF/DWG save/reopen. For parabola, retain
@@ -403,7 +414,10 @@ for both fill rules. Its follow-up materialization fix rotates corner-arc
 angular provenance into the world frame, allowing rotated positive-bulge
 growth to pass worker materialization and round-trip through all five tested
 file lanes. Combined-frame positive-bulge growth still refuses atomically
-during cycle assembly. These tested self-crossing profiles expose ordinary
+during cycle assembly. A follow-up experiment using evaluation tolerance for
+exact noding and radial-gap arc tangency classification did not resolve this
+cell and was discarded; the focused 226-assertion regression continues to
+require an atomic refusal. These tested self-crossing profiles expose ordinary
 worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
 polyline topology feature generally.
