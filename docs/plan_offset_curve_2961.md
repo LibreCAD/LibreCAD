@@ -48354,6 +48354,7 @@ QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
   'High-origin concave polyline offsets trim and persist ordinary fragments' --reporter compact
 QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
   '[lc-offsetcurve][trim]' --reporter compact
+make -j4  # /private/tmp/offset3193-qmake6-fresh
 git diff --check
 ```
 
@@ -48362,5 +48363,8 @@ high-origin persistence/Trim regression; 112,444 assertions / 8 Trim cases
 passed in the broader regression tag. The focused test covers 60
 profile/origin/rotation/version lanes and independent LibreDWG geometry checks
 for the DWG outputs. Code commit `d2d26b786`; this qualifies these profiles and
-conditions only, not every concave or collapsed-neck topology. Visible GUI
-acceptance and broader ODA/AutoCAD validation remain open.
+conditions only, not every concave or collapsed-neck topology. The qmake6
+application/plugin build also completed from this source state, producing
+executable `LibreCAD` and `LibreCADOffsetWorker` artifacts; it does not provide
+a qmake test executable. Visible GUI acceptance and broader ODA/AutoCAD
+validation remain open.
