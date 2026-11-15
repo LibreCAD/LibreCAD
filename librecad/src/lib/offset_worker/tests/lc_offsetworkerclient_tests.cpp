@@ -5795,12 +5795,26 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         return RS_Vector{std::cos(angle) * point.x - std::sin(angle) * point.y,
                          std::sin(angle) * point.x + std::cos(angle) * point.y};
     };
-    for (const double tangentSlope : {0.2, 1e-8, 1e-10, 1e-12, 1e-14}) {
-        CAPTURE(tangentSlope);
-        const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
+    struct Profile {
+        const char* name;
+        LC_ParabolaData source;
+    };
+    std::vector<Profile> profiles;
+    const std::array<std::pair<const char*, double>, 5> slopeProfiles{{
+        {"0.2", 0.2}, {"1e-8", 1e-8}, {"1e-10", 1e-10}, {"1e-12", 1e-12}, {"1e-14", 1e-14}}};
+    for (const auto& [name, tangentSlope] : slopeProfiles) {
+        profiles.push_back({name, LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + frameTranslation,
               rotate({10.0, 0.0}) + frameTranslation}},
-            {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}});
+            {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}})});
+    }
+    profiles.push_back({"asymmetric-tangents", LC_ParabolaData::FromEndPointsTangents(
+        {{rotate({7.0, -2.0}) + frameTranslation,
+          rotate({-5.0, 0.5}) + frameTranslation}},
+        {{rotate({-2.0, 9.25}), rotate({-10.0, -6.75})}})});
+    for (const Profile& profile : profiles) {
+        CAPTURE(profile.name);
+        const LC_ParabolaData& source = profile.source;
         REQUIRE(source.isValid());
         for (const double signedDistance : {0.5, -0.5}) {
             CAPTURE(signedDistance);
