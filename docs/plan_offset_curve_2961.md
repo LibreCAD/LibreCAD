@@ -85,6 +85,9 @@ on current head `008c927b9`; visible desktop acceptance remains separate.
 Section 1493 supersedes the earlier `+/-1e-14` parabola Trim refusal by
 moving whole-conic Trim to a deterministic non-axis-aligned parameter origin;
 the depth ceiling remains 48 and the complete dedicated Trim suite passes.
+Section 1494 adds a rotated-frame stress pass at that phase for the full
+endpoint-tangent slope ladder; this is additional fixture evidence, not a
+general guarantee against every root near the selected phase.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49705,3 +49708,28 @@ round trips, with explicit fail-closed outcomes for unsupported variants.
 Parabola geometry qualification remains limited to the concrete constructions,
 sample layouts, conditioning, and persistence lanes listed in prior sections;
 the recent tangent-scaling tests do not close that broader matrix.
+
+## 1494. Stress Endpoint-tangent Trim in the Conic Seam Phase (2026-11-15)
+
+Test commit `e1ef7d9e2` rotates the endpoint-tangent parabola source by the
+same non-axis-aligned phase used as the whole-conic Trim parameter origin,
+then reruns the existing slope ladder `0.2`, `1e-8`, `1e-10`, `1e-12`, and
+`1e-14`. This places the secondary circle crossing near the selected chart
+origin and checks direct preparation, action preview/commit, and undo/redo in
+both the original and rotated frames. All cases succeed at the existing depth
+limit. This specifically checks that the fix did not merely move the measured
+failure to the new phase; it does not prove that arbitrary roots near the
+selected seam are certifiable.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Result: 2,347 assertions / 1 test case pass. Keep the solver fail-closed for
+other unresolved seam configurations; continue broader parabola construction,
+scale/frame, and source-family qualification.
