@@ -46578,16 +46578,22 @@ The `1e-8` and `1e-10` profiles pass the worker-backed typed-source replacement,
 Trim, undo/redo, and five R14/R2000/R2018 DXF/DWG save/reopen lanes. These
 results qualify these straight-profile endpoint/tangent cases only. Commit
 `31bbb338d` also adds the `1e-14` profile to bounded worker preparation across
-both signs and distances; this proves worker Produce transport for that source,
-not operation-8 cache admission, Trim, or persistence at that slope.
+both signs and distances. Commit `9bac949b8` then carries the same profile
+through operation-7 generation, operation-8 cache admission, and all five
+R14/R2000/R2018 DXF/DWG save/reopen lanes, checking that the typed source and
+tiny apex survive. The `1e-14` case is not yet qualified through the native
+Trim action or visible replacement workflow.
 
 Validation on macOS arm64 CMake Release: `[parabola][tangent]` passes 854
 assertions / 4 cases; `I trimmed every typed source family to plain fragments`
 passes 5,631 assertions / 1 case; `Typed parabola sources use bounded worker
 preparation` passes 4,860 assertions / 1 case; both `librecad_tests` and
-`librecad_offset_worker_client_tests` build; and `git diff --check` passes.
-Other constructions/conditioning, low-slope cache/persistence, visible GUI,
-cross-platform runtime, and independent CAD acceptance remain open.
+`librecad_offset_worker_client_tests` build; the new near-parallel worker-cache
+round-trip case passes 1,016 assertions / 1 case; and `git diff --check` passes.
+The focused command is
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' --reporter compact`.
+Other constructions/conditioning, low-slope Trim/action qualification, visible
+GUI, cross-platform runtime, and independent CAD acceptance remain open.
 
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
