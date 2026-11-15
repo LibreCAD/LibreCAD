@@ -8194,6 +8194,47 @@ TEST_CASE(
   CHECK(admittedCaches > 0);
 }
 
+TEST_CASE(
+    "worker protocol rejects degenerate endpoint-tangent parabola sources",
+    "[lc-offsetcurve][worker-kernel][source-generation][parabola][tangent]["
+    "refusal]") {
+  const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
+  const std::array<LC_ParabolaData, 4> invalidSources{{
+      LC_ParabolaData::FromEndPointsTangents(endpoints,
+                                             {{{1.0, 0.0}, {1.0, 0.0}}}),
+      LC_ParabolaData::FromEndPointsTangents(endpoints,
+                                             {{{0.0, 0.0}, {1.0, 1.0}}}),
+      LC_ParabolaData::FromEndPointsTangents(endpoints,
+                                             {{{1.0, 1e-15}, {1.0, -1e-15}}}),
+      LC_ParabolaData::FromEndPointsTangents(
+          endpoints,
+          {{{1.0, std::numeric_limits<double>::infinity()}, {1.0, -1.0}}}),
+  }};
+
+  RS_SplineData cache{1, false};
+  cache.controlPoints = {{0.0, 0.0}, {1.0, 0.0}};
+  cache.knotslist = {0.0, 0.0, 1.0, 1.0};
+  cache.weights = {1.0, 1.0};
+
+  for (std::size_t index = 0; index < invalidSources.size(); ++index) {
+    CAPTURE(index);
+    const LC_OffsetSourceGeometry source{invalidSources[index]};
+    CHECK_FALSE(invalidSources[index].isValid());
+    CHECK_FALSE(source.isWellFormed());
+    const LC_OffsetSourceDefinition definition{source, 0.01, 1e-4, false};
+
+    const req::Request generationRequest{token,
+                                         req::GenerateSource{definition, {}}};
+    CHECK_FALSE(req::admitted(generationRequest));
+    CHECK_FALSE(req::encode(generationRequest));
+
+    const req::Request validationRequest{
+        token, req::ValidateSourceCache{cache, definition, {}}};
+    CHECK_FALSE(req::admitted(validationRequest));
+    CHECK_FALSE(req::encode(validationRequest));
+  }
+}
+
 TEST_CASE("parabola worker cache validation is stable across uniform scales",
           "[lc-offsetcurve][worker-kernel][source-cache][parabola][scale]") {
     std::size_t acceptedCaches = 0;
