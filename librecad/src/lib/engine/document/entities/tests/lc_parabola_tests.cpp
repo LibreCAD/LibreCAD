@@ -434,6 +434,53 @@ TEST_CASE("LC_Parabola: Opposite-end clustering is measured across large-origin 
   }
 }
 
+TEST_CASE("LC_Parabola: Near-equal ordinates have permutation-stable ordering",
+          "[parabola][reconstruction][ordering]") {
+  const double firstMagnitude = std::sqrt(3.0e-6);
+  const double secondMagnitude = std::sqrt(1.5e-6);
+  const std::array<RS_Vector, 4> samples{{
+      {0.0, 0.0},
+      {-secondMagnitude, secondMagnitude * secondMagnitude},
+      {-firstMagnitude, firstMagnitude * firstMagnitude},
+      {1.0, 1.0},
+  }};
+  const std::array<std::size_t, 4> originalOrder{{0, 1, 2, 3}};
+  std::array<std::size_t, 4> order = originalOrder;
+  std::vector<LC_ParabolaData> referenceCandidates;
+  std::size_t permutationCount = 0;
+  do {
+    std::vector<RS_Vector> orderedSamples;
+    orderedSamples.reserve(order.size());
+    for (const std::size_t index : order)
+      orderedSamples.push_back(samples[index]);
+    const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+    CAPTURE(order);
+    REQUIRE_FALSE(candidates.empty());
+    for (const auto& candidate : candidates) {
+      REQUIRE(candidate.isValid());
+      CHECK(std::all_of(candidate.m_controlPoints.begin(), candidate.m_controlPoints.end(),
+                        [](const RS_Vector& point) {
+        return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+      }));
+    }
+    if (permutationCount == 0) {
+      referenceCandidates = candidates;
+    } else {
+      REQUIRE(candidates.size() == referenceCandidates.size());
+      for (std::size_t candidateIndex = 0; candidateIndex < candidates.size(); ++candidateIndex) {
+        CHECK(candidates[candidateIndex].m_controlPoints[0].distanceTo(
+                  referenceCandidates[candidateIndex].m_controlPoints[0]) < 1e-8);
+        CHECK(candidates[candidateIndex].m_controlPoints[1].distanceTo(
+                  referenceCandidates[candidateIndex].m_controlPoints[1]) < 1e-8);
+        CHECK(candidates[candidateIndex].m_controlPoints[2].distanceTo(
+                  referenceCandidates[candidateIndex].m_controlPoints[2]) < 1e-8);
+      }
+    }
+    ++permutationCount;
+  } while (std::next_permutation(order.begin(), order.end()));
+  CHECK(permutationCount == 24);
+}
+
 TEST_CASE("LC_Parabola: From4Points rejects malformed and degenerate samples",
           "[parabola][reconstruction][validation]") {
   const std::vector<RS_Vector> validSamples{{0.0, 0.0}, {1.0, 1.0},

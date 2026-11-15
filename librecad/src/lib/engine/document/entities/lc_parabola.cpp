@@ -62,13 +62,12 @@ bool validateConvexPoints(std::vector<RS_Vector>& points)
     });
     if (!valid)
         return false;
-    // sort points by coordinates
+    // Use a strict weak ordering for std::sort. A tolerance-based comparator
+    // can be non-transitive when three y coordinates straddle the tolerance.
     std::sort(points.begin(), points.end(), [](const RS_Vector& v0, const RS_Vector& v1) {
-        if (v0.y + RS_TOLERANCE < v1.y)
-            return true;
-        if (v0.y - RS_TOLERANCE > v1.y)
-            return false;
-        return v0.x + RS_TOLERANCE < v1.x;
+        if (v0.y != v1.y)
+            return v0.y < v1.y;
+        return v0.x < v1.x;
     });
     // find any coincidence
     for(size_t i=1; i<points.size(); ++i)
@@ -312,7 +311,13 @@ std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_V
         return {};
 
     // Axis discovery intersects diagonals, so keep it away from large world coordinates.
-    const RS_Vector origin = points.front();
+    // Choose the local origin from the point set, not the caller's traversal order.
+    const RS_Vector origin = *std::min_element(
+        points.begin(), points.end(), [](const RS_Vector& a, const RS_Vector& b) {
+            if (a.x != b.x)
+                return a.x < b.x;
+            return a.y < b.y;
+        });
     double coordinateScale = 0.0;
     for (const RS_Vector& point : points)
         coordinateScale = std::max(
