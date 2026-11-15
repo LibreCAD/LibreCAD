@@ -46716,6 +46716,30 @@ combined-frame positive-bulge growth cell remains unsupported; visible GUI,
 other mixed-bulge arrangements, cross-platform runtime, and independent CAD
 acceptance remain open.
 
+## 1395. Expose the Open Bow-tie Junction in World Coordinates (2026-11-14)
+
+Test commit `6d75fd4de` adds the open-boundary endpoint pair and adjacent
+source-span indices to the cycle-assembly diagnostics. The wrapper now
+transforms both points back out of its local frame before returning a refusal,
+so large-origin and rotated cases report coordinates in the caller's drawing
+frame. For the
+positive-bulge combined-frame growth fixture, the unmatched directed junction
+is from source span 1 to span 0; the open end is approximately
+`(145.204, -2000001.126)` and the nearest kept start is approximately
+`(146.059, -2000000.615)`, with a gap of `0.9959593`. Both fill rules produce
+the same pair. This narrows the failing junction but does not identify the
+correct sector or prove that joining these endpoints yields a valid
+arrangement. No tolerance-based endpoint snap or topology change is authorized
+by this evidence; retain atomic refusal pending an independent sector/routing
+oracle.
+
+Validation on macOS arm64 CMake Release: the focused mixed-frame bow-tie case
+passes 250 assertions / 1 case; `[curve-offset][region]` passes 28,702
+assertions / 23 cases; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. This
+remains an unsupported geometry case; visible GUI, broader mixed-bulge
+coverage, cross-platform runtime, and independent CAD acceptance remain open.
+
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
 Test commits `bc050a90c` and `6b9859713` add transverse ellipse cuts whose
