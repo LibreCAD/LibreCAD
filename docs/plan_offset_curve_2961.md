@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`bbcd9774c`):** The
+`b07aba642`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -77,9 +77,11 @@ worker-backed replacement from a line to a parabola. The new cross-family
 completion gate in section 1532 extends the replacement/highlight transition
 to every supported kind; selector inventory alone is not that evidence.
 Section 1533 adds a balanced interior four-point parabola layout to direct
-reconstruction, a representative transformed worker/cache and five-format
-persistence row, and Trim Two with undo/redo. This is one additional bounded
-sample distribution, not arbitrary four-point reconstruction support.
+reconstruction, worker/cache, five-format persistence, and Trim Two with
+undo/redo for all three control profiles at scales `1e-3`, `1e-2`, `1e-1`,
+and `1` in the rotated `(1e6,-2e6)` frame (section 1534). This is one
+additional bounded sample distribution, not arbitrary four-point
+reconstruction support.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -51058,3 +51060,9 @@ to 900,000 ms. Available LibreDWG reads pass. The known fixed-handle raw DWG
 replay diagnostics are not semantic source failures. Other sample
 distributions, construction/conditioning boundaries, visible GUI, and
 independent CAD acceptance remain open.
+
+## 1534. Extend Balanced-interior Parabola Coverage Across Profiles and Scales (2026-11-15)
+
+Test commit `b07aba642` extends the balanced-interior layout `{0.1, 0.3, 0.7, 0.9}` from section 1533 across all three control profiles and scales `1e-3`, `1e-2`, `1e-1`, and `1` under the rotated `(1e6,-2e6)` frame. The real worker/cache and five-format typed-source persistence matrices now run all 12 combinations, both signed offset distances, and the two save/reopen passes. Trim Two, undo/redo, and five-lane result round-trips likewise run the 12 profile/scale combinations with reversed sample traversal. If a reconstructed candidate does not match the hidden generator, the tests select a sample-fitting candidate and make no hidden-source-recovery claim. This closes the measured profile/scale grid only; other sample layouts, frames, and continuous scale intervals remain open.
+
+Validation: CMake Release build of `librecad_tests` and `librecad_offset_worker_client_tests`; the worker/cache matrix passes 93,599 assertions / 1 case; the five-format persistence matrix passes 69,118 assertions / 1 case using `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000` and `DWGREAD=/opt/homebrew/bin/dwgread`; the Trim Two matrix passes 19,225 assertions / 1 case. Section 1533's direct reconstruction suite remains 2,921 assertions / 11 cases and covers all three profiles/scales for this layout. LibreDWG parses the emitted DWGs. The raw OBJECTS `fixed-handle=2` diagnostics remain separate from semantic source validation. Visible GUI, other geometry-family variants, and independent CAD acceptance remain open.
