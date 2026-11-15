@@ -47495,3 +47495,30 @@ one closed major/minor-bulge profile. It does not add editable cache or Trim
 support for disconnected major-bulge offsets, nor generalize to other bulge
 arrangements. Keep those limitations and the remaining Slice 4 family/variant
 matrix open.
+
+## 1422. Qualify a Closed Rounded-polyline Region Directly (2026-11-15)
+
+Added a closed rounded-rectangle polyline with four tangent quarter-circle
+bulges alternating with straight spans. Direct `RegionBoundary` growth and
+erosion at distance `0.2` must each produce one positively oriented closed
+cycle, remain on the correct side of the source, and stay within `1e-5` of an
+independently polygonized source boundary. The source arcs are sampled at 2,048
+segments each for the independent winding and distance oracle.
+
+Validation on macOS arm64 CMake Release: the focused
+`[curve-offset][region][polyline][curved-boundary]` case passes 15 assertions
+/ 1 case; the complete `[curve-offset][region]` suite passes 28,715 assertions
+/ 24 cases; the `librecad_tests` target builds; and `git diff --check` passes.
+Test commits `c839acb5f` and `541b8f4bd`.
+
+This is direct geometry evidence for one simple convex rounded profile only.
+The Polyline capability table's older broad open items must be read together
+with later evidence: sections 1337-1341 qualify strictly convex linear
+polylines through 2,048 edges and worker Trim/persistence; sections 1361-1362
+qualify one U-shaped concavity and one two-lobe neck collapse; sections
+1405-1406 qualify the recorded positive/negative mixed-bulge bow-tie frames.
+The new rounded-rectangle case does not yet pass through the worker/cache,
+native Trim action, or DXF/DWG save/reopen lanes. Those end-to-end checks,
+other curved/concave/self-crossing arrangements, visible GUI interaction,
+cross-platform runtime, and independent CAD acceptance remain open; do not
+generalize from this direct-only case.
