@@ -2820,3 +2820,71 @@ TEST_CASE("Native Trim tangency refusal preserves the curve and undo state",
     REQUIRE_FALSE(context.messages.isEmpty());
     CHECK(context.messages.back().contains("nothing changed"));
 }
+
+TEST_CASE("Large-origin rounded polyline source refusal preserves the editable offset",
+          "[lc-offsetcurve][polyline][high-origin][atomic]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    const RS_Vector origin{1e6, -1e6};
+    constexpr double angle = .37;
+    const RS_Vector xAxis{std::cos(angle), std::sin(angle)};
+    const RS_Vector yAxis{-xAxis.y, xAxis.x};
+    const auto transform = [&](const RS_Vector& point) {
+        return origin + xAxis * point.x + yAxis * point.y;
+    };
+    view.getViewPort()->setOffsetAndFactor(qRound(200. - origin.x * 10.),
+                                          qRound(200. - origin.y * 10.), 10.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic, .2);
+    const auto beforeDefinition = target->definition();
+    const auto beforeCache = RS_Spline::geometryFingerprint(target->getData());
+    graphic.select(QList<RS_Entity*>{target}, true);
+
+    const double quarterArcBulge = std::tan(M_PI / 8.0);
+    auto sourceOwner = std::make_unique<RS_Polyline>(&graphic);
+    for (const auto& [point, bulge] : std::array<std::pair<RS_Vector, double>, 8>{{
+             {{0, 1}, quarterArcBulge}, {{1, 0}, 0.}, {{3, 0}, quarterArcBulge},
+             {{4, 1}, 0.}, {{4, 3}, quarterArcBulge}, {{3, 4}, 0.},
+             {{1, 4}, quarterArcBulge}, {{0, 3}, 0.}}}) {
+        sourceOwner->addVertex(transform(point), bulge);
+    }
+    sourceOwner->setClosed(true);
+    sourceOwner->endPolyline();
+    sourceOwner->setLayer(graphic.findLayer("0"));
+    auto* source = sourceOwner.get();
+    graphic.addEntity(source);
+    sourceOwner.release();
+
+    auto update = LC_ActionsHandlerFactory::createActionInstance(
+        RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::Polyline);
+    const RS_Vector sourcePick = transform({2, 0});
+    mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, false);
+    mouse(*update, view, sourcePick, true);
+    lc::test::awaitUpdate(*updateAction);
+
+    CHECK(updateAction->lastReport().updated == 0);
+    CHECK(updateAction->lastReport().refused == 1);
+    REQUIRE(updateAction->lastReport().outcomes.size() == 1);
+    CHECK_FALSE(updateAction->lastReport().outcomes.front().refusal.isEmpty());
+    CHECK_FALSE(target->isDeleted());
+    CHECK_FALSE(source->isDeleted());
+    CHECK(onlyNative(graphic) == target);
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == beforeCache);
+    basisEquals(target->definition().basis, beforeDefinition.basis);
+    CHECK(target->definition().distance == beforeDefinition.distance);
+    CHECK(target->definition().towardCentre == beforeDefinition.towardCentre);
+    CHECK(target->isSelected());
+}
