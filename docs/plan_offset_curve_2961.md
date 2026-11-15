@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest plan reconciliation (2026-11-15, tested local head
-`02bf377d7`, based on PR #3193 head `6bf772ff1`; roadmap update pending):** The repeated request to
+**Latest plan reconciliation (2026-11-15, pushed PR #3193 head
+`5391d809c`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -49,6 +49,10 @@ limits, visible picker/highlight interaction, and independent CAD acceptance
 remain open. The second-save DWG `fixed-handle=2`
 raw OBJECTS replay warning remains a separate metadata limitation; successful
 LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
+On `5391d809c`, the offscreen Qt dialog matrix passes 8,801 assertions / 3
+cases and the live action candidate-filter case passes 148 assertions / 1
+case; these requalify widget semantics but do not close visible desktop
+acceptance.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -48894,3 +48898,29 @@ including LibreDWG parsing when available. Repeated `fixed-handle=2` raw DWG
 OBJECTS replay diagnostics remain separate from entity-level persistence
 success. Visible picker interaction, independent CAD acceptance, and further
 parabola conditioning/variant coverage remain open.
+
+## 1469. Requalify All-source-type Picker Semantics (2026-11-15)
+
+At PR head `5391d809c`, reran the offscreen Qt Properties dialog matrix that
+changes the source-type filter across all nine supported kinds while checking
+candidate refresh, existing-source highlight, and preservation of source
+definition/cache until an explicit replacement is selected. The live
+`I update` action test likewise changes its candidate filter across the same
+nine kinds without mutating the target. This is widget-level event coverage;
+it is not a substitute for the still-open visible desktop workflow.
+
+Validation:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source][typed][matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[i-update][action][typed][picker]' --reporter compact
+git diff --check
+```
+
+Results: the dialog matrix passes 8,801 assertions / 3 cases; the live action
+candidate-filter case passes 148 assertions / 1 case. The PR checks queried at
+`5391d809c` were still running across macOS, Windows, and Linux jobs, with
+several platform jobs skipped; exact-head completion remains to be verified
+after this roadmap-only commit triggers its own checks.
