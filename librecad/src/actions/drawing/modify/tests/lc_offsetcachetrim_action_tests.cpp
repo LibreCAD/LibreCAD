@@ -2204,21 +2204,9 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     LC_OffsetCacheTrim::Work trimWork;
     const auto directTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
         {nativePick}, {}, {}, &trimWork);
-    if (tangentSlope == 1e-14) {
-        CHECK(directTrim.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
-        CHECK(trimWork.intersections.deepestPairRefinement ==
-              LC_OffsetCacheTrim::Limits{}.maxDepth);
-        f.action->click(nativePick);
-        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
-        f.action->hover(cutterPick);
-        CHECK(trimPreview(*f.action->m_preview).empty());
-        CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(cutter->isDeleted());
-        CHECK(trimGeometry(*native) == nativeBefore);
-        CHECK(trimGeometry(*cutter) == cutterBefore);
-        return;
-    }
     REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(trimWork.intersections.deepestPairRefinement <=
+          LC_OffsetCacheTrim::Limits{}.maxDepth);
 
     f.action->click(nativePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);

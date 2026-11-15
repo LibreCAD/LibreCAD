@@ -1284,6 +1284,9 @@ public:
         LC_IntersectionResult result;
         result.status = m_status;
         result.work = m_work;
+        result.hasFailureDomain = m_hasFailureDomain;
+        result.failureDomain = m_failureDomain;
+        result.failureDepth = m_failureDepth;
         if (good()) {
             if (m_retained) {
                 for (auto& root : m_roots) {
@@ -2106,12 +2109,18 @@ private:
                 continue;
             }
             if (cell.depth >= m_options.maxDepth) {
+                m_hasFailureDomain = true;
+                m_failureDomain = cell.box;
+                m_failureDepth = cell.depth;
                 return fail(LC_IntersectionStatus::LimitExceeded);
             }
             const bool first = std::hypot(a.x.width(), a.y.width()) >= std::hypot(b.x.width(), b.y.width());
             const LC_Interval parameter = first ? cell.box.parameterA : cell.box.parameterB;
             const double middle = centre(parameter);
             if (!(parameter.lo() < middle && middle < parameter.hi())) {
+                m_hasFailureDomain = true;
+                m_failureDomain = cell.box;
+                m_failureDepth = cell.depth;
                 return fail(LC_IntersectionStatus::AmbiguousTopology);
             }
             if (!canGenerate(2) || !reserveAdditional(pending, 2) || !generate(2)) {
@@ -2407,6 +2416,9 @@ private:
     bool m_issued{false};
     LC_IntersectionStatus m_status{LC_IntersectionStatus::Ok};
     LC_IntersectionWorkStats m_work;
+    bool m_hasFailureDomain{false};
+    LC_IntersectionDomain m_failureDomain{};
+    unsigned m_failureDepth{0};
     std::vector<Piece> m_leaves;
     std::vector<Bounds> m_parameterBounds;
     std::vector<LC_ParametricIntersection> m_events;
@@ -2513,6 +2525,9 @@ LC_CertifiedQueryResult findCertifiedIntersections(
     const auto queried = impl->solver.run(&result.work);
     result.status = queried.status;
     result.work = queried.work;
+    result.hasFailureDomain = queried.hasFailureDomain;
+    result.failureDomain = queried.failureDomain;
+    result.failureDepth = queried.failureDepth;
     if (queried.status == LC_IntersectionStatus::Ok) {
         result.session.reset(new LC_CertifiedIntersectionSession{std::move(impl)});
     }

@@ -346,6 +346,10 @@ struct LC_CertifiedQueryResult {
     LC_IntersectionStatus status{LC_IntersectionStatus::InvalidInput};
     /** Includes two session/issuer items and one extra metadata item per initially retained root. */
     LC_IntersectionWorkStats work;
+    /** Unresolved pair at strict query failure, when failure occurred during pair refinement. */
+    bool hasFailureDomain{false};
+    LC_IntersectionDomain failureDomain{};
+    unsigned failureDepth{0};
     std::unique_ptr<LC_CertifiedIntersectionSession> session;
 };
 

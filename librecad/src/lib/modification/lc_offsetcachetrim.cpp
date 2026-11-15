@@ -260,7 +260,12 @@ std::unique_ptr<LC_CertifiedIntersectionSession> query(
     try { result = findCertifiedIntersections(std::move(provider), options, &entered); }
     catch (...) { c.adopt(entered); throw; }
     c.adopt(entered);
-    if (result.status != LC_IntersectionStatus::Ok) { fail(coreFailure(result.status, ambiguous)); }
+    if (result.status != LC_IntersectionStatus::Ok) {
+        c.work.hasIntersectionFailureDomain = result.hasFailureDomain;
+        c.work.intersectionFailureDomain = result.failureDomain;
+        c.work.intersectionFailureDepth = result.failureDepth;
+        fail(coreFailure(result.status, ambiguous));
+    }
     if (!result.session || !result.session->hasValidProofs()) { fail(Refusal::AmbiguousRoots); }
     return std::move(result.session);
 }
@@ -1076,8 +1081,9 @@ Input admit(Context& c, const RS_SplineData& source, const RS_Entity& entity, co
             fail(Refusal::UnsupportedCutter);
         }
         if (frame->sourceSweep().whole) {
-            // Trim alone uses a theta=0 seam; native frame defaults stay unchanged.
-            frame = frame->withWholeStart(0.);
+            // Keep whole-conic roots away from common axis-aligned seam roots.
+            // This changes only the parameter origin, not the represented curve.
+            frame = frame->withWholeStart(0.371234567890123);
             if (!frame) fail(Refusal::Arithmetic);
         }
         cutterClosed = frame->sourceSweep().whole;
@@ -1931,6 +1937,11 @@ void addWork(Work& to, const Work& from) {
     a.deepestPairRefinement = std::max(a.deepestPairRefinement, b.deepestPairRefinement);
     a.deepestOrderingRefinement = std::max(a.deepestOrderingRefinement, b.deepestOrderingRefinement);
     a.deepestRootRefinement = std::max(a.deepestRootRefinement, b.deepestRootRefinement);
+    if (from.hasIntersectionFailureDomain) {
+        to.hasIntersectionFailureDomain = true;
+        to.intersectionFailureDomain = from.intersectionFailureDomain;
+        to.intersectionFailureDepth = from.intersectionFailureDepth;
+    }
 }
 
 void shift(Location& location, std::size_t offset) { location.rawSpan += offset; }

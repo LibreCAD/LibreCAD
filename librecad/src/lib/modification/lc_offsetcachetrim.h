@@ -103,6 +103,9 @@ struct Work {
     std::size_t kernelItems = 0, kernelComparisons = 0;
     std::size_t outputSpans = 0, outputControls = 0, outputKnots = 0;
     LC_IntersectionWorkStats intersections;
+    bool hasIntersectionFailureDomain = false;
+    LC_IntersectionDomain intersectionFailureDomain{};
+    unsigned intersectionFailureDepth = 0;
 };
 
 struct Cancellation {
