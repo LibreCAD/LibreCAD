@@ -836,7 +836,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
                 : parabolaVariant == 4 ? 1e-10 : 1e-14;
             sourceData = LC_OffsetSourceGeometry{LC_ParabolaData::FromEndPointsTangents(
                 {{{-5.0, 0.0}, {5.0, 0.0}}}, {{{1.0, slope}, {1.0, -slope}}})};
-        } else {
+        } else if (parabolaVariant != 6) {
             sourceData = LC_OffsetSourceGeometry{LC_ParabolaData{controls}};
         }
     }
