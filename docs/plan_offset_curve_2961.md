@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, code revision
-`148d1acad`):** The repeated request to
+`f246d779f`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -75,6 +75,8 @@ the spline entity is present; editable-source semantic validation remains open.
 Section 1483 extends the endpoint-tangent persistence matrix with an
 asymmetric tangent-direction construction through the same worker and file
 lanes.
+Section 1484 requires LibreDWG's JSON output to expose both editable-offset
+EED markers on each decoded SPLINE; it does not claim schema interpretation.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -49390,3 +49392,29 @@ does not establish all endpoint orderings, tangent direction pairs, endpoint
 spacing, or numerical scales. It also does not validate custom EED semantics
 in LibreDWG, ODA/AutoCAD acceptance, or visible GUI interaction. Continue the
 parabola family-by-variant matrix without generalizing beyond these fixtures.
+
+## 1484. Require LibreDWG to Expose Editable-offset EED Markers (2026-11-15)
+
+Commit `f246d779f` strengthens the independent JSON reader checks for each
+R2000 and R2018 DWG in the endpoint-tangent persistence matrix. For a decoded
+`SPLINE`, its `eed` array must contain both the `LC_OFFSET_CURVE` application
+record and the `TYPED_SOURCE` marker. This confirms that LibreDWG exposes the
+editable-source EED carrier on the persisted entity, including for the
+asymmetric tangent profile added in section 1483.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Result: 5,785 assertions / 1 case pass. The reader verifies EED marker
+presence, not the custom payload's typed-source schema, parameter semantics,
+or round-trip equivalence. ODA FileConverter still aborts before conversion
+during macOS pasteboard/XPC initialization; no ODA result is available. Keep
+ODA/AutoCAD acceptance and visible packaged-app interaction open.
