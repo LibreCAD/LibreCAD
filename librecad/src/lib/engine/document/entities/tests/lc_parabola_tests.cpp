@@ -312,6 +312,43 @@ TEST_CASE("LC_Parabola: From4Points reconstructs rotated geometry at a large ori
   CHECK(reconstructed);
 }
 
+TEST_CASE("LC_Parabola: Far-end clustered samples do not qualify a known large-origin profile",
+          "[parabola][reconstruction][conditioning][large-origin]") {
+  const std::array<RS_Vector, 3> controls{{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}};
+  constexpr double scale = 1e-2;
+  constexpr double angle = 0.6435011087932844;
+  const RS_Vector translation{1e6, -2e6};
+  const auto transform = [&](const RS_Vector& point) {
+    RS_Vector mapped = point * scale;
+    mapped.rotate(angle);
+    return mapped + translation;
+  };
+  const auto pointAt = [&](const double t) {
+    return transform(bezierAt(controls, t));
+  };
+  const std::vector<RS_Vector> samples{
+      pointAt(0.0), pointAt(0.98), pointAt(0.999), pointAt(1.0)};
+  const std::array<RS_Vector, 3> independent{{
+      pointAt(0.15), pointAt(0.5), pointAt(0.85)}};
+  const double fitTolerance =
+      256.0 * std::numeric_limits<double>::epsilon() * 2e6;
+  const auto candidates = LC_ParabolaData::From4Points(samples);
+  // Four clustered inputs alone are insufficient to qualify this reconstruction.
+  REQUIRE_FALSE(candidates.empty());
+  const auto fits = [&](const LC_ParabolaData& candidate, const auto& points) {
+    return candidate.isValid() &&
+        std::all_of(points.begin(), points.end(), [&](const RS_Vector& point) {
+          return candidate.fromX(candidate.findX(point)).distanceTo(point) <= fitTolerance;
+        });
+  };
+  CHECK(std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
+    return fits(candidate, samples);
+  }));
+  CHECK_FALSE(std::any_of(candidates.begin(), candidates.end(), [&](const auto& candidate) {
+    return fits(candidate, samples) && fits(candidate, independent);
+  }));
+}
+
 TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
           "[parabola][reconstruction][matrix]") {
   const std::array<RS_Vector, 3> controls{{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
