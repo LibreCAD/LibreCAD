@@ -48106,3 +48106,39 @@ direction/version lanes, including the DWG external-reader checks. Test commit
 cutter, and transforms; other concave/bulged layouts, more root/pick
 configurations, visible GUI, cross-platform runtime, and ODA/AutoCAD acceptance
 remain open.
+
+## 1445. Route Concave Polyline Erosion Through RegionBoundary (2026-11-15)
+
+Worker option selection previously recognized strict convex closed polylines
+and self-intersecting polylines, but left simple concave closed polylines on
+the direct-offset path. Replaced the convex-only orientation check with a
+signed-area orientation for any well-formed, simple closed polyline whose live
+entity matches its captured geometry. The inward side now selects
+`RegionBoundary`; the outward side remains `Direct`. Self-intersection routing
+is unchanged.
+
+Added a worker-client regression using a closed dumbbell polygon whose narrow
+neck collapses under inward offset. It compares worker branches with direct
+RegionBoundary materialization, verifies editable native-source/cache
+reconstruction from the multi-branch ordinary output, and checks two-pass
+DXF/DWG save/reopen for R14, R2000, and R2018. The test also asserts outward
+routing remains Direct. This evidence is specific to that linear dumbbell and
+offset magnitude; other concave and bulged profiles, high-origin concave Trim,
+broader variants, visible UI, cross-platform execution, and independent
+ODA/AutoCAD acceptance remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests librecad_offset_worker_client_tests librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Worker client transports and persists concave polyline neck-collapse branches' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests '[lc-offsetcurve][worker-client][polyline][region-boundary]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_kernel_tests '[lc-offsetcurve][worker-kernel][polyline][region-boundary][tolerance]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[curve-offset][region][polyline]' --reporter compact
+git diff --check
+```
+
+Results: 280 assertions / 1 new client case; 6,671 assertions / 5 matching
+worker-client cases; 110 assertions / 2 worker-kernel cases; and 1,691
+assertions / 13 direct polyline RegionBoundary cases passed. Implementation
+and regression tests are commit `1a8f83169`.
