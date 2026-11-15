@@ -48073,3 +48073,32 @@ two-pass native persistence only for this U-shaped profile and cutter. Other
 concave/bulged layouts, cutter/root configurations, broader platform/runtime
 coverage, visible GUI acceptance, and independent ODA/AutoCAD acceptance
 remain open.
+
+## 1444. Cover Both High-origin Concave Offset Orientations (2026-11-15)
+
+Extended section 1443's U-shaped polyline Trim/action matrix to signed offsets
+`-0.5` and `+0.5`. The source entity is removed after successful native
+source replacement and before Trim so it cannot compete with the offset for
+the picked target. Each orientation retains the same two origins, two
+rotations, transverse cutter, undo/redo checks, two-pass R14/R2000/R2018
+DXF/DWG persistence, and independent LibreDWG inspection for DWG fragments.
+The test asserts that Update-from-Source preserves the requested signed
+distance.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'High-origin concave polyline offsets trim and persist ordinary fragments' \
+  --reporter compact
+git diff --check
+```
+
+Result: 8,500 assertions / 1 Catch2 case passed across 40 origin/rotation/
+direction/version lanes, including the DWG external-reader checks. Test commit
+`b8e6eec71`. This qualifies only the stated U-profile, distance magnitudes,
+cutter, and transforms; other concave/bulged layouts, more root/pick
+configurations, visible GUI, cross-platform runtime, and ODA/AutoCAD acceptance
+remain open.
