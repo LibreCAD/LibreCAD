@@ -5976,8 +5976,8 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
 #endif
 
     qint64 requestId = 1;
-    const std::array<std::pair<std::size_t, double>, 4> profileScales{{
-        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1.0}}};
+    const std::array<std::pair<std::size_t, double>, 6> profileScales{{
+        {0, 1e-6}, {0, 1.0}, {0, 1e6}, {1, 1e-6}, {1, 1.0}, {1, 1e6}}};
     for (const auto& profileScale : profileScales) {
         const std::size_t profileIndex = profileScale.first;
         const double scale = profileScale.second;

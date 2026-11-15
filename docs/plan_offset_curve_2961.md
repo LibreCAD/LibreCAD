@@ -48536,3 +48536,37 @@ git diff --check
 The focused picker result above is previously recorded evidence, not a test run
 performed for this documentation-only reconciliation. No implementation,
 geometry-completeness, or visible-GUI gate is closed by this entry.
+
+## 1459. Extend Asymmetric Four-point Parabola Persistence Across Scales (2026-11-15)
+
+Extended section 1457's asymmetric `From4Points` profile persistence from
+unit scale to the full `1e-6`, `1`, and `1e6` scale set already used by the
+worker/cache matrix. The existing symmetric control net remains covered at all
+three scales. Each profile-scale pair uses all three four-point sample layouts,
+both signed offsets, and five native-capable output lanes: R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Reopened typed source and generated cache geometry
+are checked; LibreDWG independently parses emitted DWGs when available.
+
+This closes scale coverage only for these two quadratic control nets and
+listed transformations/distances. It does not establish arbitrary
+`From4Points` conditioning, additional source constructions, affine
+transforms, domain limits, Trim, or external CAD acceptance.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][persistence]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points]' --reporter compact
+git diff --check
+```
+
+Results: the focused persistence selection passes 11,748 assertions / 2
+cases; the complete four-point subset passes 27,825 assertions / 3 cases.
+Both R2000 and R2018 DWG lanes are independently parsed in the persistence
+matrix. This is a test-coverage extension; no production-kernel change was
+needed.
