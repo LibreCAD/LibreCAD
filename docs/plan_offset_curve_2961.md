@@ -25,17 +25,17 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest implementation reconciliation (2026-11-15, pushed head
-`a1184540a`):** The source-type selector contract is implemented for all nine
+**Latest implementation reconciliation (2026-11-15, latest code/test commit
+`f3fd662c0`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532, while visible packaged-app acceptance remains open. Recent
-four-point parabola evidence is tracked in sections 1533-1542: direct
-reconstruction covers the balanced and interior-asymmetric sample layouts
-across three control profiles and four scales in the rotated high-origin
-frame; every sample permutation of both layouts also passes worker/cache and
-five-format persistence for one representative profile/scale, both offset
-signs, and available LibreDWG reads. These bounded matrices do not establish
+four-point parabola evidence is tracked in sections 1533-1543: direct
+reconstruction covers four balanced/asymmetric sample layouts across three
+control profiles and four scales in the rotated high-origin frame; every
+sample permutation of all four layouts also passes worker/cache and five-format
+persistence for one representative profile/scale, both offset signs, and
+available LibreDWG reads. These bounded matrices do not establish
 arbitrary sample-layout, scale, frame, or external-CAD support. The high-origin
 rotated case also fixed a production reconstruction failure. This closes only
 those recorded profiles and lanes. Sections 1464-1466 exercise Trim Two and
@@ -51291,3 +51291,43 @@ cases; worker/cache, five-format persistence, and LibreDWG inspection pass
 56,109 assertions / 1 case. DWG `fixed-handle=2` raw OBJECTS replay diagnostics
 remain unrelated to typed-source assertions. More sample layouts/frames,
 visible desktop acceptance, and ODA/AutoCAD acceptance remain open.
+
+## 1543. Exercise Broad and Close-pair Parabola Samples (2026-11-15)
+
+Test commit `f3fd662c0` adds two more four-point distributions to the
+permutation matrix: the broad asymmetric layout `{0.02, 0.31, 0.68, 0.98}`
+and the close-interior-pair layout `{0.1, 0.45, 0.46, 0.9}`. Direct
+reconstruction now checks all 24 orderings for both new layouts across the
+existing three control profiles and four scales in the rotated `(1e6,-2e6)`
+frame, requiring sample fit and bounded independent-point error. The worker,
+cache-admission, both-sign, five-format two-pass persistence, and optional
+LibreDWG matrices now cover all 24 orderings of all four recorded interior
+layouts for one representative profile/scale/frame. The close-pair fixture is
+one measured spacing, not a proven separation threshold; arbitrary sampling,
+scale, frame, and continuous conditioning boundaries remain unqualified.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][permutation]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][from-four-points][permutation][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+Results: build passes; focused direct permutation reconstruction passes 3,456
+assertions / 1 case; full parabola reconstruction passes 6,377 assertions / 12
+cases; worker/cache, five-format persistence, and LibreDWG inspection pass
+112,011 assertions / 1 case. DWG `fixed-handle=2` raw OBJECTS replay diagnostics
+remain separate from semantic source validation. Visible desktop and
+ODA/AutoCAD acceptance remain open.
