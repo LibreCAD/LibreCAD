@@ -3174,7 +3174,12 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount, prepared.fragments.size(),
             trimDistance);
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(prepared.fragments.size() > 1);
+    REQUIRE(prepared.rootCount == 4);
+    if (signedDistance > 0.0) {
+        REQUIRE(prepared.fragments.size() == 1);
+    } else {
+        REQUIRE(prepared.fragments.size() > 1);
+    }
     std::vector<std::uint64_t> expectedFragments;
     for (const auto& fragment : prepared.fragments)
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
