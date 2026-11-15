@@ -79,7 +79,9 @@ static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&
 
 constexpr int SuiteTimeoutMs = 150000;
 constexpr int MaxSuiteTimeoutMs = 900000;
-constexpr int WaitTimeoutMs = 6000;
+constexpr int WaitTimeoutMs = static_cast<int>(Client::Deadlines::commit +
+                                               Client::Deadlines::terminate +
+                                               Client::Deadlines::reap + 5000);
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 
 int boundedSuiteTimeout(const int requested, const bool valid) {
