@@ -119,19 +119,28 @@ TEST_CASE("Offset source highlight is rendered and removed with its lease",
         renderer.setupPainter(&painter);
         renderer.beginPass();
         renderer.drawOverlay(&painter);
-        UNSCOPED_INFO("overlay pen: " << painter.pen().color().name().toStdString()
-                      << " style " << static_cast<int>(painter.pen().style())
-                      << " origin " << viewport.toGuiX(0) << "," << viewport.toGuiY(0));
         painter.end();
-        int colored = 0;
+        return image;
+    };
+    const auto redPixels = [](const QImage& image) {
+        int count = 0;
         for (int y = 0; y < image.height(); ++y)
             for (int x = 0; x < image.width(); ++x)
-                if (image.pixelColor(x, y) != QColor(Qt::black)) ++colored;
-        return colored;
+                if (image.pixelColor(x, y) == QColor(Qt::red)) ++count;
+        return count;
     };
-    CHECK(render() > 0);
+    const QImage highlighted = render();
+    CHECK(redPixels(highlighted) > 0);
+    const int sourceY = viewport.toGuiY(0);
+    int sourcePixels = 0;
+    for (int x = viewport.toGuiX(0); x <= viewport.toGuiX(40); ++x) {
+        for (int y = sourceY - 1; y <= sourceY + 1; ++y) {
+            if (highlighted.pixelColor(x, y) == QColor(Qt::red)) ++sourcePixels;
+        }
+    }
+    CHECK(sourcePixels > 0);
     lease.reset();
-    CHECK(render() == 0);
+    CHECK(redPixels(render()) == 0);
 }
 
 TEST_CASE("drawing, draft, preview and print keep the same model-space dash lengths",
