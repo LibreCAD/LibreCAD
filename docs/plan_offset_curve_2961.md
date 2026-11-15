@@ -49476,3 +49476,24 @@ Result: 15,226 assertions / 44 cases pass. This is automated offscreen UI
 coverage; it does not verify visible packaged-app layout or interaction on the
 desktop. Keep visible GUI acceptance open, and do not add a duplicate selector
 or infer broader entity support from this picker result.
+
+## 1487. Confirm Requested Source-type Switching Scope (2026-11-15)
+
+The latest request reiterates that changing the source type must be possible
+inside the workflow for choosing a replacement source, and that the picker
+must cover every source type currently supported by the model. This is already
+implemented by the existing in-dialog type control and is covered by section
+1486; the supported choices are line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+typed parabola source, not a spline-points substitute. Do not create a second
+control or expand the UI list beyond `SupportedKinds` without adding actual
+geometry support.
+
+Implementation status: automated offscreen picker coverage is complete and
+revalidated on the current PR head `f1d82ae80`. Remaining acceptance is a
+visible packaged-app check that the type control remains usable while choosing
+a replacement, candidates update to the selected type, and the committed
+source remains highlighted until a valid replacement is accepted. Preserve
+the existing-source/cache invariants on type changes, cancellation, invalid
+candidates, and preparation failure. Do not mark the visible gate complete
+from the offscreen results in section 1486.
