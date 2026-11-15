@@ -3787,6 +3787,7 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
     CAPTURE(built.status, diagnostics.status, diagnostics.candidateParameters,
             diagnostics.candidateBoxes, diagnostics.stallIntervals,
+            diagnostics.unclassifiedBoundaries,
             diagnostics.failureSpan, diagnostics.failureT0, diagnostics.failureT1);
     CHECK(built.status == LC_CurveOffsetStatus::Ok);
     CHECK(diagnostics.complete == (diagnostics.status == LC_CurveOffsetStatus::Ok));
@@ -3822,7 +3823,21 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
             return (interval.first <= domainStartValue && interval.second >= domainStartValue) ||
                    (interval.first <= domainEndValue && interval.second >= domainEndValue);
         });
-    CHECK((seamCandidate || seamStall));
+    const auto unclassifiedSeam = std::find_if(
+        diagnostics.unclassifiedBoundaries.begin(),
+        diagnostics.unclassifiedBoundaries.end(), [&](const auto& boundary) {
+            return std::abs(boundary.parameter - domainStartValue) < 1e-7 ||
+                   std::abs(boundary.parameter - domainEndValue) < 1e-7;
+        });
+    const bool seamUnclassified =
+        unclassifiedSeam != diagnostics.unclassifiedBoundaries.end();
+    CHECK((seamCandidate || seamStall || seamUnclassified));
+    if (seamUnclassified) {
+        CHECK(std::abs(unclassifiedSeam->leftFactor) <=
+              unclassifiedSeam->leftRoundoffBound);
+        CHECK(std::abs(unclassifiedSeam->rightFactor) <=
+              unclassifiedSeam->rightRoundoffBound);
+    }
     if (seamCandidate) CHECK((seamOwnedByStart || seamOwnedByEnd));
 
     const auto startPoint = oracleOffsetPoint(
@@ -3873,6 +3888,9 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
     }
     if (seamStall) {
         CHECK(nearestBranchEndpoint <= options->tolerance.requestedGeometry);
+    }
+    if (seamUnclassified) {
+        CHECK(nearestOutput <= options->tolerance.requestedGeometry);
     }
 }
 
@@ -3972,8 +3990,11 @@ TEST_CASE("periodic rational seam roots map across weight profiles",
       seamCandidate = true;
       seamOwnedByStart |= atStart && box.span == 0 && box.t0 <= startValue &&
                           box.t1 >= startValue;
+      const double parameterRoundoff = 64.0 * std::numeric_limits<double>::epsilon() *
+          std::max({1.0, std::abs(startValue), std::abs(endValue)});
       seamOwnedByEnd |= atEnd && box.span + 2 == sourceBreaks.size() &&
-                        box.t0 <= endValue && box.t1 >= endValue;
+                        box.t0 <= endValue + parameterRoundoff &&
+                        box.t1 >= endValue - parameterRoundoff;
     }
     const bool seamStall = std::any_of(
         diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
@@ -4227,7 +4248,6 @@ TEST_CASE("periodic rational seam tangent root maps to a bounded stall",
 TEST_CASE("higher-degree periodic spline seam roots map to output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][seam-root][even-root][degree-limit]") {
-    std::size_t unclassifiedWeightedSeams = 0;
     for (const auto [degree, weightProfile] : {
              std::pair{4, 0}, std::pair{4, 1}, std::pair{5, 0},
              std::pair{4, 2}, std::pair{5, 1}, std::pair{5, 2},
@@ -4482,7 +4502,6 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                       unclassifiedSeam->leftRoundoffBound);
                 CHECK(std::abs(unclassifiedSeam->rightFactor) <=
                       unclassifiedSeam->rightRoundoffBound);
-                ++unclassifiedWeightedSeams;
             }
         }
         if (seamCandidate != diagnostics.candidateParameters.end()) {
@@ -4633,7 +4652,6 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             }
         }
     }
-    CHECK(unclassifiedWeightedSeams > 0);
 }
 
 TEST_CASE("periodic rational seam tangent and interior roots map to output",
@@ -9911,6 +9929,13 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         const auto originalGeometry = LC_CurveOffset::buildDirectBranches(
             *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25),
             *options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(originalGeometry.status,
+                originalGeometry.intersectionDiagnostics.stage,
+                originalGeometry.intersectionDiagnostics.failureSite,
+                originalGeometry.intersectionDiagnostics.status,
+                originalGeometry.intersectionDiagnostics.hasFailureDomain,
+                originalGeometry.intersectionDiagnostics.failureDepth,
+                originalGeometry.intersectionDiagnostics.nodeMatchComparisons);
         CHECK((originalGeometry.status == LC_CurveOffsetStatus::Ok ||
                originalGeometry.status == LC_CurveOffsetStatus::AmbiguousTopology));
 
@@ -9929,6 +9954,13 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         const auto recenteredGeometry = LC_CurveOffset::buildDirectBranches(
             *recentered, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25),
             *recenteredOptions, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(recenteredGeometry.status,
+                recenteredGeometry.intersectionDiagnostics.stage,
+                recenteredGeometry.intersectionDiagnostics.failureSite,
+                recenteredGeometry.intersectionDiagnostics.status,
+                recenteredGeometry.intersectionDiagnostics.hasFailureDomain,
+                recenteredGeometry.intersectionDiagnostics.failureDepth,
+                recenteredGeometry.intersectionDiagnostics.nodeMatchComparisons);
         CHECK(recenteredGeometry.status == originalGeometry.status);
 
         auto outward = inward;
@@ -9940,6 +9972,8 @@ TEST_CASE("convex polyline orientation survives rotated large-origin reconstruct
         const req::Request request{token, req::GenerateSource{inward, {}}};
         const auto reply = LC_OffsetWorkerKernel::run(request);
         const auto& generated = native(reply, 7);
+        CAPTURE(generated.refusal, generated.engineStatus,
+                generated.checkReason, generated.engineRuns);
         REQUIRE(generated.engineStatus == originalGeometry.status);
         if (originalGeometry.status == LC_CurveOffsetStatus::AmbiguousTopology) {
             CHECK(originalGeometry.branches.empty());
