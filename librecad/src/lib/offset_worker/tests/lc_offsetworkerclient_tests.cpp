@@ -5784,11 +5784,16 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                                      {RS2::FormatDXFRW2018, "r2018.dxf"},
                                      {RS2::FormatDWG2018, "r2018.dwg"}}};
     qint64 requestId = 1;
+    const auto rotate = [](const RS_Vector& point) {
+        constexpr double angle = 0.41;
+        return RS_Vector{std::cos(angle) * point.x - std::sin(angle) * point.y,
+                         std::sin(angle) * point.x + std::cos(angle) * point.y};
+    };
     for (const double tangentSlope : {0.2, 1e-8, 1e-10, 1e-12, 1e-14}) {
         CAPTURE(tangentSlope);
         const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
-            {{{0.0, 0.0}, {10.0, 0.0}}},
-            {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
+            {{rotate({0.0, 0.0}), rotate({10.0, 0.0})}},
+            {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}});
         REQUIRE(source.isValid());
         for (const double signedDistance : {0.5, -0.5}) {
             CAPTURE(signedDistance);
@@ -5860,10 +5865,9 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                 const auto* reopenedSource = std::get_if<LC_ParabolaData>(
                     &reopenedOffset->sourceDefinition()->source.value);
                 REQUIRE(reopenedSource);
-                CHECK(reopenedSource->m_controlPoints[0].distanceTo(source.m_controlPoints[0]) < 1e-12);
-                CHECK(reopenedSource->m_controlPoints[2].distanceTo(source.m_controlPoints[2]) < 1e-12);
-                CHECK(std::abs(reopenedSource->m_controlPoints[1].y -
-                               source.m_controlPoints[1].y) < 5e-20);
+                for (std::size_t i = 0; i < source.m_controlPoints.size(); ++i)
+                    CHECK(reopenedSource->m_controlPoints[i].distanceTo(
+                              source.m_controlPoints[i]) < 2e-14);
             }
             requestId += 2;
         }
