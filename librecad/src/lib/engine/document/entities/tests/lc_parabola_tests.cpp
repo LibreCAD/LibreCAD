@@ -356,10 +356,12 @@ TEST_CASE("LC_Parabola: From4Points handles varied scales and sample layouts",
     const double mt = 1.0 - t;
     return controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) + controls[2] * (t * t);
   };
-  const std::array<std::array<double, 4>, 3> layouts{{
+  const std::array<std::array<double, 4>, 5> layouts{{
       {{0.0, 0.3, 0.7, 1.0}},
       {{0.05, 0.2, 0.65, 0.95}},
       {{0.0, 0.1, 0.4, 1.0}},
+      {{0.0, 0.9, 0.99, 1.0}},
+      {{0.0, 0.95, 0.995, 1.0}},
   }};
 
   for (const double scale : {1e-6, 1.0, 1e6}) {

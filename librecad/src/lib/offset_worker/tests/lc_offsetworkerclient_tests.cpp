@@ -5880,11 +5880,9 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
         {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
         {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
     }};
-    const std::array<std::array<double, 4>, 5> layouts{{
-        {{0.0, 0.3, 0.7, 1.0}},
-        {{0.05, 0.2, 0.65, 0.95}},
-        {{0.0, 0.1, 0.4, 1.0}},
+    const std::array<std::array<double, 4>, 3> layouts{{
         {{0.0, 0.001, 0.02, 1.0}},
+        {{0.0, 0.9, 0.99, 1.0}},
         {{0.0, 0.98, 0.999, 1.0}},
     }};
     qint64 requestId = 1;
@@ -5926,7 +5924,7 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
                 });
             if (profileIndex == 2 && scale == 1e-2 &&
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
-                layout[1] > 0.9) {
+                layout[1] == 0.98) {
                 CHECK(candidate == candidates.end());
                 continue;
             }
@@ -5987,11 +5985,9 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
         {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
         {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
     }};
-    const std::array<std::array<double, 4>, 5> layouts{{
-        {{0.0, 0.3, 0.7, 1.0}},
-        {{0.05, 0.2, 0.65, 0.95}},
-        {{0.0, 0.1, 0.4, 1.0}},
+    const std::array<std::array<double, 4>, 3> layouts{{
         {{0.0, 0.001, 0.02, 1.0}},
+        {{0.0, 0.9, 0.99, 1.0}},
         {{0.0, 0.98, 0.999, 1.0}},
     }};
     struct Lane {
