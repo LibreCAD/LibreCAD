@@ -25,6 +25,35 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
+**Latest plan reconciliation (2026-11-15, PR #3193 head
+`1b2ac2e1c3a2c2445e439dfcf872ef880cb702cf`):** The repeated request to
+change source type during replacement and support every kind in
+`LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
+requirement, not a new parabola-only UI feature. The selector already filters
+all nine kinds, including parabola as distinct from spline-points; retain the
+visible-GUI acceptance gate below. Recent work now qualifies three four-point
+parabola control nets through local-frame reconstruction, worker/cache,
+positive and negative offsets, and two save/reopen passes for the five
+R14/R2000/R2018 DXF/DWG lanes. The high-origin rotated case also fixed a
+production reconstruction failure. This closes only those recorded profiles
+and lanes: four-point parabola Trim, other parabola constructions and
+conditioning/domain limits, visible picker/highlight interaction, and
+independent CAD acceptance remain open. The second-save DWG `fixed-handle=2`
+raw OBJECTS replay warning remains a separate metadata limitation; successful
+LibreDWG parsing is not full DWG semantic or raw-payload round-trip evidence.
+
+**Next implementation/validation order:** (1) completed by `b434866dc`:
+reconstructed four-point parabola source replacement now passes Trim Two
+preview/commit and undo/redo; see section 1464; (2) continue the existing
+family-by-variant matrix for concrete parabola constructions or conditioning
+boundaries not already represented, preserving independent geometry oracles
+and fail-closed limits; (3) complete the visible Properties workflow for
+repeated type changes, candidate refresh, current-source indication,
+successful replacement, and cancellation/refusal; (4) record independent
+ODA/AutoCAD acceptance where available and keep raw DWG replay diagnostics
+distinct from entity-level round-trip results. Do not add a second selector or
+claim all variants from the nine-kind selector inventory.
+
 **Latest source-widget disposition (reconfirmed 2026-11-15):** The repeated
 request to change source type during replacement picking and support every
 currently supported type does not require another widget implementation
@@ -48673,3 +48702,60 @@ parabola-tagged regression suite passes 5,872,368 assertions / 43 cases; the
 four-point worker/cache/persistence subset passes 61,589 assertions / 3 cases.
 The repeated second-save DWG `fixed-handle=2` raw-object replay warning is
 documented in section 1460 and is not treated as complete metadata replay.
+
+## 1463. Reconcile Source-type Request with Four-point Parabola Evidence (2026-11-15)
+
+The repeated request to change source type while choosing a replacement and
+cover all supported source families is already implemented by the shared
+Properties selector/filter and headlessly tested across all nine
+`LC_OffsetSourceGeometry::SupportedKinds`; parabola remains a distinct kind.
+No duplicate selector or parabola-only UI implementation is planned. Keep
+visible interaction acceptance open: change types repeatedly during the active
+replacement workflow, verify candidate refresh and current-source indication,
+then check successful replacement and cancellation/refusal on the desktop.
+
+Sections 1461-1462 add three four-point parabola control nets and a rotated,
+high-origin reconstruction case. The recorded cases pass through source
+reconstruction, worker/cache, both offset signs, and two native save/reopen
+passes across R14/R2000/R2018 DXF/DWG lanes. This evidence does not close
+four-point parabola Trim, general parabola-variant/conditioning coverage, or
+independent CAD acceptance. DWG second-save `fixed-handle=2` raw OBJECTS
+replay diagnostics remain separate from the successful entity/source checks.
+
+The reconstructed four-point Trim/action/undo-redo gate is now closed for one
+profile by section 1464. Next, add only concrete missing parabola
+variants/boundaries to the existing family matrix. Complete the visible
+picker/highlight workflow and record platform, binary revision, route, and
+result. Do not treat selector inventory, headless tests, or LibreDWG parse
+success as substitutes for these gates.
+
+## 1464. Trim Four-point Reconstructed Parabola Sources Through the Action (2026-11-15)
+
+Test commit `b434866dc` constructs a quadratic control net, samples four
+points, recovers the matching typed candidate with `LC_ParabolaData::From4Points`,
+and uses that reconstructed entity to replace an existing offset source. The
+worker-backed replacement retains the exact typed control net. The test then
+performs Trim Two against a circular cutter, checks that preview leaves both
+operands and the undo epoch unchanged, commits and compares generated spline
+and arc geometry with the preview, and verifies undo/redo restores and reapplies
+the operation. This closes the action-level Trim gate for this four-point
+profile only; it does not broaden construction, conditioning, cutter, or
+topology coverage.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[from-four-points][trim-two]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[trim-action][typed-source][parabola]' --reporter compact
+git diff --check
+```
+
+Results: the new action test passes 188 assertions / 1 case; the complete
+typed-parabola Trim action selection passes 74,675 assertions / 5 cases.
+The remaining parabola work is variant/conditioning boundaries not yet
+represented, visible picker/highlight acceptance, and independent CAD
+acceptance. The repeated DWG `fixed-handle=2` raw OBJECTS replay warning is
+unrelated and remains an explicit metadata limitation.
