@@ -47896,3 +47896,24 @@ fails on the DWG cases, confirming the external-reader path is executed. Test
 commit `370bd6c26`; `git diff --check` passes. Other entities, remaining
 families and variants, visible interaction, cross-platform packaging, and
 external CAD acceptance remain separate open gates.
+
+## 1438. Revalidate the Source-family Picker at the Current PR Head (2026-11-15)
+
+Re-ran the complete headless Properties source-picker selection at PR head
+`6ed8e2713` after the source-widget clarification and independent DWG-reader
+test. It verifies that the type control remains usable during replacement
+browsing, candidate filtering refreshes across all nine current
+`LC_OffsetSourceGeometry::SupportedKinds`, and parabola remains distinct from
+spline-points. This does not prove visible desktop interaction or all concrete
+geometric variants end to end.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Result: 15,226 assertions / 44 cases passed. The active-workflow visible
+acceptance remains open in Slice 5; per-variant source/worker/cache/Trim/file
+qualification remains open in Slice 4.
