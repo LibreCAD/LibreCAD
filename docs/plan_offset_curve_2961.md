@@ -47358,9 +47358,13 @@ degree-1/3 and native-write outputs, and no model-space entities for plot-only
 outputs), plus spline degree/control/knot cardinality and the
 `LC_OFFSET_CURVE` EED marker. All 84 pass with zero mismatches.
 
-An additional ACadSharp inspector build was attempted against the locally
-pinned source, but NuGet restore could not reach `api.nuget.org`; no ACadSharp
-result is claimed. This independent LibreDWG check validates only these
-generated fixtures and is not ODA/AutoCAD acceptance or arbitrary-version
-interoperability. Existing visible GUI, external CAD, exact-head CI, and
-family-by-variant geometry gates remain open.
+The ACadSharp project restore itself could not reach `api.nuget.org`, so the
+independent inspector used the locally built ACadSharp DLL from pinned source
+commit `3a52a52047e84670759c1f9ad3916ec3ce85ff56`. It reads all 70
+non-AC1021 files successfully; all 40 decoded SPLINE records have valid knot
+cardinality. The 14 AC1021/R2007 files are excluded because this ACadSharp
+revision has the previously documented AC1021 reader gap. LibreDWG covers all
+84. These independent-reader checks validate only these generated fixtures
+and are not ODA/AutoCAD acceptance or arbitrary-version interoperability.
+Existing visible GUI, external CAD, exact-head CI, and family-by-variant
+geometry gates remain open.
