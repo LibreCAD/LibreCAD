@@ -818,7 +818,7 @@ TEST_CASE("Worker client transports and persists concave polyline neck-collapse 
   }
 }
 
-TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
+TEST_CASE("Worker client persists concave mixed-bulge native offsets",
           "[lc-offsetcurve][worker-client][polyline][mixed-bulge][cache][persistence]") {
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -845,7 +845,8 @@ TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
     REQUIRE(source->isWellFormed());
 
     constexpr qint64 requestId = 2110;
-    constexpr double signedDistance = .25;
+    const double signedDistance = GENERATE(-.25, .25);
+    CAPTURE(rotation, origin, signedDistance);
     const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
     const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
     Receipts receipts;
@@ -864,9 +865,15 @@ TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
     REQUIRE(directSource);
     const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *directSource);
     REQUIRE(options);
-    CHECK(options->mode == LC_CurveOffsetMode::RegionBoundary);
+    CHECK(options->mode == (signedDistance > 0.0
+                                ? LC_CurveOffsetMode::RegionBoundary
+                                : LC_CurveOffsetMode::Direct));
     const auto direct = LC_CurveOffset::buildDirectBranches(
-        *directSource, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, signedDistance),
+        *directSource,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0.0
+                                            ? LC_CurveOffsetSide::Left
+                                            : LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
         *options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
     const auto materialized = LC_CurveOffset::materializeBranches(
