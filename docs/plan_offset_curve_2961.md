@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`3b35bb901`):** The
+`32cb3a8f7`):** The
 repeated request to change source type during replacement and support every
 kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
@@ -67,8 +67,9 @@ select a sample-fitting alternative; that does not recover the hidden
 generating curve. The adjacent `{0, 0.95, 0.995, 1}` layout also passes the
 direct reconstruction oracle for all three profiles and four scales, with
 worker/cache and typed-source persistence for all three at scale `1e-1`, plus
-Trim Two and result round-trips for all three at scale `1e-1`; its other Trim
-and persistence scales remain open.
+worker/cache and typed-source persistence for all three at all four scales.
+Trim Two and result round-trips cover all three at scale `1e-1`; its other Trim
+scales remain open.
 Other sample distributions, parabola constructions, conditioning/domain
 limits, visible picker/highlight interaction, lower-scale conditioning beyond
 the sampled profile boundaries, additional transformed/high-origin dense-end
@@ -50740,8 +50741,8 @@ both signed offsets; when no candidate meets the independent-point oracle, the
 test explicitly chooses a sample-fitting candidate. Typed-source persistence
 passes through all five DXF/DWG lanes at this representative scale, with
 available LibreDWG reads. At this checkpoint the layout had not yet been
-carried through Trim; section 1527 adds Trim at scale `1e-1`. Worker and
-persistence evidence at the other three scales remains open.
+carried through Trim; section 1527 adds Trim at scale `1e-1`. Section 1528
+extends worker and persistence evidence to the other three scales.
 
 Validation on macOS arm64 CMake Release:
 
@@ -50786,5 +50787,34 @@ git diff --check
 ```
 
 Result: all tests passed, 11,159 assertions / 1 case. Visible Properties
-interaction, additional alternate-layout scales, other parabola variants, and
+interaction, Trim at the other alternate-layout scales, other parabola
+variants, and independent CAD acceptance remain open.
+
+## 1528. Extend Alternate-layout Worker and Persistence Across Scales (2026-11-15)
+
+Test commit `32cb3a8f7` adds the remaining scales `1e-3`, `1e-2`, and `1` for
+each of the three control profiles using the alternate layout
+`{0, 0.95, 0.995, 1}`, rotation `0.6435011087932844`, and translation
+`(1e6,-2e6)`. Together with section 1526, all three profiles now pass the
+worker/cache and typed-source persistence matrix across scales `1e-3`,
+`1e-2`, `1e-1`, and `1`. Each row checks both signed offsets, operation-8 cache
+validation, and all five R14/R2000/R2018 DXF/DWG lanes; available LibreDWG
+reads are enabled. The test uses the repository's bounded 900-second client
+suite allowance. Trim remains qualified only at scale `1e-1` in section 1527.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 121,544 assertions / 2 cases. This closes only the
+measured three profiles, four scales, one transform, and alternate sample
+layout. Other parabola variants/layouts, Trim at other scales, visible UI, and
 independent CAD acceptance remain open.
