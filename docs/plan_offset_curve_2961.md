@@ -35,7 +35,7 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
-**Current source-widget requirement and status (2026-11-14):** After the user
+**Current source-widget requirement and status (reconfirmed 2026-11-15):** After the user
 starts choosing a replacement source curve, the source-type control remains
 available in that active selection workflow. The user can change the requested
 type repeatedly, including after candidate results are visible, and each change
@@ -90,7 +90,7 @@ unless a regression is found. Remaining picker acceptance is a visible desktop
 check in Slice 5: switch types repeatedly during active selection, verify
 eligible candidates refresh for every kind and the existing source remains
 indicated, then verify successful replacement and cancel/refusal behavior.
-The latest clarification on 2026-11-14 reconfirms this all-kinds contract; it
+The latest clarification on 2026-11-15 reconfirms this all-kinds contract; it
 adds no second selector or separate parabola-only implementation slice. Keep
 this gate separate from Slice 4's per-variant capture/reconstruction,
 worker/cache, Trim, and DXF/DWG qualification; selector availability alone
@@ -116,7 +116,7 @@ Keep the nine-kind inventory as the scope boundary; every family must have an
 eligible concrete replacement candidate, and unsupported variants must refuse
 atomically.
 
-**Current decision (reconfirmed 2026-11-14):** Keep the existing source-type
+**Current decision (reconfirmed 2026-11-15):** Keep the existing source-type
 control usable throughout the active replacement workflow, including after
 the candidate list is open. Each change filters candidates immediately for
 all nine kinds in `LC_OffsetSourceGeometry::SupportedKinds`; parabola remains
@@ -130,7 +130,7 @@ behavior, and (b) Slice 4 qualification of concrete source variants through
 capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG round-trips.
 Record visible-test platform, binary revision, route, and result when done.
 
-**Latest request reaffirmed (2026-11-14):** During replacement selection, keep
+**Latest request reaffirmed (2026-11-15):** During replacement selection, keep
 the source-type control usable without exiting the workflow, and refresh
 eligible candidates for every current `SupportedKinds` entry: line, arc,
 circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
@@ -141,7 +141,7 @@ covered, visible interaction remains in Slice 5, and concrete-variant
 capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG evidence
 remain in Slice 4. A selector entry alone is not geometry support.
 
-**Request reaffirmed (2026-11-14):** The source-curve widget must let the user
+**Request reaffirmed (2026-11-15):** The source-curve widget must let the user
 change the requested source type while choosing a replacement and offer every
 kind in `LC_OffsetSourceGeometry::SupportedKinds`, including parabola. Treat
 “support” as end-to-end source support, not just a selector entry: parabola
@@ -1135,6 +1135,7 @@ class. “All supported types” means every kind in this inventory; it does not
 certify every concrete geometry variant for generation, cache admission, or
 file round-trip. Track those separately with explicit eligibility/refusal
 tests.
+
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -47324,3 +47325,42 @@ was queued when this checkpoint was written. Keep exact-head CI, visible GUI
 acceptance, cross-platform/package and independent-CAD checks open; no broad
 portability or end-to-end variant support claim follows from these local
 tests.
+
+## 1416. Reconfirm Full-family Source Replacement Scope (2026-11-15)
+
+The latest request reiterates that replacement selection must support changing
+the requested source type while the chooser remains active, and must cover all
+currently modeled source kinds rather than only the recently emphasized
+parabola. The canonical inventory remains the nine entries in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is a distinct
+source kind and must remain so through candidate capture and reconstruction.
+
+This is a scope reaffirmation, not a new implementation slice. The selector,
+in-workflow filter refresh, and headless typed-replacement matrix are already
+implemented and covered; the latest recorded source-picker run is 15,226
+assertions / 44 cases (sections 1410 and 1415). Do not add another widget or
+special-case parabola UI. Keep the following acceptance open: visible repeated
+type changes and candidate refresh while selecting, current-source indication
+and atomic replacement/cancel behavior (Slice 5); concrete variants through
+capture/reconstruction, worker/cache, applicable Trim, and DXF/DWG round-trips
+(Slice 4). A type appearing in the selector is not proof that every geometry
+variant in that family is supported.
+
+## 1417. Independently Inspect Generated DWG Matrix (2026-11-15)
+
+At PR source `41ebbb5b4edaa77fdb3620541b584e94b993bbfe`, the fresh
+`[g-matrix][dwg]` run passes 17,494 assertions / 8 cases and preserves 84 DWG
+outputs under `/private/tmp/offset-3193-actual-dwg-outputs-rerun-20261115`.
+LibreDWG 0.14 reads all 84 files as JSON. A semantic pass checks the expected
+model-space inventory (one LINE for line-control outputs, one SPLINE for
+degree-1/3 and native-write outputs, and no model-space entities for plot-only
+outputs), plus spline degree/control/knot cardinality and the
+`LC_OFFSET_CURVE` EED marker. All 84 pass with zero mismatches.
+
+An additional ACadSharp inspector build was attempted against the locally
+pinned source, but NuGet restore could not reach `api.nuget.org`; no ACadSharp
+result is claimed. This independent LibreDWG check validates only these
+generated fixtures and is not ODA/AutoCAD acceptance or arbitrary-version
+interoperability. Existing visible GUI, external CAD, exact-head CI, and
+family-by-variant geometry gates remain open.
