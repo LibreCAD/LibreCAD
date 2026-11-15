@@ -8126,6 +8126,74 @@ TEST_CASE("parabola source caches validate across orientation and curvature dist
     CHECK(refusedCaches > 0);
 }
 
+TEST_CASE(
+    "endpoint-tangent parabola conditioning crosses worker cache validation",
+    "[lc-offsetcurve][worker-kernel][source-cache][parabola][tangent]["
+    "conditioning]") {
+  const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
+  constexpr std::array<double, 7> slopes{
+      {1e-4, 1e-6, 1e-8, 1e-10, 1e-12, 1e-13, 1e-14}};
+  std::size_t admittedCaches = 0;
+  std::size_t explicitRefusals = 0;
+
+  for (const double slope : slopes) {
+    const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
+        endpoints, {{{1.0, slope}, {1.0, -slope}}});
+    REQUIRE(data.isValid());
+    const LC_OffsetSourceGeometry source{data};
+    REQUIRE(source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    REQUIRE(source.isWellFormed());
+
+    for (const double sign : {-1.0, 1.0}) {
+      CAPTURE(slope, sign);
+      const LC_OffsetSourceDefinition definition{source, sign * 0.01, 1e-4,
+                                                 false};
+      const req::Request generationRequest{token,
+                                           req::GenerateSource{definition, {}}};
+      const auto generationReply =
+          LC_OffsetWorkerKernel::run(generationRequest);
+      const auto &generated = native(generationReply, 7);
+      REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+      REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+      REQUIRE_FALSE(generated.ordinary.empty());
+
+      RS_SplineData cache;
+      if (const auto *spline =
+              std::get_if<RS_SplineData>(&generated.ordinary.front())) {
+        cache = *spline;
+      } else {
+        const auto *segment =
+            std::get_if<req::Segment>(&generated.ordinary.front());
+        REQUIRE(segment);
+        cache.degree = 1;
+        cache.controlPoints = {segment->start, segment->end};
+        cache.knotslist = {0, 0, 1, 1};
+        cache.weights = {1, 1};
+      }
+
+      const req::Request validationRequest{
+          token, req::ValidateSourceCache{cache, definition, {}}};
+      const auto validationReply =
+          LC_OffsetWorkerKernel::run(validationRequest);
+      const auto &validated = native(validationReply, 8);
+      CHECK(validated.engineRuns == 1);
+      if (generated.ordinary.size() == 1 &&
+          validated.refusal == LC_OffsetCurveRefusal::None) {
+        CHECK(validated.changed);
+        ++admittedCaches;
+      } else {
+        CHECK(validated.refusal ==
+              LC_OffsetCurveRefusal::NotCacheRepresentable);
+        CHECK_FALSE(validated.changed);
+        ++explicitRefusals;
+      }
+    }
+  }
+
+  CHECK(admittedCaches + explicitRefusals == slopes.size() * 2);
+  CHECK(admittedCaches > 0);
+}
+
 TEST_CASE("parabola worker cache validation is stable across uniform scales",
           "[lc-offsetcurve][worker-kernel][source-cache][parabola][scale]") {
     std::size_t acceptedCaches = 0;
