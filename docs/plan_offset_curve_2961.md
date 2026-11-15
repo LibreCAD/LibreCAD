@@ -48042,3 +48042,34 @@ QtSvg deployment target, but the build exits 0. Test commit `7e7ce49bc`.
 Direct support and worker/file persistence are now qualified for this exact
 U-shaped profile and frames; high-origin Trim, other concave layouts, broader
 variant coverage, and visible GUI remain open.
+
+## 1443. Trim High-origin Concave Polyline Offsets (2026-11-15)
+
+Extended the closed U-shaped linear-polyline profile from sections 1441-1442
+through the native Trim action at origins `1e6` and `1e9`, rotations `0` and
+`0.37` radians, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. A transverse
+finite-line cutter crosses the two arms. The test compares action-produced
+ordinary spline fragments against `LC_OffsetCacheTrim::prepare`, verifies the
+native cache/source definition is restored by undo and removed again by redo,
+then exports, reopens, saves again, and reopens a second time. Each DWG output
+fragment is also matched against LibreDWG `minJSON` spline geometry when
+`dwgread` is available.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'High-origin concave polyline offsets trim and persist ordinary fragments' \
+  --reporter compact
+git diff --check
+```
+
+Result: 4,360 assertions / 1 Catch2 case passed across the full 20-lane
+origin/rotation/version matrix, including independent DWG fragment inspection;
+the test code is commit `6e6cb77c1`. This closes high-origin Trim and
+two-pass native persistence only for this U-shaped profile and cutter. Other
+concave/bulged layouts, cutter/root configurations, broader platform/runtime
+coverage, visible GUI acceptance, and independent ODA/AutoCAD acceptance
+remain open.
