@@ -5831,6 +5831,18 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             {{rotate({0.0, 0.0}) + frameTranslation,
               rotate({10.0, 0.0}) + frameTranslation}},
             {{rotate({1.0, -0.2}), rotate({1.0, 0.2})}})});
+    profiles.push_back({"tiny-tangent-vectors",
+        LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({7.0, -2.0}) + frameTranslation,
+              rotate({-5.0, 0.5}) + frameTranslation}},
+            {{rotate({-2e-150, 9.25e-150}),
+              rotate({-10e-150, -6.75e-150})}})});
+    profiles.push_back({"huge-tangent-vectors",
+        LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({7.0, -2.0}) + frameTranslation,
+              rotate({-5.0, 0.5}) + frameTranslation}},
+            {{rotate({-2e150, 9.25e150}),
+              rotate({-10e150, -6.75e150})}})});
     for (const Profile& profile : profiles) {
         CAPTURE(profile.name);
         const LC_ParabolaData& source = profile.source;

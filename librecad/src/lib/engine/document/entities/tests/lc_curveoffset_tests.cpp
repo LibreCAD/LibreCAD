@@ -2557,6 +2557,43 @@ TEST_CASE("Mirrored endpoint-tangent parabola keeps exact offset geometry",
     }
 }
 
+TEST_CASE("Endpoint-tangent parabola is invariant to tangent-vector magnitude",
+          "[curve-offset][direct][parabola][tangent][magnitude][oracle]") {
+    const std::array<RS_Vector, 2> endpoints{{{7.0, -2.0}, {-5.0, 0.5}}};
+    const std::array<RS_Vector, 2> tangents{{{-2.0, 9.25}, {-10.0, -6.75}}};
+    const LC_ParabolaData reference =
+        LC_ParabolaData::FromEndPointsTangents(endpoints, tangents);
+    REQUIRE(reference.isValid());
+
+    for (const double magnitude : {1e-150, 1e150}) {
+        CAPTURE(magnitude);
+        const std::array<RS_Vector, 2> scaledTangents{{
+            tangents[0] * magnitude, tangents[1] * magnitude}};
+        const LC_ParabolaData data =
+            LC_ParabolaData::FromEndPointsTangents(endpoints, scaledTangents);
+        REQUIRE(data.isValid());
+        for (std::size_t i = 0; i < data.m_controlPoints.size(); ++i)
+            CHECK(data.m_controlPoints[i].distanceTo(reference.m_controlPoints[i]) < 1e-12);
+
+        const LC_Parabola source{nullptr, data};
+        const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+        REQUIRE(snapshot);
+        CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        const EvalFn exactCurve = evaluator(source);
+        for (const double distance : {0.25, 1.0}) {
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(distance, side);
+                const auto result = offsetToSide(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(maxDeviation(result, exactCurve) <=
+                      options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
 TEST_CASE("Endpoint-tangent parabola construction refuses degenerate tangent pairs",
           "[curve-offset][parabola][tangent][refusal]") {
     const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};

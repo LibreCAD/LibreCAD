@@ -49563,3 +49563,36 @@ complete endpoint-tangent worker/cache/persistence matrix passes 11,591
 assertions / 1 case with LibreDWG enabled. Visible packaged-app acceptance and
 ODA/AutoCAD semantic acceptance remain open. Continue the parabola
 variant/conditioning matrix without generalizing from this mirrored profile.
+
+## 1490. Qualify Endpoint-tangent Direction Magnitude Scaling (2026-11-15)
+
+Endpoint tangent vectors encode directions, so multiplying both vectors by a
+positive finite scalar must not change the constructed parabola. A regression
+compares the asymmetric endpoint-tangent control polygon and independent
+normal-offset geometry against the reference construction at tangent-vector
+magnitudes `1e-150` and `1e150`. The end-to-end matrix repeats these extremes
+after rotation/translation and checks both signed offsets, exact worker cache
+admission, R14 DXF, R2000 DXF/DWG, R2018 DXF/DWG save/reopen, and LibreDWG
+SPLINE plus editable-offset EED marker visibility. This validates these two
+finite scaling factors for this endpoint/tangent profile only; it does not
+claim arbitrary vector exponents, overflowed/non-finite inputs, or full
+endpoint-tangent family support.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][magnitude][oracle]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][parabola][tangent][persistence]' --reporter compact
+git diff --check
+```
+
+Results: direct geometry passes 6,277 assertions / 1 case; the complete
+endpoint-tangent worker/cache/persistence matrix passes 14,109 assertions / 1
+case with LibreDWG enabled. Visible packaged-app acceptance and ODA/AutoCAD
+semantic acceptance remain open. Continue the remaining parabola and other
+source-family variant matrix without generalizing beyond the measured inputs.
