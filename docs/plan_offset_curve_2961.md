@@ -46545,20 +46545,20 @@ not claim external ODA/AutoCAD acceptance.
 
 ## 1389. Qualify Shallow Endpoint-tangent Parabola (2026-11-14)
 
-Test commits `a43c1b08b` and `ac627c4f7` add endpoint-tangent parabolas with
-opposite tangent slopes of `1e-8` and `1e-10` to the all-source-family
-Update-from-Source/Trim integration matrix. Both typed sources pass worker
-preparation, native Trim, undo/redo, and the five R14/R2000/R2018 DXF/DWG
-save/reopen lanes. The independent direct normal test covers slopes from
-`1e-4` through `1e-14`, with a slope-relative check of the reconstructed
-control apex; section 1390 records the robust-construction fix and explicit
-degeneracy refusals. This extends flatter-profile evidence only to these
+Test commits `a43c1b08b`, `ac627c4f7`, and `bfed5c167` add endpoint-tangent
+parabolas with opposite tangent slopes of `1e-8`, `1e-10`, and `1e-14` to the
+all-source-family Update-from-Source/Trim integration matrix. All three typed
+profiles pass worker preparation, native Trim, undo/redo, and the five
+R14/R2000/R2018 DXF/DWG save/reopen lanes. The independent direct normal test
+covers slopes from `1e-4` through `1e-14`, with a slope-relative check of the
+reconstructed control apex; section 1390 records the robust-construction fix
+and explicit degeneracy refusals. This extends flatter-profile evidence only to these
 endpoint/tangent layouts and distances; it does not establish more extreme
 conditioning or arbitrary parabola support.
 
 Validation on macOS arm64 CMake Release: `[parabola][tangent]` passes 854
 assertions / 4 cases; `I trimmed every typed source family to plain fragments`
-passes 5,631 assertions / 1 case; rebuilding `librecad_tests`
+passes 5,882 assertions / 1 case; rebuilding `librecad_tests`
 succeeds; and `git diff --check` passes. Visible GUI and external-CAD acceptance
 remain separate gates.
 
@@ -46574,26 +46574,24 @@ previously rejected finite inputs at slope `1e-11`, while retaining
 
 Direct exact-normal tests now pass for opposite endpoint-tangent slopes from
 `1e-4` through `1e-14`; parallel tangents and slope `1e-15` remain invalid.
-The `1e-8` and `1e-10` profiles pass the worker-backed typed-source replacement,
-Trim, undo/redo, and five R14/R2000/R2018 DXF/DWG save/reopen lanes. These
-results qualify these straight-profile endpoint/tangent cases only. Commit
-`31bbb338d` also adds the `1e-14` profile to bounded worker preparation across
-both signs and distances. Commit `9bac949b8` then carries the same profile
-through operation-7 generation, operation-8 cache admission, and all five
-R14/R2000/R2018 DXF/DWG save/reopen lanes, checking that the typed source and
-tiny apex survive. The `1e-14` case is not yet qualified through the native
-Trim action or visible replacement workflow.
+The `1e-8`, `1e-10`, and `1e-14` profiles pass worker-backed typed-source
+replacement, native Trim, undo/redo, and five R14/R2000/R2018 DXF/DWG
+save/reopen lanes. Commits `31bbb338d` and `9bac949b8` additionally prove the
+`1e-14` source through bounded worker preparation, operation-7 generation,
+operation-8 cache admission, and five-lane persistence, with the tiny apex
+preserved on reopen. These results qualify only these straight-profile
+endpoint/tangent cases; visible GUI interaction remains separate.
 
 Validation on macOS arm64 CMake Release: `[parabola][tangent]` passes 854
 assertions / 4 cases; `I trimmed every typed source family to plain fragments`
-passes 5,631 assertions / 1 case; `Typed parabola sources use bounded worker
+passes 5,882 assertions / 1 case; `Typed parabola sources use bounded worker
 preparation` passes 4,860 assertions / 1 case; both `librecad_tests` and
 `librecad_offset_worker_client_tests` build; the new near-parallel worker-cache
 round-trip case passes 1,016 assertions / 1 case; and `git diff --check` passes.
 The focused command is
 `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' --reporter compact`.
-Other constructions/conditioning, low-slope Trim/action qualification, visible
-GUI, cross-platform runtime, and independent CAD acceptance remain open.
+Other constructions/conditioning, visible GUI, cross-platform runtime, and
+independent CAD acceptance remain open.
 
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
