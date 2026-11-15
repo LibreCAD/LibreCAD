@@ -29,7 +29,8 @@ Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 `3f18b0a29`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
-section 1532, while visible packaged-app acceptance remains open. Recent
+section 1532 and revalidated on the rebuilt current tree in section 1549,
+while visible packaged-app acceptance remains open. Recent
 four-point parabola evidence is tracked in sections 1533-1543: direct
 reconstruction covers four balanced/asymmetric sample layouts across three
 control profiles and four scales in the rotated high-origin frame; every
@@ -51515,3 +51516,30 @@ assertions / 1 case with DWG enabled and LibreDWG reads available. `git diff
 --check` passes. The count varies with admitted/refused cache rows; a partition
 assertion ensures all 240 generated rows are accounted for. Visible GUI and
 independent ODA/AutoCAD acceptance remain open.
+
+## 1549. Revalidate All-family Source-type Switching on the Current Tree (2026-11-15)
+
+The source-type widget contract is covered by section 1532; this checkpoint
+rebuilds and reruns the focused headless Properties/source-picker tests after
+the latest hyperbola qualification. The suite verifies that the source type
+can be changed during candidate picking, that candidate filtering follows the
+selected type, that supported source families (including a distinct parabola)
+can replace the current typed source, and that highlight/filter and refusal
+behavior remain intact. This confirms the automated implementation on the
+current source tree; it is not a substitute for visible interaction in the
+packaged macOS application.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_properties_dialog_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_properties_dialog_tests \
+  '[gui][dialog][offsetcurve][source]~[.slow]' --reporter compact
+git diff --check
+```
+
+Results: the rebuilt test target passes all selected cases, 15,252 assertions
+/ 42 cases, with no failures. Visible packaged-app interaction and independent
+ODA/AutoCAD acceptance remain open.
