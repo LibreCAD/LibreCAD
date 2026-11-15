@@ -47233,3 +47233,29 @@ cancel/refusal behavior. Slice 4 still owns end-to-end qualification of
 concrete variants through capture/reconstruction, worker/cache, applicable
 Trim, and DXF/DWG save/reopen. Nine selector entries or this picker suite do
 not establish complete geometric support for every variant.
+
+## 1413. Align Worker-client Test Wait With Commit Deadline (2026-11-15)
+
+The Linux `VerifyDwgDxfFast` job at PR head
+`28d2cbaf95a0b57ccdab32d939230a4c9231911b` failed the exhaustive typed-source
+client matrix at source index 327 because its test callback watchdog was six
+seconds, shorter than the worker client's 30-second commit deadline plus
+bounded terminate/reap time. The test now derives its wait limit from those
+production deadline constants and adds a five-second event-delivery margin;
+the worker deadline itself is unchanged. CTest already sets the bounded
+client-suite timeout to 900 seconds for this matrix.
+
+Validation on macOS arm64 CMake Release after the fix: rebuilding
+`librecad_offset_worker_client_tests` succeeds, and with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000` the focused exhaustive case passes
+2,913,696 assertions / 1 case. The change is committed as `0569ccd68`.
+Await the exact-head Linux CTest result before closing the CI failure.
+
+The same Linux job independently reports four kernel-test failures that are
+not addressed by this test-harness fix: a translated/rotated convex polyline
+has different `AmbiguousTopology` versus `Ok` outcomes before and after
+recentering; three periodic-spline tests disagree on whether seam roots are
+classified as candidate, stall, or unclassified boundaries. Their independent
+geometry-oracle assertions and diagnostics must be reviewed before adjusting
+either implementation or test expectations. Preserve these as open Slice R
+portability/correctness gates; do not waive them by broadening timeouts.
