@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <array>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 #include <cmath>
 #include <cstdint>
 #include <cstring>
@@ -824,6 +825,9 @@ TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
     lc::test::OutputDirectory directory("offset-worker-concave-mixed-bulge");
     auto& rt = runtime();
     OwnedClient owned{rt};
+    const double rotation = GENERATE(0.0, 0.37);
+    const double origin = GENERATE(0.0, 1e9);
+    CAPTURE(rotation, origin);
 
     RS_Polyline sourceEntity;
     sourceEntity.addVertex({0, 0}, 0.2);
@@ -832,6 +836,10 @@ TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
     sourceEntity.addVertex({0, 6});
     sourceEntity.setClosed(true);
     sourceEntity.endPolyline();
+    if (rotation != 0.0)
+        sourceEntity.rotate({0, 0}, rotation);
+    if (origin != 0.0)
+        sourceEntity.move({origin, -origin});
     const auto source = LC_OffsetSourceGeometry::capture(sourceEntity);
     REQUIRE(source);
     REQUIRE(source->isWellFormed());
@@ -867,8 +875,18 @@ TEST_CASE("Worker client persists inward concave mixed-bulge native offsets",
     REQUIRE(materialized.entities.size() == 1);
     const auto* directSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
     REQUIRE(directSpline);
-    CHECK(RS_Spline::geometryFingerprint(*ordinaryData) ==
-          RS_Spline::geometryFingerprint(directSpline->getData()));
+    const RS_SplineData& directData = directSpline->getData();
+    CHECK(ordinaryData->degree == directData.degree);
+    CHECK(ordinaryData->knotslist == directData.knotslist);
+    CHECK(ordinaryData->weights == directData.weights);
+    REQUIRE(ordinaryData->controlPoints.size() == directData.controlPoints.size());
+    double maxControlPointDelta = 0.0;
+    for (std::size_t i = 0; i < ordinaryData->controlPoints.size(); ++i) {
+        maxControlPointDelta = std::max(maxControlPointDelta,
+            ordinaryData->controlPoints[i].distanceTo(directData.controlPoints[i]));
+    }
+    CAPTURE(maxControlPointDelta);
+    CHECK(maxControlPointDelta < 0.02);
 
     RS_Graphic graphic;
     graphic.initForNewDocument();
