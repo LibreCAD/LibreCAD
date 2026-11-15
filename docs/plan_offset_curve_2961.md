@@ -110,18 +110,19 @@ Keep the nine-kind inventory as the scope boundary; every family must have an
 eligible concrete replacement candidate, and unsupported variants must refuse
 atomically.
 
-**Latest clarification (2026-11-14):** The requested control is the existing
-source-type filter inside the active replacement picker. It must remain
-interactive while the user is selecting a new source and refresh candidates
-for every supported offset-source kind, including a separately typed
-parabola. This clarification does not expand the supported-kind inventory or
-claim universal variant support. Implementation and headless coverage are
-already recorded above and in sections 1291-1293, 1342, and 1375; do not add a
-second widget or duplicate parabola-only implementation. The remaining
-picker-specific work is visible desktop acceptance in Slice 5, while Slice 4
-continues to own geometry, worker/cache, Trim, and DXF/DWG qualification for
-concrete variants. Record the visible interaction outcome and binary revision
-there when completed.
+**Current decision (reconfirmed 2026-11-14):** Keep the existing source-type
+control usable throughout the active replacement workflow, including after
+the candidate list is open. Each change filters candidates immediately for
+all nine kinds in `LC_OffsetSourceGeometry::SupportedKinds`; parabola remains
+distinct from spline-points. This is type selection and candidate filtering,
+not conversion of the currently committed source. The implementation and
+headless family-level coverage are recorded above and in sections 1291-1293,
+1342, and 1375. Do not add another selector or a parabola-only slice. The
+remaining work is (a) Slice 5 visible desktop acceptance of repeated type
+changes, candidate refresh, source indication, replacement, and cancel/refusal
+behavior, and (b) Slice 4 qualification of concrete source variants through
+capture/reconstruction, worker/cache, Trim, and applicable DXF/DWG round-trips.
+Record visible-test platform, binary revision, route, and result when done.
 
 **Request reaffirmed (2026-11-14):** The source-curve widget must let the user
 change the requested source type while choosing a replacement and offer every
