@@ -5798,6 +5798,7 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     struct Profile {
         const char* name;
         LC_ParabolaData source;
+        double scale = 1.0;
     };
     std::vector<Profile> profiles;
     const std::array<std::pair<const char*, double>, 5> slopeProfiles{{
@@ -5808,6 +5809,14 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
               rotate({10.0, 0.0}) + frameTranslation}},
             {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}})});
     }
+    profiles.push_back({"small-scale-1e-8", LC_ParabolaData::FromEndPointsTangents(
+        {{rotate({0.0, 0.0}) + frameTranslation,
+          rotate({1e-3, 0.0}) + frameTranslation}},
+        {{rotate({1.0, 1e-8}), rotate({1.0, -1e-8})}}), 1e-4});
+    profiles.push_back({"large-scale-1e-14", LC_ParabolaData::FromEndPointsTangents(
+        {{rotate({0.0, 0.0}) + frameTranslation,
+          rotate({1e5, 0.0}) + frameTranslation}},
+        {{rotate({1.0, 1e-14}), rotate({1.0, -1e-14})}}), 1e4});
     profiles.push_back({"asymmetric-tangents", LC_ParabolaData::FromEndPointsTangents(
         {{rotate({7.0, -2.0}) + frameTranslation,
           rotate({-5.0, 0.5}) + frameTranslation}},
@@ -5816,10 +5825,12 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         CAPTURE(profile.name);
         const LC_ParabolaData& source = profile.source;
         REQUIRE(source.isValid());
-        for (const double signedDistance : {0.5, -0.5}) {
+        for (const double signedUnitDistance : {0.5, -0.5}) {
+            const double signedDistance = signedUnitDistance * profile.scale;
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
-                LC_OffsetSourceGeometry{source}, signedDistance, 1e-4, false};
+                LC_OffsetSourceGeometry{source}, signedDistance,
+                1e-4 * profile.scale, false};
             Receipts generatedReceipts;
             REQUIRE(owned.get().submit(
                 {token(requestId), Req::GenerateSource{definition, {}}},
@@ -5916,9 +5927,14 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                 const auto* reopenedSource = std::get_if<LC_ParabolaData>(
                     &reopenedOffset->sourceDefinition()->source.value);
                 REQUIRE(reopenedSource);
+                double sourceMagnitude = 1.0;
+                for (const RS_Vector& point : source.m_controlPoints)
+                    sourceMagnitude = std::max({sourceMagnitude, std::abs(point.x), std::abs(point.y)});
+                const double sourceTolerance = std::max(
+                    2e-14, 8.0 * std::numeric_limits<double>::epsilon() * sourceMagnitude);
                 for (std::size_t i = 0; i < source.m_controlPoints.size(); ++i)
                     CHECK(reopenedSource->m_controlPoints[i].distanceTo(
-                              source.m_controlPoints[i]) < 2e-14);
+                              source.m_controlPoints[i]) < sourceTolerance);
             }
             requestId += 2;
         }
