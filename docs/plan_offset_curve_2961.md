@@ -431,33 +431,28 @@ endpoint. The independent cycle, fill-side, and boundary-distance checks pass
 for both fill rules. Its follow-up materialization fix rotates corner-arc
 angular provenance into the world frame, allowing rotated positive-bulge
 growth to pass worker materialization and round-trip through all five tested
-file lanes. Combined-frame positive-bulge growth still refuses atomically
-during cycle assembly. Follow-up experiments using evaluation tolerance for
-exact noding, radial-gap arc tangency classification, and bounded candidate-
-endpoint events did not resolve this cell and were discarded; the focused
-226-assertion regression continues to require an atomic refusal. The exact
-arrangement currently rejects candidate branch 5 because its control points
-deviate `9.81e-12` from a chord, above machine-scale slack, while the candidate
-interval crosses source-adapter breaks and is not certified as a straight
-span. Admitting it under evaluation tolerance enters exact noding but produces
-two outgoing kept pieces at `(-40.2236006616, 0.4472166635)`; the independent
-cycle is still unproved, so this relaxation was also discarded. These tested
-self-crossing profiles expose ordinary
+file lanes. The combined-frame positive-bulge growth refusal recorded here was
+resolved in section 1405: retain exact primitive intersection tolerance, but
+seed missing corner-circle cuts from candidate offset endpoints only when the
+source endpoint matches a known region node and its radial residual is within
+the node-merge budget. This produces independently checked closed cycles for
+both fill rules, without the broad tolerance relaxation or ambiguous branch
+snapping rejected by earlier experiments. Section 1405 extends the direct
+checks to positive- and negative-bulge bow-ties and validates the
+positive-bulge worker path and file lanes. These tested self-crossing profiles expose ordinary
 worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
 polyline topology feature generally.
 
-**Combined-frame diagnostic update (section 1394):** the strict arrangement
-reports `CycleAssembly/OpenBoundary` with a nearest kept endpoint gap of
-approximately `0.9959593` for the tested combined rotation/translation and
-positive-bulge growth, under both fill rules. The relevant offset-arc/corner-
-circle contact is an external tangency whose computed center-distance error is
-about `5e-11`; a bounded endpoint-contact experiment recovers that root but
-then exposes multiple kept continuations at a different corner. Neither
-relaxing global intersection tolerances nor snapping endpoints is safe. Keep
-the atomic refusal until an independent face/sector topology rule proves which
-continuations form valid cycles; retain the failure subtype and endpoint-gap
-diagnostics as regression evidence.
+**Combined-frame diagnostic update (section 1394; superseded by section 1405):**
+the pre-fix strict arrangement reported `CycleAssembly/OpenBoundary` with a
+nearest kept endpoint gap of approximately `0.9959593` for the tested
+combined rotation/translation and positive-bulge growth under both fill rules.
+Section 1405 identifies the missing contact as a corner-circle cut at a
+candidate endpoint and fixes that bounded case without changing the global
+intersection tolerance. The regression now requires valid closed cycles and
+independent fill-side and boundary-distance checks; the old atomic-refusal
+expectation no longer applies to this fixture.
 
 **Slice 4 status addendum (sections 1364-1367):** the tested all-straight
 single-crossing bow-tie polyline passes direct `RegionBoundary` growth and
@@ -47060,3 +47055,51 @@ assertions / 44 cases. This reconfirms repeated in-workflow filtering across
 all nine supported source kinds and parabola's distinct type at the current
 product-code state. It remains headless coverage and does not close visible
 desktop interaction or the broader geometry-variant and delivery gates.
+
+## 1404. Reconfirm Editable Source-family Selection Contract (2026-11-14)
+
+The latest request reiterates two linked requirements for the existing
+Properties source-curve widget: a user replacing an offset's source must be
+able to change the requested curve type while selecting a replacement, and
+the replacement workflow must cover every kind in
+`LC_OffsetSourceGeometry::SupportedKinds` (line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline). Parabola remains a
+distinct typed source, not a spline-points alias. Changing type filters
+eligible existing entities; it does not convert or commit the current source.
+
+No additional selector or parabola-only implementation slice is needed. The
+selector/filter contract is implemented and headlessly covered by sections
+1399 and 1403. The plan's remaining work is unchanged: Slice 5 must visibly
+exercise repeated type changes during an active replacement, candidate-list
+refresh, current-source indication, accepted replacement, cancellation, and
+refusal; Slice 4 must continue qualifying concrete variants end-to-end through
+capture/reconstruction, worker/cache, applicable Trim, and DXF/DWG
+save/reopen. Any unsupported or invalid candidate must preserve the prior
+source and cache atomically. Record the tested platform, binary revision, and
+actual visible result; do not treat the combo-box inventory as proof of
+geometry-family support.
+
+## 1405. Close Combined-frame Mixed-bulge Bow-tie Cycles (2026-11-14)
+
+Implementation commit `3bb3c9bd8` fixes the positive-bulge bow-tie growth
+refusal under combined rotation and large translation. Exact primitive
+intersections remain exact; after
+intersection noding, the arrangement now also derives circle cuts from
+candidate offset endpoints that (1) evaluate to a known source-region node
+and (2) lie on that node's radius-`|d|` circle within the node-merge budget.
+This recovers near-tangent endpoint contacts lost to floating-point rounding
+without widening all intersection tests. Both positive- and negative-bulge
+bow-tie matrices now require successful closed cycles for grow/shrink, both
+fill rules, and identity, rotation-only, translation-only, and combined
+frames; an independent polygon oracle checks boundary distance and fill side.
+The worker test now expects success for the positive-bulge matrix at both
+signed distances and continues through native result validation and the
+existing DXF/DWG save/reopen lanes.
+
+Validation on macOS arm64 CMake Release: the focused positive-bulge matrix
+passes 236 assertions / 1 case; `[curve-offset][region]` passes 28,704
+assertions / 23 cases; and `Worker client validates mixed-frame positive-
+bulge region outcomes` passes 1,757 assertions / 1 case. `git diff --check`
+passes. This qualifies only these bow-tie profiles, transforms, distances, and
+file lanes; broader self-crossing topologies and unrelated delivery gates
+remain open.
