@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest implementation reconciliation (2026-11-15, roadmap revision
-`675b60f09`; latest picker validation on code revision `670e1d24d`):** The repeated request to
+**Latest implementation reconciliation (2026-11-15, code revision
+`7fe23f714`; latest picker validation on code revision `670e1d24d`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -50202,3 +50202,39 @@ Acceptance remains split deliberately:
 No new code slice is required unless visible acceptance or a regression finds
 that the selector, candidate refresh, highlighting, or source/cache invariants
 do not match this contract.
+
+## 1510. Quantify the Opposite-end Clustered Parabola Limit (2026-11-15)
+
+Test commit `7fe23f714` strengthens the section 1468 high-origin regression by
+measuring the best independent-point error among all reconstructed candidates.
+For the third control net at scale `1e-2`, rotation `0.6435011087932844`,
+translation `(1e6,-2e6)`, and sample parameters `{0, 0.98, 0.999, 1}`, the
+observed best error is `1.39514812979e-6` against the scale-and-origin-aware
+acceptance tolerance `1.1368683772e-7` (about 12.3 times the tolerance). The
+test bounds this ratio to `(1, 64)` rather than requiring a platform-identical
+floating-point result. Both candidates still fit the four input samples, but
+neither qualifies against the independent points. This is a measured
+conditioning/information-loss boundary for rounded, translated samples, not a
+successful recovery or a production fix. Keep the worker/cache and persistence
+matrix refusal for this row; do not relax acceptance tolerance to force it
+through.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction]' --reporter compact
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Results: 2,324 assertions / 8 direct reconstruction cases and 78,564
+assertions / 2 worker/cache/persistence cases pass, including available
+LibreDWG reads. The raw `fixed-handle=2` replay diagnostic remains distinct
+from semantic entity/file assertions. Other parabola constructions and
+conditioning rows, visible picker acceptance, and independent ODA/AutoCAD
+acceptance remain open.
