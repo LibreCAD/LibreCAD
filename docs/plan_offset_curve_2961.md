@@ -47160,3 +47160,32 @@ completed; `[curve-offset][region][budget]` passes 858 assertions / 3 cases;
 bulge worker persistence case passes 312 assertions / 1 case. This constrains
 the endpoint-recovery pass but does not close broader hostile-topology,
 visible-GUI, cross-platform, or independent-CAD acceptance.
+
+## 1409. Revalidate Complete Curve-offset Suite After Work-cap Change (2026-11-14)
+
+At exact PR source `22daebe5a3636a94bd9e755d96f93d836c7056d8`, the complete
+`[curve-offset]` selector passes 2,247,333 assertions / 350 cases using
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'[curve-offset]' --reporter compact`. This rechecks the entire curve-offset
+unit-test surface after endpoint-to-node matching joined the bounded
+intersection work ledger. The result is a local macOS arm64 CMake Release
+qualification only; it does not close the separate ASan, qmake6/platform,
+visible-GUI, native package, or independent-CAD gates in Slice R.
+
+## 1410. Requalify qmake6 and Source Picker at Exact PR Head (2026-11-14)
+
+At PR source `22daebe5a3636a94bd9e755d96f93d836c7056d8`, regenerated and
+completed the recursive macOS arm64 qmake6 build:
+`qmake6 -o Makefile /Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD/librecad.pro`
+followed by `make -j6` in `/private/tmp/offset3193-qmake6-fresh`. Exit status
+was zero and the bundle contains both `LibreCAD.app/Contents/MacOS/LibreCAD`
+and `LibreCADOffsetWorker`. The shell's optional cargo-env-file notice and
+pre-existing compiler warnings did not fail the build. The current-source
+headless source-picker command
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests
+'[gui][dialog][offsetcurve][source]' --reporter compact` passes 15,226
+assertions / 44 cases. PR checks Headless (ON) and Headless (OFF) also report
+success at this exact revision. These results add local qmake6 product/helper
+and family-picker evidence; they do not close qmake6 package relocation,
+ASan, visible GUI, remaining PR platform/format jobs, or independent CAD
+acceptance.
