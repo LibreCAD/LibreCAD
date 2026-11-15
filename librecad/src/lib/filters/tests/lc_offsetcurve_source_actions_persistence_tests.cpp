@@ -1300,7 +1300,8 @@ TEST_CASE("translated rounded polyline action matches an independent worker requ
     const bool reversedTraversal = GENERATE(false, true);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
-    CAPTURE(origin.x, origin.y, signedDistance, reversedTraversal, static_cast<int>(format));
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+    CAPTURE(origin.x, origin.y, signedDistance, reversedTraversal, static_cast<int>(format), dwg);
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -1525,6 +1526,25 @@ TEST_CASE("translated rounded polyline action matches an independent worker requ
     }
     std::sort(reopenedTrimmed.begin(), reopenedTrimmed.end());
     CHECK(reopenedTrimmed == expectedTrimmed);
+    if (dwg) {
+        QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+        if (!libreDwgReader.isEmpty()) {
+            bool checkedTrimFragment = false;
+            for (const auto* entity : reopened) {
+                if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+                const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+                REQUIRE(spline);
+                const auto fingerprint = RS_Spline::geometryFingerprint(spline->getData());
+                if (std::find(expectedTrimmed.begin(), expectedTrimmed.end(), fingerprint) ==
+                    expectedTrimmed.end()) continue;
+                checkLibreDwgSpline(libreDwgReader, output, spline->getData());
+                checkedTrimFragment = true;
+                break;
+            }
+            CHECK(checkedTrimFragment);
+        }
+    }
 }
 
 TEST_CASE("bounded hyperbola source trims through document actions and file lanes",
