@@ -1268,7 +1268,7 @@ TEST_CASE("Subnormal certified roots never merge into source endpoints or lose c
     }
 }
 
-TEST_CASE("Rounded constant retained spans refuse all cache-trim output", tags) {
+TEST_CASE("Rounded constant retained spans are omitted only when output remains representable", tags) {
     constexpr double origin = 0x1p52;
     for (unsigned fixture = 0; fixture < 3; ++fixture)
         for (const bool reverse : {false, true}) for (const bool cutterReverse : {false, true}) {
@@ -1295,15 +1295,36 @@ TEST_CASE("Rounded constant retained spans refuse all cache-trim output", tags) 
         if (spline) { cutterBefore = spline->getData(); }
         // The first intersection is (origin+.25, origin+.25). Its exact
         // retained subspan rounds to (origin,origin) at BOTH output controls.
-        // fixture 1 embeds that constant span in a nonconstant fragment;
-        // fixture 2/reverse stages the other, nonempty fragment before refusal.
+        // Fixture 1 has other representable geometry in the same fragment,
+        // so the rounded-constant span is omitted. The other fixtures have no
+        // representable output and must refuse atomically.
         const RS_Vector pick = fixture == 2 ? RS_Vector{origin + 1, origin + 1} : RS_Vector{origin, origin + 1};
         const auto result = Trim::prepare(data, *cutter, {pick});
-        refused(result); CHECK(result.refusal == Trim::Refusal::Arithmetic);
-        CHECK(result.roots.empty()); CHECK(result.rootCount == (fixture == 2 ? 2 : 1));
-        CHECK(result.work.outputSpans == (fixture == 0 ? 1 : 2));
-        CHECK(result.work.outputControls == (fixture == 0 ? 2 : fixture == 1 ? 3 : 4));
-        CHECK(result.work.outputKnots == (fixture == 0 ? 4 : fixture == 1 ? 5 : 8));
+        if (fixture == 1) {
+            REQUIRE(result.refusal == Trim::Refusal::None);
+            REQUIRE(result.fragments.size() == 1);
+            CHECK(result.fragmentCount == 1); CHECK(result.removed);
+            REQUIRE(result.roots.size() == 1); CHECK(result.rootCount == 1);
+            CHECK(result.work.outputSpans == 1);
+            CHECK(result.work.outputControls == 2);
+            CHECK(result.work.outputKnots == 4);
+            const auto& fragment = result.fragments.front();
+            REQUIRE(fragment.sourceSections.size() == 1);
+            REQUIRE(fragment.data.controlPoints.size() == 2);
+            const auto& firstControl = fragment.data.controlPoints.front();
+            const auto& lastControl = fragment.data.controlPoints.back();
+            CHECK((firstControl.x != lastControl.x || firstControl.y != lastControl.y));
+            REQUIRE((fragment.start.rootId.has_value() || fragment.end.rootId.has_value()));
+            const auto rootId = fragment.start.rootId ? *fragment.start.rootId : *fragment.end.rootId;
+            CHECK(result.roots.at(rootId).worldX.contains(origin));
+            CHECK(result.roots.at(rootId).worldY.contains(origin));
+        } else {
+            refused(result); CHECK(result.refusal == Trim::Refusal::EmptyOutput);
+            CHECK(result.roots.empty()); CHECK(result.rootCount == (fixture == 2 ? 2 : 1));
+            CHECK(result.work.outputSpans == (fixture == 0 ? 1 : 2));
+            CHECK(result.work.outputControls == (fixture == 0 ? 2 : 4));
+            CHECK(result.work.outputKnots == (fixture == 0 ? 4 : 8));
+        }
         equalData(data, before);
         if (spline) { equalData(spline->getData(), cutterBefore); }
         else { near(cutter->getStartpoint(), cutterStart, 0); near(cutter->getEndpoint(), cutterEnd, 0); }
@@ -1361,7 +1382,7 @@ TEST_CASE("Paired conic preparation refuses collapsed polynomial complements in 
         // Reverse storage stages the other nonempty fragment before refusal.
         const auto result = Trim::prepareConic(data, conic,
             {{origin + 1, origin + 2}}, Trim::Pick{{origin + 1, origin + 1}});
-        refused(result); CHECK(result.refusal == Trim::Refusal::Arithmetic);
+        refused(result); CHECK(result.refusal == Trim::Refusal::EmptyOutput);
         CHECK(result.roots.empty()); CHECK(result.rootCount == 2);
         CHECK(result.work.outputSpans == 2); CHECK(result.work.outputControls == 4);
         CHECK(result.work.outputKnots == 8);

@@ -49221,3 +49221,74 @@ git diff --check
 Result: all five generated slope profiles pass the focused test matrix with
 901 assertions / 1 test case. Only the four non-extreme profiles trim; the
 `1e-14` case is specifically asserted as a fail-closed refusal.
+
+## 1480. Reconcile Typed Source Picker Completion and Reject Unqualified Circle-chart Experiment (2026-11-15)
+
+The source replacement widget requirement is implemented: while choosing a
+replacement source, the user can change the requested curve type; the existing
+source remains identified/highlighted; candidates are filtered to the selected
+type; and a failed/cancelled replacement preserves the committed source and
+cache. The selector is sourced from all nine current
+`LC_OffsetSourceGeometry::SupportedKinds` entries (line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline). Parabola is
+a distinct type, not a spline-points alias. This closes the picker-control
+requirement, but does not certify every geometric variant for capture, worker
+processing, Trim, or persistence. Keep those per-family and per-variant gates
+separate.
+
+Headless coverage recorded for the current picker implementation:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source][typed][matrix]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[i-update][action][typed][picker]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][offsetcurve][source][highlight]' --reporter compact
+```
+
+These selections passed 8,801 assertions / 3 cases, 148 assertions / 1 case,
+and 461 assertions / 21 cases, respectively. Visible packaged-app interaction
+and independent CAD acceptance remain open; headless type enumeration alone
+does not close either gate.
+
+The attempt to expand the measured endpoint-tangent parabola Trim range by
+rotating the internal whole-circle conic chart is **rejected and reverted**.
+Its focused action test passed 944 assertions, including `+/-1e-14`, but it
+regressed the complete Trim suite (179/182 cases; 108 failed assertions) and
+violated established canonical-circle chart/fragment and refusal expectations.
+The production code is restored to the canonical circle chart, and the
+`+/-1e-14` endpoint-tangent case again fails closed as recorded in section
+1478. Do not claim that extreme slope supported or retry chart rotation
+without an approach that preserves all existing parameterization contracts.
+
+The first full-suite run after restoring the chart found two stale test
+contracts from before commit `d2d26b786` (`fix(offset): trim high-origin
+neck-collapse caches`). That implementation intentionally omits a rounded
+constant span when another representable fragment survives, and reports
+`EmptyOutput` when the entire candidate output disappears. The tests were
+updated to assert both behaviors: the representable fixture emits one
+nonconstant span anchored to its certified root; wholly collapsed outputs
+remain atomic refusals; and paired conic preparation uses the same
+`EmptyOutput` policy. Input and cutter geometry must remain unchanged in every
+case.
+
+Validation after chart restoration and test-contract update on macOS arm64
+CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_trim_tests -j4
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]' --reporter compact
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_offset_trim_tests \
+  --reporter compact
+git diff --check
+```
+
+Results: the focused action case passes 873 assertions / 1 case; the complete
+Trim suite passes 4,836,873 assertions / 182 cases. The two high-origin
+contract cases pass 630 assertions / 2 cases. The chart experiment is not in
+the worktree. Keep visible packaged-app interaction and independent CAD
+acceptance open. Further work belongs to missing per-family geometry support
+and those acceptance gates, not another source-picker selector.
