@@ -47661,3 +47661,23 @@ This qualifies only the two recorded signed orientations at magnitude `0.2`
 for this tangent quarter-circle profile. It does not establish distance
 thresholds, transformations, other bulge arrangements, or generalized
 closed-polyline Trim support. Keep those Slice 4/Slice 5 gates open.
+
+## 1429. Revalidate the Nine-family Picker at Current PR Head (2026-11-15)
+
+Re-ran the Properties source-picker suite at PR head `9de8afe3e` after the
+latest plan and Trim-matrix updates. This is headless confirmation of the
+existing selector contract: the type control stays usable during candidate
+browsing, candidate filtering covers all nine `SupportedKinds`, and parabola
+remains a distinct kind. It does not establish visible desktop interaction or
+the separate geometry/variant qualification in Slice 4.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Result: 15,226 assertions / 44 cases passed. Keep repeated visible switching,
+candidate refresh, source indication, accepted replacement, and
+cancel/refusal checks open in Slice 5. No new selector implementation slice
+is indicated unless this behavior regresses.
