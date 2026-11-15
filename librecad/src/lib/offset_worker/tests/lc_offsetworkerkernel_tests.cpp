@@ -10079,7 +10079,7 @@ TEST_CASE("worker generates and transports self-crossing linear polyline regions
     }
 }
 
-TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
+TEST_CASE("simple closed mixed-bulge offsets promote both source-cache sides",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
     RS_Polyline polyline;
     polyline.addVertex({0, 0}, 0.2);
@@ -10096,6 +10096,13 @@ TEST_CASE("closed mixed-bulge source promotes only the cache-representable side"
     for (const double signedDistance : {-.25, .25}) {
         CAPTURE(signedDistance);
         const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+        const auto sourceEntity = source->makeEntity();
+        REQUIRE(sourceEntity);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *sourceEntity);
+        REQUIRE(options);
+        CHECK(options->mode == (signedDistance > 0.0
+                                    ? LC_CurveOffsetMode::RegionBoundary
+                                    : LC_CurveOffsetMode::Direct));
         const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
         const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
         const auto& generated = native(generationReply, 7);
@@ -10107,31 +10114,17 @@ TEST_CASE("closed mixed-bulge source promotes only the cache-representable side"
             REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
             cache = std::get<RS_SplineData>(generated.ordinary.front());
         } else {
-            REQUIRE(generated.ordinary.size() > 1);
-            if (const auto* spline =
-                    std::get_if<RS_SplineData>(&generated.ordinary.front())) {
-                cache = *spline;
-            } else {
-                const auto& segment = std::get<req::Segment>(generated.ordinary.front());
-                cache.degree = 1;
-                cache.controlPoints = {segment.start, segment.end};
-                cache.knotslist = {0, 0, 1, 1};
-                cache.weights = {1, 1};
-            }
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+            cache = std::get<RS_SplineData>(generated.ordinary.front());
         }
         const req::Request validationRequest{token,
             req::ValidateSourceCache{cache, definition, {}}};
         const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
         const auto& validated = native(validationReply, 8);
-        if (signedDistance < 0.0) {
-            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
-            CHECK(validated.changed);
-            CHECK(validated.engineRuns == 1);
-        } else {
-            CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
-            CHECK_FALSE(validated.changed);
-            CHECK(validated.engineRuns == 1);
-        }
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        CHECK(validated.engineRuns == 1);
     }
 }
 
