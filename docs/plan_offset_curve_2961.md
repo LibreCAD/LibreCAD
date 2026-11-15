@@ -50525,3 +50525,31 @@ git diff --check
 Result: all tests passed, 8,353 assertions / 1 case. Visible Properties
 interaction, other parabola conditioning/domain rows, and independent CAD
 acceptance remain open.
+
+## 1520. Complete Trim Coverage for the Measured Clustered-parabola Scale Rows (2026-11-15)
+
+Test commit `33c1c0f94` adds scale `1e-2` to the same profile-2 opposite-end
+layout `{0, 0.98, 0.999, 1}`, rotated by `0.6435011087932844`, translated to
+`(1e6,-2e6)`, and traversed in reverse. The independent hidden-curve oracle
+must reject all reconstructed candidates before the test chooses a valid
+sample-fitting parabola. That selected source passes worker-backed
+replacement, Trim Two preview and commit, undo/redo, and all five R14/R2000/
+R2018 DXF/DWG save/reopen lanes. Combined with sections 1516-1519, Trim is now
+measured at scales `1e-3`, `1e-2`, `1e-1`, and `1` for this one precise
+control profile, transform, traversal, and sample layout. Do not infer
+continuous-scale, other-profile, or other-layout support from these points.
+
+Validation on macOS arm64 CMake Release, with LibreDWG available:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims reconstructed parabolas across transformed frames with undo and redo' \
+  --reporter compact
+git diff --check
+```
+
+Result: all tests passed, 8,589 assertions / 1 case. Remaining work includes
+other parabola conditioning and construction variants, visible Properties
+interaction, and independent CAD acceptance.
