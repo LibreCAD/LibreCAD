@@ -25,8 +25,8 @@ USA.
 
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest implementation reconciliation (2026-11-15, code revision
-`6023dc2e0`):** The repeated request to
+**Latest implementation reconciliation (2026-11-15, roadmap revision
+`675b60f09`; latest picker validation on code revision `670e1d24d`):** The repeated request to
 change source type during replacement and support every kind in
 `LC_OffsetSourceGeometry::SupportedKinds` remains a single generic picker
 requirement, not a new parabola-only UI feature. The selector already filters
@@ -152,7 +152,7 @@ spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
 coverage satisfy the implementation portion; the focused headless
 source-picker suite passes 15,226 assertions / 44 cases on this checkout,
-revalidated at implementation head `6023dc2e0` in section 1508. Do
+revalidated at implementation head `670e1d24d` in section 1508. Do
 not add another selector or duplicate the parabola-specific UI work. Keep
 visible interaction acceptance open. Separately, the phrase "support all
 kinds" requires end-to-end evidence, not only menu entries: for each enabled
@@ -50158,8 +50158,9 @@ visible desktop acceptance, and external CAD acceptance remain open.
 Re-run the focused headless Properties source-picker suite after the latest
 Trim/test changes. It passes 15,226 assertions across 44 cases, reconfirming
 repeated in-workflow type switching, candidate filtering for all nine kinds,
-and current-source indication at implementation head `6023dc2e0`. This does
-not replace visible desktop acceptance.
+and current-source indication at implementation head `670e1d24d`. This does
+not replace visible desktop acceptance. Roadmap-only follow-up is recorded in
+section 1509.
 
 ```sh
 QT_QPA_PLATFORM=offscreen \
@@ -50172,3 +50173,32 @@ any UI interaction: macOS System Events returned error `-10827`. No visible
 workflow steps are claimed. Reattempt only from a session with a working,
 authorized desktop-control path; preserve the exact acceptance sequence in
 the source-widget checklist above.
+
+## 1509. Clarify the Full Source-type Replacement Contract (2026-11-15)
+
+The latest request confirms two distinct requirements: while replacement
+selection is active, the source widget must allow switching the requested
+curve type; and the type inventory must include every kind currently supported
+by `LC_OffsetSourceGeometry::SupportedKinds`, including parabola. The existing
+in-workflow selector satisfies the implementation requirement and exposes
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline. Parabola remains a distinct typed source. No duplicate selector
+or additional picker implementation is indicated by this clarification.
+
+Acceptance remains split deliberately:
+
+- **Automated picker contract:** covered by section 1508's offscreen suite
+  (15,226 assertions / 44 cases on code revision `670e1d24d`).
+- **Visible interaction:** still open. In a packaged desktop session, begin
+  replacement picking, change the requested type at least twice, verify the
+  candidate list refreshes each time and the committed source remains
+  highlighted, then accept a valid candidate and separately cancel or refuse
+  a replacement. Confirm source/cache state remains coherent in both paths.
+- **Geometry support:** not implied by the selector. Continue the family by
+  concrete variant matrix for candidate eligibility, capture/reconstruction,
+  worker/cache, applicable Trim, and DXF/DWG persistence; report bounded or
+  fail-closed support where a lane is not implemented or validated.
+
+No new code slice is required unless visible acceptance or a regression finds
+that the selector, candidate refresh, highlighting, or source/cache invariants
+do not match this contract.
