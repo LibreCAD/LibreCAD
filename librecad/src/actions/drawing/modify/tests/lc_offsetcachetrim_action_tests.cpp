@@ -861,13 +861,14 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
     for (const auto* output : fragments) CHECK_FALSE(output->isDeleted());
 }
 
-TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a circle in both pick orders",
+TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against circular and elliptic cutters",
           "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][trim-two]") {
     constexpr double rotation = .37;
     for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u})
     for (const bool leftBranch : {false, true})
+    for (const unsigned cutterKind : {0u, 1u})
     for (const bool hyperbolaFirst : {false, true}) {
-        CAPTURE(profile, leftBranch, hyperbolaFirst);
+        CAPTURE(profile, leftBranch, cutterKind, hyperbolaFirst);
         Drawing<true> f;
         auto* previous = addNative(f.graphic);
         const LC_HyperbolaData sourceData = profile == 0
@@ -922,15 +923,27 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         RS_Vector normal{-tangent.y, tangent.x};
         constexpr double circleRadius = 1.0;
         const RS_Vector circleCenter = intersection + tangent * circleRadius;
-        auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
-        f.graphic.addEntity(circle);
+        RS_Entity* cutter = nullptr;
+        RS_Vector cutterPick;
+        if (cutterKind == 0) {
+            cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
+            cutterPick = circleCenter + normal * circleRadius;
+        } else {
+            cutter = new RS_Ellipse(&f.graphic,
+                RS_EllipseData{circleCenter, tangent * (1.1 * circleRadius), .95, 0, 0, false});
+            cutterPick = circleCenter + normal * (1.045 * circleRadius);
+        }
+        f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(
             breaks.front() + (breaks[1] - breaks.front()) * .9);
-        const RS_Vector circlePick = circleCenter + normal * circleRadius;
         const auto nativeBefore = trimGeometry(*native);
-        const auto circleBefore = trimGeometry(*circle);
-        const RS_Vector firstPick = hyperbolaFirst ? nativePick : circlePick;
-        const RS_Vector secondPick = hyperbolaFirst ? circlePick : nativePick;
+        const auto cutterBefore = trimGeometry(*cutter);
+        const auto directTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
+            {nativePick});
+        REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+        REQUIRE(directTrim.rootCount >= 2);
+        const RS_Vector firstPick = hyperbolaFirst ? nativePick : cutterPick;
+        const RS_Vector secondPick = hyperbolaFirst ? cutterPick : nativePick;
         f.action->click(firstPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
@@ -938,14 +951,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         const auto preview = trimPreview(*f.action->m_preview);
         REQUIRE_FALSE(preview.empty());
         CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
         CHECK(trimGeometry(*native) == nativeBefore);
-        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
         CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
 
         f.action->click(secondPick);
         REQUIRE(native->isDeleted());
-        REQUIRE(circle->isDeleted());
+        REQUIRE(cutter->isDeleted());
         std::vector<std::string> committed;
         std::vector<RS_Entity*> fragments;
         for (auto* entity : live(f.graphic)) {
@@ -957,8 +970,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
             return entity->rtti() == RS2::EntitySpline;
         }));
-        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
-            return entity->rtti() == RS2::EntityArc;
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [&](const RS_Entity* entity) {
+            return entity->rtti() == (cutterKind == 0 ? RS2::EntityArc : RS2::EntityEllipse);
         }));
 
         QTemporaryDir directory;
@@ -1000,6 +1013,20 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
                 const auto& y = b->getData();
                 return closeVector(x.center, y.center) && close(x.radius, y.radius) &&
                     close(x.angle1, y.angle1) && close(x.angle2, y.angle2) && x.reversed == y.reversed;
+            }
+            if (const auto* a = dynamic_cast<const RS_Ellipse*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Ellipse*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                if (!x.isArc || !y.isArc) return false;
+                const bool sameEnds = closeVector(a->getStartpoint(), b->getStartpoint()) &&
+                    closeVector(a->getEndpoint(), b->getEndpoint());
+                const bool reversedEnds = closeVector(a->getStartpoint(), b->getEndpoint()) &&
+                    closeVector(a->getEndpoint(), b->getStartpoint());
+                return closeVector(x.center, y.center) && close(x.majorP.magnitude(), y.majorP.magnitude()) &&
+                    close(x.ratio, y.ratio) && close(a->getLength(), b->getLength()) &&
+                    closeVector(a->getMiddlePoint(), b->getMiddlePoint()) && (sameEnds || reversedEnds);
             }
             if (const auto* a = dynamic_cast<const LC_Hyperbola*>(&expected)) {
                 const auto* b = dynamic_cast<const LC_Hyperbola*>(&actual);
@@ -1050,13 +1077,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
                 REQUIRE(document.isObject());
                 unsigned externalSplines = 0;
                 unsigned externalArcs = 0;
+                unsigned externalEllipses = 0;
                 for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
                     const QString entity = value.toObject().value("entity").toString();
                     externalSplines += entity == QLatin1String("SPLINE");
                     externalArcs += entity == QLatin1String("ARC");
+                    externalEllipses += entity == QLatin1String("ELLIPSE");
                 }
                 CHECK(externalSplines > 0);
-                CHECK(externalArcs > 0);
+                const bool hasCutterFragments = cutterKind == 0 ? externalArcs > 0 : externalEllipses > 0;
+                CHECK(hasCutterFragments);
             }
 #endif
             RS_Graphic reopened;
@@ -1094,16 +1124,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
 
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
         CHECK_FALSE(hyperbola->isDeleted());
         REQUIRE(native->hasGeneralizedSourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
         CHECK(trimGeometry(*native) == nativeBefore);
-        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
         for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
         REQUIRE(f.graphic.redo());
         CHECK(native->isDeleted());
-        CHECK(circle->isDeleted());
+        CHECK(cutter->isDeleted());
         for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
     }
 }
