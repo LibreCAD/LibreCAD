@@ -47006,3 +47006,19 @@ in-workflow switching, distinct parabola selection, and associated picker
 state tests at this source state. It does not close visible desktop
 interaction, cross-platform delivery, or the independent geometry-variant
 matrix.
+
+## 1400. Trim Typed Parabola Caches Against Elliptic Cutters (2026-11-15)
+
+Test commit `b387a13bd` extends the worker-created typed-parabola Trim Two
+matrix from circular cutters to include eccentric ellipses (semiaxis ratio
+`0.5`) in both pick orders. The existing symmetric/asymmetric source profiles,
+scales `0.1`, `1`, and `10`, transformed cases, signed offsets, and bounded
+near-cusp profile remain in the matrix. It checks preview/commit parity,
+undo/redo, five DXF/DWG save/reopen lanes, sampled elliptic-arc representation,
+and reopened geometry. This qualifies those fixtures only, not every parabola
+variant, ellipse ratio/domain, or near-tangent topology.
+
+Validation on macOS arm64 CMake Release: the focused case passes 29,055
+assertions / 1 case; `cmake --build /private/tmp/offset-2961-cmake-clean
+--target librecad_tests -j4` succeeds; and `git diff --check` passes. The
+visible-GUI, cross-platform, and independent CAD gates remain open.
