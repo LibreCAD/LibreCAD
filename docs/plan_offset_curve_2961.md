@@ -48978,6 +48978,15 @@ cannot start its bundled Qt runtime on this host, reporting that the required
 acceptance. Keep the independent-reader gate open and retry when either a
 working ODA/FreeCAD installation or a separate supported machine is available.
 
+The visible-app gate could not be exercised in this session either. The
+previously approved `/private/tmp/LibreCAD-PR3193-visible.app` path is absent;
+the current CMake test bundle is not a LaunchServices application bundle, and
+`open`/System Events return macOS error `-10827`. Directly running its GUI
+executable aborts in AppKit/HIServices application registration; the retained
+crash logs show SIGABRT before the event loop. Thus the offscreen Qt picker
+tests in section 1469 remain the strongest current evidence, and visible
+desktop acceptance is still open.
+
 The internal LibreDWG reads, LibreCAD reopen checks, and five-lane native-file
 tests remain valid but are not substitutes for independent semantic CAD
 validation. Do not change geometry or weaken assertions to work around these
