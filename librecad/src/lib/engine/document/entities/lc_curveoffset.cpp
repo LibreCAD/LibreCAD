@@ -7367,6 +7367,9 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 if (!used[k] && pieces[k].pieces.front().bezier[0] == end) {
                     if (next != pieces.size()) {
                         result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
+                        result.intersectionDiagnostics.cycleAssemblyFailure =
+                            LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::
+                                MultipleContinuations;
                         return LC_CurveOffsetStatus::AmbiguousTopology; // cycles touching at a point
                     }
                     next = k;
@@ -7375,6 +7378,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             const bool closes = end == cycle.cubicPieces.front().bezier[0];
             if (closes && next != pieces.size()) {
                 result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
+                result.intersectionDiagnostics.cycleAssemblyFailure =
+                    LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::TouchingCycles;
                 return LC_CurveOffsetStatus::AmbiguousTopology; // another cycle touches it at its start
             }
             if (closes) {
@@ -7382,6 +7387,16 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             }
             if (next == pieces.size()) {
                 result.intersectionDiagnostics.failureSite = FailureSite::CycleAssembly;
+                result.intersectionDiagnostics.cycleAssemblyFailure =
+                    LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::OpenBoundary;
+                double nearestStart = std::numeric_limits<double>::infinity();
+                for (const size_t k : kept) {
+                    const double gap = end.distanceTo(pieces[k].pieces.front().bezier[0]);
+                    if (gap < nearestStart) {
+                        nearestStart = gap;
+                    }
+                }
+                result.intersectionDiagnostics.cycleAssemblyEndpointGap = nearestStart;
                 return LC_CurveOffsetStatus::AmbiguousTopology; // a boundary that does not close
             }
             current = next;

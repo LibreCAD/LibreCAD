@@ -276,8 +276,17 @@ struct LC_CurveOffsetGeometryResult {
             CandidateClassification,
             CycleAssembly
         };
+        enum class CycleAssemblyFailure {
+            None,
+            MultipleContinuations,
+            TouchingCycles,
+            OpenBoundary
+        };
         Stage stage{Stage::None};
         FailureSite failureSite{FailureSite::None};
+        CycleAssemblyFailure cycleAssemblyFailure{CycleAssemblyFailure::None};
+        // Nearest kept start from an open endpoint; -1 when not applicable.
+        double cycleAssemblyEndpointGap{-1.0};
         LC_IntersectionStatus status{LC_IntersectionStatus::Ok};
         LC_IntersectionWorkStats work{};
         bool hasFailureDomain{false};

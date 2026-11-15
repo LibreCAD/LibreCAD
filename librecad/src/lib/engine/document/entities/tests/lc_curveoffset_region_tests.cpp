@@ -499,6 +499,10 @@ TEST_CASE("Positive-bulge bow-tie mixed-frame successes are independently checke
                     CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
                     CHECK(result.intersectionDiagnostics.failureSite ==
                           LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
+                    CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::OpenBoundary);
+                    CAPTURE(result.intersectionDiagnostics.cycleAssemblyEndpointGap);
+                    CHECK(result.intersectionDiagnostics.cycleAssemblyEndpointGap > 0.5);
                     CHECK(result.branches.empty());
                     const std::size_t ruleIndex = rule == LC_CurveFillRule::NonZero ? 0u : 1u;
                     REQUIRE(identityGrowth[ruleIndex].status == LC_CurveOffsetStatus::Ok);
