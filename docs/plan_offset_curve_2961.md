@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`936e6fe87`):** The source-type selector contract is implemented for all nine
+`055dd9a7e`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -52,8 +52,8 @@ save/reopen, with two reopen passes and optional LibreDWG validation. Section
 1548 aligns persistence with all three tested curvature-scaled offsets (`0.5`,
 `1.0`, `1.5` times vertex radius). Section 1550 adds a worker/cache
 conditioning matrix for endpoint-tangent parabola constructions from slope
-`1e-4` to `1e-14`, matched to existing exact-normal tests; typed-source file
-persistence for this exact construction grid remains open. These bounded test
+`1e-4` to `1e-14`, matched to existing exact-normal tests; section 1551 carries
+those slopes through typed-source five-format persistence. These bounded test
 matrices do not establish arbitrary hyperbola/parabola support or
 visible/external-CAD acceptance.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
@@ -51578,3 +51578,34 @@ git diff --check
 Results: the worker/cache conditioning case passes 363 assertions / 1 case;
 the direct exact-normal tangent suite passes 17,214 assertions / 4 cases.
 Typed persistence across DXF/DWG and independent CAD acceptance remain open.
+
+## 1551. Persist the Endpoint-tangent Parabola Slope Grid (2026-11-15)
+
+Test commit `055dd9a7e` expands the existing near-parallel endpoint-tangent
+parabola persistence profiles to include slopes `1e-4`, `1e-6`, and `1e-13`.
+Together with the already covered `1e-8`, `1e-10`, `1e-12`, and `1e-14`
+profiles, this now matches section 1550's full worker/cache slope grid; the
+existing moderate-slope, asymmetric, reversed, mirrored, and tangent-magnitude
+profiles remain in the same test. Each profile is exercised at both signed
+offsets through operation-7 generation, operation-8 cache admission, typed
+parabola reconstruction, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen. LibreDWG `minJSON` checks the typed-source EED markers when
+available. The claim is bounded to these named profiles and distances.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+Results: build passes; the expanded five-format matrix passes 17,854
+assertions / 1 case with DWG enabled and LibreDWG available. Broader parabola
+construction/conditioning, visible GUI, and independent ODA/AutoCAD acceptance
+remain open.
