@@ -51142,9 +51142,13 @@ cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
 QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   '[gui][offsetcurve][source][highlight][render]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
 git diff --check
 ```
 
 Result: build passes; the focused renderer matrix passes 46 assertions / 1
-case. Visible packaged-app interaction and independent CAD acceptance remain
-open.
+case; the complete source-picker suite passes 15,284 assertions / 44 cases.
+The latter is headless UI coverage, not packaged-app interaction. Visible
+desktop acceptance and independent CAD acceptance remain open.
