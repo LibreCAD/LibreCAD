@@ -5912,7 +5912,7 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
             for (const double t : layout)
                 samples.push_back(pointAt(t));
             const auto candidates = LC_ParabolaData::From4Points(samples);
-            const auto candidate = std::find_if(candidates.begin(), candidates.end(),
+            auto candidate = std::find_if(candidates.begin(), candidates.end(),
                 [&](const LC_ParabolaData& value) {
                     if (!value.isValid())
                         return false;
@@ -5926,7 +5926,16 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
                 layout[1] == 0.98) {
                 CHECK(candidate == candidates.end());
-                continue;
+                candidate = std::find_if(candidates.begin(), candidates.end(),
+                    [&](const LC_ParabolaData& value) {
+                        if (!value.isValid())
+                            return false;
+                        return std::all_of(samples.begin(), samples.end(),
+                            [&](const RS_Vector& point) {
+                                return value.fromX(value.findX(point)).distanceTo(point) <=
+                                       fitTolerance;
+                            });
+                    });
             }
             REQUIRE(candidate != candidates.end());
 
@@ -6032,7 +6041,7 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
             for (const double t : layout)
                 samples.push_back(pointAt(t));
             const auto candidates = LC_ParabolaData::From4Points(samples);
-            const auto candidate = std::find_if(candidates.begin(), candidates.end(),
+            auto candidate = std::find_if(candidates.begin(), candidates.end(),
                 [&](const LC_ParabolaData& value) {
                     if (!value.isValid())
                         return false;
@@ -6044,9 +6053,18 @@ TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
                 });
             if (profileIndex == 2 && scale == 1e-2 &&
                 frame.translation.x == 1e6 && frame.translation.y == -2e6 &&
-                layout[1] > 0.9) {
+                layout[1] == 0.98) {
                 CHECK(candidate == candidates.end());
-                continue;
+                candidate = std::find_if(candidates.begin(), candidates.end(),
+                    [&](const LC_ParabolaData& value) {
+                        if (!value.isValid())
+                            return false;
+                        return std::all_of(samples.begin(), samples.end(),
+                            [&](const RS_Vector& point) {
+                                return value.fromX(value.findX(point)).distanceTo(point) <=
+                                       fitTolerance;
+                            });
+                    });
             }
             REQUIRE(candidate != candidates.end());
 
