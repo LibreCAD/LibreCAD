@@ -46640,6 +46640,26 @@ QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[
 Visible Properties interaction, broader family/variant coverage, cross-platform
 runtime, and independent CAD acceptance remain open.
 
+## 1393. Compare Combined-frame Bow-tie Growth With a Transformed Reference (2026-11-14)
+
+Test commit `2ba37cc51` retains the exact `CycleAssembly` refusal for positive-
+bulge combined-frame growth and adds a rigidly transformed reference from the
+successful identity-frame growth result for both fill rules. The reference
+cycles are checked against the independently sampled transformed source for
+closure, offset distance, region side, and positive area. Both references pass
+while the actual combined-frame binary arrangement still refuses atomically.
+This establishes a geometrically valid transformed boundary candidate; it
+does not prove that the represented binary source has the same exact contact
+topology or authorize publishing the current refused result. The next
+implementation step is to identify the unmatched or multiply incident
+candidate node and resolve it with an independent topology check, preserving
+refusal for genuinely ambiguous contacts.
+
+Validation on macOS arm64 CMake Release: the focused mixed-frame bow-tie case
+passes 238 assertions / 1 case; the complete `[curve-offset][region]`
+selection passes 28,690 assertions / 23 cases; `librecad_tests` builds; and
+`git diff --check` passes.
+
 ## 1359. Qualify Ellipse Secants at Source-chord Sagitta Scale (2026-11-14)
 
 Test commits `bc050a90c` and `6b9859713` add transverse ellipse cuts whose
