@@ -98,6 +98,8 @@ Section 1498 expands the dense-end worker/cache and persistence layout across
 all three control profiles at scale 1 in the recorded transformed frames.
 Section 1499 expands the same three profile shapes through the Trim action and
 five-format persistence matrix at the test frame.
+Section 1500 adds scale `1e-6` and `1e6` worker/cache and persistence rows for
+profile 0; the other two profiles remain qualified at scale 1 only.
 
 **Next implementation/validation order:** (1) completed by `b434866dc` and
 extended by `9aacfd0aa`, `4b5e35ae8`, and `2a09c6aa9`, with the opposite-end
@@ -28382,57 +28384,6 @@ also survives R14/R2000/R2018 DXF/DWG save/reopen/second-save; signed offsets
 promote from carriers through the same five format lanes after worker
 validation.
 
-## 1498. Extend Dense-end Worker and Persistence Across Parabola Profiles (2026-11-15)
-
-Section 1496 initially added the `{0, 0.95, 0.995, 1}` sample layout for one
-profile/frame. The worker/cache and typed-source persistence matrices now run
-it for all three recorded control profiles at scale 1 in their rotated and
-translated frames. Each row checks input and independent points before
-generation, both signed offsets, worker cache admission, and two
-save/reopen passes through the R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
-lanes. This broadens only the measured profiles at scale 1; other scales and
-frames remain unqualified.
-
-Validation on macOS arm64 CMake Release:
-
-```sh
-cmake --build /private/tmp/offset-2961-cmake-clean \
-  --target librecad_offset_worker_client_tests -j4
-QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
-  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
-  '[from-four-points][matrix]' --reporter compact
-git diff --check
-```
-
-Result: 65,684 assertions / 2 cases pass, including available LibreDWG DWG
-entity-presence checks. The existing `fixed-handle=2` replay diagnostic is
-not semantic-source failure. Continue the family-by-variant matrix rather
-than extrapolating from these three profiles.
-
-## 1499. Trim the Dense-end Layout Across Three Parabola Profiles (2026-11-15)
-
-The Trim action matrix now runs its `{0, 0.95, 0.995, 1}` reconstructed
-parabola variant over three distinct control-net profiles. Each candidate is
-checked at independent points against its own generating profile before
-replacement, then exercised through Trim, undo/redo, and the R14 DXF, R2000
-DXF/DWG, and R2018 DXF/DWG lanes. The profile coordinates are in a compact
-test frame; this is not high-origin or all-scale qualification.
-
-Validation on macOS arm64 CMake Release:
-
-```sh
-cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
-QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
-  /private/tmp/offset-2961-cmake-clean/librecad_tests \
-  'I trimmed every typed source family to plain fragments' --reporter compact
-git diff --check
-```
-
-Result: 6,650 assertions / 1 test case pass, including all five file lanes
-and available LibreDWG DWG entity-presence checks. Broader sample layouts,
-profiles, conditioning, visible picker acceptance, and independent CAD review
-remain open.
-
 Validation: the focused high-degree knot worker selector passes 188 assertions
 across 3 cases; typed-source file round-trip passes 7,620 assertions; staged
 cache-promotion matrix passes 70,521 assertions; `librecad_tests` and worker
@@ -49877,3 +49828,81 @@ reconstructed-source variant in its DXF/DWG lanes; LibreDWG is used for DWG
 entity-presence checks when available. Continue broader parabola variant and
 conditioning qualification, visible picker acceptance, and independent CAD
 validation.
+
+## 1498. Extend Dense-end Worker and Persistence Across Parabola Profiles (2026-11-15)
+
+Section 1496 initially added the `{0, 0.95, 0.995, 1}` sample layout for one
+profile/frame. The worker/cache and typed-source persistence matrices now run
+it for all three recorded control profiles at scale 1 in their rotated and
+translated frames. Each row checks input and independent points before
+generation, both signed offsets, worker cache admission, and two
+save/reopen passes through the R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+lanes. This broadens only the measured profiles at scale 1; other scales and
+frames remain unqualified.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: 65,684 assertions / 2 cases pass, including available LibreDWG DWG
+entity-presence checks. The existing `fixed-handle=2` replay diagnostic is
+not semantic-source failure. Continue the family-by-variant matrix rather
+than extrapolating from these three profiles.
+
+## 1499. Trim the Dense-end Layout Across Three Parabola Profiles (2026-11-15)
+
+The Trim action matrix now runs its `{0, 0.95, 0.995, 1}` reconstructed
+parabola variant over three distinct control-net profiles. Each candidate is
+checked at independent points against its own generating profile before
+replacement, then exercised through Trim, undo/redo, and the R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG lanes. The profile coordinates are in a compact
+test frame; this is not high-origin or all-scale qualification.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I trimmed every typed source family to plain fragments' --reporter compact
+git diff --check
+```
+
+Result: 6,650 assertions / 1 test case pass, including all five file lanes
+and available LibreDWG DWG entity-presence checks. Broader sample layouts,
+profiles, conditioning, visible picker acceptance, and independent CAD review
+remain open.
+
+## 1500. Stress Dense-end Parabola Sampling Across Scales (2026-11-15)
+
+The `{0, 0.95, 0.995, 1}` worker/cache and typed-source persistence row for
+control profile 0 now also runs at scales `1e-6` and `1e6`, using the existing
+proportionally scaled/rotated/translated frames. The three profiles at scale 1
+remain included. For the two additional rows, both signed offsets are
+generated, cache-validated, and reopened twice through all five recorded DXF
+and DWG lanes, with LibreDWG SPLINE presence checked where available. This is
+scale evidence for profile 0 only; it does not qualify the other two profiles
+at these scales or arbitrary translations.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[from-four-points][matrix]' --reporter compact
+git diff --check
+```
+
+Result: 68,540 assertions / 2 cases pass. Expected DWG raw-replay
+`fixed-handle=2` diagnostics remain separate from the semantic source and
+entity-level checks. Continue other parabola scale/frame rows and preserve the
+explicit ambiguity limits for clustered four-point inputs.
