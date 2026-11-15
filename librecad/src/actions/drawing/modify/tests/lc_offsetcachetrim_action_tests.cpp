@@ -1853,7 +1853,7 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     unsigned profile;
     bool expectLimitRefusal;
   };
-  const std::array<Frame, 31> frames{{
+  const std::array<Frame, 33> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1874,6 +1874,8 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e2, 0.0, {}, false, true, 1, false},
       {1e3, 0.0, {}, false, true, 1, false},
       {1e-5, 0.0, {}, false, true, 1, true},
+      {2e-5, 0.0, {}, false, true, 1, false},
+      {5e-5, 0.0, {}, false, true, 1, false},
       {1e-4, 0.0, {}, false, true, 1, false},
       {1e6, 0.0, {}, false, true, 1, false},
       {1e-6, 0.0, {}, false, true, 2, true},
