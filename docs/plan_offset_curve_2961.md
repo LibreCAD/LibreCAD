@@ -46613,7 +46613,11 @@ passes 226 assertions / 1 case; rebuilding `librecad_tests` succeeds; and
 growth. Resolve it only after an independent arrangement oracle can
 distinguish a true touching-cycle ambiguity from numerical misclassification;
 broader mixed-bulge arrangements, visible GUI, cross-platform runtime, and
-independent CAD acceptance remain open.
+independent CAD acceptance remain open. A temporary experiment that allowed
+normalized-frame cycle endpoints to match within `nodeMerge` did not turn the
+combined-frame growth result into a valid cycle, so that uncommitted production
+change was discarded. This tolerance alone is not evidence that the candidate
+topology is safe to join.
 
 ## 1392. Revalidate Region and Source-picker Suites at the Current PR Head (2026-11-14)
 
