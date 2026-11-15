@@ -2146,8 +2146,10 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
+    const double tangentSlope = GENERATE(0.2, 1e-14);
     const LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
-        {{{0.0, 0.0}, {10.0, 0.0}}}, {{{1.0, 0.2}, {1.0, -0.2}}});
+        {{{0.0, 0.0}, {10.0, 0.0}}},
+        {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
     REQUIRE(sourceData.isValid());
     auto* parabola = new LC_Parabola(&f.graphic, sourceData);
     f.graphic.addEntity(parabola);
@@ -2198,6 +2200,25 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const RS_Vector cutterPick = circleCenter + normal * radius;
     const auto nativeBefore = trimGeometry(*native);
     const auto cutterBefore = trimGeometry(*cutter);
+
+    LC_OffsetCacheTrim::Work trimWork;
+    const auto directTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
+        {nativePick}, {}, {}, &trimWork);
+    if (tangentSlope == 1e-14) {
+        CHECK(directTrim.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+        CHECK(trimWork.intersections.deepestPairRefinement ==
+              LC_OffsetCacheTrim::Limits{}.maxDepth);
+        f.action->click(nativePick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        f.action->hover(cutterPick);
+        CHECK(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
+        return;
+    }
+    REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
 
     f.action->click(nativePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
