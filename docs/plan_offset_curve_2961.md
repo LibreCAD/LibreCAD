@@ -49,9 +49,8 @@ Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
 atomically. Sections 1595 and 1597 hold the implementation and headless
 interaction evidence; there is no additional source-widget implementation
-slice indicated by this request. The source-picker product revision
-`b96f27469` remains unchanged through current PR branch head `46e828312`; the
-commits since that product revision add qualification tests and roadmap
+slice indicated by this request. The latest source-picker product revision
+remains `b96f27469`; subsequent commits add qualification tests and roadmap
 checkpoints, not additional source-picker product code. At that product
 revision,
 `[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
@@ -54462,4 +54461,26 @@ Validation on macOS arm64 CMake Release with DWG support:
 This closes worker/codec/cache validation for the listed periodic rows, not
 process-backed GUI replacement, Trim, persistence, other weights, or arbitrary
 periodic layouts.
+
+## 1636. Exercise Periodic Rational Roots in the Built Helper (2026-11-16)
+
+Test commit `34fb3d97b` sends one representative interior-knot root for each
+degree-4/6 and three positive weight-gradient profiles through the built
+native helper in fresh subprocesses. For each of the six rows, the helper
+generates the ordinary branch result, the test combines it into a candidate
+cache, and a second helper process admits that cache against the typed source.
+The direct kernel matrix in sections 1631-1635 remains the evidence for every
+interior break; this process test deliberately limits itself to one knot per
+profile to stay within the subprocess suite watchdog. No production behavior
+changed.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused built-helper test: 868 assertions / 1 case.
+- Full built-helper process suite: 3,564 assertions / 7 cases.
+- `git diff --check`: passed.
+
+This adds process-level generation and cache admission for the six recorded
+rows, not GUI replacement, Trim, persistence, all-knot subprocess coverage,
+other periodic weights/layouts, or external CAD acceptance.
 
