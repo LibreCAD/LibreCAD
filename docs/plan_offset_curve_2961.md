@@ -55423,3 +55423,23 @@ promoted to ODA acceptance. Keep the external-CAD gate open until the converter
 can be run in a genuinely attached interactive context or another working
 independent reader is available.
 
+## 1677. Scale Steep Asymmetric Tangent Trim across Three Frames (2026-11-16)
+
+Test commit `6790c4df1` extends section 1675's steep tangent pair to source
+scale `1e-3` at `(1e3, -2e3)` and scale `1e3` at `(1e9, -2e9)`, retaining
+the unit-scale `(1e6, -2e6)` row. All three use the rotated frame, both signed
+offset directions, and circle cutter radii `0.05`, `0.1`, and `0.25` times
+source scale. The existing exact tangent-circle oracle, worker-backed source
+replacement, Trim Two preview/commit, undo/redo, and five DXF/DWG reopen lanes
+run for every profile.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 66,350 assertions / 1 case.
+- CMake `librecad_offset_trim_tests` target build: passed.
+- `git diff --check`: passed.
+
+The three scale/frame rows do not establish arbitrary affine covariance or
+other tangent pairs, cutter shapes, and contact boundaries; keep those variant
+gates open.
+
