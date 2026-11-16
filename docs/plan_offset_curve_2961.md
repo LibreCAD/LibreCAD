@@ -54424,3 +54424,21 @@ This covers all interior breaks for two positive symmetric gradients at
 degrees 4 and 6; additional periodic weight distributions and knot layouts
 remain open.
 
+## 1634. Add Asymmetric Periodic Weight Coverage (2026-11-16)
+
+Test commit `eacd01d6a` adds the asymmetric positive gradient
+`0.7 + 0.05 * controlIndex` alongside the two seam-symmetric gradients in the
+degree-4/6 periodic interior-root matrix. Every interior break in each profile
+still receives independent one-sided curvature and root checks, production
+candidate/stall ownership, and output-point mapping. No production behavior
+changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused three-profile periodic matrix: 612 assertions / 1 case.
+- Full offset worker-kernel suite: 1,970,358 assertions / 124 cases.
+- `git diff --check`: passed.
+
+Three specific positive weight gradients are now covered. Other periodic
+weight distributions, knot layouts, and source scales remain open.
+
