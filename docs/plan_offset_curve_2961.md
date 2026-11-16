@@ -54570,3 +54570,26 @@ profiles, GUI replacement, Trim/persistence for these exact rows, broader
 periodic distributions/topologies, and independent CAD acceptance remain
 open.
 
+## 1641. Admit Every Periodic Knot for All Four Weight Profiles (2026-11-16)
+
+Test commit `71b715252` extends section 1640's subprocess matrix to all
+interior knots in all four positive weight profiles, for degrees four and six.
+Each row goes through built-helper generation, sampled event-point mapping on
+the emitted spline spans, cache combination, and `ValidateSourceCache` in a
+separate helper process. The per-profile helper/watchdog is reset for each
+weight profile, preserving the 24-second bound without truncating knot rows.
+The high-precision direct oracle remains in the kernel matrix; the subprocess
+sample is a transport/integration cross-check, not a replacement oracle. No
+production behavior changed.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused all-profile/all-knot helper matrix: 115,014 assertions / 1 case.
+- Full helper-process suite: 117,795 assertions / 7 cases.
+- `git diff --check`: passed.
+
+This closes the recorded four-profile, degree-4/6 periodic root matrix across
+the direct kernel and built-helper cache-admission paths. Other periodic
+weights, knot/control layouts, source scales, GUI replacement, Trim/persistence
+for these exact fixtures, and independent CAD acceptance remain open.
+
