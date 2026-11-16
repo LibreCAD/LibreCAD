@@ -53411,7 +53411,11 @@ highlight, and worker-backed replacement. In particular, the source Properties
 selection passes 15,498 assertions / 45 cases, the incremental all-kind filter
 case passes 148 assertions / 1 case, and the all-family hover/click/replacement
 case passes 466 assertions / 1 case at the recorded PR product revision.
-These tests do not establish visible packaged-app interaction.
+The full 15,498-assertion / 45-case source-picker selection was rerun against
+the current CMake Release test binary during this reconciliation and passed;
+intervening PR commits are roadmap-only, with no product source changes since
+the recorded picker revision. These tests do not establish visible
+packaged-app interaction.
 
 Plan disposition: no new source-picker implementation slice. Keep the visible
 Properties workflow (change types repeatedly, verify candidate refresh and
