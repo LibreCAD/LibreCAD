@@ -52425,11 +52425,12 @@ is claimed.
 
 Test commit `2039b3d5a` extends section 1575's typed-source/fallback persistence
 matrix to the complete recorded ratio set `{0.01, 0.05, 0.2, 0.5, 1.0}` at
-both high origins `(1e6,-1e6)` and `(1e9,-2e9)`. The bounded matrix contains
-576 generated profiles total: 240 at the ordinary origin, plus 336 at high
-origins. Every row covers both hyperbola branches, forward/reversed bounds,
-both offset signs, and cusp fractions `0.5`, `1.0`, and `1.5`; high-origin
-ratios `0.05` and `0.2` additionally retain the wider interval.
+both high origins `(1e6,-1e6)` and `(1e9,-2e9)`. Follow-up test commit
+`41f33a504` adds the wider parameter interval for every ratio at both high
+origins. The bounded matrix now contains 720 generated profiles total: 240 at
+the ordinary origin, plus 480 at high origins. Every row covers both
+hyperbola branches, forward/reversed bounds, parameter half-widths `0.4` and
+`0.8`, both offset signs, and cusp fractions `0.5`, `1.0`, and `1.5`.
 
 All rows exercise source-cache combination and operation validation, then
 persist the source using DXF R12, DXF R2000, DXF R2018, DWG R2000, and DWG
@@ -52446,7 +52447,7 @@ Validation on macOS arm64 CMake Release:
 ```sh
 cmake --build /private/tmp/offset-2961-cmake-clean \
   --target librecad_offset_worker_client_tests -j4
-LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1800000 QT_QPA_PLATFORM=offscreen \
   DWGREAD=/opt/homebrew/bin/dwgread \
   /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
   'Bounded hyperbola cusp profiles persist typed sources across file lanes' \
@@ -52454,12 +52455,12 @@ LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-The focused case passes 355,177 assertions / 1 case. The test emits the known
+The focused case passes 453,231 assertions / 1 case. The test emits the known
 DWG raw-object fixed-handle replay diagnostics; this geometry round-trip does
 not claim lossless replay of those unrelated raw objects. Remaining gaps
-include other high-origin ratios/scales and interval shapes, broader
-cache-refused profiles, interactive packaged-app source-picker acceptance,
-and independent ODA/AutoCAD acceptance. The source-picker implementation
-supports switching among all nine supported source kinds, including parabola;
-the visible desktop acceptance gate remains outstanding.
+include other origins/scales and interval shapes, broader cache-refused
+profiles, interactive packaged-app source-picker acceptance, and independent
+ODA/AutoCAD acceptance. The source-picker implementation supports switching
+among all nine supported source kinds, including parabola; the visible desktop
+acceptance gate remains outstanding.
 
