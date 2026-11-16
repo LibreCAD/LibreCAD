@@ -54442,3 +54442,22 @@ Validation on macOS arm64 CMake Release with DWG support:
 Three specific positive weight gradients are now covered. Other periodic
 weight distributions, knot layouts, and source scales remain open.
 
+## 1635. Validate Periodic Interior Roots Through the Worker Cache (2026-11-16)
+
+Test commit `cea4752a2` extends every row in section 1634 through
+`GenerateSource`, result wire encode/decode, cache combination, and
+`ValidateSourceCache`. All three positive weight gradients, degrees 4 and 6,
+and every interior knot must produce a complete worker result and an
+admissible cache. The independent direct root and retained-output assertions
+remain in the same matrix. No production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused three-profile periodic matrix: 1,872 assertions / 1 case.
+- Full offset worker-kernel suite: 1,971,618 assertions / 124 cases.
+- `git diff --check`: passed.
+
+This closes worker/codec/cache validation for the listed periodic rows, not
+process-backed GUI replacement, Trim, persistence, other weights, or arbitrary
+periodic layouts.
+
