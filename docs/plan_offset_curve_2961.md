@@ -54202,3 +54202,24 @@ knots, higher degrees, periodic seam/interior ownership, and complete
 event-to-output mapping remain open; do not infer arbitrary rational tangent
 support from this profile.
 
+## 1623. Extend Non-binary Rational Tangent Weight Coverage (2026-11-16)
+
+Test commit `42d276947` adds stored-double middle weight `0.7` to the same
+clamped single-span rational quadratic tangent matrix and renames the case to
+reflect that its weights are not limited to binary values. The existing
+independent high-precision root/sign checks, certified motion enclosure, output
+mapping, and regular opposite-side checks all pass for this profile. No
+production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused rational tangent weight matrix: 414 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,525 assertions / 119 cases.
+- `git diff --check`: passed.
+
+The clamped single-span quadratic matrix now includes middle weights `0.3`
+and `0.7`, in addition to the explicitly listed binary profiles. This remains
+a finite profile set; nonuniform and repeated knots, higher degrees, periodic
+root ownership, and complete mapping of all tangent/collapse events remain
+open.
+
