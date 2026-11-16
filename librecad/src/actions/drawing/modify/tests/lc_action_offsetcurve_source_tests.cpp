@@ -4,6 +4,7 @@
 #include <catch2/generators/catch_generators.hpp>
 
 #include <array>
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <vector>
@@ -30,6 +31,7 @@
 #include "lc_offsetcurveactiontestsupport.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurveui.h"
+#include "lc_highlight.h"
 #include "../../../../lib/offset_worker/lc_offsetworkerrequest.h"
 #include "rs_block.h"
 #include "rs_document.h"
@@ -74,6 +76,7 @@ public:
     using LC_ActionOffsetCurveUpdateSource::m_limits;
     using LC_ActionOffsetCurveUpdateSource::createOptionsWidget;
     using LC_ActionPreSelectionAwareBase::m_selectionComplete;
+    using RS_PreviewActionInterface::m_highlight;
     using RS_PreviewActionInterface::m_preview;
     // Call the real protected preparation callback while useSource supplies its private source identity.
     LC_DocumentModificationBatch* preparationOnlyBatch = nullptr;
@@ -914,7 +917,17 @@ TEST_CASE("I update source selector filters and replaces every supported source 
 
     selector->setCurrentIndex(selector->findData(static_cast<int>(kind)));
     CHECK(f.action->sourceKind() == kind);
-    f.action->useSource(source);
+    const RS_Vector sourcePick = source->getNearestPointOnEntity({0, 0}, true);
+    f.action->hover(sourcePick);
+    REQUIRE(f.action->m_highlight != nullptr);
+    REQUIRE(f.action->m_highlight->count() == 1);
+    const auto* highlighted = f.action->m_highlight->entityAt(0);
+    REQUIRE(highlighted != nullptr);
+    const auto highlightedGeometry = LC_OffsetSourceGeometry::capture(*highlighted);
+    REQUIRE(highlightedGeometry);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*highlightedGeometry) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+    f.action->click(sourcePick);
     CHECK(f.action->lastReport().updated == 1);
     CHECK(f.action->lastReport().refused == 0);
     CHECK(f.action->lastReport().unchanged == 0);
