@@ -52066,17 +52066,19 @@ offset-family completeness, visible GUI, or independent CAD acceptance.
 
 ## 1566. Exercise Independent Source and Elliptic-arc Frames (2026-11-15)
 
-Test commits `ac6caa3f3` and `ae08870b6` add a second high-origin
-partial-ellipse clipping profile whose source parabola is rotated by `0.73`
+Test commits `ac6caa3f3`, `ae08870b6`, and `4d0dd9004` add a high-origin
+partial-ellipse clipping matrix whose source parabola is rotated by `0.73`
 radians and whose elliptic arc is independently rotated by `0.25` radians.
 The matrix covers all four combinations of forward/reversed parabola control
 order and forward/reversed representations of the same upper-arc-plus-chord
-boundary. The oracle checks source-Bezier preservation, endpoint membership on
-either the arc or its chord, interior containment in the bounded region, and
-an interior point classified inside the LoopOptimizer result. This directly
-covers the clone-and-local-transform path when source and boundary axes differ.
+boundary, at geometry scales `1` and `1e3` under the same `(1e9,-2e9)` world
+translation. The oracle checks source-Bezier preservation, endpoint membership
+on either the arc or its chord, interior containment in the bounded region,
+and an interior point classified inside the LoopOptimizer result. This
+directly covers the clone-and-local-transform path when source and boundary
+axes differ and model scale changes.
 
-Validation on macOS arm64 CMake Release at PR head `ae08870b6`:
+Validation on macOS arm64 CMake Release at PR head `4d0dd9004`:
 
 ```sh
 cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
@@ -52090,10 +52092,10 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-Results: the focused independently rotated arc selection passes 76 assertions
-/ 1 case across all four direction combinations; `[lc-hatchfix]` passes 89,794
-assertions across 172 passing cases with one skipped. This is one relative
-source/boundary rotation and one partial-ellipse shape, not arbitrary rotations,
-affine/3D transforms, all arc intervals, general offset-family completeness,
-visible GUI, or independent CAD acceptance.
+Results: the focused independently rotated arc selection passes 152 assertions
+/ 1 case across four direction combinations and two scales; `[lc-hatchfix]`
+passes 89,870 assertions across 172 passing cases with one skipped. This is
+one relative source/boundary rotation and one partial-ellipse shape, not
+arbitrary rotations, other scales, affine/3D transforms, all arc intervals,
+general offset-family completeness, visible GUI, or independent CAD acceptance.
 
