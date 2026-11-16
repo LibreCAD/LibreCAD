@@ -52889,3 +52889,26 @@ claimed. Both acceptance gates need a functioning local desktop session.
 LibreDWG validation of the exact-cusp hyperbola Trim-action matrix is recorded
 in section 1585 and is not a substitute for ODA/AutoCAD.
 
+## 1587. Revalidate Parabola Geometry and Worker Permutations on Current Source (2026-11-16)
+
+On the current CMake Release build, the focused parabola Direct suite passes
+56,336 assertions / 12 cases, the focused direct Trim case passes 68
+assertions / 1 case, the bounded typed-parabola worker-preparation case passes
+3,710 assertions / 1 case, and the 24-order/four-layout/three-profile/four-scale
+worker/cache matrix passes 1,234,635 assertions / 1 case. These runs confirm
+current-source geometry, Trim, and real-helper cache admission; the focused
+matrix does not include file persistence.
+
+A broader `[lc-offsetcurve][worker-client][parabola]` invocation with
+`DWGREAD=/opt/homebrew/bin/dwgread` and the configured 900,000 ms suite limit
+ran for 900,626 ms and failed only the suite watchdog: 1,459,236 assertions
+passed and five watchdog failures were reported across seven selected cases.
+The first watchdog fired in the multi-layout permutation/persistence case at
+layout `{0.05, 0.2, 0.65, 0.95}`, order `{0, 3, 2, 1}`, negative offset; later
+cases observed the already-expired suite clock. This broad selection is not a
+PASS and does not indicate a geometry assertion failure. Preserve the bounded
+900-second timeout; run the long persistence case in isolation if fresh
+current-source file-lane revalidation is required. Previously recorded
+worker/file/LibreDWG matrices remain tied to their own source receipts and are
+not promoted by this focused run.
+
