@@ -55484,3 +55484,28 @@ The oracle checks endpoint normals only; it does not prove interior exact-normal
 deviation or arbitrary tangent pairs, affine transforms, cache admission, or
 external CAD interoperability. Retain those as separate variant gates.
 
+## 1680. Verify Interior Exact Normals for the Steep Tangent Pair (2026-11-16)
+
+Test commit `ec18934bb` adds a kernel-level analytic oracle for the steep
+asymmetric tangent pair from sections 1675-1679 at scales `1e-3`, `1`, and
+`1e3`, in translated/rotated frames through origin `(1e9,-2e9)`. At five
+interior quadratic-Bezier parameters, it independently evaluates the source
+point and derivative from the defining control net, offsets by the signed unit
+left normal, and measures against the generated NURBS by direct NURBS
+evaluation plus bounded nearest-parameter refinement. The comparison is made
+in a translated local frame to avoid conflating geometry error with large
+world-coordinate distance-query conditioning. Both offset signs are required
+to stay within the recorded `4e-4 * scale` geometry tolerance (or the larger
+floating-point floor).
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 141 assertions / 1 case.
+- `endpoint-tangent parabola conditioning crosses worker cache validation`: 465 assertions / 1 case.
+- `librecad_offset_worker_kernel_tests` target build: passed.
+- `git diff --check`: passed.
+
+This establishes the recorded tangent pair, five interior parameters, and
+three frames only; it does not make all tangent layouts, singular/contact
+boundaries, or exterior CAD acceptance exhaustive.
+
