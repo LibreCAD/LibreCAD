@@ -55004,15 +55004,18 @@ interaction, and independent ODA/AutoCAD acceptance remain open.
 
 ## 1660. Reconcile the All-family Properties Source Picker Request (2026-11-16)
 
-The repeated request is to keep source-family choice available while selecting
-a replacement and to include every source kind supported by editable offsets.
-This is already implemented by the all-family filter in section 1658; it does
-not call for another selector, new geometry encoding, or a parabola-only UI
-path. The contract is explicit: the user may change the filter repeatedly
-before committing a candidate; `All supported types` exposes all nine modeled
-kinds; parabola remains distinct from spline-points; choosing a candidate
-updates the displayed family and enters asynchronous validation; and filter
-changes alone preserve the current source and cache.
+The repeated request is that, while choosing a replacement source curve, the
+user can change its requested type and then choose a matching curve. This
+applies to every source kind supported by the offset model: line, arc, circle,
+ellipse, parabola, hyperbola, spline, spline-points, and polyline. This is
+already implemented by the all-family filter in section 1658; it does not call
+for a second selector, new geometry encoding, or a parabola-only UI path. The
+contract is explicit: the type control remains available throughout candidate
+browsing; the user may change it repeatedly before committing a candidate;
+`All supported types` exposes all nine modeled kinds; parabola remains distinct
+from spline-points; choosing a candidate updates the displayed family and
+enters asynchronous validation; and filter changes alone preserve the current
+source and cache.
 
 Current automated evidence remains section 1658's all-family selection,
 incremental large-list filtering, and typed-parabola workflow. Do not infer
