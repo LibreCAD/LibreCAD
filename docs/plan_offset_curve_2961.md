@@ -54957,6 +54957,10 @@ The failed experiment was removed and did not change the implementation. Its
 diagnostic run recorded 3,612 passing assertions and one failed assertion for
 the expected valid near-tangent success; the exact oracle confirmed two
 distinct roots. This case is an outstanding geometry/kernel item, not a
-passing acceptance result. Other near-tangent distances and orientations,
-visible-app interaction, and independent ODA/AutoCAD acceptance remain open.
+passing acceptance result. After removing the experiment, the existing
+endpoint-tangent Trim Two regression passed 45,320 assertions / 1 case on
+macOS arm64 CMake Release, confirming the established tangent refusal and
+supported adjacent profiles are unchanged. Other near-tangent distances and
+orientations, visible-app interaction, and independent ODA/AutoCAD acceptance
+remain open.
 
