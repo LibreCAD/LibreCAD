@@ -55087,8 +55087,31 @@ Validation on macOS arm64 CMake Release with LibreDWG:
   prefixes and unchanged source/history checks retained.
 - CMake build and `git diff --check`: passed.
 
-This does not qualify degree-one contacts across arbitrary conic ratios,
-rotations, origins, scales or cutter profiles, nor does it close cubic
-near-tangent boundaries beyond the separately measured fixtures. Visible-app
-and independent ODA/AutoCAD acceptance remain open.
+Section 1663 extends degree-one qualification to a rotated ellipse at ratios
+`0.5` and `2.0`. Other conic ratios, rotations, origins, scales or cutter
+profiles remain open, as do cubic near-tangent boundaries beyond the
+separately measured fixtures. Visible-app and independent ODA/AutoCAD
+acceptance remain open.
+
+## 1663. Qualify Near-tangent Degree-one Rotated Ellipse Contacts (2026-11-16)
+
+Test commit `9b8ab4221` carries the degree-one near-tangent conic cases from
+section 1662 through a rotated ellipse whose major displacement is `(2, 1)`.
+It checks ratios `0.5` and `2.0` (including the greater-than-one image scale),
+forward and reversed source traversal, and inward fractions `1e-8`, `1e-10`,
+and `1e-12`. The oracle forms the actual stored line/ellipse implicit quadratic
+with exact rationals and requires a positive discriminant before expecting two
+simple roots. Successful trims return two correctly ordered source parameters
+and one conic fragment without mutating the input. Each measured profile reaches
+at least 24 pair-refinement levels (observed depths 32, 36, and 42).
+
+Validation on macOS arm64 CMake Release:
+
+- Rotated ellipse matrix: 324 assertions / 1 case.
+- Full trim-kernel selector: 4,644,308 assertions / 92 cases.
+- `git diff --check`: passed.
+
+This is kernel-level geometry qualification only; it does not add action,
+worker, file-round-trip, arbitrary ellipse-ratio/origin/scale, cubic near-tangent,
+visible-app, or external CAD coverage.
 
