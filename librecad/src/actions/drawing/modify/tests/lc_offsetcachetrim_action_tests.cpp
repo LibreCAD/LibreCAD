@@ -2852,6 +2852,42 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
             CHECK(circleBatch.entitiesToAdd[i]->rtti() == preparedBatch.entitiesToAdd[i]->rtti());
             CHECK(trimGeometry(*circleBatch.entitiesToAdd[i]) == trimGeometry(*preparedBatch.entitiesToAdd[i]));
         }
+
+        f.action->click(nativePick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        CHECK(f.action->caughtAt(circlePick) == circle);
+        f.action->hover(circlePick);
+        const auto circlePreview = trimPreview(*f.action->m_preview);
+        REQUIRE(circlePreview.size() == preparedBatch.entitiesToAdd.size());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        f.action->click(circlePick);
+        CHECK(native->isDeleted());
+        CHECK(circle->isDeleted());
+        auto committedCircle = trimPreview(f.graphic);
+        std::sort(committedCircle.begin(), committedCircle.end());
+        auto expectedCircle = circlePreview;
+        std::sort(expectedCircle.begin(), expectedCircle.end());
+        CHECK(committedCircle == expectedCircle);
+        std::vector<RS_Entity*> circleFragments;
+        for (auto* entity : live(f.graphic))
+            if (entity != native && entity != circle && entity != parabola && entity != cutter)
+                circleFragments.push_back(entity);
+        REQUIRE(circleFragments.size() == circlePreview.size());
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        for (const auto* fragment : circleFragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(circle->isDeleted());
+        for (const auto* fragment : circleFragments) CHECK_FALSE(fragment->isDeleted());
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        for (const auto* fragment : circleFragments) CHECK(fragment->isDeleted());
+        f.action = std::make_unique<CacheTrim<true>>(&f.context);
+
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(circle->isDeleted());
         CHECK(circle->getCenter() == circleCenter);
