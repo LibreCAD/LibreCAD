@@ -631,8 +631,9 @@ TEST_CASE("High-origin parabola clipping uses local elliptic-arc intersections",
 
 TEST_CASE("High-origin parabola clipping handles independently rotated elliptic arcs",
           "[lc-hatchfix][pattern][parabola][trim][large-origin][elliptic-arc][rotated]") {
-    const bool reversed = GENERATE(false, true);
-    CAPTURE(reversed);
+    const bool reversedArc = GENERATE(false, true);
+    const bool reversedSource = GENERATE(false, true);
+    CAPTURE(reversedArc, reversedSource);
     constexpr double sourceRotation = 0.73;
     constexpr double ellipseRotation = 0.25;
     constexpr double majorRadius = 1.8;
@@ -645,6 +646,7 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
                                                   {2.0, 0.0}}};
     std::array<RS_Vector, 3> controls;
     std::transform(localControls.begin(), localControls.end(), controls.begin(), toSourceWorld);
+    if (reversedSource) std::reverse(controls.begin(), controls.end());
     const LC_ParabolaData sourceData{controls};
     REQUIRE(sourceData.isValid());
 
@@ -653,7 +655,7 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
                            majorRadius * std::sin(ellipseRotation)};
     auto* arc = new RS_Ellipse(boundary.get(),
         RS_EllipseData{translation, majorP, ratio,
-                       reversed ? M_PI : 0.0, reversed ? 0.0 : M_PI, reversed});
+                       reversedArc ? M_PI : 0.0, reversedArc ? 0.0 : M_PI, reversedArc});
     boundary->addEntity(arc);
     boundary->addEntity(new RS_Line(boundary.get(),
         RS_LineData{arc->getEndpoint(), arc->getStartpoint()}));
@@ -680,7 +682,9 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
     for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
         const RS_Vector point = bezierAt(resultControls, parameter);
         const RS_Vector sourceLocal = (point - translation).rotated(-sourceRotation);
-        const double sourceParameter = (sourceLocal.x + 2.0) / 4.0;
+        const double sourceParameter = reversedSource
+                                           ? (2.0 - sourceLocal.x) / 4.0
+                                           : (sourceLocal.x + 2.0) / 4.0;
         CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
 
         const RS_Vector ellipseLocal = (point - translation).rotated(-ellipseRotation);
