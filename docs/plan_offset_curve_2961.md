@@ -54306,3 +54306,22 @@ This closes only three degree-elevated single-span profiles. Other high-degree
 weight layouts, nonuniform/repeated knots at these degrees, periodic higher-
 degree ownership, and continuous event-to-output coverage remain open.
 
+## 1628. Map High-degree Rational Tangencies Across a Nonuniform Knot (2026-11-16)
+
+Test commit `b16324339` extends the degree-4-through-6 tangent matrix by
+inserting a nonuniform knot at `0.25` into each degree-elevated rational
+quadratic. The tangent remains at `0.5` in the following span. The independent
+oracle checks sampled curve equivalence, midpoint tangency and same-sign
+neighbors; production must complete isolation, own the event, and map its
+point to retained output. No production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused degree-4-through-6 nonuniform tangent matrix: 115 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,741 assertions / 122 cases.
+- `git diff --check`: passed.
+
+This qualifies one knot location and one inherited weight layout per degree.
+Other knot positions/multiplicities, high-degree weight profiles, periodic
+higher-degree ownership, and continuous event-to-output coverage remain open.
+
