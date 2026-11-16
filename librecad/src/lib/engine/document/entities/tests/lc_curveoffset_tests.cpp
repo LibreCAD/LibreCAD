@@ -2506,31 +2506,33 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
         return RS_Vector{std::cos(rotation) * point.x - std::sin(rotation) * point.y,
                          std::sin(rotation) * point.x + std::cos(rotation) * point.y};
     };
-    constexpr double slope = 1e-4;
-    const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
-        {{rotate({0.0, 0.0}) + translation, rotate({10.0, 0.0}) + translation}},
-        {{rotate({1.0, slope}), rotate({1.0, -slope})}});
-    REQUIRE(data.isValid());
-
-    const LC_Parabola source{nullptr, data};
-    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
-    REQUIRE(snapshot);
-    CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
-    const EvalFn exactCurve = evaluator(source);
     constexpr double distance = 0.01;
     constexpr double requestedTolerance = 1e-3;
-    const auto options = LC_CurveOffset::makeDirectOptions(
-        source, distance, requestedTolerance);
-    REQUIRE(options.tolerance.requestedGeometry == requestedTolerance);
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
-                                           LC_CurveOffsetSide::Right}) {
-        CAPTURE(side);
-        const auto result = LC_CurveOffset::buildDirectBranches(
-            source, LC_CurveOffset::makeSideRequest(side, distance), options,
-            LC_CurveOffset::makeDirectSourceBudget());
-        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-        CHECK(maxDeviation(result, exactCurve) <=
-              options.tolerance.requestedGeometry);
+    for (const double slope : {1e-4, 1e-5, 1e-6}) {
+        CAPTURE(slope);
+        const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({0.0, 0.0}) + translation, rotate({10.0, 0.0}) + translation}},
+            {{rotate({1.0, slope}), rotate({1.0, -slope})}});
+        REQUIRE(data.isValid());
+
+        const LC_Parabola source{nullptr, data};
+        const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+        REQUIRE(snapshot);
+        CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        const EvalFn exactCurve = evaluator(source);
+        const auto options = LC_CurveOffset::makeDirectOptions(
+            source, distance, requestedTolerance);
+        REQUIRE(options.tolerance.requestedGeometry == requestedTolerance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, exactCurve) <=
+                  options.tolerance.requestedGeometry);
+        }
     }
 }
 
