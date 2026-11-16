@@ -52241,8 +52241,9 @@ smallest profiles when its requested relative tolerance falls below the
 numeric floor. The direct oracle supplies an explicit `1e-4` tolerance there;
 the worker definitions already use that explicit tolerance. This verifies
 fail-closed defaults and bounded operation with declared precision, not
-automatic success below the arithmetic floor. High-origin DXF/DWG persistence
-and other hyperbola scales/origins remain open.
+automatic success below the arithmetic floor. Section 1572 adds five-lane
+persistence for one explicitly configured high-origin hyperbola profile;
+other high-origin profiles and scales remain open.
 
 Validation on macOS arm64 CMake Release:
 
@@ -52261,5 +52262,35 @@ git diff --check
 
 Results: the direct-oracle selection passes 131,260 assertions / 1 case; the
 worker/cache variant matrix passes 2,530 assertions / 1 case. No high-origin
-file-format round trip or external CAD acceptance is claimed.
+file-format round trip or external CAD acceptance was yet claimed at that
+checkpoint; section 1572 follows with the bounded persistence slice.
+
+## 1572. Persist an Explicit-tolerance High-origin Hyperbola (2026-11-15)
+
+Test commit `ec3fc29dd` carries a bounded hyperbola centered at `(1e9,-2e9)`
+through the real worker, operation-8 cache validation, and five native file
+lanes. Four rows use ratio `0.05`, bounds `[-0.4,0.4]`, both signed offsets,
+and distances `0.5` and `1.5` times the vertex radius. Each is required to
+admit a typed source before saving. R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+reopen as an editable bounded-hyperbola offset with the same signed distance
+and cache fingerprint. When LibreDWG is available, both DWG versions must
+decode one SPLINE with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][large-origin][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+The focused case passes 2,575 assertions / 1 case with DWG support and
+LibreDWG inspection enabled. This closes only the four listed high-origin
+rows; it does not establish persistence for other origins, ratios, intervals,
+or cache-refused high-origin outputs, nor ODA/AutoCAD acceptance.
 
