@@ -55087,11 +55087,11 @@ Validation on macOS arm64 CMake Release with LibreDWG:
   prefixes and unchanged source/history checks retained.
 - CMake build and `git diff --check`: passed.
 
-Section 1663 extends degree-one qualification to a rotated ellipse at ratios
-`0.5` and `2.0`. Other conic ratios, rotations, origins, scales or cutter
-profiles remain open, as do cubic near-tangent boundaries beyond the
-separately measured fixtures. Visible-app and independent ODA/AutoCAD
-acceptance remain open.
+Sections 1663-1664 extend degree-one qualification to a rotated ellipse at
+ratios `0.5` and `2.0`, with three specified origin/scale profiles. Other
+conic ratios, rotations, origins, scales or cutter profiles remain open, as do
+cubic near-tangent boundaries beyond the separately measured fixtures.
+Visible-app and independent ODA/AutoCAD acceptance remain open.
 
 ## 1663. Qualify Near-tangent Degree-one Rotated Ellipse Contacts (2026-11-16)
 
@@ -55114,4 +55114,32 @@ Validation on macOS arm64 CMake Release:
 This is kernel-level geometry qualification only; it does not add action,
 worker, file-round-trip, arbitrary ellipse-ratio/origin/scale, cubic near-tangent,
 visible-app, or external CAD coverage.
+
+## 1664. Translate Near-tangent Ellipse Contacts across Scales (2026-11-16)
+
+Test commit `796b6ffdf` extends section 1663's exact-rational line/ellipse
+matrix to centers `(0, 0)`, `(1e6, -2e6)`, and `(1e9, -2e9)`, with geometry
+scales `1`, `10`, and `1e3`, respectively. It retains both rotated ellipse
+ratios (`0.5`, `2.0`) and both line traversals. Inward offsets are chosen per
+profile to remain distinguishable in the actual stored doubles: `{1e-8,
+1e-10, 1e-12}` at the origin, `{1e-8, 1e-9, 1e-10}` at the medium origin,
+and `1e-8` at the high origin. The exact rational oracle is computed from the
+stored source endpoints and ellipse parameters, and each accepted row proves
+two distinct roots before checking their order, fragment output, and input
+immutability. The refinement-depth floor remains 24.
+
+The initial unit-scale `(1e6, -2e6)`, `1e-10` probe had zero exact
+discriminant after coordinate quantization; that row was not treated as a
+secant or as a product failure. Scaling that translated profile to 10 preserves
+a distinct stored secant while keeping the requested near-tangent fraction.
+
+Validation on macOS arm64 CMake Release:
+
+- Translated/scale ellipse matrix: 756 assertions / 1 case.
+- Full trim-kernel selector: 4,644,740 assertions / 92 cases.
+- CMake `librecad_tests` build and `git diff --check`: passed.
+
+This adds only the recorded center/scale/ratio/distance rows to kernel geometry
+coverage. It does not establish arbitrary translation-scale covariance, GUI or
+worker behavior, file round trips, or independent CAD acceptance.
 
