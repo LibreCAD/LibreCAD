@@ -6868,6 +6868,7 @@ TEST_CASE(
   std::size_t generatedRows = 0;
   std::size_t persistedRows = 0;
   std::size_t nativeCacheRefusals = 0;
+  std::size_t persistedMultiBranchRows = 0;
   for (const double ratio : ratios) {
     constexpr double semiMajor = 10.0;
     const double vertexRadius = semiMajor * ratio * ratio;
@@ -6905,6 +6906,56 @@ TEST_CASE(
               ++generatedRows;
               if (generated.ordinary.size() != 1) {
                 ++nativeCacheRefusals;
+                if (persistedMultiBranchRows == 0) {
+                  RS_Graphic ordinaryGraphic;
+                  ordinaryGraphic.initForNewDocument();
+                  auto *ordinaryLayer = new RS_Layer("OrdinaryOffset");
+                  ordinaryGraphic.addLayer(ordinaryLayer);
+                  std::vector<std::uint64_t> expectedFragments;
+                  for (const auto &output : generated.ordinary) {
+                    const auto *splineData = std::get_if<RS_SplineData>(&output);
+                    REQUIRE(splineData);
+                    RS_Spline spline{nullptr, *splineData};
+                    REQUIRE(spline.validate());
+                    auto *entity = new RS_Spline(&ordinaryGraphic, *splineData);
+                    entity->setLayer(ordinaryLayer);
+                    ordinaryGraphic.addEntity(entity);
+                    expectedFragments.push_back(
+                        RS_Spline::geometryFingerprint(*splineData));
+                  }
+                  REQUIRE(expectedFragments.size() > 1);
+
+                  for (const Lane &lane : lanes) {
+                    CAPTURE(lane.extension, ratio, halfWidth, oppositeBranch,
+                            reverseBounds, fraction, sign);
+#ifndef DWGSUPPORT
+                    if (lane.format == RS2::FormatDWG ||
+                        lane.format == RS2::FormatDWG2018)
+                      continue;
+#endif
+                    const auto path = directory.file(
+                        std::to_string(generationId) + "-ordinary-" +
+                        lane.extension);
+                    REQUIRE(lc::test::exportDrawing(ordinaryGraphic, path,
+                                                    lane.format));
+                    RS_Graphic reopened;
+                    REQUIRE(lc::test::importDrawing(reopened, path,
+                                                   lane.format));
+                    std::vector<std::uint64_t> actualFragments;
+                    for (RS_Entity *entity : reopened) {
+                      if (entity->isDeleted() ||
+                          entity->rtti() != RS2::EntitySpline)
+                        continue;
+                      const auto *spline =
+                          dynamic_cast<const RS_Spline *>(entity);
+                      REQUIRE(spline);
+                      actualFragments.push_back(
+                          RS_Spline::geometryFingerprint(spline->getData()));
+                    }
+                    CHECK(actualFragments == expectedFragments);
+                  }
+                  ++persistedMultiBranchRows;
+                }
                 continue;
               }
 
@@ -7032,6 +7083,7 @@ TEST_CASE(
   CHECK(generatedRows == ratios.size() * intervalHalfWidths.size() * 2 * 2 *
                              curvatureFractions.size() * 2);
   CHECK(persistedRows > 0);
+  CHECK(persistedMultiBranchRows == 1);
   CHECK(persistedRows + nativeCacheRefusals == generatedRows);
 }
 
