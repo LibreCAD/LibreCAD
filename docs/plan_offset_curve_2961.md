@@ -53958,3 +53958,35 @@ close the continuous origin/scale matrix, alternate tangent constructions,
 all Trim sides/cutters, visible-app acceptance, or independent ODA/AutoCAD
 acceptance.
 
+## 1619. Extend Tangent-Parabola Scale and Origin Matrix (2026-11-16)
+
+Add direct offset/oracle cases and worker/cache file-lane profiles for a small
+scale (`span=1e-3`, `slope=1e-6`, signed distance magnitude `5e-6`) and a large
+scale (`span=1e5`, `slope=1e-8`, signed distance magnitude `500`). Each scale
+is exercised at the origin and at a translated origin (`(1e3,-2e3)` for the
+small profile; `(1e9,-2e9)` for the large profile). These additions extend the
+matrix for one endpoint-tangent construction only. The new scale rows are not
+yet exercised through Trim Two; section 1618's Trim Two evidence remains
+limited to `span=10`, `slope=1e-8`, origins through `(1e8,-2e8)`.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+Results: broad direct parabola selection passes 64,728 assertions / 15 cases;
+worker/cache and five-format persistence pass 40,596 assertions / 1 case.
+The full origin/scale/construction/cutter matrix, Trim Two for these new scale
+rows, visible-app acceptance, and independent ODA/AutoCAD acceptance remain
+open.
+
