@@ -3020,7 +3020,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     for (const RS_Entity* fragment : fragments)
         CHECK_FALSE(fragment->isDeleted());
 
-    if (highOrigin || scaleExtreme) {
+    if (highOrigin || scaleExtreme || asymmetricTangents) {
         QTemporaryDir directory;
         REQUIRE(directory.isValid());
         const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14,
