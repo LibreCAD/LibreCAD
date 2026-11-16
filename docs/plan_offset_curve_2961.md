@@ -53174,7 +53174,8 @@ entity dependency.
 This behavior is already covered by properties-dialog regressions for every
 family, preserved highlighting across family changes, unique/ambiguous source
 matching, retained identity for duplicate geometry, selection preservation,
-and incremental scans under document mutations. The broader source-picker
+and incremental scans under document mutations. Revalidated at PR head
+`316fd3500` in the current CMake Release build, the broader source-picker
 suite passes 15,498 assertions / 45 cases. The separate Update-from-Source
 action also has all-kind live filtering and replacement coverage; test commit
 `d70b1e392` drives hover/highlight/click for every supported family (466
