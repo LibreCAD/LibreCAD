@@ -261,10 +261,11 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1643 add one rotated, high-origin
-asymmetric endpoint-tangent parabola through Trim Two and all five internal
-file lanes; continue with materially distinct tangent layouts, scales, and
-cutter conditioning rather than treating that profile as exhaustive; (3) completed by sections 1504-1507: qualify
+and fail-closed limits. Sections 1642-1644 add a rotated, high-origin
+asymmetric endpoint-tangent parabola and its reversed traversal through Trim
+Two and all five internal file lanes; continue with materially distinct
+tangent layouts, scales, and cutter conditioning rather than treating these
+two traversal cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
@@ -54633,4 +54634,25 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 The evidence remains bounded to the one asymmetric tangent pair and frame
 listed in section 1642. Other tangent layouts, scales, cutter conditioning,
 visible-app acceptance, and independent ODA/AutoCAD acceptance remain open.
+
+## 1644. Trim the Reversed Asymmetric Endpoint-tangent Source (2026-11-16)
+
+Test commit `5f8a162b4` adds the reversed traversal of section 1642's
+asymmetric endpoint-tangent parabola to the action matrix. The endpoints are
+swapped and the tangent vectors are reversed and negated, preserving the
+geometric construction while changing its parameter orientation. The case
+passes worker-backed source replacement, Trim Two preview/commit, undo/redo,
+and the five DXF/DWG save/reopen lanes with the same fragment-geometry checks;
+LibreDWG inspects the DWG outputs when available. No production behavior
+changed.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Focused endpoint-tangent Trim Two matrix: 13,559 assertions / 1 case.
+- All five enabled format lanes completed for both asymmetric traversals.
+- `git diff --check`: passed before commit.
+
+This adds reversed parameterization evidence for one asymmetric geometry; it
+does not cover other tangent pairs, endpoint spacing, scales/origins, cutter
+conditioning, visible-app acceptance, or independent ODA/AutoCAD acceptance.
 
