@@ -1143,12 +1143,12 @@ TEST_CASE("T Trim Two commits certified exact- and post-cusp hyperbola caches at
     Drawing<true> f;
     auto* previous = addNative(f.graphic);
     const double ratio = GENERATE(0.4, std::sqrt(1.0 / 3.5));
-    const double translation = GENERATE(0.0, 1e8, 1e9);
+    const double translation = GENERATE(0.0, 1e8, 1e9, 2e9);
     const RS_Vector origin = translation == 0.0
                                  ? RS_Vector{-2, 6}
                                  : RS_Vector{translation, -translation};
     if (translation > 0.0) {
-        const double zoom = translation > 5e8 ? 2.0 : 4.0;
+        const double zoom = translation > 1.5e9 ? 1.0 : (translation > 5e8 ? 2.0 : 4.0);
         f.view.getViewPort()->setOffsetAndFactor(qRound(200.0 - origin.x * zoom),
                                                   qRound(200.0 - origin.y * zoom), zoom);
     }
