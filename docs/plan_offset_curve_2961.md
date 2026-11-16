@@ -55462,3 +55462,25 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This is one additional cutter shape at one scale/frame, not general line
 placement, tangent direction, or contact-boundary coverage.
 
+## 1679. Add Worker-cache and Exact Endpoint-normal Coverage for Steep Tangents (2026-11-16)
+
+Test commit `e79b618a7` adds the steep asymmetric endpoint-tangent pair
+`{(0.8, 0.6), (0.6, -0.8)}` to the worker-client cache/persistence matrix at
+source scales `1e-3`, `1`, and `1e3`, with translated and high-origin frames.
+For both signed offset distances, an independent endpoint oracle computes
+`P + d * leftNormal` from the defining tangent vectors and checks that the two
+generated spline endpoints match those points in either traversal order. Each
+profile also continues through worker source-cache validation and R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG round trips, including optional LibreDWG
+inspection.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 41,357 assertions / 1 case.
+- `librecad_offset_worker_client_tests` target build: passed.
+- `git diff --check`: passed.
+
+The oracle checks endpoint normals only; it does not prove interior exact-normal
+deviation or arbitrary tangent pairs, affine transforms, cache admission, or
+external CAD interoperability. Retain those as separate variant gates.
+
