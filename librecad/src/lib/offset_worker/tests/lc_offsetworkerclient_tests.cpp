@@ -7424,7 +7424,9 @@ TEST_CASE(
   OwnedClient client{rt};
   RS_EntityContainer owner;
   RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
-  const std::array<RS_Vector, 2> origins{{{1e6, -1e6}, {1e9, -2e9}}};
+  const std::array<RS_Vector, 3> origins{{{1e6, -1e6},
+                                         {1e9, -2e9},
+                                         {1e12, -2e12}}};
 
   struct Lane {
     RS2::FormatType format;
@@ -7444,20 +7446,24 @@ TEST_CASE(
   qint64 requestId = 220000;
   std::size_t admittedRows = 0;
   for (const RS_Vector &origin : origins) {
+    const bool veryHighOrigin = std::abs(origin.x) > 1e11 ||
+                                std::abs(origin.y) > 1e11;
+    const double semiMajor = veryHighOrigin ? 2e4 : 10.0;
     for (const double ratio : {0.05, 0.2}) {
       const LC_HyperbolaData data{
-          origin, {10.0 * std::cos(0.37), 10.0 * std::sin(0.37)},
+          origin, {semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
           ratio,  -0.4,
           0.4,    false};
       const LC_OffsetSourceGeometry source{data};
       REQUIRE(source.isWellFormed());
       const double vertexRadius = data.majorP.magnitude() * ratio * ratio;
-      for (const double fraction : {0.5, 1.5}) {
+      for (const double fraction : {0.5, 1.0, 1.5}) {
         for (const double sign : {-1.0, 1.0}) {
           const double signedDistance = sign * fraction * vertexRadius;
           CAPTURE(origin.x, origin.y, ratio, fraction, sign, signedDistance);
-          const LC_OffsetSourceDefinition definition{source, signedDistance,
-                                                     1e-4, false};
+          const double requestedTolerance = veryHighOrigin ? 0.05 : 1e-4;
+          const LC_OffsetSourceDefinition definition{
+              source, signedDistance, requestedTolerance, false};
           const qint64 generationId = requestId++;
           Receipts generationReceipts;
           REQUIRE(client.get().submit(
@@ -7586,7 +7592,7 @@ TEST_CASE(
       }
     }
   }
-  CHECK(admittedRows == origins.size() * 2 * 2 * 2);
+  CHECK(admittedRows == origins.size() * 2 * 3 * 2);
 }
 
 TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker preparation",
