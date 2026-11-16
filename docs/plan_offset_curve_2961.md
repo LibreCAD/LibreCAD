@@ -54265,3 +54265,23 @@ This qualifies one double-knot rational quadratic profile and one interior
 tangent. Other knot multiplicities, tangent positions, higher degrees,
 periodic ownership, and complete event-to-output mapping remain open.
 
+## 1626. Qualify Periodic Rational Seam Tangency with Alternate Weights (2026-11-16)
+
+Test commit `2e67dc598` adds a periodic rational cubic with positive base
+weights `{1, 0.3, 1.3, 0.7}` to the seam-tangent matrix. The signed offset is
+derived from the one-sided seam curvature; the independent high-precision
+oracle confirms equal seam curvature, an even root from both owners, and
+same-sign neighbors. Production isolation must complete, report a candidate or
+stall owning the seam, and map the oracle seam point to retained output. No
+production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused alternate-weight periodic seam case: 16 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,626 assertions / 121 cases.
+- `git diff --check`: passed.
+
+This qualifies one additional periodic weight profile and seam event only.
+Other periodic weight/knot layouts, interior-root ownership variants, higher
+degrees, and complete event-to-output mapping remain open.
+
