@@ -2642,17 +2642,21 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+                                 13, 14, 15, 16);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
     const bool reversedTangentTraversal = profile == 4 || profile == 6 ||
-                                          profile == 8 || profile == 10 || profile == 12;
+                                          profile == 8 || profile == 10 || profile == 12 ||
+                                          profile == 14 || profile == 16;
     const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
-                                    (profile >= 5 && profile <= 12);
-    const bool oppositeBend = profile >= 5 && profile <= 12;
-    const bool lineCutter = profile == 11 || profile == 12;
-    const bool asymmetricSmallScale = profile == 7 || profile == 8;
-    const bool asymmetricLargeScale = profile == 9 || profile == 10;
+                                    (profile >= 5 && profile <= 16);
+    const bool oppositeBend = profile >= 5 && profile <= 16;
+    const bool lineCutter = profile >= 11 && profile <= 16;
+    const bool asymmetricSmallScale = profile == 7 || profile == 8 ||
+                                      profile == 13 || profile == 14;
+    const bool asymmetricLargeScale = profile == 9 || profile == 10 ||
+                                      profile == 15 || profile == 16;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3)
