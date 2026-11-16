@@ -564,6 +564,8 @@ TEST_CASE("High-origin parabola clipping uses local ellipse intersections",
 
 TEST_CASE("High-origin parabola clipping uses local elliptic-arc intersections",
           "[lc-hatchfix][pattern][parabola][trim][large-origin][elliptic-arc]") {
+    const bool reversed = GENERATE(false, true);
+    CAPTURE(reversed);
     constexpr double rotation = 0.73;
     constexpr double majorRadius = 1.8;
     constexpr double ratio = 0.7;
@@ -582,7 +584,8 @@ TEST_CASE("High-origin parabola clipping uses local elliptic-arc intersections",
     const RS_Vector majorP{majorRadius * std::cos(rotation),
                            majorRadius * std::sin(rotation)};
     auto* arc = new RS_Ellipse(boundary.get(),
-        RS_EllipseData{translation, majorP, ratio, 0.0, M_PI, false});
+        RS_EllipseData{translation, majorP, ratio,
+                       reversed ? M_PI : 0.0, reversed ? 0.0 : M_PI, reversed});
     boundary->addEntity(arc);
     boundary->addEntity(new RS_Line(boundary.get(),
         RS_LineData{arc->getEndpoint(), arc->getStartpoint()}));
@@ -590,6 +593,9 @@ TEST_CASE("High-origin parabola clipping uses local elliptic-arc intersections",
     auto roots = optimizer.getResults();
     REQUIRE(roots);
     REQUIRE_FALSE(roots->empty());
+    CAPTURE(reversed, roots->size(), roots->front().getTotalArea(),
+            roots->front().isInside(toWorld({0.0, 0.5})));
+    REQUIRE(roots->front().isInside(toWorld({0.0, 0.5})));
 
     RS_Pattern pattern{QStringLiteral("TESTPARABOLAELLIPTICARC")};
     pattern.addEntity(new LC_Parabola(&pattern, sourceData));
