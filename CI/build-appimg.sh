@@ -80,6 +80,7 @@ LC_QT_PLUGINS=(
     imageformats/libqgif.so
     imageformats/libqico.so
     imageformats/libqjpeg.so
+    imageformats/libqpdf.so
     imageformats/libqsvg.so
     imageformats/libqtiff.so
     tls/libqopensslbackend.so
@@ -129,5 +130,7 @@ wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/re
 chmod +x appimagetool-*.AppImage
 # Bundle EVERYTHING
 VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage -s deploy appdir/usr/share/applications/*.desktop
+[ -n "$(find appdir -name libqpdf.so -print -quit)" ] || { echo "libqpdf.so missing from the AppImage" >&2; exit 1; }
+[ -n "$(find appdir -name 'libQt6Pdf.so*' -print -quit)" ] || { echo "libQt6Pdf missing from the AppImage" >&2; exit 1; }
 VERSION=`git describe --always` ./appimagetool-*.AppImage ./appdir
 chmod +x *.AppImage

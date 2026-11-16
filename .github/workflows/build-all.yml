@@ -197,7 +197,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.9.*'
-          modules: 'qt5compat'
+          modules: 'qt5compat qtpdf'
           arch: 'clang_64'
 
       - name: Install boost dependencies
@@ -234,6 +234,12 @@ jobs:
           scripts/test-osx-package.sh \
             --app LibreCAD.app \
             --architectures arm64,x86_64
+
+          # Qt's PDF image plugin must survive deployment and pruning.
+          test -f LibreCAD.app/Contents/PlugIns/imageformats/libqpdf.dylib
+          test -d LibreCAD.app/Contents/Frameworks/QtPdf.framework
+          archs=" $(lipo -archs LibreCAD.app/Contents/PlugIns/imageformats/libqpdf.dylib) "
+          [[ $archs == *' arm64 '* && $archs == *' x86_64 '* ]]
 
           # Exercise the fallback image backend from the same finalized app.
           # This validates both image paths without compiling LibreCAD twice.
