@@ -53658,3 +53658,42 @@ continuous representability boundary in `(1.103125e-9, 1.10625e-9)`, nor other
 origins/scales, constructions, cutters, visible-app use, or independent
 ODA/AutoCAD acceptance.
 
+## 1610. Extend the High-origin Tangent Boundary to 1.1046875e-9 (2026-11-16)
+
+The midpoint slope `1.1046875e-9` is valid at the recorded rotated
+`(1e9,-2e9)` frame and is now covered through both signed direct offsets,
+worker/cache generation and validation, both Trim Two `towardCentre` values,
+and all five DXF/DWG save/reopen lanes. Available LibreDWG checks verify the
+expected generated and trimmed entity types. The lower adjacent probe
+`1.103125e-9` remains invalid; probes `1.1e-9`, `1.0625e-9`, and `1e-9` are
+also invalid at this frame. This is sampled boundary evidence, not a proof that
+all values on either side of the interval have the same representability.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Results: direct geometry passes 1,459 assertions / 1 case; worker/cache and
+five-format persistence pass 35,438 assertions / 1 case; Trim Two and its
+result round-trips pass 8,275 assertions / 1 case. The remaining sampled
+interval is `(1.103125e-9, 1.1046875e-9)`; other origins/scales,
+constructions, cutters, visible-app use, and independent ODA/AutoCAD
+acceptance remain open.
+
