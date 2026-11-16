@@ -2658,6 +2658,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const bool asymmetricLargeScale = profile == 9 || profile == 10 ||
                                       profile == 15 || profile == 16;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
+    const bool tangentCircleBoundary =
+        (scaleExtreme && scaleProfile == 1) || profile == 5 || profile == 6;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3)
         : asymmetricSmallScale ? 1e-3
@@ -2815,7 +2817,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
               2 * oracle.maximumAngularError + 1e-12);
     }
 
-    if (scaleExtreme && scaleProfile == 1) {
+    if (tangentCircleBoundary) {
         const RS_Vector circlePick = circleCenter + normal * radius;
         const RS_Vector tangentCircleCenter = intersection + normal * radius;
         RS_Circle tangentCircle{nullptr, {tangentCircleCenter, radius}};
