@@ -111,9 +111,14 @@ interval directions, widths, and all three cusp distances; each high origin
 must exercise ordinary fallback. Section 1575 extends the direct exact-normal
 oracle to all five recorded ratios at three origins and the worker/cache
 matrix to all five ratios at the ordinary and `1e9` origins; its 240 rows all
-admit canonical caches. The expanded ratios are not yet persisted at high
-origins. These do not close other hyperbola origins/scales or ODA/AutoCAD
-acceptance. Sections 1550 and
+admit canonical caches. Section 1576 closes five-lane typed-or-fallback
+persistence for the complete five-ratio set at `(1e6,-1e6)` and
+`(1e9,-2e9)`, including both recorded interval widths. Sections 1577-1578
+extend direct geometry, worker/cache, and persistence to `(1e12,-2e12)` for
+their recorded ratio/profile grids; sections 1579-1585 further qualify
+interval widths/domains, exact cusp thresholds, and Trim at the recorded
+origins. These bounded matrices do not close other hyperbola origins/scales,
+arbitrary domains, or ODA/AutoCAD acceptance. Sections 1550 and
 1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
 `1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
