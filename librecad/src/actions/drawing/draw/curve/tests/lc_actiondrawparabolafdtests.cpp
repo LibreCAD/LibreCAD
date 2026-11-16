@@ -95,3 +95,50 @@ TEST_CASE("Focus-vertex parabola action creates an exact typed source",
     REQUIRE(source.has_value());
     CHECK(source->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
 }
+
+TEST_CASE("Focus-directrix parabola action captures an existing line",
+          "[actions][draw][parabola][focus-directrix]") {
+    ParabolaFDFixture fixture;
+    REQUIRE(fixture.qtReady);
+    REQUIRE(fixture.view.setCurrentAction(fixture.action));
+
+    const RS_Vector focus{0.0, 4.0};
+    auto* directrixLine = new RS_Line(&fixture.graphic,
+                                      RS_LineData{{-5.0, -4.0}, {5.0, -4.0}});
+    fixture.graphic.addEntity(directrixLine);
+    fixture.action->onCoordinateEvent(ParabolaFDProbe::SetFocus, false, focus);
+    REQUIRE(fixture.action->getStatus() == ParabolaFDProbe::SetDirectrix);
+
+    const LC_MouseEvent directrixClick = lc::test::eventAt(0.0, -4.0);
+    fixture.action->onMouseLeftButtonRelease(ParabolaFDProbe::SetDirectrix,
+                                             &directrixClick);
+    REQUIRE(fixture.action->getStatus() == ParabolaFDProbe::SetStartPoint);
+
+    fixture.action->onCoordinateEvent(ParabolaFDProbe::SetStartPoint, false,
+                                      {-2.0, 0.25});
+    REQUIRE(fixture.action->getStatus() == ParabolaFDProbe::SetEndPoint);
+    fixture.action->onCoordinateEvent(ParabolaFDProbe::SetEndPoint, false,
+                                      {2.0, 0.25});
+
+    LC_Parabola* created = nullptr;
+    for (RS_Entity* entity : fixture.graphic) {
+        if (!entity->isDeleted() && entity->rtti() == RS2::EntityParabola) {
+            REQUIRE(created == nullptr);
+            created = dynamic_cast<LC_Parabola*>(entity);
+        }
+    }
+    REQUIRE(created != nullptr);
+
+    const LC_ParabolaData& data = created->getData();
+    REQUIRE(data.isValid());
+    CHECK(data.getFocus().distanceTo(focus) < 1e-10);
+    for (const double x : {-2.0, -1.0, 0.0, 1.0, 2.0}) {
+        const RS_Vector point = data.fromX(x);
+        CHECK(point.distanceTo(focus) ==
+              Catch::Approx(directrixLine->getDistanceToPoint(point)).margin(1e-10));
+    }
+
+    const auto source = LC_OffsetSourceGeometry::capture(*created);
+    REQUIRE(source.has_value());
+    CHECK(source->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+}
