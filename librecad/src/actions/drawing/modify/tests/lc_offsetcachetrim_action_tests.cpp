@@ -2642,21 +2642,31 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
-    const bool reversedTangentTraversal = profile == 4 || profile == 6;
+    const bool reversedTangentTraversal = profile == 4 || profile == 6 ||
+                                          profile == 8 || profile == 10;
     const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
-                                    profile == 5;
-    const bool oppositeBend = profile == 5 || profile == 6;
+                                    (profile >= 5 && profile <= 10);
+    const bool oppositeBend = profile >= 5 && profile <= 10;
+    const bool asymmetricSmallScale = profile == 7 || profile == 8;
+    const bool asymmetricLargeScale = profile == 9 || profile == 10;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
     const double profileScale = scaleExtreme
-        ? (scaleProfile == 0 ? 1e-3 : 1e3) : 1.0;
+        ? (scaleProfile == 0 ? 1e-3 : 1e3)
+        : asymmetricSmallScale ? 1e-3
+        : asymmetricLargeScale ? 1e3
+                               : 1.0;
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1000.0 * profileScale, 0}, 1, 0, .1, false});
     const RS_Vector sourceTranslation = highOrigin
         ? RS_Vector{1e9, -2e9}
         : scaleExtreme
             ? (scaleProfile == 0 ? RS_Vector{1e3, -2e3} : RS_Vector{1e9, -2e9})
+        : asymmetricSmallScale
+            ? RS_Vector{1e3, -2e3}
+        : asymmetricLargeScale
+            ? RS_Vector{1e9, -2e9}
         : asymmetricTangents
             ? RS_Vector{1e6, -2e6}
             : profile == 0
@@ -2685,15 +2695,16 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
                                      : 0.371234567890123;
     CAPTURE(profile, scaleProfile, asymmetricTangents, reversedTangentTraversal,
+            oppositeBend, asymmetricSmallScale, asymmetricLargeScale,
             sourceTranslation,
             profileScale, towardCentre, tangentSlope, sourceRotation);
     const double endpointSpacing = scaleExtreme
-        ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0;
+        ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
     const std::array<RS_Vector, 2> endpointTangents = profile == 4
         ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
-        : profile == 6
+        : reversedTangentTraversal
             ? std::array<RS_Vector, 2>{{{-0.8, -0.25}, {-1.0, 0.4}}}
-            : profile == 5
+            : oppositeBend
                 ? std::array<RS_Vector, 2>{{{1.0, -0.4}, {0.8, 0.25}}}
                 : asymmetricTangents
                     ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
@@ -2751,7 +2762,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     tangent /= tangent.magnitude();
     const RS_Vector normal{-tangent.y, tangent.x};
     const double radius = oppositeBend
-        ? GENERATE(.05, .1, .25)
+        ? GENERATE(.05, .1, .25) * profileScale
         : .1 * profileScale;
     const RS_Vector circleCenter = intersection + tangent * radius;
     RS_Entity* cutter = nullptr;
@@ -3051,7 +3062,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         REQUIRE_FALSE(expectedGeometry.empty());
 
         const double geometryTolerance = scaleExtreme
-            ? (scaleProfile == 0 ? 1e-7 : 1e-4) : 1e-4;
+            ? (scaleProfile == 0 ? 1e-7 : 1e-4)
+            : asymmetricSmallScale ? 1e-7 : 1e-4;
         const auto closePoint = [=](const RS_Vector& a, const RS_Vector& b) {
             return a.valid && b.valid &&
                    a.distanceTo(b) <= geometryTolerance;
