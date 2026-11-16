@@ -53501,3 +53501,31 @@ frame only. Values between `1e-9` and `1.125e-9`, other origins/scales,
 arbitrary endpoint-tangent constructions, visible-app acceptance, and
 independent ODA/AutoCAD acceptance remain open.
 
+## 1606. Trim Two on a High-origin Endpoint-tangent Parabola (2026-11-16)
+
+Test commit `1dd4db561` extends `T Trim Two trims an endpoint-tangent
+parabola` with a translated/rotated high-origin profile (slope `1e-4`,
+rotation `0.371234567890123`, origin `(1e9,-2e9)`). The case exercises
+worker-backed Update from Source, typed source retention, direct trim
+preparation, preview immutability, atomic trim commit, and undo/redo. The
+ordinary-origin tangent cases remain in the same test. This is a focused
+trim-workflow qualification; it does not expand the ten-slope direct/cache
+matrix in section 1605.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Results: 2,122 assertions / 1 case pass. Remaining for this workflow: add
+DXF/DWG save-reopen verification of the trimmed high-origin fragments (and
+LibreDWG inspection where available), then re-run the focused test and relevant
+file-lane suite. Visible-app trimming acceptance and independent ODA/AutoCAD
+acceptance remain separate open gates.
+
