@@ -44,13 +44,16 @@ success, and cancellation/refusal remains open in Slice 5. The nine-kind
 inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically. At current PR test head
-`ef28377f4`, `[gui][dialog][offsetcurve][source]` passes 15,498 assertions /
-45 cases in CMake Release; this includes explicit enabled-state checks during
-an active scan and a large-document async filtering matrix for every supported
-kind. Product code remains at
+atomically. At current PR head `9ffd35f4d`,
+`[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
+CMake Release; this includes explicit enabled-state checks during an active
+scan and a large-document async filtering matrix for every supported kind.
+The separate Update-from-Source action click/highlight matrix added by
+`d70b1e392` passes 466 assertions / 1 case across all nine types. Product
+code remains at
 `b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent commits only update the
-roadmap and tests. This is headless UI evidence and does not close the
+roadmap and tests, including parabola drawing-action tests. This is headless UI
+evidence and does not close the
 visible packaged-app gate.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
