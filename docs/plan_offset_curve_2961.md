@@ -52634,3 +52634,31 @@ offset-entity checks. Asymmetric domains outside these four, additional
 high-origin file profiles, visible packaged-app acceptance, and independent
 ODA/AutoCAD acceptance remain open.
 
+## 1581. Persist Cusp-endpoint Intervals at 1e12 (2026-11-16)
+
+Test commit `7a1bd8b6b` introduced 48 asymmetric interval persistence profiles
+and is extended here to 64. All four interval shapes from section 1580 now
+run at both `(23,-17)` and `(1e12,-2e12)`, with both branches, forward and
+reversed bounds, and both offset signs. This adds five-lane save/reopen,
+second-save/reopen, and optional LibreDWG EED inspection for the two
+cusp-endpoint intervals at `1e12`; the high-origin feature scale and explicit
+tolerance remain `2e4` and `0.05`.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][asymmetric][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+The 64-profile persistence matrix passes 37,468 assertions / 1 case with DWG
+support and LibreDWG enabled. The raw OBJECTS fixed-handle diagnostics remain
+unrelated. Other asymmetric domains and ODA/AutoCAD plus visible-app
+acceptance remain open.
+
