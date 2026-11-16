@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerresult.h"
+#include "../lc_offsetworkersourcecache.h"
 #include "lc_offsetworkerwire.h"
 #include "rs_ellipse.h"
+#include "rs_spline.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <QCborValue>
@@ -676,6 +678,104 @@ TEST_CASE("Built helper produces a typed line source", "[lc-offsetcurve][worker-
     CHECK(produced.outputStatus == Reply::OrdinaryStatus::Complete);
     REQUIRE(produced.outputs.size() == 1);
     CHECK(std::holds_alternative<Req::Segment>(produced.outputs.front()));
+}
+
+TEST_CASE("Built helper generates and admits high-degree periodic rational knot roots",
+          "[lc-offsetcurve][worker-process][periodic][rational][high-degree][cache]") {
+    int argc = 1; char name[] = "offset-worker-periodic-spline-tests"; char* argv[] = {name, nullptr};
+    std::unique_ptr<QCoreApplication> application;
+    if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
+    Helper helper;
+    const std::array<std::pair<double, bool>, 3> weightProfiles{{
+        {0.1, true}, {0.05, true}, {0.05, false}}};
+    qint64 requestId = 100;
+    std::size_t admittedRoots = 0;
+
+    for (const auto [weightStep, symmetricWeights] : weightProfiles) {
+        for (const std::size_t degree : {4u, 6u}) {
+            RS_SplineData data;
+            data.degree = degree;
+            data.type = RS_SplineData::SplineType::ClampedOpen;
+            data.savedOpenType = data.type;
+            const std::size_t controlCount = degree + 3;
+            for (std::size_t i = 0; i < controlCount; ++i) {
+                const double angle = 2.0 * std::acos(-1.0) * static_cast<double>(i) /
+                                     static_cast<double>(controlCount);
+                data.controlPoints.emplace_back(10.0 * std::cos(angle),
+                                                7.0 * std::sin(angle));
+                const std::size_t weightIndex = symmetricWeights
+                    ? std::min(i, controlCount - i) : i;
+                data.weights.push_back(0.7 + weightStep * static_cast<double>(weightIndex));
+            }
+            data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+            for (std::size_t i = 1; i <= controlCount - degree - 1; ++i)
+                data.knotslist.push_back(static_cast<double>(i) /
+                                         static_cast<double>(controlCount - degree));
+            data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+
+            RS_Spline source{nullptr, data};
+            CAPTURE(weightStep, symmetricWeights, degree);
+            REQUIRE(source.validate());
+            source.setClosed(true);
+            REQUIRE(source.validate());
+            data = source.getData();
+            const auto breaks = source.getBreakParameters();
+            REQUIRE(breaks.size() > 2);
+
+            // The kernel oracle covers every knot. Keep subprocess startup bounded
+            // while exercising one representative interior root per profile.
+            for (std::size_t breakIndex = 1;
+                 breakIndex + 1 < breaks.size() && breakIndex == 1; ++breakIndex) {
+                const double knotValue = breaks[breakIndex];
+                LC_CurveJet leftJet;
+                LC_CurveJet rightJet;
+                REQUIRE(source.tryEvaluateJet(knotValue, LC_CurveEvaluationSide::Left, leftJet));
+                REQUIRE(source.tryEvaluateJet(knotValue, LC_CurveEvaluationSide::Right, rightJet));
+                const auto curvature = [](const LC_CurveJet& jet) {
+                    const double speed = jet.first.magnitude();
+                    return (jet.first.x * jet.second.y - jet.first.y * jet.second.x) /
+                           (speed * speed * speed);
+                };
+                const double leftCurvature = curvature(leftJet);
+                const double rightCurvature = curvature(rightJet);
+                REQUIRE(std::isfinite(leftCurvature));
+                REQUIRE(std::isfinite(rightCurvature));
+                REQUIRE(std::abs(leftCurvature + rightCurvature) > 1e-12);
+                const double signedDistance = 2.0 / (leftCurvature + rightCurvature);
+                const LC_OffsetSourceDefinition definition{
+                    LC_OffsetSourceGeometry{data}, signedDistance, 1e-2, false};
+                CAPTURE(knotValue, signedDistance);
+
+                const qint64 generationId = requestId++;
+                const Req::Request generationRequest{
+                    Req::Token{generationId, 11, 13, 17},
+                    Req::GenerateSource{definition, {}}};
+                const auto generatedReply = helper.run(generationRequest);
+                REQUIRE(std::holds_alternative<Reply::Native>(generatedReply.result));
+                const auto& generated = std::get<Reply::Native>(generatedReply.result);
+                CHECK((generated.refusal == LC_OffsetCurveRefusal::None ||
+                       generated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable));
+                REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+                REQUIRE(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+                REQUIRE_FALSE(generated.ordinary.empty());
+
+                RS_SplineData cache;
+                REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+                const qint64 validationId = requestId++;
+                const Req::Request validationRequest{
+                    Req::Token{validationId, 11, 13, 17},
+                    Req::ValidateSourceCache{cache, definition, {}}};
+                const auto validationReply = helper.run(validationRequest);
+                REQUIRE(std::holds_alternative<Reply::Native>(validationReply.result));
+                const auto& validated = std::get<Reply::Native>(validationReply.result);
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+                CHECK(validated.changed);
+                ++admittedRoots;
+            }
+        }
+    }
+    CHECK(admittedRoots == 6);
 }
 
 TEST_CASE("Built helper returns a bounded typed-source sample-limit refusal",
