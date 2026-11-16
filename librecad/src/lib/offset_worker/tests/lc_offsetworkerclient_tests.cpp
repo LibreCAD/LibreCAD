@@ -6906,7 +6906,7 @@ TEST_CASE(
               ++generatedRows;
               if (generated.ordinary.size() != 1) {
                 ++nativeCacheRefusals;
-                if (persistedMultiBranchRows == 0) {
+                if (generated.ordinary.size() > 1) {
                   RS_Graphic ordinaryGraphic;
                   ordinaryGraphic.initForNewDocument();
                   auto *ordinaryLayer = new RS_Layer("OrdinaryOffset");
@@ -7124,7 +7124,7 @@ TEST_CASE(
   CHECK(generatedRows == ratios.size() * intervalHalfWidths.size() * 2 * 2 *
                              curvatureFractions.size() * 2);
   CHECK(persistedRows > 0);
-  CHECK(persistedMultiBranchRows == 1);
+  CHECK(persistedMultiBranchRows > 0);
   CHECK(persistedRows + nativeCacheRefusals == generatedRows);
 }
 
