@@ -26,10 +26,11 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`b3d64c418`):** Rotated and reversed parabola pattern clipping now orders
+`287ddc188`):** Rotated and reversed parabola pattern clipping now orders
 intersections in the directed local parameter and extracts exact Bezier
-subcurves; its regression and broad hatch validation are recorded in section
-1559. The source-type selector contract is implemented for all nine
+subcurves. Parabola/line contacts are solved in the parabola's local frame for
+high-origin stability. Regressions and broad hatch validation are recorded in
+sections 1559-1560. The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -51890,4 +51891,39 @@ existing shell-profile warning for absent optional
 closes only parabola pattern clipping for the covered transforms and interval
 profiles; it does not establish broad parabola trimming or the full
 family-by-variant matrix in Slice 4.
+
+## 1560. Stabilize Rotated Parabola Clipping at Large Origins (2026-11-15)
+
+Commit `287ddc188` extends section 1559's rotated parabola clipping regression
+to translation `(1e9, -2e9)`. The regression first exposed that the generic
+world-space parabola/line conic intersection returned contacts over one unit
+from the true boundary at this origin, corrupting the retained subcurve.
+`trimPatternEntities` now detects parabola-versus-line pairs, transforms the
+parabola controls and line endpoints into a vertex-centered frame aligned to
+the parabola axis, solves the bounded intersections there, and maps contacts
+back to world coordinates. Other entity/boundary pairs retain the existing
+intersection path; this does not claim large-origin stability for other
+parabola boundary types or general conic intersection code.
+
+Validation on macOS arm64:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-hatchfix][pattern][parabola][trim]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-hatchfix]' --reporter compact
+cd /private/tmp/offset3193-qmake6-fresh && make -j6
+git diff --check
+```
+
+Results: focused clipping passes 22 assertions / 2 cases, including rotated
+and reversed near-vertical geometry; `[lc-hatchfix]` passes 89,646 assertions
+across 168 cases, with one skipped. The recursive qmake6 application, worker,
+and plugin build exits 0; existing optional shell-profile and compiler/linker
+warnings remain. This closes only the tested rotated/high-origin
+parabola-versus-line pattern-clipping profile, not the broader geometry,
+worker/cache, Trim, persistence, visible-GUI, or independent-CAD matrix.
 
