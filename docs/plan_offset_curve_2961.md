@@ -52226,3 +52226,40 @@ closes persistence for those measured cusp profiles and file lanes only; it
 does not establish other hyperbola domains, visible GUI acceptance, or
 ODA/AutoCAD acceptance.
 
+## 1571. Qualify Hyperbola Cusps at High World Origins (2026-11-15)
+
+Test commit `ae9abf6cb` extends the hyperbola cusp-boundary matrix to centers
+`(23,-17)`, `(1e6,-1e6)`, and `(1e9,-2e9)`. The direct exact-normal oracle
+covers ratios `0.05` and `0.2`, both hyperbola branches, forward/reversed
+parameter bounds, both offset sides, and distances `0.5` and `1.5` times the
+vertex radius. The worker/kernel matrix covers the same origins and source
+variants, both signed offsets, and cusp-scaled distances `0.5`, `1.0`, and
+`1.5`, then checks operation-8 admission or explicit multi-branch refusal.
+
+At the `1e9` origin, the default direct-options factory correctly refuses the
+smallest profiles when its requested relative tolerance falls below the
+numeric floor. The direct oracle supplies an explicit `1e-4` tolerance there;
+the worker definitions already use that explicit tolerance. This verifies
+fail-closed defaults and bounded operation with declared precision, not
+automatic success below the arithmetic floor. High-origin DXF/DWG persistence
+and other hyperbola scales/origins remain open.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][large-origin]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp][variants]' \
+  --reporter compact
+git diff --check
+```
+
+Results: the direct-oracle selection passes 131,260 assertions / 1 case; the
+worker/cache variant matrix passes 2,530 assertions / 1 case. No high-origin
+file-format round trip or external CAD acceptance is claimed.
+
