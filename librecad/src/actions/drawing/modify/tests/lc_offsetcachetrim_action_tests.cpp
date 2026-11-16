@@ -2353,12 +2353,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-    auto initial = LC_OffsetCurve::create(seed, 0.5, false);
+    const bool highOrigin = GENERATE(false, true);
+    const bool towardCentre = highOrigin ? GENERATE(false, true) : false;
+    auto initial = LC_OffsetCurve::create(seed, 0.5, towardCentre);
     REQUIRE(initial);
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
-    const bool highOrigin = GENERATE(false, true);
     const double tangentSlope = highOrigin
         ? GENERATE(1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
                    1.5e-9, 1.25e-9, 1.125e-9)

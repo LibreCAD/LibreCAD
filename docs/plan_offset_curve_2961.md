@@ -53588,3 +53588,32 @@ offset high-origin Trim Two slope grid only; inward trims, alternate cutters,
 other frames/scales, visible-app use, and independent ODA/AutoCAD acceptance
 remain open.
 
+## 1608. Trim the Ten High-origin Slopes on Both Offset Sides (2026-11-16)
+
+The endpoint-tangent Trim Two fixture now runs each of section 1605's ten
+representable high-origin slopes with both `towardCentre` values. The source
+frame, slope set, cutter construction, worker-backed replacement, Trim Two
+preview/atomic commit, undo/redo, and five DXF/DWG round-trip lanes are shared
+across the two sides. The export/reopen matcher checks all fragments, and
+available LibreDWG parses verify the expected fragment entity types. The
+`1e-9` collapsed-control source remains rejected and is not sent through the
+trim workflow.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Result: 6,795 assertions / 1 case pass, including all ten slopes on both
+offset sides and the ordinary-origin cases. This closes the recorded
+positive/inward side matrix for this frame and cutter only; other origins,
+scales, source constructions, cutters, visible-app use, and independent
+ODA/AutoCAD acceptance remain open.
+
