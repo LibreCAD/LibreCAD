@@ -686,7 +686,6 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
     int argc = 1; char name[] = "offset-worker-periodic-spline-tests"; char* argv[] = {name, nullptr};
     std::unique_ptr<QCoreApplication> application;
     if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
-    Helper helper;
     const std::array<std::pair<double, bool>, 4> weightProfiles{{
         {0.1, true}, {0.05, true}, {0.05, false}, {0.2, false}}};
     qint64 requestId = 100;
@@ -694,6 +693,7 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
     std::size_t generatedRoots = 0;
 
     for (const auto [weightStep, symmetricWeights] : weightProfiles) {
+        Helper helper;
         for (const std::size_t degree : {4u, 6u}) {
             RS_SplineData data;
             data.degree = degree;
@@ -726,9 +726,6 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
 
             for (std::size_t breakIndex = 1;
                  breakIndex + 1 < breaks.size(); ++breakIndex) {
-                // The direct matrix covers every knot. Keep full cache-admission
-                // subprocesses bounded, but map every knot for the steeper profile.
-                if (weightStep != 0.2 && breakIndex != 1) continue;
                 const double knotValue = breaks[breakIndex];
                 LC_CurveJet leftJet;
                 LC_CurveJet rightJet;
@@ -793,7 +790,6 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
                 CAPTURE(expectedKnotOffset.x, expectedKnotOffset.y, nearestGeneratedPoint);
                 CHECK(nearestGeneratedPoint <= 10.0 * definition.relativeTolerance);
 
-                if (breakIndex != 1 && weightStep != 0.2) continue;
                 RS_SplineData cache;
                 REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
                 const qint64 validationId = requestId++;
