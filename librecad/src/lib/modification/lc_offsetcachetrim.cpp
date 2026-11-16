@@ -1315,16 +1315,18 @@ struct ExactConicImage { I u, v; };
 std::optional<ExactConicImage> exactConicImageOnCacheSpan(
         Context& c, const Geo::CacheSpan& span, const Conic& conic,
         const Geo::ReferenceFrame& frame, const I& sourceParameter, double allowance) {
-    if (span.degree != 3 || !finite(sourceParameter) || sourceParameter.lo() < 0 ||
+    if ((span.degree != 1 && span.degree != 3) || !finite(sourceParameter) || sourceParameter.lo() < 0 ||
         sourceParameter.hi() > 1 || !(sourceParameter.lo() < sourceParameter.hi())) return {};
+    const std::size_t degree = span.degree;
+    const std::size_t implicitDegree = 2 * degree;
     const Q ax{conic.data.majorP.x}, ay{conic.data.majorP.y};
     const Q ratio{conic.data.ratio};
     const Q axisSquared = ax * ax + ay * ay;
     if (axisSquared == 0 || ratio <= 0) return {};
 
-    std::array<Q, 4> u{}, v{};
+    ExactScalarNet u{}, v{};
     const Q cx{conic.data.center.x}, cy{conic.data.center.y};
-    for (std::size_t i = 0; i < 4; ++i) {
+    for (std::size_t i = 0; i <= degree; ++i) {
         c.check();
         const Q x = Q{span.controls[i].x} - cx;
         const Q y = Q{span.controls[i].y} - cy;
@@ -1332,32 +1334,45 @@ std::optional<ExactConicImage> exactConicImageOnCacheSpan(
         v[i] = (-x * ay + y * ax) / (axisSquared * ratio);
     }
 
-    constexpr std::array<unsigned, 4> choose3{{1, 3, 3, 1}};
-    constexpr std::array<unsigned, 7> choose6{{1, 6, 15, 20, 15, 6, 1}};
+    const auto choose = [](std::size_t n, std::size_t k) {
+        unsigned value = 1;
+        for (std::size_t i = 1; i <= k; ++i)
+            value = value * unsigned(n + 1 - i) / unsigned(i);
+        return value;
+    };
     ExactScalarNet implicit{};
-    for (std::size_t k = 0; k <= 6; ++k) {
+    for (std::size_t k = 0; k <= implicitDegree; ++k) {
         Q value = 0;
-        for (std::size_t i = 0; i <= 3; ++i) {
-            if (k < i || k - i > 3) continue;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            if (k < i || k - i > degree) continue;
             const std::size_t j = k - i;
-            const Q weight = Q{choose3[i] * choose3[j]} / Q{choose6[k]};
+            const Q weight = Q{choose(degree, i) * choose(degree, j)} /
+                             Q{choose(implicitDegree, k)};
             value += weight * (u[i] * u[j] + v[i] * v[j]);
         }
         implicit[k] = value - Q{1};
     }
 
     const Q a{sourceParameter.lo()}, b{sourceParameter.hi()};
-    auto local = restrictScalarNet(implicit, 6, a, b);
+    auto local = restrictScalarNet(implicit, implicitDegree, a, b);
     ExactScalarNet localU{}, localV{};
     std::copy(u.begin(), u.end(), localU.begin());
     std::copy(v.begin(), v.end(), localV.begin());
-    localU = restrictScalarNet(localU, 3, a, b);
-    localV = restrictScalarNet(localV, 3, a, b);
-    const Q first = local.front(), last = local.back();
-    if (first == 0 || last == 0 || (first < 0) == (last < 0)) return {};
+    localU = restrictScalarNet(localU, degree, a, b);
+    localV = restrictScalarNet(localV, degree, a, b);
+    const Q first = local.front(), last = local[implicitDegree];
+    if (first == 0 && last == 0) return {};
+    if (first == 0 || last == 0) {
+        const std::size_t endpoint = first == 0 ? 0 : degree;
+        const I imageU = enclose(localU[endpoint]);
+        const I imageV = enclose(localV[endpoint]);
+        if (!finite(imageU) || !finite(imageV)) return {};
+        return ExactConicImage{imageU, imageV};
+    }
+    if ((first < 0) == (last < 0)) return {};
     const bool increasing = local[1] > local[0];
     if (local[1] == local[0]) return {};
-    for (std::size_t i = 0; i < 6; ++i) {
+    for (std::size_t i = 0; i < implicitDegree; ++i) {
         c.compare();
         if (increasing ? local[i + 1] <= local[i] : local[i + 1] >= local[i]) return {};
     }
@@ -1380,20 +1395,20 @@ std::optional<ExactConicImage> exactConicImageOnCacheSpan(
     Q lo = a, hi = b, fLo = first;
     for (unsigned round = 0; round < c.limits.maxDepth; ++round) {
         c.check();
-        const auto imageU = bounds(localU, 3), imageV = bounds(localV, 3);
+        const auto imageU = bounds(localU, degree), imageV = bounds(localV, degree);
         if (!imageU || !imageV) return {};
         if (imageScale * std::hypot(imageU->width(), imageV->width()) <= allowance * 0.25)
             return ExactConicImage{*imageU, *imageV};
 
         c.items(1);
-        const auto halves = splitScalarHalf(local, 6);
-        const auto halvesU = splitScalarHalf(localU, 3);
-        const auto halvesV = splitScalarHalf(localV, 3);
+        const auto halves = splitScalarHalf(local, implicitDegree);
+        const auto halvesU = splitScalarHalf(localU, degree);
+        const auto halvesV = splitScalarHalf(localV, degree);
         const Q middle = (lo + hi) / 2;
-        const Q fMiddle = halves.first.back();
+        const Q fMiddle = halves.first[implicitDegree];
         if (fMiddle == 0) {
-            const I imageUAtRoot = enclose(halvesU.first.back());
-            const I imageVAtRoot = enclose(halvesV.first.back());
+            const I imageUAtRoot = enclose(halvesU.first[degree]);
+            const I imageVAtRoot = enclose(halvesV.first[degree]);
             if (!finite(imageUAtRoot) || !finite(imageVAtRoot)) return {};
             return ExactConicImage{imageUAtRoot, imageVAtRoot};
         }

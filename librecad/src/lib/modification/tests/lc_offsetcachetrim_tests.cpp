@@ -2477,6 +2477,47 @@ TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without single
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 5);
 }
 
+TEST_CASE("Conic-only trim certifies near-tangent degree-one circle contacts", tags) {
+    using Exact = boost::multiprecision::cpp_rational;
+    RS_Circle cutter{nullptr, {{0, 0}, 1}};
+    for (const bool reverse : {false, true}) {
+        for (const double inward : {1e-8, 1e-10, 1e-12, 1e-14}) {
+            CAPTURE(reverse, inward);
+            const double y = 1 - inward;
+            const Exact exactY{y};
+            const Exact exactOffsetSquared = 1 - exactY * exactY;
+            REQUIRE(exactOffsetSquared > 0);
+            auto source = cache({{-2, y}, {2, y}});
+            if (reverse) reversed(source);
+            const double offset = std::sqrt(exactOffsetSquared.convert_to<double>());
+            REQUIRE(offset > 0);
+            const auto before = source;
+            const double expectedLeft = (2 - offset) / 4;
+            const double expectedRight = (2 + offset) / 4;
+            const auto result = Trim::prepareConic(source, cutter, {{0, -2}});
+            CAPTURE(static_cast<int>(result.refusal), result.rootCount,
+                    result.work.failureStage,
+                    result.work.intersections.deepestPairRefinement,
+                    result.work.intersections.totalBoxPairs,
+                    result.work.intersections.generatedLeaves);
+            if (inward == 1e-14) {
+                CHECK(result.refusal == Trim::Refusal::LimitExceeded);
+                CHECK(result.work.failureStage == Trim::Stage::IntersectionQuery);
+                CHECK(result.rootCount == 0);
+                refused(result);
+                equalData(source, before);
+                continue;
+            }
+            REQUIRE(result.refusal == Trim::Refusal::None);
+            REQUIRE(result.roots.size() == 2);
+            CHECK(std::abs(result.roots[0].target.localParameter.lo() - expectedLeft) < 2e-7);
+            CHECK(std::abs(result.roots[1].target.localParameter.lo() - expectedRight) < 2e-7);
+            REQUIRE(result.conicFragments.size() == 1);
+            equalData(source, before);
+        }
+    }
+}
+
 TEST_CASE("Conic-only trim combines disconnected contacts on an ellipse", tags) {
     RS_SplineData source{1, false};
     source.controlPoints = {{-3, .25}, {3, .25}, {.5, -2}, {.5, 2},
