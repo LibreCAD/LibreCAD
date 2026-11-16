@@ -52906,6 +52906,13 @@ admission, R14 DXF, R2000 DXF/DWG and R2018 DXF/DWG, then runs LibreDWG
 `minJSON` checks on both DWG outputs. This is one bounded fixture/profile, not
 fresh revalidation of every permutation's persistence.
 
+The isolated `Every balanced parabola sample permutation survives worker cache
+validation` case passes 109,235 assertions / 1 case with all 24 orders of the
+four recorded layouts, both signed offsets, and the five DXF/DWG lanes with
+the repeated reopen checks. `PATH=/usr/bin:/bin:/usr/sbin:/sbin` intentionally
+kept optional `dwgread` discovery off for this file-heavy matrix;
+these are internal-reader round trips, not independent DWG validation.
+
 A broader `[lc-offsetcurve][worker-client][parabola]` invocation with
 `DWGREAD=/opt/homebrew/bin/dwgread` and the configured 900,000 ms suite limit
 ran for 900,626 ms and failed only the suite watchdog: 1,459,236 assertions
