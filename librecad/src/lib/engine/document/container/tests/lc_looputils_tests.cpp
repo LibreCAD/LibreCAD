@@ -365,7 +365,7 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
 TEST_CASE("Rotated parabola pattern clipping preserves the exact subcurve",
           "[lc-hatchfix][pattern][parabola][trim]") {
     constexpr double rotation = 0.73;
-    const RS_Vector translation{17.0, -9.0};
+    const RS_Vector translation{1e9, -2e9};
     const auto toWorld = [rotation, translation](const RS_Vector& point) {
         return point.rotated(rotation) + translation;
     };
@@ -405,7 +405,7 @@ TEST_CASE("Rotated parabola pattern clipping preserves the exact subcurve",
     for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
         const double sourceParameter = 0.25 + 0.5 * parameter;
         CHECK(bezierAt(resultControls, parameter).distanceTo(
-                  bezierAt(worldControls, sourceParameter)) < 1e-7);
+                  bezierAt(worldControls, sourceParameter)) < 2e-6);
     }
 }
 

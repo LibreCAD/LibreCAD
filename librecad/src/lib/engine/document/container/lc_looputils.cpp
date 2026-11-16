@@ -1767,6 +1767,32 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
     auto entityIsClosed = [&](const RS_Entity* e) {
         return !roots.empty() && roots.front().isEntityClosed(e);
     };
+    auto intersectionsFor = [](RS_Entity* entity, RS_Entity* boundary) {
+        if (entity->rtti() == RS2::EntityParabola &&
+            boundary->rtti() == RS2::EntityLine) {
+            const auto& data = static_cast<LC_Parabola*>(entity)->getData();
+            if (!data.m_valid) return RS_VectorSolutions{};
+            const RS_Vector origin = data.m_vertex;
+            const double angle = M_PI / 2.0 - data.m_axis.angle();
+            const auto toLocal = [origin, angle](const RS_Vector& point) {
+                return (point - origin).rotated(angle);
+            };
+            std::array<RS_Vector, 3> localControls;
+            std::transform(data.m_controlPoints.begin(), data.m_controlPoints.end(),
+                           localControls.begin(), toLocal);
+            LC_Parabola localParabola(nullptr, LC_ParabolaData{localControls});
+            const auto* line = static_cast<RS_Line*>(boundary);
+            RS_Line localLine(nullptr, RS_LineData{toLocal(line->getStartpoint()),
+                                                   toLocal(line->getEndpoint())});
+            RS_VectorSolutions localIntersections =
+                RS_Information::getIntersection(&localParabola, &localLine, true);
+            for (RS_Vector& point : localIntersections) {
+                point = point.rotated(-angle) + origin;
+            }
+            return localIntersections;
+        }
+        return RS_Information::getIntersection(entity, boundary, true);
+    };
 
     for (const LC_TileSlot& slot : tiles) {
         for (RS_Entity* e : patternEntities) {
@@ -1782,7 +1808,7 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
 
             std::vector<RS_Vector> all_inters;
             for (auto* b : boundaries) {
-                RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
+                RS_VectorSolutions sol = intersectionsFor(cloned.get(), b);
                 for (RS_Vector v : sol) {
                     all_inters.push_back(v);
                 }
