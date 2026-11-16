@@ -42,7 +42,9 @@ success, and cancellation/refusal remains open in Slice 5. The nine-kind
 inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically.
+atomically. On pushed head `6cf9495ce33476adb909a82eff825b5ca8500258`,
+`[gui][dialog][offsetcurve][source]` was re-run in CMake Release and passed
+15,284 assertions / 44 cases; this remains headless UI evidence only.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
