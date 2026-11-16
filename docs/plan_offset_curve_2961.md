@@ -53155,23 +53155,29 @@ and select a replacement without closing and reopening the properties dialog.
 The chooser must cover every source kind accepted by the offset model:
 `Line`, `Arc`, `Circle`, `Ellipse`, `Spline`, `SplinePoints`, `Parabola`,
 `Hyperbola`, and `Polyline` (including the supported bounded-hyperbola
-representation). The current source remains highlighted whenever it is in the
-visible candidate set; changing the kind must not misidentify a different
-entity or silently replace the source.
+representation). Hovering a candidate must visibly highlight that exact
+candidate. An offset definition currently stores source geometry by value, not
+a stable handle to the original drawing entity. Therefore, when re-highlighting
+the already-stored source, use exact encoded geometry equality; do not claim a
+unique source-entity identity from geometric similarity. If multiple drawing
+entities have identical stored geometry, the UI must avoid implying which one
+was originally used. Changing the kind must not misidentify an entity or
+silently replace the source.
 
 The existing all-kind asynchronous filtering regression establishes that
 each kind can produce candidates, but it does not by itself prove the complete
 replacement interaction. Close the remaining verification gap with focused
 coverage for the chooser state transition and its integration:
 
-1. Start replacement with an existing source and confirm that source is
-   selected/highlighted when eligible.
+1. Start replacement with an existing source definition and confirm that any
+   drawing candidates with exact matching encoded geometry are highlighted
+   when eligible; if there is no exact match, do not highlight a near-match.
 2. Change the kind repeatedly across all nine supported kinds without closing
    the chooser; each transition refreshes candidates and does not retain stale
    rows from the prior kind.
-3. When the current source is not of the newly selected kind, do not highlight
-   an unrelated candidate. When switching back to its kind, identify the
-   original source again.
+3. When the stored source is not of the newly selected kind, do not highlight
+   an unrelated candidate. When switching back to its kind, restore the exact
+   geometry match without claiming a stable entity identity that is not stored.
 4. Select a different candidate of each available kind and verify that the
    stored `LC_OffsetSourceGeometry` has the matching typed kind and entity
    identity. Cancellation, an empty result, and a failed selection leave the
@@ -53187,7 +53193,8 @@ replacement. Reuse the all-nine-kind asynchronous test rather than duplicating
 its expensive candidate generation. If a transition exposes a production bug,
 fix it in a separately validated slice and record the commit here before
 continuing. Completion requires all supported kinds to be selectable through
-one chooser session, exact current-source highlighting, passing focused and
+one chooser session, exact candidate hover highlighting, correct matching of
+stored source geometry where a drawing candidate exists, passing focused and
 full picker suites, and recorded packaged-app verification. The current
 headless suite passes 15,498 assertions / 45 source-picker cases, but the
 complete replacement interaction and visible-app acceptance remain open.
@@ -53222,4 +53229,37 @@ Test commit `9b85fd7e1` covers this construction route only. Other parabola
 frames, worker/cache, Trim, and typed persistence remain covered by their
 separate matrices. The source-picker interaction, visible desktop acceptance,
 and independent CAD acceptance remain open.
+
+## 1597. Exercise Typed Source Hover Highlight and Replacement Clicks (2026-11-16)
+
+The existing all-family replacement matrix changed the source-kind combo and
+called the action's internal source setter directly. It proved typed geometry
+replacement but bypassed mouse hover/click behavior. The matrix now drives the
+real action hover and click path for every supported kind. Before clicking, it
+inspects the highlight overlay and requires its captured typed geometry to
+match the hovered drawing candidate exactly; after clicking, it verifies that
+the target stores the matching source kind and geometry. This covers the
+candidate currently under the pointer, not discovery of an existing stored
+source candidate when the action first opens.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I update source selector filters and replaces every supported source family' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'I update source type changes the live candidate filter without changing the target' \
+  --reporter compact
+git diff --check
+```
+
+Result: the all-family type-switch/hover-highlight/click/replacement matrix
+passes 466 assertions / 1 case; the live candidate-filter transition matrix
+passes 148 assertions / 1 case. Test commit `d70b1e392` adds no production
+behavior. Stored-source discovery/highlighting, cancellation and failed-click
+interaction, full picker suite, and packaged-app verification remain open.
 
