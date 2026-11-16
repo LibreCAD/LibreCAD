@@ -54085,12 +54085,12 @@ Implementation-ready sequence:
    the proof resolution, extreme translation, and exhausted limits. Ambiguous
    or uncertifiable cases must continue to return a typed refusal without
    partial fragments or document mutation.
-5. **Action/history done by `87cb0c14e`:** the same high-origin/large-scale
-   circle profile now traverses the real Trim Two async preview and commit,
-   checks committed output against the preview, and verifies undo, redo, and
-   restoration for both offset sides. **Next:** save/reopen the resulting
-   fragments through all five DXF/DWG round-trip lanes and independently
-   verify geometry and entity types.
+5. **Done by `87cb0c14e` and `7c1336144`:** the same high-origin/large-scale
+   circle profile traverses the real Trim Two async preview and commit, checks
+   committed output against the preview, verifies undo/redo/restoration for
+   both offset sides, and round-trips committed fragments through all five
+   DXF/DWG lanes. Reopened geometry is matched by type and sampled geometry;
+   both DWG versions are additionally inspected by LibreDWG when available.
 
 Stage-probe validation on macOS arm64 CMake Release with DWG support and
 LibreDWG:
@@ -54130,23 +54130,27 @@ worker-result cases passed 30 and 5,324 assertions respectively. Those results
 are historical diagnosis only. Post-fix validation on the same macOS arm64
 CMake Release build passes the focused projected-position test (512 assertions
 / 1 case), the endpoint-tangent Trim Two action matrix (11,774 assertions / 1
-generated case before history coverage), and the full Trim kernel suite (4,643,737
-assertions / 89 cases). The worker result codec passes 470,974 assertions / 36
+generated case before history coverage), and the full Trim kernel suite
+(4,643,737 assertions / 89 cases). The worker result codec passes 470,974 assertions / 36
 cases and the worker request codec passes 603,644 assertions / 19 cases. The
 updated action probe verifies cache-only, conic-only, paired, worker, and
 prepared-path success with two roots, no intersection-failure domain, valid
 conic fragments, equivalent direct/worker-prepared batches, and no source or
-cutter mutation before publication. The added action-history check verifies
+cutter mutation before publication. The action-history check verifies
 preview/commit geometry and undo/redo restoration for both offset sides. The
+same action test exports committed results through AC1009 DXF, AC1015 DXF,
+AC1018 DWG, AC1032 DXF, and AC1032 DWG, reopens all five, checks geometry and
+entity types, and validates both DWGs with `/opt/homebrew/bin/dwgread`. The
 independent oracle still finds two
 simple, spatially separated cache/circle roots for both tested scale profiles
 and sides; it is test-only and does not certify production roots. Diagnostic
 slice `f1543889e` and exact-oracle slice `d116fb035` were already pushed to PR
-#3193. Implementation slice `b75658cb5` and action-history test slice
-`87cb0c14e` are committed. The latest action run passes 12,252 assertions / 1
-generated case; its additional checks cover preview/commit output, document
-mutation, and undo/redo. This plan checkpoint records persistence and
-negative-boundary validation as remaining gates.
+#3193. Implementation slice `b75658cb5`, action-history test slice
+`87cb0c14e`, and five-format round-trip slice `7c1336144` are committed. The
+latest action run passes 12,365 assertions / 1 generated case; added checks
+cover preview/commit output, undo/redo, and all five persistence lanes. This
+plan checkpoint leaves the focused negative-boundary matrix as the remaining
+gate.
 
 Completion gate for this investigation: reproducible diagnosis, the exact
 independent cache/circle oracle, proof-preserving direct and worker success for
