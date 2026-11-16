@@ -5944,6 +5944,22 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             name, scale, origin, {0.2, 0.9797958971132712},
             {0.9, -0.4358898943540673}));
     }
+    const auto extremeMagnitudeProfile = [&](const char* name, const double scale,
+                                             const RS_Vector& origin) {
+        return Profile{name, LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({0.0, 0.0}) + origin,
+              rotate({10.0 * scale, 0.0}) + origin}},
+            {{rotate({8e-151, 6e-151}), rotate({6e149, -8e149})}}), scale};
+    };
+    profiles.push_back(extremeMagnitudeProfile(
+        "steep-asymmetric-extreme-tangent-magnitudes-small", 1e-3,
+        {1e3, -2e3}));
+    profiles.push_back(extremeMagnitudeProfile(
+        "steep-asymmetric-extreme-tangent-magnitudes-unit", 1.0,
+        frameTranslation));
+    profiles.push_back(extremeMagnitudeProfile(
+        "steep-asymmetric-extreme-tangent-magnitudes-large", 1e3,
+        highOrigin));
     profiles.push_back({"mirrored-tangents",
         LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + frameTranslation,
