@@ -2658,28 +2658,28 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const int profile =
       GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-               33, 34);
+               33, 34, 35, 36, 37, 38);
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
       profile == 4 || profile == 6 || profile == 8 || profile == 10 ||
       profile == 12 || profile == 14 || profile == 16 || profile == 18 ||
       profile == 20 || profile == 22;
-  const bool steepAsymmetricTangents = profile >= 23 && profile <= 34;
+  const bool steepAsymmetricTangents = profile >= 23 && profile <= 38;
   const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
                                   steepAsymmetricTangents ||
                                   (profile >= 5 && profile <= 22);
   const bool oppositeBend = profile >= 5 && profile <= 16;
   const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
-                          profile >= 29;
+                          (profile >= 29 && profile <= 34);
   const bool asymmetricSmallScale =
       profile == 7 || profile == 8 || profile == 13 || profile == 14 ||
       profile == 19 || profile == 20 || profile == 24 || profile == 31 ||
-      profile == 33;
+      profile == 33 || profile == 35 || profile == 37;
   const bool asymmetricLargeScale =
       profile == 9 || profile == 10 || profile == 15 || profile == 16 ||
       profile == 21 || profile == 22 || profile == 25 || profile == 32 ||
-      profile == 34;
+      profile == 34 || profile == 36 || profile == 38;
   const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
   const double profileScale = scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e3)
                               : asymmetricSmallScale ? 1e-3
@@ -2729,7 +2729,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const std::array<RS_Vector, 2> endpointTangents =
       steepAsymmetricTangents
           ? profile <= 26 ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
-            : (profile == 27 || profile == 29 || profile == 31 || profile == 32)
+            : (profile == 27 || profile == 29 || profile == 31 ||
+               profile == 32 || profile == 35 || profile == 36)
                 ? std::array<RS_Vector, 2>{{{0.8, -0.6}, {0.6, 0.8}}}
                 : std::array<RS_Vector, 2>{{{0.2, 0.9797958971132712},
                                             {0.9, -0.4358898943540673}}}
