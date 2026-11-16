@@ -2651,396 +2651,414 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
 }
 
 TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
-          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
-    REQUIRE(lc::test::ensureSettings());
-    Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                                 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26);
-    const bool highOrigin = profile == 2;
-    const bool scaleExtreme = profile == 1;
-    const bool reversedTangentTraversal = profile == 4 || profile == 6 ||
-                                          profile == 8 || profile == 10 || profile == 12 ||
-                                          profile == 14 || profile == 16 || profile == 18 ||
-                                          profile == 20 || profile == 22;
-    const bool steepAsymmetricTangents = profile >= 23 && profile <= 26;
-    const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
-                                    steepAsymmetricTangents ||
-                                    (profile >= 5 && profile <= 22);
-    const bool oppositeBend = profile >= 5 && profile <= 16;
-    const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26;
-    const bool asymmetricSmallScale = profile == 7 || profile == 8 ||
-                                      profile == 13 || profile == 14 ||
-                                      profile == 19 || profile == 20 || profile == 24;
-    const bool asymmetricLargeScale = profile == 9 || profile == 10 ||
-                                      profile == 15 || profile == 16 ||
-                                      profile == 21 || profile == 22 || profile == 25;
-    const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
-    const double profileScale = scaleExtreme
-        ? (scaleProfile == 0 ? 1e-3 : 1e3)
-        : asymmetricSmallScale ? 1e-3
-        : asymmetricLargeScale ? 1e3
-                               : 1.0;
-    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1000.0 * profileScale, 0}, 1, 0, .1, false});
-    const RS_Vector sourceTranslation = highOrigin
-        ? RS_Vector{1e9, -2e9}
-        : scaleExtreme
-            ? (scaleProfile == 0 ? RS_Vector{1e3, -2e3} : RS_Vector{1e9, -2e9})
-        : asymmetricSmallScale
-            ? RS_Vector{1e3, -2e3}
-        : asymmetricLargeScale
-            ? RS_Vector{1e9, -2e9}
-        : asymmetricTangents
-            ? RS_Vector{1e6, -2e6}
-            : profile == 0
-                ? GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
-                           RS_Vector{1e8, -2e8})
-                : RS_Vector{0.0, 0.0};
-    const bool towardCentre = highOrigin || sourceTranslation.x != 0.0
-        ? GENERATE(false, true) : false;
-    auto initial = LC_OffsetCurve::create(seed, 0.5 * profileScale, towardCentre);
-    REQUIRE(initial);
-    auto* previous = initial.entity.release();
-    f.graphic.addEntity(previous);
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent]["
+          "trim-two]") {
+  REQUIRE(lc::test::ensureSettings());
+  Drawing<true> f;
+  const int profile =
+      GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+               19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30);
+  const bool highOrigin = profile == 2;
+  const bool scaleExtreme = profile == 1;
+  const bool reversedTangentTraversal =
+      profile == 4 || profile == 6 || profile == 8 || profile == 10 ||
+      profile == 12 || profile == 14 || profile == 16 || profile == 18 ||
+      profile == 20 || profile == 22;
+  const bool steepAsymmetricTangents = profile >= 23 && profile <= 30;
+  const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
+                                  steepAsymmetricTangents ||
+                                  (profile >= 5 && profile <= 22);
+  const bool oppositeBend = profile >= 5 && profile <= 16;
+  const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
+                          profile == 29 || profile == 30;
+  const bool asymmetricSmallScale =
+      profile == 7 || profile == 8 || profile == 13 || profile == 14 ||
+      profile == 19 || profile == 20 || profile == 24;
+  const bool asymmetricLargeScale =
+      profile == 9 || profile == 10 || profile == 15 || profile == 16 ||
+      profile == 21 || profile == 22 || profile == 25;
+  const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
+  const double profileScale = scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e3)
+                              : asymmetricSmallScale ? 1e-3
+                              : asymmetricLargeScale ? 1e3
+                                                     : 1.0;
+  RS_Ellipse seed(
+      nullptr,
+      RS_EllipseData{{0, 0}, {1000.0 * profileScale, 0}, 1, 0, .1, false});
+  const RS_Vector sourceTranslation =
+      highOrigin ? RS_Vector{1e9, -2e9}
+      : scaleExtreme
+          ? (scaleProfile == 0 ? RS_Vector{1e3, -2e3} : RS_Vector{1e9, -2e9})
+      : asymmetricSmallScale ? RS_Vector{1e3, -2e3}
+      : asymmetricLargeScale ? RS_Vector{1e9, -2e9}
+      : asymmetricTangents   ? RS_Vector{1e6, -2e6}
+      : profile == 0 ? GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
+                                RS_Vector{1e8, -2e8})
+                     : RS_Vector{0.0, 0.0};
+  const bool towardCentre =
+      highOrigin || sourceTranslation.x != 0.0 ? GENERATE(false, true) : false;
+  auto initial = LC_OffsetCurve::create(seed, 0.5 * profileScale, towardCentre);
+  REQUIRE(initial);
+  auto *previous = initial.entity.release();
+  f.graphic.addEntity(previous);
 
-    const double tangentSlope = highOrigin
-        ? GENERATE(1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
-                   1.5e-9, 1.25e-9, 1.125e-9, 1.10625e-9,
-                   1.1046875e-9, 1.1044921875e-9,
-                   1.1044677734375e-9)
-        : scaleExtreme
-            ? (scaleProfile == 0 ? 1e-6 : 1e-8)
-        : sourceTranslation.x == 0.0
-            ? GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14)
-        : 1e-8;
-    const bool includeHighOriginCircle = highOrigin && tangentSlope == 1e-8;
-    const bool tangentCircleBoundary = steepAsymmetricTangents ||
-        (scaleExtreme && scaleProfile == 1) || profile == 5 || profile == 6 ||
-        includeHighOriginCircle;
-    const double sourceRotation = highOrigin
-        ? 0.371234567890123
-        : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
-                                     : 0.371234567890123;
-    CAPTURE(profile, scaleProfile, asymmetricTangents, reversedTangentTraversal,
-            oppositeBend, asymmetricSmallScale, asymmetricLargeScale,
-            sourceTranslation,
-            profileScale, towardCentre, tangentSlope, sourceRotation);
-    const double endpointSpacing = scaleExtreme
-        ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
-    const std::array<RS_Vector, 2> endpointTangents = steepAsymmetricTangents
-        ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
-        : profile == 4 || profile == 18 ||
-                                                      profile == 20 || profile == 22
-        ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
-        : reversedTangentTraversal
-            ? std::array<RS_Vector, 2>{{{-0.8, -0.25}, {-1.0, 0.4}}}
-            : oppositeBend
-                ? std::array<RS_Vector, 2>{{{1.0, -0.4}, {0.8, 0.25}}}
-                : asymmetricTangents
-                    ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
-                    : std::array<RS_Vector, 2>{{{1.0, tangentSlope}, {1.0, -tangentSlope}}};
-    LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
-        reversedTangentTraversal
-            ? std::array<RS_Vector, 2>{{{endpointSpacing, 0.0}, {0.0, 0.0}}}
-            : std::array<RS_Vector, 2>{{{0.0, 0.0}, {endpointSpacing, 0.0}}},
-        endpointTangents);
-    REQUIRE(sourceData.isValid());
-    const double cosine = std::cos(sourceRotation);
-    const double sine = std::sin(sourceRotation);
-    for (auto& point : sourceData.m_controlPoints) {
-        point = {cosine * point.x - sine * point.y + sourceTranslation.x,
-                 sine * point.x + cosine * point.y + sourceTranslation.y};
-    }
-    auto* parabola = new LC_Parabola(&f.graphic, sourceData);
-    f.graphic.addEntity(parabola);
-    f.graphic.select(QList<RS_Entity*>{previous}, true);
+  const double tangentSlope =
+      highOrigin ? GENERATE(1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9, 1.5e-9,
+                            1.25e-9, 1.125e-9, 1.10625e-9, 1.1046875e-9,
+                            1.1044921875e-9, 1.1044677734375e-9)
+      : scaleExtreme               ? (scaleProfile == 0 ? 1e-6 : 1e-8)
+      : sourceTranslation.x == 0.0 ? GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14)
+                                   : 1e-8;
+  const bool includeHighOriginCircle = highOrigin && tangentSlope == 1e-8;
+  const bool tangentCircleBoundary =
+      steepAsymmetricTangents || (scaleExtreme && scaleProfile == 1) ||
+      profile == 5 || profile == 6 || includeHighOriginCircle;
+  const double sourceRotation = highOrigin ? 0.371234567890123
+                                : sourceTranslation.x == 0.0
+                                    ? GENERATE(0., 0.371234567890123)
+                                    : 0.371234567890123;
+  CAPTURE(profile, scaleProfile, asymmetricTangents, reversedTangentTraversal,
+          oppositeBend, asymmetricSmallScale, asymmetricLargeScale,
+          sourceTranslation, profileScale, towardCentre, tangentSlope,
+          sourceRotation);
+  const double endpointSpacing =
+      scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
+  const std::array<RS_Vector, 2> endpointTangents =
+      steepAsymmetricTangents
+          ? profile <= 26 ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
+            : (profile == 27 || profile == 29)
+                ? std::array<RS_Vector, 2>{{{0.8, -0.6}, {0.6, 0.8}}}
+                : std::array<RS_Vector, 2>{{{0.2, 0.9797958971132712},
+                                            {0.9, -0.4358898943540673}}}
+      : profile == 4 || profile == 18 || profile == 20 || profile == 22
+          ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
+      : reversedTangentTraversal
+          ? std::array<RS_Vector, 2>{{{-0.8, -0.25}, {-1.0, 0.4}}}
+      : oppositeBend ? std::array<RS_Vector, 2>{{{1.0, -0.4}, {0.8, 0.25}}}
+      : asymmetricTangents
+          ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
+          : std::array<RS_Vector, 2>{
+                {{1.0, tangentSlope}, {1.0, -tangentSlope}}};
+  LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
+      reversedTangentTraversal
+          ? std::array<RS_Vector, 2>{{{endpointSpacing, 0.0}, {0.0, 0.0}}}
+          : std::array<RS_Vector, 2>{{{0.0, 0.0}, {endpointSpacing, 0.0}}},
+      endpointTangents);
+  REQUIRE(sourceData.isValid());
+  const double cosine = std::cos(sourceRotation);
+  const double sine = std::sin(sourceRotation);
+  for (auto &point : sourceData.m_controlPoints) {
+    point = {cosine * point.x - sine * point.y + sourceTranslation.x,
+             sine * point.x + cosine * point.y + sourceTranslation.y};
+  }
+  auto *parabola = new LC_Parabola(&f.graphic, sourceData);
+  f.graphic.addEntity(parabola);
+  f.graphic.select(QList<RS_Entity *>{previous}, true);
 
-    UpdateSourceProbe update(&f.context);
-    update.init(0);
-    update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
-    update.use(parabola);
-    lc::test::awaitUpdate(update);
-    REQUIRE(update.lastReport().updated == 1);
-    REQUIRE(previous->isDeleted());
+  UpdateSourceProbe update(&f.context);
+  update.init(0);
+  update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
+  update.use(parabola);
+  lc::test::awaitUpdate(update);
+  REQUIRE(update.lastReport().updated == 1);
+  REQUIRE(previous->isDeleted());
 
-    LC_OffsetCurve* native = nullptr;
-    for (RS_Entity* entity : live(f.graphic)) {
-        if (entity->rtti() != RS2::EntityOffsetCurve)
-            continue;
-        REQUIRE(native == nullptr);
-        native = dynamic_cast<LC_OffsetCurve*>(entity);
-    }
-    REQUIRE(native);
-    REQUIRE(native->sourceDefinition());
-    CHECK(native->sourceDefinition()->source.kind() ==
-          LC_OffsetSourceGeometry::Kind::Parabola);
-    const auto* retainedSource = std::get_if<LC_ParabolaData>(
-        &native->sourceDefinition()->source.value);
-    REQUIRE(retainedSource);
-    for (std::size_t i = 0; i < sourceData.m_controlPoints.size(); ++i)
-        CHECK(retainedSource->m_controlPoints[i].distanceTo(
-                  sourceData.m_controlPoints[i]) == 0.0);
+  LC_OffsetCurve *native = nullptr;
+  for (RS_Entity *entity : live(f.graphic)) {
+    if (entity->rtti() != RS2::EntityOffsetCurve)
+      continue;
+    REQUIRE(native == nullptr);
+    native = dynamic_cast<LC_OffsetCurve *>(entity);
+  }
+  REQUIRE(native);
+  REQUIRE(native->sourceDefinition());
+  CHECK(native->sourceDefinition()->source.kind() ==
+        LC_OffsetSourceGeometry::Kind::Parabola);
+  const auto *retainedSource =
+      std::get_if<LC_ParabolaData>(&native->sourceDefinition()->source.value);
+  REQUIRE(retainedSource);
+  for (std::size_t i = 0; i < sourceData.m_controlPoints.size(); ++i)
+    CHECK(retainedSource->m_controlPoints[i].distanceTo(
+              sourceData.m_controlPoints[i]) == 0.0);
 
-    const auto breaks = native->getBreakParameters();
-    REQUIRE(breaks.size() >= 2);
-    const double parameter = (breaks.front() + breaks[1]) * .5;
-    const RS_Vector intersection = native->getPointAt(parameter);
-    const double step = std::max(1e-7, (breaks[1] - breaks.front()) * 1e-5);
-    RS_Vector tangent = native->getPointAt(parameter + step) -
-                        native->getPointAt(parameter - step);
-    REQUIRE(tangent.magnitude() > RS_TOLERANCE);
-    tangent /= tangent.magnitude();
-    const RS_Vector normal{-tangent.y, tangent.x};
-    const double radius = (oppositeBend || steepAsymmetricTangents) && !lineCutter
-        ? GENERATE(.05, .1, .25) * profileScale
-        : .1 * profileScale;
-    const bool cutterFirst = lineCutter ? GENERATE(false, true) : false;
-    CAPTURE(cutterFirst);
-    const RS_Vector circleCenter = intersection + tangent * radius;
-    RS_Entity* cutter = nullptr;
-    RS_Vector cutterPick;
-    if (scaleExtreme || lineCutter) {
-        cutter = new RS_Line(&f.graphic,
-            RS_LineData{intersection - normal * radius * 2.0,
-                        intersection + normal * radius * 2.0});
-        cutterPick = intersection + normal * radius;
+  const auto breaks = native->getBreakParameters();
+  REQUIRE(breaks.size() >= 2);
+  const double parameter = (breaks.front() + breaks[1]) * .5;
+  const RS_Vector intersection = native->getPointAt(parameter);
+  const double step = std::max(1e-7, (breaks[1] - breaks.front()) * 1e-5);
+  RS_Vector tangent = native->getPointAt(parameter + step) -
+                      native->getPointAt(parameter - step);
+  REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+  tangent /= tangent.magnitude();
+  const RS_Vector normal{-tangent.y, tangent.x};
+  const double radius = (oppositeBend || steepAsymmetricTangents) && !lineCutter
+                            ? GENERATE(.05, .1, .25) * profileScale
+                            : .1 * profileScale;
+  const bool cutterFirst = lineCutter ? GENERATE(false, true) : false;
+  CAPTURE(cutterFirst);
+  const RS_Vector circleCenter = intersection + tangent * radius;
+  RS_Entity *cutter = nullptr;
+  RS_Vector cutterPick;
+  if (scaleExtreme || lineCutter) {
+    cutter = new RS_Line(&f.graphic,
+                         RS_LineData{intersection - normal * radius * 2.0,
+                                     intersection + normal * radius * 2.0});
+    cutterPick = intersection + normal * radius;
+  } else {
+    cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
+    cutterPick = circleCenter + normal * radius;
+  }
+  f.graphic.addEntity(cutter);
+  const RS_Vector nativePick =
+      native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) *
+                                              (scaleExtreme ? .25 : .9));
+  const auto nativeBefore = trimGeometry(*native);
+  const auto cutterBefore = trimGeometry(*cutter);
+
+  LC_OffsetCacheTrim::Work trimWork;
+  const auto directTrim = LC_OffsetCacheTrim::prepare(
+      native->getData(), *cutter, {nativePick}, {}, {}, &trimWork);
+  REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+  CAPTURE(intersection, nativePick, cutterPick, radius);
+  CHECK(trimWork.intersections.deepestPairRefinement <=
+        LC_OffsetCacheTrim::Limits{}.maxDepth);
+
+  if (scaleExtreme) {
+    const RS_Vector circlePick = circleCenter + normal * radius;
+    const auto oracle = exactCircleBezierOracle(native->getData(), circleCenter,
+                                                radius, circlePick);
+    CAPTURE(scaleProfile, sourceTranslation, profileScale, towardCentre,
+            oracle.distinctRoots, oracle.repeatedRoots,
+            oracle.minimumSeparation, oracle.selectedArcSweep,
+            oracle.selectedArcMargin);
+    REQUIRE(oracle.valid);
+    CHECK(oracle.distinctRoots == 2);
+    CHECK(oracle.repeatedRoots == 0);
+    CHECK(oracle.minimumSeparation > radius * 1e-6);
+    CHECK(oracle.selectedArcSweep > 0);
+    CHECK(oracle.selectedArcSweep < 2 * M_PI);
+    CHECK(oracle.selectedArcMargin > 2 * oracle.maximumAngularError + 1e-12);
+  }
+
+  if (tangentCircleBoundary) {
+    const RS_Vector circlePick = circleCenter + normal * radius;
+    const RS_Vector tangentCircleCenter = intersection + normal * radius;
+    RS_Circle tangentCircle{nullptr, {tangentCircleCenter, radius}};
+    const auto tangentOracle =
+        exactCircleBezierOracle(native->getData(), tangentCircleCenter, radius,
+                                tangentCircleCenter + normal * radius);
+    CAPTURE(tangentOracle.valid, tangentOracle.distinctRoots,
+            tangentOracle.repeatedRoots, tangentOracle.minimumSeparation);
+    const auto tangentTrim = LC_OffsetCacheTrim::prepareConic(
+        native->getData(), tangentCircle,
+        {tangentCircleCenter + normal * radius});
+    CAPTURE(tangentTrim.refusal, tangentTrim.rootCount,
+            tangentTrim.work.failureStage,
+            tangentTrim.work.hasIntersectionFailureDomain);
+    const bool independentlySeparatedSecant =
+        tangentOracle.valid && tangentOracle.distinctRoots == 2 &&
+        tangentOracle.repeatedRoots == 0 &&
+        tangentOracle.minimumSeparation > radius * 1e-6;
+    if (independentlySeparatedSecant) {
+      CHECK(tangentTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+      CHECK(tangentTrim.rootCount == 2);
+      REQUIRE(tangentTrim.conicFragments.size() == 1);
+      CHECK(tangentTrim.fragments.empty());
     } else {
-        cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
-        cutterPick = circleCenter + normal * radius;
+      CHECK(tangentTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
+      CHECK(tangentTrim.fragments.empty());
+      CHECK(tangentTrim.conicFragments.empty());
+      CHECK(tangentTrim.fragmentCount == 0);
+      CHECK_FALSE(tangentTrim.removed);
     }
-    f.graphic.addEntity(cutter);
-    const RS_Vector nativePick = native->getPointAt(
-        breaks.front() + (breaks[1] - breaks.front()) * (scaleExtreme ? .25 : .9));
-    const auto nativeBefore = trimGeometry(*native);
-    const auto cutterBefore = trimGeometry(*cutter);
+    CHECK(trimGeometry(*native) == nativeBefore);
 
-    LC_OffsetCacheTrim::Work trimWork;
-    const auto directTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
-        {nativePick}, {}, {}, &trimWork);
-    REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-    CAPTURE(intersection, nativePick, cutterPick, radius);
-    CHECK(trimWork.intersections.deepestPairRefinement <=
-          LC_OffsetCacheTrim::Limits{}.maxDepth);
-
-    if (scaleExtreme) {
-        const RS_Vector circlePick = circleCenter + normal * radius;
-        const auto oracle = exactCircleBezierOracle(native->getData(), circleCenter,
-                                                     radius, circlePick);
-        CAPTURE(scaleProfile, sourceTranslation, profileScale, towardCentre,
-                oracle.distinctRoots, oracle.repeatedRoots,
-                oracle.minimumSeparation, oracle.selectedArcSweep,
-                oracle.selectedArcMargin);
+    if (includeHighOriginCircle && !towardCentre) {
+      for (const double inwardFraction : {1e-2, 1e-3, 1e-4, 1e-5, 1e-6}) {
+        const RS_Vector nearCenter =
+            tangentCircleCenter - normal * (radius * inwardFraction);
+        RS_Circle nearCircle{nullptr, {nearCenter, radius}};
+        const RS_Vector nearPick = nearCenter + normal * radius;
+        const auto oracle = exactCircleBezierOracle(
+            native->getData(), nearCenter, radius, nearPick);
+        CAPTURE(inwardFraction, oracle.valid, oracle.distinctRoots,
+                oracle.repeatedRoots, oracle.minimumSeparation);
         REQUIRE(oracle.valid);
         CHECK(oracle.distinctRoots == 2);
         CHECK(oracle.repeatedRoots == 0);
-        CHECK(oracle.minimumSeparation > radius * 1e-6);
-        CHECK(oracle.selectedArcSweep > 0);
-        CHECK(oracle.selectedArcSweep < 2 * M_PI);
-        CHECK(oracle.selectedArcMargin >
-              2 * oracle.maximumAngularError + 1e-12);
+        LC_OffsetCacheTrim::Work nearWork;
+        const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
+            native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
+        CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
+                nearWork.intersections.deepestPairRefinement,
+                nearWork.intersections.deepestRootRefinement,
+                nearWork.intersections.totalBoxPairs,
+                nearWork.intersections.generatedLeaves);
+        CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+        CHECK(nearTrim.rootCount == 2);
+        REQUIRE(nearTrim.conicFragments.size() == 1);
+        CHECK(trimGeometry(*native) == nativeBefore);
+      }
+
+      for (const double inwardFraction : {5e-7, 1e-7, 1e-8}) {
+        const RS_Vector nearCenter =
+            tangentCircleCenter - normal * (radius * inwardFraction);
+        RS_Circle nearCircle{nullptr, {nearCenter, radius}};
+        const RS_Vector nearPick = nearCenter + normal * radius;
+        const auto oracle = exactCircleBezierOracle(
+            native->getData(), nearCenter, radius, nearPick);
+        CAPTURE(inwardFraction, oracle.valid, oracle.distinctRoots,
+                oracle.repeatedRoots, oracle.minimumSeparation);
+        const bool independentlySeparatedSecant =
+            oracle.valid && oracle.distinctRoots == 2 &&
+            oracle.repeatedRoots == 0 &&
+            oracle.minimumSeparation > radius * 1e-6;
+        LC_OffsetCacheTrim::Work nearWork;
+        const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
+            native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
+        CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
+                nearWork.intersections.deepestPairRefinement,
+                nearWork.intersections.deepestRootRefinement,
+                nearWork.intersections.totalBoxPairs,
+                nearWork.intersections.generatedLeaves);
+        if (independentlySeparatedSecant) {
+          CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+          CHECK(nearTrim.rootCount == 2);
+          REQUIRE(nearTrim.conicFragments.size() == 1);
+        } else {
+          CHECK(nearTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
+          CHECK(nearTrim.rootCount == 0);
+          CHECK(nearTrim.fragments.empty());
+          CHECK(nearTrim.conicFragments.empty());
+          CHECK(nearTrim.fragmentCount == 0);
+          CHECK_FALSE(nearTrim.removed);
+        }
+        CHECK(trimGeometry(*native) == nativeBefore);
+      }
     }
 
-    if (tangentCircleBoundary) {
-        const RS_Vector circlePick = circleCenter + normal * radius;
-        const RS_Vector tangentCircleCenter = intersection + normal * radius;
-        RS_Circle tangentCircle{nullptr, {tangentCircleCenter, radius}};
-        const auto tangentOracle = exactCircleBezierOracle(native->getData(),
-            tangentCircleCenter, radius, tangentCircleCenter + normal * radius);
-        CAPTURE(tangentOracle.valid, tangentOracle.distinctRoots, tangentOracle.repeatedRoots,
-                tangentOracle.minimumSeparation);
-        const auto tangentTrim = LC_OffsetCacheTrim::prepareConic(native->getData(),
-            tangentCircle, {tangentCircleCenter + normal * radius});
-        CAPTURE(tangentTrim.refusal, tangentTrim.rootCount,
-                tangentTrim.work.failureStage,
-                tangentTrim.work.hasIntersectionFailureDomain);
-        const bool independentlySeparatedSecant = tangentOracle.valid &&
-            tangentOracle.distinctRoots == 2 && tangentOracle.repeatedRoots == 0 &&
-            tangentOracle.minimumSeparation > radius * 1e-6;
-        if (independentlySeparatedSecant) {
-            CHECK(tangentTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-            CHECK(tangentTrim.rootCount == 2);
-            REQUIRE(tangentTrim.conicFragments.size() == 1);
-            CHECK(tangentTrim.fragments.empty());
-        } else {
-            CHECK(tangentTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
-            CHECK(tangentTrim.fragments.empty());
-            CHECK(tangentTrim.conicFragments.empty());
-            CHECK(tangentTrim.fragmentCount == 0);
-            CHECK_FALSE(tangentTrim.removed);
-        }
-        CHECK(trimGeometry(*native) == nativeBefore);
+    auto *circle =
+        new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
+    f.graphic.addEntity(circle);
+    const auto cacheOnly =
+        LC_OffsetCacheTrim::prepare(native->getData(), *circle, {nativePick});
+    const auto conicOnly = LC_OffsetCacheTrim::prepareConic(
+        native->getData(), *circle, {circlePick});
+    CAPTURE(cacheOnly.refusal, cacheOnly.rootCount, cacheOnly.fragments.size(),
+            conicOnly.refusal, conicOnly.rootCount,
+            conicOnly.conicFragments.size(), conicOnly.work.failureStage,
+            conicOnly.work.hasIntersectionFailureDomain,
+            conicOnly.work.intersections.totalBoxPairs,
+            conicOnly.work.intersections.generatedLeaves);
+    LC_OffsetCacheTrim::Work circleWork;
+    const auto circleTrim = LC_OffsetCacheTrim::prepareConic(
+        native->getData(), *circle, {circlePick},
+        LC_OffsetCacheTrim::Pick{nativePick}, {}, {}, &circleWork);
+    CAPTURE(circleTrim.refusal, circleTrim.rootCount,
+            circleTrim.conicFragments.size(), circleWork.failureStage,
+            circleWork.hasIntersectionFailureDomain,
+            circleWork.intersections.totalBoxPairs,
+            circleWork.intersections.generatedLeaves,
+            circleWork.intersections.deepestPairRefinement);
+    CHECK(circleTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(circleTrim.rootCount == 2);
+    REQUIRE(circleTrim.conicFragments.size() == 1);
+    CHECK_FALSE(circleWork.hasIntersectionFailureDomain);
+    CHECK(cacheOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(cacheOnly.rootCount == 2);
+    CHECK_FALSE(cacheOnly.fragments.empty());
+    CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(conicOnly.rootCount == 2);
+    CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::None);
+    REQUIRE(conicOnly.conicFragments.size() == 1);
+    CHECK(trimGeometry(*native) == nativeBefore);
 
-        if (includeHighOriginCircle && !towardCentre) {
-            for (const double inwardFraction : {1e-2, 1e-3, 1e-4, 1e-5, 1e-6}) {
-                const RS_Vector nearCenter = tangentCircleCenter -
-                    normal * (radius * inwardFraction);
-                RS_Circle nearCircle{nullptr, {nearCenter, radius}};
-                const RS_Vector nearPick = nearCenter + normal * radius;
-                const auto oracle = exactCircleBezierOracle(native->getData(), nearCenter,
-                                                             radius, nearPick);
-                CAPTURE(inwardFraction, oracle.valid, oracle.distinctRoots,
-                        oracle.repeatedRoots, oracle.minimumSeparation);
-                REQUIRE(oracle.valid);
-                CHECK(oracle.distinctRoots == 2);
-                CHECK(oracle.repeatedRoots == 0);
-                LC_OffsetCacheTrim::Work nearWork;
-                const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
-                    native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
-                CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
-                        nearWork.intersections.deepestPairRefinement,
-                        nearWork.intersections.deepestRootRefinement,
-                        nearWork.intersections.totalBoxPairs,
-                        nearWork.intersections.generatedLeaves);
-                CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-                CHECK(nearTrim.rootCount == 2);
-                REQUIRE(nearTrim.conicFragments.size() == 1);
-                CHECK(trimGeometry(*native) == nativeBefore);
-            }
+    LC_StoredCacheTrimOptions workerOptions;
+    const auto limits =
+        RS_Modification::storedCacheTrimRemainingLimits(workerOptions.kernel);
+    REQUIRE(limits);
+    const LC_OffsetWorkerRequest::Token token{
+        1, 3, 17, qint64(f.graphic.undoStateEpoch())};
+    const auto request = RS_Modification::storedCacheTrimRequest(
+        *native, nativePick, *circle, circlePick, true, token, *limits);
+    REQUIRE(request);
+    const auto completion = joinedTrimWorker(*request);
+    const auto &workerResult =
+        std::get<LC_OffsetCacheTrim::Result>(completion->reply().result);
+    CHECK(workerResult.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CHECK(workerResult.rootCount == 2);
+    CHECK(workerResult.work.failureStage == LC_OffsetCacheTrim::Stage::None);
 
-            for (const double inwardFraction : {5e-7, 1e-7, 1e-8}) {
-                const RS_Vector nearCenter = tangentCircleCenter -
-                    normal * (radius * inwardFraction);
-                RS_Circle nearCircle{nullptr, {nearCenter, radius}};
-                const RS_Vector nearPick = nearCenter + normal * radius;
-                const auto oracle = exactCircleBezierOracle(native->getData(), nearCenter,
-                                                             radius, nearPick);
-                CAPTURE(inwardFraction, oracle.valid, oracle.distinctRoots,
-                        oracle.repeatedRoots, oracle.minimumSeparation);
-                const bool independentlySeparatedSecant = oracle.valid &&
-                    oracle.distinctRoots == 2 && oracle.repeatedRoots == 0 &&
-                    oracle.minimumSeparation > radius * 1e-6;
-                LC_OffsetCacheTrim::Work nearWork;
-                const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
-                    native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
-                CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
-                        nearWork.intersections.deepestPairRefinement,
-                        nearWork.intersections.deepestRootRefinement,
-                        nearWork.intersections.totalBoxPairs,
-                        nearWork.intersections.generatedLeaves);
-                if (independentlySeparatedSecant) {
-                    CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-                    CHECK(nearTrim.rootCount == 2);
-                    REQUIRE(nearTrim.conicFragments.size() == 1);
-                } else {
-                    CHECK(nearTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
-                    CHECK(nearTrim.rootCount == 0);
-                    CHECK(nearTrim.fragments.empty());
-                    CHECK(nearTrim.conicFragments.empty());
-                    CHECK(nearTrim.fragmentCount == 0);
-                    CHECK_FALSE(nearTrim.removed);
-                }
-                CHECK(trimGeometry(*native) == nativeBefore);
-            }
-        }
+    LC_StoredCacheTrimCompletions received{*request, *completion};
+    received.publicationUndoEpoch = f.graphic.undoStateEpoch();
+    LC_DocumentModificationBatch preparedBatch;
+    const auto preparedTrim = RS_Modification::trimStoredCachePrepared(
+        f.graphic, *native, nativePick, *circle, circlePick, true,
+        preparedBatch, received, workerOptions);
+    REQUIRE(preparedTrim.result);
+    CHECK_FALSE(preparedTrim.cacheRefusal);
+    CHECK(preparedTrim.cacheWork.failureStage ==
+          workerResult.work.failureStage);
+    REQUIRE(preparedBatch.entitiesToAdd.size() ==
+            circleTrim.fragments.size() + circleTrim.conicFragments.size());
+    CHECK(preparedBatch.entitiesToDelete.size() == 2);
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(circle->isDeleted());
 
-        auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
-        f.graphic.addEntity(circle);
-        const auto cacheOnly = LC_OffsetCacheTrim::prepare(native->getData(), *circle,
-            {nativePick});
-        const auto conicOnly = LC_OffsetCacheTrim::prepareConic(native->getData(), *circle,
-            {circlePick});
-        CAPTURE(cacheOnly.refusal, cacheOnly.rootCount, cacheOnly.fragments.size(),
-                conicOnly.refusal, conicOnly.rootCount, conicOnly.conicFragments.size(),
-                conicOnly.work.failureStage,
-                conicOnly.work.hasIntersectionFailureDomain,
-                conicOnly.work.intersections.totalBoxPairs,
-                conicOnly.work.intersections.generatedLeaves);
-        LC_OffsetCacheTrim::Work circleWork;
-        const auto circleTrim = LC_OffsetCacheTrim::prepareConic(native->getData(), *circle,
-            {circlePick}, LC_OffsetCacheTrim::Pick{nativePick}, {}, {}, &circleWork);
-        CAPTURE(circleTrim.refusal, circleTrim.rootCount, circleTrim.conicFragments.size(),
-                circleWork.failureStage, circleWork.hasIntersectionFailureDomain,
-                circleWork.intersections.totalBoxPairs, circleWork.intersections.generatedLeaves,
-                circleWork.intersections.deepestPairRefinement);
-        CHECK(circleTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-        CHECK(circleTrim.rootCount == 2);
-        REQUIRE(circleTrim.conicFragments.size() == 1);
-        CHECK_FALSE(circleWork.hasIntersectionFailureDomain);
-        CHECK(cacheOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
-        CHECK(cacheOnly.rootCount == 2);
-        CHECK_FALSE(cacheOnly.fragments.empty());
-        CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
-        CHECK(conicOnly.rootCount == 2);
-        CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::None);
-        REQUIRE(conicOnly.conicFragments.size() == 1);
-        CHECK(trimGeometry(*native) == nativeBefore);
+    LC_DocumentModificationBatch circleBatch;
+    const auto trimTwo = RS_Modification::trimStoredCache(
+        f.graphic, *native, nativePick, *circle, circlePick, true, circleBatch);
+    REQUIRE(trimTwo.result);
+    CHECK_FALSE(trimTwo.cacheRefusal);
+    CHECK(trimTwo.cacheWork.failureStage == LC_OffsetCacheTrim::Stage::None);
+    REQUIRE(circleBatch.entitiesToAdd.size() ==
+            preparedBatch.entitiesToAdd.size());
+    CHECK(circleBatch.entitiesToDelete == preparedBatch.entitiesToDelete);
+    for (qsizetype i = 0; i < circleBatch.entitiesToAdd.size(); ++i) {
+      CHECK(circleBatch.entitiesToAdd[i]->rtti() ==
+            preparedBatch.entitiesToAdd[i]->rtti());
+      CHECK(trimGeometry(*circleBatch.entitiesToAdd[i]) ==
+            trimGeometry(*preparedBatch.entitiesToAdd[i]));
+    }
 
-        LC_StoredCacheTrimOptions workerOptions;
-        const auto limits = RS_Modification::storedCacheTrimRemainingLimits(workerOptions.kernel);
-        REQUIRE(limits);
-        const LC_OffsetWorkerRequest::Token token{1, 3, 17,
-            qint64(f.graphic.undoStateEpoch())};
-        const auto request = RS_Modification::storedCacheTrimRequest(*native,
-            nativePick, *circle, circlePick, true, token, *limits);
-        REQUIRE(request);
-        const auto completion = joinedTrimWorker(*request);
-        const auto& workerResult = std::get<LC_OffsetCacheTrim::Result>(
-            completion->reply().result);
-        CHECK(workerResult.refusal == LC_OffsetCacheTrim::Refusal::None);
-        CHECK(workerResult.rootCount == 2);
-        CHECK(workerResult.work.failureStage == LC_OffsetCacheTrim::Stage::None);
+    f.action->click(nativePick);
+    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    CHECK(f.action->caughtAt(circlePick) == circle);
+    f.action->hover(circlePick);
+    const auto circlePreview = trimPreview(*f.action->m_preview);
+    REQUIRE(circlePreview.size() == preparedBatch.entitiesToAdd.size());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(circle->isDeleted());
+    f.action->click(circlePick);
+    CHECK(native->isDeleted());
+    CHECK(circle->isDeleted());
+    auto committedCircle = trimPreview(f.graphic);
+    std::sort(committedCircle.begin(), committedCircle.end());
+    auto expectedCircle = circlePreview;
+    std::sort(expectedCircle.begin(), expectedCircle.end());
+    CHECK(committedCircle == expectedCircle);
+    std::vector<RS_Entity *> circleFragments;
+    for (auto *entity : live(f.graphic))
+      if (entity != native && entity != circle && entity != parabola &&
+          entity != cutter)
+        circleFragments.push_back(entity);
+    REQUIRE(circleFragments.size() == circlePreview.size());
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(circle->isDeleted());
+    for (const auto *fragment : circleFragments)
+      CHECK(fragment->isDeleted());
+    REQUIRE(f.graphic.redo());
+    CHECK(native->isDeleted());
+    CHECK(circle->isDeleted());
+    for (const auto *fragment : circleFragments)
+      CHECK_FALSE(fragment->isDeleted());
 
-        LC_StoredCacheTrimCompletions received{*request, *completion};
-        received.publicationUndoEpoch = f.graphic.undoStateEpoch();
-        LC_DocumentModificationBatch preparedBatch;
-        const auto preparedTrim = RS_Modification::trimStoredCachePrepared(f.graphic,
-            *native, nativePick, *circle, circlePick, true, preparedBatch, received,
-            workerOptions);
-        REQUIRE(preparedTrim.result);
-        CHECK_FALSE(preparedTrim.cacheRefusal);
-        CHECK(preparedTrim.cacheWork.failureStage == workerResult.work.failureStage);
-        REQUIRE(preparedBatch.entitiesToAdd.size() == 2);
-        CHECK(preparedBatch.entitiesToDelete.size() == 2);
-        CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
-
-        LC_DocumentModificationBatch circleBatch;
-        const auto trimTwo = RS_Modification::trimStoredCache(f.graphic, *native,
-            nativePick, *circle, circlePick, true, circleBatch);
-        REQUIRE(trimTwo.result);
-        CHECK_FALSE(trimTwo.cacheRefusal);
-        CHECK(trimTwo.cacheWork.failureStage == LC_OffsetCacheTrim::Stage::None);
-        REQUIRE(circleBatch.entitiesToAdd.size() == preparedBatch.entitiesToAdd.size());
-        CHECK(circleBatch.entitiesToDelete == preparedBatch.entitiesToDelete);
-        for (qsizetype i = 0; i < circleBatch.entitiesToAdd.size(); ++i) {
-            CHECK(circleBatch.entitiesToAdd[i]->rtti() == preparedBatch.entitiesToAdd[i]->rtti());
-            CHECK(trimGeometry(*circleBatch.entitiesToAdd[i]) == trimGeometry(*preparedBatch.entitiesToAdd[i]));
-        }
-
-        f.action->click(nativePick);
-        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
-        CHECK(f.action->caughtAt(circlePick) == circle);
-        f.action->hover(circlePick);
-        const auto circlePreview = trimPreview(*f.action->m_preview);
-        REQUIRE(circlePreview.size() == preparedBatch.entitiesToAdd.size());
-        CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
-        f.action->click(circlePick);
-        CHECK(native->isDeleted());
-        CHECK(circle->isDeleted());
-        auto committedCircle = trimPreview(f.graphic);
-        std::sort(committedCircle.begin(), committedCircle.end());
-        auto expectedCircle = circlePreview;
-        std::sort(expectedCircle.begin(), expectedCircle.end());
-        CHECK(committedCircle == expectedCircle);
-        std::vector<RS_Entity*> circleFragments;
-        for (auto* entity : live(f.graphic))
-            if (entity != native && entity != circle && entity != parabola && entity != cutter)
-                circleFragments.push_back(entity);
-        REQUIRE(circleFragments.size() == circlePreview.size());
-        REQUIRE(f.graphic.undo());
-        CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(circle->isDeleted());
-        for (const auto* fragment : circleFragments) CHECK(fragment->isDeleted());
-        REQUIRE(f.graphic.redo());
-        CHECK(native->isDeleted());
-        CHECK(circle->isDeleted());
-        for (const auto* fragment : circleFragments) CHECK_FALSE(fragment->isDeleted());
-
-        QTemporaryDir circleDirectory;
-        REQUIRE(circleDirectory.isValid());
-        const std::array<RS2::FormatType, 5> circleFormats{{RS2::FormatDXFRW14,
-            RS2::FormatDXFRW2000, RS2::FormatDWG, RS2::FormatDXFRW2018,
-            RS2::FormatDWG2018}};
+    QTemporaryDir circleDirectory;
+    REQUIRE(circleDirectory.isValid());
+    const std::array<RS2::FormatType, 5> circleFormats{
+        {RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+         RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
 #ifdef DWGSUPPORT
         QString circleLibreDwgReader = qEnvironmentVariable("DWGREAD");
         if (circleLibreDwgReader.isEmpty())
