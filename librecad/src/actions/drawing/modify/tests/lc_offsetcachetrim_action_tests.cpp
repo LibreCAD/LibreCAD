@@ -2852,28 +2852,31 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         CHECK(trimGeometry(*native) == nativeBefore);
 
         if (scaleExtreme && scaleProfile == 1 && !towardCentre) {
-            const double inwardFraction = 1e-3;
-            const RS_Vector nearCenter = tangentCircleCenter -
-                normal * (radius * inwardFraction);
-            RS_Circle nearCircle{nullptr, {nearCenter, radius}};
-            const RS_Vector nearPick = nearCenter + normal * radius;
-            const auto oracle = exactCircleBezierOracle(native->getData(), nearCenter,
-                                                         radius, nearPick);
-            REQUIRE(oracle.valid);
-            CHECK(oracle.distinctRoots == 2);
-            CHECK(oracle.repeatedRoots == 0);
-            LC_OffsetCacheTrim::Work nearWork;
-            const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
-                native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
-            CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
-                    nearWork.intersections.deepestPairRefinement,
-                    nearWork.intersections.deepestRootRefinement,
-                    nearWork.intersections.totalBoxPairs,
-                    nearWork.intersections.generatedLeaves);
-            CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-            CHECK(nearTrim.rootCount == 2);
-            REQUIRE(nearTrim.conicFragments.size() == 1);
-            CHECK(trimGeometry(*native) == nativeBefore);
+            for (const double inwardFraction : {1e-2, 1e-3, 1e-4}) {
+                const RS_Vector nearCenter = tangentCircleCenter -
+                    normal * (radius * inwardFraction);
+                RS_Circle nearCircle{nullptr, {nearCenter, radius}};
+                const RS_Vector nearPick = nearCenter + normal * radius;
+                const auto oracle = exactCircleBezierOracle(native->getData(), nearCenter,
+                                                             radius, nearPick);
+                CAPTURE(inwardFraction, oracle.valid, oracle.distinctRoots,
+                        oracle.repeatedRoots, oracle.minimumSeparation);
+                REQUIRE(oracle.valid);
+                CHECK(oracle.distinctRoots == 2);
+                CHECK(oracle.repeatedRoots == 0);
+                LC_OffsetCacheTrim::Work nearWork;
+                const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
+                    native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
+                CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
+                        nearWork.intersections.deepestPairRefinement,
+                        nearWork.intersections.deepestRootRefinement,
+                        nearWork.intersections.totalBoxPairs,
+                        nearWork.intersections.generatedLeaves);
+                CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+                CHECK(nearTrim.rootCount == 2);
+                REQUIRE(nearTrim.conicFragments.size() == 1);
+                CHECK(trimGeometry(*native) == nativeBefore);
+            }
         }
 
         auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
