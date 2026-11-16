@@ -52899,6 +52899,13 @@ worker/cache matrix passes 1,234,635 assertions / 1 case. These runs confirm
 current-source geometry, Trim, and real-helper cache admission; the focused
 matrix does not include file persistence.
 
+The isolated `From-four-points parabola offsets retain worker caches across
+file lanes` case also passes 1,043 assertions with
+`DWGREAD=/opt/homebrew/bin/dwgread`; it checks worker generation/cache
+admission, R14 DXF, R2000 DXF/DWG and R2018 DXF/DWG, then runs LibreDWG
+`minJSON` checks on both DWG outputs. This is one bounded fixture/profile, not
+fresh revalidation of every permutation's persistence.
+
 A broader `[lc-offsetcurve][worker-client][parabola]` invocation with
 `DWGREAD=/opt/homebrew/bin/dwgread` and the configured 900,000 ms suite limit
 ran for 900,626 ms and failed only the suite watchdog: 1,459,236 assertions
