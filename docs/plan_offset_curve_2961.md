@@ -54927,3 +54927,29 @@ Other line placements, tangency/refusal boundaries, source scales/origins
 beyond the tested ratios, visible-app interaction, and independent
 ODA/AutoCAD acceptance remain open.
 
+## 1658. Select Replacement Sources Across All Supported Families (2026-11-16)
+
+Implementation commit `1749fa062` adds an `All supported types` option to the
+Properties source-family filter. In this mode the source list includes every
+encodable/selectable native source family and retains each candidate's actual
+family in its label. Selecting a candidate synchronizes the family selector
+back to that entity's type before guarded worker preparation. Both synchronous
+and incremental large-document scans support the wildcard filter; ID lookup,
+source identity validation, and current-source matching remain active.
+
+The regression matrix selects each supported family through the all-types
+filter: ellipse, spline, spline points, parabola, bounded hyperbola, line, arc,
+circle, and polyline. A separate large-list test exercises cross-family
+selection after the incremental scan.
+
+Validation on macOS arm64 CMake Release:
+
+- All-family source replacement: 411 assertions / 1 case.
+- Incremental large-list family switching: 155 assertions / 1 case.
+- Existing typed parabola/source-family workflow: 66 assertions / 1 case.
+- `git diff --check`: passed.
+
+The implementation is committed locally. This does not close visible packaged
+Properties interaction, external ODA/AutoCAD acceptance, or the remaining
+geometry and persistence gates recorded above.
+
