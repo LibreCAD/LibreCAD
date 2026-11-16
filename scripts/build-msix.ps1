@@ -741,7 +741,9 @@ try {
         'unpack', '/o', '/p', $packagePath, '/d', $validationDirectory
     )
 
-    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'Qt6Pdf.dll', 'imageformats\qpdf.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\qt-third-party.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\readme.md', 'licenses\LICENSE', 'licenses\SOURCE.txt')) {
+    # Qt ships no PDF module for Windows ARM64, so only x64 carries the PDF image plugin.
+    $pdfPaths = if ($Architecture -eq 'x64') { @('Qt6Pdf.dll', 'imageformats\qpdf.dll') } else { @() }
+    foreach ($requiredPath in @('AppxManifest.xml', 'LibreCAD.exe', 'resources.pri', 'Assets\Square150x150Logo.png', 'iconengines\lc_svgiconengine.dll', 'resources\fonts\standard.lff', 'licenses\gpl-2.0.txt', 'licenses\gpl-3.0.txt', 'licenses\qt-third-party.txt', 'licenses\OFL-noto-cjk.txt', 'licenses\readme.md', 'licenses\LICENSE', 'licenses\SOURCE.txt') + $pdfPaths) {
         if (-not (Test-Path -LiteralPath (Join-Path $validationDirectory $requiredPath) -PathType Leaf)) {
             throw "MSIX validation output is missing $requiredPath"
         }

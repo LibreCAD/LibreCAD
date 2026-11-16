@@ -180,7 +180,7 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
-    runs-on: macos-14
+    runs-on: macos-15
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -471,7 +471,8 @@ jobs:
           arch: 'win64_msvc2022_arm64'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt5compat qtimageformats qtpdf qtshadertools'
+          # Qt ships no PDF module for Windows ARM64.
+          modules: 'qt5compat qtimageformats qtshadertools'
 
       - name: (3) Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -553,8 +554,6 @@ jobs:
           if errorlevel 1 exit /b 1
           if not exist windows\Qt6Core.dll exit /b 1
           if not exist windows\platforms\qwindows.dll exit /b 1
-          if not exist windows\Qt6Pdf.dll (echo Qt6Pdf.dll was not deployed & exit /b 1)
-          if not exist windows\imageformats\qpdf.dll (echo imageformats\qpdf.dll was not deployed & exit /b 1)
           for /r generated %%f in (librecad_*.qm) do copy "%%f" librecad\ts\
           for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
           powershell.exe -ExecutionPolicy Bypass -File scripts\copy-vc-runtime.ps1 -Architecture ARM64 -Destination windows
@@ -566,13 +565,6 @@ jobs:
           set LC_ARCH=ARM64
           call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
-
-      - name: Check that a PDF image renders
-        # Qt's PDF image plugin fails silently, so look at the pixels.
-        timeout-minutes: 10
-        run: |
-          & scripts\check-pdf-image.ps1 -Program windows\LibreCAD.exe
-        shell: pwsh
 
       - name: Rename installer
         run: |
