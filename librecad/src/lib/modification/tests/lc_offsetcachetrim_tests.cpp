@@ -1799,6 +1799,18 @@ TEST_CASE("Near-tangent roots are either separated by proof or refused without o
     }
 }
 
+TEST_CASE("An exact cubic endpoint tangent to a circle refuses atomically", tags) {
+    const auto data = cache({{0, 0}, {3, 4}, {3, 4}, {0, 0}}, 3);
+    const auto before = data;
+    RS_Circle cutter{nullptr, {{-12, 9}, 15}};
+    const auto result = Trim::prepareConic(data, cutter, {{3, 9}});
+    refused(result);
+    CHECK((result.refusal == Trim::Refusal::TangencyOrOverlap ||
+           result.refusal == Trim::Refusal::AmbiguousRoots ||
+           result.refusal == Trim::Refusal::LimitExceeded));
+    equalData(data, before);
+}
+
 TEST_CASE("An actually admitted native cache trims to its retained cubic cap in both orders", tags) {
     for (bool reverse : {false, true}) {
         const auto native = nativeRing(reverse); const auto before = native->getData();

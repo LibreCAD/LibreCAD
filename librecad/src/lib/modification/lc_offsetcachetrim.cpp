@@ -1283,6 +1283,168 @@ struct Root {
     bool conicContracted = false;
 };
 
+using ExactScalarNet = std::array<Q, 7>;
+
+std::pair<ExactScalarNet, ExactScalarNet> splitScalarAt(const ExactScalarNet& net,
+                                                        std::size_t degree,
+                                                        const Q& t) {
+    ExactScalarNet work = net, left{}, right{};
+    left[0] = work[0]; right[degree] = work[degree];
+    for (std::size_t level = 1; level <= degree; ++level) {
+        for (std::size_t i = 0; i <= degree - level; ++i)
+            work[i] = (Q{1} - t) * work[i] + t * work[i + 1];
+        left[level] = work[0]; right[degree - level] = work[degree - level];
+    }
+    return {std::move(left), std::move(right)};
+}
+
+std::pair<ExactScalarNet, ExactScalarNet> splitScalarHalf(const ExactScalarNet& net,
+                                                          std::size_t degree) {
+    return splitScalarAt(net, degree, Q{1} / 2);
+}
+
+ExactScalarNet restrictScalarNet(ExactScalarNet net, std::size_t degree,
+                                 const Q& a, const Q& b) {
+    if (b < 1) net = splitScalarAt(net, degree, b).first;
+    if (a > 0) net = splitScalarAt(net, degree, a / b).second;
+    return net;
+}
+
+struct ExactConicImage { I u, v; };
+
+std::optional<ExactConicImage> exactConicImageOnCacheSpan(
+        Context& c, const Geo::CacheSpan& span, const Conic& conic,
+        const Geo::ReferenceFrame& frame, const I& sourceParameter, double allowance) {
+    if (span.degree != 3 || !finite(sourceParameter) || sourceParameter.lo() < 0 ||
+        sourceParameter.hi() > 1 || !(sourceParameter.lo() < sourceParameter.hi())) return {};
+    const Q ax{conic.data.majorP.x}, ay{conic.data.majorP.y};
+    const Q ratio{conic.data.ratio};
+    const Q axisSquared = ax * ax + ay * ay;
+    if (axisSquared == 0 || ratio <= 0) return {};
+
+    std::array<Q, 4> u{}, v{};
+    const Q cx{conic.data.center.x}, cy{conic.data.center.y};
+    for (std::size_t i = 0; i < 4; ++i) {
+        c.check();
+        const Q x = Q{span.controls[i].x} - cx;
+        const Q y = Q{span.controls[i].y} - cy;
+        u[i] = (x * ax + y * ay) / axisSquared;
+        v[i] = (-x * ay + y * ax) / (axisSquared * ratio);
+    }
+
+    constexpr std::array<unsigned, 4> choose3{{1, 3, 3, 1}};
+    constexpr std::array<unsigned, 7> choose6{{1, 6, 15, 20, 15, 6, 1}};
+    ExactScalarNet implicit{};
+    for (std::size_t k = 0; k <= 6; ++k) {
+        Q value = 0;
+        for (std::size_t i = 0; i <= 3; ++i) {
+            if (k < i || k - i > 3) continue;
+            const std::size_t j = k - i;
+            const Q weight = Q{choose3[i] * choose3[j]} / Q{choose6[k]};
+            value += weight * (u[i] * u[j] + v[i] * v[j]);
+        }
+        implicit[k] = value - Q{1};
+    }
+
+    const Q a{sourceParameter.lo()}, b{sourceParameter.hi()};
+    auto local = restrictScalarNet(implicit, 6, a, b);
+    ExactScalarNet localU{}, localV{};
+    std::copy(u.begin(), u.end(), localU.begin());
+    std::copy(v.begin(), v.end(), localV.begin());
+    localU = restrictScalarNet(localU, 3, a, b);
+    localV = restrictScalarNet(localV, 3, a, b);
+    const Q first = local.front(), last = local.back();
+    if (first == 0 || last == 0 || (first < 0) == (last < 0)) return {};
+    const bool increasing = local[1] > local[0];
+    if (local[1] == local[0]) return {};
+    for (std::size_t i = 0; i < 6; ++i) {
+        c.compare();
+        if (increasing ? local[i + 1] <= local[i] : local[i + 1] >= local[i]) return {};
+    }
+
+    const auto bounds = [](const ExactScalarNet& values, std::size_t degree) -> std::optional<I> {
+        Q minimum = values[0], maximum = values[0];
+        for (std::size_t i = 1; i <= degree; ++i) {
+            minimum = std::min(minimum, values[i]);
+            maximum = std::max(maximum, values[i]);
+        }
+        const I low = enclose(minimum), high = enclose(maximum);
+        if (!finite(low) || !finite(high)) return {};
+        return I::hull(low.lo(), high.hi());
+    };
+    const double axisScale = std::hypot(conic.data.majorP.x, conic.data.majorP.y) / frame.scale();
+    if (!(axisScale > 0) || !std::isfinite(axisScale)) return {};
+    const double imageScale = axisScale * std::max(1.0, conic.data.ratio);
+    if (!std::isfinite(imageScale)) return {};
+
+    Q lo = a, hi = b, fLo = first;
+    for (unsigned round = 0; round < c.limits.maxDepth; ++round) {
+        c.check();
+        const auto imageU = bounds(localU, 3), imageV = bounds(localV, 3);
+        if (!imageU || !imageV) return {};
+        if (imageScale * std::hypot(imageU->width(), imageV->width()) <= allowance * 0.25)
+            return ExactConicImage{*imageU, *imageV};
+
+        c.items(1);
+        const auto halves = splitScalarHalf(local, 6);
+        const auto halvesU = splitScalarHalf(localU, 3);
+        const auto halvesV = splitScalarHalf(localV, 3);
+        const Q middle = (lo + hi) / 2;
+        const Q fMiddle = halves.first.back();
+        if (fMiddle == 0) {
+            const I imageUAtRoot = enclose(halvesU.first.back());
+            const I imageVAtRoot = enclose(halvesV.first.back());
+            if (!finite(imageUAtRoot) || !finite(imageVAtRoot)) return {};
+            return ExactConicImage{imageUAtRoot, imageVAtRoot};
+        }
+        if ((fMiddle < 0) == (fLo < 0)) {
+            lo = middle; fLo = fMiddle;
+            local = halves.second; localU = halvesU.second; localV = halvesV.second;
+        } else {
+            hi = middle;
+            local = halves.first; localU = halvesU.first; localV = halvesV.first;
+        }
+    }
+    return {};
+}
+
+I contractConicAgainstExactCacheRoot(Context& c, const Input& input,
+                                     const Root& contact, const I& parameter) {
+    if (!input.conic || !finite(parameter) || parameter.lo() < 0 ||
+        parameter.hi() > input.conic->unit.parameterEnd()) return {};
+    const auto sourceId = contact.snapshot.event.isolation.segmentA;
+    if (sourceId >= input.source->size()) return {};
+    const I sourceDomain = intersect(contact.parameter - I::point(double(sourceId)), I::hull(0, 1));
+    const double allowance = conicAllowance(*input.conic, input.frame);
+    const auto sourceRoot = exactConicImageOnCacheSpan(c, (*input.source)[sourceId],
+        *input.conic, input.frame, sourceDomain, allowance);
+    if (!sourceRoot) return {};
+    I conicParameter = parameter;
+    for (unsigned round = 0; round < c.limits.maxDepth; ++round) {
+        c.check(); c.compare();
+        I x, y;
+        if (!conicPositionBounds(*input.conic, input.frame, conicParameter.lo(),
+                                 conicParameter.hi(), x, y)) return {};
+        if (x.width() <= allowance && y.width() <= allowance) return conicParameter;
+        const double middle = mid(conicParameter);
+        LC_CurveJetBounds point, interval;
+        if (!std::isfinite(middle) ||
+            !input.conic->unit.boundSourceJet(middle, middle, point) ||
+            !input.conic->unit.boundSourceJet(conicParameter.lo(), conicParameter.hi(), interval)) return {};
+        const double tx = mid(point.dx), ty = mid(point.dy);
+        const double length = std::hypot(tx, ty);
+        if (!(length > 0) || !std::isfinite(length)) return {};
+        const I axisX = I::point(tx / length), axisY = I::point(ty / length);
+        const I residual = (point.x - sourceRoot->u) * axisX + (point.y - sourceRoot->v) * axisY;
+        const I derivative = interval.dx * axisX + interval.dy * axisY;
+        if (!finite(residual) || !finite(derivative) || !derivative.excludesZero()) return {};
+        const I next = intersect(conicParameter, I::point(middle) - residual / derivative);
+        if (!finite(next) || !(next.width() < conicParameter.width())) return {};
+        conicParameter = next;
+    }
+    return {};
+}
+
 std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                         LC_CertifiedIntersectionSession& session) {
     c.stage(Stage::RootExtraction);
@@ -1613,7 +1775,15 @@ std::vector<Root> conicContacts(Context& c, const Input& input, const std::vecto
                 fail(Refusal::AmbiguousRoots);
             }
             c.stage(Stage::ConicRootRefinement);
-            snapshot = contract(c, session, contact.handle, Refusal::AmbiguousRoots); t = snapshot.event.isolation.parameterB;
+            try {
+                snapshot = contract(c, session, contact.handle, Refusal::AmbiguousRoots);
+                t = snapshot.event.isolation.parameterB;
+            } catch (const Failure& failure) {
+                if (failure.reason != Refusal::AmbiguousRoots) throw;
+                const I narrowed = contractConicAgainstExactCacheRoot(c, input, contact, t);
+                if (!finite(narrowed) || narrowed.width() >= t.width()) throw;
+                t = narrowed;
+            }
             c.stage(Stage::ConicRootContraction);
         }
         c.stage(Stage::ConicRootParameter);

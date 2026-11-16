@@ -2825,17 +2825,56 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         const RS_Vector circlePick = circleCenter + normal * radius;
         const RS_Vector tangentCircleCenter = intersection + normal * radius;
         RS_Circle tangentCircle{nullptr, {tangentCircleCenter, radius}};
+        const auto tangentOracle = exactCircleBezierOracle(native->getData(),
+            tangentCircleCenter, radius, tangentCircleCenter + normal * radius);
+        CAPTURE(tangentOracle.valid, tangentOracle.distinctRoots, tangentOracle.repeatedRoots,
+                tangentOracle.minimumSeparation);
         const auto tangentTrim = LC_OffsetCacheTrim::prepareConic(native->getData(),
             tangentCircle, {tangentCircleCenter + normal * radius});
         CAPTURE(tangentTrim.refusal, tangentTrim.rootCount,
                 tangentTrim.work.failureStage,
                 tangentTrim.work.hasIntersectionFailureDomain);
-        CHECK(tangentTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
-        CHECK(tangentTrim.fragments.empty());
-        CHECK(tangentTrim.conicFragments.empty());
-        CHECK(tangentTrim.fragmentCount == 0);
-        CHECK_FALSE(tangentTrim.removed);
+        const bool independentlySeparatedSecant = tangentOracle.valid &&
+            tangentOracle.distinctRoots == 2 && tangentOracle.repeatedRoots == 0 &&
+            tangentOracle.minimumSeparation > radius * 1e-6;
+        if (independentlySeparatedSecant) {
+            CHECK(tangentTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+            CHECK(tangentTrim.rootCount == 2);
+            REQUIRE(tangentTrim.conicFragments.size() == 1);
+            CHECK(tangentTrim.fragments.empty());
+        } else {
+            CHECK(tangentTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
+            CHECK(tangentTrim.fragments.empty());
+            CHECK(tangentTrim.conicFragments.empty());
+            CHECK(tangentTrim.fragmentCount == 0);
+            CHECK_FALSE(tangentTrim.removed);
+        }
         CHECK(trimGeometry(*native) == nativeBefore);
+
+        if (scaleExtreme && scaleProfile == 1 && !towardCentre) {
+            const double inwardFraction = 1e-3;
+            const RS_Vector nearCenter = tangentCircleCenter -
+                normal * (radius * inwardFraction);
+            RS_Circle nearCircle{nullptr, {nearCenter, radius}};
+            const RS_Vector nearPick = nearCenter + normal * radius;
+            const auto oracle = exactCircleBezierOracle(native->getData(), nearCenter,
+                                                         radius, nearPick);
+            REQUIRE(oracle.valid);
+            CHECK(oracle.distinctRoots == 2);
+            CHECK(oracle.repeatedRoots == 0);
+            LC_OffsetCacheTrim::Work nearWork;
+            const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
+                native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
+            CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
+                    nearWork.intersections.deepestPairRefinement,
+                    nearWork.intersections.deepestRootRefinement,
+                    nearWork.intersections.totalBoxPairs,
+                    nearWork.intersections.generatedLeaves);
+            CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+            CHECK(nearTrim.rootCount == 2);
+            REQUIRE(nearTrim.conicFragments.size() == 1);
+            CHECK(trimGeometry(*native) == nativeBefore);
+        }
 
         auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
         f.graphic.addEntity(circle);
