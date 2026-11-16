@@ -53949,9 +53949,11 @@ LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-Results: direct origin matrix 368 assertions / 1 case; worker/cache and
-five-format persistence 35,366 assertions / 1 case; Trim Two and five-format
-result persistence 10,174 assertions / 1 case. These bounded frames do not
+Results: direct origin matrix 368 assertions / 1 case; the broader
+`[curve-offset][direct][parabola]` selection passes 64,360 assertions / 14
+cases; worker/cache and five-format persistence pass 35,366 assertions / 1
+case; Trim Two and five-format result persistence pass 10,174 assertions / 1
+case. These bounded frames do not
 close the continuous origin/scale matrix, alternate tangent constructions,
 all Trim sides/cutters, visible-app acceptance, or independent ODA/AutoCAD
 acceptance.
