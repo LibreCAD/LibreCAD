@@ -55344,3 +55344,34 @@ worker-validation diagnostics, and persistence/import routing before treating
 these as environment-only failures. These results do not implicate the local
 frame condition by themselves, but they prevent a clean end-to-end claim.
 
+## 1673. Rebuild Import and Round-trip Test Binaries before Triage (2026-11-16)
+
+The apparent native-carrier failures listed in section 1672 were stale-test
+artifacts. The first CMake build updated the application and worker, but did
+not relink the separately declared plugin, console-import, and fast filter
+test targets. Rebuilding `librecad_console_command_utils_tests`,
+`librecad_offset_external_plugin_tests`, `librecad_dxf_fast_tests`, and
+`librecad_dwg_fast_tests` against the current `librecad_lib` clears the
+reported failures: the R2018 fixture again imports as editable
+`LC_OffsetCurve`, and the DXF/DWG round-trip coverage passes.
+
+Product commit `2ab67d631` also makes deferred-import downgrades more
+diagnosable by including the first bounded validation diagnostic's kind,
+reason, detail, and item index alongside the existing count. This does not
+change the fail-closed spline fallback; it makes a future actual downgrade
+actionable.
+
+Validation on macOS arm64 CMake Release:
+
+- Console native-offset DXF/DWG import cases: 8 assertions / 2 cases passed.
+- Separately compiled external-plugin block import: 11 assertions / 1 case
+  passed.
+- Fast DXF suite: passed.
+- Fast DWG suite: passed.
+- `git diff --check`: passed.
+
+When diagnosing future failures, rebuild the affected CMake targets explicitly;
+the default application build does not necessarily refresh `EXCLUDE_FROM_ALL`
+test executables. This clears the specific import/round-trip findings from
+section 1672; unrelated open gates elsewhere in this roadmap remain open.
+
