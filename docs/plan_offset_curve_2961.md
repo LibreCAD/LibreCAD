@@ -261,12 +261,11 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1645 add a rotated, high-origin
-asymmetric endpoint-tangent parabola and its reversed traversal through an
-independent exact-normal oracle, Trim Two, and all five internal file lanes;
-continue with materially distinct tangent layouts, scales, and cutter
-conditioning rather than treating these two traversal cases as exhaustive;
-(3) completed by sections 1504-1507: qualify
+and fail-closed limits. Sections 1642-1646 add two rotated, high-origin
+asymmetric endpoint-tangent parabolas and their reversed traversals through
+an independent exact-normal oracle, Trim Two, and all five internal file
+lanes; continue with materially distinct tangent layouts, scales, and cutter
+conditioning rather than treating these four cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
@@ -54676,4 +54675,26 @@ Validation on macOS arm64 CMake Release:
 This oracle covers one asymmetric tangent pair, its reversed parameterization,
 one transformed frame, and one offset magnitude. Other endpoint-tangent
 profiles and conditioning remain open.
+
+## 1646. Qualify an Opposite-bend Asymmetric Tangent Construction (2026-11-16)
+
+Test commit `631048c54` adds a second endpoint-tangent pair, `(1.0, -0.4)`
+and `(0.8, 0.25)`, whose control point lies on the opposite side of the
+endpoint chord from section 1642's profile. The direct exact-normal oracle
+checks both parameter traversals and both offset sides in the rotated,
+translated frame. The Trim Two fixture also runs the forward construction
+through worker-backed source replacement, preview/commit, undo/redo, and all
+five DXF/DWG save/reopen lanes with geometry comparison and LibreDWG checks.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Focused asymmetric exact-normal matrix: 860 assertions / 1 case.
+- Full direct-parabola group: 65,588 assertions / 16 cases.
+- Endpoint-tangent Trim Two matrix: 14,201 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+The second pair is checked through the forward action traversal; its reversed
+action-level Trim and persistence path remains open, as do other tangent
+layouts, endpoint spacing, scales/origins, cutter conditioning, visible-app
+acceptance, and independent ODA/AutoCAD acceptance.
 
