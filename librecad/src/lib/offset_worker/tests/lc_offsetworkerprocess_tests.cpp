@@ -691,6 +691,7 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
         {0.1, true}, {0.05, true}, {0.05, false}, {0.2, false}}};
     qint64 requestId = 100;
     std::size_t admittedRoots = 0;
+    std::size_t generatedRoots = 0;
 
     for (const auto [weightStep, symmetricWeights] : weightProfiles) {
         for (const std::size_t degree : {4u, 6u}) {
@@ -723,10 +724,11 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
             const auto breaks = source.getBreakParameters();
             REQUIRE(breaks.size() > 2);
 
-            // The kernel oracle covers every knot. Keep subprocess startup bounded
-            // while exercising one representative interior root per profile.
             for (std::size_t breakIndex = 1;
-                 breakIndex + 1 < breaks.size() && breakIndex == 1; ++breakIndex) {
+                 breakIndex + 1 < breaks.size(); ++breakIndex) {
+                // The direct matrix covers every knot. Keep full cache-admission
+                // subprocesses bounded, but map every knot for the steeper profile.
+                if (weightStep != 0.2 && breakIndex != 1) continue;
                 const double knotValue = breaks[breakIndex];
                 LC_CurveJet leftJet;
                 LC_CurveJet rightJet;
@@ -759,34 +761,39 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
                 REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
                 REQUIRE(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
                 REQUIRE_FALSE(generated.ordinary.empty());
+                ++generatedRoots;
 
                 const double speed = leftJet.first.magnitude();
                 REQUIRE(speed > 0.0);
                 const RS_Vector expectedKnotOffset = leftJet.point +
                     RS_Vector{-leftJet.first.y / speed, leftJet.first.x / speed} * signedDistance;
-                double nearestGeneratedEndpoint = std::numeric_limits<double>::infinity();
+                double nearestGeneratedPoint = std::numeric_limits<double>::infinity();
                 for (const Req::Cutter& branch : generated.ordinary) {
                     if (const auto* segment = std::get_if<Req::Segment>(&branch)) {
-                        nearestGeneratedEndpoint = std::min(nearestGeneratedEndpoint,
+                        nearestGeneratedPoint = std::min(nearestGeneratedPoint,
                             std::min(segment->start.distanceTo(expectedKnotOffset),
                                      segment->end.distanceTo(expectedKnotOffset)));
                     } else if (const auto* splineData = std::get_if<RS_SplineData>(&branch)) {
                         RS_Spline spline{nullptr, *splineData};
-                        double start = 0.0;
-                        double end = 0.0;
-                        REQUIRE(spline.getParameterDomain(start, end));
-                        const RS_Vector first = spline.getPointAt(start);
-                        const RS_Vector last = spline.getPointAt(end);
-                        REQUIRE(first.valid);
-                        REQUIRE(last.valid);
-                        nearestGeneratedEndpoint = std::min(nearestGeneratedEndpoint,
-                            std::min(first.distanceTo(expectedKnotOffset),
-                                     last.distanceTo(expectedKnotOffset)));
+                        const auto outputBreaks = spline.getBreakParameters();
+                        REQUIRE(outputBreaks.size() >= 2);
+                        for (std::size_t span = 0; span + 1 < outputBreaks.size(); ++span) {
+                            for (int sample = 0; sample <= 32; ++sample) {
+                                const double parameter = outputBreaks[span] +
+                                    (outputBreaks[span + 1] - outputBreaks[span]) *
+                                    static_cast<double>(sample) / 32.0;
+                                const RS_Vector point = spline.getPointAt(parameter);
+                                REQUIRE(point.valid);
+                                nearestGeneratedPoint = std::min(nearestGeneratedPoint,
+                                    point.distanceTo(expectedKnotOffset));
+                            }
+                        }
                     }
                 }
-                CAPTURE(expectedKnotOffset.x, expectedKnotOffset.y, nearestGeneratedEndpoint);
-                CHECK(nearestGeneratedEndpoint <= 10.0 * definition.relativeTolerance);
+                CAPTURE(expectedKnotOffset.x, expectedKnotOffset.y, nearestGeneratedPoint);
+                CHECK(nearestGeneratedPoint <= 10.0 * definition.relativeTolerance);
 
+                if (breakIndex != 1) continue;
                 RS_SplineData cache;
                 REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
                 const qint64 validationId = requestId++;
@@ -804,6 +811,7 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
         }
     }
     CHECK(admittedRoots == 8);
+    CHECK(generatedRoots > admittedRoots);
 }
 
 TEST_CASE("Built helper returns a bounded typed-source sample-limit refusal",
