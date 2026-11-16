@@ -29,6 +29,7 @@
 #include <cmath>
 #include <functional>
 #include <limits>
+#include <optional>
 #include <random>
 #include <set>
 #include <unordered_map>
@@ -1907,37 +1908,53 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
     return new LC_SplinePoints(nullptr, sub_data);
   } else if (type == RS2::EntityParabola) {
     auto para = static_cast<LC_Parabola*>(e);
-    RS_Vector tan1 = para->getTangentDirection(p1).normalize();
-    RS_Vector tan2 = para->getTangentDirection(p2).normalize();
-    std::array<RS_Vector, 2> ends = {p1, p2};
-    std::array<RS_Vector, 2> tans = {tan1, tan2};
-    LC_ParabolaData sub_data = LC_ParabolaData::FromEndPointsTangents(ends, tans);
-    if (sub_data.m_valid) {
-      return new LC_Parabola(nullptr, sub_data);
-    }
-    // Fallback: Interpolate controls
-    auto cps = para->getData().m_controlPoints;
-    std::sort(cps.begin(), cps.end(), [](const RS_Vector& a, const RS_Vector& b){ return a.x < b.x; });
-    double x1 = p1.x, x2 = p2.x;
-    if (x1 > x2) {
-        std::swap(x1, x2);
-    }
-    std::array<RS_Vector, 3> sub_cps;
-    double range = x2 - x1;
-    if (range < RS_TOLERANCE) {
+    const LC_ParabolaData& data = para->getData();
+    if (!data.m_valid) {
         return nullptr;
     }
-    for (int i = 0; i < 3; ++i) {
-      double ratio = (cps[i].x - x1) / range;
-      if (ratio < 0) {
-          ratio = 0;
-      }
-      else if (ratio > 1) {
-          ratio = 1;
-      }
-      sub_cps[i] = RS_Vector{x1 + ratio * range, cps[i].y};  // Preserve y for parabolic shape
+    const double startX = data.findX(data.m_controlPoints.front());
+    const double endX = data.findX(data.m_controlPoints.back());
+    const double span = endX - startX;
+    if (!std::isfinite(span) || std::abs(span) <= RS_TOLERANCE) {
+        return nullptr;
     }
-    return new LC_Parabola(nullptr, LC_ParabolaData{sub_cps});
+    const double spanTolerance = RS_TOLERANCE / std::abs(span);
+    auto parameterAt = [&](const RS_Vector& point) -> std::optional<double> {
+        const double parameter = (data.findX(point) - startX) / span;
+        if (!std::isfinite(parameter) || parameter < -spanTolerance ||
+            parameter > 1.0 + spanTolerance) {
+            return std::nullopt;
+        }
+        return std::clamp(parameter, 0.0, 1.0);
+    };
+    const auto first = parameterAt(p1);
+    const auto last = parameterAt(p2);
+    if (!first || !last || *last - *first <= 0.0) {
+        return nullptr;
+    }
+
+    // A parabola's transverse axis coordinate is affine in its quadratic
+    // Bezier parameter. The symmetric blossom therefore gives the exact
+    // control net for the interval, including reversed source traversal.
+    const auto& controls = data.m_controlPoints;
+    const double a = *first;
+    const double b = *last;
+    const double oneMinusA = 1.0 - a;
+    const double oneMinusB = 1.0 - b;
+    const RS_Vector start = controls[0] * (oneMinusA * oneMinusA) +
+                            controls[1] * (2.0 * oneMinusA * a) +
+                            controls[2] * (a * a);
+    const RS_Vector middle = controls[0] * (oneMinusA * oneMinusB) +
+                             controls[1] * (a * oneMinusB + b * oneMinusA) +
+                             controls[2] * (a * b);
+    const RS_Vector end = controls[0] * (oneMinusB * oneMinusB) +
+                          controls[1] * (2.0 * oneMinusB * b) +
+                          controls[2] * (b * b);
+    LC_ParabolaData subData{{start, middle, end}};
+    if (!subData.m_valid) {
+        return nullptr;
+    }
+    return new LC_Parabola(nullptr, subData);
   }
   return nullptr;
 }
@@ -2012,16 +2029,18 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
     if (!d.m_valid) {
         return {};
     }
-    double x_min = std::min({d.m_controlPoints[0].x, d.m_controlPoints[1].x, d.m_controlPoints[2].x});
-    double x_max = std::max({d.m_controlPoints[0].x, d.m_controlPoints[1].x, d.m_controlPoints[2].x});
-    double x_range = x_max - x_min;
-    if (x_range < RS_TOLERANCE) {
+    const double startX = d.findX(d.m_controlPoints.front());
+    const double span = d.findX(d.m_controlPoints.back()) - startX;
+    if (!std::isfinite(span) || std::abs(span) <= RS_TOLERANCE) {
         return {};
     }
+    const double parameterTolerance = RS_TOLERANCE / std::abs(span);
     for (RS_Vector v : inters) {
-      double x_param = d.findX(v);
-      double norm_param = (x_param - x_min) / x_range;  // [0,1]
-      param_points.emplace_back(norm_param, v);
+      const double parameter = (d.findX(v) - startX) / span;
+      if (std::isfinite(parameter) && parameter >= -parameterTolerance &&
+          parameter <= 1.0 + parameterTolerance) {
+          param_points.emplace_back(std::clamp(parameter, 0.0, 1.0), v);
+      }
     }
   }
   std::sort(param_points.begin(), param_points.end(), [](const auto& a, const auto& b){

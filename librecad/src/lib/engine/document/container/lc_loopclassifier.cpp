@@ -1099,6 +1099,11 @@ RS_Vector pieceRepPoint(const RS_Entity& piece) {
         // RS_Point's position; its own getStartpoint and getMiddlePoint are
         // both the position.
         return piece.getStartpoint();
+    case RS2::EntityParabola: {
+        const auto& parabola = static_cast<const LC_Parabola&>(piece);
+        const auto& controls = parabola.getData().m_controlPoints;
+        return controls[0] * 0.25 + controls[1] * 0.5 + controls[2] * 0.25;
+    }
     default:
         return piece.getMiddlePoint();
     }
@@ -1137,6 +1142,17 @@ RS_Vector pieceCanonicalNormal(const RS_Entity& piece, const RS_Vector& m) {
         const double len = d.magnitude();
         if (!(len > 0.0)) return RS_Vector(0.0, 1.0);
         return d / len;
+    }
+    case RS2::EntityParabola: {
+        RS_Vector dir = static_cast<const LC_Parabola&>(piece).getTangentDirection(m);
+        const double len = dir.magnitude();
+        if (!(len > 0.0) || !std::isfinite(len)) return RS_Vector(0.0, 1.0);
+        dir = dir / len;
+        double ang = std::atan2(dir.y, dir.x);
+        while (ang < 0.0) ang += kPi;
+        while (ang >= kPi) ang -= kPi;
+        const RS_Vector uc(std::cos(ang), std::sin(ang));
+        return RS_Vector(-uc.y, uc.x);
     }
     default:
         // Other atomic types (ellipse arc, spline, parabola, hyperbola):
