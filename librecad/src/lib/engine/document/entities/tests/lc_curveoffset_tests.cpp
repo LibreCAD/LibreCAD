@@ -2534,6 +2534,12 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
                   options.tolerance.requestedGeometry);
         }
     }
+
+    const auto unrepresentable = LC_ParabolaData::FromEndPointsTangents(
+        {{rotate({0.0, 0.0}) + translation, rotate({10.0, 0.0}) + translation}},
+        {{rotate({1.0, 1e-9}), rotate({1.0, -1e-9})}});
+    CHECK_FALSE(unrepresentable.isValid());
+    CHECK_FALSE(LC_OffsetSourceGeometry{unrepresentable}.isWellFormed());
 }
 
 TEST_CASE("Reversed asymmetric endpoint-tangent parabola keeps exact offset geometry",
