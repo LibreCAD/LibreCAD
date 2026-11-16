@@ -269,9 +269,10 @@ Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
-complete the visible Properties workflow for repeated type changes, candidate
-refresh, current-source indication, successful replacement, and
-cancellation/refusal; (5) completed by section 1532: the automated all-family
+automated Properties coverage is revalidated by section 1649 for repeated
+type changes, candidate refresh, current-source indication, replacement, and
+cancellation/refusal; retain visible packaged-app interaction as the remaining
+manual gate; (5) completed by section 1532: the automated all-family
 replacement and highlight-transfer matrix; (6) record independent ODA/AutoCAD
 acceptance where available and keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
@@ -286,8 +287,8 @@ replacement succeeds. Its choices must match all nine
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
 coverage satisfy the implementation portion; the focused headless
-source-picker suite passes 15,498 assertions / 45 cases at PR head
-`84dca44c7`. The separate action-level type-switch/hover/click matrix passes
+source-picker suite passes 15,498 assertions / 45 cases, revalidated at PR
+head `0a0a6e06ee88f741f41c5a2971581c71d86f28f5`. The separate action-level type-switch/hover/click matrix passes
 466 assertions / 1 case across all nine types (`d70b1e392`); its live filter
 transition case passes 148 assertions / 1 case. Successful
 replacement/highlight transfer across all nine kinds was added in
@@ -54737,4 +54738,23 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 Other cutter types, placements, tangencies, radii beyond this set, source
 scales/origins, visible-app acceptance, and independent ODA/AutoCAD acceptance
 remain open.
+
+## 1649. Revalidate the Headless Properties Source-picker Gate (2026-11-16)
+
+The focused offscreen Properties/source-picker suite was rerun against PR head
+`0a0a6e06ee88f741f41c5a2971581c71d86f28f5`. It covers the repeated source-type
+switch workflow and existing all-nine-kind replacement, candidate refresh,
+current-source, cancellation, and refusal assertions. This confirms the
+automated workflow gate at the current pre-1649 plan-update code head; it does
+not substitute for visible packaged-app interaction.
+
+Validation:
+
+- `QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-cmake-clean/librecad_tests '[gui][dialog][offsetcurve][source]' --reporter compact`: 15,498 assertions / 45 cases passed.
+- `git diff --check`: passed before commit.
+
+The headless implementation and regression gate are complete. Manually
+exercise the packaged Properties dialog with repeated type changes, visible
+candidate refresh/current-source indication, successful replacement, and
+cancellation/refusal; keep this gate open until that interaction is recorded.
 
