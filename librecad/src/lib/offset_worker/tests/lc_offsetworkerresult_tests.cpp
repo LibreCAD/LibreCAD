@@ -143,6 +143,7 @@ void same(const Trim::Work& a, const Trim::Work& b) {
     CHECK(a.inputSpans == b.inputSpans); CHECK(a.inputRecords == b.inputRecords); CHECK(a.rootRecords == b.rootRecords);
     CHECK(a.kernelItems == b.kernelItems); CHECK(a.kernelComparisons == b.kernelComparisons);
     CHECK(a.outputSpans == b.outputSpans); CHECK(a.outputControls == b.outputControls); CHECK(a.outputKnots == b.outputKnots);
+    CHECK(a.failureStage == b.failureStage);
     same(a.intersections, b.intersections);
 }
 void same(const Trim::Result& a, const Trim::Result& b) {
@@ -318,7 +319,7 @@ TEST_CASE("Worker ordinary fallback retains exact raw values outside lowered C a
         }
         const auto decoded = roundtrip(r, reply(r, n));
         const auto wire = Reply::encode(decoded, r); REQUIRE(wire);
-        CHECK(wire->at(0).toInteger() == 9);
+        CHECK(wire->at(0).toInteger() == 10);
         const auto body = wire->at(4).toArray(); REQUIRE(body.size() == 15);
         CHECK(body.at(12).toInteger() == qint64(Reply::OrdinaryStatus::Complete));
         REQUIRE(body.at(13).toArray().size() == 3);
@@ -574,7 +575,7 @@ TEST_CASE("Worker CheckThrough receipts contain only bounded membership work and
     roundtrip(r, reply(r, n));
     n.refusal = Refusal::ThroughNotOnCache; roundtrip(r, reply(r, n));
     const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
-    CHECK(encoded->at(0).toInteger() == 9); CHECK(encoded->at(2).toInteger() == 4);
+    CHECK(encoded->at(0).toInteger() == 10); CHECK(encoded->at(2).toInteger() == 4);
     REQUIRE(encoded->at(4).toArray().size() == 15);
     CHECK_FALSE(Reply::decode(patched(*encoded, {0}, 1), r));
     CHECK_FALSE(Reply::decode(patched(*encoded, {2}, 5), r));
@@ -1143,7 +1144,8 @@ TEST_CASE("Worker Trim malformed records cannot drop fields repair intervals or 
         patched(*encoded, {4, 3, 0, 2, 2}, QCborArray{.8, .2}),
         patched(*encoded, {4, 3, 0, 3, 3}, QCborArray{2., -2.}),
         patched(*encoded, {4, 3, 0, 5}, QCborArray{INFINITY, INFINITY}),
-        patched(*encoded, {4, 7, 5}, qint64(t.work.outputSpans + 1))
+        patched(*encoded, {4, 7, 5}, qint64(t.work.outputSpans + 1)),
+        patched(*encoded, {4, 7, 9}, qint64(Trim::Stage::FinalValidation) + 1)
     };
     for (const auto& a : bad) CHECK_FALSE(Reply::decode(a, r));
     auto changed = t; changed.roots[0].id = 1; CHECK_FALSE(Reply::encode(reply(r, changed), r));
@@ -1151,6 +1153,9 @@ TEST_CASE("Worker Trim malformed records cannot drop fields repair intervals or 
     changed = t; changed.fragments[0].sourceSections[0].to = INFINITY; CHECK_FALSE(Reply::encode(reply(r, changed), r));
     changed = t; changed.removed->from.localParameter = LC_Interval{}; CHECK_FALSE(Reply::encode(reply(r, changed), r));
     changed = t; changed.work.intersections.totalBoxPairs = std::numeric_limits<std::size_t>::max();
+    CHECK_FALSE(Reply::encode(reply(r, changed), r));
+    changed = t; changed.work.failureStage = static_cast<Trim::Stage>(
+        static_cast<unsigned>(Trim::Stage::FinalValidation) + 1);
     CHECK_FALSE(Reply::encode(reply(r, changed), r));
 }
 
@@ -1298,7 +1303,7 @@ TEST_CASE("Worker worst structural Trim shape fits the unchanged whole wire ceil
     };
     const auto values = count(count, *encoded);
     CAPTURE(values);
-    CHECK(values == 245943); CHECK(values <= Wire::Limits{}.items);
+    CHECK(values == 245944); CHECK(values <= Wire::Limits{}.items);
     Wire::Error error; const auto frame = Wire::encode(*encoded, &error);
     REQUIRE(error == Wire::Error::None); REQUIRE(frame.size() > 4);
     CAPTURE(frame.size()); CHECK(frame.size() - 4 <= Wire::Limits{}.frameBytes);
@@ -1459,7 +1464,7 @@ TEST_CASE("Produced receipts retain pointer-free diagnostics grouping and succes
     d.source.stoppedBy = LC_OffsetSourceStatus::Vanished; d.source.engineStatus = Status::Ok;
     producedRoundtrip(r, d);
     const auto wire = producedRoundtrip(r, d);
-    CHECK(wire.at(0).toInteger() == 9); CHECK(wire.at(2).toInteger() == 5);
+    CHECK(wire.at(0).toInteger() == 10); CHECK(wire.at(2).toInteger() == 5);
     REQUIRE(wire.at(4).toArray().size() == 6);
     REQUIRE(wire.at(4).toArray().at(0).toArray().size() == 19);
     for (const auto& bad : {

@@ -54023,3 +54023,102 @@ round-trip lanes. The large-scale circle-cutter variant returns
 this test does not claim arbitrary cutter, slope, origin, or scale coverage.
 Visible-app and independent ODA/AutoCAD acceptance remain open.
 
+## 1621. Diagnose Near-flat Parabola/Circle Trim Ambiguity (2026-11-16)
+
+Follow up the large-scale circle-cutter refusal from section 1620 as a
+correctness investigation, not as an instruction to force acceptance. The
+fixture has a near-flat endpoint-tangent parabola (`span=1e5`, `slope=1e-8`)
+at high origin `(1e9,-2e9)`. The equivalent transverse-line Trim Two cases
+complete. A stage probe now distinguishes the paths: cache-only circle
+trimming returns two roots and succeeds, but conic-only and paired
+`prepareConic` return `AmbiguousRoots` with two roots already reported,
+nonzero intersection work, and no intersection-failure domain. `Work` now
+reports the last kernel stage, including through the worker result protocol
+(version 10). The diagnostic identifies `ConicRootRefinement`: the certified
+intersection session cannot further shrink a root interval, returns
+`AmbiguousTopology`, and maps to `AmbiguousRoots`. This is neither the depth
+ceiling nor root ordering, pick projection, or clipping. The typed refusal
+remains correct until an independent oracle determines whether this is a true
+unresolvable contact or an overly conservative contraction.
+
+Implementation-ready sequence:
+
+1. **Done:** add refusal-stage diagnostics to Trim `Work`, serialize and range
+   validate them through worker protocol v10, and exercise cache-only success
+   plus conic-only/paired refusal through direct preparation, synchronous Trim
+   Two, worker execution, and prepared publication. The action-level fixture
+   verifies the typed refusal is atomic and that the document and output batch
+   are unchanged. Keep these stage assertions and the line-cutter case as
+   controls.
+2. Build an independent exact-polynomial oracle for intersections of the
+   actual stored unit-weight cubic Bezier cache (generated from the parabola
+   offset) with the circle, in a translated/scaled local frame. Form the
+   circle-implicit polynomial per cache span and use a Sturm sequence to
+   establish distinct-root count, multiplicity, isolation, and separation;
+   independently determine the selected retained arc side. Do not use the
+   production intersection provider or its root data as the oracle. Include
+   both `towardCentre` values and verify that translation/scaling preserve the
+   expected topology.
+3. If the oracle and proof diagnostics show a solver defect, implement the
+   narrowest certifiable remedy in the intersection/proof layer. Any analytic
+   specialization must use bounded arithmetic, prove every accepted root or
+   exclusion over its parameter domain, respect cancellation and work limits,
+   and refuse tangency/overlap or inseparable root intervals atomically. Do
+   not relax `hasValidProofs()`, merge overlapping intervals without an
+   equality proof, or infer crossings from samples alone.
+4. Add focused negative cases for tangency, near-tangency, roots closer than
+   the proof resolution, extreme translation, and exhausted limits. Ambiguous
+   or uncertifiable cases must continue to return a typed refusal without
+   partial fragments or document mutation.
+5. For a successful remedy, qualify the direct preparation, worker/cache
+   admission, Trim Two preview/commit, undo/redo, and five DXF/DWG round-trip
+   lanes for the same circle profile. For an intentional safe refusal, keep
+   the behavior and explicitly test/report the refusal at the action boundary
+   rather than treating circle trimming as supported at that profile.
+
+Stage-probe validation on macOS arm64 CMake Release with DWG support and
+LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_result_tests \
+  'Worker Trim malformed records cannot drop fields repair intervals or forge references' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_result_tests \
+  'Worker Trim conic and paired results preserve original conics and all diagnostics' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_result_tests \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_request_tests \
+  --reporter compact
+git diff --check
+```
+
+Results: 11,476 assertions / 1 generated test case pass for the action matrix;
+the malformed result-codec test passes 30 assertions / 1 case, and the conic
+and paired worker result round-trip test passes 5,324 assertions / 1 case. The
+full result codec suite passes 470,974 assertions / 36 cases, and the full
+request codec suite passes 603,644 assertions / 19 cases at protocol v10. The
+action probe verifies cache-only success, conic-only and paired
+`AmbiguousRoots`, two discovered roots, absence of an intersection-query
+failure domain, and no document/batch mutation on Trim Two refusal. The paired
+preparation reports `Stage::ConicRootRefinement`; worker execution preserves
+the same stage and prepared publication preserves the same refusal without
+mutating the batch. This stage diagnosis is not yet an independent geometric
+oracle.
+
+Completion gate: a reproducible exact-stage diagnosis, an independent oracle,
+and tests demonstrating either certified success or explicitly preserved
+atomic refusal through direct, worker, action, and persistence paths. No claim
+of general parabola/circle support follows from one profile. Visible-app
+interaction and independent ODA/AutoCAD acceptance remain separate delivery
+checks.
+

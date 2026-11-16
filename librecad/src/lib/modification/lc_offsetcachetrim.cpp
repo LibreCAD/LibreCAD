@@ -189,6 +189,7 @@ struct Context {
     Limits limits;
     Cancellation cancellation;
     Work work;
+    void stage(Stage value) { work.failureStage = value; }
     void check() const { cancelled(cancellation); }
     std::size_t itemsLeft() const {
         return limits.maxGeneratedItems - work.kernelItems - work.intersections.generatedItems;
@@ -251,6 +252,7 @@ Refusal coreFailure(LC_IntersectionStatus s, Refusal ambiguous) {
 std::unique_ptr<LC_CertifiedIntersectionSession> query(
         Context& c, std::unique_ptr<const LC_ParametricCurves> provider, Refusal ambiguous) {
     c.check();
+    c.stage(Stage::IntersectionQuery);
     const auto options = c.options(1);
     if (options.maxGeneratedItems < 2 || !options.maxLeaves || !options.maxBoxPairs) {
         fail(Refusal::LimitExceeded);
@@ -1265,6 +1267,7 @@ struct Root {
 
 std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                         LC_CertifiedIntersectionSession& session) {
+    c.stage(Stage::RootExtraction);
     c.roots(session.rootCount());
     c.items(session.rootCount());
     std::vector<Root> out; out.reserve(session.rootCount());
@@ -1573,6 +1576,7 @@ I closestConic(Context& c, const Input& input, const Pick& pick) {
 
 std::vector<Root> conicContacts(Context& c, const Input& input, const std::vector<Root>& contacts,
                                 LC_CertifiedIntersectionSession& session) {
+    c.stage(Stage::ConicRootContraction);
     c.items(contacts.size()); std::vector<Root> out; out.reserve(contacts.size());
     const double end = input.conic->unit.parameterEnd(), error = conicAllowance(*input.conic, input.frame);
     for (const auto& contact : contacts) {
@@ -1586,9 +1590,15 @@ std::vector<Root> conicContacts(Context& c, const Input& input, const std::vecto
             // the geometric endpoint allowance; the angle enclosure can reach
             // its outward-rounding floor before that independent bound.
             if (jet.x.width() <= error && jet.y.width() <= error) break;
-            if (round == c.limits.maxDepth) fail(Refusal::AmbiguousRoots);
+            if (round == c.limits.maxDepth) {
+                c.stage(Stage::ConicRootConvergence);
+                fail(Refusal::AmbiguousRoots);
+            }
+            c.stage(Stage::ConicRootRefinement);
             snapshot = contract(c, session, contact.handle, Refusal::AmbiguousRoots); t = snapshot.event.isolation.parameterB;
+            c.stage(Stage::ConicRootContraction);
         }
+        c.stage(Stage::ConicRootParameter);
         double cut = mid(t);
         if (!std::isfinite(cut) || !t.contains(cut)) fail(Refusal::AmbiguousRoots);
         if (input.cutterClosed && exactParameter(t, end)) { t = I::point(0); cut = 0; }
@@ -1598,6 +1608,7 @@ std::vector<Root> conicContacts(Context& c, const Input& input, const std::vecto
         }
         if (!duplicate) out.push_back({contact.handle, snapshot, t, cut, contact.provenanceId});
     }
+    c.stage(Stage::ConicRootOrdering);
     for (std::size_t i = 1; i < out.size(); ++i) {
         std::size_t j = i;
         while (j) {
@@ -1942,6 +1953,7 @@ void addWork(Work& to, const Work& from) {
         to.intersectionFailureDomain = from.intersectionFailureDomain;
         to.intersectionFailureDepth = from.intersectionFailureDepth;
     }
+    if (from.failureStage != Stage::None) to.failureStage = from.failureStage;
 }
 
 void shift(Location& location, std::size_t offset) { location.rawSpan += offset; }
@@ -2072,9 +2084,11 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
         if (conicPick && (!Geo::isFinite2D(conicPick->worldPoint) || conicPick->rawSpanHint || conicPick->localParameterSeed))
             fail(Refusal::InvalidInput);
         if (conicPick && (!c.limits.maxOutputControls || !c.limits.maxOutputKnots)) fail(Refusal::LimitExceeded);
+        c.stage(Stage::Admission);
         const auto input = admit(c, target, cutter, pick);
         if (conicPick && !input.conic) fail(Refusal::UnsupportedCutter);
         c.items(input.source->size());
+        c.stage(Stage::Components);
         const auto parts = components(*input.source);
         if (parts.size() > 1 && emitCache) {
             result = prepareComponents(c, input, parts, cutter, pick, conicPick, emitCache);
@@ -2150,9 +2164,12 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
                 ++unique;
             }
             ordered.resize(unique);
+            c.stage(Stage::ConicPickProjection);
             const auto projected = closestConic(c, input, *conicPick);
+            c.stage(Stage::ConicClipping);
             Range conicRemoved;
             const auto ranges = retain(c, input.conic->unit.parameterEnd(), input.cutterClosed, ordered, projected, conicRemoved);
+            c.stage(Stage::ConicFragmentAssembly);
             conics = assembleConic(c, input, ordered, ranges);
         } else {
             std::vector<Root> contacts;
@@ -2172,17 +2189,22 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
             result.rootCount = contacts.size();
             if (contacts.empty()) { fail(Refusal::NoUsableRoots); }
             if (emitCache) {
+                c.stage(Stage::CachePickProjection);
                 const auto projected = closest(c, input, pick);
                 const auto ranges = retain(c, double(input.source->size()), input.closed, contacts,
                     projected.parameter, removed);
+                c.stage(Stage::CacheFragmentAssembly);
                 fragments = assemble(c, input, contacts, ranges);
             }
             if (conicPick) {
                 auto ordered = conicContacts(c, input, contacts, *session);
+                c.stage(Stage::ConicPickProjection);
                 const auto projected = closestConic(c, input, *conicPick);
+                c.stage(Stage::ConicClipping);
                 Range conicRemoved;
                 const auto ranges = retain(c, input.conic->unit.parameterEnd(), input.cutterClosed,
                     ordered, projected, conicRemoved);
+                c.stage(Stage::ConicFragmentAssembly);
                 conics = assembleConic(c, input, ordered, ranges);
             }
             c.items(contacts.size()); provenance.reserve(contacts.size());
@@ -2197,12 +2219,14 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
             }
             if (session && !session->hasValidProofs()) { fail(Refusal::AmbiguousRoots); }
         }
+        c.stage(Stage::FinalValidation);
         c.check();
         if (emitCache) result.removed = RemovedInterval{location(removed.from.parameter, input.source->size()),
             location(removed.to.parameter, input.source->size()), removed.wrap};
         result.conicFragments = std::move(conics);
         result.roots = std::move(provenance); result.fragments = std::move(fragments);
         result.fragmentCount = result.fragments.size(); result.refusal = Refusal::None;
+        c.work.failureStage = Stage::None;
     } catch (const Failure& failure) { result.refusal = failure.reason; }
       catch (const std::bad_alloc&) { result.refusal = Refusal::AllocationFailure; }
       catch (...) { if (onExit) { *onExit = c.work; } throw; }

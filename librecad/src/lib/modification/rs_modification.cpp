@@ -2748,6 +2748,8 @@ bool debitStoredTrimWork(storedTrim::Limits& remaining, storedTrim::Work& total,
     LC_TRIM_MAX(deepestPreparation); LC_TRIM_MAX(deepestPairRefinement);
     LC_TRIM_MAX(deepestOrderingRefinement); LC_TRIM_MAX(deepestRootRefinement);
 #undef LC_TRIM_MAX
+    if (work.failureStage != storedTrim::Stage::None)
+        total.failureStage = work.failureStage;
     return true;
 }
 

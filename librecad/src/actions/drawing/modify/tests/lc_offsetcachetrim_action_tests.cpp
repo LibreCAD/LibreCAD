@@ -58,6 +58,11 @@
 #include "lc_undosection.h"
 #include "rs_selection.h"
 
+namespace {
+std::unique_ptr<LC_OffsetWorkerCompletion> joinedTrimWorker(
+    const LC_OffsetWorkerRequest::Request& request);
+}
+
 class LC_OffsetTrimWorkerTestAccess {
 public:
     static void deadline(LC_OffsetTrimWorker& worker, qint64 value) { worker.m_commitLimit = value; }
@@ -2472,6 +2477,103 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CAPTURE(intersection, nativePick, cutterPick, radius);
     CHECK(trimWork.intersections.deepestPairRefinement <=
           LC_OffsetCacheTrim::Limits{}.maxDepth);
+
+    if (scaleExtreme && scaleProfile == 1) {
+        const RS_Vector circlePick = circleCenter + normal * radius;
+        auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
+        f.graphic.addEntity(circle);
+        const auto cacheOnly = LC_OffsetCacheTrim::prepare(native->getData(), *circle,
+            {nativePick});
+        const auto conicOnly = LC_OffsetCacheTrim::prepareConic(native->getData(), *circle,
+            {circlePick});
+        CAPTURE(cacheOnly.refusal, cacheOnly.rootCount, cacheOnly.fragments.size(),
+                conicOnly.refusal, conicOnly.rootCount, conicOnly.conicFragments.size(),
+                conicOnly.work.failureStage,
+                conicOnly.work.hasIntersectionFailureDomain,
+                conicOnly.work.intersections.totalBoxPairs,
+                conicOnly.work.intersections.generatedLeaves);
+        LC_OffsetCacheTrim::Work circleWork;
+        const auto circleTrim = LC_OffsetCacheTrim::prepareConic(native->getData(), *circle,
+            {circlePick}, LC_OffsetCacheTrim::Pick{nativePick}, {}, {}, &circleWork);
+        CAPTURE(circleTrim.refusal, circleTrim.rootCount,
+                circleWork.hasIntersectionFailureDomain,
+                circleWork.intersectionFailureDomain.segmentA,
+                circleWork.intersectionFailureDomain.segmentB,
+                circleWork.intersectionFailureDomain.parameterA.lo(),
+                circleWork.intersectionFailureDomain.parameterA.hi(),
+                circleWork.intersectionFailureDepth,
+                circleWork.intersections.totalBoxPairs,
+                circleWork.intersections.generatedLeaves,
+                circleWork.intersections.deepestPairRefinement);
+        CHECK(circleTrim.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(circleTrim.rootCount == 2);
+        CHECK_FALSE(circleWork.hasIntersectionFailureDomain);
+        CHECK(cacheOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
+        CHECK(cacheOnly.rootCount == 2);
+        CHECK_FALSE(cacheOnly.fragments.empty());
+        CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(conicOnly.rootCount == 2);
+        CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::ConicRootRefinement);
+        CHECK(conicOnly.conicFragments.empty());
+        CHECK(trimGeometry(*native) == nativeBefore);
+
+        LC_StoredCacheTrimOptions workerOptions;
+        const auto limits = RS_Modification::storedCacheTrimRemainingLimits(workerOptions.kernel);
+        REQUIRE(limits);
+        const LC_OffsetWorkerRequest::Token token{1, 3, 17,
+            qint64(f.graphic.undoStateEpoch())};
+        const auto request = RS_Modification::storedCacheTrimRequest(*native,
+            nativePick, *circle, circlePick, true, token, *limits);
+        REQUIRE(request);
+        const auto completion = joinedTrimWorker(*request);
+        const auto& workerResult = std::get<LC_OffsetCacheTrim::Result>(
+            completion->reply().result);
+        CHECK(workerResult.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(workerResult.rootCount == 2);
+        CHECK(workerResult.work.failureStage ==
+              LC_OffsetCacheTrim::Stage::ConicRootRefinement);
+
+        LC_StoredCacheTrimCompletions received{*request, *completion};
+        received.publicationUndoEpoch = f.graphic.undoStateEpoch();
+        LC_DocumentModificationBatch preparedBatch;
+        const auto preparedTrim = RS_Modification::trimStoredCachePrepared(f.graphic,
+            *native, nativePick, *circle, circlePick, true, preparedBatch, received,
+            workerOptions);
+        CHECK_FALSE(preparedTrim.result);
+        REQUIRE(preparedTrim.cacheRefusal);
+        CHECK(*preparedTrim.cacheRefusal == workerResult.refusal);
+        CHECK(preparedTrim.cacheWork.failureStage == workerResult.work.failureStage);
+        CHECK(preparedBatch.entitiesToAdd.empty());
+        CHECK(preparedBatch.entitiesToDelete.empty());
+
+        LC_DocumentModificationBatch circleBatch;
+        const auto trimTwo = RS_Modification::trimStoredCache(f.graphic, *native,
+            nativePick, *circle, circlePick, true, circleBatch);
+        REQUIRE(trimTwo.cacheRefusal);
+        CAPTURE(*trimTwo.cacheRefusal, trimTwo.cacheWork.failureStage,
+                trimTwo.cacheWork.hasIntersectionFailureDomain,
+                trimTwo.cacheWork.intersectionFailureDomain.segmentA,
+                trimTwo.cacheWork.intersectionFailureDomain.segmentB,
+                trimTwo.cacheWork.intersectionFailureDomain.parameterA.lo(),
+                trimTwo.cacheWork.intersectionFailureDomain.parameterA.hi(),
+                trimTwo.cacheWork.intersectionFailureDepth,
+                trimTwo.cacheWork.intersections.totalBoxPairs,
+                trimTwo.cacheWork.intersections.generatedLeaves,
+                trimTwo.cacheWork.intersections.deepestPairRefinement);
+        CHECK_FALSE(trimTwo.result);
+        REQUIRE(trimTwo.cacheRefusal);
+        CHECK(*trimTwo.cacheRefusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(trimTwo.cacheWork.failureStage == LC_OffsetCacheTrim::Stage::ConicRootRefinement);
+        CHECK_FALSE(trimTwo.cacheWork.hasIntersectionFailureDomain);
+        CHECK(trimTwo.cacheWork.intersections.totalBoxPairs > 0);
+        CHECK(circleBatch.entitiesToAdd.empty());
+        CHECK(circleBatch.entitiesToDelete.empty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        CHECK(circle->getCenter() == circleCenter);
+        CHECK(circle->getRadius() == radius);
+        REQUIRE(f.graphic.removeEntity(circle));
+    }
 
     f.action->click(nativePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
@@ -6229,6 +6331,7 @@ void sameTrimWork(const LC_OffsetCacheTrim::Work& a, const LC_OffsetCacheTrim::W
     CHECK_TRIM_WORK(inputSpans); CHECK_TRIM_WORK(inputRecords); CHECK_TRIM_WORK(rootRecords);
     CHECK_TRIM_WORK(kernelItems); CHECK_TRIM_WORK(kernelComparisons);
     CHECK_TRIM_WORK(outputSpans); CHECK_TRIM_WORK(outputControls); CHECK_TRIM_WORK(outputKnots);
+    CHECK_TRIM_WORK(failureStage);
 #undef CHECK_TRIM_WORK
     const auto& x = a.intersections; const auto& y = b.intersections;
 #define CHECK_TRIM_CORE(f) CHECK(x.f == y.f)

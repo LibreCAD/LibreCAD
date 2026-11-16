@@ -61,7 +61,8 @@ auto members(LC_IntersectionWorkStats& d) {
 }
 auto members(Trim::Work& d) {
     return std::tie(d.inputSpans, d.inputRecords, d.rootRecords, d.kernelItems,
-        d.kernelComparisons, d.outputSpans, d.outputControls, d.outputKnots, d.intersections);
+        d.kernelComparisons, d.outputSpans, d.outputControls, d.outputKnots, d.intersections,
+        d.failureStage);
 }
 auto members(SourceDiagnostics& d) {
     return std::tie(d.status, d.engineStatus, d.detail, d.stoppedBy, d.usage,
@@ -89,6 +90,7 @@ template<class T> constexpr qint64 enumMax() {
     else if constexpr (std::is_same_v<T, Failure>) return qint64(Failure::InternalFailure);
     else if constexpr (std::is_same_v<T, OrdinaryStatus>) return qint64(OrdinaryStatus::Unsupported);
     else if constexpr (std::is_same_v<T, Trim::Refusal>) return qint64(Trim::Refusal::AllocationFailure);
+    else if constexpr (std::is_same_v<T, Trim::Stage>) return qint64(Trim::Stage::FinalValidation);
     else if constexpr (std::is_same_v<T, LC_IntersectionProof>) return qint64(LC_IntersectionProof::AnalyticMonotoneTransverse);
     else { static_assert(std::is_same_v<T, void>, "Missing protocol enum range"); }
 }

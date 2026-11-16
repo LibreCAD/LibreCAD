@@ -91,6 +91,14 @@ struct RemovedInterval {
     bool crossesStorageSeam = false;
 };
 
+enum class Stage : unsigned {
+    None, Admission, Components, IntersectionQuery, RootExtraction,
+    CachePickProjection, CacheFragmentAssembly, ConicRootContraction,
+    ConicRootRefinement, ConicRootConvergence, ConicRootParameter,
+    ConicRootOrdering, ConicPickProjection, ConicClipping,
+    ConicFragmentAssembly, FinalValidation
+};
+
 enum class Refusal {
     None, InvalidInput, UnsupportedLayout, UnsupportedCutter, NoUsableRoots,
     AmbiguousPick, AmbiguousRoots, TangencyOrOverlap, EmptyOutput,
@@ -106,6 +114,8 @@ struct Work {
     bool hasIntersectionFailureDomain = false;
     LC_IntersectionDomain intersectionFailureDomain{};
     unsigned intersectionFailureDepth = 0;
+    // Last kernel stage entered when a refusal is returned; None on success.
+    Stage failureStage = Stage::None;
 };
 
 struct Cancellation {
