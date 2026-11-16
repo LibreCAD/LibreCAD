@@ -54970,11 +54970,13 @@ orientations, visible-app interaction, and independent ODA/AutoCAD acceptance
 remain open.
 
 Implementation commit `23d4847bf` adds a bounded, proof-preserving fallback
-for cubic source spans. It forms the conic implicit equation in exact rational
-Bernstein form, proves a unique source-parameter root by endpoint sign change
-and strict monotonicity, bounds the source image by subdivision in
-conic-normalized coordinates, then contracts the conic parameter with interval
-Newton and a derivative projection excluding zero. The physical image-width
+for cubic source spans; test commit `8a9e4d1f3` expands the high-origin
+regression over three cutter offsets. The fallback forms the conic implicit
+equation in exact rational Bernstein form. It proves a unique source-parameter
+root by endpoint sign change and strict monotonicity, bounds the source image
+by subdivision in conic-normalized coordinates, then contracts the conic
+parameter with interval Newton and a derivative projection excluding zero.
+The physical image-width
 bound accounts for both normalized axis scales, including ellipse ratios above
 one. The original joint root snapshot is not patched or replaced; any failed
 proof, bound, or budget check retains the original `AmbiguousRoots` refusal.
@@ -54983,12 +54985,12 @@ unhandled tested cubic profile, not the general near-tangent class.
 
 Validation on macOS arm64 CMake Release:
 
-- Full endpoint-tangent Trim Two matrix: 51,697 assertions / 1 case.
+- Full endpoint-tangent Trim Two matrix with inward fractions `1e-2`, `1e-3`,
+  and `1e-4`: 51,591 assertions / 1 case. Each exact oracle reports two
+  simple roots, and each direct `prepareConic` result contains two roots.
 - Certified intersection trim-kernel suite: 4,643,770 assertions / 90 cases.
 - Exact tangent endpoint regression: 33 assertions / 1 case; atomic refusal
   and source immutability verified.
-- High-origin near-tangent candidate: independent exact oracle reports two
-  simple roots; `prepareConic` succeeds with two roots and one conic fragment.
 - CMake build and `git diff --check`: passed.
 
 Coverage remains specific to the tested cubic high-origin/large-scale profile.
