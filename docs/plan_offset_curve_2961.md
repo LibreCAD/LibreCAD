@@ -52133,8 +52133,33 @@ git diff --check
 ```
 
 The focused persistence case passes 143,826 assertions / 1 case, and the
-worker-client test target builds. This is one representative multi-fragment
-profile using LibreCAD's own export/reopen paths; it does not cover every
-refused matrix row, independently inspect those fallback DWGs with LibreDWG,
-or establish visible GUI or ODA/AutoCAD acceptance.
+worker-client test target builds. Section 1568 adds independent LibreDWG
+inspection for this representative fallback. This does not cover every
+refused matrix row or establish visible GUI or ODA/AutoCAD acceptance.
+
+## 1568. Independently Inspect Hyperbola Fallback DWGs (2026-11-15)
+
+Test commit `6dec30c74` extends section 1567's representative multi-fragment
+fallback check with LibreDWG `minJSON` inspection for the R2000 and R2018 DWGs.
+When `DWGREAD` is available, each file must decode the expected number of
+SPLINE entities, and every decoded spline must have at least `degree + 1`
+control points with knot cardinality `controls + degree + 1`. The test remains
+optional on builds without DWG support or a LibreDWG reader.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][persistence]' --reporter compact
+git diff --check
+```
+
+The focused persistence case passes 143,788 assertions / 1 case with the
+independent-reader assertions active. This validates parseable SPLINE
+structure for the one selected fallback row, not all refused rows, full
+hyperbola semantic recovery by LibreDWG, or ODA/AutoCAD acceptance.
 
