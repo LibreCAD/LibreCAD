@@ -8478,10 +8478,10 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
           "variants]") {
   std::size_t admittedCaches = 0;
   std::size_t refusedCaches = 0;
-  const std::array<RS_Vector, 3> origins{{{23.0, -17.0},
-                                         {1e9, -2e9},
-                                         {1e12, -2e12}}};
+  const std::array<RS_Vector, 3> origins{
+      {{23.0, -17.0}, {1e9, -2e9}, {1e12, -2e12}}};
   constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
+  constexpr std::array<double, 2> halfWidths{{0.4, 0.8}};
   for (const RS_Vector &origin : origins) {
     for (const double ratio : ratios) {
       const bool veryHighOrigin =
@@ -8490,48 +8490,50 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
       const double vertexRadius = semiMajor * ratio * ratio;
       for (const bool oppositeBranch : {false, true}) {
         for (const bool reverseBounds : {false, true}) {
-          const LC_HyperbolaData data{
-              origin,
-              RS_Vector{semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
-              ratio,
-              reverseBounds ? 0.4 : -0.4,
-              reverseBounds ? -0.4 : 0.4,
-              oppositeBranch};
-          for (const double fraction : {0.5, 1.0, 1.5}) {
-            for (const double sign : {-1.0, 1.0}) {
-              const double distance = sign * fraction * vertexRadius;
-              CAPTURE(origin.x, origin.y, ratio, oppositeBranch, reverseBounds,
-                      fraction, sign, distance);
-              const LC_OffsetSourceDefinition definition{
-                  LC_OffsetSourceGeometry{data}, distance, 1e-4, false};
-              const auto generatedReply = LC_OffsetWorkerKernel::run(
-                  {token, req::GenerateSource{definition, {}}});
-              const auto &generated = native(generatedReply, 7);
-              REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-              REQUIRE(generated.ordinaryStatus ==
-                      result::OrdinaryStatus::Complete);
-              REQUIRE_FALSE(generated.ordinary.empty());
+          for (const double halfWidth : halfWidths) {
+            const LC_HyperbolaData data{origin,
+                                        RS_Vector{semiMajor * std::cos(0.37),
+                                                  semiMajor * std::sin(0.37)},
+                                        ratio,
+                                        reverseBounds ? halfWidth : -halfWidth,
+                                        reverseBounds ? -halfWidth : halfWidth,
+                                        oppositeBranch};
+            for (const double fraction : {0.5, 1.0, 1.5}) {
+              for (const double sign : {-1.0, 1.0}) {
+                const double distance = sign * fraction * vertexRadius;
+                CAPTURE(origin.x, origin.y, ratio, oppositeBranch,
+                        reverseBounds, halfWidth, fraction, sign, distance);
+                const LC_OffsetSourceDefinition definition{
+                    LC_OffsetSourceGeometry{data}, distance, 1e-4, false};
+                const auto generatedReply = LC_OffsetWorkerKernel::run(
+                    {token, req::GenerateSource{definition, {}}});
+                const auto &generated = native(generatedReply, 7);
+                REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+                REQUIRE(generated.ordinaryStatus ==
+                        result::OrdinaryStatus::Complete);
+                REQUIRE_FALSE(generated.ordinary.empty());
 
-              RS_SplineData cache;
-              if (!LC_OffsetWorkerSourceCache::combine(generated.ordinary,
-                                                       cache)) {
-                ++refusedCaches;
-                continue;
+                RS_SplineData cache;
+                if (!LC_OffsetWorkerSourceCache::combine(generated.ordinary,
+                                                         cache)) {
+                  ++refusedCaches;
+                  continue;
+                }
+                const auto validationReply = LC_OffsetWorkerKernel::run(
+                    {token, req::ValidateSourceCache{cache, definition, {}}});
+                const auto &validated = native(validationReply, 8);
+                if (validated.refusal == LC_OffsetCurveRefusal::None &&
+                    validated.changed) {
+                  CHECK(validated.changed);
+                  ++admittedCaches;
+                } else {
+                  CHECK(validated.refusal ==
+                        LC_OffsetCurveRefusal::NotCacheRepresentable);
+                  CHECK_FALSE(validated.changed);
+                  ++refusedCaches;
+                }
+                CHECK(validated.engineRuns == 1);
               }
-              const auto validationReply = LC_OffsetWorkerKernel::run(
-                  {token, req::ValidateSourceCache{cache, definition, {}}});
-              const auto &validated = native(validationReply, 8);
-              if (validated.refusal == LC_OffsetCurveRefusal::None &&
-                  validated.changed) {
-                CHECK(validated.changed);
-                ++admittedCaches;
-              } else {
-                CHECK(validated.refusal ==
-                      LC_OffsetCurveRefusal::NotCacheRepresentable);
-                CHECK_FALSE(validated.changed);
-                ++refusedCaches;
-              }
-              CHECK(validated.engineRuns == 1);
             }
           }
         }
@@ -8539,7 +8541,7 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
     }
   }
   const std::size_t expectedRows =
-      origins.size() * ratios.size() * 2 * 2 * 3 * 2;
+      origins.size() * ratios.size() * 2 * 2 * halfWidths.size() * 3 * 2;
   CHECK(admittedCaches + refusedCaches == expectedRows);
   CHECK(admittedCaches == expectedRows);
   CHECK(refusedCaches == 0);
