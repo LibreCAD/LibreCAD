@@ -392,6 +392,19 @@ can be identified. This is limited to the supported **offset source** families,
 not every entity LibreCAD can draw. Do not infer support for every geometry
 variant from the presence of a family in a combo box.
 
+**Latest clarification (2026-11-16):** While selecting a replacement source,
+the user can change the requested source type without leaving the active
+selection workflow; the candidate list refreshes for every kind in
+`LC_OffsetSourceGeometry::SupportedKinds`. This is candidate filtering, not
+conversion of the existing source. Parabola is included as a distinct kind
+from spline-points, and all nine kinds remain the scope boundary. The selector,
+filtering, and typed parabola replacement are already covered headlessly; do
+not add another widget or a parabola-only implementation slice. The remaining
+picker gate is visible Properties-workflow acceptance: change types repeatedly,
+confirm candidate refresh and the existing-source indication, then verify
+replacement and cancellation/refusal behavior. End-to-end geometry-variant
+qualification remains separately tracked in Slice 4.
+
 **Current source-widget requirement and status (reconfirmed 2026-11-15):** After the user
 starts choosing a replacement source curve, the source-type control remains
 available in that active selection workflow. The user can change the requested
@@ -54166,4 +54179,26 @@ the qualified frame, fail-closed negative tests, and action/history/persistence
 qualification. No claim of general parabola/circle support follows from one
 profile. Visible-app interaction and independent ODA/AutoCAD acceptance remain
 separate delivery checks.
+
+## 1622. Qualify a Non-binary Rational Quadratic Tangent Weight (2026-11-16)
+
+Test commit `6e4219e90` adds middle weight `0.3` to the exact symmetric
+rational-quadratic tangent matrix. The signed offset continues to be derived
+from the analytic midpoint curvature; the independent high-precision oracle
+checks the even tangent root and same-sign neighbors, and the existing checks
+cover the production motion enclosure, mapped stall endpoints and tangent
+point, and regular opposite offset. No production tolerance or acceptance rule
+changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused rational tangent weight matrix: 391 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,502 assertions / 119 cases.
+- `git diff --check`: passed.
+
+This qualifies the one stored-double weight `0.3` in the clamped single-span
+quadratic layout only. Other non-binary weight profiles, nonuniform or repeated
+knots, higher degrees, periodic seam/interior ownership, and complete
+event-to-output mapping remain open; do not infer arbitrary rational tangent
+support from this profile.
 
