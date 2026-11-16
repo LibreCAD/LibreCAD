@@ -260,8 +260,11 @@ section 1686 extends the independent interior-normal oracle to reversed
 traversal, and section 1687 completes their three-scale circle/line Trim Two
 action matrix. Section 1688 also qualifies a `1e300` endpoint-tangent
 magnitude ratio through the interior oracle and forward worker/cache lanes.
-Continue with materially distinct tangent directions and contact conditioning;
-do not inflate this finite profile set into general coverage.
+Section 1689 probes exact interior normals at `0.1/0.5/0.9` of vertex
+curvature radius for the recorded tangent layouts; cache/persistence admission
+at those ratios remains open. Continue with materially distinct tangent
+directions and contact conditioning; do not inflate this finite profile set
+into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55689,4 +55692,25 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This records one extreme magnitude pair only; overflow/underflow boundaries,
 arbitrary independent endpoint scales, Trim behavior for this input, and
 external CAD acceptance remain open.
+
+## 1689. Probe Interior Normals across Vertex-curvature Offset Ratios (2026-11-16)
+
+Test commit `2df6ce6fe` varies signed offset distance by `0.1`, `0.5`, and
+`0.9` times each source parabola's vertex curvature radius. It checks the four
+recorded tangent-input layouts, forward and reversed traversal, all three
+scale/origin rows, and five interior parameters against independently
+evaluated exact `C + dN`, with direct NURBS nearest-point refinement. This
+approaches the vertex cusp threshold from below without claiming behavior at
+the singular boundary or beyond it.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 3,384 assertions / 1 case.
+- `endpoint-tangent parabola conditioning crosses worker cache validation`: 465 assertions / 1 case.
+- `librecad_offset_worker_kernel_tests` target build: passed.
+- `git diff --check`: passed.
+
+This is geometry-only evidence. Operation-8 cache admission and five-format
+persistence at these curvature ratios, exact cusp behavior, and external CAD
+acceptance remain open.
 
