@@ -51970,3 +51970,31 @@ nonuniform/three-dimensional transforms, and the broader Slice 4
 family/variant, persistence, visible-GUI, and independent-CAD gates remain
 open.
 
+## 1563. Confirm Source-widget Type Selection Includes Every Supported Kind (2026-11-15)
+
+The latest clarification requires the source-curve widget to permit changing
+the requested curve type while replacement-source selection is active, and to
+offer every type currently supported by offset source capture. The required
+inventory is the nine `LC_OffsetSourceGeometry::SupportedKinds`: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola must remain a distinct choice; it must not be hidden under
+spline-points or treated as unsupported.
+
+This confirms, rather than expands, the implementation contract in sections
+1532, 1549, 1555, and 1558. Automated tests already cover repeated type changes,
+candidate-filter refresh, preservation of the old source/highlight until a
+replacement is accepted, and transfer of source/highlight after worker
+preparation succeeds. No additional production-code slice is planned unless
+these tests regress or the supported-kind inventory changes. Geometry support
+for each kind across generation, cache/worker, trimming, and persistence
+remains subject to Slice 4's separate matrix; the selector alone does not
+establish those capabilities.
+
+The outstanding widget-specific gate remains a visible packaged-app check:
+begin source replacement, change the requested type at least twice (including
+to and from parabola), verify candidates refresh while the original source
+stays highlighted, then accept a candidate and verify the source and highlight
+change together. Also verify cancellation/refusal preserves the original
+source and highlight. Record platform and binary revision. Headless Qt tests
+do not close this gate; independent CAD interoperability is tracked separately.
+
