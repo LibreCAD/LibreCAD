@@ -7278,139 +7278,147 @@ TEST_CASE("asymmetric hyperbola intervals persist across DXF and DWG lanes",
                 reverseBounds ? intervalStart : intervalEnd,
                 oppositeBranch};
             const double tolerance = veryHighOrigin ? 0.05 : 1e-4;
-            const LC_OffsetSourceDefinition definition{
-                LC_OffsetSourceGeometry{data}, sign * vertexRadius * 0.25,
-                tolerance, false};
-            CAPTURE(originIndex, intervalStart, intervalEnd, reverseBounds,
-                    oppositeBranch, sign);
+            const std::array<double, 2> fractions{{0.25, 1.0}};
+            const std::size_t fractionCount = veryHighOrigin ? 2 : 1;
+            for (std::size_t fractionIndex = 0; fractionIndex < fractionCount;
+                 ++fractionIndex) {
+              const double fraction = fractions[fractionIndex];
+              const LC_OffsetSourceDefinition definition{
+                  LC_OffsetSourceGeometry{data}, sign * vertexRadius * fraction,
+                  tolerance, false};
+              CAPTURE(originIndex, intervalStart, intervalEnd, reverseBounds,
+                      oppositeBranch, sign, fraction);
 
-            const qint64 generationId = requestId++;
-            Receipts generationReceipts;
-            REQUIRE(client.get().submit(
-                {token(generationId), Req::GenerateSource{definition, {}}},
-                Client::Mode::Commit, generationReceipts.into(0)));
-            rt.until([&] { return generationReceipts.calls[0] != 0; });
-            const auto &generationCompletion =
-                completed(generationReceipts.at(0), generationId, 7);
-            const auto &generated =
-                std::get<Reply::Native>(generationCompletion.reply().result);
-            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-            REQUIRE(generated.ordinaryStatus ==
-                    Reply::OrdinaryStatus::Complete);
-            REQUIRE(generated.ordinary.size() == 1);
-            RS_SplineData cache;
-            REQUIRE(
-                LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+              const qint64 generationId = requestId++;
+              Receipts generationReceipts;
+              REQUIRE(client.get().submit(
+                  {token(generationId), Req::GenerateSource{definition, {}}},
+                  Client::Mode::Commit, generationReceipts.into(0)));
+              rt.until([&] { return generationReceipts.calls[0] != 0; });
+              const auto &generationCompletion =
+                  completed(generationReceipts.at(0), generationId, 7);
+              const auto &generated =
+                  std::get<Reply::Native>(generationCompletion.reply().result);
+              REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+              REQUIRE(generated.ordinaryStatus ==
+                      Reply::OrdinaryStatus::Complete);
+              REQUIRE(generated.ordinary.size() == 1);
+              RS_SplineData cache;
+              REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary,
+                                                          cache));
 
-            const qint64 validationId = requestId++;
-            Receipts validationReceipts;
-            REQUIRE(client.get().submit(
-                {token(validationId),
-                 Req::ValidateSourceCache{cache, definition, {}}},
-                Client::Mode::Commit, validationReceipts.into(0)));
-            rt.until([&] { return validationReceipts.calls[0] != 0; });
-            const auto &validationCompletion =
-                completed(validationReceipts.at(0), validationId, 8);
-            const auto &validated =
-                std::get<Reply::Native>(validationCompletion.reply().result);
-            REQUIRE(validated.refusal == LC_OffsetCurveRefusal::None);
-            REQUIRE(validated.changed);
-            auto admitted =
-                validationCompletion.nativeValidatedSource(attributes);
-            REQUIRE(admitted);
-            REQUIRE(admitted->sourceDefinition());
+              const qint64 validationId = requestId++;
+              Receipts validationReceipts;
+              REQUIRE(client.get().submit(
+                  {token(validationId),
+                   Req::ValidateSourceCache{cache, definition, {}}},
+                  Client::Mode::Commit, validationReceipts.into(0)));
+              rt.until([&] { return validationReceipts.calls[0] != 0; });
+              const auto &validationCompletion =
+                  completed(validationReceipts.at(0), validationId, 8);
+              const auto &validated =
+                  std::get<Reply::Native>(validationCompletion.reply().result);
+              REQUIRE(validated.refusal == LC_OffsetCurveRefusal::None);
+              REQUIRE(validated.changed);
+              auto admitted =
+                  validationCompletion.nativeValidatedSource(attributes);
+              REQUIRE(admitted);
+              REQUIRE(admitted->sourceDefinition());
 
-            RS_Graphic graphic;
-            graphic.initForNewDocument();
-            auto *layer = new RS_Layer("Offset");
-            graphic.addLayer(layer);
-            admitted->setLayer(layer);
-            graphic.addEntity(admitted.release());
-            const auto fingerprint = RS_Spline::geometryFingerprint(cache);
-            for (const Lane &lane : lanes) {
-              CAPTURE(lane.extension);
+              RS_Graphic graphic;
+              graphic.initForNewDocument();
+              auto *layer = new RS_Layer("Offset");
+              graphic.addLayer(layer);
+              admitted->setLayer(layer);
+              graphic.addEntity(admitted.release());
+              const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+              for (const Lane &lane : lanes) {
+                CAPTURE(lane.extension);
 #ifndef DWGSUPPORT
-              if (lane.format == RS2::FormatDWG ||
-                  lane.format == RS2::FormatDWG2018)
-                continue;
+                if (lane.format == RS2::FormatDWG ||
+                    lane.format == RS2::FormatDWG2018)
+                  continue;
 #endif
-              const auto path = directory.file(std::to_string(generationId) +
-                                               "-" + lane.extension);
-              REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
-              for (int pass = 0; pass < 2; ++pass) {
-                RS_Graphic reopened;
-                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-                LC_OffsetCurve *reopenedOffset = nullptr;
-                for (RS_Entity *entity : reopened) {
-                  if (entity->isDeleted() ||
-                      entity->rtti() != RS2::EntityOffsetCurve)
-                    continue;
-                  REQUIRE(reopenedOffset == nullptr);
-                  reopenedOffset = dynamic_cast<LC_OffsetCurve *>(entity);
+                const auto path = directory.file(std::to_string(generationId) +
+                                                 "-" + lane.extension);
+                REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                for (int pass = 0; pass < 2; ++pass) {
+                  RS_Graphic reopened;
+                  REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                  LC_OffsetCurve *reopenedOffset = nullptr;
+                  for (RS_Entity *entity : reopened) {
+                    if (entity->isDeleted() ||
+                        entity->rtti() != RS2::EntityOffsetCurve)
+                      continue;
+                    REQUIRE(reopenedOffset == nullptr);
+                    reopenedOffset = dynamic_cast<LC_OffsetCurve *>(entity);
+                  }
+                  REQUIRE(reopenedOffset);
+                  REQUIRE(reopenedOffset->sourceDefinition());
+                  CHECK(reopenedOffset->sourceDefinition()->signedDistance ==
+                        definition.signedDistance);
+                  CHECK(RS_Spline::geometryFingerprint(
+                            reopenedOffset->getData()) == fingerprint);
+                  const auto *reopenedData = std::get_if<LC_HyperbolaData>(
+                      &reopenedOffset->sourceDefinition()->source.value);
+                  REQUIRE(reopenedData);
+                  CHECK(reopenedData->center.distanceTo(data.center) < 1e-9);
+                  CHECK(reopenedData->majorP.distanceTo(data.majorP) < 1e-9);
+                  CHECK(reopenedData->ratio == data.ratio);
+                  CHECK(reopenedData->angle1 == data.angle1);
+                  CHECK(reopenedData->angle2 == data.angle2);
+                  CHECK(reopenedData->reversed == data.reversed);
+                  CHECK(reopenedData->reversed == data.reversed);
+                  if (pass == 0)
+                    REQUIRE(
+                        lc::test::exportDrawing(reopened, path, lane.format));
                 }
-                REQUIRE(reopenedOffset);
-                REQUIRE(reopenedOffset->sourceDefinition());
-                CHECK(reopenedOffset->sourceDefinition()->signedDistance ==
-                      definition.signedDistance);
-                CHECK(RS_Spline::geometryFingerprint(
-                          reopenedOffset->getData()) == fingerprint);
-                const auto *reopenedData = std::get_if<LC_HyperbolaData>(
-                    &reopenedOffset->sourceDefinition()->source.value);
-                REQUIRE(reopenedData);
-                CHECK(reopenedData->center.distanceTo(data.center) < 1e-9);
-                CHECK(reopenedData->majorP.distanceTo(data.majorP) < 1e-9);
-                CHECK(reopenedData->ratio == data.ratio);
-                CHECK(reopenedData->angle1 == data.angle1);
-                CHECK(reopenedData->angle2 == data.angle2);
-                CHECK(reopenedData->reversed == data.reversed);
-                CHECK(reopenedData->reversed == data.reversed);
-                if (pass == 0)
-                  REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
-              }
 #ifdef DWGSUPPORT
-              if (!libreDwgReader.isEmpty() &&
-                  (lane.format == RS2::FormatDWG ||
-                   lane.format == RS2::FormatDWG2018)) {
-                QProcess reader;
-                reader.start(libreDwgReader,
-                             {"-O", "minJSON", lc::test::toQString(path)});
-                REQUIRE(reader.waitForStarted());
-                REQUIRE(reader.waitForFinished(30000));
-                INFO(reader.readAllStandardError().toStdString());
-                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-                REQUIRE(reader.exitCode() == 0);
-                const QJsonDocument document =
-                    QJsonDocument::fromJson(reader.readAllStandardOutput());
-                REQUIRE(document.isObject());
-                const QJsonArray objects =
-                    document.object().value("OBJECTS").toArray();
-                CHECK(std::any_of(
-                    objects.begin(), objects.end(),
-                    [](const QJsonValue &value) {
-                      const QJsonObject object = value.toObject();
-                      if (object.value("entity").toString() != "SPLINE")
-                        return false;
-                      bool offsetApp = false;
-                      bool typedSource = false;
-                      for (const QJsonValue &record :
-                           object.value("eed").toArray()) {
-                        const QString entry =
-                            record.toObject().value("value").toString();
-                        offsetApp = offsetApp || entry == "LC_OFFSET_CURVE";
-                        typedSource = typedSource || entry == "TYPED_SOURCE";
-                      }
-                      return offsetApp && typedSource;
-                    }));
-              }
+                if (!libreDwgReader.isEmpty() &&
+                    (lane.format == RS2::FormatDWG ||
+                     lane.format == RS2::FormatDWG2018)) {
+                  QProcess reader;
+                  reader.start(libreDwgReader,
+                               {"-O", "minJSON", lc::test::toQString(path)});
+                  REQUIRE(reader.waitForStarted());
+                  REQUIRE(reader.waitForFinished(30000));
+                  INFO(reader.readAllStandardError().toStdString());
+                  REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                  REQUIRE(reader.exitCode() == 0);
+                  const QJsonDocument document =
+                      QJsonDocument::fromJson(reader.readAllStandardOutput());
+                  REQUIRE(document.isObject());
+                  const QJsonArray objects =
+                      document.object().value("OBJECTS").toArray();
+                  CHECK(std::any_of(
+                      objects.begin(), objects.end(),
+                      [](const QJsonValue &value) {
+                        const QJsonObject object = value.toObject();
+                        if (object.value("entity").toString() != "SPLINE")
+                          return false;
+                        bool offsetApp = false;
+                        bool typedSource = false;
+                        for (const QJsonValue &record :
+                             object.value("eed").toArray()) {
+                          const QString entry =
+                              record.toObject().value("value").toString();
+                          offsetApp = offsetApp || entry == "LC_OFFSET_CURVE";
+                          typedSource = typedSource || entry == "TYPED_SOURCE";
+                        }
+                        return offsetApp && typedSource;
+                      }));
+                }
 #endif
+              }
+              ++persistedRows;
             }
-            ++persistedRows;
           }
         }
       }
     }
   }
-  CHECK(persistedRows == origins.size() * intervals.size() * 2 * 2 * 2);
+  CHECK(persistedRows == origins.size() * intervals.size() * 2 * 2 * 2 +
+                             intervals.size() * 2 * 2 * 2);
 }
 
 TEST_CASE(
