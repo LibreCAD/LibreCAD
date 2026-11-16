@@ -2642,9 +2642,10 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2);
+    const int profile = GENERATE(0, 1, 2, 3);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
+    const bool asymmetricTangents = profile == 3;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3) : 1.0;
@@ -2653,6 +2654,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         ? RS_Vector{1e9, -2e9}
         : scaleExtreme
             ? (scaleProfile == 0 ? RS_Vector{1e3, -2e3} : RS_Vector{1e9, -2e9})
+        : asymmetricTangents
+            ? RS_Vector{1e6, -2e6}
             : profile == 0
                 ? GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
                            RS_Vector{1e8, -2e8})
@@ -2678,13 +2681,15 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         ? 0.371234567890123
         : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
                                      : 0.371234567890123;
-    CAPTURE(profile, scaleProfile, sourceTranslation, profileScale, towardCentre,
-            tangentSlope, sourceRotation);
+    CAPTURE(profile, scaleProfile, asymmetricTangents, sourceTranslation,
+            profileScale, towardCentre, tangentSlope, sourceRotation);
     const double endpointSpacing = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0;
+    const std::array<RS_Vector, 2> endpointTangents = asymmetricTangents
+        ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
+        : std::array<RS_Vector, 2>{{{1.0, tangentSlope}, {1.0, -tangentSlope}}};
     LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
-        {{{0.0, 0.0}, {endpointSpacing, 0.0}}},
-        {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
+        {{{0.0, 0.0}, {endpointSpacing, 0.0}}}, endpointTangents);
     REQUIRE(sourceData.isValid());
     const double cosine = std::cos(sourceRotation);
     const double sine = std::sin(sourceRotation);
