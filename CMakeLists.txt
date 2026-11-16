@@ -3792,7 +3792,7 @@ if (BUILD_TESTS)
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/native-offset-geometry-timeout-tests")
     add_dependencies(librecad_offset_worker_geometry_timeout_tests librecad_offset_worker_geometry_timeout_fixture)
     if(LIBRECAD_REGISTER_OFFSET_WORKER_TESTS)
-        foreach(kind request result kernel process client fault geometry_timeout)
+        foreach(kind request result kernel process fault geometry_timeout)
             set(worker_filter "[lc-offsetcurve]")
             if(kind STREQUAL "process")
                 set(worker_filter "[lc-offsetcurve]~[ordinary]")
@@ -3805,15 +3805,41 @@ if (BUILD_TESTS)
         # The complete kernel matrix is intentionally broad and takes several
         # minutes in Release; keep CTest's timeout above its full-suite runtime.
         set_tests_properties(offset_worker_kernel PROPERTIES TIMEOUT 900)
-        # The client matrix includes multi-format import/export and independent
-        # DWG validation; keep its bounded in-process watchdog below CTest's.
-        set_tests_properties(offset_worker_client PROPERTIES TIMEOUT 960
-            ENVIRONMENT "QT_QPA_PLATFORM=offscreen;LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000")
+        # File-lane client coverage is split into deterministic shards so each
+        # process gets its own bounded watchdog without dropping matrix cases.
+        set(worker_client_tests)
+        foreach(shard RANGE 0 7)
+            set(test_name offset_worker_client_${shard})
+            list(APPEND worker_client_tests ${test_name})
+            add_test(NAME ${test_name}
+                COMMAND librecad_offset_worker_client_tests "[lc-offsetcurve][worker-client]~[hyperbola-cusp-persistence]~[parabola-permutation-persistence]~[parabola-profile-matrix]"
+                    --order lex --shard-count 8 --shard-index ${shard})
+            set_tests_properties(${test_name} PROPERTIES TIMEOUT 960
+                ENVIRONMENT "QT_QPA_PLATFORM=offscreen;LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000")
+        endforeach()
+        set(worker_client_matrix_tests)
+        foreach(matrix_tag IN ITEMS parabola-permutation-persistence parabola-profile-matrix)
+            set(test_name offset_worker_client_${matrix_tag})
+            list(APPEND worker_client_matrix_tests ${test_name})
+            add_test(NAME ${test_name}
+                COMMAND librecad_offset_worker_client_tests "[${matrix_tag}]")
+            set_tests_properties(${test_name} PROPERTIES TIMEOUT 960
+                ENVIRONMENT "QT_QPA_PLATFORM=offscreen;LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000")
+        endforeach()
+        set(worker_client_hyperbola_cusp_tests)
+        foreach(shard RANGE 0 19)
+            set(test_name offset_worker_client_hyperbola_cusp_${shard})
+            list(APPEND worker_client_hyperbola_cusp_tests ${test_name})
+            add_test(NAME ${test_name}
+                COMMAND librecad_offset_worker_client_tests "[hyperbola-cusp-persistence]")
+            set_tests_properties(${test_name} PROPERTIES TIMEOUT 960
+                ENVIRONMENT "QT_QPA_PLATFORM=offscreen;LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000;LC_OFFSET_CLIENT_HYPERBOLA_CUSP_SHARD=${shard}")
+        endforeach()
         add_test(NAME offset_worker_process_ordinary
             COMMAND librecad_offset_worker_process_tests "[lc-offsetcurve][ordinary]")
         set_tests_properties(offset_worker_process_ordinary PROPERTIES
             TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen" RUN_SERIAL TRUE)
-        set_tests_properties(offset_worker_process offset_worker_client offset_worker_fault offset_worker_geometry_timeout
+        set_tests_properties(offset_worker_process ${worker_client_tests} ${worker_client_matrix_tests} ${worker_client_hyperbola_cusp_tests} offset_worker_fault offset_worker_geometry_timeout
             PROPERTIES RUN_SERIAL TRUE)
     endif()
     set(LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER "" CACHE FILEPATH

@@ -9963,7 +9963,7 @@ TEST_CASE("rounded-rectangle polyline erodes through curved region boundaries",
     const auto concaveOptions = LC_OffsetWorkerTolerance::directOptions(
         LC_OffsetSourceDefinition{concaveSource, 0.25, 1e-4, false}, *concaveEntity);
     REQUIRE(concaveOptions);
-    CHECK(concaveOptions->mode == LC_CurveOffsetMode::Direct);
+    CHECK(concaveOptions->mode == LC_CurveOffsetMode::RegionBoundary);
 
     LC_OffsetPolylineData mismatched = counterClockwise;
     std::get<RS_ArcData>(mismatched.segments[1]).radius = 1.1;

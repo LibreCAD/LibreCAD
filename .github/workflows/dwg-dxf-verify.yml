@@ -153,7 +153,21 @@ jobs:
           cmake --install format-tests --component OffsetWorker --prefix "$stage"
           test -x "$stage/bin/LibreCADOffsetWorker"
           cp format-tests/librecad_offset_worker_client_tests "$stage/bin/"
-          (cd "$stage/bin" && LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 ./librecad_offset_worker_client_tests "[lc-offsetcurve][worker-client]")
+          cd "$stage/bin"
+          for shard in 0 1 2 3 4 5 6 7; do
+            LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 ./librecad_offset_worker_client_tests \
+              "[lc-offsetcurve][worker-client]~[hyperbola-cusp-persistence]~[parabola-permutation-persistence]~[parabola-profile-matrix]" \
+              --order lex --shard-count 8 --shard-index "$shard"
+          done
+          LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 ./librecad_offset_worker_client_tests \
+            "[parabola-permutation-persistence]"
+          LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 ./librecad_offset_worker_client_tests \
+            "[parabola-profile-matrix]"
+          for shard in $(seq 0 19); do
+            LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 \
+              LC_OFFSET_CLIENT_HYPERBOLA_CUSP_SHARD="$shard" \
+              ./librecad_offset_worker_client_tests "[hyperbola-cusp-persistence]"
+          done
 
   VerifyDwgDxfWindows:
     strategy:
@@ -254,7 +268,18 @@ jobs:
           set QT_QPA_PLATFORM=offscreen
           set LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000
           pushd "%STAGE%\bin"
-          librecad_offset_worker_client_tests.exe "[lc-offsetcurve][worker-client]"
+          for /L %%I in (0,1,7) do (
+            librecad_offset_worker_client_tests.exe "[lc-offsetcurve][worker-client]~[hyperbola-cusp-persistence]~[parabola-permutation-persistence]~[parabola-profile-matrix]" --order lex --shard-count 8 --shard-index %%I
+            if errorlevel 1 exit /b 1
+          )
+          librecad_offset_worker_client_tests.exe "[parabola-permutation-persistence]"
           if errorlevel 1 exit /b 1
+          librecad_offset_worker_client_tests.exe "[parabola-profile-matrix]"
+          if errorlevel 1 exit /b 1
+          for /L %%I in (0,1,19) do (
+            set LC_OFFSET_CLIENT_HYPERBOLA_CUSP_SHARD=%%I
+            librecad_offset_worker_client_tests.exe "[hyperbola-cusp-persistence]"
+            if errorlevel 1 exit /b 1
+          )
           popd
         shell: cmd
