@@ -4749,7 +4749,7 @@ TEST_CASE("Hyperbola cusp offsets retain exact normals at translated origins",
 
             for (const LC_CurveOffsetSide side :
                  {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-              for (const double fraction : {0.5, 1.5}) {
+              for (const double fraction : {0.5, 1.0, 1.5}) {
                 const double distance = fraction * vertexRadius;
                 CAPTURE(side, fraction, distance);
                 const bool largeOrigin =
@@ -4776,8 +4776,10 @@ TEST_CASE("Hyperbola cusp offsets retain exact normals at translated origins",
                 const double worldResolution = 4.0 * std::hypot(ulpX, ulpY);
                 const double allowedDeviation = std::max(
                     options.tolerance.requestedGeometry, worldResolution);
-                CHECK(maxDeviation(result, hyperbolaEvaluator(data)) <=
-                      allowedDeviation);
+                const double cuspJoinTolerance =
+                    fraction == 1.0 ? options.tolerance.nodeMerge : 0.0;
+                CHECK(maxDeviation(result, hyperbolaEvaluator(data),
+                                   cuspJoinTolerance) <= allowedDeviation);
               }
             }
           }
@@ -4836,7 +4838,7 @@ TEST_CASE("Asymmetric hyperbola cusp offsets retain exact normals",
                                    -std::numeric_limits<double>::infinity())));
             for (const LC_CurveOffsetSide side :
                  {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-              for (const double fraction : {0.5, 1.5}) {
+              for (const double fraction : {0.5, 1.0, 1.5}) {
                 const double distance = fraction * vertexRadius;
                 CAPTURE(side, fraction, distance);
                 const bool largeOrigin =
@@ -4857,8 +4859,10 @@ TEST_CASE("Asymmetric hyperbola cusp offsets retain exact normals",
                 const double worldResolution = 4.0 * std::hypot(ulpX, ulpY);
                 const double allowedDeviation = std::max(
                     options.tolerance.requestedGeometry, worldResolution);
-                CHECK(maxDeviation(result, hyperbolaEvaluator(data)) <=
-                      allowedDeviation);
+                const double cuspJoinTolerance =
+                    fraction == 1.0 ? options.tolerance.nodeMerge : 0.0;
+                CHECK(maxDeviation(result, hyperbolaEvaluator(data),
+                                   cuspJoinTolerance) <= allowedDeviation);
               }
             }
           }
