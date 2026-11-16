@@ -275,7 +275,7 @@ jobs:
           arch: 'win64_msvc2022_64'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt3d qt5compat qtimageformats qtshadertools'
+          modules: 'qt3d qt5compat qtimageformats qtpdf qtshadertools'
           tools: 'tools_cmake'
 
       - name: (3) Add MSBuild to PATH
@@ -361,6 +361,8 @@ jobs:
           if exist windows\iconengines\*.lib del /q windows\iconengines\*.lib
           if exist windows\iconengines\*.exp del /q windows\iconengines\*.exp
           if not exist windows\iconengines\lc_svgiconengine.dll exit /b 1
+          if not exist windows\Qt6Pdf.dll (echo Qt6Pdf.dll was not deployed & exit /b 1)
+          if not exist windows\imageformats\qpdf.dll (echo imageformats\qpdf.dll was not deployed & exit /b 1)
           set LC_ARCH=AMD64
           call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
@@ -456,7 +458,7 @@ jobs:
           arch: 'win64_msvc2022_arm64'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt5compat qtimageformats qtshadertools'
+          modules: 'qt5compat qtimageformats qtpdf qtshadertools'
 
       - name: (3) Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -538,6 +540,8 @@ jobs:
           if errorlevel 1 exit /b 1
           if not exist windows\Qt6Core.dll exit /b 1
           if not exist windows\platforms\qwindows.dll exit /b 1
+          if not exist windows\Qt6Pdf.dll (echo Qt6Pdf.dll was not deployed & exit /b 1)
+          if not exist windows\imageformats\qpdf.dll (echo imageformats\qpdf.dll was not deployed & exit /b 1)
           for /r generated %%f in (librecad_*.qm) do copy "%%f" librecad\ts\
           for /r generated %%f in (plugins_*.qm) do copy "%%f" plugins\ts\
           powershell.exe -ExecutionPolicy Bypass -File scripts\copy-vc-runtime.ps1 -Architecture ARM64 -Destination windows

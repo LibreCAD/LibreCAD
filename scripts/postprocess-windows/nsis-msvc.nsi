@@ -143,6 +143,8 @@ Section "Main Section" SecMain
   
   ; Ensure application icon is installed (required for shortcuts and Add/Remove Programs)
   File "${MUI_ICON}"
+  SetOutPath "$INSTDIR\licenses"
+  File "..\..\licenses\*.txt"
   
   ; Fallback Qt plugin copies (non-fatal; windeployqt should have handled these)
   SetOutPath "$INSTDIR\platforms"

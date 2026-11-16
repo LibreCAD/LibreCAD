@@ -11,6 +11,8 @@
   (UTF-8 and LDID/87 Latin-1 mapped explicitly).  Backed by vendored shapelib
   1.6.3 compiled as C++17 (CVE-2023-30259-hardened via the corpus + hostile-
   fixture safety-net tests in librecad_tests).  Fixes #1481.
+- Windows packages ship Qt's PDF image plugin, so the Image tool can place a
+  PDF page as a picture, as Linux builds already could.  Fixes #3103.
 
 ### Removed
 - importshp plugin (superseded by the native SHP filter above; the plugin's
