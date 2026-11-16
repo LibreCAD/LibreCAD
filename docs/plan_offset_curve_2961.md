@@ -53523,9 +53523,34 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-Results: 2,122 assertions / 1 case pass. Remaining for this workflow: add
-DXF/DWG save-reopen verification of the trimmed high-origin fragments (and
-LibreDWG inspection where available), then re-run the focused test and relevant
-file-lane suite. Visible-app trimming acceptance and independent ODA/AutoCAD
-acceptance remain separate open gates.
+This test update adds the high-origin output save/reopen lane. It exports the
+committed trim fragments through R14/R2000/R2018 DXF and R2000/R2018 DWG,
+reopens each drawing, and matches every committed fragment. Splines are checked
+at 33 normalized parameter samples in one consistent forward or reverse
+orientation; lines, arcs, and ellipses use type-specific geometry checks. The
+matcher uses an explicit `1e-4` world-coordinate tolerance for the
+`(1e9,-2e9)` frame. When `dwgread` is configured, both DWG files must parse
+successfully through `minJSON` and the parsed JSON must contain each expected
+fragment entity type; LibreCAD import then verifies the fragment geometry.
+The `minJSON` representation uses entity-type values rather than an uppercase
+`ENTITIES` array.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Results: the focused case passes 2,149 assertions / 1 case, including all five
+save/reopen lanes and both available LibreDWG reads. This closes persistence
+qualification for the single high-origin profile used by this Trim Two test;
+it does not imply the ten-slope grid in section 1605 was trimmed or persisted.
+Visible-app trimming acceptance and independent ODA/AutoCAD acceptance remain
+separate open gates.
 

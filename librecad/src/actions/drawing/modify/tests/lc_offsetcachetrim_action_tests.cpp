@@ -2473,6 +2473,162 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK(cutter->isDeleted());
     for (const RS_Entity* fragment : fragments)
         CHECK_FALSE(fragment->isDeleted());
+
+    if (highOrigin) {
+        QTemporaryDir directory;
+        REQUIRE(directory.isValid());
+        const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14,
+            RS2::FormatDXFRW2000, RS2::FormatDWG, RS2::FormatDXFRW2018,
+            RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+        QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (libreDwgReader.isEmpty())
+            libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+        std::vector<const RS_Entity*> expectedGeometry(fragments.begin(),
+                                                       fragments.end());
+        REQUIRE_FALSE(expectedGeometry.empty());
+
+        constexpr double geometryTolerance = 1e-4;
+        const auto closePoint = [=](const RS_Vector& a, const RS_Vector& b) {
+            return a.valid && b.valid &&
+                   a.distanceTo(b) <= geometryTolerance;
+        };
+        const auto sameEndpoints = [&](const RS_Entity& expected,
+                                       const RS_Entity& actual) {
+            const RS_Vector expectedStart = expected.getStartpoint();
+            const RS_Vector expectedEnd = expected.getEndpoint();
+            const RS_Vector actualStart = actual.getStartpoint();
+            const RS_Vector actualEnd = actual.getEndpoint();
+            return (closePoint(expectedStart, actualStart) &&
+                    closePoint(expectedEnd, actualEnd)) ||
+                   (closePoint(expectedStart, actualEnd) &&
+                    closePoint(expectedEnd, actualStart));
+        };
+        const auto matchesGeometry = [&](const RS_Entity& expected,
+                                         const RS_Entity& actual) {
+            if (expected.rtti() != actual.rtti())
+                return false;
+            if (const auto* expectedLine = dynamic_cast<const RS_Line*>(&expected)) {
+                const auto* actualLine = dynamic_cast<const RS_Line*>(&actual);
+                return actualLine && sameEndpoints(*expectedLine, *actualLine);
+            }
+            if (const auto* expectedSpline = dynamic_cast<const RS_Spline*>(&expected)) {
+                const auto* actualSpline = dynamic_cast<const RS_Spline*>(&actual);
+                if (!actualSpline)
+                    return false;
+                double expectedStart = 0.0, expectedEnd = 0.0;
+                double actualStart = 0.0, actualEnd = 0.0;
+                if (!expectedSpline->getParameterDomain(expectedStart, expectedEnd) ||
+                    !actualSpline->getParameterDomain(actualStart, actualEnd) ||
+                    !(expectedEnd > expectedStart) || !(actualEnd > actualStart))
+                    return false;
+                bool matchesForward = true;
+                bool matchesReverse = true;
+                for (unsigned i = 0; i <= 32; ++i) {
+                    const double fraction = static_cast<double>(i) / 32.0;
+                    const RS_Vector expectedPoint = expectedSpline->getPointAt(
+                        expectedStart + (expectedEnd - expectedStart) * fraction);
+                    const RS_Vector actualForward = actualSpline->getPointAt(
+                        actualStart + (actualEnd - actualStart) * fraction);
+                    const RS_Vector actualReverse = actualSpline->getPointAt(
+                        actualEnd - (actualEnd - actualStart) * fraction);
+                    if (!expectedPoint.valid || !actualForward.valid ||
+                        !actualReverse.valid)
+                        return false;
+                    matchesForward &= closePoint(expectedPoint, actualForward);
+                    matchesReverse &= closePoint(expectedPoint, actualReverse);
+                }
+                return matchesForward || matchesReverse;
+            }
+            if (const auto* expectedArc = dynamic_cast<const RS_Arc*>(&expected)) {
+                const auto* actualArc = dynamic_cast<const RS_Arc*>(&actual);
+                return actualArc &&
+                    closePoint(expectedArc->getCenter(), actualArc->getCenter()) &&
+                    std::abs(expectedArc->getRadius() - actualArc->getRadius()) <=
+                        geometryTolerance &&
+                    std::abs(expectedArc->getLength() - actualArc->getLength()) <=
+                        geometryTolerance &&
+                    sameEndpoints(*expectedArc, *actualArc);
+            }
+            if (const auto* expectedEllipse = dynamic_cast<const RS_Ellipse*>(&expected)) {
+                const auto* actualEllipse = dynamic_cast<const RS_Ellipse*>(&actual);
+                return actualEllipse &&
+                    closePoint(expectedEllipse->getCenter(), actualEllipse->getCenter()) &&
+                    closePoint(expectedEllipse->getMajorP(), actualEllipse->getMajorP()) &&
+                    std::abs(expectedEllipse->getRatio() - actualEllipse->getRatio()) <=
+                        geometryTolerance &&
+                    std::abs(expectedEllipse->getLength() - actualEllipse->getLength()) <=
+                        geometryTolerance &&
+                    sameEndpoints(*expectedEllipse, *actualEllipse);
+            }
+            return false;
+        };
+
+        for (std::size_t lane = 0; lane < formats.size(); ++lane) {
+            const bool dwg = formats[lane] == RS2::FormatDWG ||
+                             formats[lane] == RS2::FormatDWG2018;
+#ifndef DWGSUPPORT
+            if (dwg)
+                continue;
+#endif
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("high-origin-parabola-trim-%1")
+                    .arg(lane) + (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[lane]));
+#ifdef DWGSUPPORT
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader,
+                    {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document =
+                    QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                const QByteArray json = document.toJson(QJsonDocument::Compact);
+                for (const RS_Entity* expected : expectedGeometry) {
+                    const char* dwgType = expected->rtti() == RS2::EntitySpline ? "SPLINE" :
+                        expected->rtti() == RS2::EntityLine ? "LINE" :
+                        expected->rtti() == RS2::EntityArc ? "ARC" :
+                        expected->rtti() == RS2::EntityEllipse ? "ELLIPSE" : nullptr;
+                    REQUIRE(dwgType);
+                    const QByteArray marker = QByteArrayLiteral("\"") + dwgType +
+                                              QByteArrayLiteral("\"");
+                    CHECK(json.contains(marker));
+                }
+            }
+#endif
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, formats[lane]));
+            std::vector<const RS_Entity*> reopenedGeometry;
+            for (const RS_Entity* entity : live(reopened)) {
+                CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+                if (entity->rtti() == RS2::EntitySpline ||
+                    entity->rtti() == RS2::EntityLine ||
+                    entity->rtti() == RS2::EntityArc ||
+                    entity->rtti() == RS2::EntityEllipse)
+                    reopenedGeometry.push_back(entity);
+            }
+            CAPTURE(formats[lane]);
+            std::vector<bool> matched(reopenedGeometry.size(), false);
+            for (const RS_Entity* expected : expectedGeometry) {
+                bool found = false;
+                for (std::size_t i = 0; i < reopenedGeometry.size(); ++i) {
+                    if (matched[i] ||
+                        !matchesGeometry(*expected, *reopenedGeometry[i]))
+                        continue;
+                    matched[i] = true;
+                    found = true;
+                    break;
+                }
+                CHECK(found);
+            }
+        }
+    }
 }
 
 TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
