@@ -6933,6 +6933,178 @@ TEST_CASE("knot-inserted rational quadratic tangent maps across nonuniform spans
     }
 }
 
+TEST_CASE("double-inserted rational quadratic tangent maps through its knot",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-"
+          "root][repeated-knot]") {
+    constexpr double middleWeight = 0.3;
+    constexpr double firstInsertion = 0.25;
+    const double firstWeight =
+        1.0 - firstInsertion + firstInsertion * middleWeight;
+    const double secondWeight =
+        (1.0 - firstInsertion) * middleWeight + firstInsertion;
+
+    RS_SplineData original{2, false};
+    original.type = RS_SplineData::SplineType::ClampedOpen;
+    original.controlPoints = {{-2, 0}, {0, 2}, {2, 0}};
+    original.knotslist = {0, 0, 0, 1, 1, 1};
+    original.weights = {1, middleWeight, 1};
+
+    RS_SplineData onceInserted{2, false};
+    onceInserted.type = RS_SplineData::SplineType::ClampedOpen;
+    onceInserted.controlPoints = {
+        {-2, 0},
+        {-2 * (1.0 - firstInsertion) / firstWeight,
+         2 * middleWeight * firstInsertion / firstWeight},
+        {2 * firstInsertion / secondWeight,
+         2 * middleWeight * (1.0 - firstInsertion) / secondWeight},
+        {2, 0}};
+    onceInserted.knotslist = {0, 0, 0, firstInsertion, 1, 1, 1};
+    onceInserted.weights = {1, firstWeight, secondWeight, 1};
+
+    const auto insertKnot = [](RS_SplineData& data, const double knot) {
+        struct HomogeneousPoint {
+            double x;
+            double y;
+            double w;
+        };
+        const std::size_t degree = data.degree;
+        const std::size_t count = data.controlPoints.size();
+        REQUIRE(count > degree);
+        REQUIRE(data.weights.size() == count);
+        const std::size_t last = count - 1;
+        const auto upper = std::upper_bound(data.knotslist.begin(),
+                                            data.knotslist.end(), knot);
+        REQUIRE(upper != data.knotslist.begin());
+        const std::size_t span =
+            static_cast<std::size_t>(upper - data.knotslist.begin() - 1);
+        const std::size_t multiplicity = static_cast<std::size_t>(std::count(
+            data.knotslist.begin(), data.knotslist.end(), knot));
+        REQUIRE(span >= degree);
+        REQUIRE(span <= last);
+        REQUIRE(multiplicity < degree);
+
+        std::vector<HomogeneousPoint> points;
+        points.reserve(count);
+        for (std::size_t i = 0; i < count; ++i) {
+            points.push_back({data.controlPoints[i].x * data.weights[i],
+                              data.controlPoints[i].y * data.weights[i],
+                              data.weights[i]});
+        }
+        std::vector<HomogeneousPoint> inserted(count + 1);
+        for (std::size_t i = 0; i <= span - degree; ++i)
+            inserted[i] = points[i];
+        for (std::size_t i = span - multiplicity; i <= last; ++i)
+            inserted[i + 1] = points[i];
+        for (std::size_t i = span - degree + 1;
+             i <= span - multiplicity; ++i) {
+            const double denominator = data.knotslist[i + degree] -
+                                       data.knotslist[i];
+            REQUIRE(denominator > 0.0);
+            const double alpha =
+                (knot - data.knotslist[i]) / denominator;
+            inserted[i] = {
+                alpha * points[i].x + (1.0 - alpha) * points[i - 1].x,
+                alpha * points[i].y + (1.0 - alpha) * points[i - 1].y,
+                alpha * points[i].w + (1.0 - alpha) * points[i - 1].w};
+        }
+        data.knotslist.insert(data.knotslist.begin() + span + 1, knot);
+        data.controlPoints.resize(count + 1);
+        data.weights.resize(count + 1);
+        for (std::size_t i = 0; i <= count; ++i) {
+            REQUIRE(inserted[i].w > 0.0);
+            data.controlPoints[i] =
+                {inserted[i].x / inserted[i].w,
+                 inserted[i].y / inserted[i].w};
+            data.weights[i] = inserted[i].w;
+        }
+    };
+    RS_SplineData repeated = onceInserted;
+    insertKnot(repeated, 0.5);
+    insertKnot(repeated, 0.5);
+    const RS_Spline repeatedSource{nullptr, repeated};
+    REQUIRE(repeatedSource.validate());
+    REQUIRE(std::count(repeated.knotslist.begin(), repeated.knotslist.end(),
+                       0.5) == 2);
+
+    for (const double parameter : {0.1, 0.25, 0.4, 0.5, 0.6, 0.8, 0.9}) {
+        const auto originalPoint =
+            evaluateSplineOracle(original, SplineOracle{parameter});
+        const auto repeatedPoint =
+            evaluateSplineOracle(repeated, SplineOracle{parameter});
+        const SplineOracle dx = originalPoint.first - repeatedPoint.first;
+        const SplineOracle dy = originalPoint.second - repeatedPoint.second;
+        CAPTURE(parameter, dx, dy);
+        CHECK(sqrt(dx * dx + dy * dy) < SplineOracle{"1e-12"});
+    }
+
+    const SplineOracle start{0};
+    const SplineOracle end{1};
+    const SplineOracle root{"0.5"};
+    const SplineOracle step{"1e-24"};
+    const double signedDistance = -2.0 / middleWeight;
+    const SplineOracle distance{signedDistance};
+    const SplineOracle tangentLeft =
+        oracleOffsetFactor(repeated, root, step, start, end, distance, true);
+    const SplineOracle tangentRight =
+        oracleOffsetFactor(repeated, root, step, start, end, distance, false);
+    const SplineOracle before = oracleOffsetFactor(
+        repeated, root - SplineOracle{"1e-7"}, step, start, end, distance);
+    const SplineOracle after = oracleOffsetFactor(
+        repeated, root + SplineOracle{"1e-7"}, step, start, end, distance);
+    CAPTURE(signedDistance, tangentLeft, tangentRight, before, after);
+    CHECK(abs(tangentLeft) < SplineOracle{"1e-10"});
+    CHECK(abs(tangentRight) < SplineOracle{"1e-10"});
+    CHECK(before != 0);
+    CHECK(after != 0);
+    CHECK((before < 0) == (after < 0));
+
+    const RS_Spline source{nullptr, repeated};
+    const double requestedGeometry = 1e-4;
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{repeated}, signedDistance,
+        requestedGeometry, false};
+    const auto options =
+        LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.status, diagnostics.failureStage,
+            diagnostics.candidateParameters, diagnostics.stallIntervals);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(diagnostics.complete);
+    const bool ownsRoot =
+        std::any_of(diagnostics.candidateParameters.begin(),
+                    diagnostics.candidateParameters.end(), [](double parameter) {
+                        return std::abs(parameter - 0.5) <= 1e-7;
+                    }) ||
+        std::any_of(diagnostics.stallIntervals.begin(),
+                    diagnostics.stallIntervals.end(),
+                    [](const auto& interval) {
+                        return interval.first <= 0.5 && 0.5 <= interval.second;
+                    });
+    CHECK(ownsRoot);
+
+    const auto tangentPoint =
+        oracleOffsetPoint(repeated, root, step, start, end, distance);
+    const RS_Vector expected{tangentPoint.first.convert_to<double>(),
+                             tangentPoint.second.convert_to<double>()};
+    double nearestEndpoint = std::numeric_limits<double>::infinity();
+    for (const LC_OffsetBranch& branch : built.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            nearestEndpoint = std::min(
+                nearestEndpoint,
+                std::min(piece.bezier.front().distanceTo(expected),
+                         piece.bezier.back().distanceTo(expected)));
+        }
+    }
+    CAPTURE(nearestEndpoint, requestedGeometry);
+    CHECK(nearestEndpoint <= requestedGeometry);
+}
+
 TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational]["
           "tangent-root][degree]") {
