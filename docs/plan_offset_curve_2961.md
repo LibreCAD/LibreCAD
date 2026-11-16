@@ -51998,3 +51998,36 @@ change together. Also verify cancellation/refusal preserves the original
 source and highlight. Record platform and binary revision. Headless Qt tests
 do not close this gate; independent CAD interoperability is tracked separately.
 
+## 1564. Reconcile the Self-crossing Polyline Slice 4 Summary (2026-11-15)
+
+The high-level Slice 4 table still described an exact straight `RS_Polyline`
+bow-tie test as pending. That is stale: section 1456 adds an independent
+all-straight bow-tie profile and verifies one growth cycle and two erosion
+cycles for both EvenOdd and NonZero fill rules. The currently built test
+executable reruns `[curve-offset][region][polyline][self-crossing]` with
+1,554 assertions across 9 passing cases. Earlier mixed-bulge work in sections
+1376-1388 also covers specific positive/negative bulge bow-ties across bounded
+rigid frames, requiring independently checked cycles or empty atomic
+`AmbiguousTopology` refusals.
+
+The older report of an exact polyline bow-tie returning `AmbiguousTopology`
+remains unclassified because its vertex list was not recorded; it cannot be
+assumed equivalent to section 1456's tested profile. Do not repeat the
+already-covered straight-profile implementation slice or claim general
+self-crossing support. Continue with a reproducible broader crossing/tangency
+matrix only when concrete input geometry is identified, while retaining the
+existing family-by-variant and independent CAD gates.
+
+Validation on macOS arm64 CMake Release at current PR head `93b47c725`:
+
+```sh
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][region][polyline][self-crossing]' --reporter compact
+git diff --check
+```
+
+Result: 1,554 assertions / 9 cases passed. This is current test evidence for
+the bounded self-crossing selector, not complete Slice 4 or visible-GUI / CAD
+interoperability acceptance.
+
