@@ -52948,3 +52948,47 @@ shell emits the existing missing optional `/private/tmp/libdxfrw-cargo/env`
 warning; the build completes successfully. No qmake test registration or
 runtime acceptance is inferred.
 
+## 1590. Keep Worker-client Matrix Tests Inside Bounded CI Lanes (2026-11-16)
+
+The current-source CTest run found one stale polyline routing expectation and
+one persistence assertion that incorrectly required every region output to
+contain a standalone `LINE`. Concave polyline erosion is now deliberately routed
+through `RegionBoundary`; the kernel test expectation matches that policy. The
+major-bulge persistence test still checks ordered output types, geometry
+fingerprints/endpoints, two save/reopen passes, and the five R14/R2000/R2018
+DXF/DWG lanes. It no longer requires a separate LINE when straight spans are
+represented inside an assembled spline.
+
+The client suite exceeded its 900-second process watchdog because its
+960-profile bounded-hyperbola cusp persistence matrix was one Catch2 case. That
+matrix is unchanged and is now run in 20 origin-by-ratio partitions, each
+covering 48 full rows. Two expensive parabola permutation matrices have
+dedicated invocations; the remaining 52 client cases are deterministically
+distributed over eight Catch2 shards. The CMake/CTest registrations and Linux
+and Windows relocated-helper workflow use the same partition contract. The
+combined case inventory is exactly the original 55 worker-client cases.
+
+Validation on macOS arm64 CMake Release:
+
+- Corrected rounded-rectangle routing case: 611 assertions / 1 case.
+- Major-bulge worker persistence: 1,176 assertions / 1 case with LibreDWG.
+- Original eight-shard worker-client selection: 8/8 passed, 54 cases total,
+  1,740.25 seconds; maximum shard 816.74 seconds. This run included the two
+  parabola matrices later promoted to standalone invocations.
+- Dedicated parabola permutation persistence: 261.91 seconds, passed.
+- Dedicated parabola profile/scale matrix: 505.41 seconds, passed.
+- Hyperbola cusp persistence: all 20 partitions passed, 960 rows total,
+  31,427 assertions in the sampled shard 16, with LibreDWG enabled; 1,108.67
+  seconds for the complete partition set.
+- Current CMake test targets build, `actionlint` passes, and `git diff --check`
+  passes.
+
+The first 8-way run of the single 960-row hyperbola case was intentionally
+stopped after the suite watchdog failure exposed the oversized case; it is not
+a passing result and is superseded only for that case by the complete 20-part
+run above. No geometry budget, timeout bound, or tested row was removed. The
+source-picker behavior remains headless-verified but visible packaged-app
+acceptance is open. ODA/AutoCAD interoperability and the remaining Slice 4
+family/variant gates also remain open; this test-infrastructure slice does not
+complete the roadmap.
+
