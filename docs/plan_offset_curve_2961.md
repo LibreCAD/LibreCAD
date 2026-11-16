@@ -53851,6 +53851,7 @@ LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   'T Trim Two trims an endpoint-tangent parabola' --reporter compact
 cmake --build /private/tmp/offset-2961-cmake-clean --target LibreCAD -j4
+cd /private/tmp/offset3193-qmake6-fresh && make -j6
 git diff --check
 ```
 
@@ -53861,7 +53862,11 @@ Results: direct geometry and recentered materialization pass 7,652 assertions
 interval is now valid at `1.1044677734375e-9` and invalid at
 `1.104443359375e-9`; this is not a continuous boundary claim. Other origins,
 scales, parabola constructions, cutter matrices, visible-app use, and
-independent ODA/AutoCAD acceptance remain open.
+independent ODA/AutoCAD acceptance remain open. The recursive qmake6
+application/worker/plugin build also exits 0. It emits the known local
+`.bash_profile` missing-optional-env warning, existing logical-operator
+precedence warnings, and macOS SDK deployment-target notices; none stop the
+build.
 
 ## 1616. Probe the High-origin Tangent Boundary at 1.10445556640625e-9 (2026-11-16)
 
