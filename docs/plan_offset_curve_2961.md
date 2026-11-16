@@ -53460,20 +53460,21 @@ the full slope ladder at high origins or arbitrary endpoint-tangent
 constructions. Other high-origin conditioning, visible-app acceptance, and
 independent ODA/AutoCAD acceptance remain open.
 
-## 1605. Extend High-origin Tangent Conditioning to Nine Slopes (2026-11-16)
+## 1605. Extend High-origin Tangent Conditioning to Ten Slopes (2026-11-16)
 
 Test commit `3370bff4b` expands section 1604's direct and worker-client
 high-origin profile from slope `1e-4` to `{1e-4, 1e-5, 1e-6}`. Follow-up test
 commits `053e2c3bb` and `94c92e997` add `1e-7` and `1e-8`; `06a074ac6` adds
 `5e-9` and `2e-9`, all representable and passing at this frame. Test commit
-`b3e0e8cb6` adds the successful `1.5e-9` profile and `c400fec91` adds
-`1.25e-9`. A `1e-9` slope at the same feature scale collapses the translated
-control geometry: test commit `860f57496` verifies it is invalid and worker
-generation/cache-validation requests are rejected before encoding. The nine
-successful slopes retain the same 10-unit endpoint spacing, rotation `0.41`,
-origin `(1e9,-2e9)`, explicit `1e-3` direct geometry tolerance, and both
-offset signs. The persistence lane includes worker generation/cache admission
-and five-format save/reopen with LibreDWG typed-source inspection.
+`b3e0e8cb6` adds the successful `1.5e-9` profile, `c400fec91` adds
+`1.25e-9`, and `02f0e8c76` adds `1.125e-9`. A `1e-9` slope at the same
+feature scale collapses the translated control geometry: test commit
+`860f57496` verifies it is invalid and worker generation/cache-validation
+requests are rejected before encoding. The ten successful slopes retain the
+same 10-unit endpoint spacing, rotation `0.41`, origin `(1e9,-2e9)`, explicit
+`1e-3` direct geometry tolerance, and both offset signs. The persistence lane
+includes worker generation/cache admission and five-format save/reopen with
+LibreDWG typed-source inspection.
 
 Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
 
@@ -53492,11 +53493,11 @@ librecad_offset_worker_client_tests \
 git diff --check
 ```
 
-Results: direct geometry passes 848 assertions / 1 case; worker/cache and
-five-format persistence pass 27,321 assertions / 1 case; the direct and worker
-refusal tests pass 472 and 30 assertions / 1 case each. This qualifies the
-nine successful slopes and the single `1e-9` invalid-source boundary at the
-stated frame only. Values between `1e-9` and `1.25e-9`, other origins/scales,
+Results: direct geometry passes 942 assertions / 1 case; worker/cache and
+five-format persistence pass 28,284 assertions / 1 case; the direct and worker
+refusal tests pass 472 and 30 assertions / 1 case each. This qualifies the ten
+successful slopes and the single `1e-9` invalid-source boundary at the stated
+frame only. Values between `1e-9` and `1.125e-9`, other origins/scales,
 arbitrary endpoint-tangent constructions, visible-app acceptance, and
 independent ODA/AutoCAD acceptance remain open.
 
