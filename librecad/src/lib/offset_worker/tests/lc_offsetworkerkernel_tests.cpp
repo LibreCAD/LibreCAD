@@ -5280,6 +5280,39 @@ TEST_CASE("high-degree periodic rational roots map at an interior knot",
         }
         CAPTURE(degree, nearestEndpoint, requestedGeometry);
         CHECK(nearestEndpoint <= requestedGeometry);
+
+        const req::Request generationRequest{
+            token, req::GenerateSource{definition, {}}};
+        const auto generatedReply =
+            LC_OffsetWorkerKernel::run(generationRequest);
+        const auto& generated = native(generatedReply, 7);
+        CAPTURE(degree, weightStep, symmetricWeights, knotValue,
+                generated.engineStatus, generated.ordinaryStatus,
+                generated.refusal, generated.ordinary.size());
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(generated.ordinary.empty());
+        const auto generatedWire =
+            result::encode(generatedReply, generationRequest);
+        REQUIRE(generatedWire);
+        REQUIRE(result::decode(*generatedWire, generationRequest));
+
+        RS_SplineData cache;
+        REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+        const req::Request validationRequest{
+            token, req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply =
+            LC_OffsetWorkerKernel::run(validationRequest);
+        const auto& validated = native(validationReply, 8);
+        CAPTURE(degree, weightStep, symmetricWeights, knotValue,
+                validated.refusal, validated.engineStatus, validated.changed);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+        const auto validationWire = result::encode(
+            validationReply, validationRequest);
+        REQUIRE(validationWire);
+        REQUIRE(result::decode(*validationWire, validationRequest));
         }
       }
     }
