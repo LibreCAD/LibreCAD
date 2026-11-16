@@ -2866,7 +2866,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         CHECK(trimGeometry(*native) == nativeBefore);
 
         if (includeHighOriginCircle && !towardCentre) {
-            for (const double inwardFraction : {1e-2, 1e-3, 1e-4}) {
+            for (const double inwardFraction : {1e-2, 1e-3, 1e-4, 1e-5}) {
                 const RS_Vector nearCenter = tangentCircleCenter -
                     normal * (radius * inwardFraction);
                 RS_Circle nearCircle{nullptr, {nearCenter, radius}};
