@@ -212,6 +212,10 @@ TEST_CASE("LC_Parabola: endpoint-tangent construction rejects degenerate inputs"
       endpoints, {{{1.0, 0.0}, {2.0, 0.0}}});
   CHECK_FALSE(parallel.isValid());
 
+  const auto parallelOppositeDirections = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{-1.0, 0.2}, {1.0, -0.2}}});
+  CHECK_FALSE(parallelOppositeDirections.isValid());
+
   const auto zeroStartTangent = LC_ParabolaData::FromEndPointsTangents(
       endpoints, {{{0.0, 0.0}, {1.0, -1.0}}});
   CHECK_FALSE(zeroStartTangent.isValid());

@@ -260,12 +260,14 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
         !finitePlanar(endTangents[0]) || !finitePlanar(endTangents[1]))
         return {};
 
-    const auto unitDirection = [](const RS_Vector& tangent, RS_Vector& direction) {
+    const auto unitDirection = [](const RS_Vector& tangent, RS_Vector& direction,
+                                  RS_Vector& scaledDirection) {
         const double scale = std::max(std::abs(tangent.x), std::abs(tangent.y));
         if (!std::isfinite(scale) || scale == 0.0)
             return false;
         const double x = tangent.x / scale;
         const double y = tangent.y / scale;
+        scaledDirection = {x, y};
         const double length = std::hypot(x, y);
         if (!std::isfinite(length) || length == 0.0)
             return false;
@@ -275,16 +277,21 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
 
     RS_Vector firstDirection;
     RS_Vector secondDirection;
-    if (!unitDirection(endTangents[0], firstDirection) ||
-        !unitDirection(endTangents[1], secondDirection))
+    RS_Vector firstScaledDirection;
+    RS_Vector secondScaledDirection;
+    if (!unitDirection(endTangents[0], firstDirection, firstScaledDirection) ||
+        !unitDirection(endTangents[1], secondDirection, secondScaledDirection))
+        return {};
+
+    const long double directionCross =
+        static_cast<long double>(firstScaledDirection.x) * secondScaledDirection.y -
+        static_cast<long double>(firstScaledDirection.y) * secondScaledDirection.x;
+    if (!std::isfinite(directionCross) || directionCross == 0.0L)
         return {};
 
     const long double denominator =
         static_cast<long double>(firstDirection.x) * secondDirection.y -
         static_cast<long double>(firstDirection.y) * secondDirection.x;
-    if (!std::isfinite(denominator) || denominator == 0.0L)
-        return {};
-
     const long double deltaX = static_cast<long double>(endPoints[1].x) - endPoints[0].x;
     const long double deltaY = static_cast<long double>(endPoints[1].y) - endPoints[0].y;
     const long double parameter =
