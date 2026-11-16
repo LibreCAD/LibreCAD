@@ -52551,3 +52551,36 @@ enumerated profiles only; other origins/scales, interval shapes, broader
 cache-refused profiles, visible packaged-app acceptance, and independent
 ODA/AutoCAD acceptance remain open.
 
+## 1579. Exercise Two Hyperbola Cusp Interval Widths (2026-11-16)
+
+The direct exact-normal oracle and worker/kernel cache matrix now test
+symmetric hyperbola parameter half-widths `0.4` and `0.8`, including reversed
+bounds, at all three existing origins and five ratios. This doubles the direct
+oracle's interval-width coverage and the worker/kernel cusp-profile rows while
+retaining both branches, offset sides/signs, and cusp-distance fractions. The
+worker-client's five-lane DXF/DWG round-trip already covers both widths from
+section 1578, so no expensive persistence matrix was duplicated here.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][large-origin]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp][variants]' \
+  --reporter compact
+git diff --check
+```
+
+Results: the direct exact-normal oracle passes 781,860 assertions / 1 case;
+the worker/kernel cache matrix passes 17,283 assertions / 1 case. This closes
+the specifically enumerated `{0.4, 0.8}` symmetric interval-width gap for
+these origins/ratios. Asymmetric intervals and other interval shapes remain
+unqualified, as do broader cache-refused profiles, visible packaged-app
+acceptance, and independent ODA/AutoCAD acceptance.
+
