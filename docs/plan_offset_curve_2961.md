@@ -52662,3 +52662,39 @@ support and LibreDWG enabled. The raw OBJECTS fixed-handle diagnostics remain
 unrelated. Other asymmetric domains and ODA/AutoCAD plus visible-app
 acceptance remain open.
 
+## 1582. Persist Asymmetric Intervals Across the Recorded Origins (2026-11-16)
+
+The 64-profile section 1581 matrix now covers all four recorded origins:
+`(23,-17)`, `(1e6,-1e6)`, `(1e9,-2e9)`, and `(1e12,-2e12)`. All four
+asymmetric/cusp-endpoint interval shapes run at each origin with both
+branches, forward/reversed bounds, and both signed offsets, for 128 typed
+profiles. Ratio `0.2` and quarter-vertex-radius distance remain the selected
+persistence profile; the direct and kernel matrices retain the broader ratio
+and cusp-distance grid. The `1e12` case uses semi-major axis `2e4` and
+tolerance `0.05`; other origins use semi-major axis `10` and tolerance
+`1e-4`.
+
+Every admitted profile is saved and reopened through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG, saved again, and reopened a second time. Source bounds,
+branch, signed distance, and cache fingerprint are checked. LibreDWG minJSON
+checks both EED markers in each emitted DWG when available.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][asymmetric][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+The 128-profile five-lane and LibreDWG matrix passes 68,438 assertions / 1
+case. Raw OBJECTS fixed-handle replay diagnostics remain separate from entity
+round-trip evidence. Other asymmetric domains, broader persistence ratios and
+distances, visible-app acceptance, and independent ODA/AutoCAD acceptance
+remain open.
+
