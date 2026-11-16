@@ -258,9 +258,10 @@ matrix. Section 1685 adds reversed mirrored/unequal tangent sources to the
 worker-cache and five-lane persistence matrix across all three scales;
 section 1686 extends the independent interior-normal oracle to reversed
 traversal, and section 1687 completes their three-scale circle/line Trim Two
-action matrix. Continue with materially distinct tangent directions and
-contact conditioning; do not inflate this finite profile set into general
-coverage.
+action matrix. Section 1688 also qualifies a `1e300` endpoint-tangent
+magnitude ratio through the interior oracle and forward worker/cache lanes.
+Continue with materially distinct tangent directions and contact conditioning;
+do not inflate this finite profile set into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55666,4 +55667,26 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 These checks close the reversed versions of the two recorded layouts only.
 Other tangent angles, cutter placements, scale/curvature contact limits, GUI
 acceptance, and independent CAD acceptance remain open.
+
+## 1688. Qualify Extreme Endpoint-tangent Magnitude Imbalance (2026-11-16)
+
+Test commit `f7827654f` adds the steep tangent directions with endpoint-vector
+magnitudes `1e-150` and `1e150`, a ratio of `1e300`. The independent analytic
+interior-normal oracle covers both traversal directions, both signed offsets,
+all three scales/frames, and five interior parameters. The real worker/cache
+and five-format persistence matrix covers both offset signs at scales `1e-3`,
+`1`, and `1e3` in the forward traversal. The oracle derives geometry from the
+resulting defining control net, so the magnitude imbalance is the varied input
+conditioning rather than a second offset formula.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 1,128 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 53,750 assertions / 1 case.
+- Both CMake test targets built successfully.
+- `git diff --check`: passed.
+
+This records one extreme magnitude pair only; overflow/underflow boundaries,
+arbitrary independent endpoint scales, Trim behavior for this input, and
+external CAD acceptance remain open.
 
