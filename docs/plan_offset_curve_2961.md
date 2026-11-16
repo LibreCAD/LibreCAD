@@ -55390,3 +55390,36 @@ The separate `offset_worker_process_ordinary` test remains at its 30-second
 timeout because its filtered workload is distinct; change it only if measured
 evidence shows it needs a larger budget.
 
+## 1675. Qualify a Steeper Asymmetric Endpoint-tangent Parabola (2026-11-16)
+
+Test commit `798025b87` adds a materially steeper endpoint-tangent pair
+`{(0.8, 0.6), (0.6, -0.8)}` to the existing Trim Two action matrix. This is
+profile 23: the typed parabola is rotated by `0.371234567890123`, translated
+to `(1e6, -2e6)`, and tested at both signed offset directions. Circle cutter
+radii `0.05`, `0.1`, and `0.25` exercise the new layout's contact conditioning;
+the direct exact-root oracle also checks the tangent-circle boundary. Each
+row continues through worker-backed source replacement, Trim Two preview and
+atomic commit, undo/redo, and the five DXF/DWG reopen lanes.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 57,826 assertions / 1 case.
+- `git diff --check`: passed.
+
+This adds one asymmetric tangent layout at the recorded frame, scale, and
+cutter radii only; arbitrary tangent pairs and broader scale/frame covariance
+remain open.
+
+## 1676. Retry the ODA Audit from the Active Aqua Bootstrap (2026-11-16)
+
+The user confirmed that ODAFileConverter was open in the macOS desktop session.
+The independent audit was retried against the preserved 84-fixture directory
+using both the executable directly and `launchctl asuser 502`. Both attempts
+still abort before file processing with pasteboard `-4960` and
+`hiservices-xpcservice` connection errors. `open -a` still returns
+`kLSNoExecutableErr`; the unique output directory remains empty. Therefore no
+DWG was independently accepted or rejected, and LibreDWG evidence must not be
+promoted to ODA acceptance. Keep the external-CAD gate open until the converter
+can be run in a genuinely attached interactive context or another working
+independent reader is available.
+
