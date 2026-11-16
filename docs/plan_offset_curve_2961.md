@@ -54484,3 +54484,23 @@ This adds process-level generation and cache admission for the six recorded
 rows, not GUI replacement, Trim, persistence, all-knot subprocess coverage,
 other periodic weights/layouts, or external CAD acceptance.
 
+## 1637. Verify the Periodic Knot Point in Helper Output (2026-11-16)
+
+Test commit `ea25b8f74` strengthens section 1636's subprocess rows by deriving
+the expected offset point from the source's one-sided knot jet and requiring
+the generated ordinary branch to retain an endpoint within the configured
+relative geometric tolerance. This checks event-to-output mapping across the
+process boundary in addition to successful generation and subsequent cache
+admission. The independent high-precision root and all-knot mapping evidence
+remains in the kernel matrix; this helper-side check covers the six
+representative rows only.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused built-helper test: 951 assertions / 1 case.
+- Full built-helper process suite: 3,645 assertions / 7 cases.
+- `git diff --check`: passed.
+
+This does not close all-knot subprocess coverage, GUI replacement, Trim,
+persistence, additional periodic profiles, or external CAD acceptance.
+
