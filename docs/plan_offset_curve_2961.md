@@ -54223,3 +54223,24 @@ a finite profile set; nonuniform and repeated knots, higher degrees, periodic
 root ownership, and complete mapping of all tangent/collapse events remain
 open.
 
+## 1624. Map a Non-binary Rational Tangency Across Inserted Knots (2026-11-16)
+
+Test commit `671164a26` adds the stored-double middle weight `0.3` to the
+knot-inserted rational-quadratic tangent matrix. The fixture inserts knots at
+parameters `0.25` and `0.5`, first checks the resulting rational spline against
+the original at independent sample parameters, then verifies the tangent
+factor from both sides of the interior knot using the high-precision oracle.
+Both inserted layouts complete production isolation and map the tangent event
+to retained output within requested geometry tolerance. No production behavior
+changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused knot-insertion tangent matrix: 280 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,565 assertions / 119 cases.
+- `git diff --check`: passed.
+
+This adds one non-binary weight to the existing insertion layouts; it does not
+qualify arbitrary knot vectors, repeated knots, higher-degree splines, or
+periodic tangent ownership. Those remain separate open matrix dimensions.
+
