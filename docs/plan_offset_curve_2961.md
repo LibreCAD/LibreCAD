@@ -53697,3 +53697,27 @@ interval is `(1.103125e-9, 1.1046875e-9)`; other origins/scales,
 constructions, cutters, visible-app use, and independent ODA/AutoCAD
 acceptance remain open.
 
+## 1611. Probe the High-origin Tangent Boundary at 1.10390625e-9 (2026-11-16)
+
+The direct endpoint-tangent oracle now includes slope `1.10390625e-9` among
+the high-origin invalid construction probes. At rotation `0.41` and origin
+`(1e9,-2e9)`, it is invalid along with the previously sampled
+`1.103125e-9`, `1.1e-9`, `1.0625e-9`, and `1e-9` values; the `1.1046875e-9`
+profile remains valid and fully qualified by section 1610. This narrows the
+sampled interval only and makes no continuous-boundary claim.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+git diff --check
+```
+
+Result: 1,461 assertions / 1 case pass, including both signed direct offsets
+for every admitted profile and invalid-source checks for the sampled lower
+slopes. The unresolved interval is `(1.10390625e-9, 1.1046875e-9]`; other
+origins, scales, constructions, and external CAD acceptance remain open.
+
