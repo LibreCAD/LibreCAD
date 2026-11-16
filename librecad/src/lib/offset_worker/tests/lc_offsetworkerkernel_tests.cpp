@@ -8926,6 +8926,9 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
         {{{0.2, 0.9797958971132712}, {0.9, -0.4358898943540673}}}},
        {"extreme-tangent-magnitude-ratio",
         {{{8e-151, 6e-151}, {6e149, -8e149}}}}}};
+  std::size_t admittedCaches = 0;
+  std::size_t refusedCaches = 0;
+  std::size_t uncombinedOutputs = 0;
   const auto nearestSplineDistance = [](const RS_Spline &spline,
                                         const RS_Vector &point) {
     double first = 0.0;
@@ -9013,6 +9016,26 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
                     result::OrdinaryStatus::Complete);
             REQUIRE_FALSE(generated.ordinary.empty());
 
+            RS_SplineData cache;
+            if (LC_OffsetWorkerSourceCache::combine(generated.ordinary,
+                                                    cache)) {
+              const auto validationReply = LC_OffsetWorkerKernel::run(
+                  {token,
+                   req::ValidateSourceCache{cache, signedDefinition, {}}});
+              const auto &validated = native(validationReply, 8);
+              if (validated.refusal == LC_OffsetCurveRefusal::None) {
+                CHECK(validated.changed);
+                ++admittedCaches;
+              } else {
+                CHECK(validated.refusal ==
+                      LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+                ++refusedCaches;
+              }
+            } else {
+              ++uncombinedOutputs;
+            }
+
             std::vector<std::unique_ptr<RS_Spline>> output;
             for (const auto &ordinary : generated.ordinary) {
               const auto *data = std::get_if<RS_SplineData>(&ordinary);
@@ -9060,6 +9083,10 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
       }
     }
   }
+  CAPTURE(admittedCaches, refusedCaches, uncombinedOutputs);
+  CHECK(admittedCaches + refusedCaches + uncombinedOutputs ==
+        tangentLayouts.size() * frames.size() * 2 * 3 * 2);
+  CHECK(uncombinedOutputs == 0);
 }
 
 TEST_CASE(
