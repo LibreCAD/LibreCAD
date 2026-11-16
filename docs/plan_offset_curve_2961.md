@@ -245,6 +245,12 @@ Line-cutter checks cover both tangent pairs and both traversals at source scales
 Section 1656 also checks fail-closed tangent-circle contact for the
 opposite-bend traversal pair; section 1657 completes the matching
 three-scale line-cutter matrix for the first tangent pair.
+Sections 1675-1681 add a steeper tangent pair with circle and line Trim Two
+coverage, three-scale action/persistence coverage, worker-cache round trips,
+and independent endpoint/interior-normal oracles for three tangent layouts.
+The interior oracle uses relative tolerance `1e-4` against the recorded
+order-of-ten local span; these samples remain bounded, not a claim of arbitrary
+tangent-pair completeness.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
