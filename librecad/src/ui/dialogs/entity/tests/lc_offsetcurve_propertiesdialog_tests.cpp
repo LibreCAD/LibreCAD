@@ -882,6 +882,101 @@ TEST_CASE("Large source chooser scans incrementally and discards superseded fami
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
 }
 
+TEST_CASE("Large source chooser filters every supported family incrementally",
+          "[gui][dialog][offsetcurve][source][incremental][family-matrix]") {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    const auto geometryFor = [](const Kind kind) {
+        switch (kind) {
+        case Kind::Line: return LC_OffsetSourceGeometry{RS_LineData{{-4, 0}, {4, 0}}};
+        case Kind::Arc: return LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 4, .2, 1.4, false}};
+        case Kind::Circle: return LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 4}};
+        case Kind::Ellipse: return LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .7, 0, 0, false}};
+        case Kind::Spline: {
+            RS_SplineData data{2, false};
+            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            data.knotslist = {0, 0, 0, 1, 1, 1};
+            data.weights = {1, 1, 1};
+            return LC_OffsetSourceGeometry{data};
+        }
+        case Kind::SplinePoints: {
+            LC_SplinePointsData data{false, false};
+            data.useControlPoints = true;
+            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            return LC_OffsetSourceGeometry{data};
+        }
+        case Kind::Parabola:
+            return LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}}};
+        case Kind::BoundedHyperbola:
+            return LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .5, -.4, .4}};
+        case Kind::Polyline:
+            return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{-4, 0}, {4, 0}, false,
+                {RS_LineData{{-4, 0}, {0, 2}}, RS_LineData{{0, 2}, {4, 0}}}}};
+        case Kind::Invalid: break;
+        }
+        return LC_OffsetSourceGeometry{RS_LineData{}};
+    };
+
+    Fixture f;
+    f.graphic.setAutoUpdateBorders(false);
+    std::vector<std::pair<qulonglong, Kind>> expectedCandidates;
+    for (int i = 0; i < 300; ++i) {
+        auto* line = new RS_Line(nullptr, RS_LineData{{double(i), 40}, {double(i + 1), 40}});
+        f.graphic.addEntity(line);
+        expectedCandidates.emplace_back(static_cast<qulonglong>(line->getId()), Kind::Line);
+    }
+    for (const Kind kind : LC_OffsetSourceGeometry::SupportedKinds) {
+        if (kind == Kind::Line) continue;
+        auto geometry = geometryFor(kind);
+        REQUIRE(geometry.isWellFormed());
+        auto entity = geometry.makeEntity();
+        REQUIRE(entity);
+        auto* raw = entity.get();
+        f.graphic.addEntity(raw);
+        expectedCandidates.emplace_back(static_cast<qulonglong>(raw->getId()), kind);
+        entity.release();
+    }
+    f.graphic.setAutoUpdateBorders(true);
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+    const Snapshot before(*clone);
+
+    for (const Kind kind : LC_OffsetSourceGeometry::SupportedKinds) {
+        CAPTURE(static_cast<int>(kind));
+        const int typeIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(typeIndex >= 0);
+        typeBox->setCurrentIndex(typeIndex);
+        CHECK(typeBox->isEnabled());
+        CHECK_FALSE(widget.isPreparing());
+        CHECK_FALSE(sourceBox->isEnabled());
+        CHECK(sourceBox->currentText().contains("Scanning"));
+        REQUIRE(pollEventsUntil([&] { return sourceBox->isEnabled(); }));
+        CHECK(typeBox->isEnabled());
+        CHECK(typeBox->currentData().toInt() == static_cast<int>(kind));
+
+        std::vector<qulonglong> visibleIds;
+        for (int row = 0; row < sourceBox->count(); ++row) {
+            bool hasId = false;
+            const qulonglong id = sourceBox->itemData(row).toULongLong(&hasId);
+            if (hasId) visibleIds.push_back(id);
+        }
+        std::vector<qulonglong> expectedIds;
+        for (const auto& [id, candidateKind] : expectedCandidates)
+            if (candidateKind == kind) expectedIds.push_back(id);
+        REQUIRE_FALSE(expectedIds.empty());
+        CHECK(visibleIds == expectedIds);
+    }
+    before.geometry(*clone);
+}
+
 TEST_CASE("Source matching maximum encodable single-entity benchmark",
           "[gui][dialog][offsetcurve][source][offset-picker-entity-bound][.slow]") {
     constexpr std::size_t controlCap = LC_OffsetWorkerRequest::Values::MaximumSourceControlPoints;

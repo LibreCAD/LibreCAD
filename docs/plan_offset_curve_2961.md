@@ -46617,6 +46617,49 @@ cache/Trim integration, other mixed-bulge persistence profiles, broader
 topology and frame matrices, visible GUI, cross-platform runtime, and
 independent CAD acceptance remain open.
 
+## 1593. Exercise Every Source Type in the Incremental Picker (2026-11-16)
+
+The source-type widget must remain editable while replacement candidates are
+being gathered, and changing its value must refresh the candidate list for the
+new type without modifying the offset entity until a candidate is explicitly
+chosen. This applies to every entry in `LC_OffsetSourceGeometry::SupportedKinds`,
+not only line/parabola switching. The supported set is line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline;
+parabola is a distinct source kind.
+
+Test `Large source chooser filters every supported family incrementally`
+creates a large document that forces asynchronous scanning, then visits each
+supported kind in turn. For every kind it verifies the type selector remains
+enabled, the candidate selector reports scanning until results are ready, the
+completed list contains exactly the entities of the requested kind, and the
+edited offset geometry is unchanged by filtering alone. Existing synchronous
+all-kind replacement tests cover selecting a candidate and highlighting the
+current source; this regression covers the incremental path.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Large source chooser filters every supported family incrementally' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+git diff --check
+```
+
+Result: the focused asynchronous all-kind regression passes 208 assertions / 1
+case; the complete source-picker selection passes 15,498 assertions / 45
+cases. The implementation and prior synchronous matrix already expose all nine
+supported kinds, including parabola. No additional type-specific selector
+implementation is indicated. The manual packaged-app workflow remains open:
+change source type repeatedly while replacing a source, confirm candidate
+refresh and current-source highlighting, choose a new candidate, then verify
+cancellation/refusal preserves the previous source. Independent CAD acceptance
+and concrete family-variant qualification remain separate gates.
+
 ## 1380. Preserve Exact Polyline Primitives Through Local Frames (2026-11-14)
 
 The local rigid-frame adapter now preserves the exact-polyline capabilities
