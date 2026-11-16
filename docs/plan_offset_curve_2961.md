@@ -45,12 +45,12 @@ inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
 atomically. At current PR test head
-`0ff9c6e8f`, `[gui][dialog][offsetcurve][source]` passes 15,498 assertions /
+`ef28377f4`, `[gui][dialog][offsetcurve][source]` passes 15,498 assertions /
 45 cases in CMake Release; this includes explicit enabled-state checks during
 an active scan and a large-document async filtering matrix for every supported
 kind. Product code remains at
 `b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent commits only update the
-roadmap and this test. This is headless UI evidence and does not close the
+roadmap and tests. This is headless UI evidence and does not close the
 visible packaged-app gate.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
@@ -261,7 +261,7 @@ spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
 coverage satisfy the implementation portion; the current focused headless
 source-picker suite passes 15,498 assertions / 45 cases at PR test head
-`0ff9c6e8f`. Successful replacement/highlight transfer across all nine kinds
+`ef28377f4`. Successful replacement/highlight transfer across all nine kinds
 was added in implementation commit `2a4b111ca`; the current test-only follow-up
 extends asynchronous filtering coverage across all nine. Do
 not add another selector or duplicate the parabola-specific UI work. Keep
@@ -53110,4 +53110,38 @@ type repeatedly while replacing a source, confirm candidate refresh and
 current-source highlighting, choose a new candidate, then verify
 cancellation/refusal preserves the previous source. Independent CAD
 acceptance and concrete family-variant qualification remain separate gates.
+
+## 1594. Qualify Focus-and-vertex Parabola Creation (2026-11-16)
+
+The focus-and-vertex drawing action is a distinct user construction route
+that materializes the same typed parabola representation used by the offset
+source model. Its point-pick path had no action-level regression. The new test
+drives focus, vertex, start, and end input through the actual action, then
+checks the committed entity's focus and vertex and verifies sampled points by
+the independent parabola definition: distance to focus equals distance to the
+derived directrix. It also requires source capture to preserve the distinct
+`Parabola` kind.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Focus-vertex parabola action creates an exact typed source' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[actions][draw][parabola]' --reporter compact
+git diff --check
+```
+
+Result: the focused action regression passes 19 assertions / 1 case; the
+parabola drawing-action selection passes 27 assertions / 2 cases. Test commit
+`ef28377f4` qualifies the focus-and-vertex action's generated source
+representation only. The separate focus-plus-directrix-line action route and
+additional frames are not covered by this test. Worker/cache, Trim, and DXF/DWG
+behavior are governed by the existing typed-parabola matrices, not inferred
+from this creation-action test. The source-picker, visible-app, and independent
+CAD gates remain tracked separately.
 
