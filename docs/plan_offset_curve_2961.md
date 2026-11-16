@@ -26,11 +26,11 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`287ddc188`):** Rotated and reversed parabola pattern clipping now orders
+`2faecfeb8`):** Rotated and reversed parabola pattern clipping now orders
 intersections in the directed local parameter and extracts exact Bezier
-subcurves. Parabola/line contacts are solved in the parabola's local frame for
-high-origin stability. Regressions and broad hatch validation are recorded in
-sections 1559-1560. The source-type selector contract is implemented for all nine
+subcurves. Parabola intersections with cloned atomic boundaries are solved in
+the parabola's local frame for high-origin stability. Regressions and broad
+hatch validation are recorded in sections 1559-1561. The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -51895,15 +51895,19 @@ family-by-variant matrix in Slice 4.
 ## 1560. Stabilize Rotated Parabola Clipping at Large Origins (2026-11-15)
 
 Commit `287ddc188` extends section 1559's rotated parabola clipping regression
-to translation `(1e9, -2e9)`. The regression first exposed that the generic
-world-space parabola/line conic intersection returned contacts over one unit
-from the true boundary at this origin, corrupting the retained subcurve.
-`trimPatternEntities` now detects parabola-versus-line pairs, transforms the
-parabola controls and line endpoints into a vertex-centered frame aligned to
-the parabola axis, solves the bounded intersections there, and maps contacts
-back to world coordinates. Other entity/boundary pairs retain the existing
-intersection path; this does not claim large-origin stability for other
-parabola boundary types or general conic intersection code.
+to translation `(1e9, -2e9)`. It first exposed that generic world-space
+parabola/line intersection could return contacts over one unit from the true
+boundary at this origin, corrupting the retained subcurve. Commit
+`2faecfeb8` generalizes the remedy: for parabola clipping, each atomic
+boundary is cloned and transformed with the parabola controls into a
+vertex-centered frame aligned to the parabola axis; bounded intersections are
+solved there and mapped back to world coordinates. Non-parabola clipping
+continues through the existing path. Section 1561 strengthens the high-origin
+circle case to require both retained endpoints lie on the actual circle;
+without local-frame solving, the generic world-space solver placed them 0.2
+inside it. This does not establish stability for every possible boundary
+entity implementation or general conic intersection outside this clipping
+path.
 
 Validation on macOS arm64:
 
@@ -51919,11 +51923,31 @@ cd /private/tmp/offset3193-qmake6-fresh && make -j6
 git diff --check
 ```
 
-Results: focused clipping passes 22 assertions / 2 cases, including rotated
-and reversed near-vertical geometry; `[lc-hatchfix]` passes 89,646 assertions
-across 168 cases, with one skipped. The recursive qmake6 application, worker,
-and plugin build exits 0; existing optional shell-profile and compiler/linker
-warnings remain. This closes only the tested rotated/high-origin
-parabola-versus-line pattern-clipping profile, not the broader geometry,
-worker/cache, Trim, persistence, visible-GUI, or independent-CAD matrix.
+Results at the line-specialized implementation: focused clipping passes 22
+assertions / 2 cases, including rotated and reversed near-vertical geometry;
+`[lc-hatchfix]` passes 89,646 assertions across 168 cases, with one skipped.
+The recursive qmake6 application, worker, and plugin build exits 0; existing
+optional shell-profile and compiler/linker warnings remain. Section 1561
+extends boundary coverage to circles and supersedes the line-only scope here;
+the broader geometry, worker/cache, Trim, persistence, visible-GUI, and
+independent-CAD matrix remains open.
+
+## 1561. Verify High-origin Parabola Clipping Against a Circle (2026-11-15)
+
+Test commit `d3ae00450` adds a rotated parabola at `(1e9, -2e9)` clipped by a
+circle of radius `1.8`. The regression checks one retained typed parabola,
+sampled source-curve equality, interior samples within the circle, and both
+endpoints on the circle within `2e-6`. Tightening the endpoint assertion
+exposed that world-space conic intersection had produced contacts `0.2`
+inside the circle. Commit `2faecfeb8` fixes that by doing the intersection in
+the common local frame for cloned atomic boundaries, not only for lines.
+
+Validation on macOS arm64: the focused `[lc-hatchfix][pattern][parabola]
+[trim]` selection passes 38 assertions / 3 cases; the full `[lc-hatchfix]`
+selection passes 89,662 assertions across 169 passing cases with one skipped.
+The recursive qmake6 application, worker, and plugin build exits 0. Its
+existing optional `/private/tmp/libdxfrw-cargo/env` shell-profile warning and
+compiler/linker warnings remain. This verifies line and circle boundary
+profiles for tested rotations/origins, not every atomic boundary geometry or
+the full Slice 4 family/variant matrix.
 
