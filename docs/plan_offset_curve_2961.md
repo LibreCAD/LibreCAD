@@ -52584,3 +52584,53 @@ these origins/ratios. Asymmetric intervals and other interval shapes remain
 unqualified, as do broader cache-refused profiles, visible packaged-app
 acceptance, and independent ODA/AutoCAD acceptance.
 
+## 1580. Qualify Asymmetric Hyperbola Cusp Intervals (2026-11-16)
+
+The direct exact-normal oracle and worker/kernel matrix now include four
+parameter domains: `[-0.4, 0.8]`, `[-0.8, 0.4]`, `[0, 0.8]`, and `[-0.8, 0]`,
+each in forward and reversed order. Both straddling and cusp-endpoint domains
+are exercised over the five recorded ratios, both branches, both offset sides
+or signs, cusp-distance fractions, and origins through `(1e12,-2e12)`. The
+worker-client persistence case adds 48 selected profiles at `(23,-17)` and
+`(1e12,-2e12)` (with the two straddling interval shapes at the latter), ratio
+`0.2`, both branches, interval directions, and offset signs. At `1e12`, the
+semi-major axis is `2e4` and the explicit tolerance is `0.05`.
+
+Each persistence profile must be admitted as a typed source, is exported
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, reopened and saved again,
+then reopened a second time with source kind, bounds, branch, signed distance,
+and cache fingerprint checked. When `dwgread` is available, its minJSON output
+must also expose a SPLINE with both editable-offset EED markers in each DWG.
+This is selected-profile persistence, not the full direct/kernel Cartesian
+matrix through every file lane.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_kernel_tests \
+           librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][asymmetric]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp][asymmetric]' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][asymmetric][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+Results: the direct exact-normal oracle passes 1,220,472 assertions / 1 case;
+the worker/cache matrix passes 44,162 assertions / 1 case; the 48-profile
+five-lane persistence and LibreDWG check passes 25,466 assertions / 1 case.
+The known DWG raw-object fixed-handle diagnostics are unrelated to the
+offset-entity checks. Asymmetric domains outside these four, additional
+high-origin file profiles, visible packaged-app acceptance, and independent
+ODA/AutoCAD acceptance remain open.
+
