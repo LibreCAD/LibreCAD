@@ -52845,19 +52845,20 @@ Validation on macOS arm64 CMake Release:
 
 ```sh
 cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
-QT_QPA_PLATFORM=offscreen \
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   'T Trim Two commits certified exact- and post-cusp hyperbola caches atomically' \
   --reporter compact
-QT_QPA_PLATFORM=offscreen \
+DWGREAD=/opt/homebrew/bin/dwgread QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   '[gui][lc-offsetcurve][trim-action][typed-source][hyperbola]' \
   --reporter compact
 git diff --check
 ```
 
-The focused action case passes 1,505 assertions / 1 case; the complete
-typed-hyperbola Trim-action selection passes 15,256 assertions / 3 cases. The
+With `DWGREAD=/opt/homebrew/bin/dwgread`, the focused action case passes
+1,527 assertions / 1 case; the complete typed-hyperbola Trim-action selection
+passes 15,311 assertions / 3 cases. The
 direct Trim suite remains 59,719 assertions / 45 cases (section 1584). These
 profiles close the exact-cusp Trim action row at ordinary origin and the
 recorded `(1e8,-1e8)`, `(1e9,-1e9)`, and `(2e9,-2e9)` translated frames.
@@ -52865,4 +52866,19 @@ The last frame is a viewport integer-offset boundary, not general support for
 larger coordinates or every screen scale. Other hyperbola domains and
 distances, visible Properties acceptance, and independent ODA/AutoCAD
 acceptance remain open.
+
+## 1586. Probe Independent ODA Validation Availability (2026-11-16)
+
+The machine has ODA File Converter 27.1.0.0 at
+`/Applications/ODAFileConverter.app` ([official ODA tool page](https://www.opendesign.com/guestfiles/oda_file_converter)). Its documented batch interface accepts
+source directory, destination directory, input filter, output version/type,
+recursive flag, and audit flag. An audited ACAD2018 DXF conversion was attempted
+on the existing offset DWG output corpus using that argument order. Direct
+launch and `launchctl asuser 502` both abort with exit status 134 after
+`PasteBoard`/`com.apple.hiservices-xpcservice` connection errors and produce no
+output files; LaunchServices `open -a` fails with `kLSNoExecutableErr`. No ODA
+read/convert result is claimed. The independent ODA acceptance gate remains
+open until the converter can run in a functioning desktop session. LibreDWG
+validation of the exact-cusp hyperbola Trim-action matrix is recorded in
+section 1585 and is not a substitute for ODA/AutoCAD.
 
