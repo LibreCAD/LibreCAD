@@ -1138,14 +1138,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against circ
     }
 }
 
-TEST_CASE("T Trim Two commits a certified post-cusp hyperbola cache atomically",
-          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][post-cusp]") {
+TEST_CASE("T Trim Two commits certified exact- and post-cusp hyperbola caches atomically",
+          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][cusp][trim-two]") {
     Drawing<true> f;
     auto* previous = addNative(f.graphic);
+    const double ratio = GENERATE(0.4, std::sqrt(1.0 / 3.5));
     auto* hyperbola = new LC_Hyperbola(&f.graphic,
         LC_HyperbolaData{{-2, 6}, {3.5 * std::cos(-.58), 3.5 * std::sin(-.58)},
-                         .4, -1.1, .9, false});
+                         ratio, -1.1, .9, false});
     f.graphic.addEntity(hyperbola);
+    CAPTURE(ratio, 3.5 * ratio * ratio);
     f.graphic.select(QList<RS_Entity*>{previous}, true);
     UpdateSourceProbe update(&f.context);
     update.init(0);
