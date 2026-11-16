@@ -250,7 +250,9 @@ coverage, three-scale action/persistence coverage, worker-cache round trips,
 and independent endpoint/interior-normal oracles for three tangent layouts.
 The interior oracle uses relative tolerance `1e-4` against the recorded
 order-of-ten local span; these samples remain bounded, not a claim of arbitrary
-tangent-pair completeness.
+tangent-pair completeness. Section 1682 adds mirrored and unequal layouts to
+circle/line Trim Two with full action and persistence checks; scale variance
+for those two remains source-oracle-only.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55535,4 +55537,25 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 These are three concrete tangent layouts, not a proof for arbitrary tangent
 angles, parameterization, intersection/contact boundaries, or external CAD
 readers.
+
+## 1682. Exercise Mirrored and Unequal Tangents through Trim Two (2026-11-16)
+
+Test commit `2e071c18b` extends the endpoint-tangent Trim Two matrix with the
+mirrored and unequal steep pairs from section 1681. Each pair runs with a
+circle cutter and a line cutter at the transformed unit-scale frame, with both
+operand-pick orders for line cutters. The existing circle/contact oracle,
+worker-backed preparation, preview/commit, undo/redo, and five DXF/DWG
+save/reopen lanes remain active. The expected atomic output count is now
+derived from the exact direct native/conic fragments rather than assuming
+every valid layout yields exactly two entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 80,184 assertions / 1 case.
+- CMake `librecad_offset_trim_tests` target build: passed.
+- `git diff --check`: passed.
+
+The two added tangent pairs are each tested at one scale/frame in the action
+matrix; the source-only analytic oracle covers their scale rows. Other cutter
+placements, source scales, and external CAD acceptance remain separate gates.
 
