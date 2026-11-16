@@ -53863,3 +53863,26 @@ interval is now valid at `1.1044677734375e-9` and invalid at
 scales, parabola constructions, cutter matrices, visible-app use, and
 independent ODA/AutoCAD acceptance remain open.
 
+## 1616. Probe the High-origin Tangent Boundary at 1.10445556640625e-9 (2026-11-16)
+
+The direct construction oracle adds `1.10445556640625e-9`, the midpoint
+between section 1615's valid `1.1044677734375e-9` profile and section 1614's
+invalid `1.104443359375e-9` probe. Construction rejects the midpoint at the
+recorded rotated `(1e9,-2e9)` frame. This narrows sampled construction
+representability only; it is not a continuous threshold or offset-engine
+boundary.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+git diff --check
+```
+
+Result: 7,654 assertions / 1 case pass. The sampled bracket is now
+`(1.10445556640625e-9, 1.1044677734375e-9]`; other origins, scales,
+constructions, and external CAD acceptance remain open.
+
