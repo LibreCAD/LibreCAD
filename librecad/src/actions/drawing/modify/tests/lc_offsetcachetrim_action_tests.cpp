@@ -2648,6 +2648,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const bool reversedTangentTraversal = profile == 4 || profile == 6;
     const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
                                     profile == 5;
+    const bool oppositeBend = profile == 5 || profile == 6;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3) : 1.0;
@@ -2749,7 +2750,9 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(tangent.magnitude() > RS_TOLERANCE);
     tangent /= tangent.magnitude();
     const RS_Vector normal{-tangent.y, tangent.x};
-    const double radius = .1 * profileScale;
+    const double radius = oppositeBend
+        ? GENERATE(.05, .1, .25)
+        : .1 * profileScale;
     const RS_Vector circleCenter = intersection + tangent * radius;
     RS_Entity* cutter = nullptr;
     RS_Vector cutterPick;
