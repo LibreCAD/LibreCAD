@@ -261,10 +261,11 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1651 add two asymmetric
+and fail-closed limits. Sections 1642-1652 add two asymmetric
 endpoint-tangent parabolas and both traversals through an independent
 exact-normal oracle, Trim Two, source scales `1e-3/1/1e3`, and all five internal
-file lanes; the opposite-bend pair also varies three scaled cutter radii.
+file lanes; the opposite-bend pair varies three scaled circle-cutter radii and
+also passes Trim Two with line cutters in both traversals.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -54803,4 +54804,24 @@ The evidence closes these two bounded constructions over the recorded scale,
 origin, traversal, and cutter-radius combinations. Other tangent geometries,
 source scales/origins outside the matrix, other cutter types/placements,
 visible-app interaction, and independent ODA/AutoCAD acceptance remain open.
+
+## 1652. Trim Both Opposite-bend Traversals with Line Cutters (2026-11-16)
+
+Test commit `84a2ecee4` adds straight-line cutter cases for both forward and
+reversed traversals of the opposite-bend asymmetric endpoint-tangent
+parabola. Each line crosses the selected offset point along its local normal.
+Both rows pass direct cache-trim preparation, worker-backed Trim Two preview
+and commit, undo/redo, and all five DXF/DWG save/reopen geometry comparisons;
+LibreDWG inspects both DWGs when available. This complements section 1648's
+circle-cutter radius matrix without claiming coverage for other cutter types
+or placements.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Endpoint-tangent Trim Two matrix: 23,925 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+Other cutter geometries and placements, tangency/refusal boundaries, source
+scales beyond the recorded set, visible-app interaction, and independent
+ODA/AutoCAD acceptance remain open.
 
