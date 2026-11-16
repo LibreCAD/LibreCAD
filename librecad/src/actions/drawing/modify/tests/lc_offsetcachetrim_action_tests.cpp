@@ -2882,6 +2882,66 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         CHECK(native->isDeleted());
         CHECK(circle->isDeleted());
         for (const auto* fragment : circleFragments) CHECK_FALSE(fragment->isDeleted());
+
+        QTemporaryDir circleDirectory;
+        REQUIRE(circleDirectory.isValid());
+        const std::array<RS2::FormatType, 5> circleFormats{{RS2::FormatDXFRW14,
+            RS2::FormatDXFRW2000, RS2::FormatDWG, RS2::FormatDXFRW2018,
+            RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+        QString circleLibreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (circleLibreDwgReader.isEmpty())
+            circleLibreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+        for (std::size_t lane = 0; lane < circleFormats.size(); ++lane) {
+            const auto format = circleFormats[lane];
+            const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+#ifndef DWGSUPPORT
+            if (dwg) continue;
+#endif
+            const auto file = std::filesystem::path(circleDirectory.filePath(
+                QStringLiteral("high-origin-circle-trim-%1").arg(lane) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+#ifdef DWGSUPPORT
+            if (dwg && !circleLibreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(circleLibreDwgReader,
+                    {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document =
+                    QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+                const QByteArray json = document.toJson(QJsonDocument::Compact);
+                for (const RS_Entity* expected : circleFragments) {
+                    const char* dwgType = expected->rtti() == RS2::EntitySpline ? "SPLINE" :
+                        expected->rtti() == RS2::EntityLine ? "LINE" :
+                        expected->rtti() == RS2::EntityArc ? "ARC" :
+                        expected->rtti() == RS2::EntityEllipse ? "ELLIPSE" : nullptr;
+                    REQUIRE(dwgType);
+                    const QByteArray marker = QByteArrayLiteral("\"") + QByteArray{dwgType} +
+                                              QByteArrayLiteral("\"");
+                    CHECK(json.contains(marker));
+                }
+            }
+#endif
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, format));
+            std::vector<const RS_Entity*> reopenedGeometry;
+            for (const RS_Entity* entity : live(reopened)) {
+                CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+                if (std::any_of(circleFragments.begin(), circleFragments.end(),
+                    [entity](const RS_Entity* expected) { return expected->rtti() == entity->rtti(); }))
+                    reopenedGeometry.push_back(entity);
+            }
+            CAPTURE(format, lane);
+            CHECK(sameTrimGeometrySet(circleFragments, reopenedGeometry));
+        }
+
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(circle->isDeleted());
