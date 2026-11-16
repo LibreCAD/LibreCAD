@@ -5920,6 +5920,30 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                                                1.0, frameTranslation));
     profiles.push_back(steepAsymmetricProfile("steep-asymmetric-large-scale",
                                                1e3, highOrigin));
+    const auto reversedSteepProfile = [&](const char* name, const double scale,
+                                          const RS_Vector& origin,
+                                          const RS_Vector& firstTangent,
+                                          const RS_Vector& secondTangent) {
+        return Profile{name, LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({10.0 * scale, 0.0}) + origin,
+              rotate({0.0, 0.0}) + origin}},
+            {{rotate(secondTangent) * -1.0, rotate(firstTangent) * -1.0}}), scale};
+    };
+    for (const auto& [name, scale, origin] : std::array{
+             std::tuple{"steep-asymmetric-mirror-reversed-small", 1e-3, RS_Vector{1e3, -2e3}},
+             std::tuple{"steep-asymmetric-mirror-reversed-unit", 1.0, frameTranslation},
+             std::tuple{"steep-asymmetric-mirror-reversed-large", 1e3, highOrigin}}) {
+        profiles.push_back(reversedSteepProfile(
+            name, scale, origin, {0.8, -0.6}, {0.6, 0.8}));
+    }
+    for (const auto& [name, scale, origin] : std::array{
+             std::tuple{"steep-asymmetric-unequal-reversed-small", 1e-3, RS_Vector{1e3, -2e3}},
+             std::tuple{"steep-asymmetric-unequal-reversed-unit", 1.0, frameTranslation},
+             std::tuple{"steep-asymmetric-unequal-reversed-large", 1e3, highOrigin}}) {
+        profiles.push_back(reversedSteepProfile(
+            name, scale, origin, {0.2, 0.9797958971132712},
+            {0.9, -0.4358898943540673}));
+    }
     profiles.push_back({"mirrored-tangents",
         LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + frameTranslation,
@@ -5989,7 +6013,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                 const std::array<RS_Vector, 2> endpoints{
                     source.m_controlPoints.front(), source.m_controlPoints.back()};
                 const std::array<RS_Vector, 2> tangents{
-                    rotate({0.8, 0.6}), rotate({0.6, -0.8})};
+                    source.m_controlPoints[1] - source.m_controlPoints[0],
+                    source.m_controlPoints[2] - source.m_controlPoints[1]};
                 std::array<RS_Vector, 2> expectedOffsetEndpoints;
                 for (std::size_t i = 0; i < endpoints.size(); ++i) {
                     const RS_Vector unitTangent = tangents[i].normalized();
