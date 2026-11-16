@@ -2642,14 +2642,15 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
     const bool reversedTangentTraversal = profile == 4 || profile == 6 ||
-                                          profile == 8 || profile == 10;
+                                          profile == 8 || profile == 10 || profile == 12;
     const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
-                                    (profile >= 5 && profile <= 10);
-    const bool oppositeBend = profile >= 5 && profile <= 10;
+                                    (profile >= 5 && profile <= 12);
+    const bool oppositeBend = profile >= 5 && profile <= 12;
+    const bool lineCutter = profile == 11 || profile == 12;
     const bool asymmetricSmallScale = profile == 7 || profile == 8;
     const bool asymmetricLargeScale = profile == 9 || profile == 10;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
@@ -2761,13 +2762,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(tangent.magnitude() > RS_TOLERANCE);
     tangent /= tangent.magnitude();
     const RS_Vector normal{-tangent.y, tangent.x};
-    const double radius = oppositeBend
+    const double radius = oppositeBend && !lineCutter
         ? GENERATE(.05, .1, .25) * profileScale
         : .1 * profileScale;
     const RS_Vector circleCenter = intersection + tangent * radius;
     RS_Entity* cutter = nullptr;
     RS_Vector cutterPick;
-    if (scaleExtreme) {
+    if (scaleExtreme || lineCutter) {
         cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - normal * radius * 2.0,
                         intersection + normal * radius * 2.0});
@@ -3030,7 +3031,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     std::sort(committed.begin(), committed.end());
     std::sort(expected.begin(), expected.end());
     CHECK(committed == expected);
-    CHECK(committedLines.size() == (scaleExtreme ? 1u : 0u));
+    CHECK(committedLines.size() == ((scaleExtreme || lineCutter) ? 1u : 0u));
     CHECK_FALSE(fragments.empty());
 
     REQUIRE(f.graphic.undo());
