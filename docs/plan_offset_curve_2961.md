@@ -25,21 +25,24 @@ USA.
 
 Updated: 2026-11-16. Project: **LibreCAD**, not LibreCAD_3.
 
-**Current source-picker disposition (2026-11-16):** The Properties source
-filter covers all nine `LC_OffsetSourceGeometry::SupportedKinds` and now has an
-`All supported types` choice for cross-family replacement. Selecting any of
-the nine candidates synchronizes the filter to the selected entity's actual
-family before guarded worker preparation. The synchronous and incremental
-large-document paths are covered, including ellipse, spline, spline-points,
-parabola, bounded hyperbola, line, arc, circle, and polyline. Implementation is
-commit `1749fa062`; plan evidence is section 1658. This supersedes the older
+**Current source-picker disposition (2026-11-16):** While choosing a
+replacement in the Properties widget, the user can change the source-family
+filter repeatedly and then choose a candidate from that family, or select
+`All supported types` to browse across families. The filter covers all nine
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct type, not a spline-points alias. Selecting a candidate synchronizes
+the filter to its actual family before guarded worker preparation; changing
+the filter alone does not replace or mutate the committed source/cache. The
+synchronous and incremental large-document paths are covered. Implementation
+is commit `1749fa062`; plan evidence is section 1658. This supersedes the older
 source-picker product revision and menu-only characterization below. It does
 not qualify every concrete geometry variant: capture/reconstruction,
 worker/cache, Trim, and applicable DXF/DWG lanes remain tracked separately in
 the family-by-variant roadmap. Visible packaged-app acceptance of repeated
-type changes, candidate refresh, source indication, successful replacement,
-and cancellation/refusal remains open. The type selector is not a replacement
-for that gate or for external ODA/AutoCAD acceptance.
+type changes, candidate refresh, existing-source indication, successful
+replacement, and cancellation/refusal remains open. The type selector is not
+a replacement for that gate or for external ODA/AutoCAD acceptance.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
@@ -54996,4 +54999,25 @@ Validation on macOS arm64 CMake Release:
 Coverage remains specific to the tested cubic high-origin/large-scale profile.
 Non-cubic near-tangent cases, other distances/orientations, visible-app
 interaction, and independent ODA/AutoCAD acceptance remain open.
+
+## 1660. Reconcile the All-family Properties Source Picker Request (2026-11-16)
+
+The repeated request is to keep source-family choice available while selecting
+a replacement and to include every source kind supported by editable offsets.
+This is already implemented by the all-family filter in section 1658; it does
+not call for another selector, new geometry encoding, or a parabola-only UI
+path. The contract is explicit: the user may change the filter repeatedly
+before committing a candidate; `All supported types` exposes all nine modeled
+kinds; parabola remains distinct from spline-points; choosing a candidate
+updates the displayed family and enters asynchronous validation; and filter
+changes alone preserve the current source and cache.
+
+Current automated evidence remains section 1658's all-family selection,
+incremental large-list filtering, and typed-parabola workflow. Do not infer
+that the picker itself establishes end-to-end capture, reconstruction,
+worker/cache, trimming, or DXF/DWG persistence for every concrete geometry
+variant; those are separate Slice 4 gates. The remaining picker task is the
+visible packaged-app acceptance already tracked under Slice 5: change types
+repeatedly, verify candidate refresh and existing-source indication, replace
+successfully, and confirm cancellation/refusal leaves the prior source intact.
 
