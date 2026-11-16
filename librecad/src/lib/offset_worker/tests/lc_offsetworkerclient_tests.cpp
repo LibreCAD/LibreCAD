@@ -6270,12 +6270,8 @@ TEST_CASE("Every interior parabola sample permutation survives the worker "
     };
     for (std::size_t profileIndex = 0; profileIndex < controlProfiles.size();
          ++profileIndex) {
-      if (translationIndex == 1 && profileIndex != 2)
-        continue;
       const auto &controls = controlProfiles[profileIndex];
       for (const double scale : scales) {
-        if (translationIndex == 1 && scale != 1.0)
-          continue;
         CAPTURE(profileIndex, scale, angle, translation);
         const auto pointAt = [&](const double t) {
           const double mt = 1.0 - t;
@@ -6296,14 +6292,15 @@ TEST_CASE("Every interior parabola sample permutation survives the worker "
 
         for (std::size_t layoutIndex = 0; layoutIndex < layouts.size();
              ++layoutIndex) {
-          if (translationIndex == 1 && layoutIndex != 0)
-            continue;
           const auto &parameters = layouts[layoutIndex];
           CAPTURE(parameters);
           std::array<RS_Vector, 4> samples;
           std::transform(parameters.begin(), parameters.end(), samples.begin(),
                          pointAt);
           std::array<std::size_t, 4> order{{0, 1, 2, 3}};
+          const bool allPermutations =
+              translationIndex == 0 ||
+              (profileIndex == 2 && scale == 1.0 && layoutIndex == 0);
           do {
             CAPTURE(order);
             std::vector<RS_Vector> orderedSamples;
@@ -6344,7 +6341,17 @@ TEST_CASE("Every interior parabola sample permutation survives the worker "
               RS_SplineData cache;
               REQUIRE(
                   LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+              CAPTURE(result.refusal, result.ordinaryStatus, result.engineRuns);
               auto native = generated.nativeSource(attributes);
+              if (!native) {
+                CHECK(translationIndex == 1);
+                CHECK(result.refusal ==
+                      LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+                CHECK(result.engineRuns == 1);
+                requestId += 2;
+                continue;
+              }
               REQUIRE(native);
               REQUIRE(native->sourceDefinition());
               CHECK(native->sourceDefinition()->source.kind() ==
@@ -6367,7 +6374,8 @@ TEST_CASE("Every interior parabola sample permutation survives the worker "
               exactCache(admitted->getData(), cache);
               requestId += 2;
             }
-          } while (std::next_permutation(order.begin(), order.end()));
+          } while (allPermutations &&
+                   std::next_permutation(order.begin(), order.end()));
         }
       }
     }
