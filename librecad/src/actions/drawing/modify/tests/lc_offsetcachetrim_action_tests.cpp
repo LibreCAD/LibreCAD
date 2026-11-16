@@ -2358,8 +2358,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
-    const double tangentSlope = GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
-    const double sourceRotation = GENERATE(0., 0.371234567890123);
+    const bool highOrigin = GENERATE(false, true);
+    const double tangentSlope = highOrigin
+        ? 1e-4 : GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
+    const double sourceRotation = highOrigin
+        ? 0.371234567890123 : GENERATE(0., 0.371234567890123);
+    const RS_Vector sourceTranslation = highOrigin
+        ? RS_Vector{1e9, -2e9} : RS_Vector{0.0, 0.0};
     LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
         {{{0.0, 0.0}, {10.0, 0.0}}},
         {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
@@ -2367,7 +2372,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const double cosine = std::cos(sourceRotation);
     const double sine = std::sin(sourceRotation);
     for (auto& point : sourceData.m_controlPoints) {
-        point = {cosine * point.x - sine * point.y, sine * point.x + cosine * point.y};
+        point = {cosine * point.x - sine * point.y + sourceTranslation.x,
+                 sine * point.x + cosine * point.y + sourceTranslation.y};
     }
     auto* parabola = new LC_Parabola(&f.graphic, sourceData);
     f.graphic.addEntity(parabola);
