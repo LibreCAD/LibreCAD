@@ -2765,6 +2765,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const double radius = oppositeBend && !lineCutter
         ? GENERATE(.05, .1, .25) * profileScale
         : .1 * profileScale;
+    const bool cutterFirst = lineCutter ? GENERATE(false, true) : false;
+    CAPTURE(cutterFirst);
     const RS_Vector circleCenter = intersection + tangent * radius;
     RS_Entity* cutter = nullptr;
     RS_Vector cutterPick;
@@ -3001,10 +3003,12 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         REQUIRE(f.graphic.removeEntity(circle));
     }
 
-    f.action->click(nativePick);
+    const RS_Vector firstPick = cutterFirst ? cutterPick : nativePick;
+    const RS_Vector secondPick = cutterFirst ? nativePick : cutterPick;
+    f.action->click(firstPick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
-    CHECK(f.action->caughtAt(cutterPick) == cutter);
-    f.action->hover(cutterPick);
+    CHECK(f.action->caughtAt(secondPick) == (cutterFirst ? native : cutter));
+    f.action->hover(secondPick);
     const auto preview = trimPreview(*f.action->m_preview);
     REQUIRE_FALSE(preview.empty());
     CHECK_FALSE(native->isDeleted());
@@ -3012,7 +3016,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK(trimGeometry(*native) == nativeBefore);
     CHECK(trimGeometry(*cutter) == cutterBefore);
 
-    f.action->click(cutterPick);
+    f.action->click(secondPick);
     CHECK(native->isDeleted());
     CHECK(cutter->isDeleted());
     std::vector<RS_Entity*> fragments;
