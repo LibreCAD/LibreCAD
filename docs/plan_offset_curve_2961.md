@@ -55185,3 +55185,24 @@ orientation, and slope profile, not general translation/scale invariance.
 Smaller fractions, other origins/scales/slopes, non-cubic contacts,
 visible-app use, and independent ODA/AutoCAD acceptance remain open.
 
+## 1667. Bound Sub-ULP High-origin Tangent Trim Outcomes (2026-11-16)
+
+Test commit `289c7c260` adds inward fractions `5e-7`, `1e-7`, and `1e-8` to
+the high-origin parabola/circle boundary probe from sections 1665-1666. Each
+case derives its expectation from the exact circle/Bezier oracle over the
+actual stored doubles. A sufficiently separated two-root secant must be
+accepted with two roots and one conic fragment; an input the oracle cannot
+certify to that separation must fail closed with zero roots, no fragments, and
+no source mutation. This explicitly exercises quantization near the world
+coordinate ULP without treating the nominal decimal displacement as proof of
+a geometrically distinct secant or changing any production tolerance.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 46,264 assertions / 1 case.
+- CMake `librecad_tests` build and `git diff --check`: passed.
+
+The boundary matrix is still one high-origin/unit-scale/orientation/slope
+profile. Other origins, scales, tangent directions, source degrees, and cutter
+shapes remain open, as do visible-app and independent ODA/AutoCAD acceptance.
+
