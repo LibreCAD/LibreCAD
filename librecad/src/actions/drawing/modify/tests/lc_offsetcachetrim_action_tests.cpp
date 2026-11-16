@@ -1143,11 +1143,18 @@ TEST_CASE("T Trim Two commits certified exact- and post-cusp hyperbola caches at
     Drawing<true> f;
     auto* previous = addNative(f.graphic);
     const double ratio = GENERATE(0.4, std::sqrt(1.0 / 3.5));
+    const bool translated = GENERATE(false, true);
+    const RS_Vector origin = translated ? RS_Vector{1e8, -1e8} : RS_Vector{-2, 6};
+    if (translated) {
+        constexpr double zoom = 4.0;
+        f.view.getViewPort()->setOffsetAndFactor(qRound(200.0 - origin.x * zoom),
+                                                  qRound(200.0 - origin.y * zoom), zoom);
+    }
     auto* hyperbola = new LC_Hyperbola(&f.graphic,
-        LC_HyperbolaData{{-2, 6}, {3.5 * std::cos(-.58), 3.5 * std::sin(-.58)},
+        LC_HyperbolaData{origin, {3.5 * std::cos(-.58), 3.5 * std::sin(-.58)},
                          ratio, -1.1, .9, false});
     f.graphic.addEntity(hyperbola);
-    CAPTURE(ratio, 3.5 * ratio * ratio);
+    CAPTURE(ratio, 3.5 * ratio * ratio, translated, origin);
     f.graphic.select(QList<RS_Entity*>{previous}, true);
     UpdateSourceProbe update(&f.context);
     update.init(0);
