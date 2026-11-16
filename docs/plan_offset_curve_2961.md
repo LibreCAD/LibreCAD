@@ -53284,14 +53284,16 @@ origins and continuous scale intervals also remain unqualified.
 
 ## 1599. Qualify Reconstructed-parabola Worker Cache at 1e9 Origins (2026-11-16)
 
-The worker/cache permutation matrix now also runs a bounded `(1e9, -2e9)` row:
-the third control profile, unit scale, balanced `{0.1, 0.3, 0.7, 0.9}` sample
-layout, all 24 sample permutations, and both signed offset distances. For each
-row it verifies worker generation, typed parabola source preservation, exact
-cache combination, and successful cache re-admission. The original complete
-profile/scale/layout matrix remains unchanged at `(1e6, -2e6)`. This does not
-qualify worker/cache behavior at other high-origin profiles/scales/layouts,
-Trim at `1e9`, or DXF/DWG persistence at `1e9`.
+The worker/cache matrix also runs all three control profiles, four scales, and
+four sample layouts at `(1e9, -2e9)` for both signed offsets. Every row checks
+worker generation and exact ordinary-cache combination. Native/cache-admitted
+rows must retain the typed parabola and pass operation-8 re-admission; rows
+that cannot be promoted must explicitly return `NotCacheRepresentable` with a
+complete ordinary result. The balanced unit-scale anchor additionally checks
+all 24 sample permutations. This qualifies the stated profile/scale/layout
+grid and its observed admission/refusal behavior, not continuous parameters
+between rows or other origins. Trim and DXF/DWG at `1e9` are tracked separately
+in sections 1600-1602.
 
 Validation on macOS arm64 CMake Release:
 
@@ -53306,10 +53308,11 @@ librecad_offset_worker_client_tests \
 git diff --check
 ```
 
-Result: 1,270,777 assertions pass in 1 test case. The default 150-second suite
+Result: 1,313,960 assertions pass in 1 test case. The default 150-second suite
 watchdog expires before the original matrix completes; rerunning with the
-existing 900-second timeout override completes successfully. This is headless
-worker/cache evidence only, not a visible GUI or persistence acceptance result.
+existing 900-second timeout override completes successfully. Test commit
+`6e6f83790` adds the high-origin profile/scale/layout outcome matrix. This is
+headless worker/cache evidence only, not a visible GUI or external-CAD result.
 
 ## 1600. Persist a Reconstructed Parabola at 1e9 Origins (2026-11-16)
 
