@@ -23,10 +23,12 @@
 # Submits an MSIX bundle built by "Continuous build" to the Microsoft Store.
 #
 # The Store signs a submission after certification, so the bundle this takes
-# is deliberately unsigned. Each successful master build triggers a Store
-# submission, which can take up to three business days; only one submission
-# can be in progress at a time. The first submission is made by hand in
-# Partner Center.
+# is deliberately unsigned. Successful master builds trigger a Store
+# submission. If another job cancels the overall build, the MSIX is still
+# eligible once its packaging job succeeds and the commit is still current on
+# master. Certification can take up to three business days; only one
+# submission can be in progress at a time. The first submission is made by
+# hand in Partner Center.
 #
 # Setup, and what a run does to the product in Partner Center:
 # docs/development/msix-store.md.
@@ -68,7 +70,8 @@ jobs:
     if: >-
       github.repository_owner == 'LibreCAD' &&
       ((github.event_name == 'workflow_run' &&
-        github.event.workflow_run.conclusion == 'success' &&
+        (github.event.workflow_run.conclusion == 'success' ||
+         github.event.workflow_run.conclusion == 'cancelled') &&
         github.event.workflow_run.event == 'push' &&
         github.event.workflow_run.head_branch == 'master' &&
         github.event.workflow_run.head_repository.full_name == github.repository) ||
@@ -80,6 +83,31 @@ jobs:
     env:
       MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
     steps:
+      - name: Verify the completed build
+        if: ${{ github.event_name == 'workflow_run' }}
+        run: |
+          $run = gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:RUN_ID" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $run) { throw "Run $env:RUN_ID was not found." }
+
+          $branch = gh api "repos/$env:GITHUB_REPOSITORY/branches/master" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $branch) { throw 'Could not verify the current master commit.' }
+          if ($run.head_sha -ne $branch.commit.sha) {
+            throw "Run $env:RUN_ID is for $($run.head_sha), but master is now $($branch.commit.sha); refusing to submit a stale build."
+          }
+
+          $runJobs = gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:RUN_ID/jobs?per_page=100" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $runJobs) { throw "Could not inspect jobs for run $env:RUN_ID." }
+          $packageJob = $runJobs.jobs | Where-Object { $_.name -eq 'PackageWindowsMsix' } | Select-Object -First 1
+          if (-not $packageJob -or $packageJob.conclusion -ne 'success') {
+            $result = if ($packageJob) { $packageJob.conclusion } else { 'not found' }
+            throw "Run $env:RUN_ID cannot be submitted: PackageWindowsMsix concluded '$result'."
+          }
+          Write-Host "Run $env:RUN_ID is current on master and PackageWindowsMsix succeeded."
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+
       - name: Check the Store configuration
         # First, so that a missing secret fails in seconds and by name.  An
         # unset secret reaches the script as an empty string, and msstore
