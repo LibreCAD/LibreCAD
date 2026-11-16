@@ -54549,3 +54549,24 @@ profile; it does not provide all-knot cache admission, all-knot process
 coverage for the other profiles, GUI replacement, Trim, persistence, other
 weight distributions/layouts, or external CAD acceptance.
 
+## 1640. Admit Every Steep-profile Knot Cache in a Separate Process (2026-11-16)
+
+Test commit `9f9ef98a2` extends section 1639 so each generated interior-knot
+result for the steeper positive asymmetric degree-4/6 profile is combined and
+submitted to a fresh helper process for `ValidateSourceCache`. The test now
+requires every generated root row to receive successful cache admission; the
+other three profiles still use representative-knot subprocess admission.
+No production behavior changed.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused helper-process matrix: 44,508 assertions / 1 case.
+- Full helper-process suite: 47,173 assertions / 7 cases.
+- `git diff --check`: passed.
+
+This closes full process generation, point mapping, and cache admission for
+the recorded stronger gradient only. All-knot admission for the other three
+profiles, GUI replacement, Trim/persistence for these exact rows, broader
+periodic distributions/topologies, and independent CAD acceptance remain
+open.
+
