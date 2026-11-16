@@ -255,8 +255,9 @@ circle/line Trim Two with full action and persistence checks; section 1683
 extends both line-cutter layouts across source scales `1e-3/1/1e3`, and
 section 1684 does the same for circle cutters with the three-radius contact
 matrix. Section 1685 adds reversed mirrored/unequal tangent sources to the
-worker-cache and five-lane persistence matrix across all three scales; extend
-the independent interior-normal and action matrices to reversed traversal.
+worker-cache and five-lane persistence matrix across all three scales;
+section 1686 extends the independent interior-normal oracle to reversed
+traversal. Extend the Trim Two action matrix to those reversed layouts.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55621,4 +55622,24 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This qualifies two reversed layouts at the recorded three frames; arbitrary
 tangent vectors, other endpoint parameterizations, and external CAD acceptance
 remain open.
+
+## 1686. Verify Reversed Tangent Layouts against Interior Exact Normals (2026-11-16)
+
+Test commit `d4b15f556` extends the analytic NURBS-distance oracle from section
+1681 to both forward and reversed traversal for all three tangent layouts and
+all three scales/translated frames. Reversed cases swap endpoints and negate
+and swap the defining endpoint tangents. Five interior Bezier parameters and
+both offset signs remain checked against exact `C + dN`; the NURBS nearest
+parameter is evaluated directly with local-frame comparison and the same
+requested-tolerance bound.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 846 assertions / 1 case.
+- `endpoint-tangent parabola conditioning crosses worker cache validation`: 465 assertions / 1 case.
+- `librecad_offset_worker_kernel_tests` target build: passed.
+- `git diff --check`: passed.
+
+This closes the recorded reversed interior-normal rows only; arbitrary tangent
+pairs and broader contact conditions remain open.
 
