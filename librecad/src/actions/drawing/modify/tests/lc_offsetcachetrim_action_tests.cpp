@@ -2642,11 +2642,11 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2, 3, 4);
+    const int profile = GENERATE(0, 1, 2, 3, 4, 5);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
     const bool reversedTangentTraversal = profile == 4;
-    const bool asymmetricTangents = profile == 3 || reversedTangentTraversal;
+    const bool asymmetricTangents = profile == 3 || reversedTangentTraversal || profile == 5;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3) : 1.0;
@@ -2689,6 +2689,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0;
     const std::array<RS_Vector, 2> endpointTangents = reversedTangentTraversal
         ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
+        : profile == 5
+            ? std::array<RS_Vector, 2>{{{1.0, -0.4}, {0.8, 0.25}}}
         : asymmetricTangents
             ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
             : std::array<RS_Vector, 2>{{{1.0, tangentSlope}, {1.0, -tangentSlope}}};

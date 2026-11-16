@@ -2508,12 +2508,16 @@ TEST_CASE("Asymmetric endpoint-tangent parabola offsets retain exact normals",
                          std::sin(rotation) * point.x + std::cos(rotation) * point.y +
                              translation.y};
     };
-    const std::array<std::array<RS_Vector, 2>, 2> endpoints{{
+    const std::array<std::array<RS_Vector, 2>, 4> endpoints{{
+        {{{0.0, 0.0}, {10.0, 0.0}}},
+        {{{10.0, 0.0}, {0.0, 0.0}}},
         {{{0.0, 0.0}, {10.0, 0.0}}},
         {{{10.0, 0.0}, {0.0, 0.0}}}}};
-    const std::array<std::array<RS_Vector, 2>, 2> tangents{{
+    const std::array<std::array<RS_Vector, 2>, 4> tangents{{
         {{{1.0, 0.2}, {0.7, -0.35}}},
-        {{{-0.7, 0.35}, {-1.0, -0.2}}}}};
+        {{{-0.7, 0.35}, {-1.0, -0.2}}},
+        {{{1.0, -0.4}, {0.8, 0.25}}},
+        {{{-0.8, -0.25}, {-1.0, 0.4}}}}};
 
     for (std::size_t traversal = 0; traversal < endpoints.size(); ++traversal) {
         CAPTURE(traversal);
