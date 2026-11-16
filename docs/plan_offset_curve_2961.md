@@ -54285,3 +54285,24 @@ This qualifies one additional periodic weight profile and seam event only.
 Other periodic weight/knot layouts, interior-root ownership variants, higher
 degrees, and complete event-to-output mapping remain open.
 
+## 1627. Qualify Degree-elevated Rational Tangencies Through Degree Six (2026-11-16)
+
+Test commit `74f0a0708` adds degree-4, degree-5, and degree-6 clamped rational
+Bezier sources obtained by repeated homogeneous degree elevation of the
+known tangent quadratic. Independent high-precision sample evaluations verify
+that each stored control net preserves the original curve within `1e-12`.
+For each degree, the oracle derives the midpoint curvature distance, confirms
+the even root and same-sign neighbors, and production isolation must complete,
+own the root with a candidate or stall, and map the tangent point to retained
+output. No production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused degree-4-through-6 tangent matrix: 94 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,720 assertions / 122 cases.
+- `git diff --check`: passed.
+
+This closes only three degree-elevated single-span profiles. Other high-degree
+weight layouts, nonuniform/repeated knots at these degrees, periodic higher-
+degree ownership, and continuous event-to-output coverage remain open.
+
