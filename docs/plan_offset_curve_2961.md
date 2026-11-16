@@ -42,11 +42,13 @@ success, and cancellation/refusal remains open in Slice 5. The nine-kind
 inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically. At PR product-code head
-`b96f2746901192ce3719ac84db8e89d3439c6966`,
-`[gui][dialog][offsetcurve][source]` passes 15,284 assertions / 44 cases in
-CMake Release. The subsequent `ed0df178d` commit changes only this roadmap.
-This is headless UI evidence; it does not close the visible packaged-app gate.
+atomically. At current PR test head
+`dc59252d3`, `[gui][dialog][offsetcurve][source]` passes 15,290 assertions /
+44 cases in CMake Release; this adds explicit enabled-state checks while an
+incremental candidate scan is active. Product code remains at
+`b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent commits only update the
+roadmap and this test. This is headless UI evidence and does not close the
+visible packaged-app gate.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
@@ -53021,4 +53023,36 @@ verify cancellation/refusal preserves the old source. No additional selector
 or parabola-only implementation is warranted. Slice 4's concrete
 geometry-variant qualification and independent CAD acceptance remain separate
 open work.
+
+## 1592. Require Type Switching During an Incremental Candidate Scan (2026-11-16)
+
+The large-document source picker already discards a superseded family's
+partial scan when the user changes the type filter. The regression now also
+asserts that the source-type control remains enabled after the first scan
+starts, after an incremental timer slice, immediately before and after
+switching line to parabola, while new parabola entities invalidate the active
+scan, and after the restarted scan completes. This pins the requested ability
+to change source type while the chooser is actively collecting candidates; the
+candidate list remains disabled until the replacement scan has a complete,
+current result.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Large source chooser scans incrementally and discards superseded family results' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+git diff --check
+```
+
+The focused incremental-scan test passes 143 assertions / 1 case, and the
+complete source-picker selection passes 15,290 assertions / 44 cases. The
+regression is test commit `dc59252d3`; product behavior is unchanged. The
+visible packaged-app workflow, concrete family-variant qualification, and
+independent CAD acceptance remain open.
 
