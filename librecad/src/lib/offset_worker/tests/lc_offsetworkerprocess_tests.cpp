@@ -22,6 +22,7 @@
 #include <cmath>
 #include <cstdio>
 #include <initializer_list>
+#include <limits>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -758,6 +759,33 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
                 REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
                 REQUIRE(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
                 REQUIRE_FALSE(generated.ordinary.empty());
+
+                const double speed = leftJet.first.magnitude();
+                REQUIRE(speed > 0.0);
+                const RS_Vector expectedKnotOffset = leftJet.point +
+                    RS_Vector{-leftJet.first.y / speed, leftJet.first.x / speed} * signedDistance;
+                double nearestGeneratedEndpoint = std::numeric_limits<double>::infinity();
+                for (const Req::Cutter& branch : generated.ordinary) {
+                    if (const auto* segment = std::get_if<Req::Segment>(&branch)) {
+                        nearestGeneratedEndpoint = std::min(nearestGeneratedEndpoint,
+                            std::min(segment->start.distanceTo(expectedKnotOffset),
+                                     segment->end.distanceTo(expectedKnotOffset)));
+                    } else if (const auto* splineData = std::get_if<RS_SplineData>(&branch)) {
+                        RS_Spline spline{nullptr, *splineData};
+                        double start = 0.0;
+                        double end = 0.0;
+                        REQUIRE(spline.getParameterDomain(start, end));
+                        const RS_Vector first = spline.getPointAt(start);
+                        const RS_Vector last = spline.getPointAt(end);
+                        REQUIRE(first.valid);
+                        REQUIRE(last.valid);
+                        nearestGeneratedEndpoint = std::min(nearestGeneratedEndpoint,
+                            std::min(first.distanceTo(expectedKnotOffset),
+                                     last.distanceTo(expectedKnotOffset)));
+                    }
+                }
+                CAPTURE(expectedKnotOffset.x, expectedKnotOffset.y, nearestGeneratedEndpoint);
+                CHECK(nearestGeneratedEndpoint <= 10.0 * definition.relativeTolerance);
 
                 RS_SplineData cache;
                 REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
