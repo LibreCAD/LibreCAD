@@ -2655,19 +2655,19 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
     const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                                 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25);
+                                 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
     const bool reversedTangentTraversal = profile == 4 || profile == 6 ||
                                           profile == 8 || profile == 10 || profile == 12 ||
                                           profile == 14 || profile == 16 || profile == 18 ||
                                           profile == 20 || profile == 22;
-    const bool steepAsymmetricTangents = profile >= 23 && profile <= 25;
+    const bool steepAsymmetricTangents = profile >= 23 && profile <= 26;
     const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
                                     steepAsymmetricTangents ||
                                     (profile >= 5 && profile <= 22);
     const bool oppositeBend = profile >= 5 && profile <= 16;
-    const bool lineCutter = profile >= 11 && profile <= 22;
+    const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26;
     const bool asymmetricSmallScale = profile == 7 || profile == 8 ||
                                       profile == 13 || profile == 14 ||
                                       profile == 19 || profile == 20 || profile == 24;
