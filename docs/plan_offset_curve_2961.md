@@ -55021,3 +55021,33 @@ visible packaged-app acceptance already tracked under Slice 5: change types
 repeatedly, verify candidate refresh and existing-source indication, replace
 successfully, and confirm cancellation/refusal leaves the prior source intact.
 
+## 1661. Round-trip High-origin Unit-scale Near-tangent Circle Trims (2026-11-16)
+
+Test commit `d88840156` extends the endpoint-tangent parabola Trim Two
+regression at source origin `(1e9, -2e9)`, unit profile scale, rotation
+`0.371234567890123`, and tangent slope `1e-8`. It exercises exact tangent
+circle classification for both offset directions, preserving atomic refusal
+or certified two-root acceptance as determined by the independent exact
+circle/Bezier oracle. For the outward direction, three inward center offsets
+(`1e-2`, `1e-3`, `1e-4` times the radius) each independently certify two
+simple roots and pass `prepareConic` with two roots and one conic fragment,
+without mutating the source.
+
+The same full Trim Two selection covers its established action/worker,
+undo/redo, and five DXF/DWG save/reopen lanes. Its geometry comparator now
+allows a four-coordinate-ULP floor for world-coordinate points while retaining
+the existing shape-relative tolerance; this accommodates representational
+rounding of reopened high-origin arc endpoints and does not loosen production
+geometry or serialization. Spline controls and stored spline parameters remain
+compared by the existing geometry checks.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 46,277 assertions / 1 case.
+- CMake `librecad_tests` target build and `git diff --check`: passed.
+
+This closes only the specified high-origin/unit-scale/slope profile and the
+three inward fractions. Other near-tangent distances and orientations,
+non-cubic contacts, visible-app interaction, and independent ODA/AutoCAD
+acceptance remain open.
+
