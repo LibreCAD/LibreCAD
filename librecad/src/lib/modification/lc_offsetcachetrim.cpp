@@ -433,15 +433,33 @@ struct Conic {
     Geo::ReferenceFrame unit;
 };
 
+bool conicPositionBounds(const Conic& conic, const Geo::ReferenceFrame& frame,
+                         double a, double b, I& x, I& y) {
+    x = {};
+    y = {};
+    const I scale = I::point(frame.scale());
+    const I ax = I::point(conic.data.majorP.x) / scale;
+    const I ay = I::point(conic.data.majorP.y) / scale;
+    const I bx = -ay * I::point(conic.data.ratio);
+    const I by = ax * I::point(conic.data.ratio);
+    return conic.unit.boundSourceProjectedPosition(a, b, ax, bx, x) &&
+           conic.unit.boundSourceProjectedPosition(a, b, ay, by, y);
+}
+
 bool conicJet(const Conic& conic, const Geo::ReferenceFrame& frame,
               double a, double b, LC_CurveJetBounds& out) {
     LC_CurveJetBounds unit;
-    I cx, cy;
-    if (!conic.unit.boundSourceJet(a, b, unit) || !frame.pointToFrame(conic.data.center, cx, cy)) return false;
+    I cx, cy, projectedX, projectedY;
+    if (!conic.unit.boundSourceJet(a, b, unit) ||
+        !conicPositionBounds(conic, frame, a, b, projectedX, projectedY) ||
+        !frame.pointToFrame(conic.data.center, cx, cy)) return false;
     const I scale = I::point(frame.scale());
-    const I ax = I::point(conic.data.majorP.x) / scale, ay = I::point(conic.data.majorP.y) / scale;
-    const I bx = -ay * I::point(conic.data.ratio), by = ax * I::point(conic.data.ratio);
-    out.x = cx + ax * unit.x + bx * unit.y; out.y = cy + ay * unit.x + by * unit.y;
+    const I ax = I::point(conic.data.majorP.x) / scale;
+    const I ay = I::point(conic.data.majorP.y) / scale;
+    const I bx = -ay * I::point(conic.data.ratio);
+    const I by = ax * I::point(conic.data.ratio);
+    out.x = cx + projectedX;
+    out.y = cy + projectedY;
     out.dx = ax * unit.dx + bx * unit.dy; out.dy = ay * unit.dx + by * unit.dy;
     out.ddx = ax * unit.ddx + bx * unit.ddy; out.ddy = ay * unit.ddx + by * unit.ddy;
     return finite(out.x) && finite(out.y) && finite(out.dx) && finite(out.dy) && finite(out.ddx) && finite(out.ddy);
@@ -1582,14 +1600,14 @@ std::vector<Root> conicContacts(Context& c, const Input& input, const std::vecto
     for (const auto& contact : contacts) {
         c.check(); auto snapshot = contact.snapshot; I t = snapshot.event.isolation.parameterB;
         for (unsigned round = 0;; ++round) {
-            LC_CurveJetBounds jet; I angle;
+            I localX, localY, angle;
             if (!finite(t) || t.lo() < 0 || t.hi() > end ||
-                !conicJet(*input.conic, input.frame, t.lo(), t.hi(), jet) ||
+                !conicPositionBounds(*input.conic, input.frame, t.lo(), t.hi(), localX, localY) ||
                 !input.conic->unit.boundUnwrappedAngle(t.lo(), t.hi(), angle)) fail(Refusal::Arithmetic);
             // Root isolation already proves existence/uniqueness. Contract to
             // the geometric endpoint allowance; the angle enclosure can reach
             // its outward-rounding floor before that independent bound.
-            if (jet.x.width() <= error && jet.y.width() <= error) break;
+            if (localX.width() <= error && localY.width() <= error) break;
             if (round == c.limits.maxDepth) {
                 c.stage(Stage::ConicRootConvergence);
                 fail(Refusal::AmbiguousRoots);

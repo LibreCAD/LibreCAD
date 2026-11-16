@@ -9347,6 +9347,35 @@ TEST_CASE("Source projection bounds tighten rotated cancellation only with a mon
     CHECK_FALSE(frame->boundSourceProjectedDerivative(.2,.1,ax,ay,tight)); CHECK_FALSE(tight.isValid());
 }
 
+TEST_CASE("Source position projection tightens a monotone ellipse coordinate",
+          "[lc-offsetcurve][geometry][source-position-projection]") {
+    RS_EllipseData source{{16,-32},{3,4},1,2.125,2.35,false};
+    auto frame = geo::ReferenceFrame::create(source,0); REQUIRE(frame);
+    LC_CurveJetBounds jet;
+    REQUIRE(frame->boundSourceJet(0,frame->parameterEnd(),jet));
+    const auto naive = LC_Interval::point(-3)*jet.x+LC_Interval::point(-4)*jet.y;
+    LC_Interval tight;
+    REQUIRE(frame->boundSourceProjectedPosition(0,frame->parameterEnd(),
+        LC_Interval::point(-3),LC_Interval::point(-4),tight));
+    CHECK(tight.width() < naive.width());
+    for (unsigned k = 0; k <= 32; ++k) {
+        const double t = frame->parameterEnd()*double(k)/32;
+        const auto oracle = referenceOracle(source,*frame,0,t,false);
+        checkEnclosure(tight,-3*oracle[0]-4*oracle[1]);
+    }
+    const auto axisX = LC_Interval::hull(-3,-2.5);
+    const auto axisY = LC_Interval::hull(-4,-3.5);
+    REQUIRE(frame->boundSourceProjectedPosition(0,frame->parameterEnd(),axisX,axisY,tight));
+    for (unsigned k = 0; k <= 16; ++k) {
+        const double t = frame->parameterEnd()*double(k)/16;
+        const auto oracle = referenceOracle(source,*frame,0,t,false);
+        for (const double x : {-3.,-2.5}) for (const double y : {-4.,-3.5})
+            checkEnclosure(tight,Quad(x)*oracle[0]+Quad(y)*oracle[1]);
+    }
+    CHECK_FALSE(frame->boundSourceProjectedPosition(.2,.1,axisX,axisY,tight));
+    CHECK_FALSE(tight.isValid());
+}
+
 TEST_CASE("Public complete cut search accepts exact caps and refuses every one-less ledger without a certificate",
           "[lc-offsetcurve][geometry][cache-topology-chain][cache-search-completion]") {
     const auto source = basis(1,1); const auto cache = nonNearestCutCache();

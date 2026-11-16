@@ -1001,6 +1001,35 @@ bool ReferenceFrame::boundSourceJet(const double t0, const double t1, LC_CurveJe
     return true;
 }
 
+bool ReferenceFrame::boundSourceProjectedPosition(const double t0, const double t1,
+    const LC_Interval& axisX, const LC_Interval& axisY, LC_Interval& out) const {
+    out = {};
+    if (!finiteInterval(axisX) || !finiteInterval(axisY)) { return false; }
+    LC_Interval cosine, sine;
+    if (!trig(t0, t1, cosine, sine)) { return false; }
+    const auto c = m_majorX * axisX + m_majorY * axisY;
+    const auto d = m_ratio * (-m_majorY * axisX + m_majorX * axisY);
+    if (!finiteInterval(c) || !finiteInterval(d)) { return false; }
+    auto value = c * cosine + d * sine;
+    if (!finiteInterval(value)) { return false; }
+    const auto derivative = -c * sine + d * cosine;
+    if (t0 != t1 && finiteInterval(derivative) && derivative.excludesZero()) {
+        LC_Interval firstCosine, firstSine, lastCosine, lastSine;
+        if (!trig(t0, t0, firstCosine, firstSine) || !trig(t1, t1, lastCosine, lastSine)) { return false; }
+        const auto first = c * firstCosine + d * firstSine;
+        const auto last = c * lastCosine + d * lastSine;
+        if (!finiteInterval(first) || !finiteInterval(last)) { return false; }
+        const auto endpoints = LC_Interval::hull(std::min(first.lo(), last.lo()),
+                                                 std::max(first.hi(), last.hi()));
+        const double low = std::max(value.lo(), endpoints.lo());
+        const double high = std::min(value.hi(), endpoints.hi());
+        if (!(low <= high)) { return false; }
+        value = LC_Interval::hull(low, high);
+    }
+    out = value;
+    return true;
+}
+
 bool ReferenceFrame::boundSourceProjectedDerivative(const double t0, const double t1,
     const LC_Interval& axisX, const LC_Interval& axisY, LC_Interval& out) const {
     out = {};

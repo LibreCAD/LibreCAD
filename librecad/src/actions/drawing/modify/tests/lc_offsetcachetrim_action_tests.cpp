@@ -2794,26 +2794,21 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         LC_OffsetCacheTrim::Work circleWork;
         const auto circleTrim = LC_OffsetCacheTrim::prepareConic(native->getData(), *circle,
             {circlePick}, LC_OffsetCacheTrim::Pick{nativePick}, {}, {}, &circleWork);
-        CAPTURE(circleTrim.refusal, circleTrim.rootCount,
-                circleWork.hasIntersectionFailureDomain,
-                circleWork.intersectionFailureDomain.segmentA,
-                circleWork.intersectionFailureDomain.segmentB,
-                circleWork.intersectionFailureDomain.parameterA.lo(),
-                circleWork.intersectionFailureDomain.parameterA.hi(),
-                circleWork.intersectionFailureDepth,
-                circleWork.intersections.totalBoxPairs,
-                circleWork.intersections.generatedLeaves,
+        CAPTURE(circleTrim.refusal, circleTrim.rootCount, circleTrim.conicFragments.size(),
+                circleWork.failureStage, circleWork.hasIntersectionFailureDomain,
+                circleWork.intersections.totalBoxPairs, circleWork.intersections.generatedLeaves,
                 circleWork.intersections.deepestPairRefinement);
-        CHECK(circleTrim.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(circleTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
         CHECK(circleTrim.rootCount == 2);
+        REQUIRE(circleTrim.conicFragments.size() == 1);
         CHECK_FALSE(circleWork.hasIntersectionFailureDomain);
         CHECK(cacheOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
         CHECK(cacheOnly.rootCount == 2);
         CHECK_FALSE(cacheOnly.fragments.empty());
-        CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
         CHECK(conicOnly.rootCount == 2);
-        CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::ConicRootRefinement);
-        CHECK(conicOnly.conicFragments.empty());
+        CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::None);
+        REQUIRE(conicOnly.conicFragments.size() == 1);
         CHECK(trimGeometry(*native) == nativeBefore);
 
         LC_StoredCacheTrimOptions workerOptions;
@@ -2827,10 +2822,9 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         const auto completion = joinedTrimWorker(*request);
         const auto& workerResult = std::get<LC_OffsetCacheTrim::Result>(
             completion->reply().result);
-        CHECK(workerResult.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+        CHECK(workerResult.refusal == LC_OffsetCacheTrim::Refusal::None);
         CHECK(workerResult.rootCount == 2);
-        CHECK(workerResult.work.failureStage ==
-              LC_OffsetCacheTrim::Stage::ConicRootRefinement);
+        CHECK(workerResult.work.failureStage == LC_OffsetCacheTrim::Stage::None);
 
         LC_StoredCacheTrimCompletions received{*request, *completion};
         received.publicationUndoEpoch = f.graphic.undoStateEpoch();
@@ -2838,35 +2832,26 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         const auto preparedTrim = RS_Modification::trimStoredCachePrepared(f.graphic,
             *native, nativePick, *circle, circlePick, true, preparedBatch, received,
             workerOptions);
-        CHECK_FALSE(preparedTrim.result);
-        REQUIRE(preparedTrim.cacheRefusal);
-        CHECK(*preparedTrim.cacheRefusal == workerResult.refusal);
+        REQUIRE(preparedTrim.result);
+        CHECK_FALSE(preparedTrim.cacheRefusal);
         CHECK(preparedTrim.cacheWork.failureStage == workerResult.work.failureStage);
-        CHECK(preparedBatch.entitiesToAdd.empty());
-        CHECK(preparedBatch.entitiesToDelete.empty());
+        REQUIRE(preparedBatch.entitiesToAdd.size() == 2);
+        CHECK(preparedBatch.entitiesToDelete.size() == 2);
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
 
         LC_DocumentModificationBatch circleBatch;
         const auto trimTwo = RS_Modification::trimStoredCache(f.graphic, *native,
             nativePick, *circle, circlePick, true, circleBatch);
-        REQUIRE(trimTwo.cacheRefusal);
-        CAPTURE(*trimTwo.cacheRefusal, trimTwo.cacheWork.failureStage,
-                trimTwo.cacheWork.hasIntersectionFailureDomain,
-                trimTwo.cacheWork.intersectionFailureDomain.segmentA,
-                trimTwo.cacheWork.intersectionFailureDomain.segmentB,
-                trimTwo.cacheWork.intersectionFailureDomain.parameterA.lo(),
-                trimTwo.cacheWork.intersectionFailureDomain.parameterA.hi(),
-                trimTwo.cacheWork.intersectionFailureDepth,
-                trimTwo.cacheWork.intersections.totalBoxPairs,
-                trimTwo.cacheWork.intersections.generatedLeaves,
-                trimTwo.cacheWork.intersections.deepestPairRefinement);
-        CHECK_FALSE(trimTwo.result);
-        REQUIRE(trimTwo.cacheRefusal);
-        CHECK(*trimTwo.cacheRefusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
-        CHECK(trimTwo.cacheWork.failureStage == LC_OffsetCacheTrim::Stage::ConicRootRefinement);
-        CHECK_FALSE(trimTwo.cacheWork.hasIntersectionFailureDomain);
-        CHECK(trimTwo.cacheWork.intersections.totalBoxPairs > 0);
-        CHECK(circleBatch.entitiesToAdd.empty());
-        CHECK(circleBatch.entitiesToDelete.empty());
+        REQUIRE(trimTwo.result);
+        CHECK_FALSE(trimTwo.cacheRefusal);
+        CHECK(trimTwo.cacheWork.failureStage == LC_OffsetCacheTrim::Stage::None);
+        REQUIRE(circleBatch.entitiesToAdd.size() == preparedBatch.entitiesToAdd.size());
+        CHECK(circleBatch.entitiesToDelete == preparedBatch.entitiesToDelete);
+        for (qsizetype i = 0; i < circleBatch.entitiesToAdd.size(); ++i) {
+            CHECK(circleBatch.entitiesToAdd[i]->rtti() == preparedBatch.entitiesToAdd[i]->rtti());
+            CHECK(trimGeometry(*circleBatch.entitiesToAdd[i]) == trimGeometry(*preparedBatch.entitiesToAdd[i]));
+        }
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(circle->isDeleted());
         CHECK(circle->getCenter() == circleCenter);

@@ -166,6 +166,9 @@ public:
     bool offsetJet(double t, LC_CurveJet& out) const;
     /** Continuous exact-sweep bounds, including zero-width queries and periodic endpoint limits. */
     bool boundSourceJet(double t0, double t1, LC_CurveJetBounds& out) const;
+    /** Source-position projection with coefficient combination before trig bounds. */
+    bool boundSourceProjectedPosition(double t0, double t1, const LC_Interval& axisX,
+                                      const LC_Interval& axisY, LC_Interval& out) const;
     /** Fixed-axis source derivative bound; monotone sinusoid endpoint tightening, no fitted phase. */
     bool boundSourceProjectedDerivative(double t0, double t1, const LC_Interval& axisX,
                                         const LC_Interval& axisY, LC_Interval& out) const;
