@@ -54133,8 +54133,9 @@ Pre-fix diagnostics passed 11,493 assertions / 1 generated action case and
 showed the original `ConicRootRefinement` refusal; the malformed and conic
 worker-result cases passed 30 and 5,324 assertions respectively. Those results
 are historical diagnosis only. Post-fix validation on the same macOS arm64
-CMake Release build passes the focused projected-position test (512 assertions
-/ 1 case), the endpoint-tangent Trim Two action matrix (16,205 assertions / 1
+CMake Release build passes the focused projected-position test (1,987
+assertions / 1 case), the endpoint-tangent Trim Two action matrix
+(16,205 assertions / 1
 generated case after history, persistence, and high-origin tangency coverage),
 and the full Trim kernel suite (4,643,737 assertions / 89 cases). The worker
 result codec passes 470,974 assertions / 36 cases and the worker request codec
@@ -54152,8 +54153,9 @@ simple, spatially separated cache/circle roots for both tested scale profiles
 and sides; it is test-only and does not certify production roots. Diagnostic
 slice `f1543889e` and exact-oracle slice `d116fb035` were already pushed to PR
 #3193. Implementation slice `b75658cb5`, action-history test slice
-`87cb0c14e`, five-format round-trip slice `7c1336144`, and negative-boundary
-slice `c8cfb62c3` are committed. The latest focused action run passes 16,205
+`87cb0c14e`, five-format round-trip slice `7c1336144`, negative-boundary
+slice `c8cfb62c3`, and projection-domain test slice `dfaaf915e` are committed.
+The latest focused action run passes 16,205
 assertions / 1 generated case, including a high-origin tangent refusal with
 empty output; the full kernel suite passes 4,643,737 assertions / 89 cases.
 The bounded section 1621 implementation and validation sequence is complete.
