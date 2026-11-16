@@ -52818,3 +52818,37 @@ only those exact hyperbola profiles. Worker-backed Trim action, broader
 hyperbola conditioning, visible Properties acceptance, and independent
 ODA/AutoCAD acceptance remain open.
 
+## 1585. Exercise Exact-cusp Hyperbola Trim Through the Worker Action (2026-11-16)
+
+Test commit `f764374b1` adds an exact vertex-radius profile to the existing
+worker-backed hyperbola Trim Two action test while retaining its post-cusp
+profile. The action first updates the editable offset from a rotated,
+asymmetric bounded hyperbola at offset distance `1`; the exact-cusp fixture
+uses semi-major length `3.5` and ratio `sqrt(1/3.5)`, so its vertex radius is
+`3.5 * ratio^2`. It then verifies worker preparation, Trim Two preview,
+atomic commit, undo/redo, and five DXF/DWG save/reopen lanes. No direct cache
+mutation bypasses worker validation.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two commits certified exact- and post-cusp hyperbola caches atomically' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][lc-offsetcurve][trim-action][typed-source][hyperbola]' \
+  --reporter compact
+git diff --check
+```
+
+The focused case passes 382 assertions / 1 case; the complete typed-hyperbola
+Trim-action selection passes 14,216 assertions / 3 cases. The direct Trim
+suite remains 59,719 assertions / 45 cases (section 1584). These profiles
+close the exact-cusp Trim action row only at the stated ordinary-coordinate
+frame. High-origin action interaction, other hyperbola domains and distances,
+visible Properties acceptance, and independent ODA/AutoCAD acceptance remain
+open.
+
