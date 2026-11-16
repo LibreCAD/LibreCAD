@@ -261,11 +261,12 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1652 add two asymmetric
+and fail-closed limits. Sections 1642-1653 add two asymmetric
 endpoint-tangent parabolas and both traversals through an independent
 exact-normal oracle, Trim Two, source scales `1e-3/1/1e3`, and all five internal
 file lanes; the opposite-bend pair varies three scaled circle-cutter radii and
-also passes Trim Two with line cutters in both traversals.
+also passes Trim Two with line cutters in both traversals and both operand-pick
+orders.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -54823,5 +54824,24 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 Other cutter geometries and placements, tangency/refusal boundaries, source
 scales beyond the recorded set, visible-app interaction, and independent
+ODA/AutoCAD acceptance remain open.
+
+## 1653. Verify Both Trim Two Pick Orders for Line Cutters (2026-11-16)
+
+Test commit `4aae99341` extends section 1652 so each opposite-bend line-cutter
+traversal is trimmed with the native offset selected first and with the cutter
+selected first. Both pick orders pass candidate selection, preview immutability,
+commit, undo/redo, and the five DXF/DWG save/reopen geometry checks; LibreDWG
+inspection remains enabled for both DWG lanes. This confirms operand ordering
+for these line-cutter profiles without generalizing to every cutter/source
+pair.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Endpoint-tangent Trim Two matrix: 25,429 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+Other line-cutter placements, tangent/refusal boundaries, cutter geometries,
+source scales beyond the recorded set, visible-app interaction, and independent
 ODA/AutoCAD acceptance remain open.
 
