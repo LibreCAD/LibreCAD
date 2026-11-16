@@ -55443,3 +55443,22 @@ The three scale/frame rows do not establish arbitrary affine covariance or
 other tangent pairs, cutter shapes, and contact boundaries; keep those variant
 gates open.
 
+## 1678. Exercise the Steep Tangent Layout with a Line Cutter (2026-11-16)
+
+Test commit `5cf47dcaa` adds the steep asymmetric tangent layout from sections
+1675-1677 with a line cutter, keeping its unit-scale rotated frame at
+`(1e6, -2e6)`. Both offset signs and both Trim Two operand-pick orders run
+through direct preparation, worker-backed source replacement, preview/atomic
+commit, undo/redo, and the five DXF/DWG reopen lanes. The existing
+tangent-circle oracle remains active for this profile as a boundary check;
+the committed action uses the line cutter.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 61,391 assertions / 1 case.
+- CMake `librecad_offset_trim_tests` target build: passed.
+- `git diff --check`: passed.
+
+This is one additional cutter shape at one scale/frame, not general line
+placement, tangent direction, or contact-boundary coverage.
+
