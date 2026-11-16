@@ -424,11 +424,6 @@ TEST_CASE("Five-crossing straight polyline regions grow and erode under both fil
         points.emplace_back(10.0 * std::cos(angle), 10.0 * std::sin(angle));
     }
 
-    RS_Polyline source;
-    for (const RS_Vector& point : points) source.addVertex(point);
-    source.setClosed(true);
-    source.endPolyline();
-
     std::vector<std::vector<std::pair<double, RS_Vector>>> cuts(points.size());
     for (std::size_t i = 0; i < points.size(); ++i) {
         cuts[i].emplace_back(0.0, points[i]);
@@ -463,40 +458,94 @@ TEST_CASE("Five-crossing straight polyline regions grow and erode under both fil
         for (std::size_t i = 0; i + 1 < edgeCuts.size(); ++i) nodedReference.push_back(edgeCuts[i].second);
     }
 
-    for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
-        for (const bool grow : {true, false}) {
-            CAPTURE(rule, grow);
-            constexpr double distance = 0.2;
-            auto options = LC_CurveOffset::makeDirectOptions(source, distance);
-            options.mode = LC_CurveOffsetMode::RegionBoundary;
-            options.fillRule = rule;
-            const auto result = LC_CurveOffset::buildDirectBranches(
-                source,
-                LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
-                                                distance),
-                options, LC_CurveOffset::makeDirectSourceBudget());
-            CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
-                    static_cast<int>(result.intersectionDiagnostics.status),
-                    result.intersectionDiagnostics.failureDomain.segmentA,
-                    result.intersectionDiagnostics.failureDomain.segmentB,
-                    result.intersectionDiagnostics.failureDepth);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            CHECK(result.sourceIntersections == 5);
-            const std::size_t expectedCycles = rule == LC_CurveFillRule::NonZero ? 1u : grow ? 2u : 5u;
-            REQUIRE(result.branches.size() == expectedCycles);
+    struct Frame {
+        const char* name;
+        double scale;
+        double angle;
+        RS_Vector origin;
+        bool reverse;
+        double requestedTolerance;
+    };
+    for (const Frame& frame : {
+             Frame{"unit origin", 1.0, 0.0, {0, 0}, false, 0.0},
+             Frame{"high-origin reverse", 1.0, 0.0, {1e9, -2e9}, true, 5e-5}}) {
+        const double cosine = std::cos(frame.angle);
+        const double sine = std::sin(frame.angle);
+        const auto transform = [&](const RS_Vector& point) {
+            return frame.origin + RS_Vector{frame.scale * (cosine * point.x - sine * point.y),
+                                             frame.scale * (sine * point.x + cosine * point.y)};
+        };
+        std::vector<RS_Vector> sourcePoints;
+        std::vector<RS_Vector> reference;
+        sourcePoints.reserve(points.size());
+        reference.reserve(nodedReference.size());
+        for (const RS_Vector& point : points) sourcePoints.push_back(transform(point));
+        for (const RS_Vector& point : nodedReference) reference.push_back(transform(point));
+        if (frame.reverse) {
+            std::reverse(sourcePoints.begin(), sourcePoints.end());
+            std::reverse(reference.begin(), reference.end());
+        }
 
-            const CycleCheck check = checkCycles(result, nodedReference, rule, distance, grow);
-            CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
-            CHECK(check.closed);
-            CHECK(check.worstDistance < 0.02);
-            CHECK(check.wrongSide == 0);
-            REQUIRE(check.areas.size() == result.branches.size());
-            const auto positive = std::count_if(check.areas.begin(), check.areas.end(),
-                                                [](const double area) { return area > 0.0; });
-            const auto negative = std::count_if(check.areas.begin(), check.areas.end(),
-                                                [](const double area) { return area < 0.0; });
-            CHECK(positive == (rule == LC_CurveFillRule::EvenOdd && !grow ? 5 : 1));
-            CHECK(negative == (rule == LC_CurveFillRule::EvenOdd && grow ? 1 : 0));
+        RS_Polyline source;
+        for (const RS_Vector& point : sourcePoints) source.addVertex(point);
+        source.setClosed(true);
+        source.endPolyline();
+        const QList<RS_Vector> originalVertices = source.getVertexes();
+        const double distance = 0.2 * frame.scale;
+        for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
+            for (const bool grow : {true, false}) {
+                CAPTURE(frame.name, rule, grow);
+                auto options = LC_CurveOffset::makeDirectOptions(
+                    source, distance, frame.requestedTolerance);
+                options.mode = LC_CurveOffsetMode::RegionBoundary;
+                options.fillRule = rule;
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source,
+                    LC_CurveOffset::makeSideRequest(grow ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                                                    distance),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(static_cast<int>(result.status), result.sourceIntersections,
+                        static_cast<int>(result.intersectionDiagnostics.status),
+                        static_cast<int>(result.intersectionDiagnostics.failureSite),
+                        static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure),
+                        result.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding,
+                        result.intersectionDiagnostics.regionArrangementWork.intervalFallback,
+                        result.intersectionDiagnostics.regionArrangementWork.intervalSolver.totalBoxPairs,
+                        result.intersectionDiagnostics.regionArrangementWork.intervalSolver.generatedItems,
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB,
+                        result.intersectionDiagnostics.failureDepth);
+                if (frame.requestedTolerance > 0.0 && result.status != LC_CurveOffsetStatus::Ok) {
+                    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+                    CHECK(result.sourceIntersections == 5);
+                    CHECK(result.intersectionDiagnostics.failureSite ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CandidateArrangement);
+                    CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::AmbiguousTopology);
+                    CHECK(result.branches.empty());
+                    continue;
+                }
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(result.sourceIntersections == 5);
+                const std::size_t expectedCycles = rule == LC_CurveFillRule::NonZero ? 1u : grow ? 2u : 5u;
+                REQUIRE(result.branches.size() == expectedCycles);
+
+                const CycleCheck check = checkCycles(result, reference, rule, distance, grow);
+                CAPTURE(check.worstDistance, check.worstPoint, check.wrongSide, check.areas);
+                CHECK(check.closed);
+                CHECK(check.worstDistance < 0.02 * frame.scale);
+                CHECK(check.wrongSide == 0);
+                REQUIRE(check.areas.size() == result.branches.size());
+                const auto positive = std::count_if(check.areas.begin(), check.areas.end(),
+                                                    [](const double area) { return area > 0.0; });
+                const auto negative = std::count_if(check.areas.begin(), check.areas.end(),
+                                                    [](const double area) { return area < 0.0; });
+                CHECK(positive == (rule == LC_CurveFillRule::EvenOdd && !grow ? 5 : 1));
+                CHECK(negative == (rule == LC_CurveFillRule::EvenOdd && grow ? 1 : 0));
+            }
+        }
+        REQUIRE(source.getVertexes().size() == originalVertices.size());
+        for (int i = 0; i < originalVertices.size(); ++i) {
+            CHECK(source.getVertex(i).distanceTo(originalVertices[i]) == 0.0);
         }
     }
 }
