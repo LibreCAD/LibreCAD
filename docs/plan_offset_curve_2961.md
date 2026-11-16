@@ -52829,6 +52829,9 @@ profile. Follow-up commit `cc5434955` runs both profiles at ordinary origin
 and translated frame `(1e8,-1e8)`, with the viewport fitted around the source.
 Test commit `b254eee21` extends both profiles to `(1e9,-1e9)` and fits that
 frame at 2x zoom so device-coordinate offsets remain representable.
+Test commit `ec09a6e84` extends both profiles to `(2e9,-2e9)` at 1x zoom,
+the largest recorded interactive translation that keeps the viewport's
+integer device offset representable for this fixture.
 The action updates the editable offset at distance `1` from a rotated,
 asymmetric bounded hyperbola; the exact-cusp fixture uses semi-major length
 `3.5` and ratio `sqrt(1/3.5)`, so its vertex radius is `3.5 * ratio^2`. It
@@ -52851,11 +52854,13 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-The focused action case passes 1,117 assertions / 1 case; the complete
-typed-hyperbola Trim-action selection passes 14,953 assertions / 3 cases. The
+The focused action case passes 1,505 assertions / 1 case; the complete
+typed-hyperbola Trim-action selection passes 15,256 assertions / 3 cases. The
 direct Trim suite remains 59,719 assertions / 45 cases (section 1584). These
 profiles close the exact-cusp Trim action row at ordinary origin and the
-recorded `(1e8,-1e8)` and `(1e9,-1e9)` translated frames. More extreme
-interactive origins, other hyperbola domains and distances, visible
-Properties acceptance, and independent ODA/AutoCAD acceptance remain open.
+recorded `(1e8,-1e8)`, `(1e9,-1e9)`, and `(2e9,-2e9)` translated frames.
+The last frame is a viewport integer-offset boundary, not general support for
+larger coordinates or every screen scale. Other hyperbola domains and
+distances, visible Properties acceptance, and independent ODA/AutoCAD
+acceptance remain open.
 
