@@ -261,10 +261,10 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Section 1642 adds one rotated, high-origin asymmetric
-endpoint-tangent parabola through Trim Two; continue with materially distinct
-tangent layouts, scales, and cutter conditioning rather than treating that
-profile as exhaustive; (3) completed by sections 1504-1507: qualify
+and fail-closed limits. Sections 1642-1643 add one rotated, high-origin
+asymmetric endpoint-tangent parabola through Trim Two and all five internal
+file lanes; continue with materially distinct tangent layouts, scales, and
+cutter conditioning rather than treating that profile as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
@@ -54601,9 +54601,9 @@ for these exact fixtures, and independent CAD acceptance remain open.
 Test commit `9f7481a48` extends the endpoint-tangent parabola Trim Two action
 matrix with one asymmetric tangent pair, `(1.0, 0.2)` and `(0.7, -0.35)`,
 on a source translated to `(1e6, -2e6)` and using the existing rotated frame.
-The case exercises worker-backed source replacement, Trim Two, undo/redo, and
-the existing five-format save/reopen lanes. It adds construction-specific
-integration evidence without changing production behavior.
+It exercises worker-backed source replacement, Trim Two, and undo/redo. The
+initial test version did not run the save/reopen block for this profile; that
+coverage was added and verified in section 1643.
 
 Validation on macOS arm64 CMake Release:
 
@@ -54613,4 +54613,24 @@ Validation on macOS arm64 CMake Release:
 This is one asymmetric tangent construction at one translated scale/frame;
 other tangent layouts, scales, cutters, and independent CAD acceptance remain
 open.
+
+## 1643. Round-trip the Asymmetric Endpoint-tangent Trim (2026-11-16)
+
+Test commit `ebf7a3f47` enables the existing five-format save/reopen block for
+section 1642's asymmetric endpoint-tangent profile. The committed Trim Two
+result now receives geometric comparison after R14/R2000/R2018 DXF and
+R2000/R2018 DWG export/import. When `dwgread` is available, both DWG outputs
+are also parsed and checked for each expected fragment entity type. This
+closes the persistence evidence omitted by the original 1642 test gate; it
+does not expand the source/tangent/scale/cutter matrix.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Focused endpoint-tangent Trim Two matrix: 14,760 assertions / 1 case.
+- All five enabled format lanes completed; LibreDWG inspected both DWGs.
+- `git diff --check`: passed before commit.
+
+The evidence remains bounded to the one asymmetric tangent pair and frame
+listed in section 1642. Other tangent layouts, scales, cutter conditioning,
+visible-app acceptance, and independent ODA/AutoCAD acceptance remain open.
 
