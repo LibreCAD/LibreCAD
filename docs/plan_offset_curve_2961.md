@@ -261,11 +261,12 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1644 add a rotated, high-origin
-asymmetric endpoint-tangent parabola and its reversed traversal through Trim
-Two and all five internal file lanes; continue with materially distinct
-tangent layouts, scales, and cutter conditioning rather than treating these
-two traversal cases as exhaustive; (3) completed by sections 1504-1507: qualify
+and fail-closed limits. Sections 1642-1645 add a rotated, high-origin
+asymmetric endpoint-tangent parabola and its reversed traversal through an
+independent exact-normal oracle, Trim Two, and all five internal file lanes;
+continue with materially distinct tangent layouts, scales, and cutter
+conditioning rather than treating these two traversal cases as exhaustive;
+(3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
@@ -54655,4 +54656,24 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This adds reversed parameterization evidence for one asymmetric geometry; it
 does not cover other tangent pairs, endpoint spacing, scales/origins, cutter
 conditioning, visible-app acceptance, or independent ODA/AutoCAD acceptance.
+
+## 1645. Add an Independent Oracle for Asymmetric Tangent Traversals (2026-11-16)
+
+Test commit `536785d45` adds a direct-geometry test for the same asymmetric
+endpoint-tangent parabola and reversed traversal used by sections 1642-1644.
+At the rotated `(1e6,-2e6)` frame, the direct offset builder is checked on
+both sides against the exact source-curve evaluator at distance `0.1` and
+requested geometry tolerance `1e-4`. This supplies an independent geometric
+oracle for those two action-level cases rather than relying only on cache,
+preview, and round-trip agreement.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused asymmetric tangent oracle: 512 assertions / 1 case.
+- Full direct-parabola group: 65,240 assertions / 16 cases.
+- `git diff --check`: passed before commit.
+
+This oracle covers one asymmetric tangent pair, its reversed parameterization,
+one transformed frame, and one offset magnitude. Other endpoint-tangent
+profiles and conditioning remain open.
 
