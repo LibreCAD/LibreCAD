@@ -7013,14 +7013,10 @@ TEST_CASE(
     const RS_Vector &origin = origins[originIndex];
     for (const double ratio : ratios) {
       const double vertexRadius = semiMajor * ratio * ratio;
-      const bool retainBothWidths =
-          originIndex == 0 || ratio == 0.05 || ratio == 0.2;
-      const std::size_t widthCount =
-          retainBothWidths ? intervalHalfWidths.size() : 1;
       for (const bool oppositeBranch : {false, true}) {
         for (const bool reverseBounds : {false, true}) {
-          for (std::size_t widthIndex = 0; widthIndex < widthCount;
-               ++widthIndex) {
+          for (std::size_t widthIndex = 0;
+               widthIndex < intervalHalfWidths.size(); ++widthIndex) {
             const double halfWidth = intervalHalfWidths[widthIndex];
             const LC_HyperbolaData data{origin,
                                         RS_Vector{semiMajor * std::cos(0.37),
@@ -7190,10 +7186,8 @@ TEST_CASE(
   const std::size_t baseOriginRows = ratios.size() * intervalHalfWidths.size() *
                                      2 * 2 * curvatureFractions.size() * 2;
   const std::size_t highOriginRows =
-      (origins.size() - 1) * ratios.size() * 2 * 2 *
-          curvatureFractions.size() * 2 +
-      (origins.size() - 1) * 2 * (intervalHalfWidths.size() - 1) * 2 * 2 *
-          curvatureFractions.size() * 2;
+      (origins.size() - 1) * ratios.size() * 2 * 2 * intervalHalfWidths.size() *
+      curvatureFractions.size() * 2;
   CHECK(generatedRows == baseOriginRows + highOriginRows);
   CHECK(highOriginGeneratedRows == highOriginRows);
   CHECK(highOriginFallbackRows[0] > 0);
