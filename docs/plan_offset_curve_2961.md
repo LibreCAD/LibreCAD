@@ -261,10 +261,10 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1646 add two rotated, high-origin
-asymmetric endpoint-tangent parabolas and their reversed traversals through
-an independent exact-normal oracle, Trim Two, and all five internal file
-lanes; continue with materially distinct tangent layouts, scales, and cutter
+and fail-closed limits. Sections 1642-1647 add two rotated, high-origin
+asymmetric endpoint-tangent parabolas and both traversals through an
+independent exact-normal oracle, Trim Two, and all five internal file lanes;
+continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these four cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
@@ -54697,4 +54697,24 @@ The second pair is checked through the forward action traversal; its reversed
 action-level Trim and persistence path remains open, as do other tangent
 layouts, endpoint spacing, scales/origins, cutter conditioning, visible-app
 acceptance, and independent ODA/AutoCAD acceptance.
+
+## 1647. Trim the Reversed Opposite-bend Tangent Source (2026-11-16)
+
+Test commit `83afcf832` adds the reversed traversal of section 1646's
+opposite-bend asymmetric tangent pair to the worker-backed Trim Two fixture.
+The endpoints and tangent vectors are reversed consistently. The profile
+passes source replacement, preview/commit, undo/redo, and R14/R2000/R2018 DXF
+plus R2000/R2018 DWG save/reopen with fragment geometry matching; LibreDWG
+inspects both DWGs when available.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Endpoint-tangent Trim Two matrix: 14,685 assertions / 1 case.
+- All five enabled format lanes completed for the reversed profile.
+- `git diff --check`: passed before commit.
+
+The two tested tangent pairs now each have direct-oracle and action-level
+forward/reversed evidence at one frame and distance. Broader endpoint spacing,
+scale/origin, cutter conditioning, visible-app acceptance, and independent
+ODA/AutoCAD acceptance remain open.
 
