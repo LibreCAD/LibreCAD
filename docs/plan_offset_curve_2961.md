@@ -55143,3 +55143,22 @@ This adds only the recorded center/scale/ratio/distance rows to kernel geometry
 coverage. It does not establish arbitrary translation-scale covariance, GUI or
 worker behavior, file round trips, or independent CAD acceptance.
 
+## 1665. Extend the High-origin Cubic Near-tangent Distance Ladder (2026-11-16)
+
+Test commit `e197d7b4f` adds inward fraction `1e-5` to the high-origin,
+unit-scale, endpoint-tangent parabola/circle Trim Two profile from section 1661
+(slope `1e-8`, origin `(1e9, -2e9)`). The test's exact circle/Bezier oracle
+still reports two distinct simple roots for the actual stored doubles, and the
+direct conic preparation returns both roots and one conic fragment without
+mutating the source. The existing tangent boundary, preview/commit, worker,
+undo/redo, and five DXF/DWG save/reopen lanes remain in the same action matrix.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 46,392 assertions / 1 case.
+- `git diff --check`: passed.
+
+This extends one high-origin/unit-scale/orientation profile by one inward
+fraction only. Smaller fractions, other origins/scales/slopes, non-cubic
+contacts, visible-app use, and independent ODA/AutoCAD acceptance remain open.
+
