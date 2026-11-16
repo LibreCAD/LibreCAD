@@ -52194,3 +52194,35 @@ operation-8 cache validation are not included in this new fallback persistence
 claim. Other hyperbola domains, visible GUI acceptance, and ODA/AutoCAD
 acceptance remain open.
 
+## 1570. Persist Every Cache-refused Hyperbola Cusp Result (2026-11-15)
+
+Test commit `03f77899e` extends section 1569 to cover single-fragment ordinary
+outputs that operation-8 validation refuses, as well as multi-fragment
+outputs. Every generated row in the 240-profile matrix is now partitioned:
+cache-admitted results retain their typed-source two-pass persistence, while
+every cache refusal persists the complete ordinary SPLINE output. Each
+fallback is reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with
+the full ordered geometry-fingerprint list compared. When available,
+LibreDWG independently checks the expected SPLINE count and valid
+degree/control/knot cardinality in both DWG outputs. This supersedes section
+1569's single-fragment-refusal limitation.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][persistence]' --reporter compact
+git diff --check
+```
+
+The focused case passes 155,360 assertions / 1 case with DWG support and
+LibreDWG enabled. The partition assertion requires all 240 generated rows to
+be either typed-cache persisted or cache-refused fallback persisted. This
+closes persistence for those measured cusp profiles and file lanes only; it
+does not establish other hyperbola domains, visible GUI acceptance, or
+ODA/AutoCAD acceptance.
+
