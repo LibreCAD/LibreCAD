@@ -53245,3 +53245,32 @@ behavior. Stored-source discovery/highlighting, cancellation and failed-click
 interaction, and full picker suite are covered by the properties-dialog tests
 listed in section 1595. The packaged-app verification remains open.
 
+## 1598. Extend Four-point Parabola Reconstruction to 1e9 Origins (2026-11-16)
+
+The existing rotated high-origin reconstruction matrix covered translation
+`(1e6, -2e6)`. The same three control profiles, four sample layouts, four
+scales (`1e-3` through `1`), and forward/reversed sample order now also run at
+`(1e9, -2e9)`. The test requires a candidate to fit all four input samples and
+checks the best candidate against three independent points using a tolerance
+that accounts for both local scale and world-coordinate precision. As with
+the prior matrix, passing establishes a valid sample-fitting candidate within
+the recorded independent-point tolerance; it does not claim recovery of a
+hidden generating curve where four-point reconstruction is non-unique.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][reconstruction][large-origin][profile-matrix]' \
+  --reporter compact
+git diff --check
+```
+
+Result: the expanded profile/origin matrix passes 576 assertions / 1 case.
+Test commit `57538d45f` adds no production behavior. Worker/cache generation,
+Trim, and typed DXF/DWG persistence at `(1e9, -2e9)` remain open; the existing
+`(1e6, -2e6)` evidence does not qualify them at the larger origin. Other
+origins and continuous scale intervals also remain unqualified.
+
