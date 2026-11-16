@@ -367,6 +367,13 @@ jobs:
           call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
 
+      - name: Check that a PDF image renders
+        # Qt's PDF image plugin fails silently, so look at the pixels.
+        timeout-minutes: 10
+        run: |
+          & scripts\check-pdf-image.ps1 -Program windows\LibreCAD.exe
+        shell: pwsh
+
       - name: Rename installer
         run: |
           mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win-x64.exe
@@ -553,6 +560,13 @@ jobs:
           set LC_ARCH=ARM64
           call "${{ github.workspace }}\scripts\build-nsis.bat"
         shell: cmd
+
+      - name: Check that a PDF image renders
+        # Qt's PDF image plugin fails silently, so look at the pixels.
+        timeout-minutes: 10
+        run: |
+          & scripts\check-pdf-image.ps1 -Program windows\LibreCAD.exe
+        shell: pwsh
 
       - name: Rename installer
         run: |
