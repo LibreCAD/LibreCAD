@@ -54124,9 +54124,10 @@ action probe verifies cache-only success, conic-only and paired
 failure domain, and no document/batch mutation on Trim Two refusal. The paired
 preparation reports `Stage::ConicRootRefinement`; worker execution preserves
 the same stage and prepared publication preserves the same refusal without
-mutating the batch. Diagnostic slice commit `f1543889e` is pushed to PR #3193.
-The independent oracle finds two simple, spatially separated cache/circle
-roots for both tested scale profiles and sides, while production conic
+mutating the batch. Diagnostic slice `f1543889e` and exact-oracle slice
+`d116fb035` are pushed to PR #3193. The independent oracle finds two simple,
+spatially separated cache/circle roots for both tested scale profiles and
+sides, while production conic
 contraction still refuses; the next slice must diagnose and resolve that
 proof-path discrepancy.
 
