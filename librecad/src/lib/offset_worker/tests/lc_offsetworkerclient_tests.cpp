@@ -6879,18 +6879,34 @@ TEST_CASE(
     ordinaryGraphic.initForNewDocument();
     auto *ordinaryLayer = new RS_Layer("OrdinaryOffset");
     ordinaryGraphic.addLayer(ordinaryLayer);
-    std::vector<std::uint64_t> expectedFragments;
+    std::vector<std::uint64_t> expectedSplineFragments;
+    std::vector<RS_LineData> expectedLines;
+    std::size_t expectedLineCount = 0;
+    std::size_t expectedSplineCount = 0;
     for (const auto &output : outputs) {
       const auto *splineData = std::get_if<RS_SplineData>(&output);
-      REQUIRE(splineData);
-      RS_Spline spline{nullptr, *splineData};
-      REQUIRE(spline.validate());
-      auto *entity = new RS_Spline(&ordinaryGraphic, *splineData);
+      if (splineData) {
+        RS_Spline spline{nullptr, *splineData};
+        REQUIRE(spline.validate());
+        auto *entity = new RS_Spline(&ordinaryGraphic, *splineData);
+        entity->setLayer(ordinaryLayer);
+        ordinaryGraphic.addEntity(entity);
+        expectedSplineFragments.push_back(
+            RS_Spline::geometryFingerprint(*splineData));
+        ++expectedSplineCount;
+        continue;
+      }
+      const auto *segment = std::get_if<Req::Segment>(&output);
+      REQUIRE(segment);
+      const RS_LineData lineData{segment->start, segment->end};
+      auto *entity = new RS_Line(&ordinaryGraphic, lineData);
       entity->setLayer(ordinaryLayer);
       ordinaryGraphic.addEntity(entity);
-      expectedFragments.push_back(RS_Spline::geometryFingerprint(*splineData));
+      expectedLines.push_back(lineData);
+      ++expectedLineCount;
     }
-    REQUIRE(expectedFragments.size() == outputs.size());
+    REQUIRE(expectedSplineFragments.size() + expectedLines.size() ==
+            outputs.size());
 
     for (const Lane &lane : lanes) {
       CAPTURE(lane.extension);
@@ -6903,16 +6919,42 @@ TEST_CASE(
       REQUIRE(lc::test::exportDrawing(ordinaryGraphic, path, lane.format));
       RS_Graphic reopened;
       REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-      std::vector<std::uint64_t> actualFragments;
+      std::vector<std::uint64_t> actualSplineFragments;
+      std::vector<RS_LineData> actualLines;
       for (RS_Entity *entity : reopened) {
-        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline)
+        if (entity->isDeleted())
           continue;
-        const auto *spline = dynamic_cast<const RS_Spline *>(entity);
-        REQUIRE(spline);
-        actualFragments.push_back(
-            RS_Spline::geometryFingerprint(spline->getData()));
+        if (entity->rtti() == RS2::EntitySpline) {
+          const auto *spline = dynamic_cast<const RS_Spline *>(entity);
+          REQUIRE(spline);
+          actualSplineFragments.push_back(
+              RS_Spline::geometryFingerprint(spline->getData()));
+        } else if (entity->rtti() == RS2::EntityLine) {
+          const auto *line = dynamic_cast<const RS_Line *>(entity);
+          REQUIRE(line);
+          actualLines.push_back(line->getData());
+        }
       }
-      CHECK(actualFragments == expectedFragments);
+      std::sort(actualSplineFragments.begin(), actualSplineFragments.end());
+      std::sort(expectedSplineFragments.begin(), expectedSplineFragments.end());
+      CHECK(actualSplineFragments == expectedSplineFragments);
+      REQUIRE(actualLines.size() == expectedLines.size());
+      for (const RS_LineData &expectedLine : expectedLines) {
+        const auto match = std::find_if(
+            actualLines.begin(), actualLines.end(),
+            [&](const RS_LineData &actualLine) {
+              return (actualLine.startpoint.distanceTo(expectedLine.startpoint) <=
+                          1e-4 &&
+                      actualLine.endpoint.distanceTo(expectedLine.endpoint) <=
+                          1e-4) ||
+                     (actualLine.startpoint.distanceTo(expectedLine.endpoint) <=
+                          1e-4 &&
+                      actualLine.endpoint.distanceTo(expectedLine.startpoint) <=
+                          1e-4);
+            });
+        REQUIRE(match != actualLines.end());
+        actualLines.erase(match);
+      }
     }
 #ifdef DWGSUPPORT
     if (!libreDwgReader.isEmpty()) {
@@ -6933,10 +6975,16 @@ TEST_CASE(
             QJsonDocument::fromJson(reader.readAllStandardOutput());
         REQUIRE(document.isObject());
         const QJsonArray objects = document.object().value("OBJECTS").toArray();
+        std::size_t lineCount = 0;
         std::size_t splineCount = 0;
         for (const QJsonValue &objectValue : objects) {
           const QJsonObject object = objectValue.toObject();
-          if (object.value("entity").toString() != "SPLINE")
+          const QString entityType = object.value("entity").toString();
+          if (entityType == "LINE") {
+            ++lineCount;
+            continue;
+          }
+          if (entityType != "SPLINE")
             continue;
           ++splineCount;
           const int degree = object.value("degree").toInt(-1);
@@ -6946,7 +6994,8 @@ TEST_CASE(
           CHECK(controls.size() >= degree + 1);
           CHECK(knots.size() == controls.size() + degree + 1);
         }
-        CHECK(splineCount == expectedFragments.size());
+        CHECK(lineCount == expectedLineCount);
+        CHECK(splineCount == expectedSplineCount);
       }
     }
 #endif
@@ -6963,12 +7012,16 @@ TEST_CASE(
        ++originIndex) {
     const RS_Vector &origin = origins[originIndex];
     for (const double ratio : ratios) {
-      if (originIndex != 0 && ratio != 0.05 && ratio != 0.2)
-        continue;
       const double vertexRadius = semiMajor * ratio * ratio;
+      const bool retainBothWidths =
+          originIndex == 0 || ratio == 0.05 || ratio == 0.2;
+      const std::size_t widthCount =
+          retainBothWidths ? intervalHalfWidths.size() : 1;
       for (const bool oppositeBranch : {false, true}) {
         for (const bool reverseBounds : {false, true}) {
-          for (const double halfWidth : intervalHalfWidths) {
+          for (std::size_t widthIndex = 0; widthIndex < widthCount;
+               ++widthIndex) {
+            const double halfWidth = intervalHalfWidths[widthIndex];
             const LC_HyperbolaData data{origin,
                                         RS_Vector{semiMajor * std::cos(0.37),
                                                   semiMajor * std::sin(0.37)},
@@ -7137,7 +7190,10 @@ TEST_CASE(
   const std::size_t baseOriginRows = ratios.size() * intervalHalfWidths.size() *
                                      2 * 2 * curvatureFractions.size() * 2;
   const std::size_t highOriginRows =
-      2 * 2 * intervalHalfWidths.size() * 2 * 2 * curvatureFractions.size() * 2;
+      (origins.size() - 1) * ratios.size() * 2 * 2 *
+          curvatureFractions.size() * 2 +
+      (origins.size() - 1) * 2 * (intervalHalfWidths.size() - 1) * 2 * 2 *
+          curvatureFractions.size() * 2;
   CHECK(generatedRows == baseOriginRows + highOriginRows);
   CHECK(highOriginGeneratedRows == highOriginRows);
   CHECK(highOriginFallbackRows[0] > 0);
