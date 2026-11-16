@@ -1867,8 +1867,9 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     bool oppositeEndClustered = false;
     bool interiorAsymmetric = false;
     bool interiorBalanced = false;
+    bool towardCentre = false;
   };
-  const std::array<Frame, 85> frames{{
+  const std::array<Frame, 86> frames{{
       {1.0, 0.0, {}, false, false, 0, false},
       {1e-6, 0.0, {}, false, false, 0, false},
       {1e6, 0.0, {}, false, false, 0, false},
@@ -1954,13 +1955,15 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1e-1, 0.6435011087932844, {1e6, -2e6}, true, false, 2, false, true, false, false, true},
       {1.0, 0.6435011087932844, {1e6, -2e6}, true, false, 2, false, true, false, false, true},
       {1.0, 0.6435011087932844, {1e9, -2e9}, true, false, 2, false, true, false, false, true},
+      {1.0, 0.6435011087932844, {1e9, -2e9}, true, false, 2, false, true, false, false, true, true},
   }};
   for (const Frame &frame : frames) {
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
             frame.translation.y, frame.reversed, frame.denseEnd,
             frame.profile, frame.expectLimitRefusal,
             frame.allowAmbiguousCandidate, frame.oppositeEndClustered,
-            frame.interiorAsymmetric, frame.interiorBalanced);
+            frame.interiorAsymmetric, frame.interiorBalanced,
+            frame.towardCentre);
     const double scale = frame.scale;
     const double angle = frame.angle;
     const RS_Vector translation = frame.translation;
@@ -1985,7 +1988,8 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
     RS_Ellipse seed(nullptr,
                     RS_EllipseData{{0, 0}, {scale, 0}, 1, 0, .1, false});
     const double offsetDistance = 0.5 * scale;
-    auto initial = LC_OffsetCurve::create(seed, offsetDistance, false);
+    auto initial = LC_OffsetCurve::create(seed, offsetDistance,
+                                           frame.towardCentre);
     REQUIRE(initial);
     auto *previous = initial.entity.release();
     f.graphic.addEntity(previous);
