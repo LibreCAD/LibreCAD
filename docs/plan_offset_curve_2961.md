@@ -55206,3 +55206,26 @@ The boundary matrix is still one high-origin/unit-scale/orientation/slope
 profile. Other origins, scales, tangent directions, source degrees, and cutter
 shapes remain open, as do visible-app and independent ODA/AutoCAD acceptance.
 
+## 1668. Revalidate the Source Picker and qmake6 Delivery at Current Head (2026-11-16)
+
+At current PR head `726c930c9`, the existing out-of-source qmake6 application,
+worker, libraries, tools, and plugin build completed successfully with
+`make -j4` in `/private/tmp/offset2961-qmake6-clean-current`. The current CMake
+Release `librecad_tests` binary also passes the focused source-picker cases:
+all-family filter/replacement (466 assertions), live filter changes without
+target mutation (148), and highlighted-source preservation across family
+filters (161). These results revalidate the implemented nine-family picker,
+including distinct parabola selection, on the current tree; they are headless
+tests and do not close visible packaged-app acceptance.
+
+Validation:
+
+- qmake6 full application/plugin tree: `make -j4`, exit status 0.
+- Three focused source-picker cases: 775 assertions / 3 cases.
+- Existing CMake Release `librecad_tests` build: passed.
+- `git diff --check`: passed.
+
+The physical Properties workflow (repeat type changes while browsing, inspect
+the live candidate list and source indication, replace, cancel/refuse, and
+undo/redo/save/reopen) and independent ODA/AutoCAD review remain open.
+
