@@ -117,6 +117,10 @@ public:
     }
     void clickAsync(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseLeftButtonRelease(getStatus(), &e); }
     void click(RS_Vector p) { clickAsync(p); waitForTrim(); }
+    RS_Entity* caughtAt(RS_Vector p) const {
+        const auto e = lc::test::eventAt(p.x, p.y);
+        return catchEntityByEvent(&e, RS2::ResolveNone);
+    }
     void hoverAsync(RS_Vector p) {
         deletePreviewAndHighlights(); auto e = lc::test::eventAt(p.x, p.y);
         onMouseMoveEvent(getStatus(), &e); drawPreviewAndHighlights();
@@ -2352,15 +2356,24 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-    const bool highOrigin = GENERATE(false, true);
+    const int profile = GENERATE(0, 1, 2);
+    const bool highOrigin = profile == 2;
+    const bool scaleExtreme = profile == 1;
+    const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
+    const double profileScale = scaleExtreme
+        ? (scaleProfile == 0 ? 1e-3 : 1e3) : 1.0;
+    RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1000.0 * profileScale, 0}, 1, 0, .1, false});
     const RS_Vector sourceTranslation = highOrigin
         ? RS_Vector{1e9, -2e9}
-        : GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
-                   RS_Vector{1e8, -2e8});
+        : scaleExtreme
+            ? (scaleProfile == 0 ? RS_Vector{1e3, -2e3} : RS_Vector{1e9, -2e9})
+            : profile == 0
+                ? GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
+                           RS_Vector{1e8, -2e8})
+                : RS_Vector{0.0, 0.0};
     const bool towardCentre = highOrigin || sourceTranslation.x != 0.0
         ? GENERATE(false, true) : false;
-    auto initial = LC_OffsetCurve::create(seed, 0.5, towardCentre);
+    auto initial = LC_OffsetCurve::create(seed, 0.5 * profileScale, towardCentre);
     REQUIRE(initial);
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
@@ -2370,6 +2383,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                    1.5e-9, 1.25e-9, 1.125e-9, 1.10625e-9,
                    1.1046875e-9, 1.1044921875e-9,
                    1.1044677734375e-9)
+        : scaleExtreme
+            ? (scaleProfile == 0 ? 1e-6 : 1e-8)
         : sourceTranslation.x == 0.0
             ? GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14)
             : 1e-8;
@@ -2377,8 +2392,12 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         ? 0.371234567890123
         : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
                                      : 0.371234567890123;
+    CAPTURE(profile, scaleProfile, sourceTranslation, profileScale, towardCentre,
+            tangentSlope, sourceRotation);
+    const double endpointSpacing = scaleExtreme
+        ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0;
     LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
-        {{{0.0, 0.0}, {10.0, 0.0}}},
+        {{{0.0, 0.0}, {endpointSpacing, 0.0}}},
         {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});
     REQUIRE(sourceData.isValid());
     const double cosine = std::cos(sourceRotation);
@@ -2427,13 +2446,22 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(tangent.magnitude() > RS_TOLERANCE);
     tangent /= tangent.magnitude();
     const RS_Vector normal{-tangent.y, tangent.x};
-    constexpr double radius = .1;
+    const double radius = .1 * profileScale;
     const RS_Vector circleCenter = intersection + tangent * radius;
-    auto* cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
+    RS_Entity* cutter = nullptr;
+    RS_Vector cutterPick;
+    if (scaleExtreme) {
+        cutter = new RS_Line(&f.graphic,
+            RS_LineData{intersection - normal * radius * 2.0,
+                        intersection + normal * radius * 2.0});
+        cutterPick = intersection + normal * radius;
+    } else {
+        cutter = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
+        cutterPick = circleCenter + normal * radius;
+    }
     f.graphic.addEntity(cutter);
     const RS_Vector nativePick = native->getPointAt(
-        breaks.front() + (breaks[1] - breaks.front()) * .9);
-    const RS_Vector cutterPick = circleCenter + normal * radius;
+        breaks.front() + (breaks[1] - breaks.front()) * (scaleExtreme ? .25 : .9));
     const auto nativeBefore = trimGeometry(*native);
     const auto cutterBefore = trimGeometry(*cutter);
 
@@ -2441,11 +2469,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const auto directTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
         {nativePick}, {}, {}, &trimWork);
     REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+    CAPTURE(intersection, nativePick, cutterPick, radius);
     CHECK(trimWork.intersections.deepestPairRefinement <=
           LC_OffsetCacheTrim::Limits{}.maxDepth);
 
     f.action->click(nativePick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    CHECK(f.action->caughtAt(cutterPick) == cutter);
     f.action->hover(cutterPick);
     const auto preview = trimPreview(*f.action->m_preview);
     REQUIRE_FALSE(preview.empty());
@@ -2459,18 +2489,21 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK(cutter->isDeleted());
     std::vector<RS_Entity*> fragments;
     std::vector<std::string> committed;
+    std::vector<std::string> committedLines;
     for (RS_Entity* entity : live(f.graphic)) {
         if (entity == parabola)
             continue;
         fragments.push_back(entity);
-        if (entity->rtti() == RS2::EntitySpline || entity->rtti() == RS2::EntityArc ||
-            entity->rtti() == RS2::EntityLine)
+        if (entity->rtti() == RS2::EntityLine)
+            committedLines.push_back(trimGeometry(*entity));
+        else if (entity->rtti() == RS2::EntitySpline || entity->rtti() == RS2::EntityArc)
             committed.push_back(trimGeometry(*entity));
     }
     auto expected = preview;
     std::sort(committed.begin(), committed.end());
     std::sort(expected.begin(), expected.end());
     CHECK(committed == expected);
+    CHECK(committedLines.size() == (scaleExtreme ? 1u : 0u));
     CHECK_FALSE(fragments.empty());
 
     REQUIRE(f.graphic.undo());
@@ -2486,7 +2519,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     for (const RS_Entity* fragment : fragments)
         CHECK_FALSE(fragment->isDeleted());
 
-    if (highOrigin) {
+    if (highOrigin || scaleExtreme) {
         QTemporaryDir directory;
         REQUIRE(directory.isValid());
         const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14,
@@ -2501,7 +2534,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                                        fragments.end());
         REQUIRE_FALSE(expectedGeometry.empty());
 
-        constexpr double geometryTolerance = 1e-4;
+        const double geometryTolerance = scaleExtreme
+            ? (scaleProfile == 0 ? 1e-7 : 1e-4) : 1e-4;
         const auto closePoint = [=](const RS_Vector& a, const RS_Vector& b) {
             return a.valid && b.valid &&
                    a.distanceTo(b) <= geometryTolerance;
@@ -2585,7 +2619,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                 continue;
 #endif
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("high-origin-parabola-trim-%1")
+                QStringLiteral("endpoint-parabola-trim-%1")
                     .arg(lane) + (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[lane]));
 #ifdef DWGSUPPORT

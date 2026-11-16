@@ -53966,8 +53966,11 @@ scale (`span=1e5`, `slope=1e-8`, signed distance magnitude `500`). Each scale
 is exercised at the origin and at a translated origin (`(1e3,-2e3)` for the
 small profile; `(1e9,-2e9)` for the large profile). These additions extend the
 matrix for one endpoint-tangent construction only. The new scale rows are not
-yet exercised through Trim Two; section 1618's Trim Two evidence remains
-limited to `span=10`, `slope=1e-8`, origins through `(1e8,-2e8)`.
+yet exercised through Trim Two at this checkpoint; section 1620 below adds
+Trim Two coverage with transverse line cutters. Near-flat circle-root
+ambiguity at the large scale is not claimed as solved. Section 1618's earlier
+Trim Two matrix remains limited to `span=10`, `slope=1e-8`, origins through
+`(1e8,-2e8)`.
 
 Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
 
@@ -53989,4 +53992,34 @@ worker/cache and five-format persistence pass 40,596 assertions / 1 case.
 The full origin/scale/construction/cutter matrix, Trim Two for these new scale
 rows, visible-app acceptance, and independent ODA/AutoCAD acceptance remain
 open.
+
+## 1620. Exercise Scale-extreme Parabolas through Trim Two (2026-11-16)
+
+Extend the endpoint-tangent Trim Two fixture with the section 1619 small
+(`span=1e-3`, `slope=1e-6`, offset magnitude `5e-4`) profile translated to
+`(1e3,-2e3)`, and large (`span=1e5`, `slope=1e-8`, offset magnitude `500`)
+profile translated to `(1e9,-2e9)`. Both signed sides run through source
+replacement, direct Trim preparation, worker-backed Trim Two preview/commit,
+undo/redo, and R14/R2000/R2018 DXF plus R2000/R2018 DWG reopen. A transverse
+line cutter gives unambiguous intersections at these scales. The scale test
+checks the line fragment separately from preview geometry; five-lane reopen
+checks every resulting fragment's geometry.
+
+Large-scale transverse-line Trim Two validation on macOS arm64 CMake Release
+with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Result: 19,975 assertions / 1 generated test case pass, including all five
+round-trip lanes. The large-scale circle-cutter variant returns
+`AmbiguousRoots` in prepared Trim Two and remains a distinct open boundary;
+this test does not claim arbitrary cutter, slope, origin, or scale coverage.
+Visible-app and independent ODA/AutoCAD acceptance remain open.
 
