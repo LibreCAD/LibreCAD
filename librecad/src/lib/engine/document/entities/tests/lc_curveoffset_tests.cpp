@@ -2498,6 +2498,50 @@ TEST_CASE("Nearly parallel endpoint tangents retain parabola offset support",
     }
 }
 
+TEST_CASE("Asymmetric endpoint-tangent parabola offsets retain exact normals",
+          "[curve-offset][direct][parabola][tangent][asymmetric][oracle]") {
+    const RS_Vector translation{1e6, -2e6};
+    constexpr double rotation = 0.371234567890123;
+    const auto transform = [=](const RS_Vector& point) {
+        return RS_Vector{std::cos(rotation) * point.x - std::sin(rotation) * point.y +
+                             translation.x,
+                         std::sin(rotation) * point.x + std::cos(rotation) * point.y +
+                             translation.y};
+    };
+    const std::array<std::array<RS_Vector, 2>, 2> endpoints{{
+        {{{0.0, 0.0}, {10.0, 0.0}}},
+        {{{10.0, 0.0}, {0.0, 0.0}}}}};
+    const std::array<std::array<RS_Vector, 2>, 2> tangents{{
+        {{{1.0, 0.2}, {0.7, -0.35}}},
+        {{{-0.7, 0.35}, {-1.0, -0.2}}}}};
+
+    for (std::size_t traversal = 0; traversal < endpoints.size(); ++traversal) {
+        CAPTURE(traversal);
+        auto data = LC_ParabolaData::FromEndPointsTangents(
+            endpoints[traversal], tangents[traversal]);
+        REQUIRE(data.isValid());
+        for (RS_Vector& point : data.m_controlPoints)
+            point = transform(point);
+
+        const LC_Parabola source{nullptr, data};
+        const EvalFn exactCurve = evaluator(source);
+        constexpr double distance = 0.1;
+        constexpr double requestedTolerance = 1e-4;
+        const auto options = LC_CurveOffset::makeDirectOptions(
+            source, distance, requestedTolerance);
+        REQUIRE(options.tolerance.requestedGeometry == requestedTolerance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, exactCurve) <= requestedTolerance);
+        }
+    }
+}
+
 TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
           "[curve-offset][direct][parabola][tangent][large-origin][oracle]") {
     const RS_Vector translation{1e9, -2e9};
