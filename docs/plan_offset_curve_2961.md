@@ -53394,10 +53394,12 @@ inward companion frame; no production behavior changes.
 
 ## 1603. Confirm Type-changing Source Picker Covers Every Supported Kind (2026-11-16)
 
-The latest request asks that the source-curve Properties widget permit changing
-the requested source type while choosing a replacement, and expose all source
-types supported by the offset model. Rechecked against the current code: the
-type combo is populated directly from
+The latest repeated request asks that the source-curve Properties widget permit
+changing the requested source type while choosing a replacement, and expose
+all source types supported by the offset model, explicitly including
+parabola. Treat this as a reaffirmation of the existing widget contract, not a
+new selector or a parabola-only UI slice. Rechecked against the current code:
+the type combo is populated directly from
 `LC_OffsetSourceGeometry::SupportedKinds`, and changing it refreshes the
 candidate filter without applying a source mutation. The current inventory is
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
@@ -53422,7 +53424,10 @@ Properties workflow (change types repeatedly, verify candidate refresh and
 source indication, replace successfully, and cancel/refuse without mutation)
 open under Slice 5. Keep concrete source-variant geometry, worker/cache,
 trimming, and DXF/DWG qualification open under Slice 4; selector coverage is
-not evidence of end-to-end support for every geometry variant.
+not evidence of end-to-end support for every geometry variant. In particular,
+"all types" in the widget means all nine modeled source kinds; it does not
+close Slice 4's per-variant support matrix or imply support for entity classes
+outside `SupportedKinds`.
 
 ## 1604. Qualify a High-origin Endpoint-tangent Parabola (2026-11-16)
 
@@ -53720,4 +53725,50 @@ Result: 1,461 assertions / 1 case pass, including both signed direct offsets
 for every admitted profile and invalid-source checks for the sampled lower
 slopes. The unresolved interval is `(1.10390625e-9, 1.1046875e-9]`; other
 origins, scales, constructions, and external CAD acceptance remain open.
+
+## 1612. Support the Recentered 1.1044921875e-9 Parabola (2026-11-16)
+
+The endpoint-tangent profile `1.1044921875e-9` is representable at the
+recorded `(1e9,-2e9)` frame. Direct branch construction and materialization
+at distance `0.5` initially returned `ToleranceNotMet` when the profile was
+recentered as the worker does. `LC_CurveOffset::makeDirectOptions` now grants
+eight additional bounded subdivision levels to parabolas whose normalized
+control flatness is at most `sqrt(machine epsilon)`. The policy follows the
+intrinsic conditioning after recentering; it does not relax positional
+tolerance or alter sample/output budgets. Tests verify this exact direct
+generation and materialization, the worker/cache result for both signed
+distances with five-format persistence, and Trim Two on both `towardCentre`
+sides with five-format result persistence and available LibreDWG checks.
+The direct test's recentered control net is rebuilt as `LC_ParabolaData` after
+translation, so focus/axis/vertex are recomputed exactly as in the worker's
+local-frame reconstruction.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Results after rebuilding the derived data in the recentered fixture: direct
+generation/materialization pass 4,461 assertions / 1 case; worker/cache and
+five-format persistence pass 35,303 assertions / 1 case; Trim Two and result
+persistence pass 9,501 assertions / 1 case. The interval
+is now sampled through valid `1.1044921875e-9` and invalid
+`1.104296875e-9`/`1.10390625e-9` at this frame; the continuous boundary and
+other origins/scales remain open.
 

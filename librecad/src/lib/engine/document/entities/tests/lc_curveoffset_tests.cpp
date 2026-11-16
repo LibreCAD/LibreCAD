@@ -2511,7 +2511,7 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
     for (const double slope : {1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
                                1.5e-9, 1.25e-9, 1.125e-9, 1.121875e-9,
                                1.11875e-9, 1.1125e-9, 1.10625e-9,
-                               1.1046875e-9}) {
+                               1.1046875e-9, 1.1044921875e-9}) {
         CAPTURE(slope);
         const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + translation, rotate({10.0, 0.0}) + translation}},
@@ -2536,10 +2536,56 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
             CHECK(maxDeviation(result, exactCurve) <=
                   options.tolerance.requestedGeometry);
         }
+        if (slope <= 1.1046875e-9) {
+            const double workerDistance = 0.5;
+            const auto workerToleranceOptions = LC_CurveOffset::makeDirectOptions(
+                source, workerDistance, 1e-4);
+            CHECK(workerToleranceOptions.maxSubdivisionDepth ==
+                  LC_CurveOffset::kDefaultMaxSubdivisionDepth + 8);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(side, workerDistance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, workerDistance),
+                    workerToleranceOptions, LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(maxDeviation(result, exactCurve) <=
+                      workerToleranceOptions.tolerance.requestedGeometry);
+                const auto materialized = LC_CurveOffset::materializeBranches(
+                    source, result, workerToleranceOptions,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+            }
+
+            std::array<RS_Vector, 3> localControls = data.m_controlPoints;
+            const RS_Vector localOrigin = localControls.front();
+            for (RS_Vector& point : localControls)
+                point -= localOrigin;
+            LC_ParabolaData localData{localControls};
+            LC_Parabola localSource{nullptr, localData};
+            const double localTolerance = LC_CurveOffset::toleranceFor(
+                localSource, workerDistance, 1e-4);
+            const auto localOptions = LC_CurveOffset::makeDirectOptions(
+                localSource, workerDistance, localTolerance);
+            CHECK(localOptions.maxSubdivisionDepth ==
+                  LC_CurveOffset::kDefaultMaxSubdivisionDepth + 8);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(side, workerDistance, localTolerance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    localSource, LC_CurveOffset::makeSideRequest(side, workerDistance),
+                    localOptions, LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                const auto materialized = LC_CurveOffset::materializeBranches(
+                    localSource, result, localOptions,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+            }
+        }
     }
 
-    for (const double slope : {1.10390625e-9, 1.103125e-9, 1.1e-9,
-                               1.0625e-9, 1e-9}) {
+    for (const double slope : {1.104296875e-9, 1.10390625e-9,
+                               1.103125e-9, 1.1e-9, 1.0625e-9, 1e-9}) {
         CAPTURE(slope);
         const auto unrepresentable = LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + translation,

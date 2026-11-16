@@ -5852,7 +5852,7 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}})});
     }
     const RS_Vector highOrigin{1e9, -2e9};
-    const std::array<std::pair<const char*, double>, 12> highOriginSlopeProfiles{{
+    const std::array<std::pair<const char*, double>, 13> highOriginSlopeProfiles{{
         {"high-origin-1e-4", 1e-4},
         {"high-origin-1e-5", 1e-5},
         {"high-origin-1e-6", 1e-6},
@@ -5864,7 +5864,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         {"high-origin-1.25e-9", 1.25e-9},
         {"high-origin-1.125e-9", 1.125e-9},
         {"high-origin-1.10625e-9", 1.10625e-9},
-        {"high-origin-1.1046875e-9", 1.1046875e-9}}};
+        {"high-origin-1.1046875e-9", 1.1046875e-9},
+        {"high-origin-1.1044921875e-9", 1.1044921875e-9}}};
     for (const auto& [name, tangentSlope] : highOriginSlopeProfiles) {
         profiles.push_back({name, LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + highOrigin,
@@ -5934,6 +5935,15 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             rt.until([&] { return generatedReceipts.calls[0] != 0; });
             const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
             const auto& result = std::get<Reply::Native>(generated.reply().result);
+            INFO("engineStatus=" << (result.engineStatus
+                                         ? static_cast<int>(*result.engineStatus)
+                                         : -1)
+                 << " refusal=" << static_cast<int>(result.refusal)
+                 << " ordinaryStatus=" << static_cast<int>(result.ordinaryStatus)
+                 << " samples=" << result.sampleUnits
+                 << " attemptedPieces=" << result.attemptedOutputUsage.cubicPieces
+                 << " attemptedEntities=" << result.attemptedOutputUsage.outputEntities
+                 << " attemptedDeep=" << result.attemptedOutputUsage.deepEntities);
             REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
             RS_SplineData cache;

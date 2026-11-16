@@ -7605,6 +7605,24 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
     }
     options.angleTolerance = kDefaultOffsetAngleTolerance;
     options.maxSubdivisionDepth = kDefaultMaxSubdivisionDepth;
+    if (const auto* parabola = dynamic_cast<const LC_Parabola*>(&source)) {
+        const auto& controls = parabola->getData().m_controlPoints;
+        const RS_Vector chord = controls[2] - controls[0];
+        const double chordLength = chord.magnitude();
+        if (std::isfinite(chordLength) && chordLength > 0.0) {
+            const RS_Vector unitChord = chord / chordLength;
+            const RS_Vector control = controls[1] - controls[0];
+            const double normalizedFlatness =
+                std::abs(unitChord.x * control.y - unitChord.y * control.x) /
+                chordLength;
+            if (std::isfinite(normalizedFlatness) &&
+                normalizedFlatness <= std::sqrt(g_eps)) {
+                // Nearly collinear Bezier controls can produce small curvature
+                // changes that need extra bounded fit refinement.
+                options.maxSubdivisionDepth += 8;
+            }
+        }
+    }
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source); ellipse != nullptr && std::abs(ellipse->getData().ratio) < 0.01) {
         // High eccentricity can need extra fit subdivision near the major-axis
         // vertices; the shared sample and output budgets still bound the work.
