@@ -54527,3 +54527,25 @@ periodic weight distributions, knot layouts, source scales, complete
 subprocess all-knot coverage, GUI replacement, Trim/persistence for these
 exact profiles, or independent CAD acceptance.
 
+## 1639. Map Every Steep-profile Knot in the Built Helper (2026-11-16)
+
+Test commit `91caa1b4b` extends section 1638's helper-process coverage so the
+steeper asymmetric profile (`0.7 + 0.2 * controlIndex`) generates and maps the
+offset point at every interior break for degrees four and six. The expected
+point is derived from the source one-sided jet; emitted spline spans are
+sampled locally to confirm the point lies on the actual helper output without
+assuming that each event is represented as a branch endpoint. The other three
+profiles retain representative-knot subprocess coverage, while cache admission
+is still checked at the first interior knot for every profile/degree pair.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused helper-process matrix: 43,759 assertions / 1 case.
+- Full helper-process suite: 46,418 assertions / 7 cases.
+- `git diff --check`: passed.
+
+This closes all-knot helper generation/point mapping only for the steeper
+profile; it does not provide all-knot cache admission, all-knot process
+coverage for the other profiles, GUI replacement, Trim, persistence, other
+weight distributions/layouts, or external CAD acceptance.
+
