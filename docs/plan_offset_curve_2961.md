@@ -25,49 +25,21 @@ USA.
 
 Updated: 2026-11-16. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest source-picker request reconciliation (2026-11-16):** The repeated
-request confirms two acceptance requirements for replacing an offset source:
-the Properties widget must let the user change the requested source type and
-immediately refresh eligible candidates without ending replacement selection;
-the type list must cover every source kind the offset model supports. Its type
-list is the complete current
-`LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle,
-ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
-Parabola is a distinct supported type, not a spline-points alias. This
-picker/replacement behavior is already implemented and has headless all-kind
-filtering, replacement, highlight-transfer, and incremental-scan evidence
-recorded below; do not add another selector or a parabola-only UI slice. The
-incremental regression visits all nine kinds while scanning a large document
-and proves filtering alone leaves the edited geometry unchanged. Type changes
-are candidate filters, not source mutations: until asynchronous validation
-publishes a replacement, the committed source, cache, identity, selection, and
-highlight must remain unchanged. Visible packaged-app acceptance of repeated
+**Current source-picker disposition (2026-11-16):** The Properties source
+filter covers all nine `LC_OffsetSourceGeometry::SupportedKinds` and now has an
+`All supported types` choice for cross-family replacement. Selecting any of
+the nine candidates synchronizes the filter to the selected entity's actual
+family before guarded worker preparation. The synchronous and incremental
+large-document paths are covered, including ellipse, spline, spline-points,
+parabola, bounded hyperbola, line, arc, circle, and polyline. Implementation is
+commit `1749fa062`; plan evidence is section 1658. This supersedes the older
+source-picker product revision and menu-only characterization below. It does
+not qualify every concrete geometry variant: capture/reconstruction,
+worker/cache, Trim, and applicable DXF/DWG lanes remain tracked separately in
+the family-by-variant roadmap. Visible packaged-app acceptance of repeated
 type changes, candidate refresh, source indication, successful replacement,
-and cancellation/refusal remains open in Slice 5. The nine-kind
-inventory does not establish support for every concrete geometry variant:
-Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
-Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically. Sections 1595 and 1597 hold the implementation and headless
-interaction evidence; there is no additional source-widget implementation
-slice indicated by this request. The latest source-picker product revision
-remains `b96f27469`; subsequent commits add qualification tests and roadmap
-checkpoints, not additional source-picker product code. At that product
-revision,
-`[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
-CMake Release; this includes explicit enabled-state checks during an active
-scan and a large-document async filtering matrix for every supported kind.
-The separate Update-from-Source action click/highlight matrix added by
-`d70b1e392` passes 466 assertions / 1 case across all nine types. Product
-code remains at
-`b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent commits only update the
-roadmap and tests, including parabola drawing-action tests. This is headless UI
-evidence and does not close the
-visible packaged-app gate.
-
-Checkpoint 1603 below is the latest explicit confirmation of this contract
-against the current codebase. It supersedes any older roadmap wording that
-describes a single-family-only source chooser or proposes a separate
-parabola-specific selector task.
+and cancellation/refusal remains open. The type selector is not a replacement
+for that gate or for external ODA/AutoCAD acceptance.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
@@ -274,7 +246,7 @@ Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
-automated Properties coverage is revalidated by section 1649 for repeated
+automated Properties coverage is revalidated by sections 1649 and 1658 for repeated
 type changes, candidate refresh, current-source indication, replacement, and
 cancellation/refusal; retain visible packaged-app interaction as the remaining
 manual gate; (5) completed by section 1532: the automated all-family
@@ -289,11 +261,16 @@ claim all variants from the nine-kind selector inventory.
 widget contract is that a user can change the requested source type while
 replacement picking is active, see candidates refresh to that type, and
 select a source without losing the currently committed source before the
-replacement succeeds. Its choices must match all nine
+replacement succeeds. Commit `1749fa062` additionally adds an `All supported
+types` filter for cross-family source selection; once a candidate is chosen,
+the widget narrows the type selector to the candidate's actual family. This is
+covered synchronously for each supported kind and through the incremental
+large-document scan. Its choices must match all nine
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
-coverage satisfy the implementation portion; the focused headless
+coverage satisfy the implementation portion; section 1658 records the focused
+cross-family evidence, while the baseline headless
 source-picker suite passes 15,498 assertions / 45 cases, revalidated at PR
 head `0a0a6e06ee88f741f41c5a2971581c71d86f28f5`. The separate action-level type-switch/hover/click matrix passes
 466 assertions / 1 case across all nine types (`d70b1e392`); its live filter
