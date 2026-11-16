@@ -2354,16 +2354,17 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     Drawing<true> f;
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
     const bool highOrigin = GENERATE(false, true);
-    const bool towardCentre = highOrigin ? GENERATE(false, true) : false;
+    const RS_Vector sourceTranslation = highOrigin
+        ? RS_Vector{1e9, -2e9}
+        : GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
+                   RS_Vector{1e8, -2e8});
+    const bool towardCentre = highOrigin || sourceTranslation.x != 0.0
+        ? GENERATE(false, true) : false;
     auto initial = LC_OffsetCurve::create(seed, 0.5, towardCentre);
     REQUIRE(initial);
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
-    const RS_Vector sourceTranslation = highOrigin
-        ? RS_Vector{1e9, -2e9}
-        : GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
-                   RS_Vector{1e8, -2e8});
     const double tangentSlope = highOrigin
         ? GENERATE(1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
                    1.5e-9, 1.25e-9, 1.125e-9, 1.10625e-9,

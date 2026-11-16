@@ -53923,9 +53923,9 @@ the `1e6` and `1e8` profiles at both signed `0.5` distances, validates their
 native caches, and round-trips through R14/R2000/R2018 DXF plus R2000/R2018
 DWG. The Trim Two action fixture adds those same intermediate origins for the
 fixed `1e-8` profile, exercising its existing worker-backed replacement,
-preview/commit, undo/redo, and five-lane result persistence. This extends only
-one tangent construction and spacing; the Trim fixture does not add a new
-`towardCentre` value for the intermediate origins.
+preview/commit, undo/redo, and five-lane result persistence for both
+`towardCentre` values. This extends only one tangent construction and spacing
+at the intermediate origins.
 
 Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
 
@@ -53952,7 +53952,7 @@ git diff --check
 Results: direct origin matrix 368 assertions / 1 case; the broader
 `[curve-offset][direct][parabola]` selection passes 64,360 assertions / 14
 cases; worker/cache and five-format persistence pass 35,366 assertions / 1
-case; Trim Two and five-format result persistence pass 10,174 assertions / 1
+case; Trim Two and five-format result persistence pass 10,912 assertions / 1
 case. These bounded frames do not
 close the continuous origin/scale matrix, alternate tangent constructions,
 all Trim sides/cutters, visible-app acceptance, or independent ODA/AutoCAD
