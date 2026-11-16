@@ -633,17 +633,19 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
           "[lc-hatchfix][pattern][parabola][trim][large-origin][elliptic-arc][rotated]") {
     const bool reversedArc = GENERATE(false, true);
     const bool reversedSource = GENERATE(false, true);
-    CAPTURE(reversedArc, reversedSource);
+    const double scale = GENERATE(1.0, 1e3);
+    CAPTURE(reversedArc, reversedSource, scale);
     constexpr double sourceRotation = 0.73;
     constexpr double ellipseRotation = 0.25;
-    constexpr double majorRadius = 1.8;
+    const double majorRadius = 1.8 * scale;
     constexpr double ratio = 0.7;
     const RS_Vector translation{1e9, -2e9};
     const auto toSourceWorld = [sourceRotation, translation](const RS_Vector& point) {
         return point.rotated(sourceRotation) + translation;
     };
-    const std::array<RS_Vector, 3> localControls{{{-2.0, 0.0}, {0.0, 2.0},
-                                                  {2.0, 0.0}}};
+    const std::array<RS_Vector, 3> localControls{{{-2.0 * scale, 0.0},
+                                                  {0.0, 2.0 * scale},
+                                                  {2.0 * scale, 0.0}}};
     std::array<RS_Vector, 3> controls;
     std::transform(localControls.begin(), localControls.end(), controls.begin(), toSourceWorld);
     if (reversedSource) std::reverse(controls.begin(), controls.end());
@@ -683,8 +685,8 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
         const RS_Vector point = bezierAt(resultControls, parameter);
         const RS_Vector sourceLocal = (point - translation).rotated(-sourceRotation);
         const double sourceParameter = reversedSource
-                                           ? (2.0 - sourceLocal.x) / 4.0
-                                           : (sourceLocal.x + 2.0) / 4.0;
+                                           ? (2.0 * scale - sourceLocal.x) / (4.0 * scale)
+                                           : (sourceLocal.x + 2.0 * scale) / (4.0 * scale);
         CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
 
         const RS_Vector ellipseLocal = (point - translation).rotated(-ellipseRotation);
