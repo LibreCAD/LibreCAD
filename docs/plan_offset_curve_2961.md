@@ -55259,3 +55259,29 @@ Validation on macOS arm64:
 Worker/cache, Trim, persistence, other crossings/tangencies, other frames and
 scales, visible-app interaction, and independent CAD acceptance remain open.
 
+## 1670. Bound High-origin Five-crossing Polyline Refusal (2026-11-16)
+
+Test commit `2a3514192` extends the five-crossing straight-star RegionBoundary
+matrix to a reversed unit-scale source at `(1e9, -2e9)`. The default tolerance
+is below the coordinate numeric floor, so this row requests `5e-5` explicitly
+and retains the regular unit-origin default-tolerance matrix. All four
+high-origin combinations (NonZero/EvenOdd and growth/erosion) discover the
+five source crossings, then refuse with `AmbiguousTopology` at
+`CandidateArrangement`; the result contains no partial branches, and source
+vertices remain unchanged. A success expectation would be unsound: the
+interval arrangement cannot certify a later offset/corner contact at its
+bounded depth. The star therefore remains an explicit unsupported high-origin
+profile until that contact can be proved, rather than being silently flattened
+or accepted from an approximate arrangement.
+
+Validation on macOS arm64 CMake Release:
+
+- Five-crossing straight-polyline case, unit and high-origin frames: 75 assertions / 1 case.
+- Full `[curve-offset][region]` group: 28,952 assertions / 28 cases.
+- `git diff --check`: passed.
+
+This records atomic refusal for this exact translated star, not general
+multi-crossing support. The bow-tie growth/erosion success in section 1669 is
+unchanged; other high-origin crossing counts, source scales, and contact
+topologies remain unqualified.
+
