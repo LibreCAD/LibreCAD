@@ -49,7 +49,9 @@ Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
 atomically. Sections 1595 and 1597 hold the implementation and headless
 interaction evidence; there is no additional source-widget implementation
-slice indicated by this request. At the recorded PR head `9ffd35f4d`,
+slice indicated by this request. The source-picker product revision
+`b96f27469` remains unchanged through PR head `2e560d409`; at that product
+revision,
 `[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
 CMake Release; this includes explicit enabled-state checks during an active
 scan and a large-document async filtering matrix for every supported kind.
