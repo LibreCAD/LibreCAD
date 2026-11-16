@@ -52919,3 +52919,13 @@ current-source file-lane revalidation is required. Previously recorded
 worker/file/LibreDWG matrices remain tied to their own source receipts and are
 not promoted by this focused run.
 
+## 1588. Revalidate the Complete Direct and Trim Geometry Selections (2026-11-16)
+
+On the current source, the complete `[curve-offset][direct]` selection passes
+4,181,383 assertions / 81 cases, and `[curve-offset][trim]` passes 59,719
+assertions / 45 cases, both in CMake Release with `DWGREAD` configured. This
+requalifies the implemented cross-family Direct and pure Trim geometry suites
+at this source. It does not close the worker/UI action, visible-app, ODA, or
+AutoCAD acceptance gates, nor imply every unrepresented concrete variant is
+covered by these two selectors.
+
