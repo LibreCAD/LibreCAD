@@ -54244,3 +54244,24 @@ This adds one non-binary weight to the existing insertion layouts; it does not
 qualify arbitrary knot vectors, repeated knots, higher-degree splines, or
 periodic tangent ownership. Those remain separate open matrix dimensions.
 
+## 1625. Map a Rational Tangency at a Repeated Interior Knot (2026-11-16)
+
+Test commit `3cea82fbe` adds a degree-2 rational tangent fixture with an
+interior knot of multiplicity two at the even tangent root. A test-local
+Boehm insertion routine constructs the repeated-knot control net in homogeneous
+coordinates without expanding the production API. The regression verifies
+that the resulting spline matches the original curve at high-precision sample
+parameters, checks both one-sided tangent factors and same-sign neighbors
+with the independent oracle, then requires complete production isolation and
+maps the tangent point to retained output.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused repeated-knot tangent case: 45 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,610 assertions / 120 cases.
+- `git diff --check`: passed.
+
+This qualifies one double-knot rational quadratic profile and one interior
+tangent. Other knot multiplicities, tangent positions, higher degrees,
+periodic ownership, and complete event-to-output mapping remain open.
+
