@@ -53460,3 +53460,35 @@ the full slope ladder at high origins or arbitrary endpoint-tangent
 constructions. Other high-origin conditioning, visible-app acceptance, and
 independent ODA/AutoCAD acceptance remain open.
 
+## 1605. Extend High-origin Tangent Conditioning to Three Slopes (2026-11-16)
+
+Test commit `3370bff4b` expands section 1604's direct and worker-client
+high-origin profile from slope `1e-4` to `{1e-4, 1e-5, 1e-6}`. All retain the
+same 10-unit endpoint spacing, rotation `0.41`, origin `(1e9,-2e9)`, explicit
+`1e-3` direct geometry tolerance, and both offset signs. The persistence lane
+still includes worker generation/cache admission and five-format save/reopen
+with optional LibreDWG typed-source inspection.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+Results: direct geometry passes 282 assertions / 1 case; worker/cache and
+five-format persistence pass 21,731 assertions / 1 case. This qualifies these
+three slopes at the stated frame only. Steeper slopes at this small feature
+scale, other origins/scales, arbitrary endpoint-tangent constructions,
+visible-app acceptance, and independent ODA/AutoCAD acceptance remain open.
+
