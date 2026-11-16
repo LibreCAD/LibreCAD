@@ -65,8 +65,12 @@ extends high-origin typed-source persistence to 16 rows spanning origins
 and distances `0.5` and `1.5` times vertex radius. Section 1574 adds 192
 high-origin rows to typed-or-fallback persistence across both branches,
 interval directions, widths, and all three cusp distances; each high origin
-must exercise ordinary fallback. These do not close other hyperbola
-origins/scales or ODA/AutoCAD acceptance. Sections 1550 and
+must exercise ordinary fallback. Section 1575 extends the direct exact-normal
+oracle to all five recorded ratios at three origins and the worker/cache
+matrix to all five ratios at the ordinary and `1e9` origins; its 240 rows all
+admit canonical caches. The expanded ratios are not yet persisted at high
+origins. These do not close other hyperbola origins/scales or ODA/AutoCAD
+acceptance. Sections 1550 and
 1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
 `1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
@@ -52378,4 +52382,42 @@ origins/ratios/scales, cache-refused profiles outside this matrix, and
 ODA/AutoCAD acceptance remain open. DWG raw OBJECTS replay still reports its
 separate fixed-handle diagnostic; successful entity parsing and geometry
 round-trip are not evidence of lossless raw-object replay.
+
+## 1575. Qualify Every Recorded Hyperbola Ratio at High Origins (2026-11-15)
+
+Test commit `21392cc19` extends the translated-origin direct exact-normal test
+from ratios `0.05` and `0.2` to the full recorded cusp set `{0.01, 0.05, 0.2,
+0.5, 1.0}` at origins `(23,-17)`, `(1e6,-1e6)`, and `(1e9,-2e9)`. It retains
+both branches, forward/reversed bounds, both offset sides, and distances `0.5`
+and `1.5` times vertex radius; the large-origin direct oracle uses explicit
+tolerance where the default would fall below the arithmetic floor.
+
+The worker/kernel matrix now uses the same five ratios at `(23,-17)` and
+`(1e9,-2e9)`, with both branches, forward/reversed `[-0.4,0.4]` bounds, both
+signed offsets, and distances `0.5`, `1.0`, and `1.5` times vertex radius. All
+240 generated rows combine into canonical caches and pass operation-8
+validation. The combiner also handles a line-segment ordinary result by
+elevating it into the canonical spline cache; tests do not assume every
+ordinary result is already an SPLINE.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][large-origin]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp][variants]' \
+  --reporter compact
+git diff --check
+```
+
+The direct-oracle selection passes 320,360 assertions / 1 case; the worker/cache
+selection passes 5,763 assertions / 1 case. This does not yet round-trip the
+newly added high-origin ratios through DXF/DWG, and no external CAD acceptance
+is claimed.
 
