@@ -4584,10 +4584,20 @@ bool RS_FilterDXFRW::fileImportImpl(RS_Graphic &g, const QString &file,
   const bool needsValidation = budget->carriers != 0;
   if (needsValidation)
     validation = LC_OffsetImportSession::validateExistingGraphic(g, std::move(budget));
-  if (needsValidation && validation.downgraded != 0)
-    RS_DEBUG->print(RS_Debug::D_WARNING,
-        "RS_FilterDXFRW: %zu offset carrier(s) retained as ordinary spline geometry",
-        validation.downgraded);
+  if (needsValidation && validation.downgraded != 0) {
+    if (validation.diagnostics.empty()) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+          "RS_FilterDXFRW: %zu offset carrier(s) retained as ordinary spline geometry",
+          validation.downgraded);
+    } else {
+      const auto& diagnostic = validation.diagnostics.front();
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+          "RS_FilterDXFRW: %zu offset carrier(s) retained as ordinary spline geometry; "
+          "first diagnostic kind=%d reason=%d detail=%d item=%zu",
+          validation.downgraded, static_cast<int>(diagnostic.kind),
+          diagnostic.reason, diagnostic.detail, diagnostic.item);
+    }
+  }
   if (needsValidation && validation.status != LC_OffsetImportSession::Status::Complete)
     RS_DEBUG->print(RS_Debug::D_WARNING,
         "RS_FilterDXFRW: bounded worker validation did not complete; editable carriers were downgraded");
