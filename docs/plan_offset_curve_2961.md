@@ -52867,18 +52867,25 @@ larger coordinates or every screen scale. Other hyperbola domains and
 distances, visible Properties acceptance, and independent ODA/AutoCAD
 acceptance remain open.
 
-## 1586. Probe Independent ODA Validation Availability (2026-11-16)
+## 1586. Probe Visible Desktop and Independent ODA Validation (2026-11-16)
+
+The current CMake LibreCAD bundle was launched through LaunchServices and
+returned `kLSNoExecutableErr`; direct execution then aborted with exit status
+134 after `PasteBoard`/`com.apple.hiservices-xpcservice` connection errors,
+before its Properties UI could open. Its crash report is
+`/private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/LibreCAD.59920.1794811176.crash.log`.
+No visible source-picker interaction was performed and the visible acceptance
+gate remains open.
 
 The machine has ODA File Converter 27.1.0.0 at
 `/Applications/ODAFileConverter.app` ([official ODA tool page](https://www.opendesign.com/guestfiles/oda_file_converter)). Its documented batch interface accepts
 source directory, destination directory, input filter, output version/type,
 recursive flag, and audit flag. An audited ACAD2018 DXF conversion was attempted
 on the existing offset DWG output corpus using that argument order. Direct
-launch and `launchctl asuser 502` both abort with exit status 134 after
-`PasteBoard`/`com.apple.hiservices-xpcservice` connection errors and produce no
-output files; LaunchServices `open -a` fails with `kLSNoExecutableErr`. No ODA
-read/convert result is claimed. The independent ODA acceptance gate remains
-open until the converter can run in a functioning desktop session. LibreDWG
-validation of the exact-cusp hyperbola Trim-action matrix is recorded in
-section 1585 and is not a substitute for ODA/AutoCAD.
+launch and `launchctl asuser 502` both abort with exit status 134 after the
+same pasteboard/HIServices errors and produce no output files; LaunchServices
+`open -a` also fails with `kLSNoExecutableErr`. No ODA read/convert result is
+claimed. Both acceptance gates need a functioning local desktop session.
+LibreDWG validation of the exact-cusp hyperbola Trim-action matrix is recorded
+in section 1585 and is not a substitute for ODA/AutoCAD.
 
