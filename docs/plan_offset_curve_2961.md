@@ -51754,12 +51754,16 @@ cmake --build /private/tmp/offset-2961-cmake-clean \
 QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
   '[parabola][tangent][conditioning]' --reporter compact
+cd /private/tmp/offset3193-qmake6-fresh && make -j6
 git diff --check
 ```
 
 Results: full parabola-tangent coverage passes 19,954 assertions / 8 cases;
 direct exact-normal endpoint-tangent coverage passes 17,214 assertions / 4
 cases; the worker/cache slope-conditioning matrix passes 465 assertions / 1
-case. Widget visibility and independent CAD acceptance remain separate open
-gates.
+case. Recursive qmake6 application, worker, and plugin build exits 0, including
+the changed parabola implementation; it reports the existing optional
+`/private/tmp/libdxfrw-cargo/env` shell-profile warning and existing compiler
+warnings. `git diff --check` passes. Widget visibility and independent CAD
+acceptance remain separate open gates.
 
