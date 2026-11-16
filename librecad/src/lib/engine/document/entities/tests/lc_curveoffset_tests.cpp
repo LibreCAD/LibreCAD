@@ -4696,13 +4696,18 @@ TEST_CASE("Thin bounded hyperbola offsets retain exact geometry at the vertex "
 
 TEST_CASE("Hyperbola cusp offsets retain exact normals at translated origins",
           "[curve-offset][direct][hyperbola][oracle][cusp][large-origin]") {
-  const std::array<RS_Vector, 3> origins{{{23.0, -17.0},
+  const std::array<RS_Vector, 4> origins{{{23.0, -17.0},
                                           {1e6, -1e6},
-                                          {1e9, -2e9}}};
+                                          {1e9, -2e9},
+                                          {1e12, -2e12}}};
   constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
-  constexpr double semiMajor = 10.0;
+  constexpr double baseSemiMajor = 10.0;
   constexpr double rotation = 0.37;
   for (const RS_Vector &origin : origins) {
+    const bool veryHighOrigin =
+        std::abs(origin.x) > 1e11 || std::abs(origin.y) > 1e11;
+    // Keep the origin/feature ratio comparable while respecting the numeric floor.
+    const double semiMajor = veryHighOrigin ? 2e4 : baseSemiMajor;
     for (const double ratio : ratios) {
       const double vertexRadius = semiMajor * ratio * ratio;
       for (const bool oppositeBranch : {false, true}) {
@@ -4739,15 +4744,25 @@ TEST_CASE("Hyperbola cusp offsets retain exact normals at translated origins",
             for (const double fraction : {0.5, 1.5}) {
               const double distance = fraction * vertexRadius;
               CAPTURE(side, fraction, distance);
+              const bool largeOrigin =
+                  std::abs(origin.x) > 1e8 || std::abs(origin.y) > 1e8;
               const double requestedTolerance =
-                  std::abs(origin.x) > 1e8 || std::abs(origin.y) > 1e8
-                      ? 1e-4
-                      : 0.0;
+                  veryHighOrigin ? 0.05 : largeOrigin ? 1e-4 : 0.0;
               const auto options = LC_CurveOffset::makeDirectOptions(
                   source, distance, requestedTolerance);
               const auto result = LC_CurveOffset::buildDirectBranches(
                   source, LC_CurveOffset::makeSideRequest(side, distance),
                   options, LC_CurveOffset::makeDirectSourceBudget());
+              INFO("status=" << static_cast<int>(result.status)
+                   << " optionTolerance="
+                   << options.tolerance.requestedGeometry
+                   << " observed=" << result.maxObservedError
+                   << " certified=" << result.maxCertifiedError
+                   << " diagnostics="
+                   << static_cast<int>(result.intersectionDiagnostics.stage)
+                   << "/"
+                   << static_cast<int>(
+                          result.intersectionDiagnostics.failureSite));
               REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
               REQUIRE_FALSE(result.branches.empty());
               const double worldResolution =
