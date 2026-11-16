@@ -42,14 +42,11 @@ success, and cancellation/refusal remains open in Slice 5. The nine-kind
 inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically. The latest source-picker test evidence is the CMake Release run at
-`6cf9495ce33476adb909a82eff825b5ca8500258`:
-`[gui][dialog][offsetcurve][source]` passed 15,284 assertions / 44 cases.
-The current PR head is `b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent
-changes recorded in section 1590 only partition worker-client test execution,
-so this is still the latest direct selector evidence, not a claim that the
-selector suite was rerun at `b96f27469`. Headless tests do not close the visible
-packaged-app gate.
+atomically. At PR product-code head
+`b96f2746901192ce3719ac84db8e89d3439c6966`,
+`[gui][dialog][offsetcurve][source]` passes 15,284 assertions / 44 cases in
+CMake Release. The subsequent `ed0df178d` commit changes only this roadmap.
+This is headless UI evidence; it does not close the visible packaged-app gate.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
@@ -51759,11 +51756,10 @@ distinct choice from spline-points.
 The behavior and automated acceptance are already implemented; section 1532
 covers repeated type changes, candidate filtering, preserving the old source
 and highlight until successful worker completion, and successful typed-source
-replacement plus highlight transfer for every kind. The strongest current
-selector evidence is the 15,284-assertion / 44-case CMake Release run recorded
-in the roadmap header; it is a headless run, and section 1590 confirms the
-later test-runner changes did not implement or revalidate visible UI behavior.
-No additional implementation slice is indicated unless a regression is found.
+replacement plus highlight transfer for every kind. The current product-code
+headless selector evidence is 15,284 assertions / 44 cases, rerun as recorded
+in section 1591. No additional implementation slice is indicated unless a
+regression is found.
 Do not treat selector coverage as proof that every geometry variant is usable
 through generation, worker/cache, trimming, or persistence; those remain
 governed by the family-by-variant qualification in Slice 4.
@@ -52998,4 +52994,31 @@ source-picker behavior remains headless-verified but visible packaged-app
 acceptance is open. ODA/AutoCAD interoperability and the remaining Slice 4
 family/variant gates also remain open; this test-infrastructure slice does not
 complete the roadmap.
+
+## 1591. Revalidate the All-kind Source-picker Workflow (2026-11-16)
+
+The repeated request to change the replacement type while selecting a source
+and expose all supported offset-source kinds was checked against the current
+PR product-code head `b96f2746901192ce3719ac84db8e89d3439c6966`. The focused
+offscreen Properties/source-picker selection exercises repeated type changes,
+family filtering, replacement, and highlight behavior for the full nine-kind
+inventory, including parabola as a distinct type.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[gui][dialog][offsetcurve][source]' --reporter compact
+```
+
+Result: 15,284 assertions / 44 cases pass. This confirms the implementation
+portion of the repeated request and does not claim a visible packaged-app
+interaction. The remaining source-widget gate is still the manual workflow in
+Slice 5: repeatedly switch types in the open Properties workflow, inspect
+refreshed candidates and current-source indication, replace successfully, then
+verify cancellation/refusal preserves the old source. No additional selector
+or parabola-only implementation is warranted. Slice 4's concrete
+geometry-variant qualification and independent CAD acceptance remain separate
+open work.
 
