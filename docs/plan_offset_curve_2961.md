@@ -52163,3 +52163,34 @@ independent-reader assertions active. This validates parseable SPLINE
 structure for the one selected fallback row, not all refused rows, full
 hyperbola semantic recovery by LibreDWG, or ODA/AutoCAD acceptance.
 
+## 1569. Persist Every Generated Multi-fragment Hyperbola Fallback (2026-11-15)
+
+Test commit `7691528bb` supersedes the one-row fallback scope in sections
+1567-1568. Across the existing 240 generated cusp profiles, each result with
+more than one ordinary spline fragment is now exported and reopened through
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. LibreCAD compares the ordered
+fragment geometry fingerprints after reopen. When LibreDWG is available, its
+`minJSON` output must expose the same number of SPLINE entities in each DWG,
+with valid degree/control/knot cardinality. The existing admitted-cache rows
+retain their typed-source two-pass round trips.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][persistence]' --reporter compact
+git diff --check
+```
+
+The focused persistence case passes 146,295 assertions / 1 case with DWG
+support and LibreDWG inspection enabled. The test accounts for all 240
+generated profiles and requires at least one multi-fragment row; every such
+row takes the ordinary persistence path. Single-fragment outputs rejected by
+operation-8 cache validation are not included in this new fallback persistence
+claim. Other hyperbola domains, visible GUI acceptance, and ODA/AutoCAD
+acceptance remain open.
+
