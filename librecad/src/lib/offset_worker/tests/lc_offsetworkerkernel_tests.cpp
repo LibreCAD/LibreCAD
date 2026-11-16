@@ -5194,7 +5194,9 @@ TEST_CASE("high-degree periodic rational roots map at an interior knot",
         REQUIRE(source.isClosed());
         const std::vector<double> breaks = source.getBreakParameters();
         REQUIRE(breaks.size() > 2);
-        const double knotValue = breaks[1];
+        for (std::size_t breakIndex = 1; breakIndex + 1 < breaks.size();
+             ++breakIndex) {
+        const double knotValue = breaks[breakIndex];
         const SplineOracle knot{knotValue};
         const SplineOracle start{breaks.front()};
         const SplineOracle end{breaks.back()};
@@ -5274,6 +5276,7 @@ TEST_CASE("high-degree periodic rational roots map at an interior knot",
         }
         CAPTURE(degree, nearestEndpoint, requestedGeometry);
         CHECK(nearestEndpoint <= requestedGeometry);
+        }
     }
 }
 
