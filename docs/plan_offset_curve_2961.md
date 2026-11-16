@@ -52031,3 +52031,33 @@ Result: 1,554 assertions / 9 cases passed. This is current test evidence for
 the bounded self-crossing selector, not complete Slice 4 or visible-GUI / CAD
 interoperability acceptance.
 
+## 1565. Verify High-origin Parabola Clipping Against an Elliptic Arc (2026-11-15)
+
+Test commit `e4009d7bd` adds a rotated parabola at `(1e9, -2e9)` clipped by
+a bounded upper elliptic arc and its closing chord. It verifies the retained
+entity remains a typed parabola, its sampled points match the original
+quadratic Bezier, both endpoints satisfy the ellipse equation, and interior
+samples remain inside the arc-plus-chord region. This directly exercises the
+local-frame intersection path with a partial ellipse boundary; the existing
+full-ellipse case is not used as a proxy for elliptic-arc domain handling.
+
+Validation on macOS arm64 CMake Release at PR head `e4009d7bd`:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-hatchfix][pattern][parabola][trim][large-origin]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-hatchfix]' --reporter compact
+git diff --check
+```
+
+Results: the focused large-origin circle/ellipse/elliptic-arc selection passes
+51 assertions / 3 cases; `[lc-hatchfix]` passes 89,697 assertions across 171
+passing cases with one skipped. This is boundary-clipping coverage for the
+recorded rigid frame and arc profile, not arbitrary ellipse-arc direction,
+partial-loop topology, affine/3D transforms, general offset-family completeness,
+visible GUI, or independent CAD acceptance.
+
