@@ -53148,56 +53148,32 @@ CAD gates remain tracked separately.
 
 ## 1595. Source-Type Switching While Replacing an Offset Curve Source (2026-11-16)
 
-The replacement-source chooser must keep its source-kind control available
-throughout candidate selection. A user must be able to change the requested
-kind after opening the chooser, see the candidate list refresh for that kind,
-and select a replacement without closing and reopening the properties dialog.
-The chooser must cover every source kind accepted by the offset model:
-`Line`, `Arc`, `Circle`, `Ellipse`, `Spline`, `SplinePoints`, `Parabola`,
-`Hyperbola`, and `Polyline` (including the supported bounded-hyperbola
-representation). Hovering a candidate must visibly highlight that exact
-candidate. An offset definition currently stores source geometry by value, not
-a stable handle to the original drawing entity. Therefore, when re-highlighting
-the already-stored source, use exact encoded geometry equality; do not claim a
-unique source-entity identity from geometric similarity. If multiple drawing
-entities have identical stored geometry, the UI must avoid implying which one
-was originally used. Changing the kind must not misidentify an entity or
-silently replace the source.
+The properties-dialog source widget already provides a source-kind selector
+covering all nine supported kinds (`Line`, `Arc`, `Circle`, `Ellipse`,
+`Spline`, `SplinePoints`, `Parabola`, `BoundedHyperbola`, and `Polyline`).
+Changing the type refreshes candidates in the same dialog session. The widget
+matches a stored source by exact encoded geometry, highlights that candidate,
+and provides a selection button. If duplicate entities have identical source
+geometry, the widget reports ambiguity instead of guessing; once the user
+chooses one, it preserves that candidate identity for the active edit. The
+offset definition itself remains value-based and does not create a persistent
+entity dependency.
 
-The existing all-kind asynchronous filtering regression establishes that
-each kind can produce candidates, but it does not by itself prove the complete
-replacement interaction. Close the remaining verification gap with focused
-coverage for the chooser state transition and its integration:
+This behavior is already covered by properties-dialog regressions for every
+family, preserved highlighting across family changes, unique/ambiguous source
+matching, retained identity for duplicate geometry, selection preservation,
+and incremental scans under document mutations. The broader source-picker
+suite passes 15,498 assertions / 45 cases. The separate Update-from-Source
+action also has all-kind live filtering and replacement coverage; test commit
+`d70b1e392` drives hover/highlight/click for every supported family (466
+assertions / 1 case), and its live filter transition matrix passes 148
+assertions / 1 case.
 
-1. Start replacement with an existing source definition and confirm that any
-   drawing candidates with exact matching encoded geometry are highlighted
-   when eligible; if there is no exact match, do not highlight a near-match.
-2. Change the kind repeatedly across all nine supported kinds without closing
-   the chooser; each transition refreshes candidates and does not retain stale
-   rows from the prior kind.
-3. When the stored source is not of the newly selected kind, do not highlight
-   an unrelated candidate. When switching back to its kind, restore the exact
-   geometry match without claiming a stable entity identity that is not stored.
-4. Select a different candidate of each available kind and verify that the
-   stored `LC_OffsetSourceGeometry` has the matching typed kind and entity
-   identity. Cancellation, an empty result, and a failed selection leave the
-   prior source unchanged.
-5. Verify the user-visible highlight/selection and repeated type changes in a
-   packaged LibreCAD build; retain this as a visible-app acceptance gate even
-   when headless tests pass.
-
-Implement tests at the narrowest existing seams: picker/model tests for kind
-transitions, candidate refresh, current-source matching, and no-mutation
-failure paths; dialog/property integration tests for committing a selected
-replacement. Reuse the all-nine-kind asynchronous test rather than duplicating
-its expensive candidate generation. If a transition exposes a production bug,
-fix it in a separately validated slice and record the commit here before
-continuing. Completion requires all supported kinds to be selectable through
-one chooser session, exact candidate hover highlighting, correct matching of
-stored source geometry where a drawing candidate exists, passing focused and
-full picker suites, and recorded packaged-app verification. The current
-headless suite passes 15,498 assertions / 45 source-picker cases, but the
-complete replacement interaction and visible-app acceptance remain open.
+No additional production implementation is currently indicated. The remaining
+gate is visible packaged-app verification of repeated type changes, exact
+highlight behavior, candidate selection, and cancellation/refusal without
+mutating the previous definition. Keep that gate open until it is performed;
+headless property tests do not substitute for it.
 
 ## 1596. Qualify Focus-and-directrix Parabola Creation (2026-11-16)
 
@@ -53261,5 +53237,6 @@ Result: the all-family type-switch/hover-highlight/click/replacement matrix
 passes 466 assertions / 1 case; the live candidate-filter transition matrix
 passes 148 assertions / 1 case. Test commit `d70b1e392` adds no production
 behavior. Stored-source discovery/highlighting, cancellation and failed-click
-interaction, full picker suite, and packaged-app verification remain open.
+interaction, and full picker suite are covered by the properties-dialog tests
+listed in section 1595. The packaged-app verification remains open.
 
