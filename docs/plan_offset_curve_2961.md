@@ -53354,3 +53354,21 @@ and redo` case with `DWGREAD=/opt/homebrew/bin/dwgread` and
 Result: 19,163 assertions pass in 1 test case. Test commit `976afff7b` adds
 one frame to the existing action matrix and changes no production behavior.
 
+## 1602. Cover Both Signed Trim Sides at 1e9 Origins (2026-11-16)
+
+The high-origin reconstructed-parabola Trim Two frame now runs with both
+outward and inward signed offset definitions. The source test records the side
+in its failure captures; all other geometry, worker, atomic commit, undo/redo,
+and five-format persistence checks remain identical. This supplements section
+1601's outward row with its inward counterpart; it does not broaden the
+profile, scale, sample layout, or external-CAD claim.
+
+Validation on macOS arm64 CMake Release with LibreDWG available: rebuild
+`librecad_tests` and run the focused
+`T Trim Two trims reconstructed parabolas across transformed frames with undo
+and redo` case with `DWGREAD=/opt/homebrew/bin/dwgread` and
+`QT_QPA_PLATFORM=offscreen`.
+
+Result: 19,287 assertions pass in 1 test case. Test commit `d5fc49eba` adds the
+inward companion frame; no production behavior changes.
+
