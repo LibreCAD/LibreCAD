@@ -53308,3 +53308,26 @@ watchdog expires before the original matrix completes; rerunning with the
 existing 900-second timeout override completes successfully. This is headless
 worker/cache evidence only, not a visible GUI or persistence acceptance result.
 
+## 1600. Persist a Reconstructed Parabola at 1e9 Origins (2026-11-16)
+
+The shared four-point parabola frame inventory now includes a bounded rotated
+unit-scale profile at `(1e9, -2e9)` with balanced `{0.1, 0.3, 0.7, 0.9}` fit
+samples. The typed offset is generated for both signed distances and saved
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each lane is reopened twice,
+with an intervening second save, and checks the parabola source parameters,
+signed distance, and exact worker-cache fingerprint. When `DWGREAD` is
+available, both DWG outputs also pass the existing LibreDWG `minJSON` entity
+check. This qualifies only this profile/layout/scale and these versions; it
+does not establish arbitrary high-origin parabola persistence, visible CAD
+behavior, or ODA/AutoCAD acceptance.
+
+Validation on macOS arm64 CMake Release with LibreDWG available: build
+`librecad_offset_worker_client_tests`, then run the focused
+`Four-point parabola matrix retains typed sources across file lanes` case with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`, `DWGREAD=/opt/homebrew/bin/dwgread`,
+and `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes.
+
+Result: 69,947 assertions pass in 1 test case. Test commit `951c3a51d`
+adds one high-origin profile to the existing shared frame matrix; it does not
+change production behavior.
+
