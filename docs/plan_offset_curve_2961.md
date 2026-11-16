@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`712e63a8b`):** The source-type selector contract is implemented for all nine
+`28762cb93`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -58,9 +58,13 @@ tangent pairs and non-finite tangent data before the kernel can run. This
 closes that recorded endpoint-tangent slope grid and invalid-input boundary
 only. Commit `712e63a8b` additionally rejects endpoint-tangent intersections
 whose control point would reverse either supplied directed tangent; the
-constructor, direct-oracle, and worker/cache tangent suites pass. Broader
-parabola constructions, hyperbola/parabola domains, and visible/external-CAD
-acceptance remain open.
+constructor, direct-oracle, and worker/cache tangent suites pass. Commit
+`28762cb93` makes exact parallelism detection use the max-component-scaled input
+vectors before unit normalization, preventing opposite-directed parallel
+inputs from acquiring a spurious tiny determinant. The updated constructor,
+direct-oracle, worker/cache, and Trim Two suites pass; recursive qmake6 also
+passes at this source. Broader parabola constructions, hyperbola/parabola
+domains, and visible/external-CAD acceptance remain open.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
@@ -51771,4 +51775,47 @@ the changed parabola implementation; it reports the existing optional
 `/private/tmp/libdxfrw-cargo/env` shell-profile warning and existing compiler
 warnings. `git diff --check` passes. Widget visibility and independent CAD
 acceptance remain separate open gates.
+
+## 1557. Reject Exactly Parallel Opposite-directed Tangents (2026-11-15)
+
+Commit `28762cb93` addresses a numerical edge exposed while testing section
+1556's directed-tangent refusal: normalizing opposite vectors separately can
+round their cross product to a tiny nonzero value even when their input lines
+are exactly parallel. `FromEndPointsTangents` now also computes parallelism
+from each original tangent after independent max-component scaling, before
+unit normalization. Exactly parallel same- or opposite-directed inputs are
+refused, while the unit directions remain in use for the intersection and
+signed forward-parameter checks. A regression covers the opposite-directed
+non-axis-aligned case; the existing valid slopes down to `1e-14` continue to
+pass. This guards exact parallelism only and does not define a new near-parallel
+conditioning threshold.
+
+Validation on macOS arm64 CMake Release at commit `28762cb93`:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][tangent]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[parabola][tangent][conditioning]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+cd /private/tmp/offset3193-qmake6-fresh && make -j6
+git diff --check
+```
+
+Results: full parabola-tangent suite passes 20,843 assertions / 8 cases;
+direct exact-normal suite passes 17,214 assertions / 4 cases; worker/cache
+conditioning passes 465 assertions / 1 case; endpoint-tangent Trim Two passes
+3,207 assertions / 1 case. The recursive qmake6 application, native worker,
+and plugin build exits 0; it reports the existing missing optional
+`/private/tmp/libdxfrw-cargo/env` shell-profile file and compiler warnings.
+Visible Properties interaction and independent CAD acceptance remain open.
 
