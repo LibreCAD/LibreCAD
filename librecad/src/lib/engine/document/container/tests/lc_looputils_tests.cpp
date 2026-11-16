@@ -633,13 +633,17 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
           "[lc-hatchfix][pattern][parabola][trim][large-origin][elliptic-arc][rotated]") {
     const bool reversedArc = GENERATE(false, true);
     const bool reversedSource = GENERATE(false, true);
-    const double scale = GENERATE(1.0, 1e3);
+    const double scale = GENERATE(1e-3, 1.0, 1e3);
     CAPTURE(reversedArc, reversedSource, scale);
     constexpr double sourceRotation = 0.73;
     constexpr double ellipseRotation = 0.25;
     const double majorRadius = 1.8 * scale;
     constexpr double ratio = 0.7;
     const RS_Vector translation{1e9, -2e9};
+    const double worldUlp = std::max(
+        std::nextafter(translation.x, std::numeric_limits<double>::infinity()) - translation.x,
+        std::nextafter(translation.y, std::numeric_limits<double>::infinity()) - translation.y);
+    const double worldTolerance = std::max(2e-6, 4.0 * worldUlp);
     const auto toSourceWorld = [sourceRotation, translation](const RS_Vector& point) {
         return point.rotated(sourceRotation) + translation;
     };
@@ -687,22 +691,24 @@ TEST_CASE("High-origin parabola clipping handles independently rotated elliptic 
         const double sourceParameter = reversedSource
                                            ? (2.0 * scale - sourceLocal.x) / (4.0 * scale)
                                            : (sourceLocal.x + 2.0 * scale) / (4.0 * scale);
-        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
+        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < worldTolerance);
 
         const RS_Vector ellipseLocal = (point - translation).rotated(-ellipseRotation);
         const double normalizedRadius =
             ellipseLocal.x * ellipseLocal.x / (majorRadius * majorRadius) +
             ellipseLocal.y * ellipseLocal.y /
                 (majorRadius * majorRadius * ratio * ratio);
+        const double normalizedTolerance =
+            std::max(2e-6, 4.0 * worldUlp / (majorRadius * ratio));
         if (parameter == 0.0 || parameter == 1.0) {
-            const bool onArc = ellipseLocal.y >= -2e-6 &&
-                               std::abs(normalizedRadius - 1.0) < 2e-6;
-            const bool onChord = std::abs(ellipseLocal.y) < 2e-6 &&
-                                 std::abs(ellipseLocal.x) <= majorRadius + 2e-6;
+            const bool onArc = ellipseLocal.y >= -worldTolerance &&
+                               std::abs(normalizedRadius - 1.0) < normalizedTolerance;
+            const bool onChord = std::abs(ellipseLocal.y) < worldTolerance &&
+                                 std::abs(ellipseLocal.x) <= majorRadius + worldTolerance;
             CHECK((onArc || onChord));
         } else {
-            CHECK(ellipseLocal.y >= -2e-6);
-            CHECK(normalizedRadius < 1.0 + 2e-6);
+            CHECK(ellipseLocal.y >= -worldTolerance);
+            CHECK(normalizedRadius < 1.0 + normalizedTolerance);
         }
     }
 }
