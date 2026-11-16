@@ -26,7 +26,7 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`83171435c`):** The source-type selector contract is implemented for all nine
+`712e63a8b`):** The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -56,8 +56,11 @@ tangent parabola worker/cache conditioning at the direct-oracle slopes from
 DXF/DWG lanes. Section 1554 verifies protocol admission rejects degenerate
 tangent pairs and non-finite tangent data before the kernel can run. This
 closes that recorded endpoint-tangent slope grid and invalid-input boundary
-only; broader parabola constructions, hyperbola/parabola domains, and
-visible/external-CAD acceptance remain open.
+only. Commit `712e63a8b` additionally rejects endpoint-tangent intersections
+whose control point would reverse either supplied directed tangent; the
+constructor, direct-oracle, and worker/cache tangent suites pass. Broader
+parabola constructions, hyperbola/parabola domains, and visible/external-CAD
+acceptance remain open.
 The dense-end clustered layout `{0, 0.9, 0.99, 1}` now passes both the
 independent oracle and worker/cache/persistence matrices; `{0, 0.95, 0.995,
 1}` passes the independent oracle and the worker/cache and five-lane
@@ -51689,3 +51692,74 @@ git diff --check
 ```
 
 Result: the protocol-admission refusal case passes 24 assertions / 1 case.
+
+## 1555. Reconcile the Source-widget Type-switching Request (2026-11-15)
+
+The latest request restates the source-picker requirement: while choosing a
+replacement source curve, the user must be able to change the requested source
+type, and the choices must cover every currently supported offset-source kind.
+This is not a request for a second picker or for every drawable entity type.
+“All supported types” means the nine entries in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+distinct choice from spline-points.
+
+The behavior and automated acceptance are already implemented; section 1532
+covers repeated type changes, candidate filtering, preserving the old source
+and highlight until successful worker completion, and successful typed-source
+replacement plus highlight transfer for every kind. Section 1549 rebuilds and
+reruns the focused source-picker suite on the current tree (15,252 assertions /
+42 cases). No additional implementation slice is indicated unless a regression
+is found. Do not treat selector coverage as proof that every geometry variant
+is usable through generation, worker/cache, trimming, or persistence; those
+remain governed by the family-by-variant qualification in Slice 4.
+
+Remaining acceptance for this widget request is a visible packaged-app check:
+open Offset Curve Properties, begin source selection, change the type more than
+once, verify candidates refresh for each selected type, confirm the existing
+source remains highlighted during browsing, then choose a candidate and verify
+the committed source and highlight change together. Also verify cancel/refusal
+leaves the prior source and highlight unchanged. Record platform and binary
+revision. Headless Qt tests do not close this visible-GUI gate. Independent
+ODA/AutoCAD interoperability is a separate roadmap gate and is not needed to
+close the widget interaction itself.
+
+## 1556. Reject Reversed Endpoint-tangent Parabola Constructions (2026-11-15)
+
+Commit `712e63a8b` closes a construction invariant left implicit by the
+endpoint-tangent conditioning matrix: intersecting the two tangent *lines* is
+not sufficient to define a quadratic Bezier with the supplied directed
+tangents. For a valid increasing-parameter curve, its control point must lie
+forward from the start along the start tangent and backward from the end along
+the end tangent. `FromEndPointsTangents` now checks both signed parameters in
+long-double local calculations and fails closed when either is nonpositive or
+non-finite. The header documents the directed-tangent convention. Regressions
+cover a line intersection behind either endpoint while the existing valid
+asymmetric, mirrored, reversed-traversal, magnitude-invariance, and near-
+parallel cases remain in the focused suites. This does not widen the accepted
+conditioning range or claim broader parabola-domain support.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[parabola][tangent]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent]' --reporter compact
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_kernel_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[parabola][tangent][conditioning]' --reporter compact
+git diff --check
+```
+
+Results: full parabola-tangent coverage passes 19,954 assertions / 8 cases;
+direct exact-normal endpoint-tangent coverage passes 17,214 assertions / 4
+cases; the worker/cache slope-conditioning matrix passes 465 assertions / 1
+case. Widget visibility and independent CAD acceptance remain separate open
+gates.
+
