@@ -54914,6 +54914,15 @@ back to that entity's type before guarded worker preparation. Both synchronous
 and incremental large-document scans support the wildcard filter; ID lookup,
 source identity validation, and current-source matching remain active.
 
+This also resolves the requested replacement-source workflow: the user can
+change the source family while choosing a replacement, including parabola,
+ellipse, hyperbola, spline, spline-points, line, arc, circle, and polyline.
+When the stored source still exists it remains discoverable and highlighted;
+after a successful replacement, source identity and highlight move together.
+The automated all-family hover/click/replacement and highlight-transfer tests
+cover this behavior. Do not add another type-specific source picker or a
+separate parabola-only path.
+
 The regression matrix selects each supported family through the all-types
 filter: ellipse, spline, spline points, parabola, bounded hyperbola, line, arc,
 circle, and polyline. A separate large-list test exercises cross-family
@@ -54927,40 +54936,62 @@ Validation on macOS arm64 CMake Release:
 - `git diff --check`: passed.
 
 The implementation is committed locally. This does not close visible packaged
-Properties interaction, external ODA/AutoCAD acceptance, or the remaining
-geometry and persistence gates recorded above.
+Properties interaction on the packaged app (including visually confirming the
+stored-source highlight, changing the family selector, and replacing with a
+parabola), external ODA/AutoCAD acceptance, or the remaining geometry and
+persistence gates recorded above.
 
-## 1659. Record the Unresolved Near-tangent Circle-refinement Case (2026-11-16)
+## 1659. Contract Certified Near-tangent Conic Contacts (2026-11-16)
 
 A focused extension of section 1656's asymmetric endpoint-tangent Trim Two
 case was tried at source origin `(1e9,-2e9)`, profile scale `1e3`, tangent
 slope `1e-8`, and cutter radius `100`. Moving the circle center inward by
 `1e-3 * radius` gives two distinct simple intersections under the independent
-exact circle/Bezier polynomial oracle, but `prepareConic` still returns
-`AmbiguousRoots` at `ConicRootRefinement` after pair refinement reaches depth
-24. This is a valid near-tangent input that the current kernel refuses; it is
-not evidence of a tangent or repeated root. The existing atomic refusal and
-source immutability remain intact.
+exact circle/Bezier polynomial oracle. The previous joint pair refinement
+refused this valid input at `ConicRootRefinement` after depth 24; it is not
+evidence of a tangent or repeated root.
 
 An exploratory alternating contraction of the source and conic parameters
 was rejected: independently narrowing parameter intervals does not preserve
 the certified paired-root proof unless the intersection session itself
 reissues a valid joint isolation certificate. Do not accept this geometry by
 relaxing the positional allowance, copying a narrowed interval into a root
-snapshot, or relying on the test oracle in production. The follow-up must
-improve the certified 2D root-refinement path (or add an equivalent proof-
-preserving joint contraction), then retain the exact tangent refusal beside
-the two-simple-root success case. Keep this specific high-origin/large-scale
-profile open; section 1656 closes only its distinct asymmetric profile.
+snapshot, or relying on the test oracle in production. The implementation
+below adds an equivalent proof-preserving joint contraction and retains the
+exact tangent refusal beside the two-simple-root success case. This specific
+high-origin/large-scale profile is closed below; section 1656 closes a distinct
+asymmetric profile.
 
-The failed experiment was removed and did not change the implementation. Its
-diagnostic run recorded 3,612 passing assertions and one failed assertion for
-the expected valid near-tangent success; the exact oracle confirmed two
-distinct roots. This case is an outstanding geometry/kernel item, not a
-passing acceptance result. After removing the experiment, the existing
-endpoint-tangent Trim Two regression passed 45,320 assertions / 1 case on
-macOS arm64 CMake Release, confirming the established tangent refusal and
-supported adjacent profiles are unchanged. Other near-tangent distances and
+The initial diagnostic run recorded 3,612 passing assertions and one failed
+assertion for the expected near-tangent success; the exact oracle confirmed two
+distinct roots. At that point the case remained unresolved. The implementation
+and validation below supersede that status. Other near-tangent distances and
 orientations, visible-app interaction, and independent ODA/AutoCAD acceptance
 remain open.
+
+Implementation commit `23d4847bf` adds a bounded, proof-preserving fallback
+for cubic source spans. It forms the conic implicit equation in exact rational
+Bernstein form, proves a unique source-parameter root by endpoint sign change
+and strict monotonicity, bounds the source image by subdivision in
+conic-normalized coordinates, then contracts the conic parameter with interval
+Newton and a derivative projection excluding zero. The physical image-width
+bound accounts for both normalized axis scales, including ellipse ratios above
+one. The original joint root snapshot is not patched or replaced; any failed
+proof, bound, or budget check retains the original `AmbiguousRoots` refusal.
+Other source degrees remain fail-closed. This resolves the previously
+unhandled tested cubic profile, not the general near-tangent class.
+
+Validation on macOS arm64 CMake Release:
+
+- Full endpoint-tangent Trim Two matrix: 51,697 assertions / 1 case.
+- Certified intersection trim-kernel suite: 4,643,770 assertions / 90 cases.
+- Exact tangent endpoint regression: 33 assertions / 1 case; atomic refusal
+  and source immutability verified.
+- High-origin near-tangent candidate: independent exact oracle reports two
+  simple roots; `prepareConic` succeeds with two roots and one conic fragment.
+- CMake build and `git diff --check`: passed.
+
+Coverage remains specific to the tested cubic high-origin/large-scale profile.
+Non-cubic near-tangent cases, other distances/orientations, visible-app
+interaction, and independent ODA/AutoCAD acceptance remain open.
 
