@@ -291,8 +291,13 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
         (deltaX * secondDirection.y - deltaY * secondDirection.x) / denominator;
     const long double controlX = endPoints[0].x + parameter * firstDirection.x;
     const long double controlY = endPoints[0].y + parameter * firstDirection.y;
+    const long double endTangentParameter =
+        (static_cast<long double>(endPoints[1].x) - controlX) * secondDirection.x +
+        (static_cast<long double>(endPoints[1].y) - controlY) * secondDirection.y;
     const long double maxCoordinate = std::numeric_limits<double>::max();
-    if (!std::isfinite(parameter) || !std::isfinite(controlX) || !std::isfinite(controlY) ||
+    if (!std::isfinite(parameter) || parameter <= 0.0L ||
+        !std::isfinite(endTangentParameter) || endTangentParameter <= 0.0L ||
+        !std::isfinite(controlX) || !std::isfinite(controlY) ||
         std::abs(controlX) > maxCoordinate || std::abs(controlY) > maxCoordinate)
         return {};
 

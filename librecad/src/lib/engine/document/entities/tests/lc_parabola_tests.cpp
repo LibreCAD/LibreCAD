@@ -219,6 +219,14 @@ TEST_CASE("LC_Parabola: endpoint-tangent construction rejects degenerate inputs"
   const auto nonFiniteTangent = LC_ParabolaData::FromEndPointsTangents(
       endpoints, {{{std::numeric_limits<double>::infinity(), 0.0}, {1.0, -1.0}}});
   CHECK_FALSE(nonFiniteTangent.isValid());
+
+  const auto reversedStartDirection = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{-1.0, 0.2}, {1.0, -0.3}}});
+  CHECK_FALSE(reversedStartDirection.isValid());
+
+  const auto reversedEndDirection = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{1.0, 0.2}, {-1.0, 0.3}}});
+  CHECK_FALSE(reversedEndDirection.isValid());
 }
 
 TEST_CASE("LC_Parabola: From4Points reconstructs at realistic scale",
