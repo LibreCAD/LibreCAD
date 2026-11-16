@@ -506,6 +506,62 @@ TEST_CASE("High-origin parabola clipping uses local circle intersections",
     }
 }
 
+TEST_CASE("High-origin parabola clipping uses local ellipse intersections",
+          "[lc-hatchfix][pattern][parabola][trim][large-origin][ellipse]") {
+    constexpr double sourceRotation = 0.73;
+    constexpr double ellipseRotation = 0.25;
+    const RS_Vector translation{1e9, -2e9};
+    const auto toWorld = [sourceRotation, translation](const RS_Vector& point) {
+        return point.rotated(sourceRotation) + translation;
+    };
+    const std::array<RS_Vector, 3> localControls{{{-2.0, 0.0}, {0.0, 2.0},
+                                                  {2.0, 0.0}}};
+    std::array<RS_Vector, 3> controls;
+    std::transform(localControls.begin(), localControls.end(), controls.begin(), toWorld);
+    const LC_ParabolaData sourceData{controls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector majorP{2.0 * std::cos(ellipseRotation),
+                           2.0 * std::sin(ellipseRotation)};
+    boundary->addEntity(new RS_Ellipse(boundary.get(),
+        RS_EllipseData{translation, majorP, 0.7, 0.0, 0.0, false}));
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    RS_Pattern pattern{QStringLiteral("TESTPARABOLAELLIPSE")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& points, const double t) {
+        const double u = 1.0 - t;
+        return points[0] * (u * u) + points[1] * (2.0 * u * t) + points[2] * (t * t);
+    };
+    const auto* result = static_cast<const LC_Parabola*>(trimmed->entityAt(0));
+    const auto& resultControls = result->getData().m_controlPoints;
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const RS_Vector point = bezierAt(resultControls, parameter);
+        const double sourceParameter =
+            (sourceData.findX(point) - sourceData.findX(controls.front())) /
+            (sourceData.findX(controls.back()) - sourceData.findX(controls.front()));
+        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
+        const RS_Vector local = (point - translation).rotated(-ellipseRotation);
+        const double normalizedRadius =
+            local.x * local.x / 4.0 + local.y * local.y / (4.0 * 0.7 * 0.7);
+        if (parameter == 0.0 || parameter == 1.0)
+            CHECK(std::abs(normalizedRadius - 1.0) < 2e-6);
+        else
+            CHECK(normalizedRadius < 1.0 + 2e-6);
+    }
+}
+
 namespace {
 
 /** Signature of a loop container used to compare extraction runs byte-for-byte. */
