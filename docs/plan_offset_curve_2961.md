@@ -54388,3 +54388,20 @@ This qualifies the first interior break in two periodic profiles. Other
 periodic knots and weights, higher-degree root combinations, and complete
 candidate/stall/output correspondence remain open.
 
+## 1632. Exercise Every Interior Break in the Periodic Matrix (2026-11-16)
+
+Test commit `9c5bef222` expands section 1631's degree-4/6 periodic rational
+matrix from the first interior knot to every interior break in each wrapped
+profile. Each break independently derives its one-sided curvature distance,
+requires production event ownership, and checks the oracle point against
+retained output. No production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused all-interior-break periodic matrix: 204 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,950 assertions / 124 cases.
+- `git diff --check`: passed.
+
+This closes all interior breaks for the two recorded degree/weight profiles;
+other periodic knots/weights and higher-degree ownership remain open.
+
