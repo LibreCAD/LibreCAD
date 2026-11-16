@@ -8477,10 +8477,11 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp]["
           "variants]") {
   std::size_t admittedCaches = 0;
-  std::size_t refusedMultiBranchCaches = 0;
+  std::size_t refusedCaches = 0;
   const std::array<RS_Vector, 2> origins{{{23.0, -17.0}, {1e9, -2e9}}};
+  constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
   for (const RS_Vector &origin : origins) {
-    for (const double ratio : {0.05, 0.2}) {
+    for (const double ratio : ratios) {
       const double semiMajor = 10.0;
       const double vertexRadius = semiMajor * ratio * ratio;
       for (const bool oppositeBranch : {false, true}) {
@@ -8507,22 +8508,24 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
                       result::OrdinaryStatus::Complete);
               REQUIRE_FALSE(generated.ordinary.empty());
 
-              for (const auto &output : generated.ordinary)
-                CHECK(std::holds_alternative<RS_SplineData>(output));
-              const auto &cache =
-                  std::get<RS_SplineData>(generated.ordinary.front());
+              RS_SplineData cache;
+              if (!LC_OffsetWorkerSourceCache::combine(generated.ordinary,
+                                                       cache)) {
+                ++refusedCaches;
+                continue;
+              }
               const auto validationReply = LC_OffsetWorkerKernel::run(
                   {token, req::ValidateSourceCache{cache, definition, {}}});
               const auto &validated = native(validationReply, 8);
-              if (generated.ordinary.size() == 1) {
-                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+              if (validated.refusal == LC_OffsetCurveRefusal::None &&
+                  validated.changed) {
                 CHECK(validated.changed);
                 ++admittedCaches;
               } else {
                 CHECK(validated.refusal ==
                       LC_OffsetCurveRefusal::NotCacheRepresentable);
                 CHECK_FALSE(validated.changed);
-                ++refusedMultiBranchCaches;
+                ++refusedCaches;
               }
               CHECK(validated.engineRuns == 1);
             }
@@ -8531,9 +8534,11 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
       }
     }
   }
-  CHECK(admittedCaches + refusedMultiBranchCaches ==
-        origins.size() * 2 * 2 * 2 * 3 * 2);
-  CHECK(admittedCaches > 0);
+  const std::size_t expectedRows =
+      origins.size() * ratios.size() * 2 * 2 * 3 * 2;
+  CHECK(admittedCaches + refusedCaches == expectedRows);
+  CHECK(admittedCaches == expectedRows);
+  CHECK(refusedCaches == 0);
 }
 
 TEST_CASE("bounded hyperbola worker cache validation scales across curvature neighborhoods",

@@ -4699,10 +4699,11 @@ TEST_CASE("Hyperbola cusp offsets retain exact normals at translated origins",
   const std::array<RS_Vector, 3> origins{{{23.0, -17.0},
                                           {1e6, -1e6},
                                           {1e9, -2e9}}};
+  constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
   constexpr double semiMajor = 10.0;
   constexpr double rotation = 0.37;
   for (const RS_Vector &origin : origins) {
-    for (const double ratio : {0.05, 0.2}) {
+    for (const double ratio : ratios) {
       const double vertexRadius = semiMajor * ratio * ratio;
       for (const bool oppositeBranch : {false, true}) {
         for (const bool reverseBounds : {false, true}) {
