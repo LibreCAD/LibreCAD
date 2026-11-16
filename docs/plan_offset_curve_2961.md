@@ -55509,3 +55509,24 @@ This establishes the recorded tangent pair, five interior parameters, and
 three frames only; it does not make all tangent layouts, singular/contact
 boundaries, or exterior CAD acceptance exhaustive.
 
+## 1681. Broaden the Interior-normal Oracle to Mirrored and Unequal Tangents (2026-11-16)
+
+Test commit `01b43bb72` extends section 1680's independent NURBS-distance
+oracle from one tangent pair to three: the original steep asymmetric pair, its
+mirror, and an unequal steep pair. All three run at scales `1e-3`, `1`, and
+`1e3`, origins `(1e3,-2e3)`, `(1e6,-2e6)`, and `(1e9,-2e9)`, five interior
+parameters, and both offset signs. The deviation bound is `1e-3 * scale`,
+matching the requested relative tolerance against the source's order-of-ten
+local span, with a floating-point floor for translated coordinates.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 423 assertions / 1 case.
+- `endpoint-tangent parabola conditioning crosses worker cache validation`: 465 assertions / 1 case.
+- `librecad_offset_worker_kernel_tests` target build: passed.
+- `git diff --check`: passed.
+
+These are three concrete tangent layouts, not a proof for arbitrary tangent
+angles, parameterization, intersection/contact boundaries, or external CAD
+readers.
+
