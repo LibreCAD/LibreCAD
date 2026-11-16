@@ -54325,3 +54325,24 @@ This qualifies one knot location and one inherited weight layout per degree.
 Other knot positions/multiplicities, high-degree weight profiles, periodic
 higher-degree ownership, and continuous event-to-output coverage remain open.
 
+## 1629. Qualify High-degree Tangencies at Repeated Knots (2026-11-16)
+
+Test commit `1b80e397e` reuses the test-local homogeneous Boehm insertion helper
+to insert a nonuniform knot at `0.25` and a double knot at the tangent parameter
+`0.5` into each degree-4, degree-5, and degree-6 rational quadratic elevation.
+The independent oracle verifies curve equivalence, the one-sided tangent root,
+and event-to-output mapping; production isolation completes and owns the event
+for all three degrees. The same helper now also builds the degree-2 repeated-
+knot tangent case, avoiding test-only duplication. No production behavior
+changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused degree-4-through-6 repeated-knot matrix: 106 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,708 assertions / 122 cases.
+- `git diff --check`: passed.
+
+These are three degree-elevated profiles at one nonuniform span and one double
+knot. Other knot positions/multiplicities, weight profiles, periodic higher-
+degree ownership, and complete event-to-output mapping remain open.
+
