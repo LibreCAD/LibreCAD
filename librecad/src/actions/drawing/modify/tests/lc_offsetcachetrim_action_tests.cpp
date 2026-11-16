@@ -2891,6 +2891,41 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                 REQUIRE(nearTrim.conicFragments.size() == 1);
                 CHECK(trimGeometry(*native) == nativeBefore);
             }
+
+            for (const double inwardFraction : {5e-7, 1e-7, 1e-8}) {
+                const RS_Vector nearCenter = tangentCircleCenter -
+                    normal * (radius * inwardFraction);
+                RS_Circle nearCircle{nullptr, {nearCenter, radius}};
+                const RS_Vector nearPick = nearCenter + normal * radius;
+                const auto oracle = exactCircleBezierOracle(native->getData(), nearCenter,
+                                                             radius, nearPick);
+                CAPTURE(inwardFraction, oracle.valid, oracle.distinctRoots,
+                        oracle.repeatedRoots, oracle.minimumSeparation);
+                const bool independentlySeparatedSecant = oracle.valid &&
+                    oracle.distinctRoots == 2 && oracle.repeatedRoots == 0 &&
+                    oracle.minimumSeparation > radius * 1e-6;
+                LC_OffsetCacheTrim::Work nearWork;
+                const auto nearTrim = LC_OffsetCacheTrim::prepareConic(
+                    native->getData(), nearCircle, {nearPick}, {}, {}, {}, &nearWork);
+                CAPTURE(nearTrim.refusal, nearTrim.rootCount, nearWork.failureStage,
+                        nearWork.intersections.deepestPairRefinement,
+                        nearWork.intersections.deepestRootRefinement,
+                        nearWork.intersections.totalBoxPairs,
+                        nearWork.intersections.generatedLeaves);
+                if (independentlySeparatedSecant) {
+                    CHECK(nearTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+                    CHECK(nearTrim.rootCount == 2);
+                    REQUIRE(nearTrim.conicFragments.size() == 1);
+                } else {
+                    CHECK(nearTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
+                    CHECK(nearTrim.rootCount == 0);
+                    CHECK(nearTrim.fragments.empty());
+                    CHECK(nearTrim.conicFragments.empty());
+                    CHECK(nearTrim.fragmentCount == 0);
+                    CHECK_FALSE(nearTrim.removed);
+                }
+                CHECK(trimGeometry(*native) == nativeBefore);
+            }
         }
 
         auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
