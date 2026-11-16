@@ -261,7 +261,10 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits; (3) completed by sections 1504-1507: qualify
+and fail-closed limits. Section 1642 adds one rotated, high-origin asymmetric
+endpoint-tangent parabola through Trim Two; continue with materially distinct
+tangent layouts, scales, and cutter conditioning rather than treating that
+profile as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 complete the visible Properties workflow for repeated type changes, candidate
@@ -54592,4 +54595,22 @@ This closes the recorded four-profile, degree-4/6 periodic root matrix across
 the direct kernel and built-helper cache-admission paths. Other periodic
 weights, knot/control layouts, source scales, GUI replacement, Trim/persistence
 for these exact fixtures, and independent CAD acceptance remain open.
+
+## 1642. Exercise Asymmetric Endpoint-tangent Parabola Trim Two (2026-11-16)
+
+Test commit `9f7481a48` extends the endpoint-tangent parabola Trim Two action
+matrix with one asymmetric tangent pair, `(1.0, 0.2)` and `(0.7, -0.35)`,
+on a source translated to `(1e6, -2e6)` and using the existing rotated frame.
+The case exercises worker-backed source replacement, Trim Two, undo/redo, and
+the existing five-format save/reopen lanes. It adds construction-specific
+integration evidence without changing production behavior.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused endpoint-tangent Trim Two matrix: 14,637 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+This is one asymmetric tangent construction at one translated scale/frame;
+other tangent layouts, scales, cutters, and independent CAD acceptance remain
+open.
 
