@@ -54369,3 +54369,22 @@ This covers two periodic layouts and one seam root each. Other high-degree
 periodic weights/knots, interior-root ownership, even seam tangencies, and
 complete event-to-output correspondence remain open.
 
+## 1631. Map High-degree Periodic Roots at an Interior Knot (2026-11-16)
+
+Test commit `42c6da0fe` extends the wrapped rational degree-4/6 spline matrix
+to the first interior break. For each degree, a 256-bit oracle computes both
+one-sided curvatures at that knot, derives the signed offset, verifies that
+the offset factor vanishes from both sides, and confirms production assigns
+the root to a candidate or stall and maps its point to retained output. No
+production behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused degree-4/6 periodic interior-knot case: 36 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,782 assertions / 124 cases.
+- `git diff --check`: passed.
+
+This qualifies the first interior break in two periodic profiles. Other
+periodic knots and weights, higher-degree root combinations, and complete
+candidate/stall/output correspondence remain open.
+
