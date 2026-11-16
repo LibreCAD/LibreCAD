@@ -52464,3 +52464,32 @@ ODA/AutoCAD acceptance. The source-picker implementation supports switching
 among all nine supported source kinds, including parabola; the visible desktop
 acceptance gate remains outstanding.
 
+## 1577. Extend the Direct Hyperbola Cusp Oracle to 1e12 (2026-11-16)
+
+Test commit `5f7d01b1d` adds origin `(1e12,-2e12)` to section 1575's direct
+exact-normal cusp oracle for ratios `{0.01, 0.05, 0.2, 0.5, 1.0}`, both
+branches, forward/reversed bounds, both offset sides, and cusp fractions `0.5`
+and `1.5`. The feature size is scaled to keep the origin-to-geometry ratio
+comparable to the existing high-origin rows. At this coordinate magnitude the
+requested tolerance must remain above the engine's arithmetic floor; the test
+uses `0.05` at `1e12` and allows the larger of that tolerance and four times
+the coordinate ULP when comparing against the independent exact-normal oracle.
+An initial fixed-size probe refused because its sub-resolution tolerance
+produced invalid options; it is not counted as successful geometry coverage.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][large-origin]' \
+  --reporter compact
+git diff --check
+```
+
+The focused direct-oracle case passes 432,996 assertions / 1 case. This is
+direct geometry evidence only: worker/process/cache behavior and DXF/DWG
+persistence at `1e12` remain open, as do external CAD acceptance and the
+visible packaged-app source-picker gate.
+
