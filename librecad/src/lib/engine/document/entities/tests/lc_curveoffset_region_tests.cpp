@@ -151,10 +151,11 @@ CycleCheck checkCycles(const LC_CurveOffsetGeometryResult& result, const std::ve
                 points.push_back(bezierAt(piece.bezier, k / 8.0));
             }
         }
+        const RS_Vector areaOrigin = points.front();
         double area = 0.0;
         for (size_t i = 0; i < points.size(); ++i) {
-            const RS_Vector& a = points[i];
-            const RS_Vector& b = points[(i + 1) % points.size()];
+            const RS_Vector a = points[i] - areaOrigin;
+            const RS_Vector b = points[(i + 1) % points.size()] - areaOrigin;
             area += 0.5 * (a.x * b.y - a.y * b.x);
         }
         check.areas.push_back(area);
@@ -353,6 +354,7 @@ TEST_CASE("Self-crossing polyline regions grow and erode under both fill rules",
         {"identity", 1.0, 0.0, false, {0, 0}, false},
         {"rotated translated reverse", 3.0, 0.63, false, {100000, -250000}, true},
         {"reflected scaled", 0.4, -0.3, true, {-100000, 200000}, false},
+        {"rotated high-origin reverse", 1000.0, 0.63, false, {1e9, -2e9}, true},
     };
     for (const LC_CurveFillRule rule : {LC_CurveFillRule::NonZero, LC_CurveFillRule::EvenOdd}) {
         for (const Transform& transform : transforms) {
@@ -391,6 +393,11 @@ TEST_CASE("Self-crossing polyline regions grow and erode under both fill rules",
                     options, LC_CurveOffset::makeDirectSourceBudget());
                 CAPTURE(transform.name, rule, grow, static_cast<int>(result.status),
                         static_cast<int>(result.intersectionDiagnostics.status),
+                        static_cast<int>(result.intersectionDiagnostics.failureSite),
+                        static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure),
+                        result.intersectionDiagnostics.cycleAssemblyEndpointGap,
+                        result.intersectionDiagnostics.cycleAssemblyOpenEnd,
+                        result.intersectionDiagnostics.cycleAssemblyNearestStart,
                         result.intersectionDiagnostics.failureDomain.segmentA,
                         result.intersectionDiagnostics.failureDomain.segmentB,
                         result.intersectionDiagnostics.failureDepth);

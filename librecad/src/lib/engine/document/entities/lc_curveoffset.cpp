@@ -6610,7 +6610,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         return LC_CurveOffsetStatus::InvalidSource; // a region needs a closed boundary
     }
     const auto* polylineSource = dynamic_cast<const PolylineSource*>(&source);
-    if (!normalized && polylineSource != nullptr && polylineSource->hasCircularSegment()) {
+    if (!normalized && polylineSource != nullptr) {
         const std::vector<double>& sourceBreaks = source.breaks();
         if (sourceBreaks.size() < 2) return LC_CurveOffsetStatus::InvalidSource;
         LC_CurveJet startJet;
