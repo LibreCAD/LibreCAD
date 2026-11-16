@@ -26,7 +26,10 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`28762cb93`):** The source-type selector contract is implemented for all nine
+`b3d64c418`):** Rotated and reversed parabola pattern clipping now orders
+intersections in the directed local parameter and extracts exact Bezier
+subcurves; its regression and broad hatch validation are recorded in section
+1559. The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -51818,4 +51821,73 @@ conditioning passes 465 assertions / 1 case; endpoint-tangent Trim Two passes
 and plugin build exits 0; it reports the existing missing optional
 `/private/tmp/libdxfrw-cargo/env` shell-profile file and compiler warnings.
 Visible Properties interaction and independent CAD acceptance remain open.
+
+## 1558. Reconfirm Type Changes During Source Replacement (2026-11-15)
+
+The latest request reiterates that the Properties source widget must allow the
+requested source-curve type to change after replacement picking has begun,
+and that replacement candidates must cover all source types supported by the
+offset feature. This is the same interaction contract as section 1555, not a
+new geometry-family expansion: the authoritative inventory remains the nine
+entries in `LC_OffsetSourceGeometry::SupportedKinds` (line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline).
+Parabola is a distinct selectable/captured type, not an alias for
+spline-points.
+
+Implementation and headless acceptance are already recorded in sections 1532
+and 1549. While candidate picking is active, changing the type must refresh
+the candidate filter without committing a source change; the previous source
+and its highlight remain until a valid candidate completes worker preparation.
+Success transfers the source and highlight together; cancellation or refusal
+leaves both unchanged. Repeated changes between types, including into and out
+of parabola, are covered by the recorded automated tests. Do not add another
+selector or duplicate implementation slice unless those behaviors regress.
+
+The only remaining acceptance specific to this widget is the visible
+packaged-app check from section 1555: change the type more than once during
+replacement, verify refreshed candidates and persistent old-source highlight,
+then verify successful replacement or cancellation/refusal behavior. Record
+the binary revision and platform. This UI gate is distinct from the broader
+family-by-variant geometry, worker/cache, trimming, persistence, and external
+CAD interoperability gates in Slice 4.
+
+## 1559. Preserve Exact Parabola Geometry During Pattern Clipping (2026-11-15)
+
+Commit `b3d64c418` fixes parabola pattern clipping for rotated and reversed
+curves. Intersection ordering now uses the signed normalized local transverse
+coordinate from the directed start to end, rather than world X. Each retained
+interval is reconstructed by the quadratic Bezier blossom, preserving the
+exact conic segment and its traversal direction; the prior endpoint-tangent
+reconstruction and world-coordinate fallback are removed. The point
+classifier now uses the exact Bezier midpoint as a representative point for a
+parabola and its local tangent for a boundary-side probe, avoiding invalid
+`getMiddlePoint()` results and chord-based normals.
+
+Two end-to-end clipping regressions compare samples against the original
+Bezier: a translated/rotated symmetric window and a reversed, near-vertical
+parabola clipped to an asymmetric window. Both verify one retained typed
+parabola with the correct segment geometry and direction.
+
+Validation on macOS arm64:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-hatchfix][pattern][parabola][trim]' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-hatchfix]' --reporter compact
+cd /private/tmp/offset3193-qmake6-fresh && make -j6
+git diff --check
+```
+
+Results: focused parabola clipping passes 22 assertions / 2 cases; the full
+`[lc-hatchfix]` selection passes 89,646 assertions / 168 cases (one skipped).
+The recursive qmake6 application, worker, and plugin build exits 0, with the
+existing shell-profile warning for absent optional
+`/private/tmp/libdxfrw-cargo/env` and existing compiler/linker warnings. This
+closes only parabola pattern clipping for the covered transforms and interval
+profiles; it does not establish broad parabola trimming or the full
+family-by-variant matrix in Slice 4.
 
