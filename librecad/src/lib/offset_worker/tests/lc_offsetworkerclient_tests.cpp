@@ -5852,7 +5852,7 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}})});
     }
     const RS_Vector highOrigin{1e9, -2e9};
-    const std::array<std::pair<const char*, double>, 8> highOriginSlopeProfiles{{
+    const std::array<std::pair<const char*, double>, 9> highOriginSlopeProfiles{{
         {"high-origin-1e-4", 1e-4},
         {"high-origin-1e-5", 1e-5},
         {"high-origin-1e-6", 1e-6},
@@ -5860,7 +5860,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         {"high-origin-1e-8", 1e-8},
         {"high-origin-5e-9", 5e-9},
         {"high-origin-2e-9", 2e-9},
-        {"high-origin-1.5e-9", 1.5e-9}}};
+        {"high-origin-1.5e-9", 1.5e-9},
+        {"high-origin-1.25e-9", 1.25e-9}}};
     for (const auto& [name, tangentSlope] : highOriginSlopeProfiles) {
         profiles.push_back({name, LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + highOrigin,
