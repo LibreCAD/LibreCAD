@@ -2779,6 +2779,20 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
 
     if (scaleExtreme && scaleProfile == 1) {
         const RS_Vector circlePick = circleCenter + normal * radius;
+        const RS_Vector tangentCircleCenter = intersection + normal * radius;
+        RS_Circle tangentCircle{nullptr, {tangentCircleCenter, radius}};
+        const auto tangentTrim = LC_OffsetCacheTrim::prepareConic(native->getData(),
+            tangentCircle, {tangentCircleCenter + normal * radius});
+        CAPTURE(tangentTrim.refusal, tangentTrim.rootCount,
+                tangentTrim.work.failureStage,
+                tangentTrim.work.hasIntersectionFailureDomain);
+        CHECK(tangentTrim.refusal != LC_OffsetCacheTrim::Refusal::None);
+        CHECK(tangentTrim.fragments.empty());
+        CHECK(tangentTrim.conicFragments.empty());
+        CHECK(tangentTrim.fragmentCount == 0);
+        CHECK_FALSE(tangentTrim.removed);
+        CHECK(trimGeometry(*native) == nativeBefore);
+
         auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, radius});
         f.graphic.addEntity(circle);
         const auto cacheOnly = LC_OffsetCacheTrim::prepare(native->getData(), *circle,
