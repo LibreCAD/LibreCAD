@@ -389,12 +389,15 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   package copies; those two alone do not start the workflow and are first
   packaged on `master`. Bundling runs on pushes only.
 - After each successful **Continuous build** push to `master`, **Submit MSIX to
-  Microsoft Store** starts automatically with that run's bundle. A reviewer
-  of the `microsoft-store` environment must approve the job before it can use
-  the Store credentials. Manual dispatch on `master` remains available to
-  submit a selected build run. The job:
-  1. accepts only a push run of `build-all.yml` on `master`, and refuses a
-     bundle with the placeholder identity;
+  Microsoft Store** starts automatically with that run's bundle. If the overall
+  build was canceled by another job, it can still submit when `PackageWindowsMsix`
+  succeeded and the run's commit is still current on `master`. A reviewer of
+  the `microsoft-store` environment must approve the job before it can use the
+  Store credentials. Manual dispatch on `master` remains available to submit a
+  selected build run. The job:
+  1. accepts only a same-repository push run of `build-all.yml` on `master`,
+     verifies `PackageWindowsMsix` succeeded and the run is still current on
+     `master`, and refuses a bundle with the placeholder identity;
   2. refuses the run if its App Certification Kit report has a failing
      required test (`ignore_wack` overrides);
   3. refuses to start while another submission is in progress, whatever its
