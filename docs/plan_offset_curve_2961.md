@@ -52782,3 +52782,39 @@ extreme-origin exact-threshold extension. These are the recorded profiles
 only. Broader hyperbola variants, visible-app acceptance, and independent
 ODA/AutoCAD acceptance remain open.
 
+## 1584. Trim Exact Hyperbola Cusps at Translated Origins (2026-11-16)
+
+Test commit `4eb9c3da8` adds the exact vertex-radius distance to the bounded
+hyperbola Trim oracle and checks a rotated, asymmetric bounded profile on
+both branches and both offset sides at origins `(23,-17)`, `(1e6,-1e6)`,
+`(1e9,-2e9)`, and `(1e12,-2e12)`. The independent two-way oracle checks that
+kept geometry remains at least the requested distance from the source and
+that the visible exact-normal offset is represented within twice the geometry
+tolerance. At the two large origins the semi-major axis is `2e4` and the
+requested tolerance is `0.05`.
+
+An initial small-feature probe at `(1e9,-2e9)` returned `LimitExceeded`
+atomically; it is not counted as supported Trim. Scaling the feature to `2e4`
+and using the explicit tolerance above passes at both `1e9` and `1e12`. This
+records a conditioning boundary, not a relaxation of the geometry budget.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][trim][hyperbola][cusp][large-origin][oracle]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][trim]' --reporter compact
+git diff --check
+```
+
+The focused high-origin exact-cusp Trim case passes 72 assertions / 1 case;
+the broader direct Trim suite passes 59,719 assertions / 45 cases. This closes
+only those exact hyperbola profiles. Worker-backed Trim action, broader
+hyperbola conditioning, visible Properties acceptance, and independent
+ODA/AutoCAD acceptance remain open.
+
