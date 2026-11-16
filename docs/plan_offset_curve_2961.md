@@ -257,7 +257,10 @@ section 1684 does the same for circle cutters with the three-radius contact
 matrix. Section 1685 adds reversed mirrored/unequal tangent sources to the
 worker-cache and five-lane persistence matrix across all three scales;
 section 1686 extends the independent interior-normal oracle to reversed
-traversal. Extend the Trim Two action matrix to those reversed layouts.
+traversal, and section 1687 completes their three-scale circle/line Trim Two
+action matrix. Continue with materially distinct tangent directions and
+contact conditioning; do not inflate this finite profile set into general
+coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55642,4 +55645,25 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 This closes the recorded reversed interior-normal rows only; arbitrary tangent
 pairs and broader contact conditions remain open.
+
+## 1687. Exercise Reversed Tangent Layouts through Trim Two (2026-11-16)
+
+Test commit `d4e8b9802` adds reversed versions of the mirrored and unequal
+steep tangent pairs to the Trim Two action matrix. Each runs circle and line
+cutters at source scales `1e-3`, `1`, and `1e3`, in the corresponding translated
+frames. Circle-contact checks, both line operand-pick orders, worker-backed
+preparation, preview/commit, undo/redo, and all five DXF/DWG save/reopen lanes
+remain required. Together with sections 1685-1686, the reversed source layouts
+now have worker-cache, persistence, independent interior-normal, and action
+evidence.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 139,553 assertions / 1 case.
+- CMake `librecad_offset_trim_tests` target build: passed.
+- `git diff --check`: passed.
+
+These checks close the reversed versions of the two recorded layouts only.
+Other tangent angles, cutter placements, scale/curvature contact limits, GUI
+acceptance, and independent CAD acceptance remain open.
 
