@@ -5163,8 +5163,8 @@ TEST_CASE("high-degree periodic rational roots map at the seam",
 TEST_CASE("high-degree periodic rational roots map at an interior knot",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][interior-root][degree][high-degree]") {
-    const std::array<std::pair<double, bool>, 3> weightProfiles{{
-        {0.1, true}, {0.05, true}, {0.05, false}}};
+    const std::array<std::pair<double, bool>, 4> weightProfiles{{
+        {0.1, true}, {0.05, true}, {0.05, false}, {0.2, false}}};
     for (const auto [weightStep, symmetricWeights] : weightProfiles) {
       for (const std::size_t degree : {4u, 6u}) {
         RS_SplineData data;

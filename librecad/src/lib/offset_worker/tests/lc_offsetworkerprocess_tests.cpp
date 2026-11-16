@@ -687,8 +687,8 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
     std::unique_ptr<QCoreApplication> application;
     if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
     Helper helper;
-    const std::array<std::pair<double, bool>, 3> weightProfiles{{
-        {0.1, true}, {0.05, true}, {0.05, false}}};
+    const std::array<std::pair<double, bool>, 4> weightProfiles{{
+        {0.1, true}, {0.05, true}, {0.05, false}, {0.2, false}}};
     qint64 requestId = 100;
     std::size_t admittedRoots = 0;
 
@@ -803,7 +803,7 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
             }
         }
     }
-    CHECK(admittedRoots == 6);
+    CHECK(admittedRoots == 8);
 }
 
 TEST_CASE("Built helper returns a bounded typed-source sample-limit refusal",
