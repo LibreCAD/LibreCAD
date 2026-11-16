@@ -8974,68 +8974,79 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
   for (const TangentLayout &layout : tangentLayouts) {
     CAPTURE(layout.name);
     for (const Frame &frame : frames) {
-      CAPTURE(frame.scale, frame.origin);
-      const std::array<RS_Vector, 2> endpoints{
-          {rotate({0.0, 0.0}) + frame.origin,
-           rotate({10.0 * frame.scale, 0.0}) + frame.origin}};
-      const std::array<RS_Vector, 2> tangents{
-          {rotate(layout.tangents[0]), rotate(layout.tangents[1])}};
-      const LC_ParabolaData parabola =
-          LC_ParabolaData::FromEndPointsTangents(endpoints, tangents);
-      REQUIRE(parabola.isValid());
-      for (const double signedDistance :
-           {0.1 * frame.scale, -0.1 * frame.scale}) {
-        CAPTURE(signedDistance);
-        const LC_OffsetSourceDefinition signedDefinition{
-            LC_OffsetSourceGeometry{parabola}, signedDistance, 1e-4, false};
-        const auto generatedReply = LC_OffsetWorkerKernel::run(
-            {token, req::GenerateSource{signedDefinition, {}}});
-        const auto &generated = native(generatedReply, 7);
-        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
-        REQUIRE_FALSE(generated.ordinary.empty());
+      const RS_Vector firstPoint = rotate({0.0, 0.0}) + frame.origin;
+      const RS_Vector lastPoint =
+          rotate({10.0 * frame.scale, 0.0}) + frame.origin;
+      const RS_Vector firstTangent = rotate(layout.tangents[0]);
+      const RS_Vector lastTangent = rotate(layout.tangents[1]);
+      for (const bool reversedTraversal : {false, true}) {
+        CAPTURE(frame.scale, frame.origin, reversedTraversal);
+        const std::array<RS_Vector, 2> endpoints =
+            reversedTraversal
+                ? std::array<RS_Vector, 2>{{lastPoint, firstPoint}}
+                : std::array<RS_Vector, 2>{{firstPoint, lastPoint}};
+        const std::array<RS_Vector, 2> tangents =
+            reversedTraversal
+                ? std::array<RS_Vector, 2>{{lastTangent * -1.0,
+                                            firstTangent * -1.0}}
+                : std::array<RS_Vector, 2>{{firstTangent, lastTangent}};
+        const LC_ParabolaData parabola =
+            LC_ParabolaData::FromEndPointsTangents(endpoints, tangents);
+        REQUIRE(parabola.isValid());
+        for (const double signedDistance :
+             {0.1 * frame.scale, -0.1 * frame.scale}) {
+          CAPTURE(signedDistance);
+          const LC_OffsetSourceDefinition signedDefinition{
+              LC_OffsetSourceGeometry{parabola}, signedDistance, 1e-4, false};
+          const auto generatedReply = LC_OffsetWorkerKernel::run(
+              {token, req::GenerateSource{signedDefinition, {}}});
+          const auto &generated = native(generatedReply, 7);
+          REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+          REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+          REQUIRE_FALSE(generated.ordinary.empty());
 
-        std::vector<std::unique_ptr<RS_Spline>> output;
-        for (const auto &ordinary : generated.ordinary) {
-          const auto *data = std::get_if<RS_SplineData>(&ordinary);
-          REQUIRE(data);
-          RS_SplineData localData = *data;
-          for (RS_Vector &point : localData.controlPoints)
-            point -= frame.origin;
-          output.push_back(std::make_unique<RS_Spline>(nullptr, localData));
-        }
-        REQUIRE_FALSE(output.empty());
+          std::vector<std::unique_ptr<RS_Spline>> output;
+          for (const auto &ordinary : generated.ordinary) {
+            const auto *data = std::get_if<RS_SplineData>(&ordinary);
+            REQUIRE(data);
+            RS_SplineData localData = *data;
+            for (RS_Vector &point : localData.controlPoints)
+              point -= frame.origin;
+            output.push_back(std::make_unique<RS_Spline>(nullptr, localData));
+          }
+          REQUIRE_FALSE(output.empty());
 
-        const auto &control = parabola.m_controlPoints;
-        const double worldMagnitude =
-            std::max({std::abs(endpoints[0].x), std::abs(endpoints[0].y),
-                      std::abs(endpoints[1].x), std::abs(endpoints[1].y), 1.0});
-        const double allowedDeviation = std::max(
-            1e-3 * frame.scale,
-            256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
-        double maximumDeviation = 0.0;
-        for (const double t : parameters) {
-          const double inverse = 1.0 - t;
-          const RS_Vector sourcePoint = control[0] * (inverse * inverse) +
-                                        control[1] * (2.0 * inverse * t) +
-                                        control[2] * (t * t);
-          const RS_Vector sourceTangent =
-              (control[1] - control[0]) * (2.0 * inverse) +
-              (control[2] - control[1]) * (2.0 * t);
-          REQUIRE(sourceTangent.magnitude() > 0.0);
-          const RS_Vector unitTangent = sourceTangent.normalized();
-          const RS_Vector exactOffset =
-              sourcePoint +
-              RS_Vector{-unitTangent.y, unitTangent.x} * signedDistance;
-          double nearest = RS_MAXDOUBLE;
-          for (const auto &spline : output)
-            nearest = std::min(
-                nearest,
-                nearestSplineDistance(*spline, exactOffset - frame.origin));
-          maximumDeviation = std::max(maximumDeviation, nearest);
+          const auto &control = parabola.m_controlPoints;
+          const double worldMagnitude = std::max(
+              {std::abs(endpoints[0].x), std::abs(endpoints[0].y),
+               std::abs(endpoints[1].x), std::abs(endpoints[1].y), 1.0});
+          const double allowedDeviation = std::max(
+              1e-3 * frame.scale,
+              256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+          double maximumDeviation = 0.0;
+          for (const double t : parameters) {
+            const double inverse = 1.0 - t;
+            const RS_Vector sourcePoint = control[0] * (inverse * inverse) +
+                                          control[1] * (2.0 * inverse * t) +
+                                          control[2] * (t * t);
+            const RS_Vector sourceTangent =
+                (control[1] - control[0]) * (2.0 * inverse) +
+                (control[2] - control[1]) * (2.0 * t);
+            REQUIRE(sourceTangent.magnitude() > 0.0);
+            const RS_Vector unitTangent = sourceTangent.normalized();
+            const RS_Vector exactOffset =
+                sourcePoint +
+                RS_Vector{-unitTangent.y, unitTangent.x} * signedDistance;
+            double nearest = RS_MAXDOUBLE;
+            for (const auto &spline : output)
+              nearest = std::min(
+                  nearest,
+                  nearestSplineDistance(*spline, exactOffset - frame.origin));
+            maximumDeviation = std::max(maximumDeviation, nearest);
+          }
+          CAPTURE(maximumDeviation, allowedDeviation, output.size());
+          CHECK(maximumDeviation <= allowedDeviation);
         }
-        CAPTURE(maximumDeviation, allowedDeviation, output.size());
-        CHECK(maximumDeviation <= allowedDeviation);
       }
     }
   }
