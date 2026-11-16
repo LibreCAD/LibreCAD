@@ -140,7 +140,7 @@ static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
 constexpr int SuiteTimeoutMs = 150000;
-constexpr int MaxSuiteTimeoutMs = 900000;
+constexpr int MaxSuiteTimeoutMs = 1800000;
 constexpr int WaitTimeoutMs = static_cast<int>(Client::Deadlines::commit +
                                                Client::Deadlines::terminate +
                                                Client::Deadlines::reap + 5000);
@@ -160,7 +160,8 @@ TEST_CASE("Worker client suite timeout override remains bounded", Tags) {
     CHECK(boundedSuiteTimeout(0, false) == SuiteTimeoutMs);
     CHECK(boundedSuiteTimeout(-1, true) == SuiteTimeoutMs);
     CHECK(boundedSuiteTimeout(300000, true) == 300000);
-    CHECK(boundedSuiteTimeout(1000000, true) == MaxSuiteTimeoutMs);
+    CHECK(boundedSuiteTimeout(1000000, true) == 1000000);
+    CHECK(boundedSuiteTimeout(3000000, true) == MaxSuiteTimeoutMs);
 }
 
 class Runtime {
@@ -6871,7 +6872,7 @@ TEST_CASE(
   std::size_t persistedFallbackRows = 0;
   std::size_t persistedMultiBranchRows = 0;
   std::size_t highOriginGeneratedRows = 0;
-  std::array<std::size_t, 2> highOriginFallbackRows{};
+  std::array<std::size_t, 3> highOriginFallbackRows{};
   auto persistOrdinaryFallback = [&](const auto &outputs, qint64 generationId,
                                      std::size_t originIndex) {
     REQUIRE_FALSE(outputs.empty());
@@ -6883,6 +6884,23 @@ TEST_CASE(
     std::vector<RS_LineData> expectedLines;
     std::size_t expectedLineCount = 0;
     std::size_t expectedSplineCount = 0;
+    const auto coordinateUlp = [](const double value) {
+      return std::max(
+          std::abs(std::nextafter(value,
+                                  std::numeric_limits<double>::infinity()) -
+                   value),
+          std::abs(value -
+                   std::nextafter(value,
+                                  -std::numeric_limits<double>::infinity())));
+    };
+    const auto endpointTolerance = [&coordinateUlp](const RS_Vector &first,
+                                                     const RS_Vector &second) {
+      const double ulpX = std::max(coordinateUlp(first.x),
+                                   coordinateUlp(second.x));
+      const double ulpY = std::max(coordinateUlp(first.y),
+                                   coordinateUlp(second.y));
+      return std::max(1e-4, 4.0 * std::hypot(ulpX, ulpY));
+    };
     for (const auto &output : outputs) {
       const auto *splineData = std::get_if<RS_SplineData>(&output);
       if (splineData) {
@@ -6944,13 +6962,17 @@ TEST_CASE(
             actualLines.begin(), actualLines.end(),
             [&](const RS_LineData &actualLine) {
               return (actualLine.startpoint.distanceTo(expectedLine.startpoint) <=
-                          1e-4 &&
+                          endpointTolerance(actualLine.startpoint,
+                                            expectedLine.startpoint) &&
                       actualLine.endpoint.distanceTo(expectedLine.endpoint) <=
-                          1e-4) ||
+                          endpointTolerance(actualLine.endpoint,
+                                            expectedLine.endpoint)) ||
                      (actualLine.startpoint.distanceTo(expectedLine.endpoint) <=
-                          1e-4 &&
+                          endpointTolerance(actualLine.startpoint,
+                                            expectedLine.endpoint) &&
                       actualLine.endpoint.distanceTo(expectedLine.startpoint) <=
-                          1e-4);
+                          endpointTolerance(actualLine.endpoint,
+                                            expectedLine.startpoint));
             });
         REQUIRE(match != actualLines.end());
         actualLines.erase(match);
@@ -7005,12 +7027,14 @@ TEST_CASE(
     if (outputs.size() > 1)
       ++persistedMultiBranchRows;
   };
-  const std::array<RS_Vector, 3> origins{
-      {{23.0, -17.0}, {1e6, -1e6}, {1e9, -2e9}}};
-  constexpr double semiMajor = 10.0;
+  const std::array<RS_Vector, 4> origins{
+      {{23.0, -17.0}, {1e6, -1e6}, {1e9, -2e9}, {1e12, -2e12}}};
   for (std::size_t originIndex = 0; originIndex < origins.size();
        ++originIndex) {
     const RS_Vector &origin = origins[originIndex];
+    const bool veryHighOrigin =
+        std::abs(origin.x) > 1e11 || std::abs(origin.y) > 1e11;
+    const double semiMajor = veryHighOrigin ? 2e4 : 10.0;
     for (const double ratio : ratios) {
       const double vertexRadius = semiMajor * ratio * ratio;
       for (const bool oppositeBranch : {false, true}) {
@@ -7192,6 +7216,7 @@ TEST_CASE(
   CHECK(highOriginGeneratedRows == highOriginRows);
   CHECK(highOriginFallbackRows[0] > 0);
   CHECK(highOriginFallbackRows[1] > 0);
+  CHECK(highOriginFallbackRows[2] > 0);
   CHECK(persistedRows > 0);
   CHECK(persistedFallbackRows > 0);
   CHECK(persistedMultiBranchRows > 0);

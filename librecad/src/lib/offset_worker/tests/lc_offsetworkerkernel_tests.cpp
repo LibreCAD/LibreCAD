@@ -8478,11 +8478,15 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
           "variants]") {
   std::size_t admittedCaches = 0;
   std::size_t refusedCaches = 0;
-  const std::array<RS_Vector, 2> origins{{{23.0, -17.0}, {1e9, -2e9}}};
+  const std::array<RS_Vector, 3> origins{{{23.0, -17.0},
+                                         {1e9, -2e9},
+                                         {1e12, -2e12}}};
   constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
   for (const RS_Vector &origin : origins) {
     for (const double ratio : ratios) {
-      const double semiMajor = 10.0;
+      const bool veryHighOrigin =
+          std::abs(origin.x) > 1e11 || std::abs(origin.y) > 1e11;
+      const double semiMajor = veryHighOrigin ? 2e4 : 10.0;
       const double vertexRadius = semiMajor * ratio * ratio;
       for (const bool oppositeBranch : {false, true}) {
         for (const bool reverseBounds : {false, true}) {
