@@ -53795,3 +53795,26 @@ Result: 4,463 assertions / 1 case pass. The unresolved sampled interval is
 `(1.10439453125e-9, 1.1044921875e-9]`; other frames, scales, constructions,
 and external CAD acceptance remain open.
 
+## 1614. Refine the High-origin Tangent Construction Bracket (2026-11-16)
+
+The direct construction oracle probes the midpoint slope
+`1.104443359375e-9` between section 1613's invalid sample and section 1612's
+valid `1.1044921875e-9` sample. At the rotated `(1e9,-2e9)` frame, the
+midpoint candidate is invalid. This is only a sampled `LC_ParabolaData`
+construction boundary; it does not establish an offset-engine transition or
+a continuous mathematical interval.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+git diff --check
+```
+
+Result: 4,465 assertions / 1 case pass. The sampled valid/invalid bracket is
+now `(1.104443359375e-9, 1.1044921875e-9]` for this exact frame; other
+origins, scales, constructions, and external CAD acceptance remain open.
+
