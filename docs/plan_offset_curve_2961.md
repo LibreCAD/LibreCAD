@@ -252,7 +252,9 @@ The interior oracle uses relative tolerance `1e-4` against the recorded
 order-of-ten local span; these samples remain bounded, not a claim of arbitrary
 tangent-pair completeness. Section 1682 adds mirrored and unequal layouts to
 circle/line Trim Two with full action and persistence checks; section 1683
-extends both line-cutter layouts across source scales `1e-3/1/1e3`.
+extends both line-cutter layouts across source scales `1e-3/1/1e3`, and
+section 1684 does the same for circle cutters with the three-radius contact
+matrix.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55577,4 +55579,23 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 This closes the three-scale line-cutter matrix for these two tangent layouts,
 not arbitrary line placement, cutter direction, or external CAD acceptance.
+
+## 1684. Scale Mirrored and Unequal Tangent Circle-cutter Trim (2026-11-16)
+
+Test commit `293470e20` extends the mirrored and unequal tangent circle-cutter
+profiles from sections 1682-1683 to scales `1e-3` and `1e3`, retaining the
+unit-scale rows. The frames use origins `(1e3,-2e3)`, `(1e6,-2e6)`, and
+`(1e9,-2e9)`. The existing three-radius contact matrix, independent
+tangent-circle oracle, worker-backed Trim Two preparation, preview/commit,
+undo/redo, and all five DXF/DWG save/reopen lanes run for each added scale.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 100,129 assertions / 1 case.
+- CMake `librecad_offset_trim_tests` target build: passed.
+- `git diff --check`: passed.
+
+The two added layouts now have three-scale circle and line Trim Two coverage.
+This remains a finite matrix of tangent directions, radii, placements, and
+internal file lanes; visible GUI and independent-CAD acceptance remain open.
 
