@@ -53617,3 +53617,44 @@ positive/inward side matrix for this frame and cutter only; other origins,
 scales, source constructions, cutters, visible-app use, and independent
 ODA/AutoCAD acceptance remain open.
 
+## 1609. Qualify the Next High-origin Tangent Slope Below 1.125e-9 (2026-11-16)
+
+The high-origin endpoint-tangent profile at slope `1.10625e-9` is now the
+smallest newly admitted sample below section 1605's `1.125e-9` profile. The
+direct oracle checks both signed geometric sides at origin `(1e9,-2e9)` and
+rotation `0.41`; the adjacent sampled slope `1.103125e-9` and lower probes
+`1.1e-9`, `1.0625e-9`, and `1e-9` remain invalid at that frame. The valid
+`1.10625e-9` row is included in the real worker/cache matrix with both signed
+offset distances and all five DXF/DWG persistence lanes. Trim Two now includes
+it on both `towardCentre` sides with fragment save/reopen and available
+LibreDWG entity-type checks.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Results: the direct oracle passes 1,324 assertions / 1 case, worker/cache and
+five-format persistence pass 29,843 assertions / 1 case, and Trim Two plus its
+five-format result round-trips passes 7,473 assertions / 1 case. This adds one
+fully qualified slope and several invalid samples; it does not prove the
+continuous representability boundary in `(1.103125e-9, 1.10625e-9)`, nor other
+origins/scales, constructions, cutters, visible-app use, or independent
+ODA/AutoCAD acceptance.
+
