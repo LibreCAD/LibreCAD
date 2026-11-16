@@ -276,9 +276,10 @@ type changes, candidate refresh, current-source indication, replacement, and
 cancellation/refusal; retain visible packaged-app interaction as the remaining
 manual gate; (5) completed by section 1532: the automated all-family
 replacement and highlight-transfer matrix; (6) record independent ODA/AutoCAD
-acceptance where available; section 1650 records that the installed ODA
-converter cannot run from this SSH/headless context, so visible ODA acceptance
-remains open. Keep raw DWG replay diagnostics
+acceptance where available; section 1692 supersedes the SSH runtime blocker in
+sections 1650/1676 for the preserved 84-file DWG writer/plot fixture matrix.
+Visible packaged-app acceptance, other source-family/variant acceptance, and
+AutoCAD acceptance remain open. Keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
@@ -55738,7 +55739,7 @@ accepted cache through files or prove exact cusp/beyond-cusp behavior.
 
 ## 1691. Persist Curvature-relative Endpoint-tangent Offsets (2026-11-16)
 
-Test commit `TBD` extends the section 1689/1690 curvature-relative profiles
+Test commit `c82a3b2eb` extends the section 1689/1690 curvature-relative profiles
 through the real worker/cache and five save/reopen lanes: R14 DXF, R2000
 DXF/DWG, and R2018 DXF/DWG. It covers four endpoint-tangent layouts (steep,
 mirrored, unequal, and `1e300` magnitude-ratio), three scale/origin frames,
@@ -55754,4 +55755,26 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 - `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 109,494 assertions / 1 case.
 - `librecad_offset_worker_client_tests` target build: passed.
 - `git diff --check`: passed.
+
+## 1692. Independently Convert the Preserved DWG Matrix with ODA (2026-11-16)
+
+After the user opened ODAFileConverter in the active desktop session, the
+preserved 84-file PR DWG fixture directory converted successfully to R2018
+DXF. The converter exited with status 0 and produced 84 files. A structured
+DXF group-pair audit matched every output stem to its input and checked the
+target `$ACADVER`, entity inventory, and offset marker: 48 native-cache files
+each contain one SPLINE and the `LC_OFFSET_CURVE` marker; 12 LINE controls each
+contain one LINE and no SPLINE; 24 plot-metadata fixtures contain no entities,
+as expected. No output failed the audit. This supersedes the launch failure
+receipts in sections 1650/1676 for this exact fixture matrix only.
+
+Validation:
+
+- ODA File Converter 27.1.0.0, DWG to R2018 DXF, all 84 input fixtures: exit 0 / 84 output DXFs.
+- Structured output audit: 48 SPLINE cache files, 12 LINE controls, 24 metadata-only plot files; 0 mismatches.
+- Converted files: `/private/tmp/offset-3193-oda-retry-20261116`.
+
+This does not establish visual fidelity, broader DWG feature support, typed
+source acceptance outside these fixtures, AutoCAD acceptance, or packaged-app
+GUI acceptance.
 
