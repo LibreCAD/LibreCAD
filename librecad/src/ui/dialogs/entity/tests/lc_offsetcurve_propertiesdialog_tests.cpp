@@ -638,7 +638,7 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox); REQUIRE(sourceBox);
-    CHECK(typeBox->count() == 9);
+    CHECK(typeBox->count() == 10);
     const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
     REQUIRE(lineType >= 0);
     typeBox->setCurrentIndex(lineType);
@@ -797,8 +797,12 @@ TEST_CASE("Large source chooser scans incrementally and discards superseded fami
         LC_ParabolaData{{RS_Vector{0, 2}, RS_Vector{1, 0}, RS_Vector{2, 2}}});
     REQUIRE(parabola->getData().isValid());
     f.graphic.addEntity(parabola);
-    for (int i = 0; i < 300; ++i)
-        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 40}, {double(i + 1), 40}}));
+    RS_Line* lineCandidate = nullptr;
+    for (int i = 0; i < 300; ++i) {
+        auto* line = new RS_Line(nullptr, RS_LineData{{double(i), 40}, {double(i + 1), 40}});
+        if (i == 0) lineCandidate = line;
+        f.graphic.addEntity(line);
+    }
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
     NativeWidget widget;
@@ -880,6 +884,26 @@ TEST_CASE("Large source chooser scans incrementally and discards superseded fami
     awaitPreparation(widget);
     REQUIRE(clone->sourceDefinition());
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+
+    const int allTypesIndex = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::Invalid));
+    REQUIRE(allTypesIndex >= 0);
+    typeBox->setCurrentIndex(allTypesIndex);
+    CHECK_FALSE(sourceBox->isEnabled());
+    REQUIRE(pollEventsUntil([&] {
+        return sourceBox->isEnabled() && sourceBox->findData(
+            QVariant::fromValue<qulonglong>(lineCandidate->getId())) >= 0;
+    }));
+    const int lineSourceIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(lineCandidate->getId()));
+    REQUIRE(lineSourceIndex >= 0);
+    sourceBox->setCurrentIndex(lineSourceIndex);
+    awaitPreparation(widget);
+    CHECK(typeBox->currentData().toInt() ==
+          static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Line);
 }
 
 TEST_CASE("Large source chooser filters every supported family incrementally",
@@ -946,7 +970,7 @@ TEST_CASE("Large source chooser filters every supported family incrementally",
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox);
     REQUIRE(sourceBox);
-    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()) + 1);
     const Snapshot before(*clone);
 
     for (const Kind kind : LC_OffsetSourceGeometry::SupportedKinds) {
@@ -1183,7 +1207,7 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox);
     REQUIRE(sourceBox);
-    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()) + 1);
 
     const auto initialCache = RS_Spline::geometryFingerprint(clone->getData());
     std::optional<QCborArray> initialSource;
@@ -1287,6 +1311,24 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         CHECK(RS_Spline::geometryFingerprint(clone->getData()) != cacheBefore);
         CHECK(typeBox->isEnabled());
         CHECK(sourceBox->isEnabled());
+    }
+
+    const int allTypesIndex = typeBox->findData(
+        static_cast<int>(Kind::Invalid));
+    REQUIRE(allTypesIndex >= 0);
+    for (std::size_t i = 0; i < candidates.size(); ++i) {
+        const Kind kind = LC_OffsetSourceGeometry::SupportedKinds[i];
+        CAPTURE("select-from-all-types", static_cast<int>(kind));
+        typeBox->setCurrentIndex(allTypesIndex);
+        CHECK(typeBox->currentData().toInt() == static_cast<int>(Kind::Invalid));
+        const int sourceIndex = sourceBox->findData(
+            QVariant::fromValue<qulonglong>(candidates[i]->getId()));
+        REQUIRE(sourceIndex >= 0);
+        sourceBox->setCurrentIndex(sourceIndex);
+        awaitPreparation(widget);
+        CHECK(typeBox->currentData().toInt() == static_cast<int>(kind));
+        REQUIRE(clone->sourceDefinition());
+        CHECK(clone->sourceDefinition()->source.kind() == kind);
     }
 }
 
@@ -2604,7 +2646,7 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
     REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
     CHECK(typeBox->isEnabled());
-    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()) + 1);
     for (std::size_t i = 0; i < LC_OffsetSourceGeometry::SupportedKinds.size(); ++i) {
         CHECK(typeBox->itemData(static_cast<int>(i)).toInt() ==
               static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds[i]));

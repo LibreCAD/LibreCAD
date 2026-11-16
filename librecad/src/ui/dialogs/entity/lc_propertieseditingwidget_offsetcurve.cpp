@@ -64,6 +64,7 @@ std::optional<LC_OffsetSourceGeometry::Kind> sourceKind(const RS_Entity& entity)
 
 bool mayMatchSourceKind(const RS_Entity& entity, LC_OffsetSourceGeometry::Kind kind) {
     using Kind = LC_OffsetSourceGeometry::Kind;
+    if (kind == Kind::Invalid) return sourceKind(entity).has_value();
     switch (kind) {
     case Kind::Ellipse: return dynamic_cast<const RS_Ellipse*>(&entity) != nullptr;
     case Kind::Spline: return dynamic_cast<const RS_Spline*>(&entity) != nullptr;
@@ -228,7 +229,15 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         if (source == nullptr) return;
         const auto geometry = LC_OffsetSourceGeometry::capture(*source);
         if (!geometry || !sourceVariantSelectable(*source) ||
-            static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt()) return;
+            (ui->cbSourceType->currentData().toInt() !=
+                 static_cast<int>(LC_OffsetSourceGeometry::Kind::Invalid) &&
+             static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt())) return;
+        if (geometry->kind() != static_cast<LC_OffsetSourceGeometry::Kind>(
+                                    ui->cbSourceType->currentData().toInt())) {
+            const QSignalBlocker blocked(ui->cbSourceType);
+            ui->cbSourceType->setCurrentIndex(
+                ui->cbSourceType->findData(static_cast<int>(geometry->kind())));
+        }
         const auto encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
         if (!encoding) return;
         const SourceWitness witness{id, *encoding};
@@ -480,6 +489,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     for (const auto kind : LC_OffsetSourceGeometry::SupportedKinds) {
         ui->cbSourceType->addItem(sourceKindName(kind), static_cast<int>(kind));
     }
+    ui->cbSourceType->addItem(tr("All supported types"),
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::Invalid));
     const auto wantedKind = hasRequestedKind
         ? static_cast<LC_OffsetSourceGeometry::Kind>(requestedKindValue) : selectedKind;
     int typeIndex = ui->cbSourceType->findData(static_cast<int>(wantedKind));
@@ -512,9 +523,11 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
         if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
             !mayMatchSourceKind(*entity, wantedKind)) continue;
         const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
-        if (!geometry || geometry->kind() != wantedKind) continue;
+        if (!geometry || (wantedKind != LC_OffsetSourceGeometry::Kind::Invalid &&
+                          geometry->kind() != wantedKind)) continue;
         std::optional<QCborArray> candidateEncoding;
-        if (embedded && selectedKind == actualKind)
+        if (embedded && (selectedKind == actualKind || actualKind ==
+                         LC_OffsetSourceGeometry::Kind::Invalid))
             candidateEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
         const bool matchesEmbedded = embeddedEncoding && candidateEncoding &&
             *embeddedEncoding == *candidateEncoding;
@@ -549,7 +562,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     ui->tbSelectSource->setEnabled(m_sourceCanSelect && !m_busy);
     rememberSourceChoiceSnapshot(document);
     const auto* highlightMatch = knownMatch ? knownMatch :
-        selectedKind == actualKind ? selected : nullptr;
+        (selectedKind == actualKind || actualKind == LC_OffsetSourceGeometry::Kind::Invalid)
+            ? selected : nullptr;
     refreshSourceHighlight(preserveWatch, highlightMatch, highlightAlreadyResolved);
 }
 
@@ -686,9 +700,12 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const
                 if (!entity || entity->isDeleted() ||
                     !mayMatchSourceKind(*entity, m_choiceScanWantedKind)) continue;
                 const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
-                if (!geometry || geometry->kind() != m_choiceScanWantedKind) continue;
+                if (!geometry || (m_choiceScanWantedKind !=
+                        LC_OffsetSourceGeometry::Kind::Invalid &&
+                    geometry->kind() != m_choiceScanWantedKind)) continue;
                 std::optional<QCborArray> encoding;
-                if (m_choiceScanEmbeddedKind == m_choiceScanWantedKind &&
+                if ((m_choiceScanEmbeddedKind == m_choiceScanWantedKind ||
+                     m_choiceScanWantedKind == LC_OffsetSourceGeometry::Kind::Invalid) &&
                     !m_choiceScanEmbeddedEncoding.isEmpty())
                     encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
                 const bool matchesEmbedded = encoding && *encoding == m_choiceScanEmbeddedEncoding;
@@ -724,7 +741,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const
             auto* entity = entities.at(static_cast<int>(candidate.index));
             if (!entity || entity->isDeleted() ||
                 static_cast<qulonglong>(entity->getId()) != candidate.id) continue;
-            const auto label = tr("%1 %2").arg(sourceKindName(m_choiceScanWantedKind)).arg(candidate.id);
+            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+            if (!geometry) continue;
+            const auto label = tr("%1 %2").arg(sourceKindName(geometry->kind())).arg(candidate.id);
             const QSignalBlocker blocked(ui->cbSource);
             ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(candidate.id));
         }
@@ -774,7 +793,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const
     if (desiredId != 0)
         matchedIndex = ui->cbSource->findData(QVariant::fromValue<qulonglong>(desiredId));
     if (matchedIndex < 0) {
-        const QString placeholder = embeddedKind == wantedKind
+        const QString placeholder = embeddedKind == wantedKind ||
+                wantedKind == LC_OffsetSourceGeometry::Kind::Invalid
             ? matchCount > 1 ? tr("Embedded source (ambiguous)")
               : embeddedUnsupported ? tr("Embedded source (unsupported)")
                                      : tr("Embedded source (not found)")
@@ -797,10 +817,14 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const
 
     RS_Entity* highlightMatch = nullptr;
     const auto highlightId = knownMatchId != 0 ? knownMatchId
-        : embeddedKind == wantedKind && desiredId != 0 ? desiredId : 0;
+        : (embeddedKind == wantedKind || wantedKind == LC_OffsetSourceGeometry::Kind::Invalid) &&
+                desiredId != 0 ? desiredId : 0;
     if (highlightId != 0) highlightMatch = findSourceEntity(highlightId);
     refreshSourceHighlight(preserveWatch, highlightMatch,
-                           highlightAlreadyResolved || (embeddedKind == wantedKind && desiredId == 0));
+                           highlightAlreadyResolved ||
+                               ((embeddedKind == wantedKind ||
+                                 wantedKind == LC_OffsetSourceGeometry::Kind::Invalid) &&
+                                desiredId == 0));
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
@@ -1102,7 +1126,9 @@ RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id
         if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) || entity->getId() != id) continue;
         const auto kind = sourceKind(*entity);
         if (kind && sourceVariantSelectable(*entity) &&
-            static_cast<int>(*kind) == ui->cbSourceType->currentData().toInt()) return entity;
+            (ui->cbSourceType->currentData().toInt() ==
+                 static_cast<int>(LC_OffsetSourceGeometry::Kind::Invalid) ||
+             static_cast<int>(*kind) == ui->cbSourceType->currentData().toInt())) return entity;
     }
     return nullptr;
 }
