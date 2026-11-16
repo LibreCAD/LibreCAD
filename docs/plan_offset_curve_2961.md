@@ -261,10 +261,10 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1648 add two rotated, high-origin
-asymmetric endpoint-tangent parabolas and both traversals through an
-independent exact-normal oracle, Trim Two, and all five internal file lanes;
-section 1648 also varies three cutter radii for the opposite-bend pair.
+and fail-closed limits. Sections 1642-1651 add two asymmetric
+endpoint-tangent parabolas and both traversals through an independent
+exact-normal oracle, Trim Two, source scales `1e-3/1/1e3`, and all five internal
+file lanes; the opposite-bend pair also varies three scaled cutter radii.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -54778,4 +54778,29 @@ Validation disposition:
 - LibreDWG structural checks remain separate evidence and do not replace ODA.
 - Retry the converter from an active macOS GUI session or provide a functioning
   ODA CLI/runtime context; keep independent ODA/AutoCAD acceptance open.
+
+## 1651. Scale Asymmetric Tangent Oracles and Trim Persistence (2026-11-16)
+
+Test commit `6d3130b5b` extends the independent exact-normal test for both
+asymmetric tangent pairs and both parameter traversals across source scales
+`1e-3`, `1`, and `1e3`. The source frame is rotated and translated by
+`(1e6,-2e6) * scale`; offset distance is `0.1 * scale`, and requested
+geometry tolerance is `1e-4 * scale`. The opposite-bend pair's worker-backed
+Trim Two profiles now cover the small and large copies in both traversals,
+using origins `(1e3,-2e3)` and `(1e9,-2e9)`, respectively. For both traversals
+the circle-cutter ratios `0.05`, `0.1`, and `0.25` scale with the source; each
+case runs undo/redo and all five DXF/DWG save/reopen comparisons, with
+LibreDWG inspection when available.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Focused asymmetric exact-normal matrix: 2,580 assertions / 1 case.
+- Full direct-parabola group: 67,308 assertions / 16 cases.
+- Endpoint-tangent Trim Two matrix: 22,322 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+The evidence closes these two bounded constructions over the recorded scale,
+origin, traversal, and cutter-radius combinations. Other tangent geometries,
+source scales/origins outside the matrix, other cutter types/placements,
+visible-app interaction, and independent ODA/AutoCAD acceptance remain open.
 
