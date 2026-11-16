@@ -793,7 +793,7 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
                 CAPTURE(expectedKnotOffset.x, expectedKnotOffset.y, nearestGeneratedPoint);
                 CHECK(nearestGeneratedPoint <= 10.0 * definition.relativeTolerance);
 
-                if (breakIndex != 1) continue;
+                if (breakIndex != 1 && weightStep != 0.2) continue;
                 RS_SplineData cache;
                 REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
                 const qint64 validationId = requestId++;
@@ -810,8 +810,7 @@ TEST_CASE("Built helper generates and admits high-degree periodic rational knot 
             }
         }
     }
-    CHECK(admittedRoots == 8);
-    CHECK(generatedRoots > admittedRoots);
+    CHECK(admittedRoots == generatedRoots);
 }
 
 TEST_CASE("Built helper returns a bounded typed-source sample-limit refusal",
