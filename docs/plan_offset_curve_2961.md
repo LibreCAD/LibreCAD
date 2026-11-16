@@ -52936,3 +52936,15 @@ at this source. It does not close the worker/UI action, visible-app, ODA, or
 AutoCAD acceptance gates, nor imply every unrepresented concrete variant is
 covered by these two selectors.
 
+## 1589. Recheck Recursive qmake6 Product Build at Current Source (2026-11-16)
+
+With `/opt/homebrew/bin/qmake6` reporting Qt 6.12.0, the recursive
+`make -j6` in `/private/tmp/offset3193-qmake6-fresh` exits 0 at the current
+worktree and traverses the application, offset worker, libraries, plugins, and
+tools. Since the prior clean qmake6 build at `9e4cb879d`, the only changed
+paths are the roadmap and test sources; no product source changed, so this is
+an up-to-date product-build recheck rather than a new clean compile. The login
+shell emits the existing missing optional `/private/tmp/libdxfrw-cargo/env`
+warning; the build completes successfully. No qmake test registration or
+runtime acceptance is inferred.
+
