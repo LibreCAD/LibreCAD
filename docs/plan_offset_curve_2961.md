@@ -51512,9 +51512,10 @@ Admitted rows are saved and reopened twice through R14 DXF, R2000 DXF/DWG,
 and R2018 DXF/DWG. Typed source parameters, distance, cache fingerprint, and
 available LibreDWG EED inspection are checked as in section 1547. This closes
 the file-persistence evidence for the listed finite distance/ratio/interval
-matrix only; it does not imply arbitrary hyperbola cacheability, persistence
-for refused multi-branch outputs, visible UI acceptance, or ODA/AutoCAD
-acceptance.
+matrix only; it does not imply arbitrary hyperbola cacheability or persistence
+for every refused multi-branch output. Section 1567 adds a five-lane round trip
+for one representative multi-fragment ordinary fallback. Visible UI
+acceptance and ODA/AutoCAD acceptance remain open.
 
 Validation on macOS arm64 CMake Release:
 
@@ -51845,12 +51846,16 @@ of parabola, are covered by the recorded automated tests. Do not add another
 selector or duplicate implementation slice unless those behaviors regress.
 
 The only remaining acceptance specific to this widget is the visible
-packaged-app check from section 1555: change the type more than once during
-replacement, verify refreshed candidates and persistent old-source highlight,
-then verify successful replacement or cancellation/refusal behavior. Record
-the binary revision and platform. This UI gate is distinct from the broader
-family-by-variant geometry, worker/cache, trimming, persistence, and external
-CAD interoperability gates in Slice 4.
+packaged-app check from section 1555: keep one replacement-browsing session
+open while changing the type repeatedly, including to and from parabola;
+verify each candidate refresh, and confirm the committed source, cache, and
+old-source highlight remain unchanged during browsing. After choosing a
+candidate, verify that the source and highlight change together only after
+successful worker validation. Also verify cancellation or refusal preserves
+the source, cache, and highlight. Record the binary revision and platform.
+This UI gate is distinct from the broader family-by-variant geometry,
+worker/cache, trimming, persistence, and external CAD interoperability gates
+in Slice 4.
 
 ## 1559. Preserve Exact Parabola Geometry During Pattern Clipping (2026-11-15)
 
@@ -52102,4 +52107,34 @@ one relative source/boundary rotation and one partial-ellipse shape, not
 arbitrary rotations, scales outside the tested range, affine/3D transforms,
 all arc intervals, general offset-family completeness, visible GUI, or
 independent CAD acceptance.
+
+## 1567. Persist a Multi-branch Hyperbola Cusp Fallback (2026-11-15)
+
+Test commit `fabbef994` extends the 240-row cusp matrix from section 1548.
+Cache-admitted single-fragment rows retain their existing typed-source
+round-trip coverage. In addition, the first generated row with multiple
+ordinary spline fragments is written and reopened as ordinary geometry through
+all five native file lanes: R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The test
+checks every fragment's spline geometry fingerprint and requires that a
+multi-fragment row was actually found and persisted. This verifies fallback
+geometry is not dropped merely because it cannot be represented by one native
+editable offset cache.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][persistence]' --reporter compact
+git diff --check
+```
+
+The focused persistence case passes 143,826 assertions / 1 case, and the
+worker-client test target builds. This is one representative multi-fragment
+profile using LibreCAD's own export/reopen paths; it does not cover every
+refused matrix row, independently inspect those fallback DWGs with LibreDWG,
+or establish visible GUI or ODA/AutoCAD acceptance.
 
