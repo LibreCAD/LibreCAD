@@ -231,7 +231,7 @@ TEST_CASE("Trimmed typed parabola offsets retain exact normals on both sides",
     }
 }
 
-TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals past the vertex cusp",
+TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals through the vertex cusp",
           "[curve-offset][trim][hyperbola][oracle]") {
     const LC_Hyperbola source{nullptr,
         LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}};
@@ -239,7 +239,7 @@ TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals past the verte
     const Curve evaluator = curveOf(source);
 
     for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {1.0, 4.0}) {
+        for (const double distance : {1.0, 3.0, 4.0}) {
             CAPTURE(side, distance);
             const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
@@ -249,6 +249,53 @@ TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals past the verte
             const Checked checked = check(result, evaluator, -1.5, 1.5, distance);
             CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
             CHECK(checked.worstMissing <= 2.0 * tolerance);
+        }
+    }
+}
+
+TEST_CASE("Trimmed hyperbola exact cusp remains bounded at translated origins",
+          "[curve-offset][trim][hyperbola][cusp][large-origin][oracle]") {
+    const std::array<RS_Vector, 4> origins{{{23.0, -17.0},
+                                             {1e6, -1e6},
+                                             {1e9, -2e9},
+                                             {1e12, -2e12}}};
+    for (const RS_Vector& origin : origins) {
+        const bool largeOrigin = std::abs(origin.x) > 1e8 || std::abs(origin.y) > 1e8;
+        const double semiMajor = largeOrigin ? 2e4 : 10.0;
+        constexpr double ratio = 0.2;
+        const double vertexRadius = semiMajor * ratio * ratio;
+        for (const bool oppositeBranch : {false, true}) {
+            const LC_Hyperbola source{nullptr,
+                LC_HyperbolaData{origin,
+                                 {semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
+                                 ratio, -0.4, 0.8, oppositeBranch}};
+            REQUIRE(source.isValid());
+            const Curve evaluator = curveOf(source);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(origin.x, origin.y, oppositeBranch, side, vertexRadius);
+                const double requestedTolerance = largeOrigin ? 0.05 : 0.0;
+                auto options = LC_CurveOffset::makeDirectOptions(
+                    source, vertexRadius, requestedTolerance);
+                options.mode = LC_CurveOffsetMode::Trimmed;
+                const LC_CurveOffsetGeometryResult result =
+                    LC_CurveOffset::buildDirectBranches(
+                        source,
+                        LC_CurveOffset::makeSideRequest(side, vertexRadius),
+                        options, LC_CurveOffset::makeDirectSourceBudget());
+                INFO("status=" << static_cast<int>(result.status)
+                               << " tolerance=" << options.tolerance.requestedGeometry
+                               << " observed=" << result.maxObservedError
+                               << " certified=" << result.maxCertifiedError);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const Checked checked = check(result, evaluator, -0.4, 0.8,
+                                              vertexRadius);
+                CHECK(checked.nearestKept >=
+                      vertexRadius - 2.0 * options.tolerance.requestedGeometry);
+                CHECK(checked.worstMissing <=
+                      2.0 * options.tolerance.requestedGeometry);
+            }
         }
     }
 }
