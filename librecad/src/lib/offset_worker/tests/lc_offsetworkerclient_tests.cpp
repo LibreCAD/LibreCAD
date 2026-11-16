@@ -7259,7 +7259,7 @@ TEST_CASE("asymmetric hyperbola intervals persist across DXF and DWG lanes",
     const double semiMajor = originIndex == 0 ? 10.0 : 2e4;
     constexpr double ratio = 0.2;
     const double vertexRadius = semiMajor * ratio * ratio;
-    const std::size_t intervalCount = originIndex == 0 ? intervals.size() : 2;
+    const std::size_t intervalCount = intervals.size();
     for (std::size_t intervalIndex = 0; intervalIndex < intervalCount;
          ++intervalIndex) {
       const auto [intervalStart, intervalEnd] = intervals[intervalIndex];
@@ -7407,7 +7407,7 @@ TEST_CASE("asymmetric hyperbola intervals persist across DXF and DWG lanes",
       }
     }
   }
-  CHECK(persistedRows == (intervals.size() + 2) * 2 * 2 * 2);
+  CHECK(persistedRows == origins.size() * intervals.size() * 2 * 2 * 2);
 }
 
 TEST_CASE(
