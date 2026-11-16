@@ -7382,7 +7382,48 @@ TEST_CASE("degree-elevated rational tangencies map for degrees four through six"
                                       elevated.degree + 1, 1.0);
         }
 
-        const RS_Spline source{nullptr, elevated};
+        struct HomogeneousPoint {
+            double x;
+            double y;
+            double w;
+        };
+        const std::size_t degree = elevated.degree;
+        std::vector<HomogeneousPoint> controls;
+        controls.reserve(elevated.controlPoints.size());
+        for (std::size_t i = 0; i < elevated.controlPoints.size(); ++i) {
+            controls.push_back({
+                elevated.controlPoints[i].x * elevated.weights[i],
+                elevated.controlPoints[i].y * elevated.weights[i],
+                elevated.weights[i]});
+        }
+        const double insertedKnot = 0.25;
+        std::vector<HomogeneousPoint> insertedControls(degree + 2);
+        insertedControls.front() = controls.front();
+        insertedControls.back() = controls.back();
+        for (std::size_t i = 1; i <= degree; ++i) {
+            insertedControls[i] = {
+                insertedKnot * controls[i].x +
+                    (1.0 - insertedKnot) * controls[i - 1].x,
+                insertedKnot * controls[i].y +
+                    (1.0 - insertedKnot) * controls[i - 1].y,
+                insertedKnot * controls[i].w +
+                    (1.0 - insertedKnot) * controls[i - 1].w};
+        }
+        RS_SplineData inserted = elevated;
+        inserted.controlPoints.resize(degree + 2);
+        inserted.weights.resize(degree + 2);
+        for (std::size_t i = 0; i < insertedControls.size(); ++i) {
+            REQUIRE(insertedControls[i].w > 0.0);
+            inserted.controlPoints[i] = {
+                insertedControls[i].x / insertedControls[i].w,
+                insertedControls[i].y / insertedControls[i].w};
+            inserted.weights[i] = insertedControls[i].w;
+        }
+        inserted.knotslist.assign(degree + 1, 0.0);
+        inserted.knotslist.push_back(insertedKnot);
+        inserted.knotslist.insert(inserted.knotslist.end(), degree + 1, 1.0);
+
+        const RS_Spline source{nullptr, inserted};
         REQUIRE(source.validate());
         const SplineOracle start{0};
         const SplineOracle end{1};
@@ -7391,7 +7432,7 @@ TEST_CASE("degree-elevated rational tangencies map for degrees four through six"
         for (const double parameter : {0.1, 0.25, 0.5, 0.75, 0.9}) {
             const auto basePoint = evaluateSplineOracle(base, SplineOracle{parameter});
             const auto elevatedPoint =
-                evaluateSplineOracle(elevated, SplineOracle{parameter});
+                evaluateSplineOracle(inserted, SplineOracle{parameter});
             const SplineOracle dx = basePoint.first - elevatedPoint.first;
             const SplineOracle dy = basePoint.second - elevatedPoint.second;
             CAPTURE(targetDegree, parameter, dx, dy);
@@ -7399,17 +7440,17 @@ TEST_CASE("degree-elevated rational tangencies map for degrees four through six"
         }
 
         const SplineOracle unitFactor =
-            oracleOffsetFactor(elevated, root, step, start, end, SplineOracle{1});
+            oracleOffsetFactor(inserted, root, step, start, end, SplineOracle{1});
         const SplineOracle curvature = 1 - unitFactor;
         REQUIRE(abs(curvature) > SplineOracle{"1e-12"});
         const double signedDistance = (1 / curvature).convert_to<double>();
         const SplineOracle distance{signedDistance};
         const SplineOracle tangent =
-            oracleOffsetFactor(elevated, root, step, start, end, distance);
+            oracleOffsetFactor(inserted, root, step, start, end, distance);
         const SplineOracle before = oracleOffsetFactor(
-            elevated, root - SplineOracle{"1e-7"}, step, start, end, distance);
+            inserted, root - SplineOracle{"1e-7"}, step, start, end, distance);
         const SplineOracle after = oracleOffsetFactor(
-            elevated, root + SplineOracle{"1e-7"}, step, start, end, distance);
+            inserted, root + SplineOracle{"1e-7"}, step, start, end, distance);
         CAPTURE(targetDegree, signedDistance, tangent, before, after);
         CHECK(abs(tangent) < SplineOracle{"1e-10"});
         CHECK(before != 0);
@@ -7418,7 +7459,7 @@ TEST_CASE("degree-elevated rational tangencies map for degrees four through six"
 
         constexpr double requestedGeometry = 1e-2;
         const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{elevated}, signedDistance,
+            LC_OffsetSourceGeometry{inserted}, signedDistance,
             requestedGeometry, false};
         const auto options =
             LC_OffsetWorkerTolerance::directOptions(definition, source);
@@ -7447,7 +7488,7 @@ TEST_CASE("degree-elevated rational tangencies map for degrees four through six"
         CHECK(ownsRoot);
 
         const auto tangentPoint =
-            oracleOffsetPoint(elevated, root, step, start, end, distance);
+            oracleOffsetPoint(inserted, root, step, start, end, distance);
         const RS_Vector expected{tangentPoint.first.convert_to<double>(),
                                  tangentPoint.second.convert_to<double>()};
         double nearestEndpoint = std::numeric_limits<double>::infinity();
