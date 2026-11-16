@@ -261,8 +261,9 @@ traversal, and section 1687 completes their three-scale circle/line Trim Two
 action matrix. Section 1688 also qualifies a `1e300` endpoint-tangent
 magnitude ratio through the interior oracle and forward worker/cache lanes.
 Section 1689 probes exact interior normals at `0.1/0.5/0.9` of vertex
-curvature radius for the recorded tangent layouts; cache/persistence admission
-at those ratios remains open. Continue with materially distinct tangent
+curvature radius for the recorded tangent layouts; section 1690 classifies
+operation-8 cache admission/refusal for all sampled rows. Five-format
+persistence at these ratios remains open. Continue with materially distinct tangent
 directions and contact conditioning; do not inflate this finite profile set
 into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
@@ -55710,7 +55711,27 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 - `librecad_offset_worker_kernel_tests` target build: passed.
 - `git diff --check`: passed.
 
-This is geometry-only evidence. Operation-8 cache admission and five-format
-persistence at these curvature ratios, exact cusp behavior, and external CAD
-acceptance remain open.
+Section 1690 adds operation-8 cache classification for these geometry rows;
+five-format persistence at the curvature ratios, exact cusp behavior, and
+external CAD acceptance remain open.
+
+## 1690. Classify Operation-8 Caches at Curvature-relative Distances (2026-11-16)
+
+Test commit `ba8def852` extends section 1689's 144 generated outputs (four
+tangent-input layouts, three frames, both traversals, three curvature ratios,
+and both signs) through canonical source-cache combination and operation-8
+validation. Every output must combine into a candidate and then be either
+admitted as changed or explicitly refused as `NotCacheRepresentable`; the
+matrix rejects unclassified/noncombinable output. This makes the native-cache
+boundary observable rather than treating geometry success as cache success.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 5,258 assertions / 1 case.
+- `endpoint-tangent parabola conditioning crosses worker cache validation`: 465 assertions / 1 case.
+- `librecad_offset_worker_kernel_tests` target build: passed.
+- `git diff --check`: passed.
+
+This classifies operation-8 at the sampled ratios but does not persist each
+accepted cache through files or prove exact cusp/beyond-cusp behavior.
 
