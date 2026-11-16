@@ -2585,7 +2585,8 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
         }
     }
 
-    for (const double slope : {1.10445556640625e-9, 1.104443359375e-9,
+    for (const double slope : {1.104461669921875e-9, 1.10445556640625e-9,
+                               1.104443359375e-9,
                                1.10439453125e-9,
                                1.104296875e-9, 1.10390625e-9,
                                1.103125e-9, 1.1e-9, 1.0625e-9, 1e-9}) {

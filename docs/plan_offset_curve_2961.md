@@ -53886,3 +53886,25 @@ Result: 7,654 assertions / 1 case pass. The sampled bracket is now
 `(1.10445556640625e-9, 1.1044677734375e-9]`; other origins, scales,
 constructions, and external CAD acceptance remain open.
 
+## 1617. Sample the High-origin Tangent Boundary at 1.104461669921875e-9 (2026-11-16)
+
+The direct construction oracle probes `1.104461669921875e-9`, the midpoint
+between the invalid `1.10445556640625e-9` and valid `1.1044677734375e-9`
+samples. Construction rejects this value at the recorded rotated
+`(1e9,-2e9)` frame. The result narrows sampled construction representability
+only; no continuous or engine-level boundary is inferred.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+git diff --check
+```
+
+Result: 7,656 assertions / 1 case pass. The sampled interval remains
+`(1.104461669921875e-9, 1.1044677734375e-9]` for this frame; other origins,
+scales, constructions, and external CAD acceptance remain open.
+
