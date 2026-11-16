@@ -52488,8 +52488,66 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-The focused direct-oracle case passes 432,996 assertions / 1 case. This is
-direct geometry evidence only: worker/process/cache behavior and DXF/DWG
-persistence at `1e12` remain open, as do external CAD acceptance and the
-visible packaged-app source-picker gate.
+The focused direct-oracle case passes 432,996 assertions / 1 case. At this
+checkpoint it was direct geometry evidence only; section 1578 subsequently
+closes the enumerated worker/cache and DXF/DWG persistence rows at `1e12`.
+Other origins/scales, external CAD acceptance, and the visible packaged-app
+source-picker gate remain open.
+
+## 1578. Qualify Worker and File Persistence at 1e12 (2026-11-16)
+
+Test commit `1260b2d20` extends the bounded-hyperbola cusp worker/cache matrix
+to origin `(1e12,-2e12)` at all five recorded ratios. Its 360 generated rows
+cover both branches, forward/reversed bounds, both offset signs, and cusp
+fractions `0.5`, `1.0`, and `1.5`; every row is admitted by operation-8 cache
+validation. The real worker-client persistence case now covers 960 profiles
+across origins `(23,-17)`, `(1e6,-1e6)`, `(1e9,-2e9)`, and `(1e12,-2e12)`,
+both parameter half-widths `0.4` and `0.8`, both branches/bound orders/signs,
+all five ratios, and all three cusp fractions. At `1e12`, the semi-major axis
+is scaled to `2e4` to keep the origin/feature ratio comparable to the
+previously qualified high-origin cases.
+
+The worker-client matrix checks source generation, cache validation, typed or
+ordinary-fallback persistence, five DXF/DWG file lanes, reopen, and LibreDWG
+inspection. Fallback LINE endpoints use a scale-aware comparison of
+`max(1e-4, 4 * hypot(max-x-ULP, max-y-ULP))`; this accounts for coordinate
+serialization resolution without masking geometry errors at ordinary origins.
+The first 960-row attempt hit the test harness's 15-minute cap, and the next
+identified that the fixed `1e-4` LINE matcher was below the R12 coordinate ULP
+at `1e12`. The test-only maximum override is now bounded at 30 minutes, with
+its clamping behavior covered explicitly.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_kernel_tests \
+           librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_kernel_tests \
+  '[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp][variants]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][large-origin]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Worker client suite timeout override remains bounded' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1800000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Bounded hyperbola cusp profiles persist typed sources across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+Results: worker/kernel cache selection passes 8,643 assertions / 1 case;
+direct exact-normal oracle passes 432,996 assertions / 1 case; timeout bound
+passes 5 assertions / 1 case; and the 960-profile worker-client persistence
+case passes 594,372 assertions / 1 case. The known raw-object fixed-handle
+diagnostics remain unrelated to offset entity persistence. This qualifies the
+enumerated profiles only; other origins/scales, interval shapes, broader
+cache-refused profiles, visible packaged-app acceptance, and independent
+ODA/AutoCAD acceptance remain open.
 
