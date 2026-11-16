@@ -254,7 +254,7 @@ acceptance where available and keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
-**Latest source-widget disposition (reconfirmed 2026-11-15):** The source
+**Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
 replacement picking is active, see candidates refresh to that type, and
 select a source without losing the currently committed source before the
@@ -262,11 +262,13 @@ replacement succeeds. Its choices must match all nine
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
-coverage satisfy the implementation portion; the current focused headless
-source-picker suite passes 15,498 assertions / 45 cases at PR test head
-`ef28377f4`. Successful replacement/highlight transfer across all nine kinds
-was added in implementation commit `2a4b111ca`; the current test-only follow-up
-extends asynchronous filtering coverage across all nine. Do
+coverage satisfy the implementation portion; the focused headless
+source-picker suite passes 15,498 assertions / 45 cases at PR head
+`84dca44c7`. The separate action-level type-switch/hover/click matrix passes
+466 assertions / 1 case across all nine types (`d70b1e392`); its live filter
+transition case passes 148 assertions / 1 case. Successful
+replacement/highlight transfer across all nine kinds was added in
+implementation commit `2a4b111ca`. Do
 not add another selector or duplicate the parabola-specific UI work. Keep
 visible interaction acceptance open. Separately, the phrase "support all
 kinds" requires end-to-end evidence, not only menu entries: for each enabled
