@@ -7326,6 +7326,144 @@ TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
     CHECK(nearestEndpoint(expectedTangent) <= options->tolerance.requestedGeometry);
 }
 
+TEST_CASE("degree-elevated rational tangencies map for degrees four through six",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational]["
+          "tangent-root][degree][high-degree]") {
+    const RS_SplineData quadratic{2, false};
+    RS_SplineData base = quadratic;
+    base.type = RS_SplineData::SplineType::ClampedOpen;
+    base.controlPoints = {{-2, 0}, {0, 2}, {2, 0}};
+    base.knotslist = {0, 0, 0, 1, 1, 1};
+    base.weights = {1, 0.5, 1};
+
+    for (const std::size_t targetDegree : {4u, 5u, 6u}) {
+        RS_SplineData elevated = base;
+        while (elevated.degree < targetDegree) {
+            struct HomogeneousPoint {
+                double x;
+                double y;
+                double w;
+            };
+            const std::size_t oldDegree = elevated.degree;
+            const std::size_t oldCount = elevated.controlPoints.size();
+            std::vector<HomogeneousPoint> oldPoints;
+            oldPoints.reserve(oldCount);
+            for (std::size_t i = 0; i < oldCount; ++i) {
+                oldPoints.push_back({
+                    elevated.controlPoints[i].x * elevated.weights[i],
+                    elevated.controlPoints[i].y * elevated.weights[i],
+                    elevated.weights[i]});
+            }
+            std::vector<HomogeneousPoint> newPoints(oldCount + 1);
+            newPoints.front() = oldPoints.front();
+            newPoints.back() = oldPoints.back();
+            const double newDegree = static_cast<double>(oldDegree + 1);
+            for (std::size_t i = 1; i <= oldDegree; ++i) {
+                const double alpha = static_cast<double>(i) / newDegree;
+                const HomogeneousPoint& previous = oldPoints[i - 1];
+                const HomogeneousPoint& current = oldPoints[i];
+                newPoints[i] = {
+                    alpha * previous.x + (1.0 - alpha) * current.x,
+                    alpha * previous.y + (1.0 - alpha) * current.y,
+                    alpha * previous.w + (1.0 - alpha) * current.w};
+            }
+            ++elevated.degree;
+            elevated.controlPoints.resize(newPoints.size());
+            elevated.weights.resize(newPoints.size());
+            for (std::size_t i = 0; i < newPoints.size(); ++i) {
+                REQUIRE(newPoints[i].w > 0.0);
+                elevated.controlPoints[i] = {
+                    newPoints[i].x / newPoints[i].w,
+                    newPoints[i].y / newPoints[i].w};
+                elevated.weights[i] = newPoints[i].w;
+            }
+            elevated.knotslist.assign(elevated.degree + 1, 0.0);
+            elevated.knotslist.insert(elevated.knotslist.end(),
+                                      elevated.degree + 1, 1.0);
+        }
+
+        const RS_Spline source{nullptr, elevated};
+        REQUIRE(source.validate());
+        const SplineOracle start{0};
+        const SplineOracle end{1};
+        const SplineOracle root{"0.5"};
+        const SplineOracle step{"1e-24"};
+        for (const double parameter : {0.1, 0.25, 0.5, 0.75, 0.9}) {
+            const auto basePoint = evaluateSplineOracle(base, SplineOracle{parameter});
+            const auto elevatedPoint =
+                evaluateSplineOracle(elevated, SplineOracle{parameter});
+            const SplineOracle dx = basePoint.first - elevatedPoint.first;
+            const SplineOracle dy = basePoint.second - elevatedPoint.second;
+            CAPTURE(targetDegree, parameter, dx, dy);
+            CHECK(sqrt(dx * dx + dy * dy) < SplineOracle{"1e-12"});
+        }
+
+        const SplineOracle unitFactor =
+            oracleOffsetFactor(elevated, root, step, start, end, SplineOracle{1});
+        const SplineOracle curvature = 1 - unitFactor;
+        REQUIRE(abs(curvature) > SplineOracle{"1e-12"});
+        const double signedDistance = (1 / curvature).convert_to<double>();
+        const SplineOracle distance{signedDistance};
+        const SplineOracle tangent =
+            oracleOffsetFactor(elevated, root, step, start, end, distance);
+        const SplineOracle before = oracleOffsetFactor(
+            elevated, root - SplineOracle{"1e-7"}, step, start, end, distance);
+        const SplineOracle after = oracleOffsetFactor(
+            elevated, root + SplineOracle{"1e-7"}, step, start, end, distance);
+        CAPTURE(targetDegree, signedDistance, tangent, before, after);
+        CHECK(abs(tangent) < SplineOracle{"1e-10"});
+        CHECK(before != 0);
+        CHECK(after != 0);
+        CHECK((before < 0) == (after < 0));
+
+        constexpr double requestedGeometry = 1e-2;
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{elevated}, signedDistance,
+            requestedGeometry, false};
+        const auto options =
+            LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+        const auto built = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(
+                signedDistance > 0 ? LC_CurveOffsetSide::Left
+                                   : LC_CurveOffsetSide::Right,
+                std::abs(signedDistance)),
+            *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+        CAPTURE(targetDegree, built.status, diagnostics.failureStage,
+                diagnostics.candidateParameters, diagnostics.stallIntervals);
+        REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(diagnostics.complete);
+        const bool ownsRoot =
+            std::any_of(diagnostics.candidateParameters.begin(),
+                        diagnostics.candidateParameters.end(), [](double parameter) {
+                            return std::abs(parameter - 0.5) <= 1e-7;
+                        }) ||
+            std::any_of(diagnostics.stallIntervals.begin(),
+                        diagnostics.stallIntervals.end(), [](const auto& interval) {
+                            return interval.first <= 0.5 && 0.5 <= interval.second;
+                        });
+        CHECK(ownsRoot);
+
+        const auto tangentPoint =
+            oracleOffsetPoint(elevated, root, step, start, end, distance);
+        const RS_Vector expected{tangentPoint.first.convert_to<double>(),
+                                 tangentPoint.second.convert_to<double>()};
+        double nearestEndpoint = std::numeric_limits<double>::infinity();
+        for (const LC_OffsetBranch& branch : built.branches) {
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                nearestEndpoint = std::min(
+                    nearestEndpoint,
+                    std::min(piece.bezier.front().distanceTo(expected),
+                             piece.bezier.back().distanceTo(expected)));
+            }
+        }
+        CAPTURE(targetDegree, nearestEndpoint, requestedGeometry);
+        CHECK(nearestEndpoint <= requestedGeometry);
+    }
+}
+
 TEST_CASE("exact binary rational cubic tangent has bounded output mapping",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][degree][binary]") {
     RS_SplineData data{3, false};
