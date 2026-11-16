@@ -52421,3 +52421,45 @@ selection passes 5,763 assertions / 1 case. This does not yet round-trip the
 newly added high-origin ratios through DXF/DWG, and no external CAD acceptance
 is claimed.
 
+## 1576. Persist the Full High-Origin Hyperbola Ratio Set (2026-11-15)
+
+Test commit `2039b3d5a` extends section 1575's typed-source/fallback persistence
+matrix to the complete recorded ratio set `{0.01, 0.05, 0.2, 0.5, 1.0}` at
+both high origins `(1e6,-1e6)` and `(1e9,-2e9)`. The bounded matrix contains
+576 generated profiles total: 240 at the ordinary origin, plus 336 at high
+origins. Every row covers both hyperbola branches, forward/reversed bounds,
+both offset signs, and cusp fractions `0.5`, `1.0`, and `1.5`; high-origin
+ratios `0.05` and `0.2` additionally retain the wider interval.
+
+All rows exercise source-cache combination and operation validation, then
+persist the source using DXF R12, DXF R2000, DXF R2018, DWG R2000, and DWG
+R2018 lanes. Cache-refused results are exported and reopened as ordinary
+entities: spline fragments retain exact geometry-fingerprint matching, while
+LINE segments are matched by endpoints within `1e-4` to account for decimal
+file-format rounding at large coordinates. LibreDWG inspection independently
+checks LINE/SPLINE entity counts and spline structural validity. Both high
+origins produce fallback rows, so this is not only a typed-cache persistence
+check.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Bounded hyperbola cusp profiles persist typed sources across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+The focused case passes 355,177 assertions / 1 case. The test emits the known
+DWG raw-object fixed-handle replay diagnostics; this geometry round-trip does
+not claim lossless replay of those unrelated raw objects. Remaining gaps
+include other high-origin ratios/scales and interval shapes, broader
+cache-refused profiles, interactive packaged-app source-picker acceptance,
+and independent ODA/AutoCAD acceptance. The source-picker implementation
+supports switching among all nine supported source kinds, including parabola;
+the visible desktop acceptance gate remains outstanding.
+
