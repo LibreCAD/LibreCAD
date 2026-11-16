@@ -54081,16 +54081,21 @@ Implementation-ready sequence:
    worker-prepared batches agree; preparation leaves source and cutter entities
    untouched. The exact polynomial oracle remains an independent regression
    and is not consulted by production code.
-4. Retain/add negative cases for tangency, near-tangency, roots closer than
-   the proof resolution, extreme translation, and exhausted limits. Ambiguous
-   or uncertifiable cases must continue to return a typed refusal without
-   partial fragments or document mutation.
+4. **Done by `c8cfb62c3` plus existing Trim kernel regressions:** add a
+   high-origin tangent circle beside the newly accepted secant profile and
+   prove it refuses without fragments, removal metadata, or native-geometry
+   mutation. The full kernel matrix also passes tangent/overlap refusal,
+   separated-versus-unresolved near-tangent roots, close distinct roots,
+   translated ellipse tangencies, cancellation, and zero/exhausted-limit
+   cases. These preserve atomic failure without relaxing proof validity.
 5. **Done by `87cb0c14e` and `7c1336144`:** the same high-origin/large-scale
    circle profile traverses the real Trim Two async preview and commit, checks
    committed output against the preview, verifies undo/redo/restoration for
    both offset sides, and round-trips committed fragments through all five
    DXF/DWG lanes. Reopened geometry is matched by type and sampled geometry;
    both DWG versions are additionally inspected by LibreDWG when available.
+   This closes the bounded section 1621 acceptance gate; other parabola/circle
+   variants, scales, origins, and cutters remain outside this qualification.
 
 Stage-probe validation on macOS arm64 CMake Release with DWG support and
 LibreDWG:
@@ -54129,10 +54134,11 @@ showed the original `ConicRootRefinement` refusal; the malformed and conic
 worker-result cases passed 30 and 5,324 assertions respectively. Those results
 are historical diagnosis only. Post-fix validation on the same macOS arm64
 CMake Release build passes the focused projected-position test (512 assertions
-/ 1 case), the endpoint-tangent Trim Two action matrix (11,774 assertions / 1
-generated case before history coverage), and the full Trim kernel suite
-(4,643,737 assertions / 89 cases). The worker result codec passes 470,974 assertions / 36
-cases and the worker request codec passes 603,644 assertions / 19 cases. The
+/ 1 case), the endpoint-tangent Trim Two action matrix (16,205 assertions / 1
+generated case after history, persistence, and high-origin tangency coverage),
+and the full Trim kernel suite (4,643,737 assertions / 89 cases). The worker
+result codec passes 470,974 assertions / 36 cases and the worker request codec
+passes 603,644 assertions / 19 cases. The
 updated action probe verifies cache-only, conic-only, paired, worker, and
 prepared-path success with two roots, no intersection-failure domain, valid
 conic fragments, equivalent direct/worker-prepared batches, and no source or
@@ -54146,11 +54152,11 @@ simple, spatially separated cache/circle roots for both tested scale profiles
 and sides; it is test-only and does not certify production roots. Diagnostic
 slice `f1543889e` and exact-oracle slice `d116fb035` were already pushed to PR
 #3193. Implementation slice `b75658cb5`, action-history test slice
-`87cb0c14e`, and five-format round-trip slice `7c1336144` are committed. The
-latest action run passes 12,365 assertions / 1 generated case; added checks
-cover preview/commit output, undo/redo, and all five persistence lanes. This
-plan checkpoint leaves the focused negative-boundary matrix as the remaining
-gate.
+`87cb0c14e`, five-format round-trip slice `7c1336144`, and negative-boundary
+slice `c8cfb62c3` are committed. The latest focused action run passes 16,205
+assertions / 1 generated case, including a high-origin tangent refusal with
+empty output; the full kernel suite passes 4,643,737 assertions / 89 cases.
+The bounded section 1621 implementation and validation sequence is complete.
 
 Completion gate for this investigation: reproducible diagnosis, the exact
 independent cache/circle oracle, proof-preserving direct and worker success for
