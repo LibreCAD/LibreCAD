@@ -5907,6 +5907,19 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             {{rotate({-5.0, 0.5}) + frameTranslation,
               rotate({7.0, -2.0}) + frameTranslation}},
             {{rotate({10.0, 6.75}), rotate({2.0, -9.25})}})});
+    const auto steepAsymmetricProfile = [&](const char* name, const double scale,
+                                            const RS_Vector& origin) {
+        return Profile{name, LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({0.0, 0.0}) + origin,
+              rotate({10.0 * scale, 0.0}) + origin}},
+            {{rotate({0.8, 0.6}), rotate({0.6, -0.8})}}), scale};
+    };
+    profiles.push_back(steepAsymmetricProfile("steep-asymmetric-small-scale",
+                                               1e-3, {1e3, -2e3}));
+    profiles.push_back(steepAsymmetricProfile("steep-asymmetric-unit-scale",
+                                               1.0, frameTranslation));
+    profiles.push_back(steepAsymmetricProfile("steep-asymmetric-large-scale",
+                                               1e3, highOrigin));
     profiles.push_back({"mirrored-tangents",
         LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + frameTranslation,
@@ -5972,6 +5985,35 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             CHECK(generatedNative->sourceDefinition()->source.kind() ==
                   LC_OffsetSourceGeometry::Kind::Parabola);
             exactCache(generatedNative->getData(), cache);
+            if (std::strncmp(profile.name, "steep-asymmetric-", 17) == 0) {
+                const std::array<RS_Vector, 2> endpoints{
+                    source.m_controlPoints.front(), source.m_controlPoints.back()};
+                const std::array<RS_Vector, 2> tangents{
+                    rotate({0.8, 0.6}), rotate({0.6, -0.8})};
+                std::array<RS_Vector, 2> expectedOffsetEndpoints;
+                for (std::size_t i = 0; i < endpoints.size(); ++i) {
+                    const RS_Vector unitTangent = tangents[i].normalized();
+                    const RS_Vector leftNormal{-unitTangent.y, unitTangent.x};
+                    expectedOffsetEndpoints[i] = endpoints[i] +
+                        leftNormal * signedDistance;
+                }
+                const std::array<RS_Vector, 2> actualOffsetEndpoints{
+                    generatedNative->getStartpoint(), generatedNative->getEndpoint()};
+                const double coordinateMagnitude = std::max({
+                    std::abs(endpoints[0].x), std::abs(endpoints[0].y),
+                    std::abs(endpoints[1].x), std::abs(endpoints[1].y),
+                    std::abs(signedDistance), 1.0});
+                const double endpointTolerance = std::max(
+                    1e-4 * profile.scale,
+                    128.0 * std::numeric_limits<double>::epsilon() * coordinateMagnitude);
+                const double forwardError =
+                    actualOffsetEndpoints[0].distanceTo(expectedOffsetEndpoints[0]) +
+                    actualOffsetEndpoints[1].distanceTo(expectedOffsetEndpoints[1]);
+                const double reverseError =
+                    actualOffsetEndpoints[0].distanceTo(expectedOffsetEndpoints[1]) +
+                    actualOffsetEndpoints[1].distanceTo(expectedOffsetEndpoints[0]);
+                CHECK(std::min(forwardError, reverseError) <= 2.0 * endpointTolerance);
+            }
 
             Receipts validatedReceipts;
             REQUIRE(owned.get().submit(
