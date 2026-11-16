@@ -62,8 +62,11 @@ five-lane persistence profile at origins up to `(1e9,-2e9)`, using explicit
 tolerance where the default falls below the numeric floor. Section 1573
 extends high-origin typed-source persistence to 16 rows spanning origins
 `(1e6,-1e6)` and `(1e9,-2e9)`, ratios `0.05` and `0.2`, both offset signs,
-and distances `0.5` and `1.5` times vertex radius. These do not close other
-hyperbola origins/scales or ODA/AutoCAD acceptance. Sections 1550 and
+and distances `0.5` and `1.5` times vertex radius. Section 1574 adds 192
+high-origin rows to typed-or-fallback persistence across both branches,
+interval directions, widths, and all three cusp distances; each high origin
+must exercise ordinary fallback. These do not close other hyperbola
+origins/scales or ODA/AutoCAD acceptance. Sections 1550 and
 1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
 `1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
@@ -52335,7 +52338,44 @@ git diff --check
 
 The focused case passes 12,000 assertions / 1 case with DWG support and
 LibreDWG inspection enabled. It closes typed-source persistence only for the
-16 enumerated profiles. Opposite branches, reversed bounds, other origins,
-ratios, scales, intervals, cache-refused high-origin fallback persistence, and
-ODA/AutoCAD acceptance remain unqualified.
+16 enumerated profiles. Section 1574 adds the opposite branches, reversed
+bounds, second high origin, all cusp distances, and cache-refused fallback
+rows for its bounded ratio/interval matrix. Other origins, ratios, scales,
+intervals, and ODA/AutoCAD acceptance remain unqualified.
+
+## 1574. Persist High-origin Hyperbola Typed and Fallback Results (2026-11-15)
+
+Test commit `00ee58f0b` extends the bounded hyperbola cusp persistence matrix
+from 240 to 432 rows. It retains the original 240 profiles at `(23,-17)` and
+adds 192 profiles across origins `(1e6,-1e6)` and `(1e9,-2e9)`, ratios `0.05`
+and `0.2`, both hyperbola branches, forward/reversed bounds with half-widths
+`0.4` and `0.8`, both signed offsets, and distances `0.5`, `1.0`, and `1.5`
+times vertex radius. Each completed row must persist either as an operation-8
+validated typed source or as the complete ordinary SPLINE fragment list when
+native cache representation is refused. Assertions require cache-refused
+fallback rows at each high origin. Typed rows are reopened twice, with a
+second save between passes; fallback fragment geometry is compared after
+reopen. All rows use R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. LibreDWG checks
+typed-source EED on native rows and SPLINE count/control/knot cardinality on
+fallback DWGs.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  'Bounded hyperbola cusp profiles persist typed sources across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+The focused case passes 276,787 assertions / 1 case with DWG support and
+LibreDWG inspection enabled. This closes the enumerated 432 rows only. Other
+origins/ratios/scales, cache-refused profiles outside this matrix, and
+ODA/AutoCAD acceptance remain open. DWG raw OBJECTS replay still reports its
+separate fixed-handle diagnostic; successful entity parsing and geometry
+round-trip are not evidence of lossless raw-object replay.
 
