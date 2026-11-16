@@ -498,7 +498,11 @@ TEST_CASE("High-origin parabola clipping uses local circle intersections",
             (sourceData.findX(point) - sourceData.findX(controls.front())) /
             (sourceData.findX(controls.back()) - sourceData.findX(controls.front()));
         CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
-        CHECK(circle->getDistanceToPoint(point) <= 1.8 + 2e-6);
+        const double radialDistance = point.distanceTo(circle->getCenter());
+        if (parameter == 0.0 || parameter == 1.0)
+            CHECK(std::abs(radialDistance - circle->getRadius()) < 2e-6);
+        else
+            CHECK(radialDistance < circle->getRadius() + 2e-6);
     }
 }
 

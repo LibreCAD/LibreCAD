@@ -1768,8 +1768,7 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
         return !roots.empty() && roots.front().isEntityClosed(e);
     };
     auto intersectionsFor = [](RS_Entity* entity, RS_Entity* boundary) {
-        if (entity->rtti() == RS2::EntityParabola &&
-            boundary->rtti() == RS2::EntityLine) {
+        if (entity->rtti() == RS2::EntityParabola) {
             const auto& data = static_cast<LC_Parabola*>(entity)->getData();
             if (!data.m_valid) return RS_VectorSolutions{};
             const RS_Vector origin = data.m_vertex;
@@ -1781,11 +1780,13 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
             std::transform(data.m_controlPoints.begin(), data.m_controlPoints.end(),
                            localControls.begin(), toLocal);
             LC_Parabola localParabola(nullptr, LC_ParabolaData{localControls});
-            const auto* line = static_cast<RS_Line*>(boundary);
-            RS_Line localLine(nullptr, RS_LineData{toLocal(line->getStartpoint()),
-                                                   toLocal(line->getEndpoint())});
+            std::unique_ptr<RS_Entity> localBoundary(boundary->clone());
+            if (!localBoundary) return RS_VectorSolutions{};
+            localBoundary->setParent(nullptr);
+            localBoundary->move(-origin);
+            localBoundary->rotate(RS_Vector{0.0, 0.0}, angle);
             RS_VectorSolutions localIntersections =
-                RS_Information::getIntersection(&localParabola, &localLine, true);
+                RS_Information::getIntersection(&localParabola, localBoundary.get(), true);
             for (RS_Vector& point : localIntersections) {
                 point = point.rotated(-angle) + origin;
             }
