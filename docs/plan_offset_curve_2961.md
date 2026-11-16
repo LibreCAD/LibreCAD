@@ -54983,7 +54983,8 @@ The physical image-width
 bound accounts for both normalized axis scales, including ellipse ratios above
 one. The original joint root snapshot is not patched or replaced; any failed
 proof, bound, or budget check retains the original `AmbiguousRoots` refusal.
-Other source degrees remain fail-closed. This resolves the previously
+At this implementation checkpoint, only cubic source spans use the fallback;
+section 1662 extends it to degree-one spans. This resolves the previously
 unhandled tested cubic profile, not the general near-tangent class.
 
 Validation on macOS arm64 CMake Release:
@@ -54997,7 +54998,8 @@ Validation on macOS arm64 CMake Release:
 - CMake build and `git diff --check`: passed.
 
 Coverage remains specific to the tested cubic high-origin/large-scale profile.
-Non-cubic near-tangent cases, other distances/orientations, visible-app
+Other near-tangent distances/orientations, non-cubic profiles outside the
+separately measured degree-one line/circle cases in section 1662, visible-app
 interaction, and independent ODA/AutoCAD acceptance remain open.
 
 ## 1660. Reconcile the All-family Properties Source Picker Request (2026-11-16)
@@ -55048,6 +55050,45 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 This closes only the specified high-origin/unit-scale/slope profile and the
 three inward fractions. Other near-tangent distances and orientations,
-non-cubic contacts, visible-app interaction, and independent ODA/AutoCAD
-acceptance remain open.
+contacts outside the separately tested degree-one line/circle profiles,
+visible-app interaction, and independent ODA/AutoCAD acceptance remain open.
+
+## 1662. Contract Near-tangent Degree-one Line/Circle Contacts (2026-11-16)
+
+Implementation/test commit `d2ed5d811` generalizes the exact cache-image
+fallback from cubic-only to the admitted cache degrees 1 and 3. It forms the
+conic implicit Bernstein polynomial at degree `2 * sourceDegree`, bounds the
+normalized source image at its actual degree, and retains the prior strict
+endpoint sign-change and Bernstein monotonicity requirements before subdivision.
+When a source-root interval endpoint evaluates to exactly zero as a rational,
+the fallback uses that endpoint's exact normalized image; the paired
+intersection session still supplies the unique-contact certificate. An
+interval whose two endpoints are both exact roots is rejected. Conic-parameter
+contraction remains interval Newton with a derivative projection excluding
+zero. Any other failed proof or resource check refuses without publishing
+partial trim output.
+
+The regression uses exact rational discriminants for degree-one lines crossing
+a unit circle at both forward and reversed traversals. Three near-tangent
+fractions (`1e-8`, `1e-10`, `1e-12`) produce two distinct roots and one conic
+fragment. At `1e-14`, the independent discriminant remains positive, but the
+intersection query reaches its existing budget and returns `LimitExceeded`
+with zero roots and no output; limits are not relaxed. This deliberately
+records the current fail-closed boundary rather than claiming the whole
+near-tangent interval.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Degree-one near-tangent contact suite, both traversals: 214 assertions / 1 case.
+- Full trim-kernel selector: 4,643,984 assertions / 91 cases.
+- Endpoint-tangent Trim Two action/worker and five-format round-trip matrix:
+  52,328 assertions / 1 case.
+- Standalone trim allocation/cancellation fault sweep: passed; staged-failure
+  prefixes and unchanged source/history checks retained.
+- CMake build and `git diff --check`: passed.
+
+This does not qualify degree-one contacts across arbitrary conic ratios,
+rotations, origins, scales or cutter profiles, nor does it close cubic
+near-tangent boundaries beyond the separately measured fixtures. Visible-app
+and independent ODA/AutoCAD acceptance remain open.
 
