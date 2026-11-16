@@ -23,9 +23,25 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-16. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest implementation reconciliation (2026-11-15, latest code/test commit
+**Latest source-picker request reconciliation (2026-11-16):** The request to
+change the source-curve type while choosing a replacement and support every
+currently supported offset-source kind is already implemented at the picker
+and replacement-workflow level. Keep the selector bound to
+`LC_OffsetSourceGeometry::SupportedKinds`; it filters eligible existing
+entities while replacement selection remains active, and parabola remains a
+distinct source type rather than a spline-points alias. The committed source,
+cache, identity, selection, and highlight must remain unchanged until
+asynchronous validation publishes a replacement. Do not add another selector
+or a parabola-only implementation slice. Headless all-kind filtering,
+replacement, and highlight-transfer evidence is recorded below; the actual
+visible Properties workflow remains open in Slice 5. “All kinds” does not
+establish support for every concrete geometry variant: Slice 4 still owns
+variant-specific capture/reconstruction, worker/cache, Trim, and applicable
+DXF/DWG qualification, with unsupported cases refusing atomically.
+
+**Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
 intersections in the directed local parameter and extracts exact Bezier
 subcurves. Parabola intersections with cloned atomic boundaries are solved in
@@ -52696,5 +52712,39 @@ The 128-profile five-lane and LibreDWG matrix passes 68,438 assertions / 1
 case. Raw OBJECTS fixed-handle replay diagnostics remain separate from entity
 round-trip evidence. Other asymmetric domains, broader persistence ratios and
 distances, visible-app acceptance, and independent ODA/AutoCAD acceptance
+remain open.
+
+## 1583. Test Exact Hyperbola Cusp Threshold at Translated Origins (2026-11-16)
+
+Test commit `c1f82d71f` adds the exact curvature-radius threshold (`1.0`)
+alongside the existing below- and above-cusp distances (`0.5`, `1.5`) in the
+translated-origin direct oracle and its asymmetric-interval counterpart. The
+rows retain both offset sides, both hyperbola branches, forward/reversed
+parameter bounds, the five recorded curvature ratios, and origins through
+`(1e12,-2e12)`. At exactly the cusp threshold, the continuity helper permits
+only the engine's `nodeMerge` gap tolerance; all pointwise curve-to-offset
+deviation remains bounded by the requested geometry tolerance or the existing
+coordinate-resolution floor. Other fractions retain zero continuity slack.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][large-origin]' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][hyperbola][oracle][cusp][asymmetric]' \
+  --reporter compact
+git diff --check
+```
+
+Results: the translated-origin direct suite passes 1,274,624 assertions / 1
+case; the asymmetric suite passes 1,992,160 assertions / 1 case. This adds
+direct evidence for the exact threshold only. Worker/cache qualification,
+high-origin persistence of the exact-threshold rows, broader hyperbola
+variants, visible-app acceptance, and independent ODA/AutoCAD acceptance
 remain open.
 
