@@ -54346,3 +54346,26 @@ These are three degree-elevated profiles at one nonuniform span and one double
 knot. Other knot positions/multiplicities, weight profiles, periodic higher-
 degree ownership, and complete event-to-output mapping remain open.
 
+## 1630. Map High-degree Periodic Rational Roots at the Seam (2026-11-16)
+
+Test commit `b224ea440` adds periodic wrapped rational sources of degree 4 and
+degree 6 with positive weights symmetric around the seam. A 256-bit oracle
+derives the offset distance from both one-sided seam curvatures, verifies the
+seam root and its simple sign change, and checks production output mapping.
+Each event must be represented by a candidate, a stall, or the existing
+roundoff-bounded unclassified-boundary path that marks the seam as a branch
+break. No production behavior changed. The first fixture attempt used
+asymmetric weights and did not represent the intended even tangent; it was
+corrected to test simple seam roots explicitly rather than asserting even-root
+signs.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused degree-4/6 periodic seam test: 38 assertions / 1 case.
+- Full offset worker-kernel suite: 1,969,746 assertions / 123 cases.
+- `git diff --check`: passed.
+
+This covers two periodic layouts and one seam root each. Other high-degree
+periodic weights/knots, interior-root ownership, even seam tangencies, and
+complete event-to-output correspondence remain open.
+
