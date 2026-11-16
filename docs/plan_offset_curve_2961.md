@@ -54023,23 +54023,31 @@ round-trip lanes. The large-scale circle-cutter variant returns
 this test does not claim arbitrary cutter, slope, origin, or scale coverage.
 Visible-app and independent ODA/AutoCAD acceptance remain open.
 
-## 1621. Diagnose Near-flat Parabola/Circle Trim Ambiguity (2026-11-16)
+## 1621. Resolve Near-flat Parabola/Circle Trim Ambiguity (2026-11-16)
 
-Follow up the large-scale circle-cutter refusal from section 1620 as a
-correctness investigation, not as an instruction to force acceptance. The
-fixture has a near-flat endpoint-tangent parabola (`span=1e5`, `slope=1e-8`)
-at high origin `(1e9,-2e9)`. The equivalent transverse-line Trim Two cases
-complete. A stage probe now distinguishes the paths: cache-only circle
-trimming returns two roots and succeeds, but conic-only and paired
-`prepareConic` return `AmbiguousRoots` with two roots already reported,
-nonzero intersection work, and no intersection-failure domain. `Work` now
-reports the last kernel stage, including through the worker result protocol
-(version 10). The diagnostic identifies `ConicRootRefinement`: the certified
-intersection session cannot further shrink a root interval, returns
-`AmbiguousTopology`, and maps to `AmbiguousRoots`. This is neither the depth
-ceiling nor root ordering, pick projection, or clipping. The typed refusal
-remains correct until an independent oracle determines whether this is a true
-unresolvable contact or an overly conservative contraction.
+Follow-up of section 1620 was a correctness investigation, not an instruction
+to force acceptance. The fixture has a near-flat endpoint-tangent parabola
+(`span=1e5`, `slope=1e-8`) at high origin `(1e9,-2e9)`. The equivalent
+transverse-line Trim Two cases complete. Initially cache-only circle trimming
+returned two roots and succeeded, while conic-only and paired `prepareConic`
+reported `AmbiguousRoots` after nonzero intersection work and without an
+intersection-failure domain. `Work` stage diagnostics were added and remain
+available through worker result protocol v10. The refusal was localized to
+`ConicRootRefinement`, where the already-issued root handle's Krawczyk
+contraction eventually reached double-precision stagnation. This was not a
+missing root or failed uniqueness proof.
+
+The endpoint convergence guard compared translated `jet.x/y` interval widths
+against a scale-relative geometric allowance. Outward rounding in the
+frame-center addition slightly inflated the apparent geometric spread beyond
+that allowance. A new `ReferenceFrame::boundSourceProjectedPosition` combines
+projection coefficients before trigonometric interval bounds and tightens to
+endpoint ranges only when a derivative enclosure proves monotonicity. Conic
+trim now uses the center-relative projected position spread for this width
+guard, while its absolute conic jets remain translated and outward-bounded for
+intersection and pick calculations. Root existence, uniqueness, identity, and
+image proofs still come exclusively from the certified intersection session;
+the test oracle does not generate production roots or proof credentials.
 
 Implementation-ready sequence:
 
@@ -54064,39 +54072,40 @@ Implementation-ready sequence:
    `radius * 1e-6`, and the pick lies strictly inside the selected arc. The
    production intersection provider and its root diagnostics are not used by
    this oracle.
-3. **Next:** resolve the discrepancy between the exact oracle and the
-   production root session. The exact span polynomials prove two simple,
-   separated transverse contacts, while the session refuses to contract one
-   existing root handle at `ConicRootRefinement`. Determine whether the
-   contraction loses progress due to its interval Newton/Krawczyk enclosure,
-   conic-parameter projection, or a mismatch between source and conic root
-   coordinates. Prefer repairing generic certified contraction. Any fallback
-   must match each exact span root bijectively to a session-issued root and its
-   proof domain before narrowing it; it must not create a root or proof from
-   the test oracle's algorithm alone. Prove accepted roots/exclusions over
-   their full parameter domains, respect cancellation and work limits, and
-   refuse tangency/overlap or inseparable intervals atomically. Do not relax
-   `hasValidProofs()` or merge overlapping intervals without an equality
-   proof.
-4. Add focused negative cases for tangency, near-tangency, roots closer than
+3. **Done by `b75658cb5`:** keep the generic session contraction and its proof
+   rules unchanged. Add the monotone-projection interval primitive, use it for
+   the center-relative geometric width of conic roots, and keep translated jets
+   for all positional certificates. The high-origin/large-scale fixture now
+   succeeds with two roots and a conic fragment for direct conic-only, paired
+   preparation, worker execution, and prepared Trim Two output. Direct and
+   worker-prepared batches agree; preparation leaves source and cutter entities
+   untouched. The exact polynomial oracle remains an independent regression
+   and is not consulted by production code.
+4. Retain/add negative cases for tangency, near-tangency, roots closer than
    the proof resolution, extreme translation, and exhausted limits. Ambiguous
    or uncertifiable cases must continue to return a typed refusal without
    partial fragments or document mutation.
-5. For a successful remedy, qualify the direct preparation, worker/cache
-   admission, Trim Two preview/commit, undo/redo, and five DXF/DWG round-trip
-   lanes for the same circle profile. For an intentional safe refusal, keep
-   the behavior and explicitly test/report the refusal at the action boundary
-   rather than treating circle trimming as supported at that profile.
+5. **Next:** qualify the same circle profile through actual Trim Two
+   preview/commit and undo/redo, then all five DXF/DWG round-trip lanes. The
+   current action test proves direct/worker/prepared batch parity and
+   nonmutation before publication, but does not yet prove UI preview, applied
+   document state, history, or persistence for this circle profile.
 
 Stage-probe validation on macOS arm64 CMake Release with DWG support and
 LibreDWG:
 
 ```sh
 cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Source position projection tightens a monotone ellipse coordinate' --reporter compact
 LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
   DWGREAD=/opt/homebrew/bin/dwgread \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[lc-offsetcurve][trim-kernel]' --reporter compact
 QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_offset_worker_result_tests \
   'Worker Trim malformed records cannot drop fields repair intervals or forge references' \
@@ -54114,27 +54123,30 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-Results: 11,493 assertions / 1 generated test case pass for the action matrix;
-the malformed result-codec test passes 30 assertions / 1 case, and the conic
-and paired worker result round-trip test passes 5,324 assertions / 1 case. The
-full result codec suite passes 470,974 assertions / 36 cases, and the full
-request codec suite passes 603,644 assertions / 19 cases at protocol v10. The
-action probe verifies cache-only success, conic-only and paired
-`AmbiguousRoots`, two discovered roots, absence of an intersection-query
-failure domain, and no document/batch mutation on Trim Two refusal. The paired
-preparation reports `Stage::ConicRootRefinement`; worker execution preserves
-the same stage and prepared publication preserves the same refusal without
-mutating the batch. Diagnostic slice `f1543889e` and exact-oracle slice
-`d116fb035` are pushed to PR #3193. The independent oracle finds two simple,
-spatially separated cache/circle roots for both tested scale profiles and
-sides, while production conic
-contraction still refuses; the next slice must diagnose and resolve that
-proof-path discrepancy.
+Pre-fix diagnostics passed 11,493 assertions / 1 generated action case and
+showed the original `ConicRootRefinement` refusal; the malformed and conic
+worker-result cases passed 30 and 5,324 assertions respectively. Those results
+are historical diagnosis only. Post-fix validation on the same macOS arm64
+CMake Release build passes the focused projected-position test (512 assertions
+/ 1 case), the updated endpoint-tangent Trim Two action matrix (11,774
+assertions / 1 generated case), and the full Trim kernel suite (4,643,737
+assertions / 89 cases). The worker result codec passes 470,974 assertions / 36
+cases and the worker request codec passes 603,644 assertions / 19 cases. The
+updated action probe verifies cache-only, conic-only, paired, worker, and
+prepared-path success with two roots, no intersection-failure domain, valid
+conic fragments, equivalent direct/worker-prepared batches, and no source or
+cutter mutation before publication. The independent oracle still finds two
+simple, spatially separated cache/circle roots for both tested scale profiles
+and sides; it is test-only and does not certify production roots. Diagnostic
+slice `f1543889e` and exact-oracle slice `d116fb035` were already pushed to PR
+#3193. The implementation slice is committed as `b75658cb5`; this plan
+checkpoint is a separate commit and records the remaining action-history and
+persistence gates.
 
-Completion gate: a reproducible exact-stage diagnosis, an independent oracle,
-and tests demonstrating either certified success or explicitly preserved
-atomic refusal through direct, worker, action, and persistence paths. No claim
-of general parabola/circle support follows from one profile. Visible-app
-interaction and independent ODA/AutoCAD acceptance remain separate delivery
-checks.
+Completion gate for this investigation: reproducible diagnosis, the exact
+independent cache/circle oracle, proof-preserving direct and worker success for
+the qualified frame, fail-closed negative tests, and action/history/persistence
+qualification. No claim of general parabola/circle support follows from one
+profile. Visible-app interaction and independent ODA/AutoCAD acceptance remain
+separate delivery checks.
 
