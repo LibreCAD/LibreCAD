@@ -7236,7 +7236,8 @@ TEST_CASE("asymmetric hyperbola intervals persist across DXF and DWG lanes",
   RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
   constexpr std::array<std::pair<double, double>, 4> intervals{
       {{-0.4, 0.8}, {-0.8, 0.4}, {0.0, 0.8}, {-0.8, 0.0}}};
-  const std::array<RS_Vector, 2> origins{{{23.0, -17.0}, {1e12, -2e12}}};
+  const std::array<RS_Vector, 4> origins{
+      {{23.0, -17.0}, {1e6, -1e6}, {1e9, -2e9}, {1e12, -2e12}}};
   struct Lane {
     RS2::FormatType format;
     const char *extension;
@@ -7256,7 +7257,9 @@ TEST_CASE("asymmetric hyperbola intervals persist across DXF and DWG lanes",
   for (std::size_t originIndex = 0; originIndex < origins.size();
        ++originIndex) {
     const RS_Vector &origin = origins[originIndex];
-    const double semiMajor = originIndex == 0 ? 10.0 : 2e4;
+    const bool veryHighOrigin =
+        std::abs(origin.x) > 1e11 || std::abs(origin.y) > 1e11;
+    const double semiMajor = veryHighOrigin ? 2e4 : 10.0;
     constexpr double ratio = 0.2;
     const double vertexRadius = semiMajor * ratio * ratio;
     const std::size_t intervalCount = intervals.size();
@@ -7274,7 +7277,7 @@ TEST_CASE("asymmetric hyperbola intervals persist across DXF and DWG lanes",
                 reverseBounds ? intervalEnd : intervalStart,
                 reverseBounds ? intervalStart : intervalEnd,
                 oppositeBranch};
-            const double tolerance = originIndex == 0 ? 1e-4 : 0.05;
+            const double tolerance = veryHighOrigin ? 0.05 : 1e-4;
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{data}, sign * vertexRadius * 0.25,
                 tolerance, false};
