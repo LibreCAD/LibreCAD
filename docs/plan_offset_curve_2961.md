@@ -52726,6 +52726,17 @@ only the engine's `nodeMerge` gap tolerance; all pointwise curve-to-offset
 deviation remains bounded by the requested geometry tolerance or the existing
 coordinate-resolution floor. Other fractions retain zero continuity slack.
 
+Test commit `81f4fd2fc` extends the worker-client and five-lane persistence
+matrix through `(1e12,-2e12)`, including the exact threshold. At that origin
+the semi-major axis is scaled to `2e4` and requested tolerance is `0.05` to
+keep the feature-to-coordinate ratio above the arithmetic floor. The rows
+cover ratios `0.05` and `0.2`, both signed offsets, and fractions `0.5`, `1.0`,
+and `1.5`. Each profile must pass process-worker generation and typed-cache
+admission, then save/reopen through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG;
+available LibreDWG checks inspect both DWG outputs. This is a selected
+high-origin matrix, not every branch, bound interval, ratio, or origin from
+the direct oracle's Cartesian product.
+
 Validation on macOS arm64 CMake Release:
 
 ```sh
@@ -52738,13 +52749,18 @@ QT_QPA_PLATFORM=offscreen \
   /private/tmp/offset-2961-cmake-clean/librecad_tests \
   '[curve-offset][direct][hyperbola][oracle][cusp][asymmetric]' \
   --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][large-origin][persistence]' \
+  --reporter compact
 git diff --check
 ```
 
 Results: the translated-origin direct suite passes 1,274,624 assertions / 1
-case; the asymmetric suite passes 1,992,160 assertions / 1 case. This adds
-direct evidence for the exact threshold only. Worker/cache qualification,
-high-origin persistence of the exact-threshold rows, broader hyperbola
-variants, visible-app acceptance, and independent ODA/AutoCAD acceptance
-remain open.
+case; the asymmetric suite passes 1,992,160 assertions / 1 case; and the
+high-origin worker/cache plus five-lane persistence case passes 21,818
+assertions / 1 case with LibreDWG enabled. These are the recorded profiles
+only. Broader hyperbola variants, visible-app acceptance, and independent
+ODA/AutoCAD acceptance remain open.
 
