@@ -54085,11 +54085,12 @@ Implementation-ready sequence:
    the proof resolution, extreme translation, and exhausted limits. Ambiguous
    or uncertifiable cases must continue to return a typed refusal without
    partial fragments or document mutation.
-5. **Next:** qualify the same circle profile through actual Trim Two
-   preview/commit and undo/redo, then all five DXF/DWG round-trip lanes. The
-   current action test proves direct/worker/prepared batch parity and
-   nonmutation before publication, but does not yet prove UI preview, applied
-   document state, history, or persistence for this circle profile.
+5. **Action/history done by `87cb0c14e`:** the same high-origin/large-scale
+   circle profile now traverses the real Trim Two async preview and commit,
+   checks committed output against the preview, and verifies undo, redo, and
+   restoration for both offset sides. **Next:** save/reopen the resulting
+   fragments through all five DXF/DWG round-trip lanes and independently
+   verify geometry and entity types.
 
 Stage-probe validation on macOS arm64 CMake Release with DWG support and
 LibreDWG:
@@ -54128,20 +54129,24 @@ showed the original `ConicRootRefinement` refusal; the malformed and conic
 worker-result cases passed 30 and 5,324 assertions respectively. Those results
 are historical diagnosis only. Post-fix validation on the same macOS arm64
 CMake Release build passes the focused projected-position test (512 assertions
-/ 1 case), the updated endpoint-tangent Trim Two action matrix (11,774
-assertions / 1 generated case), and the full Trim kernel suite (4,643,737
+/ 1 case), the endpoint-tangent Trim Two action matrix (11,774 assertions / 1
+generated case before history coverage), and the full Trim kernel suite (4,643,737
 assertions / 89 cases). The worker result codec passes 470,974 assertions / 36
 cases and the worker request codec passes 603,644 assertions / 19 cases. The
 updated action probe verifies cache-only, conic-only, paired, worker, and
 prepared-path success with two roots, no intersection-failure domain, valid
 conic fragments, equivalent direct/worker-prepared batches, and no source or
-cutter mutation before publication. The independent oracle still finds two
+cutter mutation before publication. The added action-history check verifies
+preview/commit geometry and undo/redo restoration for both offset sides. The
+independent oracle still finds two
 simple, spatially separated cache/circle roots for both tested scale profiles
 and sides; it is test-only and does not certify production roots. Diagnostic
 slice `f1543889e` and exact-oracle slice `d116fb035` were already pushed to PR
-#3193. The implementation slice is committed as `b75658cb5`; this plan
-checkpoint is a separate commit and records the remaining action-history and
-persistence gates.
+#3193. Implementation slice `b75658cb5` and action-history test slice
+`87cb0c14e` are committed. The latest action run passes 12,252 assertions / 1
+generated case; its additional checks cover preview/commit output, document
+mutation, and undo/redo. This plan checkpoint records persistence and
+negative-boundary validation as remaining gates.
 
 Completion gate for this investigation: reproducible diagnosis, the exact
 independent cache/circle oracle, proof-preserving direct and worker success for
