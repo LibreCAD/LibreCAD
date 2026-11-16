@@ -53424,3 +53424,39 @@ open under Slice 5. Keep concrete source-variant geometry, worker/cache,
 trimming, and DXF/DWG qualification open under Slice 4; selector coverage is
 not evidence of end-to-end support for every geometry variant.
 
+## 1604. Qualify a High-origin Endpoint-tangent Parabola (2026-11-16)
+
+Test commit `f0c277a2b` adds a rotated endpoint-tangent parabola at
+`(1e9,-2e9)` with slope `1e-4`. The direct-offset test uses an explicit
+`1e-3` requested geometry tolerance because the default falls below the
+coordinate arithmetic floor at this origin, then checks both signed sides
+against the spline evaluator within that bound. The worker-client matrix adds
+the same typed source and carries both offset signs through operation-7
+generation, operation-8 cache admission, typed reconstruction, and R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG save/reopen; LibreDWG checks the DWG typed
+source markers when available.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+git diff --check
+```
+
+Results: the direct case passes 94 assertions / 1 case; the full endpoint-
+tangent worker/cache/persistence selection passes 19,885 assertions / 1 case.
+This qualifies only the stated translated/rotated profile and tolerance, not
+the full slope ladder at high origins or arbitrary endpoint-tangent
+constructions. Other high-origin conditioning, visible-app acceptance, and
+independent ODA/AutoCAD acceptance remain open.
+
