@@ -261,15 +261,15 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1656 add two asymmetric
+and fail-closed limits. Sections 1642-1657 add two asymmetric
 endpoint-tangent parabolas and both traversals through an independent
 exact-normal oracle, Trim Two, source scales `1e-3/1/1e3`, and all five internal
-file lanes; the opposite-bend pair varies three scaled circle-cutter radii and
-also passes Trim Two with line cutters in both traversals and both operand-pick
-orders. Line-cutter checks also cover the first tangent pair at unit scale;
-the opposite-bend line-cutter cases repeat across all three source scales.
+file lanes; the opposite-bend pair varies three scaled circle-cutter radii.
+Line-cutter checks cover both tangent pairs and both traversals at source scales
+`1e-3/1/1e3`, with both operand-pick orders.
 Section 1656 also checks fail-closed tangent-circle contact for the
-opposite-bend traversal pair.
+opposite-bend traversal pair; section 1657 completes the matching
+three-scale line-cutter matrix for the first tangent pair.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -54906,5 +54906,24 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This qualifies one tangent-contact boundary for one asymmetric construction
 and its reverse. Other tangent-circle placements, near-tangent tolerances,
 source scales, cutter types, visible-app interaction, and independent
+ODA/AutoCAD acceptance remain open.
+
+## 1657. Scale First-pair Line-cutter Trim Across Both Traversals and Pick Orders (2026-11-16)
+
+Test commit `e92961696` extends the first asymmetric tangent pair's line-cutter
+Trim Two path to source scales `1e-3`, `1`, and `1e3`, with origins `(1e3,-2e3)`,
+`(1e6,-2e6)`, and `(1e9,-2e9)`. Both forward and reversed source traversals
+run with either the native offset or line cutter selected first. Each row
+checks preview/commit, undo/redo, and all five DXF/DWG save/reopen geometry
+comparisons; LibreDWG checks the DWG outputs when available. This makes the
+line-cutter scale matrix symmetric with section 1654's opposite-bend matrix.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Endpoint-tangent Trim Two matrix: 45,313 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+Other line placements, tangency/refusal boundaries, source scales/origins
+beyond the tested ratios, visible-app interaction, and independent
 ODA/AutoCAD acceptance remain open.
 
