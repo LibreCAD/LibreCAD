@@ -776,6 +776,13 @@ missing or ambiguous source must be identified as such. This picker contract
 is distinct from proving that every geometry variant in each family can be
 offset, run through the worker/cache, or persisted.
 
+**Slice 4 status correction:** Section 1564 supersedes the historical
+self-crossing sentence in the matrix below that asks for an all-straight
+bow-tie implementation. The recorded straight bow-tie growth/erosion cases
+pass under both fill rules. Do not repeat that implementation; broader exact
+crossing/tangency arrangements and mixed-bulge profiles remain individually
+unqualified unless their concrete geometry and evidence are recorded.
+
 The nine `SupportedKinds` entries are the present source inventory, not proof
 that every possible entity or geometry variant works. Do not drop an eligible
 member of these families merely because the previous source has another kind;
