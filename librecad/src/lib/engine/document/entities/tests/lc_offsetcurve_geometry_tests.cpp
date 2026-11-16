@@ -9374,6 +9374,31 @@ TEST_CASE("Source position projection tightens a monotone ellipse coordinate",
     }
     CHECK_FALSE(frame->boundSourceProjectedPosition(.2,.1,axisX,axisY,tight));
     CHECK_FALSE(tight.isValid());
+
+    source.reversed = true;
+    frame = geo::ReferenceFrame::create(source,0); REQUIRE(frame);
+    REQUIRE(frame->boundSourceProjectedPosition(0,frame->parameterEnd(),
+        LC_Interval::point(-3),LC_Interval::point(-4),tight));
+    for (unsigned k = 0; k <= 32; ++k) {
+        const double t = frame->parameterEnd()*double(k)/32;
+        const auto oracle = referenceOracle(source,*frame,0,t,false);
+        checkEnclosure(tight,-3*oracle[0]-4*oracle[1]);
+    }
+    REQUIRE(frame->boundSourceProjectedPosition(0,0,
+        LC_Interval::point(-3),LC_Interval::point(-4),tight));
+    checkEnclosure(tight,-3*referenceOracle(source,*frame,0,0,false)[0]-
+                         4*referenceOracle(source,*frame,0,0,false)[1]);
+
+    source.angle1 = 0;
+    source.angle2 = 0;
+    frame = geo::ReferenceFrame::create(source,0); REQUIRE(frame);
+    REQUIRE(frame->boundSourceProjectedPosition(0,frame->parameterEnd(),axisX,axisY,tight));
+    for (unsigned k = 0; k <= 64; ++k) {
+        const double t = frame->parameterEnd()*double(k)/64;
+        const auto oracle = referenceOracle(source,*frame,0,t,false);
+        for (const double x : {-3.,-2.5}) for (const double y : {-4.,-3.5})
+            checkEnclosure(tight,Quad(x)*oracle[0]+Quad(y)*oracle[1]);
+    }
 }
 
 TEST_CASE("Public complete cut search accepts exact caps and refuses every one-less ledger without a certificate",
