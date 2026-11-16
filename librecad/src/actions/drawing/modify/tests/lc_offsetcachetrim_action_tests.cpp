@@ -10,6 +10,7 @@
 #include <sstream>
 #include <functional>
 #include <filesystem>
+#include <boost/multiprecision/cpp_int.hpp>
 #include <limits>
 #include <utility>
 #include <QPointer>
@@ -61,6 +62,286 @@
 namespace {
 std::unique_ptr<LC_OffsetWorkerCompletion> joinedTrimWorker(
     const LC_OffsetWorkerRequest::Request& request);
+
+using OracleRational = boost::multiprecision::cpp_rational;
+using OraclePolynomial = std::vector<OracleRational>;
+
+void trimPolynomial(OraclePolynomial& p) {
+    while (p.size() > 1 && p.back() == 0) p.pop_back();
+}
+
+OraclePolynomial addPolynomial(OraclePolynomial a, const OraclePolynomial& b) {
+    a.resize(std::max(a.size(), b.size()), OracleRational{0});
+    for (std::size_t i = 0; i < b.size(); ++i) a[i] += b[i];
+    trimPolynomial(a);
+    return a;
+}
+
+OraclePolynomial multiplyPolynomial(const OraclePolynomial& a, const OraclePolynomial& b) {
+    OraclePolynomial out(a.size() + b.size() - 1, OracleRational{0});
+    for (std::size_t i = 0; i < a.size(); ++i)
+        for (std::size_t j = 0; j < b.size(); ++j) out[i + j] += a[i] * b[j];
+    trimPolynomial(out);
+    return out;
+}
+
+OraclePolynomial derivativePolynomial(const OraclePolynomial& p) {
+    if (p.size() < 2) return {OracleRational{0}};
+    OraclePolynomial out(p.size() - 1);
+    for (std::size_t i = 1; i < p.size(); ++i) out[i - 1] = OracleRational{i} * p[i];
+    trimPolynomial(out);
+    return out;
+}
+
+OracleRational evaluatePolynomial(const OraclePolynomial& p, const OracleRational& x) {
+    OracleRational value{0};
+    for (auto it = p.rbegin(); it != p.rend(); ++it) value = value * x + *it;
+    return value;
+}
+
+OraclePolynomial remainderPolynomial(OraclePolynomial a, const OraclePolynomial& b) {
+    trimPolynomial(a);
+    if (b.size() == 1 && b.front() == 0) return {OracleRational{0}};
+    while (!(a.size() == 1 && a.front() == 0) && a.size() >= b.size()) {
+        const std::size_t shift = a.size() - b.size();
+        const OracleRational factor = a.back() / b.back();
+        for (std::size_t i = 0; i < b.size(); ++i) a[shift + i] -= factor * b[i];
+        trimPolynomial(a);
+    }
+    return a;
+}
+
+std::vector<OraclePolynomial> sturmSequence(const OraclePolynomial& input) {
+    OraclePolynomial p = input;
+    trimPolynomial(p);
+    if (p.size() < 2) return {p};
+    std::vector<OraclePolynomial> sequence{p, derivativePolynomial(p)};
+    while (!(sequence.back().size() == 1 && sequence.back().front() == 0)) {
+        OraclePolynomial remainder = remainderPolynomial(
+            sequence[sequence.size() - 2], sequence.back());
+        if (remainder.size() == 1 && remainder.front() == 0) break;
+        for (auto& coefficient : remainder) coefficient = -coefficient;
+        sequence.push_back(std::move(remainder));
+    }
+    return sequence;
+}
+
+int sturmVariations(const std::vector<OraclePolynomial>& sequence,
+                    const OracleRational& x) {
+    int variations = 0;
+    int previous = 0;
+    for (const auto& polynomial : sequence) {
+        const auto value = evaluatePolynomial(polynomial, x);
+        const int sign = value > 0 ? 1 : value < 0 ? -1 : 0;
+        if (!sign) continue;
+        if (previous && previous != sign) ++variations;
+        previous = sign;
+    }
+    return variations;
+}
+
+int sturmRootCount(const std::vector<OraclePolynomial>& sequence,
+                   const OracleRational& lo, const OracleRational& hi) {
+    return sturmVariations(sequence, lo) - sturmVariations(sequence, hi);
+}
+
+OraclePolynomial divideLinearFactor(const OraclePolynomial& p,
+                                    const OracleRational& root) {
+    OraclePolynomial quotient(p.size() - 1, OracleRational{0});
+    quotient.back() = p.back();
+    for (std::size_t i = quotient.size() - 1; i > 0; --i)
+        quotient[i - 1] = p[i] + root * quotient[i];
+    trimPolynomial(quotient);
+    return quotient;
+}
+
+struct OracleRootInterval { OracleRational lo, hi; };
+
+void isolateRoots(const OraclePolynomial& polynomial,
+                  const std::vector<OraclePolynomial>& sequence,
+                  const OracleRational& lo, const OracleRational& hi,
+                  const int count, const unsigned depth,
+                  std::vector<OracleRootInterval>& roots) {
+    if (!count) return;
+    if (count == 1 && depth >= 56) {
+        roots.push_back({lo, hi});
+        return;
+    }
+    const OracleRational middle = (lo + hi) / 2;
+    if (evaluatePolynomial(polynomial, middle) == 0) {
+        roots.push_back({middle, middle});
+        const OraclePolynomial quotient = divideLinearFactor(polynomial, middle);
+        const auto quotientSturm = sturmSequence(quotient);
+        isolateRoots(quotient, quotientSturm, OracleRational{0}, OracleRational{1},
+            sturmRootCount(quotientSturm, OracleRational{0}, OracleRational{1}), 0, roots);
+        return;
+    }
+    const int leftCount = sturmRootCount(sequence, lo, middle);
+    const int rightCount = sturmRootCount(sequence, middle, hi);
+    if (leftCount + rightCount != count || depth >= 128) return;
+    isolateRoots(polynomial, sequence, lo, middle, leftCount, depth + 1, roots);
+    isolateRoots(polynomial, sequence, middle, hi, rightCount, depth + 1, roots);
+}
+
+OraclePolynomial cubicBezierCoordinate(const std::array<OracleRational, 4>& p) {
+    return {p[0], 3 * (p[1] - p[0]),
+        3 * (p[0] - 2 * p[1] + p[2]),
+        -p[0] + 3 * p[1] - 3 * p[2] + p[3]};
+}
+
+struct CircleBezierOracle {
+    bool valid = false;
+    std::size_t distinctRoots = 0;
+    std::size_t repeatedRoots = 0;
+    double minimumSeparation = 0;
+    double selectedArcSweep = 0;
+    double selectedArcMargin = 0;
+    double maximumAngularError = 0;
+};
+
+CircleBezierOracle exactCircleBezierOracle(const RS_SplineData& cache,
+    const RS_Vector& center, const double radius, const RS_Vector& pick) {
+    CircleBezierOracle result;
+    if (cache.degree != 3 || cache.type != RS_SplineData::SplineType::ClampedOpen ||
+        cache.controlPoints.size() < 4 || (cache.controlPoints.size() - 1) % 3 ||
+        cache.weights.size() != cache.controlPoints.size() ||
+        cache.knotslist.size() != cache.controlPoints.size() + 4 || !(radius > 0) ||
+        !std::isfinite(radius)) return result;
+    if (!std::all_of(cache.weights.begin(), cache.weights.end(),
+                     [](double weight) { return weight == 1.0; })) return result;
+    const std::size_t spanCount = (cache.controlPoints.size() - 1) / 3;
+    std::vector<double> expectedKnots(4, 0.0);
+    for (std::size_t span = 1; span < spanCount; ++span)
+        expectedKnots.insert(expectedKnots.end(), 3, double(span));
+    expectedKnots.insert(expectedKnots.end(), 4, double(spanCount));
+    if (cache.knotslist != expectedKnots) return result;
+
+    struct RootPoint { RS_Vector point; double angle; double positionError; };
+    std::vector<RootPoint> rootPoints;
+    const OracleRational exactRadius{radius};
+    const OracleRational radiusSquared = exactRadius * exactRadius;
+    const OracleRational cx{center.x}, cy{center.y};
+    for (std::size_t offset = 0; offset + 3 < cache.controlPoints.size(); offset += 3) {
+        std::array<OracleRational, 4> xControls, yControls;
+        OracleRational minX, maxX, minY, maxY;
+        for (std::size_t i = 0; i < 4; ++i) {
+            const auto& point = cache.controlPoints[offset + i];
+            if (!std::isfinite(point.x) || !std::isfinite(point.y)) return result;
+            xControls[i] = OracleRational{point.x} - cx;
+            yControls[i] = OracleRational{point.y} - cy;
+            if (i == 0) minX = maxX = xControls[i], minY = maxY = yControls[i];
+            else {
+                minX = std::min(minX, xControls[i]); maxX = std::max(maxX, xControls[i]);
+                minY = std::min(minY, yControls[i]); maxY = std::max(maxY, yControls[i]);
+            }
+        }
+        // Bezier convex hull exclusion avoids constructing exact polynomials
+        // for spans that cannot meet the circle's bounding square.
+        if (minX > exactRadius || maxX < -exactRadius ||
+            minY > exactRadius || maxY < -exactRadius) continue;
+
+        const auto x = cubicBezierCoordinate(xControls);
+        const auto y = cubicBezierCoordinate(yControls);
+        OraclePolynomial implicit = addPolynomial(multiplyPolynomial(x, x),
+                                                   multiplyPolynomial(y, y));
+        implicit[0] -= radiusSquared;
+        trimPolynomial(implicit);
+        if (evaluatePolynomial(implicit, OracleRational{0}) == 0 ||
+            evaluatePolynomial(implicit, OracleRational{1}) == 0) return result;
+        const auto sturm = sturmSequence(implicit);
+        const int count = sturmRootCount(sturm, OracleRational{0}, OracleRational{1});
+        if (count < 0) return result;
+        result.distinctRoots += std::size_t(count);
+
+        const auto& gcd = sturm.back();
+        if (gcd.size() > 1) {
+            const auto gcdSturm = sturmSequence(gcd);
+            const int repeated = sturmRootCount(gcdSturm, OracleRational{0}, OracleRational{1});
+            if (repeated < 0) return result;
+            result.repeatedRoots += std::size_t(repeated);
+        }
+
+        std::vector<OracleRootInterval> intervals;
+        isolateRoots(implicit, sturm, OracleRational{0}, OracleRational{1}, count, 0, intervals);
+        if (intervals.size() != std::size_t(count)) return result;
+        const auto derivativeBound = [](const OraclePolynomial& coordinate) {
+            OracleRational bound{0};
+            for (std::size_t i = 1; i < coordinate.size(); ++i) {
+                OracleRational term = OracleRational{i} * coordinate[i];
+                if (term < 0) term = -term;
+                bound += term;
+            }
+            double converted = bound.convert_to<double>();
+            if (converted > 0)
+                converted = std::nextafter(converted, std::numeric_limits<double>::infinity());
+            return converted;
+        };
+        const double speedBound = std::nextafter(std::hypot(derivativeBound(x),
+            derivativeBound(y)), std::numeric_limits<double>::infinity());
+        for (const auto& interval : intervals) {
+            const OracleRational parameter = (interval.lo + interval.hi) / 2;
+            const double localX = evaluatePolynomial(x, parameter).convert_to<double>();
+            const double localY = evaluatePolynomial(y, parameter).convert_to<double>();
+            const auto ulp = [](double value) {
+                return std::max(value - std::nextafter(value, -INFINITY),
+                    std::nextafter(value, INFINITY) - value);
+            };
+            const double halfWidth = ((interval.hi - interval.lo) / 2).convert_to<double>();
+            const double parameterRadius = std::nextafter(halfWidth,
+                std::numeric_limits<double>::infinity());
+            const double motionError = std::nextafter(speedBound * parameterRadius,
+                std::numeric_limits<double>::infinity());
+            const double coordinateError = std::nextafter(std::hypot(ulp(localX), ulp(localY)),
+                std::numeric_limits<double>::infinity());
+            const double positionError = std::nextafter(motionError + coordinateError,
+                std::numeric_limits<double>::infinity());
+            if (!std::isfinite(positionError) || !(positionError < radius / 2)) return result;
+            const double angularError = std::nextafter(std::asin(positionError /
+                (radius - positionError)) + 64 * std::numeric_limits<double>::epsilon(),
+                std::numeric_limits<double>::infinity());
+            result.maximumAngularError = std::max(result.maximumAngularError, angularError);
+            rootPoints.push_back({{localX, localY}, std::atan2(localY, localX),
+                                  positionError});
+        }
+    }
+    if (!result.distinctRoots || rootPoints.size() != result.distinctRoots) return result;
+
+    result.minimumSeparation = std::numeric_limits<double>::infinity();
+    for (std::size_t i = 0; i < rootPoints.size(); ++i) {
+        for (std::size_t j = i + 1; j < rootPoints.size(); ++j) {
+            const auto delta = rootPoints[i].point - rootPoints[j].point;
+            const double centerDistance = std::nextafter(std::hypot(delta.x, delta.y), 0.0);
+            const double lower = std::nextafter(centerDistance - rootPoints[i].positionError -
+                rootPoints[j].positionError, -std::numeric_limits<double>::infinity());
+            result.minimumSeparation = std::min(result.minimumSeparation, lower);
+        }
+    }
+
+    if (rootPoints.size() >= 2) {
+        std::vector<double> angles;
+        angles.reserve(rootPoints.size());
+        for (const auto& root : rootPoints) {
+            double angle = root.angle;
+            if (angle < 0) angle += 2 * M_PI;
+            angles.push_back(angle);
+        }
+        std::sort(angles.begin(), angles.end());
+        double pickAngle = std::atan2(pick.y - center.y, pick.x - center.x);
+        if (pickAngle < 0) pickAngle += 2 * M_PI;
+        for (std::size_t i = 0; i < angles.size(); ++i) {
+            const double start = angles[i];
+            const double end = i + 1 < angles.size() ? angles[i + 1] : angles[0] + 2 * M_PI;
+            const double selected = pickAngle < start ? pickAngle + 2 * M_PI : pickAngle;
+            if (selected > start && selected < end) {
+                result.selectedArcSweep = end - start;
+                result.selectedArcMargin = std::min(selected - start, end - selected);
+                break;
+            }
+        }
+    }
+    result.valid = true;
+    return result;
+}
 }
 
 class LC_OffsetTrimWorkerTestAccess {
@@ -2477,6 +2758,24 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CAPTURE(intersection, nativePick, cutterPick, radius);
     CHECK(trimWork.intersections.deepestPairRefinement <=
           LC_OffsetCacheTrim::Limits{}.maxDepth);
+
+    if (scaleExtreme) {
+        const RS_Vector circlePick = circleCenter + normal * radius;
+        const auto oracle = exactCircleBezierOracle(native->getData(), circleCenter,
+                                                     radius, circlePick);
+        CAPTURE(scaleProfile, sourceTranslation, profileScale, towardCentre,
+                oracle.distinctRoots, oracle.repeatedRoots,
+                oracle.minimumSeparation, oracle.selectedArcSweep,
+                oracle.selectedArcMargin);
+        REQUIRE(oracle.valid);
+        CHECK(oracle.distinctRoots == 2);
+        CHECK(oracle.repeatedRoots == 0);
+        CHECK(oracle.minimumSeparation > radius * 1e-6);
+        CHECK(oracle.selectedArcSweep > 0);
+        CHECK(oracle.selectedArcSweep < 2 * M_PI);
+        CHECK(oracle.selectedArcMargin >
+              2 * oracle.maximumAngularError + 1e-12);
+    }
 
     if (scaleExtreme && scaleProfile == 1) {
         const RS_Vector circlePick = circleCenter + normal * radius;

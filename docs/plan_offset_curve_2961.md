@@ -54050,22 +54050,34 @@ Implementation-ready sequence:
    verifies the typed refusal is atomic and that the document and output batch
    are unchanged. Keep these stage assertions and the line-cutter case as
    controls.
-2. Build an independent exact-polynomial oracle for intersections of the
+2. **Done:** implement an independent exact-polynomial test oracle for the
    actual stored unit-weight cubic Bezier cache (generated from the parabola
-   offset) with the circle, in a translated/scaled local frame. Form the
-   circle-implicit polynomial per cache span and use a Sturm sequence to
-   establish distinct-root count, multiplicity, isolation, and separation;
-   independently determine the selected retained arc side. Do not use the
-   production intersection provider or its root data as the oracle. Include
-   both `towardCentre` values and verify that translation/scaling preserve the
-   expected topology.
-3. If the oracle and proof diagnostics show a solver defect, implement the
-   narrowest certifiable remedy in the intersection/proof layer. Any analytic
-   specialization must use bounded arithmetic, prove every accepted root or
-   exclusion over its parameter domain, respect cancellation and work limits,
-   and refuse tangency/overlap or inseparable root intervals atomically. Do
-   not relax `hasValidProofs()`, merge overlapping intervals without an
-   equality proof, or infer crossings from samples alone.
+   offset) against the circle. The test checks the explicit cubic knot layout,
+   excludes impossible spans by the exact Bezier convex hull, forms each
+   circle-implicit degree-six polynomial with exact binary-rational
+   coefficients, uses Sturm sequences plus `gcd(p,p')` to count distinct and
+   repeated roots, bisects isolating intervals to width at most `2^-56`, and
+   bounds spatial separation from a derivative supremum. It independently
+   selects the circle arc containing the pick and checks angular margin. Small
+   and large scale/translation profiles and both `towardCentre` values pass:
+   exactly two simple roots are found, their conservative separation exceeds
+   `radius * 1e-6`, and the pick lies strictly inside the selected arc. The
+   production intersection provider and its root diagnostics are not used by
+   this oracle.
+3. **Next:** resolve the discrepancy between the exact oracle and the
+   production root session. The exact span polynomials prove two simple,
+   separated transverse contacts, while the session refuses to contract one
+   existing root handle at `ConicRootRefinement`. Determine whether the
+   contraction loses progress due to its interval Newton/Krawczyk enclosure,
+   conic-parameter projection, or a mismatch between source and conic root
+   coordinates. Prefer repairing generic certified contraction. Any fallback
+   must match each exact span root bijectively to a session-issued root and its
+   proof domain before narrowing it; it must not create a root or proof from
+   the test oracle's algorithm alone. Prove accepted roots/exclusions over
+   their full parameter domains, respect cancellation and work limits, and
+   refuse tangency/overlap or inseparable intervals atomically. Do not relax
+   `hasValidProofs()` or merge overlapping intervals without an equality
+   proof.
 4. Add focused negative cases for tangency, near-tangency, roots closer than
    the proof resolution, extreme translation, and exhausted limits. Ambiguous
    or uncertifiable cases must continue to return a typed refusal without
@@ -54102,7 +54114,7 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-Results: 11,476 assertions / 1 generated test case pass for the action matrix;
+Results: 11,493 assertions / 1 generated test case pass for the action matrix;
 the malformed result-codec test passes 30 assertions / 1 case, and the conic
 and paired worker result round-trip test passes 5,324 assertions / 1 case. The
 full result codec suite passes 470,974 assertions / 36 cases, and the full
@@ -54112,8 +54124,11 @@ action probe verifies cache-only success, conic-only and paired
 failure domain, and no document/batch mutation on Trim Two refusal. The paired
 preparation reports `Stage::ConicRootRefinement`; worker execution preserves
 the same stage and prepared publication preserves the same refusal without
-mutating the batch. This stage diagnosis is not yet an independent geometric
-oracle.
+mutating the batch. Diagnostic slice commit `f1543889e` is pushed to PR #3193.
+The independent oracle finds two simple, spatially separated cache/circle
+roots for both tested scale profiles and sides, while production conic
+contraction still refuses; the next slice must diagnose and resolve that
+proof-path discrepancy.
 
 Completion gate: a reproducible exact-stage diagnosis, an independent oracle,
 and tests demonstrating either certified success or explicitly preserved
