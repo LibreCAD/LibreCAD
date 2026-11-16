@@ -54405,3 +54405,22 @@ Validation on macOS arm64 CMake Release with DWG support:
 This closes all interior breaks for the two recorded degree/weight profiles;
 other periodic knots/weights and higher-degree ownership remain open.
 
+## 1633. Expand Periodic Interior Roots Across Weight Gradients (2026-11-16)
+
+Test commit `1474c320c` adds a second seam-symmetric positive weight gradient
+to the degree-4/6 periodic source matrix (`0.7 + 0.05 * seamDistance`, beside
+the existing `0.7 + 0.1 * seamDistance`). Every interior break is exercised
+for both degree and weight profiles using the independent curvature/root
+oracle, production ownership, and retained-output mapping. No production
+behavior changed.
+
+Validation on macOS arm64 CMake Release with DWG support:
+
+- Focused two-gradient periodic matrix: 408 assertions / 1 case.
+- Full offset worker-kernel suite: 1,970,154 assertions / 124 cases.
+- `git diff --check`: passed.
+
+This covers all interior breaks for two positive symmetric gradients at
+degrees 4 and 6; additional periodic weight distributions and knot layouts
+remain open.
+
