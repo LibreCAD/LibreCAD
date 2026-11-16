@@ -37,6 +37,63 @@ struct HomogeneousPoint {
     SplineOracle w;
 };
 
+bool insertRationalKnot(RS_SplineData& data, const double knot) {
+    struct WeightedControlPoint {
+        double x;
+        double y;
+        double w;
+    };
+    const std::size_t degree = data.degree;
+    const std::size_t count = data.controlPoints.size();
+    if (degree == 0 || count <= degree || data.weights.size() != count ||
+        data.knotslist.size() != count + degree + 1) {
+        return false;
+    }
+    const std::size_t last = count - 1;
+    const auto upper = std::upper_bound(data.knotslist.begin(),
+                                        data.knotslist.end(), knot);
+    if (upper == data.knotslist.begin()) return false;
+    const std::size_t span =
+        static_cast<std::size_t>(upper - data.knotslist.begin() - 1);
+    const std::size_t multiplicity = static_cast<std::size_t>(std::count(
+        data.knotslist.begin(), data.knotslist.end(), knot));
+    if (span < degree || span > last || multiplicity >= degree) return false;
+
+    std::vector<WeightedControlPoint> points;
+    points.reserve(count);
+    for (std::size_t i = 0; i < count; ++i) {
+        points.push_back({data.controlPoints[i].x * data.weights[i],
+                          data.controlPoints[i].y * data.weights[i],
+                          data.weights[i]});
+    }
+    std::vector<WeightedControlPoint> inserted(count + 1);
+    for (std::size_t i = 0; i <= span - degree; ++i)
+        inserted[i] = points[i];
+    for (std::size_t i = span - multiplicity; i <= last; ++i)
+        inserted[i + 1] = points[i];
+    for (std::size_t i = span - degree + 1;
+         i <= span - multiplicity; ++i) {
+        const double denominator =
+            data.knotslist[i + degree] - data.knotslist[i];
+        if (!(denominator > 0.0)) return false;
+        const double alpha = (knot - data.knotslist[i]) / denominator;
+        inserted[i] = {
+            alpha * points[i].x + (1.0 - alpha) * points[i - 1].x,
+            alpha * points[i].y + (1.0 - alpha) * points[i - 1].y,
+            alpha * points[i].w + (1.0 - alpha) * points[i - 1].w};
+    }
+    data.knotslist.insert(data.knotslist.begin() + span + 1, knot);
+    data.controlPoints.resize(count + 1);
+    data.weights.resize(count + 1);
+    for (std::size_t i = 0; i <= count; ++i) {
+        if (!(inserted[i].w > 0.0)) return false;
+        data.controlPoints[i] = {inserted[i].x / inserted[i].w,
+                                 inserted[i].y / inserted[i].w};
+        data.weights[i] = inserted[i].w;
+    }
+    return true;
+}
+
 std::pair<SplineOracle, SplineOracle> evaluateSplineOracle(
     const RS_SplineData& data, const SplineOracle& parameter) {
     const std::size_t degree = data.degree;
@@ -7063,66 +7120,9 @@ TEST_CASE("double-inserted rational quadratic tangent maps through its knot",
     onceInserted.knotslist = {0, 0, 0, firstInsertion, 1, 1, 1};
     onceInserted.weights = {1, firstWeight, secondWeight, 1};
 
-    const auto insertKnot = [](RS_SplineData& data, const double knot) {
-        struct HomogeneousPoint {
-            double x;
-            double y;
-            double w;
-        };
-        const std::size_t degree = data.degree;
-        const std::size_t count = data.controlPoints.size();
-        REQUIRE(count > degree);
-        REQUIRE(data.weights.size() == count);
-        const std::size_t last = count - 1;
-        const auto upper = std::upper_bound(data.knotslist.begin(),
-                                            data.knotslist.end(), knot);
-        REQUIRE(upper != data.knotslist.begin());
-        const std::size_t span =
-            static_cast<std::size_t>(upper - data.knotslist.begin() - 1);
-        const std::size_t multiplicity = static_cast<std::size_t>(std::count(
-            data.knotslist.begin(), data.knotslist.end(), knot));
-        REQUIRE(span >= degree);
-        REQUIRE(span <= last);
-        REQUIRE(multiplicity < degree);
-
-        std::vector<HomogeneousPoint> points;
-        points.reserve(count);
-        for (std::size_t i = 0; i < count; ++i) {
-            points.push_back({data.controlPoints[i].x * data.weights[i],
-                              data.controlPoints[i].y * data.weights[i],
-                              data.weights[i]});
-        }
-        std::vector<HomogeneousPoint> inserted(count + 1);
-        for (std::size_t i = 0; i <= span - degree; ++i)
-            inserted[i] = points[i];
-        for (std::size_t i = span - multiplicity; i <= last; ++i)
-            inserted[i + 1] = points[i];
-        for (std::size_t i = span - degree + 1;
-             i <= span - multiplicity; ++i) {
-            const double denominator = data.knotslist[i + degree] -
-                                       data.knotslist[i];
-            REQUIRE(denominator > 0.0);
-            const double alpha =
-                (knot - data.knotslist[i]) / denominator;
-            inserted[i] = {
-                alpha * points[i].x + (1.0 - alpha) * points[i - 1].x,
-                alpha * points[i].y + (1.0 - alpha) * points[i - 1].y,
-                alpha * points[i].w + (1.0 - alpha) * points[i - 1].w};
-        }
-        data.knotslist.insert(data.knotslist.begin() + span + 1, knot);
-        data.controlPoints.resize(count + 1);
-        data.weights.resize(count + 1);
-        for (std::size_t i = 0; i <= count; ++i) {
-            REQUIRE(inserted[i].w > 0.0);
-            data.controlPoints[i] =
-                {inserted[i].x / inserted[i].w,
-                 inserted[i].y / inserted[i].w};
-            data.weights[i] = inserted[i].w;
-        }
-    };
     RS_SplineData repeated = onceInserted;
-    insertKnot(repeated, 0.5);
-    insertKnot(repeated, 0.5);
+    REQUIRE(insertRationalKnot(repeated, 0.5));
+    REQUIRE(insertRationalKnot(repeated, 0.5));
     const RS_Spline repeatedSource{nullptr, repeated};
     REQUIRE(repeatedSource.validate());
     REQUIRE(std::count(repeated.knotslist.begin(), repeated.knotslist.end(),
@@ -7326,7 +7326,7 @@ TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
     CHECK(nearestEndpoint(expectedTangent) <= options->tolerance.requestedGeometry);
 }
 
-TEST_CASE("degree-elevated rational tangencies map for degrees four through six",
+TEST_CASE("degree-elevated rational tangencies map across degrees and knots",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational]["
           "tangent-root][degree][high-degree]") {
     const RS_SplineData quadratic{2, false};
@@ -7382,46 +7382,12 @@ TEST_CASE("degree-elevated rational tangencies map for degrees four through six"
                                       elevated.degree + 1, 1.0);
         }
 
-        struct HomogeneousPoint {
-            double x;
-            double y;
-            double w;
-        };
-        const std::size_t degree = elevated.degree;
-        std::vector<HomogeneousPoint> controls;
-        controls.reserve(elevated.controlPoints.size());
-        for (std::size_t i = 0; i < elevated.controlPoints.size(); ++i) {
-            controls.push_back({
-                elevated.controlPoints[i].x * elevated.weights[i],
-                elevated.controlPoints[i].y * elevated.weights[i],
-                elevated.weights[i]});
-        }
-        const double insertedKnot = 0.25;
-        std::vector<HomogeneousPoint> insertedControls(degree + 2);
-        insertedControls.front() = controls.front();
-        insertedControls.back() = controls.back();
-        for (std::size_t i = 1; i <= degree; ++i) {
-            insertedControls[i] = {
-                insertedKnot * controls[i].x +
-                    (1.0 - insertedKnot) * controls[i - 1].x,
-                insertedKnot * controls[i].y +
-                    (1.0 - insertedKnot) * controls[i - 1].y,
-                insertedKnot * controls[i].w +
-                    (1.0 - insertedKnot) * controls[i - 1].w};
-        }
         RS_SplineData inserted = elevated;
-        inserted.controlPoints.resize(degree + 2);
-        inserted.weights.resize(degree + 2);
-        for (std::size_t i = 0; i < insertedControls.size(); ++i) {
-            REQUIRE(insertedControls[i].w > 0.0);
-            inserted.controlPoints[i] = {
-                insertedControls[i].x / insertedControls[i].w,
-                insertedControls[i].y / insertedControls[i].w};
-            inserted.weights[i] = insertedControls[i].w;
-        }
-        inserted.knotslist.assign(degree + 1, 0.0);
-        inserted.knotslist.push_back(insertedKnot);
-        inserted.knotslist.insert(inserted.knotslist.end(), degree + 1, 1.0);
+        REQUIRE(insertRationalKnot(inserted, 0.25));
+        REQUIRE(insertRationalKnot(inserted, 0.5));
+        REQUIRE(insertRationalKnot(inserted, 0.5));
+        REQUIRE(std::count(inserted.knotslist.begin(),
+                           inserted.knotslist.end(), 0.5) == 2);
 
         const RS_Spline source{nullptr, inserted};
         REQUIRE(source.validate());
