@@ -25,10 +25,12 @@ USA.
 
 Updated: 2026-11-16. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest source-picker request reconciliation (2026-11-16):** While choosing a
-replacement source, the Properties widget must let the user change the
-requested source type and immediately refresh eligible candidates without
-ending replacement selection. Its type list is the complete current
+**Latest source-picker request reconciliation (2026-11-16):** The repeated
+request confirms two acceptance requirements for replacing an offset source:
+the Properties widget must let the user change the requested source type and
+immediately refresh eligible candidates without ending replacement selection;
+the type list must cover every source kind the offset model supports. Its type
+list is the complete current
 `LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle,
 ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
 Parabola is a distinct supported type, not a spline-points alias. This
@@ -36,15 +38,18 @@ picker/replacement behavior is already implemented and has headless all-kind
 filtering, replacement, highlight-transfer, and incremental-scan evidence
 recorded below; do not add another selector or a parabola-only UI slice. The
 incremental regression visits all nine kinds while scanning a large document
-and proves filtering alone leaves the edited geometry unchanged. Until
-asynchronous validation publishes a replacement, the committed source, cache, identity,
-selection, and highlight must remain unchanged. Visible packaged-app
-acceptance of repeated type changes, candidate refresh, source indication,
-success, and cancellation/refusal remains open in Slice 5. The nine-kind
+and proves filtering alone leaves the edited geometry unchanged. Type changes
+are candidate filters, not source mutations: until asynchronous validation
+publishes a replacement, the committed source, cache, identity, selection, and
+highlight must remain unchanged. Visible packaged-app acceptance of repeated
+type changes, candidate refresh, source indication, successful replacement,
+and cancellation/refusal remains open in Slice 5. The nine-kind
 inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically. At current PR head `9ffd35f4d`,
+atomically. Sections 1595 and 1597 hold the implementation and headless
+interaction evidence; there is no additional source-widget implementation
+slice indicated by this request. At the recorded PR head `9ffd35f4d`,
 `[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
 CMake Release; this includes explicit enabled-state checks during an active
 scan and a large-document async filtering matrix for every supported kind.
@@ -53273,4 +53278,33 @@ Test commit `57538d45f` adds no production behavior. Worker/cache generation,
 Trim, and typed DXF/DWG persistence at `(1e9, -2e9)` remain open; the existing
 `(1e6, -2e6)` evidence does not qualify them at the larger origin. Other
 origins and continuous scale intervals also remain unqualified.
+
+## 1599. Qualify Reconstructed-parabola Worker Cache at 1e9 Origins (2026-11-16)
+
+The worker/cache permutation matrix now also runs a bounded `(1e9, -2e9)` row:
+the third control profile, unit scale, balanced `{0.1, 0.3, 0.7, 0.9}` sample
+layout, all 24 sample permutations, and both signed offset distances. For each
+row it verifies worker generation, typed parabola source preservation, exact
+cache combination, and successful cache re-admission. The original complete
+profile/scale/layout matrix remains unchanged at `(1e6, -2e6)`. This does not
+qualify worker/cache behavior at other high-origin profiles/scales/layouts,
+Trim at `1e9`, or DXF/DWG persistence at `1e9`.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Every interior parabola sample permutation survives the worker profile and scale matrix' \
+  --reporter compact
+git diff --check
+```
+
+Result: 1,270,777 assertions pass in 1 test case. The default 150-second suite
+watchdog expires before the original matrix completes; rerunning with the
+existing 900-second timeout override completes successfully. This is headless
+worker/cache evidence only, not a visible GUI or persistence acceptance result.
 
