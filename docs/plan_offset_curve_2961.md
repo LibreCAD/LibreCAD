@@ -33,9 +33,11 @@ ending replacement selection. Its type list is the complete current
 ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
 Parabola is a distinct supported type, not a spline-points alias. This
 picker/replacement behavior is already implemented and has headless all-kind
-filtering, replacement, and highlight-transfer evidence recorded below; do not
-add another selector or a parabola-only UI slice. Until asynchronous
-validation publishes a replacement, the committed source, cache, identity,
+filtering, replacement, highlight-transfer, and incremental-scan evidence
+recorded below; do not add another selector or a parabola-only UI slice. The
+incremental regression visits all nine kinds while scanning a large document
+and proves filtering alone leaves the edited geometry unchanged. Until
+asynchronous validation publishes a replacement, the committed source, cache, identity,
 selection, and highlight must remain unchanged. Visible packaged-app
 acceptance of repeated type changes, candidate refresh, source indication,
 success, and cancellation/refusal remains open in Slice 5. The nine-kind
@@ -43,9 +45,10 @@ inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
 atomically. At current PR test head
-`dc59252d3`, `[gui][dialog][offsetcurve][source]` passes 15,290 assertions /
-44 cases in CMake Release; this adds explicit enabled-state checks while an
-incremental candidate scan is active. Product code remains at
+`0ff9c6e8f`, `[gui][dialog][offsetcurve][source]` passes 15,498 assertions /
+45 cases in CMake Release; this includes explicit enabled-state checks during
+an active scan and a large-document async filtering matrix for every supported
+kind. Product code remains at
 `b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent commits only update the
 roadmap and this test. This is headless UI evidence and does not close the
 visible packaged-app gate.
@@ -256,10 +259,11 @@ replacement succeeds. Its choices must match all nine
 `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
 spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
 typed source, not a spline-points alias. The existing control and offscreen
-coverage satisfy the implementation portion; the focused headless
-source-picker suite passes 15,284 assertions / 44 cases on implementation
-commit `2a4b111ca`, which adds successful replacement/highlight transfer across
-all nine kinds. Do
+coverage satisfy the implementation portion; the current focused headless
+source-picker suite passes 15,498 assertions / 45 cases at PR test head
+`0ff9c6e8f`. Successful replacement/highlight transfer across all nine kinds
+was added in implementation commit `2a4b111ca`; the current test-only follow-up
+extends asynchronous filtering coverage across all nine. Do
 not add another selector or duplicate the parabola-specific UI work. Keep
 visible interaction acceptance open. Separately, the phrase "support all
 kinds" requires end-to-end evidence, not only menu entries: for each enabled
