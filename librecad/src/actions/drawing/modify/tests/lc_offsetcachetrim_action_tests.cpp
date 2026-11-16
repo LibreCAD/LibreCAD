@@ -2360,7 +2360,9 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
 
     const bool highOrigin = GENERATE(false, true);
     const double tangentSlope = highOrigin
-        ? 1e-4 : GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
+        ? GENERATE(1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
+                   1.5e-9, 1.25e-9, 1.125e-9)
+        : GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
     const double sourceRotation = highOrigin
         ? 0.371234567890123 : GENERATE(0., 0.371234567890123);
     const RS_Vector sourceTranslation = highOrigin

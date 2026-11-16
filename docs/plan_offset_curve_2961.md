@@ -53554,3 +53554,37 @@ it does not imply the ten-slope grid in section 1605 was trimmed or persisted.
 Visible-app trimming acceptance and independent ODA/AutoCAD acceptance remain
 separate open gates.
 
+## 1607. Trim the Ten High-origin Endpoint-tangent Slopes (2026-11-16)
+
+The high-origin branch of `T Trim Two trims an endpoint-tangent parabola` now
+runs the ten slopes qualified by section 1605:
+`{1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9, 1.5e-9, 1.25e-9,
+1.125e-9}`. Each profile uses the same 10-unit endpoint spacing, rotation
+`0.371234567890123`, origin `(1e9,-2e9)`, and the test's existing positive
+offset definition. Every row exercises worker-backed source replacement,
+Trim Two preview/atomic commit, undo/redo, and result export/reopen through
+R14/R2000/R2018 DXF and R2000/R2018 DWG. Reopened fragment geometry is matched
+with type-specific checks; available `dwgread -O minJSON` output must contain
+the expected entity types. This is one signed offset and one cutter/profile
+per slope, not a complete trim matrix across signs or cutters. The rejected
+`1e-9` source remains covered as an invalid-input boundary in section 1605 and
+is not admitted to Trim Two.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Result: 4,391 assertions / 1 case pass across the ten high-origin slopes and
+existing ordinary-origin generator rows. This closes the recorded positive-
+offset high-origin Trim Two slope grid only; inward trims, alternate cutters,
+other frames/scales, visible-app use, and independent ODA/AutoCAD acceptance
+remain open.
+
