@@ -732,7 +732,19 @@ bool sameTrimGeometry(const RS_Entity& expected, const RS_Entity& actual) {
     const double tolerance = 2e-8 * scale;
     if (expected.rtti() != actual.rtti() || std::abs(expected.getLength() - actual.getLength()) > tolerance) return false;
     const auto closePoint = [tolerance](const RS_Vector& a, const RS_Vector& b) {
-        return a.distanceTo(b) <= tolerance;
+        const auto ulp = [](double value) {
+            double spacing = 0.0;
+            for (const double direction : {-INFINITY, INFINITY}) {
+                const double adjacent = std::nextafter(value, direction);
+                if (std::isfinite(adjacent))
+                    spacing = std::max(spacing, std::abs(adjacent - value));
+            }
+            return spacing;
+        };
+        // File readers may round a stored world coordinate and its derived endpoint.
+        const double coordinateUlp = 4.0 * std::hypot(
+            std::max(ulp(a.x), ulp(b.x)), std::max(ulp(a.y), ulp(b.y)));
+        return a.distanceTo(b) <= std::max(tolerance, coordinateUlp);
     };
     if (const auto* line = dynamic_cast<const RS_Line*>(&expected)) {
         const auto* other = dynamic_cast<const RS_Line*>(&actual);
@@ -2661,8 +2673,6 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                       profile == 15 || profile == 16 ||
                                       profile == 21 || profile == 22;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
-    const bool tangentCircleBoundary =
-        (scaleExtreme && scaleProfile == 1) || profile == 5 || profile == 6;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3)
         : asymmetricSmallScale ? 1e-3
@@ -2699,7 +2709,11 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
             ? (scaleProfile == 0 ? 1e-6 : 1e-8)
         : sourceTranslation.x == 0.0
             ? GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14)
-            : 1e-8;
+        : 1e-8;
+    const bool includeHighOriginCircle = highOrigin && tangentSlope == 1e-8;
+    const bool tangentCircleBoundary =
+        (scaleExtreme && scaleProfile == 1) || profile == 5 || profile == 6 ||
+        includeHighOriginCircle;
     const double sourceRotation = highOrigin
         ? 0.371234567890123
         : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
@@ -2851,7 +2865,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         }
         CHECK(trimGeometry(*native) == nativeBefore);
 
-        if (scaleExtreme && scaleProfile == 1 && !towardCentre) {
+        if (includeHighOriginCircle && !towardCentre) {
             for (const double inwardFraction : {1e-2, 1e-3, 1e-4}) {
                 const RS_Vector nearCenter = tangentCircleCenter -
                     normal * (radius * inwardFraction);
