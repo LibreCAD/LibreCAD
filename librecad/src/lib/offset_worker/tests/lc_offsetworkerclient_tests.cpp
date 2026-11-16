@@ -6954,6 +6954,47 @@ TEST_CASE(
                     }
                     CHECK(actualFragments == expectedFragments);
                   }
+#ifdef DWGSUPPORT
+                  if (!libreDwgReader.isEmpty()) {
+                    for (const Lane &lane : lanes) {
+                      if (lane.format != RS2::FormatDWG &&
+                          lane.format != RS2::FormatDWG2018)
+                        continue;
+                      const auto path = directory.file(
+                          std::to_string(generationId) + "-ordinary-" +
+                          lane.extension);
+                      QProcess reader;
+                      reader.start(libreDwgReader,
+                                   {"-O", "minJSON", lc::test::toQString(path)});
+                      REQUIRE(reader.waitForStarted());
+                      REQUIRE(reader.waitForFinished(30000));
+                      INFO(reader.readAllStandardError().toStdString());
+                      REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                      REQUIRE(reader.exitCode() == 0);
+                      const QJsonDocument document =
+                          QJsonDocument::fromJson(reader.readAllStandardOutput());
+                      REQUIRE(document.isObject());
+                      const QJsonArray objects =
+                          document.object().value("OBJECTS").toArray();
+                      std::size_t splineCount = 0;
+                      for (const QJsonValue &objectValue : objects) {
+                        const QJsonObject object = objectValue.toObject();
+                        if (object.value("entity").toString() != "SPLINE")
+                          continue;
+                        ++splineCount;
+                        const int degree = object.value("degree").toInt(-1);
+                        const QJsonArray knots =
+                            object.value("knots").toArray();
+                        const QJsonArray controls =
+                            object.value("ctrl_pts").toArray();
+                        CHECK(degree >= 1);
+                        CHECK(controls.size() >= degree + 1);
+                        CHECK(knots.size() == controls.size() + degree + 1);
+                      }
+                      CHECK(splineCount == expectedFragments.size());
+                    }
+                  }
+#endif
                   ++persistedMultiBranchRows;
                 }
                 continue;
