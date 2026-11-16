@@ -2838,6 +2838,7 @@ if (BUILD_TESTS)
         librecad/src/actions/drawing/draw/hatch/tests/lc_actiondrawhatch_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawparabola4pointstests.cpp
+        librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawparabolafdtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
         librecad/src/actions/dock_widgets/library/tests/lc_action_block_library_insert_import_tests.cpp
         librecad/src/ui/dock_widgets/library_widget/tests/qg_librarywidget_thumbnail_tests.cpp
