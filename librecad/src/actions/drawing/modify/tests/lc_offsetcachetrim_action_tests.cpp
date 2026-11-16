@@ -2642,10 +2642,11 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
-    const int profile = GENERATE(0, 1, 2, 3);
+    const int profile = GENERATE(0, 1, 2, 3, 4);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
-    const bool asymmetricTangents = profile == 3;
+    const bool reversedTangentTraversal = profile == 4;
+    const bool asymmetricTangents = profile == 3 || reversedTangentTraversal;
     const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
     const double profileScale = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e3) : 1.0;
@@ -2681,15 +2682,21 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         ? 0.371234567890123
         : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
                                      : 0.371234567890123;
-    CAPTURE(profile, scaleProfile, asymmetricTangents, sourceTranslation,
+    CAPTURE(profile, scaleProfile, asymmetricTangents, reversedTangentTraversal,
+            sourceTranslation,
             profileScale, towardCentre, tangentSlope, sourceRotation);
     const double endpointSpacing = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0;
-    const std::array<RS_Vector, 2> endpointTangents = asymmetricTangents
-        ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
-        : std::array<RS_Vector, 2>{{{1.0, tangentSlope}, {1.0, -tangentSlope}}};
+    const std::array<RS_Vector, 2> endpointTangents = reversedTangentTraversal
+        ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
+        : asymmetricTangents
+            ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
+            : std::array<RS_Vector, 2>{{{1.0, tangentSlope}, {1.0, -tangentSlope}}};
     LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
-        {{{0.0, 0.0}, {endpointSpacing, 0.0}}}, endpointTangents);
+        reversedTangentTraversal
+            ? std::array<RS_Vector, 2>{{{endpointSpacing, 0.0}, {0.0, 0.0}}}
+            : std::array<RS_Vector, 2>{{{0.0, 0.0}, {endpointSpacing, 0.0}}},
+        endpointTangents);
     REQUIRE(sourceData.isValid());
     const double cosine = std::cos(sourceRotation);
     const double sine = std::sin(sourceRotation);
