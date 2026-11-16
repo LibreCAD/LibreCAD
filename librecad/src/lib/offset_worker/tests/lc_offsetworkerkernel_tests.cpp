@@ -6832,7 +6832,8 @@ TEST_CASE("knot-inserted rational quadratic tangent maps across nonuniform spans
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-"
           "root][knot]") {
     const std::vector<std::pair<double, double>> profiles{{0.5, 0.5}, {1.0, 0.5}, {2.0, 0.5},
-                                                          {0.5, 2.0}, {1.0, 2.0}, {2.0, 2.0}};
+                                                          {0.5, 2.0}, {1.0, 2.0}, {2.0, 2.0},
+                                                          {1.0, 0.3}};
     const SplineOracle domainStart{0};
     const SplineOracle domainEnd{1};
     const SplineOracle root{"0.5"};
