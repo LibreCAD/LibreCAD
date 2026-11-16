@@ -53465,7 +53465,10 @@ independent ODA/AutoCAD acceptance remain open.
 Test commit `3370bff4b` expands section 1604's direct and worker-client
 high-origin profile from slope `1e-4` to `{1e-4, 1e-5, 1e-6}`. Follow-up test
 commits `053e2c3bb` and `94c92e997` add `1e-7` and `1e-8`; both remain
-representable and pass at this frame. All five retain the same 10-unit
+representable and pass at this frame. A `1e-9` slope at the same feature scale
+collapses the translated control geometry: test commit `860f57496` verifies
+that it is invalid and that worker generation/cache-validation requests are
+rejected before encoding. The five successful slopes retain the same 10-unit
 endpoint spacing, rotation `0.41`, origin `(1e9,-2e9)`, explicit `1e-3`
 direct geometry tolerance, and both offset signs. The persistence lane
 includes worker generation/cache admission and five-format save/reopen with
@@ -53489,8 +53492,10 @@ git diff --check
 ```
 
 Results: direct geometry passes 470 assertions / 1 case; worker/cache and
-five-format persistence pass 23,697 assertions / 1 case. This qualifies these
-five slopes at the stated frame only. Slopes below `1e-8` at this small feature
-scale, other origins/scales, arbitrary endpoint-tangent constructions,
-visible-app acceptance, and independent ODA/AutoCAD acceptance remain open.
+five-format persistence pass 23,697 assertions / 1 case; the direct and worker
+refusal tests pass 472 and 30 assertions / 1 case each. This qualifies the
+five successful slopes and the single `1e-9` invalid-source boundary at the
+stated frame only. Slopes below `1e-9`, other origins/scales, arbitrary
+endpoint-tangent constructions, visible-app acceptance, and independent
+ODA/AutoCAD acceptance remain open.
 
