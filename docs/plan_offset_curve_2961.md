@@ -254,7 +254,9 @@ tangent-pair completeness. Section 1682 adds mirrored and unequal layouts to
 circle/line Trim Two with full action and persistence checks; section 1683
 extends both line-cutter layouts across source scales `1e-3/1/1e3`, and
 section 1684 does the same for circle cutters with the three-radius contact
-matrix.
+matrix. Section 1685 adds reversed mirrored/unequal tangent sources to the
+worker-cache and five-lane persistence matrix across all three scales; extend
+the independent interior-normal and action matrices to reversed traversal.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55598,4 +55600,25 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 The two added layouts now have three-scale circle and line Trim Two coverage.
 This remains a finite matrix of tangent directions, radii, placements, and
 internal file lanes; visible GUI and independent-CAD acceptance remain open.
+
+## 1685. Persist Reversed Mirrored and Unequal Tangent Sources (2026-11-16)
+
+Test commit `d9f44d815` adds reversed-parameter versions of the mirrored and
+unequal tangent layouts from sections 1681-1684 to the worker-client
+cache/persistence matrix. Their endpoint tangents are negated and swapped with
+the endpoints, as required for reversed traversal. Both signed offset
+directions run at scales `1e-3`, `1`, and `1e3`, with source-cache validation
+and all five R14/R2000/R2018 DXF/DWG lanes. The endpoint oracle derives each
+endpoint tangent independently from the defining control net and accepts
+either output traversal order.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 49,473 assertions / 1 case.
+- `librecad_offset_worker_client_tests` target build: passed.
+- `git diff --check`: passed.
+
+This qualifies two reversed layouts at the recorded three frames; arbitrary
+tangent vectors, other endpoint parameterizations, and external CAD acceptance
+remain open.
 
