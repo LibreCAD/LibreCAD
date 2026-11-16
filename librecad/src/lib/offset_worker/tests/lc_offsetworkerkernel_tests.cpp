@@ -5163,7 +5163,9 @@ TEST_CASE("high-degree periodic rational roots map at the seam",
 TEST_CASE("high-degree periodic rational roots map at an interior knot",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][interior-root][degree][high-degree]") {
-    for (const double weightStep : {0.1, 0.05}) {
+    const std::array<std::pair<double, bool>, 3> weightProfiles{{
+        {0.1, true}, {0.05, true}, {0.05, false}}};
+    for (const auto [weightStep, symmetricWeights] : weightProfiles) {
       for (const std::size_t degree : {4u, 6u}) {
         RS_SplineData data;
         data.degree = degree;
@@ -5176,8 +5178,9 @@ TEST_CASE("high-degree periodic rational roots map at an interior knot",
                 static_cast<double>(controlCount);
             data.controlPoints.emplace_back(10.0 * std::cos(angle),
                                              7.0 * std::sin(angle));
-            const std::size_t seamDistance = std::min(i, controlCount - i);
-            data.weights.push_back(0.7 + weightStep * static_cast<double>(seamDistance));
+            const std::size_t weightIndex =
+                symmetricWeights ? std::min(i, controlCount - i) : i;
+            data.weights.push_back(0.7 + weightStep * static_cast<double>(weightIndex));
         }
         data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
         for (std::size_t i = 1; i <= controlCount - degree - 1; ++i) {
@@ -5187,7 +5190,7 @@ TEST_CASE("high-degree periodic rational roots map at an interior knot",
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
 
         RS_Spline source{nullptr, data};
-        CAPTURE(degree, weightStep);
+        CAPTURE(degree, weightStep, symmetricWeights);
         REQUIRE(source.validate());
         source.setClosed(true);
         REQUIRE(source.validate());
