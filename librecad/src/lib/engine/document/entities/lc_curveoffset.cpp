@@ -7619,7 +7619,7 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
                 normalizedFlatness <= std::sqrt(g_eps)) {
                 // Nearly collinear Bezier controls can produce small curvature
                 // changes that need extra bounded fit refinement.
-                options.maxSubdivisionDepth += 8;
+                options.maxSubdivisionDepth += 16;
             }
         }
     }

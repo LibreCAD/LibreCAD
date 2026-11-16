@@ -53732,7 +53732,7 @@ The endpoint-tangent profile `1.1044921875e-9` is representable at the
 recorded `(1e9,-2e9)` frame. Direct branch construction and materialization
 at distance `0.5` initially returned `ToleranceNotMet` when the profile was
 recentered as the worker does. `LC_CurveOffset::makeDirectOptions` now grants
-eight additional bounded subdivision levels to parabolas whose normalized
+sixteen additional bounded subdivision levels to parabolas whose normalized
 control flatness is at most `sqrt(machine epsilon)`. The policy follows the
 intrinsic conditioning after recentering; it does not relax positional
 tolerance or alter sample/output budgets. Tests verify this exact direct
@@ -53817,4 +53817,49 @@ git diff --check
 Result: 4,465 assertions / 1 case pass. The sampled valid/invalid bracket is
 now `(1.104443359375e-9, 1.1044921875e-9]` for this exact frame; other
 origins, scales, constructions, and external CAD acceptance remain open.
+
+## 1615. Qualify the 1.1044677734375e-9 High-origin Parabola (2026-11-16)
+
+The slope `1.1044677734375e-9` is constructible in the recorded rotated
+`(1e9,-2e9)` frame but initially failed direct offset fitting at the previous
+near-linear refinement allowance. Increasing the bounded flatness-triggered
+subdivision allowance from eight to sixteen extra levels admits this profile
+without changing requested positional tolerance or sample/output budgets.
+Direct tests cover both signed offsets, materialization in world and rebuilt
+worker-local frames, and the configured `1e-4` worker tolerance. The real
+worker/cache test carries both signed distances through R14/R2000/R2018 DXF
+and R2000/R2018 DWG persistence; Trim Two covers both `towardCentre` sides,
+undo/redo, and the same five result save/reopen lanes with available LibreDWG
+entity-type checks.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+cmake --build /private/tmp/offset-2961-cmake-clean --target LibreCAD -j4
+git diff --check
+```
+
+Results: direct geometry and recentered materialization pass 7,652 assertions
+/ 1 case; worker/cache and five-format persistence pass 37,154 assertions /
+1 case; Trim Two and five-format result persistence pass 10,054 assertions /
+1 case; the production application target builds. The sampled construction
+interval is now valid at `1.1044677734375e-9` and invalid at
+`1.104443359375e-9`; this is not a continuous boundary claim. Other origins,
+scales, parabola constructions, cutter matrices, visible-app use, and
+independent ODA/AutoCAD acceptance remain open.
 
