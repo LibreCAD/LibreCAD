@@ -274,7 +274,9 @@ type changes, candidate refresh, current-source indication, replacement, and
 cancellation/refusal; retain visible packaged-app interaction as the remaining
 manual gate; (5) completed by section 1532: the automated all-family
 replacement and highlight-transfer matrix; (6) record independent ODA/AutoCAD
-acceptance where available and keep raw DWG replay diagnostics
+acceptance where available; section 1650 records that the installed ODA
+converter cannot run from this SSH/headless context, so visible ODA acceptance
+remains open. Keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
@@ -54757,4 +54759,23 @@ The headless implementation and regression gate are complete. Manually
 exercise the packaged Properties dialog with repeated type changes, visible
 candidate refresh/current-source indication, successful replacement, and
 cancellation/refusal; keep this gate open until that interaction is recorded.
+
+## 1650. Record the ODA Converter Runtime Blocker (2026-11-16)
+
+The ODA File Converter 27.1.0.0 application is installed at
+`/Applications/ODAFileConverter.app`; its executable advertises a CLI with
+per-file auditing. An attempt to audit/convert the 84 existing PR DWG fixtures
+under `/private/tmp/offset-3193-actual-dwg-outputs-20261115` did not process
+files: direct executable launch aborted with exit 134 after Cocoa pasteboard
+creation and `hiservices-xpcservice` connection errors. LaunchServices also
+returned `kLSNoExecutableErr` for `open -a`, and setting
+`QT_QPA_PLATFORM=offscreen` failed because the bundle ships only the Cocoa
+Qt platform plugin. Therefore this attempt is not ODA acceptance evidence.
+
+Validation disposition:
+
+- No converted output was produced; no input fixture was accepted or rejected.
+- LibreDWG structural checks remain separate evidence and do not replace ODA.
+- Retry the converter from an active macOS GUI session or provide a functioning
+  ODA CLI/runtime context; keep independent ODA/AutoCAD acceptance open.
 
