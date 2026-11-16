@@ -6868,7 +6868,92 @@ TEST_CASE(
   std::size_t generatedRows = 0;
   std::size_t persistedRows = 0;
   std::size_t nativeCacheRefusals = 0;
+  std::size_t persistedFallbackRows = 0;
   std::size_t persistedMultiBranchRows = 0;
+  auto persistOrdinaryFallback = [&](const auto &outputs, qint64 generationId) {
+    REQUIRE_FALSE(outputs.empty());
+    RS_Graphic ordinaryGraphic;
+    ordinaryGraphic.initForNewDocument();
+    auto *ordinaryLayer = new RS_Layer("OrdinaryOffset");
+    ordinaryGraphic.addLayer(ordinaryLayer);
+    std::vector<std::uint64_t> expectedFragments;
+    for (const auto &output : outputs) {
+      const auto *splineData = std::get_if<RS_SplineData>(&output);
+      REQUIRE(splineData);
+      RS_Spline spline{nullptr, *splineData};
+      REQUIRE(spline.validate());
+      auto *entity = new RS_Spline(&ordinaryGraphic, *splineData);
+      entity->setLayer(ordinaryLayer);
+      ordinaryGraphic.addEntity(entity);
+      expectedFragments.push_back(RS_Spline::geometryFingerprint(*splineData));
+    }
+    REQUIRE(expectedFragments.size() == outputs.size());
+
+    for (const Lane &lane : lanes) {
+      CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+      if (lane.format == RS2::FormatDWG ||
+          lane.format == RS2::FormatDWG2018)
+        continue;
+#endif
+      const auto path = directory.file(std::to_string(generationId) +
+                                       "-ordinary-" + lane.extension);
+      REQUIRE(lc::test::exportDrawing(ordinaryGraphic, path, lane.format));
+      RS_Graphic reopened;
+      REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+      std::vector<std::uint64_t> actualFragments;
+      for (RS_Entity *entity : reopened) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline)
+          continue;
+        const auto *spline = dynamic_cast<const RS_Spline *>(entity);
+        REQUIRE(spline);
+        actualFragments.push_back(
+            RS_Spline::geometryFingerprint(spline->getData()));
+      }
+      CHECK(actualFragments == expectedFragments);
+    }
+#ifdef DWGSUPPORT
+    if (!libreDwgReader.isEmpty()) {
+      for (const Lane &lane : lanes) {
+        if (lane.format != RS2::FormatDWG &&
+            lane.format != RS2::FormatDWG2018)
+          continue;
+        const auto path = directory.file(std::to_string(generationId) +
+                                         "-ordinary-" + lane.extension);
+        QProcess reader;
+        reader.start(libreDwgReader,
+                     {"-O", "minJSON", lc::test::toQString(path)});
+        REQUIRE(reader.waitForStarted());
+        REQUIRE(reader.waitForFinished(30000));
+        INFO(reader.readAllStandardError().toStdString());
+        REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+        REQUIRE(reader.exitCode() == 0);
+        const QJsonDocument document =
+            QJsonDocument::fromJson(reader.readAllStandardOutput());
+        REQUIRE(document.isObject());
+        const QJsonArray objects =
+            document.object().value("OBJECTS").toArray();
+        std::size_t splineCount = 0;
+        for (const QJsonValue &objectValue : objects) {
+          const QJsonObject object = objectValue.toObject();
+          if (object.value("entity").toString() != "SPLINE")
+            continue;
+          ++splineCount;
+          const int degree = object.value("degree").toInt(-1);
+          const QJsonArray knots = object.value("knots").toArray();
+          const QJsonArray controls = object.value("ctrl_pts").toArray();
+          CHECK(degree >= 1);
+          CHECK(controls.size() >= degree + 1);
+          CHECK(knots.size() == controls.size() + degree + 1);
+        }
+        CHECK(splineCount == expectedFragments.size());
+      }
+    }
+#endif
+    ++persistedFallbackRows;
+    if (outputs.size() > 1)
+      ++persistedMultiBranchRows;
+  };
   for (const double ratio : ratios) {
     constexpr double semiMajor = 10.0;
     const double vertexRadius = semiMajor * ratio * ratio;
@@ -6906,97 +6991,7 @@ TEST_CASE(
               ++generatedRows;
               if (generated.ordinary.size() != 1) {
                 ++nativeCacheRefusals;
-                if (generated.ordinary.size() > 1) {
-                  RS_Graphic ordinaryGraphic;
-                  ordinaryGraphic.initForNewDocument();
-                  auto *ordinaryLayer = new RS_Layer("OrdinaryOffset");
-                  ordinaryGraphic.addLayer(ordinaryLayer);
-                  std::vector<std::uint64_t> expectedFragments;
-                  for (const auto &output : generated.ordinary) {
-                    const auto *splineData = std::get_if<RS_SplineData>(&output);
-                    REQUIRE(splineData);
-                    RS_Spline spline{nullptr, *splineData};
-                    REQUIRE(spline.validate());
-                    auto *entity = new RS_Spline(&ordinaryGraphic, *splineData);
-                    entity->setLayer(ordinaryLayer);
-                    ordinaryGraphic.addEntity(entity);
-                    expectedFragments.push_back(
-                        RS_Spline::geometryFingerprint(*splineData));
-                  }
-                  REQUIRE(expectedFragments.size() > 1);
-
-                  for (const Lane &lane : lanes) {
-                    CAPTURE(lane.extension, ratio, halfWidth, oppositeBranch,
-                            reverseBounds, fraction, sign);
-#ifndef DWGSUPPORT
-                    if (lane.format == RS2::FormatDWG ||
-                        lane.format == RS2::FormatDWG2018)
-                      continue;
-#endif
-                    const auto path = directory.file(
-                        std::to_string(generationId) + "-ordinary-" +
-                        lane.extension);
-                    REQUIRE(lc::test::exportDrawing(ordinaryGraphic, path,
-                                                    lane.format));
-                    RS_Graphic reopened;
-                    REQUIRE(lc::test::importDrawing(reopened, path,
-                                                   lane.format));
-                    std::vector<std::uint64_t> actualFragments;
-                    for (RS_Entity *entity : reopened) {
-                      if (entity->isDeleted() ||
-                          entity->rtti() != RS2::EntitySpline)
-                        continue;
-                      const auto *spline =
-                          dynamic_cast<const RS_Spline *>(entity);
-                      REQUIRE(spline);
-                      actualFragments.push_back(
-                          RS_Spline::geometryFingerprint(spline->getData()));
-                    }
-                    CHECK(actualFragments == expectedFragments);
-                  }
-#ifdef DWGSUPPORT
-                  if (!libreDwgReader.isEmpty()) {
-                    for (const Lane &lane : lanes) {
-                      if (lane.format != RS2::FormatDWG &&
-                          lane.format != RS2::FormatDWG2018)
-                        continue;
-                      const auto path = directory.file(
-                          std::to_string(generationId) + "-ordinary-" +
-                          lane.extension);
-                      QProcess reader;
-                      reader.start(libreDwgReader,
-                                   {"-O", "minJSON", lc::test::toQString(path)});
-                      REQUIRE(reader.waitForStarted());
-                      REQUIRE(reader.waitForFinished(30000));
-                      INFO(reader.readAllStandardError().toStdString());
-                      REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-                      REQUIRE(reader.exitCode() == 0);
-                      const QJsonDocument document =
-                          QJsonDocument::fromJson(reader.readAllStandardOutput());
-                      REQUIRE(document.isObject());
-                      const QJsonArray objects =
-                          document.object().value("OBJECTS").toArray();
-                      std::size_t splineCount = 0;
-                      for (const QJsonValue &objectValue : objects) {
-                        const QJsonObject object = objectValue.toObject();
-                        if (object.value("entity").toString() != "SPLINE")
-                          continue;
-                        ++splineCount;
-                        const int degree = object.value("degree").toInt(-1);
-                        const QJsonArray knots =
-                            object.value("knots").toArray();
-                        const QJsonArray controls =
-                            object.value("ctrl_pts").toArray();
-                        CHECK(degree >= 1);
-                        CHECK(controls.size() >= degree + 1);
-                        CHECK(knots.size() == controls.size() + degree + 1);
-                      }
-                      CHECK(splineCount == expectedFragments.size());
-                    }
-                  }
-#endif
-                  ++persistedMultiBranchRows;
-                }
+                persistOrdinaryFallback(generated.ordinary, generationId);
                 continue;
               }
 
@@ -7017,6 +7012,7 @@ TEST_CASE(
               if (validated.refusal != LC_OffsetCurveRefusal::None ||
                   !validated.changed) {
                 ++nativeCacheRefusals;
+                persistOrdinaryFallback(generated.ordinary, generationId);
                 continue;
               }
 
@@ -7124,6 +7120,7 @@ TEST_CASE(
   CHECK(generatedRows == ratios.size() * intervalHalfWidths.size() * 2 * 2 *
                              curvatureFractions.size() * 2);
   CHECK(persistedRows > 0);
+  CHECK(persistedFallbackRows > 0);
   CHECK(persistedMultiBranchRows > 0);
   CHECK(persistedRows + nativeCacheRefusals == generatedRows);
 }
