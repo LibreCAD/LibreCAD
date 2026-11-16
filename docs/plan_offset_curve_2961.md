@@ -55313,3 +55313,34 @@ picker remains active, confirm the list and existing-source indication update,
 replace with a different family (including parabola), then verify cancel/refusal
 and undo/redo behavior. Automated/headless coverage does not close that gate.
 
+## 1672. Restrict Straight-region Normalization to Translation-dominated Inputs (2026-11-16)
+
+Product commit `98a83708c` narrows the local-frame path added in section 1669.
+Straight polylines now use it only when `scale.coordinate > 16 *
+scale.feature`; polylines with circular segments retain the existing
+normalization behavior. This preserves high-origin straight-boundary stability
+without changing the unit-origin rotated-polyline path. The broad condition
+had regressed worker-client concave-neck-collapse round-trip geometry at the
+origin; the narrowed condition restores that case.
+
+Validation on macOS arm64:
+
+- CMake full application build: passed.
+- qmake6 full application/plugin build: passed.
+- `[curve-offset][region]`: 28,952 assertions / 28 cases passed.
+- `offset_worker_client_6`: passed, including the concave-neck-collapse
+  round-trip regression.
+- `git diff --check`: passed.
+
+The selected broader CTest run is not clean and must remain visible in the
+implementation queue. `offset_worker_process` exceeded its 30-second CTest
+limit; its log includes sandbox denial of `/bin/ps`, but the runtime also
+indicates the test may need a realistic bounded timeout or less expensive
+process polling. The external-plugin and console-import tests both fail to
+recover the native offset from `dxf-binary-R2018-native-degree1.dxf`; the
+DWG/DXF entity round-trip tests likewise reload `LC_OffsetCurve` as an ordinary
+spline (entity type 31 instead of 50). Investigate carrier admission,
+worker-validation diagnostics, and persistence/import routing before treating
+these as environment-only failures. These results do not implicate the local
+frame condition by themselves, but they prevent a clean end-to-end claim.
+
