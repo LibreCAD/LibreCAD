@@ -53913,3 +53913,46 @@ Result: 7,656 assertions / 1 case pass. The sampled interval remains
 `(1.104461669921875e-9, 1.1044677734375e-9]` for this frame; other origins,
 scales, constructions, and external CAD acceptance remain open.
 
+## 1618. Qualify Endpoint-tangent Parabola Origin Stability (2026-11-16)
+
+A fixed rotated endpoint-tangent parabola (`slope=1e-8`, endpoint spacing 10)
+now has direct exact-normal checks at the origin and translations
+`(1e6,-2e6)`, `(1e8,-2e8)`, and `(1e9,-2e9)`, both signed sides at distance
+`0.01`, and requested world tolerance `1e-3`. The real worker/cache matrix adds
+the `1e6` and `1e8` profiles at both signed `0.5` distances, validates their
+native caches, and round-trips through R14/R2000/R2018 DXF plus R2000/R2018
+DWG. The Trim Two action fixture adds those same intermediate origins for the
+fixed `1e-8` profile, exercising its existing worker-backed replacement,
+preview/commit, undo/redo, and five-lane result persistence. This extends only
+one tangent construction and spacing; the Trim fixture does not add a new
+`towardCentre` value for the intermediate origins.
+
+Validation on macOS arm64 CMake Release with DWG support and LibreDWG:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_tests librecad_offset_worker_client_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Endpoint-tangent parabola offsets remain stable across translated origins' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/\
+librecad_offset_worker_client_tests \
+  'Near-parallel endpoint-tangent parabola retains its worker cache across file lanes' \
+  --reporter compact
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'T Trim Two trims an endpoint-tangent parabola' --reporter compact
+git diff --check
+```
+
+Results: direct origin matrix 368 assertions / 1 case; worker/cache and
+five-format persistence 35,366 assertions / 1 case; Trim Two and five-format
+result persistence 10,174 assertions / 1 case. These bounded frames do not
+close the continuous origin/scale matrix, alternate tangent constructions,
+all Trim sides/cutters, visible-app acceptance, or independent ODA/AutoCAD
+acceptance.
+

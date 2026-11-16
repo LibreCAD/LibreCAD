@@ -2360,16 +2360,22 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     auto* previous = initial.entity.release();
     f.graphic.addEntity(previous);
 
+    const RS_Vector sourceTranslation = highOrigin
+        ? RS_Vector{1e9, -2e9}
+        : GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
+                   RS_Vector{1e8, -2e8});
     const double tangentSlope = highOrigin
         ? GENERATE(1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
                    1.5e-9, 1.25e-9, 1.125e-9, 1.10625e-9,
                    1.1046875e-9, 1.1044921875e-9,
                    1.1044677734375e-9)
-        : GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14);
+        : sourceTranslation.x == 0.0
+            ? GENERATE(0.2, 1e-8, 1e-10, 1e-12, 1e-14)
+            : 1e-8;
     const double sourceRotation = highOrigin
-        ? 0.371234567890123 : GENERATE(0., 0.371234567890123);
-    const RS_Vector sourceTranslation = highOrigin
-        ? RS_Vector{1e9, -2e9} : RS_Vector{0.0, 0.0};
+        ? 0.371234567890123
+        : sourceTranslation.x == 0.0 ? GENERATE(0., 0.371234567890123)
+                                     : 0.371234567890123;
     LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
         {{{0.0, 0.0}, {10.0, 0.0}}},
         {{{1.0, tangentSlope}, {1.0, -tangentSlope}}});

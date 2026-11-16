@@ -2600,6 +2600,41 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
     }
 }
 
+TEST_CASE("Endpoint-tangent parabola offsets remain stable across translated origins",
+          "[curve-offset][direct][parabola][tangent][origin-matrix][oracle]") {
+    constexpr double rotation = 0.41;
+    constexpr double tangentSlope = 1e-8;
+    constexpr double distance = 0.01;
+    constexpr double requestedTolerance = 1e-3;
+    const auto rotate = [rotation](const RS_Vector& point) {
+        return RS_Vector{std::cos(rotation) * point.x - std::sin(rotation) * point.y,
+                         std::sin(rotation) * point.x + std::cos(rotation) * point.y};
+    };
+    const std::array<RS_Vector, 4> origins{{{0.0, 0.0}, {1e6, -2e6},
+                                             {1e8, -2e8}, {1e9, -2e9}}};
+    for (const RS_Vector& origin : origins) {
+        CAPTURE(origin);
+        const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
+            {{rotate({0.0, 0.0}) + origin, rotate({10.0, 0.0}) + origin}},
+            {{rotate({1.0, tangentSlope}), rotate({1.0, -tangentSlope})}});
+        REQUIRE(data.isValid());
+        const LC_Parabola source{nullptr, data};
+        const auto options = LC_CurveOffset::makeDirectOptions(
+            source, distance, requestedTolerance);
+        REQUIRE(options.tolerance.requestedGeometry == requestedTolerance);
+        const EvalFn exactCurve = evaluator(source);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, exactCurve) <= requestedTolerance);
+        }
+    }
+}
+
 TEST_CASE("Reversed asymmetric endpoint-tangent parabola keeps exact offset geometry",
           "[curve-offset][direct][parabola][tangent][reversed][oracle]") {
     const std::array<RS_Vector, 2> endpoints{{{7.0, -2.0}, {-5.0, 0.5}}};
