@@ -54,7 +54,14 @@ branches, reversed bounds, and both signs. Sections 1547-1548 carry
 cache-admitted cases through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
 save/reopen, with two reopen passes and optional LibreDWG validation. Section
 1548 aligns persistence with all three tested curvature-scaled offsets (`0.5`,
-`1.0`, `1.5` times vertex radius). Sections 1550 and 1552 cover endpoint-
+`1.0`, `1.5` times vertex radius). Sections 1570-1572 now require the 240-row
+cusp matrix to account for each cache-admitted typed round trip or complete
+ordinary fallback; the fallback DWGs receive optional independent LibreDWG
+SPLINE inspection. Sections 1571-1572 add exact-normal, worker/cache, and one
+five-lane persistence profile at origins up to `(1e9,-2e9)`, using explicit
+tolerance where the default falls below the numeric floor. These do not close
+other hyperbola origins/scales or ODA/AutoCAD acceptance. Sections 1550 and
+1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
 `1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
 DXF/DWG lanes. Section 1554 verifies protocol admission rejects degenerate
