@@ -55285,3 +55285,31 @@ multi-crossing support. The bow-tie growth/erosion success in section 1669 is
 unchanged; other high-origin crossing counts, source scales, and contact
 topologies remain unqualified.
 
+## 1671. Reaffirm the Cross-family Replacement Picker Contract (2026-11-16)
+
+The Properties source widget must let users change the requested source type
+while they are choosing a replacement, and must expose every source family the
+offset model supports. This is already implemented: the selector contains the
+nine `LC_OffsetSourceGeometry::SupportedKinds` plus `All supported types`;
+changing the filter refreshes eligible candidates without mutating the offset;
+and choosing a candidate synchronizes the selector to that candidate's actual
+family before worker-backed replacement. Parabola remains a distinct family,
+not an `LC_SplinePoints` approximation. If the original source still exists,
+its highlight remains available while the filter changes; a successful
+replacement transfers identity and highlight to the new source.
+
+Current automated evidence is in section 1668 and the source-picker tests in
+`lc_offsetcurve_propertiesdialog_tests.cpp`: all-family replacement, filter
+changes during browsing, and preservation of the highlighted source across
+family filters. No additional picker, type-specific control, or
+parabola-only implementation slice is required. Do not treat family selection
+coverage as proof that every geometry variant is supported by offset
+generation, trimming, persistence, or external CAD applications; those remain
+governed by the family-by-variant gates above.
+
+The remaining acceptance item for this UI contract is a visible packaged-app
+check: begin replacement, switch the family filter more than once while the
+picker remains active, confirm the list and existing-source indication update,
+replace with a different family (including parabola), then verify cancel/refusal
+and undo/redo behavior. Automated/headless coverage does not close that gate.
+
