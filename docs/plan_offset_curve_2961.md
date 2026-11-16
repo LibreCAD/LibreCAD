@@ -42,9 +42,14 @@ success, and cancellation/refusal remains open in Slice 5. The nine-kind
 inventory does not establish support for every concrete geometry variant:
 Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
 Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
-atomically. On pushed head `6cf9495ce33476adb909a82eff825b5ca8500258`,
-`[gui][dialog][offsetcurve][source]` was re-run in CMake Release and passed
-15,284 assertions / 44 cases; this remains headless UI evidence only.
+atomically. The latest source-picker test evidence is the CMake Release run at
+`6cf9495ce33476adb909a82eff825b5ca8500258`:
+`[gui][dialog][offsetcurve][source]` passed 15,284 assertions / 44 cases.
+The current PR head is `b96f2746901192ce3719ac84db8e89d3439c6966`; subsequent
+changes recorded in section 1590 only partition worker-client test execution,
+so this is still the latest direct selector evidence, not a claim that the
+selector suite was rerun at `b96f27469`. Headless tests do not close the visible
+packaged-app gate.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
@@ -51740,7 +51745,7 @@ git diff --check
 
 Result: the protocol-admission refusal case passes 24 assertions / 1 case.
 
-## 1555. Reconcile the Source-widget Type-switching Request (2026-11-15)
+## 1555. Reconcile the Source-widget Type-switching Request (updated 2026-11-16)
 
 The latest request restates the source-picker requirement: while choosing a
 replacement source curve, the user must be able to change the requested source
@@ -51754,12 +51759,14 @@ distinct choice from spline-points.
 The behavior and automated acceptance are already implemented; section 1532
 covers repeated type changes, candidate filtering, preserving the old source
 and highlight until successful worker completion, and successful typed-source
-replacement plus highlight transfer for every kind. Section 1549 rebuilds and
-reruns the focused source-picker suite on the current tree (15,252 assertions /
-42 cases). No additional implementation slice is indicated unless a regression
-is found. Do not treat selector coverage as proof that every geometry variant
-is usable through generation, worker/cache, trimming, or persistence; those
-remain governed by the family-by-variant qualification in Slice 4.
+replacement plus highlight transfer for every kind. The strongest current
+selector evidence is the 15,284-assertion / 44-case CMake Release run recorded
+in the roadmap header; it is a headless run, and section 1590 confirms the
+later test-runner changes did not implement or revalidate visible UI behavior.
+No additional implementation slice is indicated unless a regression is found.
+Do not treat selector coverage as proof that every geometry variant is usable
+through generation, worker/cache, trimming, or persistence; those remain
+governed by the family-by-variant qualification in Slice 4.
 
 Remaining acceptance for this widget request is a visible packaged-app check:
 open Offset Curve Properties, begin source selection, change the type more than
