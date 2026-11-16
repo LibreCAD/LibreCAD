@@ -53139,9 +53139,87 @@ git diff --check
 Result: the focused action regression passes 19 assertions / 1 case; the
 parabola drawing-action selection passes 27 assertions / 2 cases. Test commit
 `ef28377f4` qualifies the focus-and-vertex action's generated source
-representation only. The separate focus-plus-directrix-line action route and
-additional frames are not covered by this test. Worker/cache, Trim, and DXF/DWG
+representation. A separate focus-plus-directrix-line action regression is now
+recorded in section 1596. These action tests do not qualify additional frames.
+Worker/cache, Trim, and DXF/DWG
 behavior are governed by the existing typed-parabola matrices, not inferred
 from this creation-action test. The source-picker, visible-app, and independent
 CAD gates remain tracked separately.
+
+## 1595. Source-Type Switching While Replacing an Offset Curve Source (2026-11-16)
+
+The replacement-source chooser must keep its source-kind control available
+throughout candidate selection. A user must be able to change the requested
+kind after opening the chooser, see the candidate list refresh for that kind,
+and select a replacement without closing and reopening the properties dialog.
+The chooser must cover every source kind accepted by the offset model:
+`Line`, `Arc`, `Circle`, `Ellipse`, `Spline`, `SplinePoints`, `Parabola`,
+`Hyperbola`, and `Polyline` (including the supported bounded-hyperbola
+representation). The current source remains highlighted whenever it is in the
+visible candidate set; changing the kind must not misidentify a different
+entity or silently replace the source.
+
+The existing all-kind asynchronous filtering regression establishes that
+each kind can produce candidates, but it does not by itself prove the complete
+replacement interaction. Close the remaining verification gap with focused
+coverage for the chooser state transition and its integration:
+
+1. Start replacement with an existing source and confirm that source is
+   selected/highlighted when eligible.
+2. Change the kind repeatedly across all nine supported kinds without closing
+   the chooser; each transition refreshes candidates and does not retain stale
+   rows from the prior kind.
+3. When the current source is not of the newly selected kind, do not highlight
+   an unrelated candidate. When switching back to its kind, identify the
+   original source again.
+4. Select a different candidate of each available kind and verify that the
+   stored `LC_OffsetSourceGeometry` has the matching typed kind and entity
+   identity. Cancellation, an empty result, and a failed selection leave the
+   prior source unchanged.
+5. Verify the user-visible highlight/selection and repeated type changes in a
+   packaged LibreCAD build; retain this as a visible-app acceptance gate even
+   when headless tests pass.
+
+Implement tests at the narrowest existing seams: picker/model tests for kind
+transitions, candidate refresh, current-source matching, and no-mutation
+failure paths; dialog/property integration tests for committing a selected
+replacement. Reuse the all-nine-kind asynchronous test rather than duplicating
+its expensive candidate generation. If a transition exposes a production bug,
+fix it in a separately validated slice and record the commit here before
+continuing. Completion requires all supported kinds to be selectable through
+one chooser session, exact current-source highlighting, passing focused and
+full picker suites, and recorded packaged-app verification. The current
+headless suite passes 15,498 assertions / 45 source-picker cases, but the
+complete replacement interaction and visible-app acceptance remain open.
+
+## 1596. Qualify Focus-and-directrix Parabola Creation (2026-11-16)
+
+The focus-and-vertex action regression does not cover the sibling construction
+route that selects an existing line as the directrix. The new action-level test
+adds a directrix line to the document, drives focus/directrix/start/end input
+through `LC_ActionDrawParabolaFD`, and verifies the resulting entity is a
+valid parabola with the requested focus. Sampled points satisfy the independent
+focus-to-curve versus curve-to-directrix distance equality, and offset-source
+capture retains `LC_OffsetSourceGeometry::Kind::Parabola`.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  'Focus-directrix parabola action captures an existing line' \
+  --reporter compact
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[actions][draw][parabola]' --reporter compact
+git diff --check
+```
+
+Result: the focused directrix-line case passes 16 assertions / 1 case; the
+complete parabola drawing-action selection passes 43 assertions / 3 cases.
+Test commit `9b85fd7e1` covers this construction route only. Other parabola
+frames, worker/cache, Trim, and typed persistence remain covered by their
+separate matrices. The source-picker interaction, visible desktop acceptance,
+and independent CAD acceptance remain open.
 
