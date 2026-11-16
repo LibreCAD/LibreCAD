@@ -55165,3 +55165,23 @@ This extends one high-origin/unit-scale/orientation profile by one inward
 fraction only. Smaller fractions, other origins/scales/slopes, non-cubic
 contacts, visible-app use, and independent ODA/AutoCAD acceptance remain open.
 
+## 1666. Extend the High-origin Cubic Near-tangent Ladder to `1e-6` (2026-11-16)
+
+Test commit `46f595cdc` adds inward fraction `1e-6` to section 1665's
+endpoint-tangent parabola/circle Trim Two profile. Although the radial center
+displacement approaches the coordinate ULP at origin `(1e9, -2e9)`, the exact
+circle/Bezier oracle computed from the stored doubles certifies two distinct
+simple roots. Direct conic preparation accepts both roots and returns one
+conic fragment without mutating the source; the full action matrix also
+validates worker execution, undo/redo, and five DXF/DWG save/reopen lanes.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 46,206 assertions / 1 case.
+- `git diff --check`: passed.
+
+This is an additional certified distance on the same high-origin, unit-scale,
+orientation, and slope profile, not general translation/scale invariance.
+Smaller fractions, other origins/scales/slopes, non-cubic contacts,
+visible-app use, and independent ODA/AutoCAD acceptance remain open.
+
