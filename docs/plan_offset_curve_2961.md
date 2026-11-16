@@ -59,8 +59,11 @@ cusp matrix to account for each cache-admitted typed round trip or complete
 ordinary fallback; the fallback DWGs receive optional independent LibreDWG
 SPLINE inspection. Sections 1571-1572 add exact-normal, worker/cache, and one
 five-lane persistence profile at origins up to `(1e9,-2e9)`, using explicit
-tolerance where the default falls below the numeric floor. These do not close
-other hyperbola origins/scales or ODA/AutoCAD acceptance. Sections 1550 and
+tolerance where the default falls below the numeric floor. Section 1573
+extends high-origin typed-source persistence to 16 rows spanning origins
+`(1e6,-1e6)` and `(1e9,-2e9)`, ratios `0.05` and `0.2`, both offset signs,
+and distances `0.5` and `1.5` times vertex radius. These do not close other
+hyperbola origins/scales or ODA/AutoCAD acceptance. Sections 1550 and
 1552 cover endpoint-
 tangent parabola worker/cache conditioning at the direct-oracle slopes from
 `1e-4` to `1e-14`; section 1553 now persists all nine slopes across the five
@@ -52301,7 +52304,38 @@ git diff --check
 ```
 
 The focused case passes 2,575 assertions / 1 case with DWG support and
-LibreDWG inspection enabled. This closes only the four listed high-origin
-rows; it does not establish persistence for other origins, ratios, intervals,
-or cache-refused high-origin outputs, nor ODA/AutoCAD acceptance.
+LibreDWG inspection enabled. Section 1573 supersedes this four-row checkpoint
+with a 16-row matrix across two origins and two ratios. This does not establish
+persistence for other origins, ratios, intervals, branches, or cache-refused
+high-origin outputs, nor ODA/AutoCAD acceptance.
+
+## 1573. Extend High-origin Hyperbola Persistence Across Origins and Ratios (2026-11-15)
+
+Test commit `c1fa4f849` extends section 1572's high-origin persistence case
+from four rows to 16. The real worker generates and validates typed bounded-hyperbola
+sources at origins `(1e6,-1e6)` and `(1e9,-2e9)`, ratios `0.05` and `0.2`,
+the positive branch over `[-0.4,0.4]`, both signed offsets, and distances
+`0.5` and `1.5` times vertex radius. Each row must admit operation-8 cache
+validation before the editable offset is saved and reopened through R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. LibreDWG independently verifies the typed
+offset EED markers in both DWGs when available.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean \
+  --target librecad_offset_worker_client_tests -j4
+LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 QT_QPA_PLATFORM=offscreen \
+  DWGREAD=/opt/homebrew/bin/dwgread \
+  /private/tmp/offset-2961-cmake-clean/LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests \
+  '[lc-offsetcurve][worker-client][hyperbola][cusp][large-origin][persistence]' \
+  --reporter compact
+git diff --check
+```
+
+The focused case passes 12,000 assertions / 1 case with DWG support and
+LibreDWG inspection enabled. It closes typed-source persistence only for the
+16 enumerated profiles. Opposite branches, reversed bounds, other origins,
+ratios, scales, intervals, cache-refused high-origin fallback persistence, and
+ODA/AutoCAD acceptance remain unqualified.
 
