@@ -55332,17 +55332,12 @@ Validation on macOS arm64:
   round-trip regression.
 - `git diff --check`: passed.
 
-The selected broader CTest run is not clean and must remain visible in the
-implementation queue. `offset_worker_process` exceeded its 30-second CTest
-limit; its log includes sandbox denial of `/bin/ps`, but the runtime also
-indicates the test may need a realistic bounded timeout or less expensive
-process polling. The external-plugin and console-import tests both fail to
-recover the native offset from `dxf-binary-R2018-native-degree1.dxf`; the
-DWG/DXF entity round-trip tests likewise reload `LC_OffsetCurve` as an ordinary
-spline (entity type 31 instead of 50). Investigate carrier admission,
-worker-validation diagnostics, and persistence/import routing before treating
-these as environment-only failures. These results do not implicate the local
-frame condition by themselves, but they prevent a clean end-to-end claim.
+The initial selected CTest run reported import/round-trip failures and a
+30-second worker-process timeout. The import/round-trip failures came from
+stale test executables and were cleared by rebuilding the affected targets;
+section 1673 records the corrected evidence. The process suite itself passes
+when allowed its measured runtime; section 1674 records the timeout correction.
+Do not treat the initial stale-binary results as current product failures.
 
 ## 1673. Rebuild Import and Round-trip Test Binaries before Triage (2026-11-16)
 
@@ -55374,4 +55369,24 @@ When diagnosing future failures, rebuild the affected CMake targets explicitly;
 the default application build does not necessarily refresh `EXCLUDE_FROM_ALL`
 test executables. This clears the specific import/round-trip findings from
 section 1672; unrelated open gates elsewhere in this roadmap remain open.
+
+## 1674. Set a Realistic CTest Timeout for Worker Process Framing (2026-11-16)
+
+Product-test commit `4337ad651` raises only the CTest timeout for
+`offset_worker_process` from 30 to 120 seconds. Its full filter launches
+hundreds of isolated helper processes and completed successfully in 52.27
+seconds on macOS arm64, including under the sandbox where `/bin/ps` is denied.
+The helper's per-operation deadlines and failure behavior are unchanged; the
+larger CTest ceiling allows the suite to finish and report those bounded
+results rather than terminating the overall test early.
+
+Validation:
+
+- `offset_worker_process`: 117,152 assertions / 6 cases passed in 52.27 seconds.
+- CMake configure/generate: passed.
+- `git diff --check`: passed.
+
+The separate `offset_worker_process_ordinary` test remains at its 30-second
+timeout because its filtered workload is distinct; change it only if measured
+evidence shows it needs a larger budget.
 
