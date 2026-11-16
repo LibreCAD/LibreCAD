@@ -2509,7 +2509,7 @@ TEST_CASE("High-origin endpoint-tangent parabola retains exact offset geometry",
     constexpr double distance = 0.01;
     constexpr double requestedTolerance = 1e-3;
     for (const double slope : {1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 5e-9, 2e-9,
-                               1.5e-9, 1.25e-9}) {
+                               1.5e-9, 1.25e-9, 1.125e-9}) {
         CAPTURE(slope);
         const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + translation, rotate({10.0, 0.0}) + translation}},
