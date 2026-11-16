@@ -25,21 +25,24 @@ USA.
 
 Updated: 2026-11-16. Project: **LibreCAD**, not LibreCAD_3.
 
-**Latest source-picker request reconciliation (2026-11-16):** The request to
-change the source-curve type while choosing a replacement and support every
-currently supported offset-source kind is already implemented at the picker
-and replacement-workflow level. Keep the selector bound to
-`LC_OffsetSourceGeometry::SupportedKinds`; it filters eligible existing
-entities while replacement selection remains active, and parabola remains a
-distinct source type rather than a spline-points alias. The committed source,
-cache, identity, selection, and highlight must remain unchanged until
-asynchronous validation publishes a replacement. Do not add another selector
-or a parabola-only implementation slice. Headless all-kind filtering,
-replacement, and highlight-transfer evidence is recorded below; the actual
-visible Properties workflow remains open in Slice 5. “All kinds” does not
-establish support for every concrete geometry variant: Slice 4 still owns
-variant-specific capture/reconstruction, worker/cache, Trim, and applicable
-DXF/DWG qualification, with unsupported cases refusing atomically.
+**Latest source-picker request reconciliation (2026-11-16):** While choosing a
+replacement source, the Properties widget must let the user change the
+requested source type and immediately refresh eligible candidates without
+ending replacement selection. Its type list is the complete current
+`LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola is a distinct supported type, not a spline-points alias. This
+picker/replacement behavior is already implemented and has headless all-kind
+filtering, replacement, and highlight-transfer evidence recorded below; do not
+add another selector or a parabola-only UI slice. Until asynchronous
+validation publishes a replacement, the committed source, cache, identity,
+selection, and highlight must remain unchanged. Visible packaged-app
+acceptance of repeated type changes, candidate refresh, source indication,
+success, and cancellation/refusal remains open in Slice 5. The nine-kind
+inventory does not establish support for every concrete geometry variant:
+Slice 4 still owns variant-specific capture/reconstruction, worker/cache,
+Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
+atomically.
 
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
@@ -52824,6 +52827,8 @@ Test commit `f764374b1` adds an exact vertex-radius profile to the existing
 worker-backed hyperbola Trim Two action test while retaining its post-cusp
 profile. Follow-up commit `cc5434955` runs both profiles at ordinary origin
 and translated frame `(1e8,-1e8)`, with the viewport fitted around the source.
+Test commit `b254eee21` extends both profiles to `(1e9,-1e9)` and fits that
+frame at 2x zoom so device-coordinate offsets remain representable.
 The action updates the editable offset at distance `1` from a rotated,
 asymmetric bounded hyperbola; the exact-cusp fixture uses semi-major length
 `3.5` and ratio `sqrt(1/3.5)`, so its vertex radius is `3.5 * ratio^2`. It
@@ -52846,11 +52851,11 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-The focused action case passes 778 assertions / 1 case; the complete
-typed-hyperbola Trim-action selection passes 14,728 assertions / 3 cases. The
+The focused action case passes 1,117 assertions / 1 case; the complete
+typed-hyperbola Trim-action selection passes 14,953 assertions / 3 cases. The
 direct Trim suite remains 59,719 assertions / 45 cases (section 1584). These
 profiles close the exact-cusp Trim action row at ordinary origin and the
-recorded `(1e8,-1e8)` translated frame. More extreme interactive origins,
-other hyperbola domains and distances, visible Properties acceptance, and
-independent ODA/AutoCAD acceptance remain open.
+recorded `(1e8,-1e8)` and `(1e9,-1e9)` translated frames. More extreme
+interactive origins, other hyperbola domains and distances, visible
+Properties acceptance, and independent ODA/AutoCAD acceptance remain open.
 
