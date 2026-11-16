@@ -52822,12 +52822,14 @@ ODA/AutoCAD acceptance remain open.
 
 Test commit `f764374b1` adds an exact vertex-radius profile to the existing
 worker-backed hyperbola Trim Two action test while retaining its post-cusp
-profile. The action first updates the editable offset from a rotated,
-asymmetric bounded hyperbola at offset distance `1`; the exact-cusp fixture
-uses semi-major length `3.5` and ratio `sqrt(1/3.5)`, so its vertex radius is
-`3.5 * ratio^2`. It then verifies worker preparation, Trim Two preview,
-atomic commit, undo/redo, and five DXF/DWG save/reopen lanes. No direct cache
-mutation bypasses worker validation.
+profile. Follow-up commit `cc5434955` runs both profiles at ordinary origin
+and translated frame `(1e8,-1e8)`, with the viewport fitted around the source.
+The action updates the editable offset at distance `1` from a rotated,
+asymmetric bounded hyperbola; the exact-cusp fixture uses semi-major length
+`3.5` and ratio `sqrt(1/3.5)`, so its vertex radius is `3.5 * ratio^2`. It
+then verifies worker preparation, Trim Two preview, atomic commit, undo/redo,
+and five DXF/DWG save/reopen lanes. No direct cache mutation bypasses worker
+validation.
 
 Validation on macOS arm64 CMake Release:
 
@@ -52844,11 +52846,11 @@ QT_QPA_PLATFORM=offscreen \
 git diff --check
 ```
 
-The focused case passes 382 assertions / 1 case; the complete typed-hyperbola
-Trim-action selection passes 14,216 assertions / 3 cases. The direct Trim
-suite remains 59,719 assertions / 45 cases (section 1584). These profiles
-close the exact-cusp Trim action row only at the stated ordinary-coordinate
-frame. High-origin action interaction, other hyperbola domains and distances,
-visible Properties acceptance, and independent ODA/AutoCAD acceptance remain
-open.
+The focused action case passes 778 assertions / 1 case; the complete
+typed-hyperbola Trim-action selection passes 14,728 assertions / 3 cases. The
+direct Trim suite remains 59,719 assertions / 45 cases (section 1584). These
+profiles close the exact-cusp Trim action row at ordinary origin and the
+recorded `(1e8,-1e8)` translated frame. More extreme interactive origins,
+other hyperbola domains and distances, visible Properties acceptance, and
+independent ODA/AutoCAD acceptance remain open.
 
