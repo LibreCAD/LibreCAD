@@ -51982,33 +51982,37 @@ nonuniform/three-dimensional transforms, and the broader Slice 4
 family/variant, persistence, visible-GUI, and independent-CAD gates remain
 open.
 
-## 1563. Confirm Source-widget Type Selection Includes Every Supported Kind (2026-11-15)
+## 1563. Source-widget Type-switching Contract and Acceptance (2026-11-15)
 
-The latest clarification requires the source-curve widget to permit changing
-the requested curve type while replacement-source selection is active, and to
-offer every type currently supported by offset source capture. The required
-inventory is the nine `LC_OffsetSourceGeometry::SupportedKinds`: line, arc,
-circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
-polyline. Parabola must remain a distinct choice; it must not be hidden under
-spline-points or treated as unsupported.
+The source widget in Offset Curve Properties must allow the user to change the
+requested source-curve type while replacement-source picking is active, then
+refresh the selectable candidates for that type without changing the current
+source. Its selector must expose every entry in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is its own
+selectable/captured kind, not an alias for spline-points. “All supported types”
+refers to this authoritative offset-source inventory, not every entity type
+drawable by LibreCAD.
 
-This confirms, rather than expands, the implementation contract in sections
-1532, 1549, 1555, and 1558. Automated tests already cover repeated type changes,
-candidate-filter refresh, preservation of the old source/highlight until a
-replacement is accepted, and transfer of source/highlight after worker
-preparation succeeds. No additional production-code slice is planned unless
-these tests regress or the supported-kind inventory changes. Geometry support
-for each kind across generation, cache/worker, trimming, and persistence
-remains subject to Slice 4's separate matrix; the selector alone does not
-establish those capabilities.
+This is the consolidated requirement from sections 1532, 1549, 1555, and 1558;
+the repeated requests do not create separate implementation slices. Existing
+headless coverage records repeated type changes, candidate-filter refresh,
+preservation of the prior source/cache/highlight while browsing, and atomic
+source/highlight transfer only after a candidate passes worker preparation.
+No further production-code work is planned unless that behavior regresses or
+`SupportedKinds` changes. Selector completeness must not be used as evidence
+that every family/variant supports generation, worker/cache admission,
+trimming, or persistence; those capabilities remain separate Slice 4 gates.
 
-The outstanding widget-specific gate remains a visible packaged-app check:
-begin source replacement, change the requested type at least twice (including
-to and from parabola), verify candidates refresh while the original source
-stays highlighted, then accept a candidate and verify the source and highlight
-change together. Also verify cancellation/refusal preserves the original
-source and highlight. Record platform and binary revision. Headless Qt tests
-do not close this gate; independent CAD interoperability is tracked separately.
+**Remaining widget acceptance:** on the packaged LibreCAD app, start replacing
+the source, switch the requested type at least twice in the same picking
+session (including to and from parabola), and verify that candidates refresh
+while the old source remains highlighted. Accept a candidate and verify that
+source, cache, and highlight commit together only after successful worker
+preparation. Cancel and exercise a refusal path, confirming the old source,
+cache, and highlight remain unchanged. Record platform and exact binary/commit
+revision. Headless Qt coverage does not close this visible-app gate. ODA/AutoCAD
+interoperability is independent and is not required to close this widget item.
 
 ## 1564. Reconcile the Self-crossing Polyline Slice 4 Summary (2026-11-15)
 
