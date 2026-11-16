@@ -251,8 +251,8 @@ and independent endpoint/interior-normal oracles for three tangent layouts.
 The interior oracle uses relative tolerance `1e-4` against the recorded
 order-of-ten local span; these samples remain bounded, not a claim of arbitrary
 tangent-pair completeness. Section 1682 adds mirrored and unequal layouts to
-circle/line Trim Two with full action and persistence checks; scale variance
-for those two remains source-oracle-only.
+circle/line Trim Two with full action and persistence checks; section 1683
+extends both line-cutter layouts across source scales `1e-3/1/1e3`.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55558,4 +55558,23 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 The two added tangent pairs are each tested at one scale/frame in the action
 matrix; the source-only analytic oracle covers their scale rows. Other cutter
 placements, source scales, and external CAD acceptance remain separate gates.
+
+## 1683. Scale Mirrored and Unequal Tangent Line-cutter Trim (2026-11-16)
+
+Test commit `a0416c29b` extends the mirrored and unequal tangent line-cutter
+profiles from section 1682 to source scales `1e-3` and `1e3`, retaining their
+unit-scale rows. The corresponding origins are `(1e3,-2e3)` and
+`(1e9,-2e9)`. Both operand-pick orders, worker-backed Trim Two preparation,
+preview/commit, undo/redo, and all five DXF/DWG save/reopen lanes run at each
+scale; the exact tangent-circle refusal/oracle remains active as a separate
+contact-boundary check.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 88,989 assertions / 1 case.
+- CMake `librecad_offset_trim_tests` target build: passed.
+- `git diff --check`: passed.
+
+This closes the three-scale line-cutter matrix for these two tangent layouts,
+not arbitrary line placement, cutter direction, or external CAD acceptance.
 
