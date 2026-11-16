@@ -54504,3 +54504,26 @@ Validation on macOS arm64 CMake Release:
 This does not close all-knot subprocess coverage, GUI replacement, Trim,
 persistence, additional periodic profiles, or external CAD acceptance.
 
+## 1638. Add a Steeper Asymmetric Periodic Weight Gradient (2026-11-16)
+
+Test commit `592a24f47` adds the positive asymmetric profile
+`weight[i] = 0.7 + 0.2 * i` to the degree-4/6 wrapped rational spline matrix.
+The direct high-precision oracle and worker/cache validation cover every
+interior knot; the built-helper test covers its representative first interior
+knot through branch generation, offset-point endpoint mapping, and a separate
+process cache-admission request. This extends the prior three gradients without
+changing production behavior.
+
+Validation on macOS arm64 CMake Release:
+
+- Focused all-interior-knot kernel matrix: 2,496 assertions / 1 case.
+- Focused helper-process matrix: 1,252 assertions / 1 case.
+- Full worker-kernel suite: 1,972,242 assertions / 124 cases.
+- Full helper-process suite: 3,957 assertions / 7 cases.
+- `git diff --check`: passed.
+
+These four bounded positive weight profiles do not establish arbitrary
+periodic weight distributions, knot layouts, source scales, complete
+subprocess all-knot coverage, GUI replacement, Trim/persistence for these
+exact profiles, or independent CAD acceptance.
+
