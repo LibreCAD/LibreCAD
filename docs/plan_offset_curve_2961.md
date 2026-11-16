@@ -50,7 +50,7 @@ Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
 atomically. Sections 1595 and 1597 hold the implementation and headless
 interaction evidence; there is no additional source-widget implementation
 slice indicated by this request. The source-picker product revision
-`b96f27469` remains unchanged through PR head `2e560d409`; at that product
+`b96f27469` remains unchanged through PR head `976afff7b`; at that product
 revision,
 `[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
 CMake Release; this includes explicit enabled-state checks during an active
@@ -53332,4 +53332,24 @@ and `QT_QPA_PLATFORM=offscreen`. `git diff --check` passes.
 Result: 69,947 assertions pass in 1 test case. Test commit `951c3a51d`
 adds one high-origin profile to the existing shared frame matrix; it does not
 change production behavior.
+
+## 1601. Trim a Reconstructed Parabola at 1e9 Origins (2026-11-16)
+
+The transformed-frame Trim Two action matrix now includes the same rotated,
+balanced-sample parabola profile at `(1e9, -2e9)`. The existing action-level
+path reconstructs and worker-validates the typed parabola source, prepares an
+asynchronous preview, commits both trim operands atomically, checks undo/redo,
+and round-trips the trimmed geometry through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. The configured LibreDWG reader validates both DWG lanes. This closes
+only the added frame for this Trim Two profile; it is not a general high-origin
+Trim guarantee or external ODA/AutoCAD/visible-GUI acceptance.
+
+Validation on macOS arm64 CMake Release with LibreDWG available: rebuild
+`librecad_tests` and run the focused
+`T Trim Two trims reconstructed parabolas across transformed frames with undo
+and redo` case with `DWGREAD=/opt/homebrew/bin/dwgread` and
+`QT_QPA_PLATFORM=offscreen`; `git diff --check` passes.
+
+Result: 19,163 assertions pass in 1 test case. Test commit `976afff7b` adds
+one frame to the existing action matrix and changes no production behavior.
 
