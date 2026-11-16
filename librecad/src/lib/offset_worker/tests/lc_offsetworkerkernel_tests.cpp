@@ -8901,6 +8901,128 @@ TEST_CASE(
 }
 
 TEST_CASE(
+    "steep asymmetric endpoint-tangent parabola offsets match analytic interior normals",
+    "[lc-offsetcurve][worker-kernel][oracle][parabola][tangent][scale]") {
+  const auto rotate = [](const RS_Vector& point) {
+    constexpr double angle = 0.41;
+    return RS_Vector{std::cos(angle) * point.x - std::sin(angle) * point.y,
+                     std::sin(angle) * point.x + std::cos(angle) * point.y};
+  };
+  struct Frame {
+    double scale;
+    RS_Vector origin;
+  };
+  const std::array<Frame, 3> frames{{
+      {1e-3, {1e3, -2e3}}, {1.0, {1e6, -2e6}}, {1e3, {1e9, -2e9}}}};
+  const std::array<double, 5> parameters{{0.1, 0.25, 0.5, 0.75, 0.9}};
+  const std::array<RS_Vector, 2> localTangents{{{0.8, 0.6}, {0.6, -0.8}}};
+  const auto nearestSplineDistance = [](const RS_Spline& spline,
+                                       const RS_Vector& point) {
+    double first = 0.0;
+    double last = 0.0;
+    REQUIRE(spline.getParameterDomain(first, last));
+    constexpr std::size_t samples = 1024;
+    std::size_t nearestIndex = 0;
+    double nearestSquared = RS_MAXDOUBLE;
+    for (std::size_t i = 0; i <= samples; ++i) {
+      const double parameter = first + (last - first) *
+          (static_cast<double>(i) / samples);
+      const double distanceSquared = spline.getPointAt(parameter).squaredTo(point);
+      if (distanceSquared < nearestSquared) {
+        nearestSquared = distanceSquared;
+        nearestIndex = i;
+      }
+    }
+    double low = first + (last - first) *
+        (static_cast<double>(nearestIndex == 0 ? 0 : nearestIndex - 1) / samples);
+    double high = first + (last - first) *
+        (static_cast<double>(std::min(samples, nearestIndex + 1)) / samples);
+    constexpr double ratio = 0.6180339887498948482;
+    double left = high - ratio * (high - low);
+    double right = low + ratio * (high - low);
+    for (int iteration = 0; iteration < 48; ++iteration) {
+      if (spline.getPointAt(left).squaredTo(point) <
+          spline.getPointAt(right).squaredTo(point)) {
+        high = right;
+        right = left;
+        left = high - ratio * (high - low);
+      } else {
+        low = left;
+        left = right;
+        right = low + ratio * (high - low);
+      }
+    }
+    return std::sqrt(std::min({nearestSquared,
+                               spline.getPointAt(left).squaredTo(point),
+                               spline.getPointAt(right).squaredTo(point)}));
+  };
+
+  for (const Frame& frame : frames) {
+    CAPTURE(frame.scale, frame.origin);
+    const std::array<RS_Vector, 2> endpoints{{
+        rotate({0.0, 0.0}) + frame.origin,
+        rotate({10.0 * frame.scale, 0.0}) + frame.origin}};
+    const std::array<RS_Vector, 2> tangents{{
+        rotate(localTangents[0]), rotate(localTangents[1])}};
+    const LC_ParabolaData parabola = LC_ParabolaData::FromEndPointsTangents(
+        endpoints, tangents);
+    REQUIRE(parabola.isValid());
+    for (const double signedDistance : {0.1 * frame.scale, -0.1 * frame.scale}) {
+      CAPTURE(signedDistance);
+      const LC_OffsetSourceDefinition signedDefinition{
+          LC_OffsetSourceGeometry{parabola}, signedDistance, 1e-4, false};
+      const auto generatedReply = LC_OffsetWorkerKernel::run(
+          {token, req::GenerateSource{signedDefinition, {}}});
+      const auto& generated = native(generatedReply, 7);
+      REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+      REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+      REQUIRE_FALSE(generated.ordinary.empty());
+
+      std::vector<std::unique_ptr<RS_Spline>> output;
+      for (const auto& ordinary : generated.ordinary) {
+        const auto* data = std::get_if<RS_SplineData>(&ordinary);
+        REQUIRE(data);
+        RS_SplineData localData = *data;
+        for (RS_Vector& point : localData.controlPoints)
+          point -= frame.origin;
+        output.push_back(std::make_unique<RS_Spline>(nullptr, localData));
+      }
+      REQUIRE_FALSE(output.empty());
+
+      const auto& control = parabola.m_controlPoints;
+      const double worldMagnitude = std::max({
+          std::abs(endpoints[0].x), std::abs(endpoints[0].y),
+          std::abs(endpoints[1].x), std::abs(endpoints[1].y), 1.0});
+      const double allowedDeviation = std::max(
+          4e-4 * frame.scale,
+          256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+      double maximumDeviation = 0.0;
+      for (const double t : parameters) {
+        const double inverse = 1.0 - t;
+        const RS_Vector sourcePoint =
+            control[0] * (inverse * inverse) +
+            control[1] * (2.0 * inverse * t) + control[2] * (t * t);
+        const RS_Vector sourceTangent =
+            (control[1] - control[0]) * (2.0 * inverse) +
+            (control[2] - control[1]) * (2.0 * t);
+        REQUIRE(sourceTangent.magnitude() > 0.0);
+        const RS_Vector unitTangent = sourceTangent.normalized();
+        const RS_Vector exactOffset = sourcePoint +
+            RS_Vector{-unitTangent.y, unitTangent.x} * signedDistance;
+        double nearest = RS_MAXDOUBLE;
+        for (const auto& spline : output)
+          nearest = std::min(nearest,
+                             nearestSplineDistance(*spline,
+                                                   exactOffset - frame.origin));
+        maximumDeviation = std::max(maximumDeviation, nearest);
+      }
+      CAPTURE(maximumDeviation, allowedDeviation, output.size());
+      CHECK(maximumDeviation <= allowedDeviation);
+    }
+  }
+}
+
+TEST_CASE(
     "worker protocol rejects degenerate endpoint-tangent parabola sources",
     "[lc-offsetcurve][worker-kernel][source-generation][parabola][tangent]["
     "refusal]") {
