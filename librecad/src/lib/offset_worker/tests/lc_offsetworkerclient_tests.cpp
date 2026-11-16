@@ -25,6 +25,7 @@
 #include <limits>
 #include <memory>
 #include <optional>
+#include <string>
 #include <type_traits>
 #include <tuple>
 #include <utility>
@@ -5836,9 +5837,10 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                          std::sin(angle) * point.x + std::cos(angle) * point.y};
     };
     struct Profile {
-        const char* name;
+        std::string name;
         LC_ParabolaData source;
         double scale = 1.0;
+        double curvatureRatio = 0.0;
     };
     std::vector<Profile> profiles;
     const std::array<std::pair<const char*, double>, 10> slopeProfiles{{
@@ -5960,6 +5962,41 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     profiles.push_back(extremeMagnitudeProfile(
         "steep-asymmetric-extreme-tangent-magnitudes-large", 1e3,
         highOrigin));
+    const auto addCurvatureProfiles = [&](
+        const char* layoutName, const RS_Vector& firstTangent,
+        const RS_Vector& secondTangent) {
+        struct CurvatureFrame {
+            const char* name;
+            double scale;
+            RS_Vector origin;
+        };
+        const std::array<CurvatureFrame, 3> curvatureFrames{{
+            {"small", 1e-3, {1e3, -2e3}},
+            {"unit", 1.0, frameTranslation},
+            {"large", 1e3, highOrigin}}};
+        for (const CurvatureFrame& frame : curvatureFrames) {
+            const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
+                {{rotate({0.0, 0.0}) + frame.origin,
+                  rotate({10.0 * frame.scale, 0.0}) + frame.origin}},
+                {{rotate(firstTangent), rotate(secondTangent)}});
+            REQUIRE(source.isValid());
+            const double vertexRadius =
+                2.0 * source.m_focus.distanceTo(source.m_vertex);
+            REQUIRE(std::isfinite(vertexRadius));
+            REQUIRE(vertexRadius > 0.0);
+            for (const double curvatureRatio : {0.1, 0.5, 0.9}) {
+                const std::string name = std::string{"curvature-"} + layoutName +
+                    "-" + frame.name + "-ratio-" + std::to_string(curvatureRatio);
+                profiles.push_back({name, source, frame.scale, curvatureRatio});
+            }
+        }
+    };
+    addCurvatureProfiles("steep", {0.8, 0.6}, {0.6, -0.8});
+    addCurvatureProfiles("mirror", {0.8, -0.6}, {0.6, 0.8});
+    addCurvatureProfiles("unequal", {0.2, 0.9797958971132712},
+                         {0.9, -0.4358898943540673});
+    addCurvatureProfiles("magnitude-ratio", {8e-151, 6e-151},
+                         {6e149, -8e149});
     profiles.push_back({"mirrored-tangents",
         LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + frameTranslation,
@@ -5994,7 +6031,11 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         const LC_ParabolaData& source = profile.source;
         REQUIRE(source.isValid());
         for (const double signedUnitDistance : {0.5, -0.5}) {
-            const double signedDistance = signedUnitDistance * profile.scale;
+            const double signedDistance = profile.curvatureRatio > 0.0
+                ? (signedUnitDistance > 0.0 ? 1.0 : -1.0) *
+                      profile.curvatureRatio *
+                      2.0 * source.m_focus.distanceTo(source.m_vertex)
+                : signedUnitDistance * profile.scale;
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{source}, signedDistance,
@@ -6025,7 +6066,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             CHECK(generatedNative->sourceDefinition()->source.kind() ==
                   LC_OffsetSourceGeometry::Kind::Parabola);
             exactCache(generatedNative->getData(), cache);
-            if (std::strncmp(profile.name, "steep-asymmetric-", 17) == 0) {
+            if (profile.name.rfind("steep-asymmetric-", 0) == 0 ||
+                profile.name.rfind("curvature-", 0) == 0) {
                 const std::array<RS_Vector, 2> endpoints{
                     source.m_controlPoints.front(), source.m_controlPoints.back()};
                 const std::array<RS_Vector, 2> tangents{

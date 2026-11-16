@@ -262,8 +262,9 @@ action matrix. Section 1688 also qualifies a `1e300` endpoint-tangent
 magnitude ratio through the interior oracle and forward worker/cache lanes.
 Section 1689 probes exact interior normals at `0.1/0.5/0.9` of vertex
 curvature radius for the recorded tangent layouts; section 1690 classifies
-operation-8 cache admission/refusal for all sampled rows. Five-format
-persistence at these ratios remains open. Continue with materially distinct tangent
+operation-8 cache admission/refusal for all sampled rows; section 1691 carries
+those curvature-relative rows through worker/cache and five-format persistence.
+Continue with materially distinct tangent
 directions and contact conditioning; do not inflate this finite profile set
 into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
@@ -55734,4 +55735,23 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 This classifies operation-8 at the sampled ratios but does not persist each
 accepted cache through files or prove exact cusp/beyond-cusp behavior.
+
+## 1691. Persist Curvature-relative Endpoint-tangent Offsets (2026-11-16)
+
+Test commit `TBD` extends the section 1689/1690 curvature-relative profiles
+through the real worker/cache and five save/reopen lanes: R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. It covers four endpoint-tangent layouts (steep,
+mirrored, unequal, and `1e300` magnitude-ratio), three scale/origin frames,
+three offset ratios (`0.1`, `0.5`, `0.9` of vertex curvature radius), and both
+offset signs. The client checks exact cache payload preservation and independently
+checks sampled output normals against the source parabola. This records these
+specific forward-traversal profiles; reverse-traversal file persistence,
+singular cusp behavior, arbitrary tangent inputs, and independent CAD acceptance
+remain open.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 109,494 assertions / 1 case.
+- `librecad_offset_worker_client_tests` target build: passed.
+- `git diff --check`: passed.
 
