@@ -52744,7 +52744,9 @@ existing quarter-radius profiles remain across all four origins; only the
 extreme-origin rows gain this exact-cusp profile, limiting the added file
 work. Each row passes worker generation, operation-8 cache admission, R14
 DXF/R2000 DXF-DWG/R2018 DXF-DWG save and two reopen passes. Available
-LibreDWG inspection checks both emitted DWGs.
+LibreDWG inspection checks both emitted DWGs. The full asymmetric persistence
+case now runs 160 profiles: the original quarter-radius matrix across four
+origins plus the exact-threshold additions at the extreme origin.
 
 Validation on macOS arm64 CMake Release:
 
@@ -52775,7 +52777,8 @@ Results: the translated-origin direct suite passes 1,274,624 assertions / 1
 case; the asymmetric suite passes 1,992,160 assertions / 1 case; and the
 high-origin worker/cache plus five-lane persistence case passes 21,818
 assertions / 1 case with LibreDWG enabled. The asymmetric five-lane persistence
-case passes 81,150 assertions / 1 case with LibreDWG enabled. These are the
-recorded profiles only. Broader hyperbola variants, visible-app acceptance,
-and independent ODA/AutoCAD acceptance remain open.
+case passes 81,150 assertions / 1 case with LibreDWG enabled after the
+extreme-origin exact-threshold extension. These are the recorded profiles
+only. Broader hyperbola variants, visible-app acceptance, and independent
+ODA/AutoCAD acceptance remain open.
 
