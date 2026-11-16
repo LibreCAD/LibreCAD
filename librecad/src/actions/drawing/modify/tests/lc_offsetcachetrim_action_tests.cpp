@@ -2643,16 +2643,16 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(lc::test::ensureSettings());
     Drawing<true> f;
     const int profile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                                 13, 14, 15, 16);
+                                 13, 14, 15, 16, 17, 18);
     const bool highOrigin = profile == 2;
     const bool scaleExtreme = profile == 1;
     const bool reversedTangentTraversal = profile == 4 || profile == 6 ||
                                           profile == 8 || profile == 10 || profile == 12 ||
-                                          profile == 14 || profile == 16;
+                                          profile == 14 || profile == 16 || profile == 18;
     const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
-                                    (profile >= 5 && profile <= 16);
+                                    (profile >= 5 && profile <= 18);
     const bool oppositeBend = profile >= 5 && profile <= 16;
-    const bool lineCutter = profile >= 11 && profile <= 16;
+    const bool lineCutter = profile >= 11 && profile <= 18;
     const bool asymmetricSmallScale = profile == 7 || profile == 8 ||
                                       profile == 13 || profile == 14;
     const bool asymmetricLargeScale = profile == 9 || profile == 10 ||
@@ -2705,7 +2705,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
             profileScale, towardCentre, tangentSlope, sourceRotation);
     const double endpointSpacing = scaleExtreme
         ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
-    const std::array<RS_Vector, 2> endpointTangents = profile == 4
+    const std::array<RS_Vector, 2> endpointTangents = profile == 4 || profile == 18
         ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
         : reversedTangentTraversal
             ? std::array<RS_Vector, 2>{{{-0.8, -0.25}, {-1.0, 0.4}}}
