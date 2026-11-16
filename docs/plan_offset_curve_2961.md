@@ -50,7 +50,9 @@ Trim, and applicable DXF/DWG qualification, with unsupported cases refusing
 atomically. Sections 1595 and 1597 hold the implementation and headless
 interaction evidence; there is no additional source-widget implementation
 slice indicated by this request. The source-picker product revision
-`b96f27469` remains unchanged through PR head `976afff7b`; at that product
+`b96f27469` remains unchanged through current PR branch head `46e828312`; the
+commits since that product revision add qualification tests and roadmap
+checkpoints, not additional source-picker product code. At that product
 revision,
 `[gui][dialog][offsetcurve][source]` passes 15,498 assertions / 45 cases in
 CMake Release; this includes explicit enabled-state checks during an active
