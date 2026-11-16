@@ -53772,3 +53772,26 @@ is now sampled through valid `1.1044921875e-9` and invalid
 `1.104296875e-9`/`1.10390625e-9` at this frame; the continuous boundary and
 other origins/scales remain open.
 
+## 1613. Probe the Next High-origin Tangent Boundary Midpoint (2026-11-16)
+
+The direct construction oracle adds slope `1.10439453125e-9`, the midpoint
+between the valid `1.1044921875e-9` profile and invalid
+`1.104296875e-9` profile from section 1612. At rotation `0.41` and origin
+`(1e9,-2e9)`, this candidate is invalid; no production change is needed. This
+narrows sampled construction representability only and does not imply a
+continuous threshold or offset-engine boundary.
+
+Validation on macOS arm64 CMake Release:
+
+```sh
+cmake --build /private/tmp/offset-2961-cmake-clean --target librecad_tests -j4
+QT_QPA_PLATFORM=offscreen \
+  /private/tmp/offset-2961-cmake-clean/librecad_tests \
+  '[curve-offset][direct][parabola][tangent][large-origin][oracle]' --reporter compact
+git diff --check
+```
+
+Result: 4,463 assertions / 1 case pass. The unresolved sampled interval is
+`(1.10439453125e-9, 1.1044921875e-9]`; other frames, scales, constructions,
+and external CAD acceptance remain open.
+
