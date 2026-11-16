@@ -26,11 +26,11 @@ USA.
 Updated: 2026-11-15. Project: **LibreCAD**, not LibreCAD_3.
 
 **Latest implementation reconciliation (2026-11-15, latest code/test commit
-`2faecfeb8`):** Rotated and reversed parabola pattern clipping now orders
+`13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
 intersections in the directed local parameter and extracts exact Bezier
 subcurves. Parabola intersections with cloned atomic boundaries are solved in
 the parabola's local frame for high-origin stability. Regressions and broad
-hatch validation are recorded in sections 1559-1561. The source-type selector contract is implemented for all nine
+hatch validation are recorded in sections 1559-1562. The source-type selector contract is implemented for all nine
 `LC_OffsetSourceGeometry::SupportedKinds`, with parabola distinct from
 spline-points; automated replacement/highlight transfer is recorded in
 section 1532 and revalidated on the rebuilt current tree in section 1549,
@@ -51950,4 +51950,23 @@ existing optional `/private/tmp/libdxfrw-cargo/env` shell-profile warning and
 compiler/linker warnings remain. This verifies line and circle boundary
 profiles for tested rotations/origins, not every atomic boundary geometry or
 the full Slice 4 family/variant matrix.
+
+## 1562. Verify High-origin Parabola Clipping Against an Ellipse (2026-11-15)
+
+Test commit `13d006a0b` adds an independently rotated, ratio-0.7 whole ellipse
+at `(1e9, -2e9)` as the clipping boundary for a rotated parabola. The
+regression verifies the retained entity is still typed as a parabola, sampled
+points agree with the original Bezier within `2e-6`, both retained endpoints
+satisfy the ellipse equation within `2e-6`, and interior samples lie inside
+the ellipse. This exercises the generalized clone-and-local-transform path
+with an ellipse rather than inferring it from the circle test.
+
+Validation on macOS arm64: focused `[lc-hatchfix][pattern][parabola][trim]`
+passes 54 assertions / 4 cases; `[lc-hatchfix]` passes 89,678 assertions
+across 170 passing cases with one skipped. Product code is unchanged from
+section 1561, where the CMake application tests and recursive qmake6
+application/worker/plugin build pass. Other boundary representations,
+nonuniform/three-dimensional transforms, and the broader Slice 4
+family/variant, persistence, visible-GUI, and independent-CAD gates remain
+open.
 
