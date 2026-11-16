@@ -63,6 +63,11 @@ roadmap and tests, including parabola drawing-action tests. This is headless UI
 evidence and does not close the
 visible packaged-app gate.
 
+Checkpoint 1603 below is the latest explicit confirmation of this contract
+against the current codebase. It supersedes any older roadmap wording that
+describes a single-family-only source chooser or proposes a separate
+parabola-specific selector task.
+
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
 intersections in the directed local parameter and extracts exact Bezier
@@ -53374,4 +53379,32 @@ and redo` case with `DWGREAD=/opt/homebrew/bin/dwgread` and
 
 Result: 19,287 assertions pass in 1 test case. Test commit `d5fc49eba` adds the
 inward companion frame; no production behavior changes.
+
+## 1603. Confirm Type-changing Source Picker Covers Every Supported Kind (2026-11-16)
+
+The latest request asks that the source-curve Properties widget permit changing
+the requested source type while choosing a replacement, and expose all source
+types supported by the offset model. Rechecked against the current code: the
+type combo is populated directly from
+`LC_OffsetSourceGeometry::SupportedKinds`, and changing it refreshes the
+candidate filter without applying a source mutation. The current inventory is
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline; parabola is distinct from spline-points. A selected candidate is
+still validated asynchronously before replacement is published, preserving
+the prior source and cache on refusal.
+
+This behavior is already implemented. Existing headless evidence covers
+repeated type switching/filtering, every supported family, candidate hover and
+highlight, and worker-backed replacement. In particular, the source Properties
+selection passes 15,498 assertions / 45 cases, the incremental all-kind filter
+case passes 148 assertions / 1 case, and the all-family hover/click/replacement
+case passes 466 assertions / 1 case at the recorded PR product revision.
+These tests do not establish visible packaged-app interaction.
+
+Plan disposition: no new source-picker implementation slice. Keep the visible
+Properties workflow (change types repeatedly, verify candidate refresh and
+source indication, replace successfully, and cancel/refuse without mutation)
+open under Slice 5. Keep concrete source-variant geometry, worker/cache,
+trimming, and DXF/DWG qualification open under Slice 4; selector coverage is
+not evidence of end-to-end support for every geometry variant.
 
