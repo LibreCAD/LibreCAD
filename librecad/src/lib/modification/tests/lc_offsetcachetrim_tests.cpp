@@ -2520,55 +2520,71 @@ TEST_CASE("Conic-only trim certifies near-tangent degree-one circle contacts", t
 
 TEST_CASE("Conic-only trim certifies near-tangent degree-one rotated ellipse contacts", tags) {
     using Exact = boost::multiprecision::cpp_rational;
-    const RS_Vector major{2, 1};
-    for (const double ratio : {.5, 2.}) {
-        RS_Ellipse cutter{nullptr, {{0, 0}, major, ratio}};
-        const RS_Vector minor{-major.y * ratio, major.x * ratio};
-        for (const bool reverse : {false, true}) {
-            for (const double inward : {1e-8, 1e-10, 1e-12}) {
-                CAPTURE(ratio, reverse, inward);
-                const RS_Vector base = minor * (1 - inward);
-                auto source = cache({base - major * 2, base + major * 2});
-                if (reverse) reversed(source);
-                const auto before = source;
+    struct Profile {
+        RS_Vector center;
+        double scale;
+        std::vector<double> inwardFractions;
+    };
+    const std::array<Profile, 3> profiles{{
+        {{0, 0}, 1, {1e-8, 1e-10, 1e-12}},
+        {{1e6, -2e6}, 10, {1e-8, 1e-9, 1e-10}},
+        {{1e9, -2e9}, 1e3, {1e-8}}
+    }};
+    for (const auto& profile : profiles) {
+        const RS_Vector center = profile.center;
+        const double scale = profile.scale;
+        const RS_Vector major{2 * scale, scale};
+        for (const double ratio : {.5, 2.}) {
+            RS_Ellipse cutter{nullptr, {center, major, ratio}};
+            const RS_Vector minor{-major.y * ratio, major.x * ratio};
+            for (const bool reverse : {false, true}) {
+                for (const double inward : profile.inwardFractions) {
+                    CAPTURE(center.x, center.y, scale, ratio, reverse, inward);
+                    const RS_Vector base = center + minor * (1 - inward);
+                    auto source = cache({base - major * 2, base + major * 2});
+                    if (reverse)
+                        reversed(source);
+                    const auto before = source;
 
-                const Exact ax{major.x}, ay{major.y}, exactRatio{ratio};
-                const Exact axisSquared = ax * ax + ay * ay;
-                const auto normalized = [&](const RS_Vector& point) {
-                    const Exact x{point.x}, y{point.y};
-                    return std::pair<Exact, Exact>{
-                        (x * ax + y * ay) / axisSquared,
-                        (-x * ay + y * ax) / (axisSquared * exactRatio)};
-                };
-                const auto [u0, v0] = normalized(source.controlPoints[0]);
-                const auto [u1, v1] = normalized(source.controlPoints[1]);
-                const Exact f0 = u0 * u0 + v0 * v0 - 1;
-                const Exact f1 = u0 * u1 + v0 * v1 - 1;
-                const Exact f2 = u1 * u1 + v1 * v1 - 1;
-                const Exact quadratic = f0 - 2 * f1 + f2;
-                const Exact linear = 2 * (f1 - f0);
-                const Exact discriminant = linear * linear - 4 * quadratic * f0;
-                REQUIRE(quadratic > 0);
-                REQUIRE(discriminant > 0);
-                const double a = quadratic.convert_to<double>();
-                const double b = linear.convert_to<double>();
-                const double root = std::sqrt(discriminant.convert_to<double>());
-                std::array<double, 2> expected{{(-b - root) / (2 * a),
-                                                (-b + root) / (2 * a)}};
-                std::sort(expected.begin(), expected.end());
+                    const Exact ax{major.x}, ay{major.y}, exactRatio{ratio};
+                    const Exact axisSquared = ax * ax + ay * ay;
+                    const auto normalized = [&](const RS_Vector& point) {
+                        const Exact x = Exact{point.x} - Exact{center.x};
+                        const Exact y = Exact{point.y} - Exact{center.y};
+                        return std::pair<Exact, Exact>{
+                            (x * ax + y * ay) / axisSquared,
+                            (-x * ay + y * ax) / (axisSquared * exactRatio)};
+                    };
+                    const auto [u0, v0] = normalized(source.controlPoints[0]);
+                    const auto [u1, v1] = normalized(source.controlPoints[1]);
+                    const Exact f0 = u0 * u0 + v0 * v0 - 1;
+                    const Exact f1 = u0 * u1 + v0 * v1 - 1;
+                    const Exact f2 = u1 * u1 + v1 * v1 - 1;
+                    const Exact quadratic = f0 - 2 * f1 + f2;
+                    const Exact linear = 2 * (f1 - f0);
+                    const Exact discriminant = linear * linear - 4 * quadratic * f0;
+                    REQUIRE(quadratic > 0);
+                    REQUIRE(discriminant > 0);
+                    const double a = quadratic.convert_to<double>();
+                    const double b = linear.convert_to<double>();
+                    const double root = std::sqrt(discriminant.convert_to<double>());
+                    std::array<double, 2> expected{
+                        {(-b - root) / (2 * a), (-b + root) / (2 * a)}};
+                    std::sort(expected.begin(), expected.end());
 
-                const auto result = Trim::prepareConic(source, cutter,
-                    {cutter.getData().center - major});
-                CAPTURE(static_cast<int>(result.refusal), result.rootCount,
-                        result.work.failureStage,
-                        result.work.intersections.deepestPairRefinement);
-                REQUIRE(result.refusal == Trim::Refusal::None);
-                CHECK(result.work.intersections.deepestPairRefinement >= 24);
-                REQUIRE(result.roots.size() == 2);
-                CHECK(std::abs(result.roots[0].target.localParameter.lo() - expected[0]) < 2e-7);
-                CHECK(std::abs(result.roots[1].target.localParameter.lo() - expected[1]) < 2e-7);
-                REQUIRE(result.conicFragments.size() == 1);
-                equalData(source, before);
+                    const auto result = Trim::prepareConic(
+                        source, cutter, {cutter.getData().center - major});
+                    CAPTURE(static_cast<int>(result.refusal), result.rootCount,
+                            result.work.failureStage,
+                            result.work.intersections.deepestPairRefinement);
+                    REQUIRE(result.refusal == Trim::Refusal::None);
+                    CHECK(result.work.intersections.deepestPairRefinement >= 24);
+                    REQUIRE(result.roots.size() == 2);
+                    CHECK(std::abs(result.roots[0].target.localParameter.lo() - expected[0]) < 2e-7);
+                    CHECK(std::abs(result.roots[1].target.localParameter.lo() - expected[1]) < 2e-7);
+                    REQUIRE(result.conicFragments.size() == 1);
+                    equalData(source, before);
+                }
             }
         }
     }
@@ -2576,8 +2592,7 @@ TEST_CASE("Conic-only trim certifies near-tangent degree-one rotated ellipse con
 
 TEST_CASE("Conic-only trim combines disconnected contacts on an ellipse", tags) {
     RS_SplineData source{1, false};
-    source.controlPoints = {{-3, .25}, {3, .25}, {.5, -2}, {.5, 2},
-                            {-3, 5}, {3, 5}, {0, 4}, {0, 6}};
+    source.controlPoints = {{-3, .25}, {3, .25}, {.5, -2}, {.5, 2}, {-3, 5}, {3, 5}, {0, 4}, {0, 6}};
     source.weights.assign(source.controlPoints.size(), 1);
     source.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
     const auto before = source;
@@ -2585,9 +2600,8 @@ TEST_CASE("Conic-only trim combines disconnected contacts on an ellipse", tags) 
     const auto ellipseBefore = ellipse.getData();
 
     const auto result = Trim::prepareConic(source, ellipse, {{.1, .9}});
-    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
-        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
-        result.work.intersections.generatedItems);
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems, result.work.intersections.totalBoxPairs,
+            result.work.intersections.generatedLeaves, result.work.intersections.generatedItems);
     REQUIRE(result.refusal == Trim::Refusal::None);
     CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
     REQUIRE(result.roots.size() == 4);
