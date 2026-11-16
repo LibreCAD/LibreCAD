@@ -4787,6 +4787,87 @@ TEST_CASE("Hyperbola cusp offsets retain exact normals at translated origins",
   }
 }
 
+TEST_CASE("Asymmetric hyperbola cusp offsets retain exact normals",
+          "[curve-offset][direct][hyperbola][oracle][cusp][asymmetric]") {
+  const std::array<RS_Vector, 4> origins{
+      {{23.0, -17.0}, {1e6, -1e6}, {1e9, -2e9}, {1e12, -2e12}}};
+  constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
+  constexpr std::array<std::pair<double, double>, 4> intervals{
+      {{-0.4, 0.8}, {-0.8, 0.4}, {0.0, 0.8}, {-0.8, 0.0}}};
+  constexpr double rotation = 0.37;
+  for (const RS_Vector &origin : origins) {
+    const bool veryHighOrigin =
+        std::abs(origin.x) > 1e11 || std::abs(origin.y) > 1e11;
+    const double semiMajor = veryHighOrigin ? 2e4 : 10.0;
+    for (const double ratio : ratios) {
+      const double vertexRadius = semiMajor * ratio * ratio;
+      for (const bool oppositeBranch : {false, true}) {
+        for (const auto &[intervalStart, intervalEnd] : intervals) {
+          for (const bool reverseBounds : {false, true}) {
+            const LC_HyperbolaData data{
+                origin,
+                RS_Vector{semiMajor * std::cos(rotation),
+                          semiMajor * std::sin(rotation)},
+                ratio,
+                reverseBounds ? intervalEnd : intervalStart,
+                reverseBounds ? intervalStart : intervalEnd,
+                oppositeBranch};
+            const LC_Hyperbola source{nullptr, data};
+            REQUIRE(source.isValid());
+            CAPTURE(origin.x, origin.y, ratio, intervalStart, intervalEnd,
+                    oppositeBranch, reverseBounds);
+            const double ulpX = std::max(
+                std::abs(
+                    std::nextafter(origin.x,
+                                   std::numeric_limits<double>::infinity()) -
+                    origin.x),
+                std::abs(
+                    origin.x -
+                    std::nextafter(origin.x,
+                                   -std::numeric_limits<double>::infinity())));
+            const double ulpY = std::max(
+                std::abs(
+                    std::nextafter(origin.y,
+                                   std::numeric_limits<double>::infinity()) -
+                    origin.y),
+                std::abs(
+                    origin.y -
+                    std::nextafter(origin.y,
+                                   -std::numeric_limits<double>::infinity())));
+            for (const LC_CurveOffsetSide side :
+                 {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+              for (const double fraction : {0.5, 1.5}) {
+                const double distance = fraction * vertexRadius;
+                CAPTURE(side, fraction, distance);
+                const bool largeOrigin =
+                    std::abs(origin.x) > 1e8 || std::abs(origin.y) > 1e8;
+                const double requestedTolerance = veryHighOrigin ? 0.05
+                                                  : largeOrigin  ? 1e-4
+                                                                 : 0.0;
+                const auto options = LC_CurveOffset::makeDirectOptions(
+                    source, distance, requestedTolerance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance),
+                    options, LC_CurveOffset::makeDirectSourceBudget());
+                INFO("status=" << static_cast<int>(result.status)
+                               << " observed=" << result.maxObservedError
+                               << " certified=" << result.maxCertifiedError);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double worldResolution = 4.0 * std::hypot(ulpX, ulpY);
+                const double allowedDeviation = std::max(
+                    options.tolerance.requestedGeometry, worldResolution);
+                CHECK(maxDeviation(result, hyperbolaEvaluator(data)) <=
+                      allowedDeviation);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 TEST_CASE("A hyperbola whose ends run backwards is offset all the same", "[curve-offset][hyperbola]") {
     // grip edits, DXF imports and reversing a hyperbola all leave angle1 > angle2
     const LC_HyperbolaData forwards{RS_Vector{5.0, -3.0}, RS_Vector{4.0, 2.0}, 0.6, -1.2, 1.5, false};

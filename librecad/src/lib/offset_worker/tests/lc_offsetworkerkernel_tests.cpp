@@ -8547,81 +8547,173 @@ TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate "
   CHECK(refusedCaches == 0);
 }
 
-TEST_CASE("bounded hyperbola worker cache validation scales across curvature neighborhoods",
-          "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][scale]") {
-    const std::array<LC_HyperbolaData, 8> variants{
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false},
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true},    LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true},
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, .2, 1.2, false},   LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false},
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}};
-    constexpr std::array<double, 4> scales{1e-3, 1.0, 1e3, 1e12};
-    constexpr std::array<double, 16> normalizedDistances{-.1,   .1,   -.3,   .3,   -.5,   .5,   -1.0, 1.0,
-                                                         -1.05, 1.05, -1.08, 1.08, -1.09, 1.09, -1.1, 1.1};
-    std::size_t acceptedCaches = 0;
-    std::size_t refusedCaches = 0;
-    std::array<std::array<double, normalizedDistances.size()>, variants.size()> unitScaleTolerances{};
-
-    for (const double scale : scales) {
-        CAPTURE(scale);
-        for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
-            const auto& base = variants[variantIndex];
-            const LC_HyperbolaData data{{base.center.x * scale, base.center.y * scale, base.center.z},
-                                        {base.majorP.x * scale, base.majorP.y * scale, base.majorP.z},
-                                        base.ratio,
-                                        base.angle1,
-                                        base.angle2,
-                                        base.reversed};
-            const LC_OffsetSourceGeometry source{data};
-            REQUIRE(source.isWellFormed());
-            auto sourceEntity = source.makeEntity();
-            REQUIRE(sourceEntity);
-
-            for (std::size_t distanceIndex = 0; distanceIndex < normalizedDistances.size(); ++distanceIndex) {
-                const double normalizedDistance = normalizedDistances[distanceIndex];
-                CAPTURE(data.angle1, data.angle2, data.reversed, normalizedDistance);
-                const double signedDistance = normalizedDistance * scale;
-                const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
-                const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *sourceEntity);
-                REQUIRE(options);
-                const double normalizedTolerance = options->tolerance.requestedGeometry / scale;
-                if (scale == 1.0) {
-                    unitScaleTolerances[variantIndex][distanceIndex] = normalizedTolerance;
-                }
-                else if (scale > 1.0) {
-                    const double reference = unitScaleTolerances[variantIndex][distanceIndex];
-                    REQUIRE(reference > 0.0);
-                    CHECK(std::abs(normalizedTolerance / reference - 1.0) < 1e-10);
-                }
-
-                const auto generatedReply = LC_OffsetWorkerKernel::run({token, req::GenerateSource{definition, {}}});
-                const auto& generated = native(generatedReply, 7);
+TEST_CASE("asymmetric bounded hyperbola cusp variants generate and validate "
+          "worker caches",
+          "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp]["
+          "asymmetric]") {
+  std::size_t admittedCaches = 0;
+  std::size_t refusedCaches = 0;
+  const std::array<RS_Vector, 4> origins{
+      {{23.0, -17.0}, {1e6, -1e6}, {1e9, -2e9}, {1e12, -2e12}}};
+  constexpr std::array<double, 5> ratios{{0.01, 0.05, 0.2, 0.5, 1.0}};
+  constexpr std::array<std::pair<double, double>, 4> intervals{
+      {{-0.4, 0.8}, {-0.8, 0.4}, {0.0, 0.8}, {-0.8, 0.0}}};
+  for (const RS_Vector &origin : origins) {
+    for (const double ratio : ratios) {
+      const bool veryHighOrigin =
+          std::abs(origin.x) > 1e11 || std::abs(origin.y) > 1e11;
+      const double semiMajor = veryHighOrigin ? 2e4 : 10.0;
+      const double vertexRadius = semiMajor * ratio * ratio;
+      for (const bool oppositeBranch : {false, true}) {
+        for (const auto &[intervalStart, intervalEnd] : intervals) {
+          for (const bool reverseBounds : {false, true}) {
+            const LC_HyperbolaData data{
+                origin,
+                RS_Vector{semiMajor * std::cos(0.37),
+                          semiMajor * std::sin(0.37)},
+                ratio,
+                reverseBounds ? intervalEnd : intervalStart,
+                reverseBounds ? intervalStart : intervalEnd,
+                oppositeBranch};
+            for (const double fraction : {0.5, 1.0, 1.5}) {
+              for (const double sign : {-1.0, 1.0}) {
+                const double distance = sign * fraction * vertexRadius;
+                CAPTURE(origin.x, origin.y, ratio, intervalStart, intervalEnd,
+                        oppositeBranch, reverseBounds, fraction, sign);
+                const LC_OffsetSourceDefinition definition{
+                    LC_OffsetSourceGeometry{data}, distance, 1e-4, false};
+                const auto generatedReply = LC_OffsetWorkerKernel::run(
+                    {token, req::GenerateSource{definition, {}}});
+                const auto &generated = native(generatedReply, 7);
                 REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-                REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+                REQUIRE(generated.ordinaryStatus ==
+                        result::OrdinaryStatus::Complete);
                 REQUIRE_FALSE(generated.ordinary.empty());
-                REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
-                const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
-                const auto cacheFingerprint = RS_Spline::geometryFingerprint(cache);
 
-                const auto validationReply = LC_OffsetWorkerKernel::run({token, req::ValidateSourceCache{cache, definition, {}}});
-                const auto& validated = native(validationReply, 8);
-                if (generated.ordinary.size() == 1) {
-                    CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
-                    CHECK(validated.changed);
-                    ++acceptedCaches;
+                RS_SplineData cache;
+                if (!LC_OffsetWorkerSourceCache::combine(generated.ordinary,
+                                                         cache)) {
+                  ++refusedCaches;
+                  continue;
                 }
-                else {
-                    CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
-                    CHECK_FALSE(validated.changed);
-                    ++refusedCaches;
+                const auto validationReply = LC_OffsetWorkerKernel::run(
+                    {token, req::ValidateSourceCache{cache, definition, {}}});
+                const auto &validated = native(validationReply, 8);
+                if (validated.refusal == LC_OffsetCurveRefusal::None &&
+                    validated.changed) {
+                  ++admittedCaches;
+                } else {
+                  CHECK(validated.refusal ==
+                        LC_OffsetCurveRefusal::NotCacheRepresentable);
+                  CHECK_FALSE(validated.changed);
+                  ++refusedCaches;
                 }
-                CHECK(RS_Spline::geometryFingerprint(cache) == cacheFingerprint);
                 CHECK(validated.engineRuns == 1);
+              }
             }
+          }
         }
+      }
     }
-    CHECK(acceptedCaches + refusedCaches == scales.size() * variants.size() * normalizedDistances.size());
-    CHECK(acceptedCaches > 0);
-    CHECK(refusedCaches > 0);
+  }
+  constexpr std::size_t expectedRows = 4 * 5 * 2 * 4 * 2 * 3 * 2;
+  CHECK(admittedCaches + refusedCaches == expectedRows);
+  CHECK(admittedCaches > 0);
+}
+
+TEST_CASE("bounded hyperbola worker cache validation scales across curvature "
+          "neighborhoods",
+          "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][scale]") {
+  const std::array<LC_HyperbolaData, 8> variants{
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, .2, 1.2, false},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false},
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}};
+  constexpr std::array<double, 4> scales{1e-3, 1.0, 1e3, 1e12};
+  constexpr std::array<double, 16> normalizedDistances{
+      -.1,   .1,   -.3,   .3,   -.5,   .5,   -1.0, 1.0,
+      -1.05, 1.05, -1.08, 1.08, -1.09, 1.09, -1.1, 1.1};
+  std::size_t acceptedCaches = 0;
+  std::size_t refusedCaches = 0;
+  std::array<std::array<double, normalizedDistances.size()>, variants.size()>
+      unitScaleTolerances{};
+
+  for (const double scale : scales) {
+    CAPTURE(scale);
+    for (std::size_t variantIndex = 0; variantIndex < variants.size();
+         ++variantIndex) {
+      const auto &base = variants[variantIndex];
+      const LC_HyperbolaData data{
+          {base.center.x * scale, base.center.y * scale, base.center.z},
+          {base.majorP.x * scale, base.majorP.y * scale, base.majorP.z},
+          base.ratio,
+          base.angle1,
+          base.angle2,
+          base.reversed};
+      const LC_OffsetSourceGeometry source{data};
+      REQUIRE(source.isWellFormed());
+      auto sourceEntity = source.makeEntity();
+      REQUIRE(sourceEntity);
+
+      for (std::size_t distanceIndex = 0;
+           distanceIndex < normalizedDistances.size(); ++distanceIndex) {
+        const double normalizedDistance = normalizedDistances[distanceIndex];
+        CAPTURE(data.angle1, data.angle2, data.reversed, normalizedDistance);
+        const double signedDistance = normalizedDistance * scale;
+        const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4,
+                                                   false};
+        const auto options =
+            LC_OffsetWorkerTolerance::directOptions(definition, *sourceEntity);
+        REQUIRE(options);
+        const double normalizedTolerance =
+            options->tolerance.requestedGeometry / scale;
+        if (scale == 1.0) {
+          unitScaleTolerances[variantIndex][distanceIndex] =
+              normalizedTolerance;
+        } else if (scale > 1.0) {
+          const double reference =
+              unitScaleTolerances[variantIndex][distanceIndex];
+          REQUIRE(reference > 0.0);
+          CHECK(std::abs(normalizedTolerance / reference - 1.0) < 1e-10);
+        }
+
+        const auto generatedReply = LC_OffsetWorkerKernel::run(
+            {token, req::GenerateSource{definition, {}}});
+        const auto &generated = native(generatedReply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(generated.ordinary.empty());
+        REQUIRE(
+            std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+        const auto &cache = std::get<RS_SplineData>(generated.ordinary.front());
+        const auto cacheFingerprint = RS_Spline::geometryFingerprint(cache);
+
+        const auto validationReply = LC_OffsetWorkerKernel::run(
+            {token, req::ValidateSourceCache{cache, definition, {}}});
+        const auto &validated = native(validationReply, 8);
+        if (generated.ordinary.size() == 1) {
+          CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+          CHECK(validated.changed);
+          ++acceptedCaches;
+        } else {
+          CHECK(validated.refusal ==
+                LC_OffsetCurveRefusal::NotCacheRepresentable);
+          CHECK_FALSE(validated.changed);
+          ++refusedCaches;
+        }
+        CHECK(RS_Spline::geometryFingerprint(cache) == cacheFingerprint);
+        CHECK(validated.engineRuns == 1);
+      }
+    }
+  }
+  CHECK(acceptedCaches + refusedCaches ==
+        scales.size() * variants.size() * normalizedDistances.size());
+  CHECK(acceptedCaches > 0);
+  CHECK(refusedCaches > 0);
 }
 
 TEST_CASE("bounded hyperbola cache validation preserves translated local detail",
