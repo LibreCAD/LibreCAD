@@ -824,15 +824,19 @@ TEST_CASE("Large source chooser scans incrementally and discards superseded fami
     CHECK(sourceBox->currentText().contains("Scanning"));
     REQUIRE(sliceTimer->isActive());
     REQUIRE(QMetaObject::invokeMethod(sliceTimer, "timeout", Qt::DirectConnection));
+    CHECK(typeBox->isEnabled());
     CHECK_FALSE(sourceBox->isEnabled());
     CHECK(sourceBox->count() == 1);
 
+    CHECK(typeBox->isEnabled());
     typeBox->setCurrentIndex(parabolaKind);
+    CHECK(typeBox->isEnabled());
     CHECK_FALSE(sourceBox->isEnabled());
     CHECK(sourceBox->currentText().contains("Scanning"));
     auto* secondParabola = new LC_Parabola(nullptr,
         LC_ParabolaData{{RS_Vector{10, 2}, RS_Vector{11, 0}, RS_Vector{12, 2}}});
     f.graphic.addEntity(secondParabola);
+    CHECK(typeBox->isEnabled());
     CHECK_FALSE(sourceBox->isEnabled());
     REQUIRE(pollEventsUntil([&] {
         return sourceBox->isEnabled() && sourceBox->findData(
@@ -840,6 +844,7 @@ TEST_CASE("Large source chooser scans incrementally and discards superseded fami
             QVariant::fromValue<qulonglong>(secondParabola->getId())) >= 0;
     }));
     CHECK(sourceBox->count() == 3);
+    CHECK(typeBox->isEnabled());
     auto* thirdParabola = new LC_Parabola(nullptr,
         LC_ParabolaData{{RS_Vector{20, 2}, RS_Vector{21, 0}, RS_Vector{22, 2}}});
     f.graphic.addEntity(thirdParabola);
@@ -851,6 +856,7 @@ TEST_CASE("Large source chooser scans incrementally and discards superseded fami
         return sourceBox->isEnabled() && sourceBox->findData(
             QVariant::fromValue<qulonglong>(thirdParabola->getId())) >= 0;
     }));
+    CHECK(typeBox->isEnabled());
     CHECK(sourceBox->count() == 4);
     widget.hide();
     auto* fourthParabola = new LC_Parabola(nullptr,
