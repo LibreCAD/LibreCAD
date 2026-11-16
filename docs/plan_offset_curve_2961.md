@@ -261,13 +261,15 @@ save/reopen in ordinary and transformed/reversed high-origin frames; see
 sections 1464-1466; (2) continue the existing
 family-by-variant matrix for concrete parabola constructions or conditioning
 boundaries not already represented, preserving independent geometry oracles
-and fail-closed limits. Sections 1642-1655 add two asymmetric
+and fail-closed limits. Sections 1642-1656 add two asymmetric
 endpoint-tangent parabolas and both traversals through an independent
 exact-normal oracle, Trim Two, source scales `1e-3/1/1e3`, and all five internal
 file lanes; the opposite-bend pair varies three scaled circle-cutter radii and
 also passes Trim Two with line cutters in both traversals and both operand-pick
 orders. Line-cutter checks also cover the first tangent pair at unit scale;
 the opposite-bend line-cutter cases repeat across all three source scales.
+Section 1656 also checks fail-closed tangent-circle contact for the
+opposite-bend traversal pair.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -54883,5 +54885,26 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 Other cutter placements and tangent/refusal boundaries, line-cutter scales
 for the first tangent pair, visible-app interaction, and independent
+ODA/AutoCAD acceptance remain open.
+
+## 1656. Verify Atomic Tangent-circle Refusal for Asymmetric Parabolas (2026-11-16)
+
+Test commit `8daaf4943` extends the tangent-circle boundary checks to both
+forward and reversed traversals of the opposite-bend asymmetric
+endpoint-tangent parabola at the recorded translated/rotated frame. Exact
+tangent contact must return a refusal with no fragments and no source
+mutation; the companion non-tangent circle still succeeds through direct
+cache/conic preparation, worker trim, preview/commit, undo/redo, and the five
+DXF/DWG save/reopen lanes. This preserves atomic fail-closed behavior for the
+tangent case while proving the adjacent valid case remains usable.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- Endpoint-tangent Trim Two matrix: 39,110 assertions / 1 case.
+- `git diff --check`: passed before commit.
+
+This qualifies one tangent-contact boundary for one asymmetric construction
+and its reverse. Other tangent-circle placements, near-tangent tolerances,
+source scales, cutter types, visible-app interaction, and independent
 ODA/AutoCAD acceptance remain open.
 
