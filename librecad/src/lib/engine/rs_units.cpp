@@ -715,34 +715,22 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format, int prec) {
             break;
         }
         case RS2::DegreesMinutesSeconds: {
-            unsigned vDegrees, vMinutes;
-            double vSeconds;
-            QString degrees, minutes, seconds;
+            // Round once at the resolution that is shown and split afterwards, so that a value
+            // rounded up carries into the minutes and degrees instead of showing 60.
+            const int secDecimals = prec > 1 ? prec - 2 : 0;
+            const double secScale = std::pow(10., secDecimals);
+            const double unitsPerMinute = prec > 1 ? 60. * secScale : 1.;
+            const double unitsPerDegree = prec > 0 ? 60. * unitsPerMinute : 1.;
 
-            vDegrees = static_cast<unsigned>(std::floor(value));
-            vMinutes = static_cast<unsigned>(std::floor((value - vDegrees) * 60.0));
-            vSeconds = (value - vDegrees - (vMinutes / 60.0)) * 3600.0;
+            const double total = std::round(value * unitsPerDegree);
+            const double inDegree = std::fmod(total, unitsPerDegree);
+            const double inMinute = std::fmod(inDegree, unitsPerMinute);
+            const auto vDegrees = static_cast<unsigned>((total - inDegree) / unitsPerDegree);
+            const auto vMinutes = static_cast<unsigned>((inDegree - inMinute) / unitsPerMinute);
 
-            seconds = RS_Math::doubleToString(vSeconds, (prec > 1 ? prec - 2 : 0));
-
-            if (seconds == "60") {
-                seconds = "0";
-                ++vMinutes;
-                if (vMinutes == 60) {
-                    vMinutes = 0;
-                    ++vDegrees;
-                }
-            }
-
-            if (prec == 0 && vMinutes >= 30.0) {
-                vDegrees++;
-            }
-            else if (prec == 1 && vSeconds >= 30.0) {
-                vMinutes++;
-            }
-
-            degrees.setNum(vDegrees);
-            minutes.setNum(vMinutes);
+            const QString degrees = QString::number(vDegrees);
+            const QString minutes = QString::number(vMinutes);
+            const QString seconds = RS_Math::doubleToString(inMinute / secScale, secDecimals);
 
             switch (prec) {
                 case 0:
