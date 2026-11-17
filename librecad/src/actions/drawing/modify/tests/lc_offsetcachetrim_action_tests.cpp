@@ -4430,29 +4430,32 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u})
     for (const bool arcFirst : {false, true}) {
         CAPTURE(profile, arcFirst);
         Drawing<true> f;
         const bool highOrigin = profile >= 9;
-        const RS_Vector center = highOrigin ? RS_Vector{1e12, -2e12} : RS_Vector{};
+        const bool veryHighOrigin = profile >= 11;
+        const RS_Vector center = profile < 9 ? RS_Vector{}
+            : veryHighOrigin ? RS_Vector{1e13, -2e13} : RS_Vector{1e12, -2e12};
         if (highOrigin) {
-            constexpr double zoom = .001;
+            const double zoom = veryHighOrigin ? 1e-5 : .001;
             f.view.getViewPort()->setSize(640, 480);
             f.view.getViewPort()->setOffsetAndFactor(
                 qRound(320.0 - center.x * zoom),
                 qRound(240.0 - center.y * zoom), zoom);
         }
-        const double offsetDistance = highOrigin ? 2500.0 : .25;
+        const double offsetDistance = veryHighOrigin ? 25000.0 : highOrigin ? 2500.0 : .25;
         RS_Ellipse seed(nullptr, RS_EllipseData{
-            {0, 0}, {highOrigin ? 20000.0 : 1.0, 0}, 1, 0, .1, false});
-        const bool towardCentre = profile == 7 || profile == 8 || profile == 9;
+            {0, 0}, {veryHighOrigin ? 200000.0 : highOrigin ? 20000.0 : 1.0, 0}, 1, 0, .1, false});
+        const bool towardCentre = profile == 7 || profile == 8 || profile == 9 || profile == 12;
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        const RS_ArcData sourceData = profile == 9 || profile == 10
-            ? RS_ArcData{center, 1e5, .35, 2.7, profile == 10}
+        const RS_ArcData sourceData = profile >= 9
+            ? RS_ArcData{center, veryHighOrigin ? 1e6 : 1e5, .35, 2.7,
+                         profile == 10 || profile == 12}
             : profile == 0
             ? RS_ArcData{{0, 0}, 2, .1, 1.4, false}
             : profile == 1
@@ -4506,7 +4509,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
         REQUIRE(tangent.magnitude() > RS_TOLERANCE);
         tangent /= tangent.magnitude();
         const RS_Vector normal{-tangent.y, tangent.x};
-        const double cutterHalfLength = highOrigin ? 10000.0 : 3.0;
+        const double cutterHalfLength = veryHighOrigin ? 100000.0 : highOrigin ? 10000.0 : 3.0;
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - normal * cutterHalfLength,
                         intersection + normal * cutterHalfLength});
