@@ -57522,3 +57522,17 @@ The focused CMake Release case passes 5,202 assertions / 1 case across both
 origins and all three source families. These sampled profiles pass LibreCAD
 round-trips; other spline layouts and polyline topology, ODA/AutoCAD, and
 visible GUI acceptance remain open.
+
+## 1784. Persist Bounded Hyperbola Trims at `1e13` (2026-11-17)
+
+Added the opt-in `LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN` profile to the existing
+bounded-hyperbola source-action/file-lane matrix. It uses source scale `1e6`
+and origin `(1e13,-2e13)`, retaining both branches, both traversal orders,
+ratios `0.25/0.75`, both signed offsets, and R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. The disposable native seed scales with large outward offsets so the
+test measures source replacement rather than an unrelated invalid seed.
+
+The opt-in CMake Release case passes 4,632 assertions / 1 case over 80
+generated combinations. This is bounded hyperbola persistence/action evidence
+for the recorded scale and frame only; additional eccentricities, intervals,
+Trim Two geometry, ODA/AutoCAD, and visible GUI acceptance remain open.
