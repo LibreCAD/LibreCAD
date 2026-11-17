@@ -57177,3 +57177,18 @@ ODA File Converter 27.1.0.0 converted all 184 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other mirrored notch layouts, scales,
 orientations, visible GUI interaction, and AutoCAD semantic acceptance remain
 open.
+
+## 1759. Vary Reflected Multi-notch Angle and Aspect Ratio (2026-11-17)
+
+The reflected profile also passes at angle `0.9` radians and vertical ratio
+`0.7`, at the same `(1e12,-2e12)` origin. The reversed-winding root mapping,
+six-root cutter union, both signed offsets and operand orders, preview,
+commit/undo/redo, and all five native-capable save/reopen lanes are retained.
+This is one additional mirrored frame, not general reflection invariance.
+
+The focused CMake Release matrix passes 40,769 assertions / 1 case. Its ODA
+staging run passes 54,802 assertions and contains exactly 192 R2000/R2018 DWGs;
+ODA File Converter 27.1.0.0 converted all 192 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other reflected profiles, orientations,
+scales, origins, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
