@@ -6616,6 +6616,22 @@ Multiple concavities, other cutter angles and placements, broader transforms
 and scales, visible GUI interaction, and AutoCAD semantic acceptance remain
 open.
 
+## 1746. Cover Multi-root U-shaped Trim Two (2026-11-17)
+
+The matrix now includes a closed U-shaped source with two concave vertices and
+a horizontal cutter crossing both arms. Direct preparation asserts exactly
+four certified source/cutter roots in both operand roles; the action then
+checks preview, commit, undo/redo, and the same five-format save/reopen matrix
+for both offset signs and both pick orders. This covers the tested four-root
+arrangement, not arbitrary high-multiplicity or self-crossing topology.
+
+The focused CMake Release matrix passes 13,521 assertions / 1 case in the
+ODA-staged run. A fresh staging directory contains exactly 80 R2000/R2018 DWGs;
+ODA File Converter 27.1.0.0 converted all 80 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Further concave layouts, cutter placements,
+origin/scale variants, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
+
 ## 1007. Qualify Thin Hyperbola Offsets at the Vertex-curvature Boundary (2026-11-12)
 
 Test commit `e88461107` adds an independent direct-geometry matrix for bounded
