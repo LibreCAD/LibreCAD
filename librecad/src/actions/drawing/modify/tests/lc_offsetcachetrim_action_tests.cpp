@@ -8801,16 +8801,15 @@ TEST_CASE("T Update from Source preserves ordinary branches for a high-origin po
     }
 }
 
-TEST_CASE("T worker certifies high-origin closed-polyline trim roots on both sides",
-          "[lc-offsetcurve][trim-kernel][typed-source][polyline][closed][high-origin]") {
+TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides",
+          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][closed][high-origin]") {
     REQUIRE(lc::test::ensureSettings());
     const RS_Vector center{1e12, -2e12};
     constexpr double radius = 1e5;
     constexpr double distance = 2500.0;
-    for (const bool towardCentre : {false, true})
-    {
+    for (const bool towardCentre : {false, true}) {
         CAPTURE(towardCentre);
-        Drawing<true> f;
+        Drawing<false> f;
         constexpr double zoom = .003;
         f.view.getViewPort()->setSize(640, 480);
         f.view.getViewPort()->setOffsetAndFactor(
@@ -8862,15 +8861,32 @@ TEST_CASE("T worker certifies high-origin closed-polyline trim roots on both sid
                         center + RS_Vector{0, 2 * radius}});
         f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(first + (last - first) * .1);
+        const RS_Vector cutterPick = center + RS_Vector{0, radius};
         const auto prepared = LC_OffsetCacheTrim::prepare(native->getData(), *cutter, {nativePick});
         CAPTURE(prepared.refusal, prepared.rootCount, prepared.fragments.size());
         REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
         REQUIRE(prepared.rootCount >= 2);
+        CHECK_FALSE(source->isDeleted());
+        CHECK_FALSE(prepared.fragments.empty());
+
+        f.action->click(cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<false>::ChooseTrimEntity);
         const auto undoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(nativePick);
+        f.action->waitForTrim();
+        REQUIRE_FALSE(f.action->m_preview->isEmpty());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
-        CHECK_FALSE(source->isDeleted());
         CHECK(f.graphic.undoStateEpoch() == undoEpoch);
-        CHECK_FALSE(prepared.fragments.empty());
+        f.action->click(nativePick);
+        REQUIRE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK_FALSE(source->isDeleted());
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
     }
 }
