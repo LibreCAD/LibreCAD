@@ -57650,3 +57650,16 @@ LibreDWG when available. The focused CMake Release test passes 5,825
 assertions / 1 case, and `git diff --check` passes. This qualifies the added
 radius/origin profile only; broader circle conditioning, ODA conversion,
 visible GUI, and AutoCAD semantic acceptance remain open.
+
+## 1793. Extend High-origin Ellipse Trim Ratios (2026-11-17)
+
+Expanded the high-origin ellipse Trim Two matrix with axis ratios `0.1` and
+`0.9` at rotations `0.41` and `0.93`, respectively, alongside the existing
+four profiles. The `0.1` profile scales its offset to one quarter of its
+minimum curvature radius so the tested inward case remains below the cusp
+boundary; the other profiles retain their prior offset. All six profiles run
+at origins `1e12` and `1e13`, both offset sides and pick orders, preview/commit,
+undo/redo, and five DXF/DWG persistence lanes. The focused CMake Release case
+passes 21,967 assertions / 1 case; `git diff --check` passes. This adds two
+bounded ratio/orientation samples, not general ellipse coverage. ODA, visible
+GUI, and AutoCAD semantic acceptance remain open.
