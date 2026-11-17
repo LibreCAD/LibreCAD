@@ -890,14 +890,14 @@ packaged-app acceptance, broader source-family coverage, and AutoCAD acceptance.
 
 **High-origin source-family addendum (sections 1778-1784):** worker/action
 Trim Two and five-lane LibreCAD round trips now include typed line, arc,
-circle, ellipse, parabola, cubic spline, fit-point spline, and polyline
-profiles at `(1e13,-2e13)` for the recorded dimensions and orientations.
-Bounded hyperbola has a separate 80-combination source-action/persistence
-matrix at that origin; it does not claim high-origin Trim Two. The cases
-establish sampled frame/scale evidence for every current picker family, not
-arbitrary geometry coverage. ODA/AutoCAD and visible Properties interaction
-remain open; ODA conversion was blocked for the newest batches by the local
-converter launch failure recorded in section 1774.
+circle, ellipse, parabola, cubic spline, fit-point spline, polyline, and
+bounded-hyperbola profiles at `(1e13,-2e13)` for the recorded dimensions and
+orientations. The 80-combination hyperbola matrix also runs Trim Two on both
+entities, with undo/redo and five format lanes. These are sampled frame/scale
+results for every current picker family, not arbitrary geometry coverage.
+ODA/AutoCAD and visible Properties interaction remain open; ODA conversion
+was blocked for the newest batches by the local converter launch failure
+recorded in section 1774.
 
 **Combined-frame diagnostic update (section 1394; superseded by section 1405):**
 the pre-fix strict arrangement reported `CycleAssembly/OpenBoundary` with a
@@ -57543,10 +57543,12 @@ ratios `0.25/0.75`, both signed offsets, and R14 DXF, R2000 DXF/DWG, and R2018
 DXF/DWG. The disposable native seed scales with large outward offsets so the
 test measures source replacement rather than an unrelated invalid seed.
 
-The opt-in CMake Release case passes 4,632 assertions / 1 case over 80
-generated combinations. This is bounded hyperbola persistence/action evidence
-for the recorded scale and frame only; additional eccentricities, intervals,
-Trim Two geometry, ODA/AutoCAD, and visible GUI acceptance remain open.
+The opt-in CMake Release case passes 4,792 assertions / 1 case over 80
+generated combinations. At the `1e13` frame it runs the actual Trim Two
+action, verifies both the cache fragments and cutter deletion/restoration
+through undo/redo, and reopens all five DXF/DWG lanes. This remains bounded to
+the recorded ratios, interval, scale, and origin; other hyperbola variants,
+ODA/AutoCAD, and visible GUI acceptance remain open.
 
 ## 1785. Revalidate Cross-family Source Replacement on Current Head (2026-11-17)
 
