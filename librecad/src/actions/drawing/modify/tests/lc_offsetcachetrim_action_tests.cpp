@@ -5462,8 +5462,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
-    const std::array<std::pair<double, double>, 4> profiles{{
-        {0.25, 0.67}, {0.45, 0.17}, {0.45, 1.2}, {0.75, 0.67}}};
+    const std::array<std::pair<double, double>, 6> profiles{{
+        {0.1, 0.41}, {0.25, 0.67}, {0.45, 0.17}, {0.45, 1.2},
+        {0.75, 0.67}, {0.9, 0.93}}};
     for (const double frame : {1e12, 1e13})
     for (const auto& [axisRatio, rotation] : profiles)
     for (const bool towardCentre : {false, true})
@@ -5472,7 +5473,8 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         Drawing<true> f;
         const bool largestFrame = frame == 1e13;
         const double sourceRadius = largestFrame ? 1e6 : 1e5;
-        const double offsetDistance = sourceRadius * .025;
+        const double offsetDistance = sourceRadius *
+            (axisRatio < .2 ? axisRatio * axisRatio * .25 : .025);
         const RS_Vector center{frame, -2 * frame};
         const double zoom = largestFrame ? 5e-5 : .001;
         f.view.getViewPort()->setSize(640, 480);
