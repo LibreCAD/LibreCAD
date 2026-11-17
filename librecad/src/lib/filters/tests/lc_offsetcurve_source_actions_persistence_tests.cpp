@@ -1584,10 +1584,10 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
           "[lc-offsetcurve][source-action][hyperbola][trim-action][persistence]") {
     const bool leftBranch = GENERATE(false, true);
     const bool reversedParameters = GENERATE(false, true);
-    const double ratio = GENERATE(0.25, 0.75);
     const bool veryHighOrigin = qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN");
     const bool highOrigin = veryHighOrigin ||
         qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_HIGH_ORIGIN");
+    const double ratio = veryHighOrigin ? GENERATE(0.25, 0.5, 0.75) : GENERATE(0.25, 0.75);
     double sourceScale = veryHighOrigin ? 1e6 : 1e5;
     if (!highOrigin) sourceScale = GENERATE(0.25, 1.0, 4.0);
     const double signedDistance = GENERATE(-0.25, 0.25) * sourceScale;
