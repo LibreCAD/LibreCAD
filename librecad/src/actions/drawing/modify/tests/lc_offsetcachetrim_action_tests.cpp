@@ -8946,7 +8946,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {0.0, 1.0, false, 0}, {.37, 1.0, false, 0},
         {0.0, .7, false, 0}, {.37, .7, false, 0},
         {0.0, 1.0, true, 0}, {0.0, 1.0, false, 1},
-        {0.0, 1.0, false, 2}, {0.0, 1.0, false, 3}}));
+        {0.0, 1.0, false, 2}, {0.0, 1.0, false, 3},
+        {0.0, 1.0, false, 4}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
@@ -8974,7 +8975,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
 
             auto* source = new RS_Polyline(&f.graphic);
             const double bulge = bulged ? std::tan(3.14159265358979323846 / 8.0) : 0.0;
-            if (topology == 1) {
+            if (topology == 1 || topology == 4) {
                 source->addVertex(world(-radius, -radius * verticalRatio));
                 source->addVertex(world(radius, -radius * verticalRatio));
                 source->addVertex(world(radius, 0));
@@ -9025,12 +9026,16 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             REQUIRE(breaks.size() >= 2);
             const RS_Vector nativePick = native->getPointAt(
                 breaks.front() + (breaks.back() - breaks.front()) * .1);
+            const bool horizontalCutter = topology == 4;
             const double cutterX = topology == 1 ? -.5 * radius : topology == 2 ? .5 * radius :
                                    topology == 3 ? .65 * radius : 0;
-            auto* cutter = new RS_Line(&f.graphic,
-                RS_LineData{world(cutterX, -2 * radius), world(cutterX, 2 * radius)});
+            const double cutterY = .5 * radius * verticalRatio;
+            auto* cutter = new RS_Line(&f.graphic, horizontalCutter
+                ? RS_LineData{world(-2 * radius, cutterY), world(2 * radius, cutterY)}
+                : RS_LineData{world(cutterX, -2 * radius), world(cutterX, 2 * radius)});
             f.graphic.addEntity(cutter);
-            const RS_Vector cutterPick = world(cutterX, radius);
+            const RS_Vector cutterPick = horizontalCutter
+                ? world(-.5 * radius, cutterY) : world(cutterX, radius);
             RS_SplineData cutterCache;
             cutterCache.degree = 1;
             cutterCache.controlPoints = {cutter->getStartpoint(), cutter->getEndpoint()};
