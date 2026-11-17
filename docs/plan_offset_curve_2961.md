@@ -56651,27 +56651,27 @@ The focused case passes 207 assertions / 1 case on macOS arm64 CMake Release.
 This proves ordinary branch preservation, not native editable-cache or
 application-level Trim support for high-origin corners; those remain open.
 
-## 1735. Trim a Worker-created High-origin Cubic Spline (2026-11-17)
+## 1735. Trim Worker-created High-origin Spline Source Families (2026-11-17)
 
-Added an application-level Trim Two regression for an asymmetric non-rational
-cubic spline translated to `(1e12,-2e12)` and scaled to `3e5`. Both entity-pick
-orders exercise worker-backed source replacement, certified trim preparation,
+Added application-level Trim Two regressions for an asymmetric non-rational
+cubic polynomial spline and an open four-fit-point `LC_SplinePoints` source,
+each translated to `(1e12,-2e12)` and scaled to `3e5`. Both entity-pick orders
+exercise worker-backed source replacement, certified trim preparation,
 preview/commit, undo/redo, and source/fragment geometry after R14 DXF, R2000
 DXF/DWG, and R2018 DXF/DWG save/reopen. The test can optionally retain its
-four DWG outputs with `LC_OFFSET_ODA_OUTPUT_DIR`; default temporary-file
+eight DWG outputs with `LC_OFFSET_ODA_OUTPUT_DIR`; default temporary-file
 cleanup is unchanged.
 
-The focused case passes 710 assertions / 1 case on macOS arm64 CMake Release.
-ODA File Converter 27.1.0.0 converted all four retained DWGs to R2018 DXF with
-exit status 0. The structured group-pair check found `AC1032`, two `SPLINE`
-entities and one `LINE` in every converted file, with no native offset marker
-expected after Trim Two.
+The focused case passes 1,425 assertions / 1 case on macOS arm64 CMake
+Release. ODA File Converter 27.1.0.0 converted all eight retained DWGs to
+R2018 DXF with exit status 0. The structured group-pair check found `AC1032`,
+two `SPLINE` entities and one `LINE` in every converted file, with no native
+offset marker expected after Trim Two.
 
-This qualifies one cubic polynomial layout and one high-origin/scale frame;
+This qualifies these two spline source layouts and one high-origin/scale frame;
 quadratic spline imports may be reified as Parabola and are intentionally
-covered by separate conic tests. High-origin spline-points application Trim,
-other spline degrees/knot layouts, broader conditioning, and visible CAD
-acceptance remain open.
+covered by separate conic tests. Other spline degrees/knot layouts, broader
+conditioning, and visible CAD acceptance remain open.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
