@@ -57052,16 +57052,23 @@ general polygon-family guarantee. More concave arrangements, scales,
 orientations, visible GUI interaction, and AutoCAD semantic acceptance remain
 open.
 
-## 1751. Track Rotated Two-notch Source Rejection (2026-11-17)
+## 1751. Accept a Rotated Two-notch Source (2026-11-17)
 
-An exploratory rotation of the second two-notch profile by `0.37` radians was
-refused during source capture with `Source is not a supported Polyline.` The
-same refusal occurred at both the `1e12` and `1e9` world-origin tiers, before
-Trim Two preparation, preview, or commit. The profile remains in the supported
-axis-aligned matrix only. This does not establish whether the rejection comes
-from endpoint/uniqueness validation, the non-adjacent-intersection check, or
-worker encodability; isolate that predicate before changing source admission.
-The rotated multi-notch case is an explicit follow-up, not a passing coverage
-claim. The focused matrix for the accepted axis-aligned rows remains the
-23,133-assertion result recorded in section 1750; no new test pass is claimed
-by this investigation.
+The rejection isolated in the prior investigation came from two distinct,
+parallel line segments whose rotated AABBs overlapped. The line intersection
+solver correctly returned indeterminate near parallelism, but source capture
+treated that as a topology failure. Before falling back to the solver, the
+validator now uses long-double signed-side tests with a coordinate-scale
+roundoff bound; it skips intersection solving only when both endpoints of one
+segment are provably on the same strict side of the other. Uncertain, touching,
+or crossing cases retain the fail-closed path. The existing self-intersection
+rejection test remains passing (15 assertions).
+
+The two-notch profile rotated by `0.37` radians now passes source capture,
+worker generation, Trim Two in both operand orders and signed offset sides,
+preview/commit/undo/redo, and all five native-capable save/reopen lanes at the
+`1e9` origin tier. The focused CMake Release matrix passes 24,561 assertions / 1
+case. A fresh stage held exactly 144 R2000/R2018 DWGs; ODA File Converter
+27.1.0.0 converted all 144 to ACAD2018 DXF with no `.err` files. `git diff
+--check` passes. This establishes one rotated two-notch arrangement at one
+origin, not arbitrary rotations/origins, nor AutoCAD semantic acceptance.
