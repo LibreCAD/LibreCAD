@@ -5020,6 +5020,22 @@ high-origin typed source families`); `git diff --check` passes. This qualifies
 the recorded transformed profile only; other rotations/topologies and ODA,
 visible GUI, and AutoCAD semantic acceptance remain open.
 
+## 1806. Trim a Quadratic Polynomial SPLINE at High Origins (2026-11-17)
+
+Added a degree-2 polynomial SPLINE control-net profile to the high-origin
+typed-source Trim Two matrix. At origins `(1e12,-2e12)` and `(1e13,-2e13)`,
+both pick orders pass worker source replacement, preview/commit, undo/redo,
+and all five R14/R2000/R2018 DXF/DWG save/reopen lanes. R2018 DWG import
+normalizes the trimmed quadratic SPLINE as `LC_Parabola`; the round-trip
+comparator checks matching endpoints and 129 sampled positions by nearest-curve
+distance rather than requiring the original RTTI. The entity length estimators
+differ, so length equality is not used for this specific normalized pair. The
+focused CMake Release test passes 12,953 assertions / 1 case (`T Trim Two
+trims worker-created high-origin typed source families`); `git diff --check`
+passes. This qualifies one non-rational quadratic profile and this recorded
+type-normalization path only; other quadratic layouts/scales, ODA, visible GUI,
+and AutoCAD acceptance remain open.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
@@ -31174,6 +31190,11 @@ eight-fit-point profile is covered both unrotated and at `0.37` radians at the
 same origins. Each listed profile passes Trim Two, undo/redo, and five-lane
 sampled-geometry round trips. These are finite fixtures, not general support
 for all fit-point layouts.
+
+**High-origin quadratic spline addendum (section 1806):** One non-rational
+quadratic SPLINE profile passes Trim Two and five-lane persistence at `1e12`
+and `1e13`; R2018's equivalent `LC_Parabola` representation is checked by
+endpoints and sampled curve membership, not by RTTI or cross-type length.
 
 **High-segment polyline clarification (sections 1337-1341):** Closed, strictly
 convex regular linear profiles pass worker generation at 256/512/1024/2048

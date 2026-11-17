@@ -751,8 +751,12 @@ bool sameTrimGeometry(const RS_Entity& expected, const RS_Entity& actual) {
     const double lengthTolerance = std::max(tolerance,
         pointTolerance(expected.getStartpoint(), actual.getStartpoint()) +
         pointTolerance(expected.getEndpoint(), actual.getEndpoint()));
-    if (expected.rtti() != actual.rtti() ||
-        std::abs(expected.getLength() - actual.getLength()) > lengthTolerance) return false;
+    const bool splineReadAsParabola =
+        dynamic_cast<const RS_Spline*>(&expected) &&
+        dynamic_cast<const LC_Parabola*>(&actual);
+    if ((expected.rtti() != actual.rtti() && !splineReadAsParabola) ||
+        (!splineReadAsParabola &&
+         std::abs(expected.getLength() - actual.getLength()) > lengthTolerance)) return false;
     if (const auto* line = dynamic_cast<const RS_Line*>(&expected)) {
         const auto* other = dynamic_cast<const RS_Line*>(&actual);
         if (!other) return false;
@@ -787,17 +791,37 @@ bool sameTrimGeometry(const RS_Entity& expected, const RS_Entity& actual) {
     }
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&expected)) {
         const auto* other = dynamic_cast<const RS_Spline*>(&actual);
-        if (!other) return false;
+        const auto* parabola = dynamic_cast<const LC_Parabola*>(&actual);
         double a0 = 0.0, a1 = 0.0, b0 = 0.0, b1 = 0.0;
-        if (!spline->getParameterDomain(a0, a1) || !other->getParameterDomain(b0, b1) ||
-            !(a1 > a0) || !(b1 > b0)) return false;
+        if (!spline->getParameterDomain(a0, a1) || !(a1 > a0)) return false;
+        if (other) {
+            if (!other->getParameterDomain(b0, b1) || !(b1 > b0)) return false;
+        } else if (parabola) {
+            if (!((closePoint(spline->getStartpoint(), parabola->getStartpoint()) &&
+                   closePoint(spline->getEndpoint(), parabola->getEndpoint())) ||
+                  (closePoint(spline->getStartpoint(), parabola->getEndpoint()) &&
+                   closePoint(spline->getEndpoint(), parabola->getStartpoint())))) {
+                return false;
+            }
+        } else {
+            return false;
+        }
         for (unsigned i = 0; i <= 128; ++i) {
             const double fraction = static_cast<double>(i) / 128.0;
-            LC_CurveJet a, b;
-            const auto side = i == 128 ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right;
-            if (!spline->tryEvaluateJet(a0 + (a1 - a0) * fraction, side, a) ||
-                !other->tryEvaluateJet(b0 + (b1 - b0) * fraction, side, b) ||
-                !closePoint(a.point, b.point)) return false;
+            LC_CurveJet a;
+            const auto side = i == 128 ? LC_CurveEvaluationSide::Left
+                                       : LC_CurveEvaluationSide::Right;
+            if (!spline->tryEvaluateJet(a0 + (a1 - a0) * fraction, side, a)) return false;
+            if (other) {
+                LC_CurveJet b;
+                if (!other->tryEvaluateJet(b0 + (b1 - b0) * fraction, side, b) ||
+                    !closePoint(a.point, b.point)) return false;
+            } else if (parabola) {
+                const RS_Vector nearest = parabola->getNearestPointOnEntity(a.point, true);
+                if (!closePoint(a.point, nearest)) {
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -8572,7 +8596,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][polyline][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     for (const double frame : {1e12, 1e13})
-    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u})
+    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u})
     for (const bool splineFirst : {false, true}) {
         CAPTURE(frame, sourceFamily, splineFirst);
         const bool largestFrame = frame == 1e13;
@@ -8594,7 +8618,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         f.graphic.addEntity(previous);
 
         RS_Entity* source = nullptr;
-        const auto sourceKind = sourceFamily == 0 || sourceFamily == 3
+        const auto sourceKind = sourceFamily == 0 || sourceFamily == 3 || sourceFamily == 8
             ? LC_OffsetSourceGeometry::Kind::Spline
             : sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 ||
                       sourceFamily == 6 || sourceFamily == 7
@@ -8630,16 +8654,23 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
             }
             sourceData.fitTolerance = 1e-3;
             source = new LC_SplinePoints(&f.graphic, sourceData);
-        } else if (sourceFamily == 0 || sourceFamily == 3) {
-            RS_SplineData sourceData{3, false};
-            sourceData.controlPoints = {
-                center, center + RS_Vector{.8 * scale, 1.2 * scale},
-                center + RS_Vector{2.2 * scale, .6 * scale},
-                center + RS_Vector{3 * scale, 0}};
-            sourceData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+        } else if (sourceFamily == 0 || sourceFamily == 3 || sourceFamily == 8) {
+            const bool quadratic = sourceFamily == 8;
+            RS_SplineData sourceData{quadratic ? 2 : 3, false};
+            sourceData.controlPoints = quadratic
+                ? std::vector<RS_Vector>{
+                    center, center + RS_Vector{1.5 * scale, 2 * scale},
+                    center + RS_Vector{3 * scale, 0}}
+                : std::vector<RS_Vector>{
+                    center, center + RS_Vector{.8 * scale, 1.2 * scale},
+                    center + RS_Vector{2.2 * scale, .6 * scale},
+                    center + RS_Vector{3 * scale, 0}};
+            sourceData.knotslist = quadratic
+                ? std::vector<double>{0, 0, 0, 1, 1, 1}
+                : std::vector<double>{0, 0, 0, 0, 1, 1, 1, 1};
             sourceData.weights = sourceFamily == 3
                 ? std::vector<double>{1, .7, 1.5, 1}
-                : std::vector<double>{1, 1, 1, 1};
+                : std::vector<double>(sourceData.controlPoints.size(), 1.0);
             source = new RS_Spline(&f.graphic, sourceData);
         } else {
             auto* polyline = new RS_Polyline(&f.graphic);
@@ -8748,8 +8779,8 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
             for (const auto* expectedEntity : expected) {
                 bool found = false;
                 for (std::size_t i = 0; i < actual.size(); ++i) {
-                    if (matched[i] || !sameTrimGeometry(*expectedEntity, *actual[i]))
-                        continue;
+                    if (matched[i]) continue;
+                    if (!sameTrimGeometry(*expectedEntity, *actual[i])) continue;
                     matched[i] = true;
                     found = true;
                     break;
@@ -8773,7 +8804,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
             CHECK(restored.closed == (sourceFamily == 4 || sourceFamily == 5 ||
                                       sourceFamily == 6 || sourceFamily == 7));
             CHECK(restored.fitTolerance == 1e-3);
-        } else if (sourceFamily == 0) {
+        } else if (sourceFamily == 0 || sourceFamily == 8) {
             CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
         } else if (sourceFamily == 2) {
             const auto& restored = std::get<LC_OffsetPolylineData>(
