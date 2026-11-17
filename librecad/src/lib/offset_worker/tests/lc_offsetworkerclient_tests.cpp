@@ -705,6 +705,102 @@ TEST_CASE("Worker client preserves a high-origin ellipse source while moving its
     qDeleteAll(batch.entitiesToAdd);
 }
 
+TEST_CASE("Worker client preserves a high-origin polynomial spline source through persistence",
+          "[lc-offsetcurve][worker-client][spline][origin][cache]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
+    RS_EntityContainer parent;
+    RS_Layer layer{QStringLiteral("high-origin spline")};
+    RS_Line attributes{&parent, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    const RS_Vector center{1e12, -2e12};
+    RS_SplineData data{2, false};
+    data.controlPoints = {center, center + RS_Vector{1e5, 1e5},
+                          center + RS_Vector{2e5, 0}};
+    data.knotslist = {0, 0, 0, 1, 1, 1};
+    data.weights = {1, 1, 1};
+    const LC_OffsetSourceGeometry source{data};
+    const LC_OffsetSourceDefinition definition{source, 2500.0, 1e-4, false};
+    REQUIRE(owned.get().submit(
+        {token(109), Req::GenerateSource{definition, {}}}, Client::Mode::Commit,
+        receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 109, 7);
+    const auto& result = std::get<Reply::Native>(completion.reply().result);
+    CAPTURE(result.engineStatus, result.refusal, result.ordinaryStatus,
+            result.ordinary.size());
+    REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+    REQUIRE(result.ordinary.size() == 1);
+
+    auto editable = completion.nativeSource(attributes);
+    REQUIRE(editable);
+    REQUIRE(editable->sourceDefinition());
+    CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
+          Req::Values::encodeSourceDefinition(definition));
+    const auto* preserved = std::get_if<RS_SplineData>(
+        &editable->sourceDefinition()->source.value);
+    REQUIRE(preserved);
+    CHECK(preserved->degree == data.degree);
+    CHECK(preserved->controlPoints == data.controlPoints);
+    CHECK(preserved->knotslist == data.knotslist);
+    CHECK(preserved->weights == data.weights);
+    const auto cacheFingerprint = RS_Spline::geometryFingerprint(editable->getData());
+
+    REQUIRE(lc::test::ensureSettings());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* outputLayer = graphic.findLayer("0");
+    REQUIRE(outputLayer);
+    std::unique_ptr<RS_Entity> persisted{editable->clone()};
+    REQUIRE(persisted);
+    persisted->setParent(&graphic);
+    persisted->setLayer(outputLayer);
+    graphic.addEntity(persisted.release());
+    lc::test::OutputDirectory directory("offset-high-origin-spline");
+    struct PersistenceLane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<PersistenceLane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+    for (const auto& lane : lanes) {
+        const auto path = directory.file(lane.extension);
+        REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+        const LC_OffsetCurve* reopenedCurve = nullptr;
+        for (const RS_Entity* entity : reopened) {
+            if (const auto* candidate = dynamic_cast<const LC_OffsetCurve*>(entity)) {
+                REQUIRE(reopenedCurve == nullptr);
+                reopenedCurve = candidate;
+            }
+        }
+        REQUIRE(reopenedCurve);
+        CHECK(reopenedCurve->isConsistent());
+        REQUIRE(reopenedCurve->sourceDefinition());
+        const auto* reopenedSpline = std::get_if<RS_SplineData>(
+            &reopenedCurve->sourceDefinition()->source.value);
+        REQUIRE(reopenedSpline);
+        CHECK(reopenedSpline->degree == data.degree);
+        REQUIRE(reopenedSpline->controlPoints.size() == data.controlPoints.size());
+        for (std::size_t i = 0; i < data.controlPoints.size(); ++i)
+            CHECK(reopenedSpline->controlPoints[i].distanceTo(data.controlPoints[i]) <= 1e-3);
+        CHECK(reopenedSpline->knotslist == data.knotslist);
+        CHECK(reopenedSpline->weights == data.weights);
+        CHECK(reopenedCurve->sourceDefinition()->signedDistance == 2500.0);
+        CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
+              cacheFingerprint);
+    }
+}
+
 TEST_CASE("Worker ordinary completions materialize exact plain output with fresh identities", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt};
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("ordinary local")};
