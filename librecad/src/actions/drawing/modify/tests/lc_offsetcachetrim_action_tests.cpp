@@ -2658,31 +2658,43 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const int profile =
       GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
                19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
-               35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50);
+               35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+               51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
+               67, 68);
+  const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
+  const int obliqueProfileIndex = profile <= 59 ? profile - 51 : profile - 60;
+  const int obliqueScaleIndex = obliqueProfileIndex / 3;
+  const int obliqueRatioIndex = obliqueProfileIndex % 3;
+  const bool obliqueReversed = profile >= 60 && profile <= 68;
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
       profile == 4 || profile == 6 || profile == 8 || profile == 10 ||
       profile == 12 || profile == 14 || profile == 16 || profile == 18 ||
-      profile == 20 || profile == 22 || (profile >= 39 && profile <= 50);
-  const bool steepAsymmetricTangents = profile >= 23 && profile <= 50;
+      profile == 20 || profile == 22 || (profile >= 39 && profile <= 50) ||
+      obliqueReversed;
+  const bool steepAsymmetricTangents =
+      (profile >= 23 && profile <= 50) || obliqueCurvatureProfile;
   const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
                                   steepAsymmetricTangents ||
                                   (profile >= 5 && profile <= 22);
   const bool oppositeBend = profile >= 5 && profile <= 16;
   const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
                           (profile >= 29 && profile <= 34) ||
-                          (profile >= 45 && profile <= 50);
+                          (profile >= 45 && profile <= 50) ||
+                          (obliqueCurvatureProfile && obliqueRatioIndex == 1);
   const bool asymmetricSmallScale =
       profile == 7 || profile == 8 || profile == 13 || profile == 14 ||
       profile == 19 || profile == 20 || profile == 24 || profile == 31 ||
       profile == 33 || profile == 35 || profile == 37 || profile == 40 ||
-      profile == 43 || profile == 46 || profile == 49;
+      profile == 43 || profile == 46 || profile == 49 ||
+      (obliqueCurvatureProfile && obliqueScaleIndex == 0);
   const bool asymmetricLargeScale =
       profile == 9 || profile == 10 || profile == 15 || profile == 16 ||
       profile == 21 || profile == 22 || profile == 25 || profile == 32 ||
       profile == 34 || profile == 36 || profile == 38 || profile == 41 ||
-      profile == 44 || profile == 47 || profile == 50;
+      profile == 44 || profile == 47 || profile == 50 ||
+      (obliqueCurvatureProfile && obliqueScaleIndex == 2);
   const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
   const double profileScale = scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e3)
                               : asymmetricSmallScale ? 1e-3
@@ -2729,7 +2741,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           sourceRotation);
   const double endpointSpacing =
       scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
-  const std::array<RS_Vector, 2> endpointTangents =
+  std::array<RS_Vector, 2> endpointTangents =
       steepAsymmetricTangents
           ? profile <= 26 ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
             : (profile >= 39 && profile <= 41) ||
@@ -2752,12 +2764,31 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           ? std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}}
           : std::array<RS_Vector, 2>{
                 {{1.0, tangentSlope}, {1.0, -tangentSlope}}};
+  if (obliqueCurvatureProfile) {
+    endpointTangents = obliqueReversed
+        ? std::array<RS_Vector, 2>{{{-0.9, 0.4358898943540673}, {-0.6, -0.8}}}
+        : std::array<RS_Vector, 2>{{{0.6, 0.8}, {0.9, -0.4358898943540673}}};
+  }
   LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
       reversedTangentTraversal
           ? std::array<RS_Vector, 2>{{{endpointSpacing, 0.0}, {0.0, 0.0}}}
           : std::array<RS_Vector, 2>{{{0.0, 0.0}, {endpointSpacing, 0.0}}},
       endpointTangents);
   REQUIRE(sourceData.isValid());
+  if (obliqueCurvatureProfile) {
+    constexpr std::array<double, 3> curvatureRatios{{0.1, 0.5, 0.9}};
+    const double vertexRadius =
+        2.0 * sourceData.m_focus.distanceTo(sourceData.m_vertex);
+    REQUIRE(std::isfinite(vertexRadius));
+    REQUIRE(vertexRadius > 0.0);
+    auto* seedOffset = dynamic_cast<LC_OffsetCurve*>(previous);
+    REQUIRE(seedOffset);
+    const double offsetDistance =
+        curvatureRatios[obliqueRatioIndex] * vertexRadius;
+    const auto distanceEdit = seedOffset->setDistance(offsetDistance);
+    REQUIRE(distanceEdit);
+    CHECK(seedOffset->definition().distance == offsetDistance);
+  }
   const double cosine = std::cos(sourceRotation);
   const double sine = std::sin(sourceRotation);
   for (auto &point : sourceData.m_controlPoints) {
