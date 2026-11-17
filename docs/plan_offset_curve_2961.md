@@ -265,9 +265,10 @@ curvature radius for the recorded tangent layouts; section 1690 classifies
 operation-8 cache admission/refusal for all sampled rows; section 1691 carries
 forward curvature-relative rows through worker/cache and five-format
 persistence; section 1693 adds the same bounded matrix for reversed traversal.
-Continue with materially distinct tangent
-directions and contact conditioning; do not inflate this finite profile set
-into general coverage.
+Section 1694 adds a fifth, oblique tangent-direction layout to the exact-normal,
+operation-8, and forward/reversed five-lane worker matrix. Continue with Trim
+contact conditioning and further materially distinct tangent directions; do
+not inflate this finite profile set into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55800,4 +55801,26 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This closes forward/reversed persistence for these sampled profiles only.
 Other tangent directions, cusp/beyond-cusp behavior, arbitrary conditioning,
 Trim contact coverage, and visible GUI acceptance remain open.
+
+## 1694. Qualify an Oblique Endpoint-tangent Pair (2026-11-16)
+
+Test commit `f043a435d` adds the direction pair `{(0.6, 0.8),
+(0.9, -0.4358898943540673)}`, whose tangent turn differs from the existing
+90-degree layouts. The independent interior-normal oracle and operation-8
+cache classification cover forward and reversed traversal, three
+scale/origin frames, ratios `0.1`, `0.5`, and `0.9` of vertex curvature radius,
+and both offset signs. The real worker/cache and all five save/reopen lanes
+cover the same bounded profile matrix.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 6,572 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 212,870 assertions / 1 case.
+- Both worker kernel/client CMake targets built successfully.
+- The client case passed with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000`.
+- `git diff --check`: passed.
+
+This qualifies one additional tangent pair only. Trim Two contact conditioning
+at these curvature-relative distances, other angle combinations, cusp boundary
+behavior, and visible GUI acceptance remain open.
 
