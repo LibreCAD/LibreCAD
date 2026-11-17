@@ -271,9 +271,12 @@ contact conditioning: section 1695 runs that oblique profile through curvature-
 relative Trim Two, tangent-circle classification, scale/traversal, action, and
 file lanes. Section 1696 adds a shallower tangent turn to the exact-normal,
 operation-8, and forward/reversed five-lane worker matrix; section 1697 adds
-its curvature-relative Trim Two action/contact matrix. Continue with other
-materially distinct tangent directions; do not inflate this finite profile
-set into general coverage.
+its curvature-relative Trim Two action/contact matrix. Section 1698 adds a
+near-vertical opposing tangent pair and raises the bounded Trim query depth to
+resolve its independently proven near-tangent secant without changing other
+work ceilings. Continue with other materially distinct tangent directions and
+contact conditioning; do not inflate this finite profile set into general
+coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55891,4 +55894,31 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This closes curvature-relative Trim for this shallow-bend pair and sampled
 profiles only. Other tangent directions, cusp-boundary contact, wider
 near-tangent ranges, and visible GUI acceptance remain open.
+
+## 1698. Resolve a Near-vertical Near-tangent Trim Contact (2026-11-16)
+
+Test/implementation commit `13c311e2f` adds the opposing tangent pair
+`{(0.2, 0.9797958971132712), (0.2, -0.9797958971132712)}` to exact-normal,
+operation-8, worker/cache, five-format persistence, and Trim Two coverage. The
+Trim matrix spans both traversal directions, both offset sides, three scales,
+and offsets `0.1`, `0.5`, and `0.9` of vertex curvature radius. At small scale,
+the independent exact circle/Bezier oracle found two distinct roots separated
+by about `1.47e-9`; intersection isolation hit its depth-48 ceiling and
+returned an atomic `LimitExceeded` before root publication. Raising only the
+Trim query's bounded `maxDepth` from 48 to 56 lets the certified query resolve
+this secant. Existing box-pair, leaf, generated-item, comparison, and output
+ceilings remain unchanged.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 9,200 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 253,316 assertions / 1 case; bounded 300-second harness override.
+- `T Trim Two trims an endpoint-tangent parabola`: 326,541 assertions / 1 case.
+- `[lc-offsetcurve][trim-kernel]`: 4,644,740 assertions / 92 cases.
+- `librecad_tests` and worker kernel/client targets built successfully.
+- `git diff --check`: passed.
+
+This resolves the recorded near-vertical secant only. Other tangent angles,
+closer/shallower roots, cusp-boundary contacts, and visible GUI acceptance
+remain open.
 
