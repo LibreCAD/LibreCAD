@@ -5469,9 +5469,11 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         {0.75, 0.67}, {0.9, 0.93}}};
     for (const double frame : {1e12, 1e13})
     for (const auto& [axisRatio, rotation] : profiles)
+    for (const bool boundedArc : {false, true})
     for (const bool towardCentre : {false, true})
     for (const bool ellipseFirst : {false, true}) {
-        CAPTURE(frame, axisRatio, rotation, towardCentre, ellipseFirst);
+        if (boundedArc && (frame != 1e13 || axisRatio != 0.45 || rotation != 0.17)) continue;
+        CAPTURE(frame, axisRatio, rotation, boundedArc, towardCentre, ellipseFirst);
         Drawing<true> f;
         const bool largestFrame = frame == 1e13;
         const double sourceRadius = largestFrame ? 1e6 : 1e5;
@@ -5490,9 +5492,14 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
 
-        auto* source = new RS_Ellipse(&f.graphic,
-            RS_EllipseData{center, {sourceRadius * std::cos(rotation), sourceRadius * std::sin(rotation)},
-                           axisRatio, 0, 0, false});
+        RS_EllipseData sourceData{center,
+            {sourceRadius * std::cos(rotation), sourceRadius * std::sin(rotation)}, axisRatio};
+        if (boundedArc) {
+            sourceData.setAngle1(5.9);
+            sourceData.setAngle2(.2);
+            sourceData.reversed = true;
+        }
+        auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
         UpdateSourceProbe update(&f.context);
@@ -5517,7 +5524,8 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
         const RS_Vector major{std::cos(rotation), std::sin(rotation)};
-        const RS_Vector target = center + major * (towardCentre ? .9 : 1.2) * sourceRadius;
+        const RS_Vector target = center + major *
+            (boundedArc ? -1.0 : towardCentre ? .9 : 1.2) * sourceRadius;
         double nativePickParameter = first;
         double nearestDistance = std::numeric_limits<double>::infinity();
         for (unsigned i = 0; i <= 8192; ++i) {
@@ -5606,6 +5614,19 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
                 if (!b) return false;
                 const auto& x = a->getData();
                 const auto& y = b->getData();
+                if (x.isArc || y.isArc) {
+                    if (!x.isArc || !y.isArc) return false;
+                    const bool sameEnds = a->getStartpoint().distanceTo(b->getStartpoint()) <= geometryTolerance &&
+                        a->getEndpoint().distanceTo(b->getEndpoint()) <= geometryTolerance;
+                    const bool reversedEnds = a->getStartpoint().distanceTo(b->getEndpoint()) <= geometryTolerance &&
+                        a->getEndpoint().distanceTo(b->getStartpoint()) <= geometryTolerance;
+                    return x.center.distanceTo(y.center) <= geometryTolerance &&
+                        x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
+                        std::abs(x.ratio - y.ratio) <= 1e-12 &&
+                        std::abs(a->getLength() - b->getLength()) <= geometryTolerance &&
+                        a->getMiddlePoint().distanceTo(b->getMiddlePoint()) <= geometryTolerance &&
+                        (sameEnds || reversedEnds);
+                }
                 return x.center.distanceTo(y.center) <= geometryTolerance &&
                        x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
                        std::abs(x.ratio - y.ratio) <= 1e-12 &&
