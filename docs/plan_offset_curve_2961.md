@@ -6583,55 +6583,6 @@ Windows/Linux runtime qualification. Remaining GUI/import caller audit,
 broader source/budget audit, installed-helper portability, and final W0-W2
 acceptance remain open.
 
-## 1744. Exercise an Asymmetric Concave Notch in Trim Two (2026-11-17)
-
-The matrix adds an L-shaped profile with a narrower/deeper notch: its inner
-corner is at `(0.3r, 0.25r)` in the local frame, with a vertical cutter at
-`x=0.65r` crossing the lower and inner horizontal legs. The existing center,
-scale, signed offsets, both pick orders, preview/commit/undo/redo, and five
-save/reopen lanes remain unchanged. This adds a different notch proportion to
-the square-corner and mirrored L profiles; it does not claim arbitrary concave
-polygons.
-
-The focused CMake Release matrix passes 10,805 assertions / 1 case. All 64
-retained R2000/R2018 DWGs converted to ACAD2018 DXF using ODA File Converter
-27.1.0.0, producing 64 DXFs with no `.err` files. `git diff --check` passes.
-Still open are multiple concavities, other notch proportions and cutter
-orientations, wider transform/scale coverage, visible GUI interaction, and
-AutoCAD semantic acceptance.
-
-## 1745. Add Horizontal Cutter Through Concave Trim Two Arm (2026-11-17)
-
-The original L profile now also runs with a horizontal finite-line cutter
-through its upper arm, in addition to its vertical cutter across the lower and
-inner legs. The same profile matrix retains both offset signs and operand pick
-orders, direct preparation, preview/commit/undo/redo, and five-format
-save/reopen. This adds a second cutter orientation for the same concave source
-without generalizing beyond the tested intersection arrangement.
-
-The focused CMake Release case passes 12,147 assertions / 1 case. All 72
-retained R2000/R2018 DWGs converted to ACAD2018 DXF through ODA File Converter
-27.1.0.0, producing 72 DXFs with no `.err` files. `git diff --check` passes.
-Multiple concavities, other cutter angles and placements, broader transforms
-and scales, visible GUI interaction, and AutoCAD semantic acceptance remain
-open.
-
-## 1746. Cover Multi-root U-shaped Trim Two (2026-11-17)
-
-The matrix now includes a closed U-shaped source with two concave vertices and
-a horizontal cutter crossing both arms. Direct preparation asserts exactly
-four certified source/cutter roots in both operand roles; the action then
-checks preview, commit, undo/redo, and the same five-format save/reopen matrix
-for both offset signs and both pick orders. This covers the tested four-root
-arrangement, not arbitrary high-multiplicity or self-crossing topology.
-
-The focused CMake Release matrix passes 13,521 assertions / 1 case in the
-ODA-staged run. A fresh staging directory contains exactly 80 R2000/R2018 DWGs;
-ODA File Converter 27.1.0.0 converted all 80 to ACAD2018 DXF with no `.err`
-files. `git diff --check` passes. Further concave layouts, cutter placements,
-origin/scale variants, visible GUI interaction, and AutoCAD semantic acceptance
-remain open.
-
 ## 1007. Qualify Thin Hyperbola Offsets at the Vertex-curvature Boundary (2026-11-12)
 
 Test commit `e88461107` adds an independent direct-geometry matrix for bounded
@@ -56980,3 +56931,67 @@ This strengthens the concave evidence only for the original L and its mirror;
 different notch proportions, multiple concavities, other cutter orientations,
 broader transforms/scales, visible GUI interaction, and AutoCAD semantic
 acceptance remain open.
+
+## 1744. Exercise an Asymmetric Concave Notch in Trim Two (2026-11-17)
+
+The matrix adds an L-shaped profile with a narrower/deeper notch: its inner
+corner is at `(0.3r, 0.25r)` in the local frame, with a vertical cutter at
+`x=0.65r` crossing the lower and inner horizontal legs. The existing center,
+scale, signed offsets, both pick orders, preview/commit/undo/redo, and five
+save/reopen lanes remain unchanged. This adds a different notch proportion to
+the square-corner and mirrored L profiles; it does not claim arbitrary concave
+polygons.
+
+The focused CMake Release matrix passes 10,805 assertions / 1 case. All 64
+retained R2000/R2018 DWGs converted to ACAD2018 DXF using ODA File Converter
+27.1.0.0, producing 64 DXFs with no `.err` files. `git diff --check` passes.
+Still open are multiple concavities, other notch proportions and cutter
+orientations, wider transform/scale coverage, visible GUI interaction, and
+AutoCAD semantic acceptance.
+
+## 1745. Add Horizontal Cutter Through Concave Trim Two Arm (2026-11-17)
+
+The original L profile now also runs with a horizontal finite-line cutter
+through its upper arm, in addition to its vertical cutter across the lower and
+inner legs. The same profile matrix retains both offset signs and operand pick
+orders, direct preparation, preview/commit/undo/redo, and five-format
+save/reopen. This adds a second cutter orientation for the same concave source
+without generalizing beyond the tested intersection arrangement.
+
+The focused CMake Release case passes 12,147 assertions / 1 case. All 72
+retained R2000/R2018 DWGs converted to ACAD2018 DXF through ODA File Converter
+27.1.0.0, producing 72 DXFs with no `.err` files. `git diff --check` passes.
+Multiple concavities, other cutter angles and placements, broader transforms
+and scales, visible GUI interaction, and AutoCAD semantic acceptance remain
+open.
+
+## 1746. Cover Multi-root U-shaped Trim Two (2026-11-17)
+
+The matrix now includes a closed U-shaped source with two concave vertices and
+a horizontal cutter crossing both arms. Direct preparation asserts exactly
+four certified source/cutter roots in both operand roles; the action then
+checks preview, commit, undo/redo, and the same five-format save/reopen matrix
+for both offset signs and both pick orders. This covers the tested four-root
+arrangement, not arbitrary high-multiplicity or self-crossing topology.
+
+The focused CMake Release matrix passes 13,521 assertions / 1 case in the
+ODA-staged run. A fresh staging directory contains exactly 80 R2000/R2018 DWGs;
+ODA File Converter 27.1.0.0 converted all 80 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Further concave layouts, cutter placements,
+origin/scale variants, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
+
+## 1747. Vary Concave Trim Two Frame and Scale (2026-11-17)
+
+Three additional concave rows combine rotation `0.37`, vertical ratio `0.7`,
+and radius scales `1.7`, `0.6`, and `1.7` across the single-notch, asymmetric
+notch, and U profiles. They retain the high-origin center and fixed `2500`
+offset, so the changed ratio between local size and offset exercises cache
+conditioning under translation, rotation, and anisotropy. These are separate
+bounded profiles, not a continuous scale/orientation sweep.
+
+The focused CMake Release matrix passes 17,593 assertions / 1 case in the
+ODA-staged run. A fresh directory held exactly 104 R2000/R2018 DWGs; ODA File
+Converter 27.1.0.0 converted all 104 to ACAD2018 DXF with no `.err` files.
+`git diff --check` passes. Other concave geometry, scale/origin ranges, GUI
+interaction, and AutoCAD semantic acceptance remain open.
