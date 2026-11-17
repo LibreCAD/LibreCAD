@@ -1684,7 +1684,7 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     std::sort(expectedFragments.begin(), expectedFragments.end());
 
     graphic.select(QList<RS_Entity*>{replacement}, true);
-    TrimActionProbe trimAction(&context);
+    TrimActionProbe trimAction(&context, veryHighOrigin);
     trimAction.init(0);
     mouse(trimAction, view, cutterCenter, true);
     mouse(trimAction, view, targetPick, true);
@@ -1696,7 +1696,7 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     }
     CHECK_FALSE(trimAction.pending());
     CHECK(replacement->isDeleted());
-    CHECK_FALSE(cutter->isDeleted());
+    CHECK(cutter->isDeleted() == veryHighOrigin);
 
     const auto collectFragments = [](const RS_Graphic& drawing) {
         std::vector<std::uint64_t> fingerprints;
@@ -1711,9 +1711,11 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     CHECK(collectFragments(graphic) == expectedFragments);
     REQUIRE(graphic.undo());
     CHECK_FALSE(replacement->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
     CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == cacheBeforeTrim);
     REQUIRE(graphic.redo());
     CHECK(replacement->isDeleted());
+    CHECK(cutter->isDeleted() == veryHighOrigin);
     CHECK(collectFragments(graphic) == expectedFragments);
 
     const auto output = std::filesystem::path(directory.filePath(
