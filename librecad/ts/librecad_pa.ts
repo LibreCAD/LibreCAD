@@ -3651,7 +3651,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
-        <translation>Patungo sa WCS</translation>
+        <translation>WCS ਵੱਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
@@ -4437,7 +4437,7 @@ Point: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Ganap na WCS: (%1)</translation>
+        <translation>ਪੂਰਨ WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -41234,7 +41234,7 @@ Binabago nito ang lahat ng entity ng Block mismo.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>Ipakita ang WCS zero marker</translation>
+        <translation>WCS ਜ਼ੀਰੋ ਮਾਰਕਰ ਦਿਖਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>

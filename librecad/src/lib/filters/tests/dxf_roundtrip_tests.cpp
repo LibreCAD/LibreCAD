@@ -9985,6 +9985,157 @@ TEST_CASE("DXF a line type no record backs is written from the list",
   std::filesystem::remove(out);
 }
 
+namespace {
+// One R2007 LTYPE record with an XDATA application, so the table-entry part
+// the writer carries over is visible.
+const char *const kChangedDefinitionFixture =
+    "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+    "0\nSECTION\n2\nTABLES\n"
+    "0\nTABLE\n2\nLTYPE\n70\n1\n"
+    "0\nLTYPE\n5\n40\n330\n5\n"
+    "100\nAcDbSymbolTableRecord\n100\nAcDbLinetypeTableRecord\n"
+    "2\nVENDOR_TAB\n70\n0\n3\nTab marks\n72\n65\n73\n2\n40\n15.0\n"
+    "49\n10.0\n49\n-5.0\n"
+    "1001\nVENDOR_APP\n1000\ntab-data\n"
+    "0\nENDTAB\n0\nENDSEC\n"
+    "0\nSECTION\n2\nENTITIES\n"
+    "0\nLINE\n5\n100\n330\n1F\n100\nAcDbEntity\n8\n0\n6\nVENDOR_TAB\n"
+    "100\nAcDbLine\n10\n0.0\n20\n0.0\n11\n10.0\n21\n0.0\n"
+    "0\nENDSEC\n0\nEOF\n";
+} // namespace
+
+// The table's definition replaced the record's; the record's identity and
+// its table-entry part stay.
+TEST_CASE("DXF writes a changed line type definition over its record",
+          "[dxf][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string src = tmpFile("changed_definition_src.dxf");
+  const std::string out = tmpFile("changed_definition_out.dxf");
+  writeText(src, kChangedDefinitionFixture);
+  RS_Graphic graphic;
+  REQUIRE(importFile(graphic, src));
+  LC_LineType *entry = graphic.findLineType(QStringLiteral("VENDOR_TAB"));
+  REQUIRE(entry != nullptr);
+  REQUIRE(entry->pattern == std::vector<double>{10.0, -5.0});
+  REQUIRE(entry->description == QStringLiteral("Tab marks"));
+  entry->pattern = {20.0, -10.0};
+  entry->description = QStringLiteral("Wider tab marks");
+
+  REQUIRE(exportAs(graphic, out));
+  CHECK(ltypeRecordsSpelt(out, "VENDOR_TAB") == Records{{20.0, -10.0}});
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_TAB", "3") ==
+        std::vector<std::string>{"Wider tab marks"});
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_TAB", "1001") ==
+        std::vector<std::string>{"VENDOR_APP"});
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_TAB", "1000") ==
+        std::vector<std::string>{"tab-data"});
+
+  RS_Graphic back;
+  REQUIRE(importFile(back, out));
+  const LC_LineType *backEntry = importedEntry(back, "VENDOR_TAB");
+  REQUIRE(backEntry != nullptr);
+  CHECK(backEntry->pattern == std::vector<double>{20.0, -10.0});
+  CHECK(backEntry->description == QStringLiteral("Wider tab marks"));
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+#ifdef DWGSUPPORT
+TEST_CASE("DWG writes a changed line type definition over its record",
+          "[dwg][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string src = tmpFile("changed_definition_dwg_src.dxf");
+  const std::string dwg = tmpFile("changed_definition_out.dwg");
+  writeText(src, kChangedDefinitionFixture);
+  RS_Graphic graphic;
+  REQUIRE(importFile(graphic, src));
+  LC_LineType *entry = graphic.findLineType(QStringLiteral("VENDOR_TAB"));
+  REQUIRE(entry != nullptr);
+  entry->pattern = {20.0, -10.0};
+  entry->description = QStringLiteral("Wider tab marks");
+
+  REQUIRE(exportAs(graphic, dwg, RS2::FormatDWG2004));
+  RS_Graphic fromDwg;
+  REQUIRE(importFile(fromDwg, dwg, RS2::FormatDWG));
+  const LC_LineType *backEntry = importedEntry(fromDwg, "VENDOR_TAB");
+  REQUIRE(backEntry != nullptr);
+  CHECK(backEntry->pattern == std::vector<double>{20.0, -10.0});
+  CHECK(backEntry->description == QStringLiteral("Wider tab marks"));
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(dwg);
+}
+#endif
+
+TEST_CASE("DXF writes a redefined built-in from the table",
+          "[dxf][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string out = tmpFile("changed_builtin_out.dxf");
+  RS_Graphic graphic;
+  importBuiltinLTypeFixture(graphic, "changed_builtin_src.dxf", "70\n0\n");
+  LC_LineType *entry = graphic.findLineType(QStringLiteral("HIDDEN"));
+  REQUIRE(entry != nullptr);
+  REQUIRE(entry->pattern == std::vector<double>{64.0, -32.0});
+  entry->pattern = {30.0, -10.0};
+
+  REQUIRE(exportAs(graphic, out));
+  CHECK(ltypeRecordsSpelt(out, "HIDDEN") == Records{{30.0, -10.0}});
+
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF writes a changed complex line type without its segments",
+          "[dxf][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string src = writeFixture("named_t8_src.dxf", kNamedR2000Fixture);
+  const std::string out = tmpFile("changed_complex_out.dxf");
+  RS_Graphic graphic;
+  REQUIRE(importFile(graphic, src));
+  LC_LineType *entry = graphic.findLineType(QStringLiteral("VENDOR_CPLX"));
+  REQUIRE(entry != nullptr);
+  REQUIRE(entry->pattern == std::vector<double>{20.0, -10.0});
+  entry->pattern = {12.0, -6.0};
+
+  REQUIRE(exportAs(graphic, out));
+  CHECK(ltypeRecordsSpelt(out, "VENDOR_CPLX") == Records{{12.0, -6.0}});
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "73") ==
+        std::vector<std::string>{"2"});
+  // The table has no complex elements; the archived application group stays.
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "9").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "75").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "340").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "46").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "50").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "44").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "45").empty());
+  CHECK(ltypeRecordGroupValues(out, "VENDOR_CPLX", "310") ==
+        std::vector<std::string>{"CAFE"});
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+// A twin is the record of another spelling, not the one the table kept.
+TEST_CASE("DXF writes a twin archived spelling as it came beside a changed record",
+          "[dxf][roundtrip][filter][linetype][named][table]") {
+  ensureSettings();
+  const std::string out = tmpFile("changed_twin_out.dxf");
+  RS_Graphic graphic;
+  importRecords(graphic, ltypeRecord("VENDOR_TAB", {10.0, -5.0}) +
+                            ltypeRecord(" VENDOR_TAB", {7.0, -7.0}));
+  LC_LineType *entry = graphic.findLineType(QStringLiteral("VENDOR_TAB"));
+  REQUIRE(entry != nullptr);
+  REQUIRE(entry->name == QStringLiteral("VENDOR_TAB"));
+  entry->pattern = {20.0, -10.0};
+
+  REQUIRE(exportAs(graphic, out));
+  CHECK(ltypeRecordsSpelt(out, "VENDOR_TAB") == Records{{20.0, -10.0}});
+  CHECK(ltypeRecordsSpelt(out, " VENDOR_TAB") == Records{{7.0, -7.0}});
+
+  std::filesystem::remove(out);
+}
+
 // A record that only names a line type is written with the dashes the list
 // has for it, which a library insert may have brought. The record keeps
 // everything else it came with.

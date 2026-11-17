@@ -169,6 +169,11 @@ write access could publish from any branch.
    | `AZURE_AD_APPLICATION_SECRET` | Client secret value; it expires, so plan its rotation |
    | `SELLER_ID` | Partner Center seller ID, from Account settings > Identifiers |
 
+The first step of the submit job checks that all four secrets are set, that
+the tenant and client IDs are GUIDs and that `MICROSOFT_STORE_BETA_PRODUCT_ID`
+is a Store ID. It lists everything that is wrong and stops, before it
+downloads the bundle or installs the CLI.
+
 The credentials only work once the account side is wired up as well:
 
 - The Entra tenant must be associated with the Partner Center account.
@@ -383,12 +388,16 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   check unless they also change `licenses/` or `LICENSE`, which the
   package copies; those two alone do not start the workflow and are first
   packaged on `master`. Bundling runs on pushes only.
-- To submit an update, manually dispatch **Submit MSIX to Microsoft Store**
-  on `master` with the run ID of the **Continuous build** run whose bundle
-  should ship. A reviewer of the `microsoft-store` environment must approve
-  the job. The job:
-  1. accepts only a push run of `build-all.yml` on `master`, and refuses a
-     bundle with the placeholder identity;
+- After each successful **Continuous build** push to `master`, **Submit MSIX to
+  Microsoft Store** starts automatically with that run's bundle. If the overall
+  build was canceled by another job, it can still submit when `PackageWindowsMsix`
+  succeeded and the run's commit is still current on `master`. A reviewer of
+  the `microsoft-store` environment must approve the job before it can use the
+  Store credentials. Manual dispatch on `master` remains available to submit a
+  selected build run. The job:
+  1. accepts only a same-repository push run of `build-all.yml` on `master`,
+     verifies `PackageWindowsMsix` succeeded and the run is still current on
+     `master`, and refuses a bundle with the placeholder identity;
   2. refuses the run if its App Certification Kit report has a failing
      required test (`ignore_wack` overrides);
   3. refuses to start while another submission is in progress, whatever its
@@ -406,7 +415,7 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   still being processed when the job stopped waiting, the job warns, and the
   commit can still fail; Partner Center shows the outcome.
 
-### What a dispatch does to the product
+### What each submission does to the product
 
 - Each run creates a new submission as a copy of the last published one and
   changes only its packages: the new `.msixupload` replaces the previous

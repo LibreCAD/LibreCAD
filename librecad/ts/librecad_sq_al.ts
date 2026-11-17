@@ -41077,7 +41077,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>Shfaq</translation>
+        <translation>Shfaq shënuesin zero të WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
