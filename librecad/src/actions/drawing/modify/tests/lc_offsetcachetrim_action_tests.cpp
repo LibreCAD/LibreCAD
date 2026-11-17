@@ -2671,7 +2671,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186,
                187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198,
                199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
-               211, 212);
+               211, 212, 213);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
@@ -2745,6 +2745,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       (backtrackingEndCuspProfile &&
        (curvatureProfileIndex % 2) == 1);
   const bool highOrigin = profile == 2;
+  const bool highOriginLargeScale = profile == 213;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
       profile == 4 || profile == 6 || profile == 8 || profile == 10 ||
@@ -2752,7 +2753,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       profile == 20 || profile == 22 || (profile >= 39 && profile <= 50) ||
       reversedCurvatureProfile;
   const bool steepAsymmetricTangents =
-      (profile >= 23 && profile <= 50) || curvatureActionProfile;
+      (profile >= 23 && profile <= 50) || highOriginLargeScale ||
+      curvatureActionProfile;
   const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
                                   steepAsymmetricTangents ||
                                   (profile >= 5 && profile <= 22);
@@ -2777,6 +2779,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       profile == 21 || profile == 22 || profile == 25 || profile == 32 ||
       profile == 34 || profile == 36 || profile == 38 || profile == 41 ||
       profile == 44 || profile == 47 || profile == 50 ||
+      highOriginLargeScale ||
       (curvatureActionProfile && curvatureScaleIndex == 2);
   const int scaleProfile = scaleExtreme ? GENERATE(0, 1) : 0;
   const double profileScale = scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e3)
@@ -2788,6 +2791,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       RS_EllipseData{{0, 0}, {1000.0 * profileScale, 0}, 1, 0, .1, false});
   const RS_Vector sourceTranslation =
       highOrigin ? RS_Vector{1e9, -2e9}
+      : highOriginLargeScale ? RS_Vector{1e12, -2e12}
       : scaleExtreme
           ? (scaleProfile == 0 ? RS_Vector{1e3, -2e3} : RS_Vector{1e9, -2e9})
       : asymmetricSmallScale ? RS_Vector{1e3, -2e3}
@@ -2826,7 +2830,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
   std::array<RS_Vector, 2> endpointTangents =
       steepAsymmetricTangents
-          ? profile <= 26 ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
+          ? profile <= 26 || highOriginLargeScale
+                ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
             : (profile >= 39 && profile <= 41) ||
                     (profile >= 45 && profile <= 47)
                 ? std::array<RS_Vector, 2>{{{-0.6, -0.8}, {-0.8, 0.6}}}
@@ -3409,8 +3414,9 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                                        fragments.end());
         REQUIRE_FALSE(expectedGeometry.empty());
 
-        const double geometryTolerance = scaleExtreme
-            ? (scaleProfile == 0 ? 1e-7 : 1e-4)
+        const double geometryTolerance = highOriginLargeScale
+            ? 128.0 * std::numeric_limits<double>::epsilon() * 2e12
+            : scaleExtreme ? (scaleProfile == 0 ? 1e-7 : 1e-4)
             : asymmetricSmallScale ? 1e-7 : 1e-4;
         const auto closePoint = [=](const RS_Vector& a, const RS_Vector& b) {
             return a.valid && b.valid &&
