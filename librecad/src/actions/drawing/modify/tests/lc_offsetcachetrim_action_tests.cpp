@@ -8486,14 +8486,15 @@ TEST_CASE("R03 Trim Two seals both natives after final peer mutation or late can
     }
 }
 
-TEST_CASE("T Trim Two trims a worker-created high-origin polynomial spline",
-          "[gui][lc-offsetcurve][trim-action][typed-source][spline][high-origin][trim-two]") {
+TEST_CASE("T Trim Two trims worker-created high-origin spline source families",
+          "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     const RS_Vector center{1e12, -2e12};
     constexpr double scale = 1e5;
     constexpr double distance = 2500.0;
+    for (const bool fitPointSource : {false, true})
     for (const bool splineFirst : {false, true}) {
-        CAPTURE(splineFirst);
+        CAPTURE(fitPointSource, splineFirst);
         Drawing<true> f;
         constexpr double zoom = .001;
         f.view.getViewPort()->setSize(640, 480);
@@ -8508,19 +8509,33 @@ TEST_CASE("T Trim Two trims a worker-created high-origin polynomial spline",
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
 
-        RS_SplineData sourceData{3, false};
-        sourceData.controlPoints = {
-            center, center + RS_Vector{.8 * scale, 1.2 * scale},
-            center + RS_Vector{2.2 * scale, .6 * scale},
-            center + RS_Vector{3 * scale, 0}};
-        sourceData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
-        sourceData.weights = {1, 1, 1, 1};
-        auto* source = new RS_Spline(&f.graphic, sourceData);
+        RS_Entity* source = nullptr;
+        const auto sourceKind = fitPointSource
+            ? LC_OffsetSourceGeometry::Kind::SplinePoints
+            : LC_OffsetSourceGeometry::Kind::Spline;
+        if (fitPointSource) {
+            LC_SplinePointsData sourceData{false, false};
+            sourceData.splinePoints = {
+                center, center + RS_Vector{.8 * scale, 1.2 * scale},
+                center + RS_Vector{2.2 * scale, .6 * scale},
+                center + RS_Vector{3 * scale, 0}};
+            sourceData.fitTolerance = 1e-3;
+            source = new LC_SplinePoints(&f.graphic, sourceData);
+        } else {
+            RS_SplineData sourceData{3, false};
+            sourceData.controlPoints = {
+                center, center + RS_Vector{.8 * scale, 1.2 * scale},
+                center + RS_Vector{2.2 * scale, .6 * scale},
+                center + RS_Vector{3 * scale, 0}};
+            sourceData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+            sourceData.weights = {1, 1, 1, 1};
+            source = new RS_Spline(&f.graphic, sourceData);
+        }
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
         UpdateSourceProbe update(&f.context);
         update.init(0);
-        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Spline);
+        update.setSourceKind(sourceKind);
         update.use(source);
         lc::test::awaitUpdate(update);
         INFO(f.context.messages.join('\n').toStdString());
@@ -8535,8 +8550,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin polynomial spline",
         }
         REQUIRE(native);
         REQUIRE(native->sourceDefinition());
-        CHECK(native->sourceDefinition()->source.kind() ==
-              LC_OffsetSourceGeometry::Kind::Spline);
+        CHECK(native->sourceDefinition()->source.kind() == sourceKind);
         CHECK(native->sourceDefinition()->signedDistance == distance);
 
         double first = 0, last = 0;
@@ -8586,8 +8600,8 @@ TEST_CASE("T Trim Two trims a worker-created high-origin polynomial spline",
             const bool dwg = format == RS2::FormatDWG ||
                              format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("high-origin-spline-trim-%1-%2")
-                    .arg(splineFirst ? 1 : 0).arg(lane) +
+                QStringLiteral("high-origin-spline-trim-%1-%2-%3")
+                    .arg(fitPointSource ? 1 : 0).arg(splineFirst ? 1 : 0).arg(lane) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
             const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
@@ -8626,7 +8640,16 @@ TEST_CASE("T Trim Two trims a worker-created high-origin polynomial spline",
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
-        CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == sourceKind);
+        if (fitPointSource) {
+            const auto& restored = std::get<LC_SplinePointsData>(
+                native->sourceDefinition()->source.value);
+            CHECK(restored.splinePoints.size() == 4);
+            CHECK(restored.fitTolerance == 1e-3);
+        } else {
+            CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
+        }
         REQUIRE(f.graphic.redo());
         CHECK(native->isDeleted());
         CHECK(cutter->isDeleted());
