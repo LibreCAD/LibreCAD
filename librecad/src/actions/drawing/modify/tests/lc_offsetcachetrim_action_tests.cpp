@@ -730,22 +730,29 @@ std::string trimGeometry(const RS_Entity& entity) {
 bool sameTrimGeometry(const RS_Entity& expected, const RS_Entity& actual) {
     const double scale = std::max({1.0, expected.getLength(), actual.getLength()});
     const double tolerance = 2e-8 * scale;
-    if (expected.rtti() != actual.rtti() || std::abs(expected.getLength() - actual.getLength()) > tolerance) return false;
-    const auto closePoint = [tolerance](const RS_Vector& a, const RS_Vector& b) {
-        const auto ulp = [](double value) {
-            double spacing = 0.0;
-            for (const double direction : {-INFINITY, INFINITY}) {
-                const double adjacent = std::nextafter(value, direction);
-                if (std::isfinite(adjacent))
-                    spacing = std::max(spacing, std::abs(adjacent - value));
-            }
-            return spacing;
-        };
-        // File readers may round a stored world coordinate and its derived endpoint.
+    const auto ulp = [](double value) {
+        double spacing = 0.0;
+        for (const double direction : {-INFINITY, INFINITY}) {
+            const double adjacent = std::nextafter(value, direction);
+            if (std::isfinite(adjacent))
+                spacing = std::max(spacing, std::abs(adjacent - value));
+        }
+        return spacing;
+    };
+    // DXF readers may round world endpoints by a few ULPs at large origins.
+    const auto pointTolerance = [tolerance, &ulp](const RS_Vector& a, const RS_Vector& b) {
         const double coordinateUlp = 4.0 * std::hypot(
             std::max(ulp(a.x), ulp(b.x)), std::max(ulp(a.y), ulp(b.y)));
-        return a.distanceTo(b) <= std::max(tolerance, coordinateUlp);
+        return std::max(tolerance, coordinateUlp);
     };
+    const auto closePoint = [&pointTolerance](const RS_Vector& a, const RS_Vector& b) {
+        return a.distanceTo(b) <= pointTolerance(a, b);
+    };
+    const double lengthTolerance = std::max(tolerance,
+        pointTolerance(expected.getStartpoint(), actual.getStartpoint()) +
+        pointTolerance(expected.getEndpoint(), actual.getEndpoint()));
+    if (expected.rtti() != actual.rtti() ||
+        std::abs(expected.getLength() - actual.getLength()) > lengthTolerance) return false;
     if (const auto* line = dynamic_cast<const RS_Line*>(&expected)) {
         const auto* other = dynamic_cast<const RS_Line*>(&actual);
         if (!other) return false;
@@ -8939,28 +8946,31 @@ TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides
 TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutter seam",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][closed][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
-    const RS_Vector center{1e12, -2e12};
     const double baseRadius = 1e5;
     constexpr double distance = 2500.0;
-    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double>({
-        {0.0, 1.0, false, 0, 1.0}, {.37, 1.0, false, 0, 1.0},
-        {0.0, .7, false, 0, 1.0}, {.37, .7, false, 0, 1.0},
-        {0.0, 1.0, true, 0, 1.0}, {0.0, 1.0, false, 1, 1.0},
-        {0.0, 1.0, false, 2, 1.0}, {0.0, 1.0, false, 3, 1.0},
-        {0.0, 1.0, false, 4, 1.0}, {0.0, 1.0, false, 5, 1.0},
-        {.37, .7, false, 1, 1.7}, {.37, .7, false, 3, .6},
-        {.37, .7, false, 5, 1.7}}));
+    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double, double>({
+        {0.0, 1.0, false, 0, 1.0, 1.0}, {.37, 1.0, false, 0, 1.0, 1.0},
+        {0.0, .7, false, 0, 1.0, 1.0}, {.37, .7, false, 0, 1.0, 1.0},
+        {0.0, 1.0, true, 0, 1.0, 1.0}, {0.0, 1.0, false, 1, 1.0, 1.0},
+        {0.0, 1.0, false, 2, 1.0, 1.0}, {0.0, 1.0, false, 3, 1.0, 1.0},
+        {0.0, 1.0, false, 4, 1.0, 1.0}, {0.0, 1.0, false, 5, 1.0, 1.0},
+        {.37, .7, false, 1, 1.7, 1.0}, {.37, .7, false, 3, .6, 1.0},
+        {.37, .7, false, 5, 1.7, 1.0},
+        {.37, .7, false, 1, 1.0, .001},
+        {0.0, 1.0, false, 5, 1.7, 10.0}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
     const int topology = std::get<3>(profiles);
     const double scale = std::get<4>(profiles);
+    const double originScale = std::get<5>(profiles);
     const double radius = baseRadius * scale;
+    const RS_Vector center{1e12 * originScale, -2e12 * originScale};
     const double cosine = std::cos(rotation), sine = std::sin(rotation);
     const auto world = [&](double x, double y) {
         return center + RS_Vector{cosine * x - sine * y, sine * x + cosine * y};
     };
-    CAPTURE(rotation, verticalRatio, bulged, topology, scale);
+    CAPTURE(rotation, verticalRatio, bulged, topology, scale, originScale);
     for (const bool towardCentre : {false, true}) {
         for (const bool nativeFirst : {false, true}) {
             CAPTURE(towardCentre, nativeFirst);
@@ -9116,10 +9126,11 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 const auto format = formats[lane];
                 const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
                 const std::filesystem::path file(directory.filePath(
-                    QStringLiteral("closed-high-origin-trim-two-%1-%2-%3-%4-%5-%6-%7-%8")
+                    QStringLiteral("closed-high-origin-trim-two-%1-%2-%3-%4-%5-%6-%7-%8-%9")
                         .arg(towardCentre ? 1 : 0).arg(nativeFirst ? 1 : 0)
                         .arg(qRound(rotation * 100)).arg(qRound(verticalRatio * 100))
-                        .arg(bulged ? 1 : 0).arg(topology).arg(qRound(scale * 100)).arg(lane) +
+                        .arg(bulged ? 1 : 0).arg(topology).arg(qRound(scale * 100))
+                        .arg(qRound(originScale * 1000)).arg(lane) +
                     (dwg ? ".dwg" : ".dxf")).toStdString());
                 REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
                 const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
@@ -9131,7 +9142,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 }
                 RS_Graphic reopened;
                 REQUIRE(lc::test::importDrawing(reopened, file, format));
-                CHECK(sameTrimGeometrySet(expectedGeometry, live(reopened)));
+                const auto reopenedGeometry = live(reopened);
+                CHECK(sameTrimGeometrySet(expectedGeometry, reopenedGeometry));
             }
         }
     }
