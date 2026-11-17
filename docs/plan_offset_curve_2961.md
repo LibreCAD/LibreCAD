@@ -4972,6 +4972,18 @@ conversion remains unverified; it must be run from an accessible desktop
 Terminal or through the ODA GUI. This does not close visible LibreCAD GUI or
 AutoCAD semantic acceptance either.
 
+## 1802. Retry ODA Conversion After the User Reopened the GUI App (2026-11-17)
+
+After the user confirmed ODAFileConverter was open in the desktop session,
+retried its executable against `/private/tmp/offset-2961-trim-two-bulged-dwgs`
+with ACAD2018 DXF output. The process exited 134 before conversion with
+`com.apple.pasteboard.clipboard` / `com.apple.pasteboard.find` errors and an
+invalid `com.apple.hiservices-xpcservice` connection. The output directory
+remained empty; this is not an ODA validation pass. Running the app in the
+visible session does not give an SSH-launched CLI process access to that
+session's services. Independent ODA conversion, visible LibreCAD interaction,
+and AutoCAD semantic acceptance remain open.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
