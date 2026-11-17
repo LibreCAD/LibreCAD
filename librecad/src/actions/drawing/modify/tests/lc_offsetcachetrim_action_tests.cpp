@@ -4234,15 +4234,26 @@ TEST_CASE("T Trim Two trims exact and beyond-cusp asymmetric branches",
 
 TEST_CASE("T Trim Two action trims a worker-created typed line offset against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][line][trim-two]") {
+    for (const double scale : {1.0, 1e5})
     for (const bool lineFirst : {false, true}) {
-        CAPTURE(lineFirst);
+        CAPTURE(scale, lineFirst);
         Drawing<true> f;
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .25, false);
+        const RS_Vector center = scale == 1e5 ? RS_Vector{1e12, -2e12}
+                                             : RS_Vector{0, 0};
+        if (center.x != 0.0) {
+            constexpr double zoom = .001;
+            f.view.getViewPort()->setSize(640, 480);
+            f.view.getViewPort()->setOffsetAndFactor(
+                qRound(320.0 - center.x * zoom),
+                qRound(240.0 - center.y * zoom), zoom);
+        }
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {scale, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, .25 * scale, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        auto* source = new RS_Line(&f.graphic, RS_LineData{{-1, 0}, {1, 0}});
+        auto* source = new RS_Line(&f.graphic, RS_LineData{
+            {center.x - scale, center.y}, {center.x + scale, center.y}});
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -4276,11 +4287,12 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
         tangent /= tangent.magnitude();
         const RS_Vector normal{-tangent.y, tangent.x};
         auto* cutter = new RS_Line(&f.graphic,
-            RS_LineData{intersection - normal * 2.0, intersection + normal * 2.0});
+            RS_LineData{intersection - normal * (2.0 * scale),
+                        intersection + normal * (2.0 * scale)});
         f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(
             breaks.front() + (breaks[1] - breaks.front()) * .9);
-        const RS_Vector cutterPick = intersection + normal * 1.5;
+        const RS_Vector cutterPick = intersection + normal * (1.5 * scale);
 
         f.action->click(lineFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
