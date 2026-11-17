@@ -8967,7 +8967,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {.37, 1.0, false, 7, 1.7, 1.0},
         {.37, 1.0, false, 8, 1.0, 1.0},
         {.9, .7, false, 8, 1.0, 1.0},
-        {.37, 1.0, false, 8, .6, 1.0}}));
+        {.37, 1.0, false, 8, .6, 1.0},
+        {.37, 1.0, false, 8, 1.7, 1.0}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
@@ -9117,8 +9118,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             CHECK(nativeFirstPrepared.rootCount >= 2);
             if (topology == 5) { CHECK(nativeFirstPrepared.rootCount == 4); }
             if (topology == 6 || topology == 7 || topology == 8) {
-                const bool pickedComponentHasTwoRoots = towardCentre == (topology == 8);
-                CHECK(nativeFirstPrepared.rootCount == (pickedComponentHasTwoRoots ? 6 : 2));
+                const bool nativeTargetHasSixRoots = towardCentre == (topology == 8);
+                CHECK(nativeFirstPrepared.rootCount == (nativeTargetHasSixRoots ? 6 : 2));
             }
             REQUIRE(lineFirstPrepared.refusal == LC_OffsetCacheTrim::Refusal::None);
             CHECK(lineFirstPrepared.rootCount >= 2);
