@@ -1550,17 +1550,21 @@ TEST_CASE("T Trim Two commits certified exact- and post-cusp hyperbola caches at
 
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against circular and elliptic cutters",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
+    for (const bool highOrigin : {false, true})
     for (const bool nearCusp : {false, true})
     for (const bool asymmetric : {false, true})
-    for (const double scale : {0.1, 1.0, 10.0})
+    for (const double scale : {0.1, 1.0, 10.0, 1e6})
     for (const bool transformed : {false, true})
     for (const bool oppositeSide : {false, true})
     for (const unsigned cutterKind : {0u, 1u})
     for (const bool parabolaFirst : {false, true}) {
         if (nearCusp && (asymmetric || scale != 1.0 || transformed)) continue;
-        CAPTURE(nearCusp, asymmetric, scale, transformed, oppositeSide, cutterKind, parabolaFirst);
+        if (highOrigin && (nearCusp || scale != 1e6)) continue;
+        if (!highOrigin && scale == 1e6) continue;
+        CAPTURE(highOrigin, nearCusp, asymmetric, scale, transformed, oppositeSide, cutterKind, parabolaFirst);
         Drawing<true> f;
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+        const double seedRadius = highOrigin ? scale : 1.0;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {seedRadius, 0}, 1, 0, .1, false});
         const double offsetDistance = scale * (nearCusp ? .45 : .05);
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, oppositeSide);
         REQUIRE(initial);
@@ -1568,7 +1572,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against circu
         f.graphic.addEntity(previous);
         const double angle = transformed ? .37 : 0.0;
         const double cosine = std::cos(angle), sine = std::sin(angle);
-        const RS_Vector translation = transformed ? RS_Vector{2 * scale, -scale} : RS_Vector{};
+        const RS_Vector origin = highOrigin ? RS_Vector{1e13, -2e13} : RS_Vector{};
+        const RS_Vector localTranslation = transformed ? RS_Vector{2 * scale, -scale} : RS_Vector{};
+        const RS_Vector translation = origin + localTranslation;
+        if (highOrigin) {
+            constexpr double zoom = 5e-5;
+            f.view.getViewPort()->setSize(640, 480);
+            f.view.getViewPort()->setOffsetAndFactor(
+                qRound(320.0 - translation.x * zoom),
+                qRound(240.0 - translation.y * zoom), zoom);
+        }
         const auto mapPoint = [&](RS_Vector point) {
             point *= scale;
             return RS_Vector{cosine * point.x - sine * point.y,
