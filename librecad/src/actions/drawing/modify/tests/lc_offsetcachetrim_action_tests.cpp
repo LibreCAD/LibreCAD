@@ -4411,18 +4411,30 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u})
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u})
     for (const bool arcFirst : {false, true}) {
         CAPTURE(profile, arcFirst);
         Drawing<true> f;
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        const double offsetDistance = .25;
-        const bool towardCentre = profile >= 7;
+        const bool highOrigin = profile >= 9;
+        const RS_Vector center = highOrigin ? RS_Vector{1e12, -2e12} : RS_Vector{};
+        if (highOrigin) {
+            constexpr double zoom = .001;
+            f.view.getViewPort()->setSize(640, 480);
+            f.view.getViewPort()->setOffsetAndFactor(
+                qRound(320.0 - center.x * zoom),
+                qRound(240.0 - center.y * zoom), zoom);
+        }
+        const double offsetDistance = highOrigin ? 2500.0 : .25;
+        RS_Ellipse seed(nullptr, RS_EllipseData{
+            {0, 0}, {highOrigin ? 20000.0 : 1.0, 0}, 1, 0, .1, false});
+        const bool towardCentre = profile == 7 || profile == 8 || profile == 9;
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        const RS_ArcData sourceData = profile == 0
+        const RS_ArcData sourceData = profile == 9 || profile == 10
+            ? RS_ArcData{center, 1e5, .35, 2.7, profile == 10}
+            : profile == 0
             ? RS_ArcData{{0, 0}, 2, .1, 1.4, false}
             : profile == 1
                 ? RS_ArcData{{3, -4}, 3.2, 2.0 * M_PI - .55, .55, false}
@@ -4475,12 +4487,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
         REQUIRE(tangent.magnitude() > RS_TOLERANCE);
         tangent /= tangent.magnitude();
         const RS_Vector normal{-tangent.y, tangent.x};
+        const double cutterHalfLength = highOrigin ? 10000.0 : 3.0;
         auto* cutter = new RS_Line(&f.graphic,
-            RS_LineData{intersection - normal * 3.0, intersection + normal * 3.0});
+            RS_LineData{intersection - normal * cutterHalfLength,
+                        intersection + normal * cutterHalfLength});
         f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(
             breaks.front() + (breaks[1] - breaks.front()) * .9);
-        const RS_Vector cutterPick = intersection + normal * 2.0;
+        const RS_Vector cutterPick = intersection + normal * cutterHalfLength * .65;
 
         f.action->click(arcFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
