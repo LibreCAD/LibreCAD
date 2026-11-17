@@ -57069,6 +57069,24 @@ worker generation, Trim Two in both operand orders and signed offset sides,
 preview/commit/undo/redo, and all five native-capable save/reopen lanes at the
 `1e9` origin tier. The focused CMake Release matrix passes 24,561 assertions / 1
 case. A fresh stage held exactly 144 R2000/R2018 DWGs; ODA File Converter
-27.1.0.0 converted all 144 to ACAD2018 DXF with no `.err` files. `git diff
---check` passes. This establishes one rotated two-notch arrangement at one
-origin, not arbitrary rotations/origins, nor AutoCAD semantic acceptance.
+27.1.0.0 converted all 144 to ACAD2018 DXF with no `.err` files.
+`git diff --check` passes. This establishes one rotated two-notch arrangement
+at one origin, not arbitrary rotations/origins, nor AutoCAD semantic
+acceptance.
+
+## 1752. Extend Rotated Two-notch Trim to `1e12` (2026-11-17)
+
+The same `0.37`-radian two-notch frame now also runs at world origin
+`(1e12,-2e12)`, in addition to the `1e9` tier in section 1751. The root-count,
+both signed offset sides, both operand orders, preview/commit/undo/redo, and all
+five native-capable save/reopen lanes pass unchanged. This confirms the
+long-double strict-separation proof at the origin tier where the original
+parallel-wall rejection was observed; it is one geometry and transform, not a
+general precision guarantee.
+
+The focused CMake Release matrix passes 25,854 assertions / 1 case; its fresh
+ODA staging run passes 25,888 assertions and contains exactly 152 R2000/R2018
+DWGs. ODA File Converter 27.1.0.0 converted all 152 to ACAD2018 DXF with no
+`.err` files. `git diff --check` passes. Other rotated concave layouts,
+orientations, origin/scale combinations, visible GUI interaction, and AutoCAD
+semantic acceptance remain open.
