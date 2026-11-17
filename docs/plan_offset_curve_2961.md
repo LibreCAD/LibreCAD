@@ -57120,3 +57120,18 @@ DWGs; ODA File Converter 27.1.0.0 converted all 168 to ACAD2018 DXF with no
 `.err` files. `git diff --check` passes. Other multi-notch layouts, angles,
 scales, origins, visible GUI interaction, and AutoCAD semantic acceptance
 remain open.
+
+## 1755. Vary Rotated Two-notch Relative Offset Scale (2026-11-17)
+
+The `0.37`-radian profile adds a radius scale of `0.6` at world origin
+`(1e12,-2e12)` while retaining the fixed `2500` offset. This raises the
+offset-to-source ratio versus the unit-scale row, while preserving the same
+six-root cutter geometry, both signed sides, operand orders, action lifecycle,
+and five native-capable save/reopen lanes. The result is a single relative
+scale sample, not a scale-continuity guarantee.
+
+The focused CMake Release matrix passes 30,178 assertions / 1 case; the ODA
+staged run passes 30,106 assertions and contains exactly 176 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 176 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other scale ratios, rotations, notch layouts,
+origins, visible GUI interaction, and AutoCAD semantic acceptance remain open.
