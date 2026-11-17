@@ -57051,3 +57051,17 @@ Converter 27.1.0.0 converted all 136 to ACAD2018 DXF with no `.err` files.
 general polygon-family guarantee. More concave arrangements, scales,
 orientations, visible GUI interaction, and AutoCAD semantic acceptance remain
 open.
+
+## 1751. Track Rotated Two-notch Source Rejection (2026-11-17)
+
+An exploratory rotation of the second two-notch profile by `0.37` radians was
+refused during source capture with `Source is not a supported Polyline.` The
+same refusal occurred at both the `1e12` and `1e9` world-origin tiers, before
+Trim Two preparation, preview, or commit. The profile remains in the supported
+axis-aligned matrix only. This does not establish whether the rejection comes
+from endpoint/uniqueness validation, the non-adjacent-intersection check, or
+worker encodability; isolate that predicate before changing source admission.
+The rotated multi-notch case is an explicit follow-up, not a passing coverage
+claim. The focused matrix for the accepted axis-aligned rows remains the
+23,133-assertion result recorded in section 1750; no new test pass is claimed
+by this investigation.
