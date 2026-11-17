@@ -56504,12 +56504,28 @@ replacement of the native offset and cutter, undo restoration of the original
 cache, and redo restoration of trimmed fragments. Each result exports and
 reopens through R14 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG; the
 reopened drawings contain no editable offset marker and preserve the entity
-count. The focused case passed 703 assertions on macOS arm64 CMake Release.
+count. Section 1725 strengthens this to tolerant geometry matching for the
+reopened source, trimmed spline, and trimmed cutter line.
 
 This establishes the worker-to-Trim-Two application path for this ellipse
 frame and cutter. Broader eccentricity, sweep, offset-side/distance, cutter
 topology, and precision coverage remain open, as do visible-app and
 AutoCAD/ODA visual acceptance.
+
+## 1725. Compare High-origin Ellipse Trim Geometry after Reopen (2026-11-17)
+
+The five-lane persistence assertions from section 1723 now compare geometry,
+not only entity counts. Reopened rational spline controls are checked within
+`1e-3` world units with degree, topology flags, knots, and weights preserved;
+the high-origin ellipse's center and major vector are checked within `1e-3`;
+and the trimmed line's endpoints are checked within the same tolerance in
+either orientation. This accounts for expected text-DXF/DWG coordinate
+rounding at the large world origin without weakening curve topology checks.
+
+The focused worker-created high-origin ellipse Trim Two case passes 730
+assertions / 1 case across both pick orders and all five persistence lanes on
+macOS arm64 CMake Release. The remaining geometry-family limitations and
+visible-app/independent-CAD acceptance are unchanged.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 

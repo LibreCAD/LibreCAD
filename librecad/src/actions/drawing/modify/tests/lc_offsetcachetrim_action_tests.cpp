@@ -5495,6 +5495,56 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         const std::array<RS2::FormatType, 5> formats{{
             RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
             RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+        const auto sameRoundTripGeometry = [](const RS_Entity& expected,
+                                              const RS_Entity& actual) {
+            if (expected.rtti() != actual.rtti()) return false;
+            if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Spline*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                if (x.degree != y.degree || x.m_closedFlag != y.m_closedFlag ||
+                    x.m_periodicFlag != y.m_periodicFlag ||
+                    x.controlPoints.size() != y.controlPoints.size() ||
+                    x.knotslist.size() != y.knotslist.size() ||
+                    x.weights.size() != y.weights.size())
+                    return false;
+                for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
+                    if (x.controlPoints[i].distanceTo(y.controlPoints[i]) > 1e-3)
+                        return false;
+                for (std::size_t i = 0; i < x.knotslist.size(); ++i)
+                    if (std::abs(x.knotslist[i] - y.knotslist[i]) > 1e-12)
+                        return false;
+                for (std::size_t i = 0; i < x.weights.size(); ++i)
+                    if (std::abs(x.weights[i] - y.weights[i]) > 1e-12)
+                        return false;
+                return true;
+            }
+            if (const auto* a = dynamic_cast<const RS_Ellipse*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Ellipse*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                return x.center.distanceTo(y.center) <= 1e-3 &&
+                       x.majorP.distanceTo(y.majorP) <= 1e-3 &&
+                       std::abs(x.ratio - y.ratio) <= 1e-12 &&
+                       std::abs(x.angle1 - y.angle1) <= 1e-12 &&
+                       std::abs(x.angle2 - y.angle2) <= 1e-12 &&
+                       x.isArc == y.isArc && x.reversed == y.reversed;
+            }
+            if (const auto* a = dynamic_cast<const RS_Line*>(&expected)) {
+                const auto* b = dynamic_cast<const RS_Line*>(&actual);
+                if (!b) return false;
+                const auto& x = a->getData();
+                const auto& y = b->getData();
+                const bool same = x.startpoint.distanceTo(y.startpoint) <= 1e-3 &&
+                                  x.endpoint.distanceTo(y.endpoint) <= 1e-3;
+                const bool reversed = x.startpoint.distanceTo(y.endpoint) <= 1e-3 &&
+                                      x.endpoint.distanceTo(y.startpoint) <= 1e-3;
+                return same || reversed;
+            }
+            return trimGeometry(expected) == trimGeometry(actual);
+        };
         for (std::size_t i = 0; i < formats.size(); ++i) {
             const bool dwg = formats[i] == RS2::FormatDWG ||
                              formats[i] == RS2::FormatDWG2018;
@@ -5510,7 +5560,22 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
                                [](const RS_Entity* entity) {
                                    return entity->rtti() == RS2::EntityOffsetCurve;
                                }));
-            CHECK(reopenedEntities.size() == live(f.graphic).size());
+            const auto expectedEntities = live(f.graphic);
+            REQUIRE(reopenedEntities.size() == expectedEntities.size());
+            std::vector<bool> matched(reopenedEntities.size(), false);
+            for (const auto* expected : expectedEntities) {
+                bool found = false;
+                for (std::size_t j = 0; j < reopenedEntities.size(); ++j) {
+                    if (matched[j] || !sameRoundTripGeometry(*expected,
+                                                              *reopenedEntities[j]))
+                        continue;
+                    matched[j] = true;
+                    found = true;
+                    break;
+                }
+                CAPTURE(formats[i], expected->rtti());
+                CHECK(found);
+            }
         }
 
         REQUIRE(f.graphic.undo());
