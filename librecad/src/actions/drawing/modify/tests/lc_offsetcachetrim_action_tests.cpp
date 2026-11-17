@@ -8946,7 +8946,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {0.0, 1.0, false, 0}, {.37, 1.0, false, 0},
         {0.0, .7, false, 0}, {.37, .7, false, 0},
         {0.0, 1.0, true, 0}, {0.0, 1.0, false, 1},
-        {0.0, 1.0, false, 2}}));
+        {0.0, 1.0, false, 2}, {0.0, 1.0, false, 3}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
@@ -8988,6 +8988,13 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 source->addVertex(world(0, 0));
                 source->addVertex(world(0, radius * verticalRatio));
                 source->addVertex(world(radius, radius * verticalRatio));
+            } else if (topology == 3) {
+                source->addVertex(world(-radius, -radius * verticalRatio));
+                source->addVertex(world(radius, -radius * verticalRatio));
+                source->addVertex(world(radius, .25 * radius * verticalRatio));
+                source->addVertex(world(.3 * radius, .25 * radius * verticalRatio));
+                source->addVertex(world(.3 * radius, radius * verticalRatio));
+                source->addVertex(world(-radius, radius * verticalRatio));
             } else {
                 source->addVertex(world(-radius, -radius * verticalRatio), bulge);
                 source->addVertex(world(radius, -radius * verticalRatio), bulge);
@@ -9018,7 +9025,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             REQUIRE(breaks.size() >= 2);
             const RS_Vector nativePick = native->getPointAt(
                 breaks.front() + (breaks.back() - breaks.front()) * .1);
-            const double cutterX = topology == 1 ? -.5 * radius : topology == 2 ? .5 * radius : 0;
+            const double cutterX = topology == 1 ? -.5 * radius : topology == 2 ? .5 * radius :
+                                   topology == 3 ? .65 * radius : 0;
             auto* cutter = new RS_Line(&f.graphic,
                 RS_LineData{world(cutterX, -2 * radius), world(cutterX, 2 * radius)});
             f.graphic.addEntity(cutter);
