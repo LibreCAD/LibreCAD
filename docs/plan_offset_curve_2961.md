@@ -57221,6 +57221,8 @@ guarantee.
 The focused CMake Release matrix passes 38,121 assertions / 1 case; the ODA
 staged run passes 39,367 assertions and contains exactly 208 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 208 to ACAD2018 DXF with no `.err`
-files. `git diff --check` passes. Other reflected scale ratios, profiles,
-orientations, origins, visible GUI interaction, and AutoCAD semantic acceptance
-remain open.
+files. After opening ODAFileConverter in the desktop session, the conversion
+was independently rerun to a fresh output directory; it again produced 208
+DXFs and no `.err` files. `git diff --check` passes. Other reflected scale
+ratios, profiles, orientations, origins, visible GUI interaction, and AutoCAD
+semantic acceptance remain open.
