@@ -2674,7 +2674,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186,
                187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198,
                199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
-               211, 212, 213, 214, 215, 216);
+               211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
@@ -2749,7 +2749,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
        (curvatureProfileIndex % 2) == 1);
   const bool highOrigin = profile == 2;
   const bool highOriginLargeScale =
-      profile == 213 || profile == 214 || profile == 215 || profile == 216;
+      profile >= 213 && profile <= 222;
   const bool highOriginBacktracking = profile == 214;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
@@ -2833,6 +2833,14 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           sourceRotation);
   const double endpointSpacing =
       scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
+  const std::array<std::array<RS_Vector, 2>, 6> additionalHighOriginLayouts{{
+      {{{0.2, 0.9797958971132712}, {0.9, -0.4358898943540673}}},
+      {{{0.6, 0.8}, {0.9, -0.4358898943540673}}},
+      {{{1.0, 0.2}, {0.7, -0.35}}},
+      {{{1.0, -0.4}, {0.8, 0.25}}},
+      {{{-0.2, 0.9797958971132712}, {0.9, -0.4358898943540673}}},
+      {{{0.9, 0.4358898943540673}, {-0.2, -0.9797958971132712}}},
+  }};
   std::array<RS_Vector, 2> endpointTangents =
       steepAsymmetricTangents
           ? highOriginBacktracking
@@ -2843,6 +2851,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           : profile == 216
               ? std::array<RS_Vector, 2>{{{0.2, 0.9797958971132712},
                                           {0.2, -0.9797958971132712}}}
+          : profile >= 217 && profile <= 222
+              ? additionalHighOriginLayouts[static_cast<std::size_t>(profile - 217)]
           : profile <= 26 || highOriginLargeScale
                 ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
             : (profile >= 39 && profile <= 41) ||

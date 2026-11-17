@@ -5917,6 +5917,25 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
               rotate({1e4, 0.0}) + RS_Vector{1e12, -2e12}}},
             {{rotate({0.2, 0.9797958971132712}),
              rotate({0.2, -0.9797958971132712})}}), 1e3});
+    const std::array<std::pair<const char*, std::array<RS_Vector, 2>>, 6>
+        additionalHighOriginLayouts{{
+            {"unequal-steep", {{{0.2, 0.9797958971132712},
+                                 {0.9, -0.4358898943540673}}}},
+            {"oblique", {{{0.6, 0.8}, {0.9, -0.4358898943540673}}}},
+            {"shallow-bend", {{{1.0, 0.2}, {0.7, -0.35}}}},
+            {"opposite-bend", {{{1.0, -0.4}, {0.8, 0.25}}}},
+            {"backtracking-start", {{{-0.2, 0.9797958971132712},
+                                      {0.9, -0.4358898943540673}}}},
+            {"backtracking-end", {{{0.9, 0.4358898943540673},
+                                    {-0.2, -0.9797958971132712}}}},
+        }};
+    for (const auto& [name, tangents] : additionalHighOriginLayouts) {
+        profiles.push_back({std::string{name} + "-origin-1e12-large",
+            LC_ParabolaData::FromEndPointsTangents(
+                {{rotate({0.0, 0.0}) + RS_Vector{1e12, -2e12},
+                  rotate({1e4, 0.0}) + RS_Vector{1e12, -2e12}}},
+                {{rotate(tangents[0]), rotate(tangents[1])}}), 1e3});
+    }
     profiles.push_back({"small-scale-translated-origin",
         LC_ParabolaData::FromEndPointsTangents(
             {{rotate({0.0, 0.0}) + RS_Vector{1e3, -2e3},
