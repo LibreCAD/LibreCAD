@@ -8958,6 +8958,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {.37, .7, false, 1, 1.7, 1.0}, {.37, .7, false, 3, .6, 1.0},
         {.37, .7, false, 5, 1.7, 1.0},
         {.37, .7, false, 1, 1.0, .001},
+        {.37, .7, false, 1, 1.0, 10.0},
         {0.0, 1.0, false, 5, 1.7, 10.0},
         {0.0, 1.0, false, 6, 1.0, 1.0},
         {.37, 1.0, false, 6, 1.0, 10.0},
