@@ -57574,3 +57574,16 @@ visible packaged Properties workflow.
 passes 161 assertions / 1 case. `[gui][dialog][offsetcurve][source][highlight]`
 passes 481 assertions / 20 cases. Visible interaction, cancellation/refusal
 in the packaged app, and independent CAD acceptance remain open.
+
+## 1787. Retry the ODA Audit with the Desktop App Open (2026-11-17)
+
+After the user confirmed ODAFileConverter was open in the macOS desktop
+session, retried command-line conversion of the staged Trim Two DWG batch to
+ACAD2018 DXF. The process still aborts before conversion with exit status 134
+and PasteBoard/XPC service errors (`com.apple.pasteboard.clipboard`,
+`com.apple.pasteboard.find`, and `com.apple.hiservices-xpcservice`). It did not
+create the requested output directory, so this attempt supplies no ODA
+validation result. The SSH-launched process is not attached to the desktop
+session's pasteboard despite the GUI app being open. Independent ODA validation
+and visible GUI acceptance remain open; prior successful ODA batches do not
+cover this newly staged set.
