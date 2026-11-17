@@ -57603,3 +57603,16 @@ combinations; `git diff --check` passes. This qualifies the recorded straight
 line orientations and scales only. The additional outputs were not converted
 by ODA in this run, and visible GUI, ODA, and AutoCAD semantic acceptance
 remain open.
+
+## 1789. Trim High-origin Arcs across Rotated and Near-full Domains (2026-11-17)
+
+Extended the worker-created typed-arc Trim Two matrix at `(1e13,-2e13)` and
+radius `1e6` with three angular domains: rotated spans `[1.2,3.55]` and
+`[2.4,4.75]`, plus the near-full-circle span `[0.15,5.95]`. Each domain is
+tested in forward and reversed traversal, both arc/native pick orders, with
+preview/commit, undo/redo, five DXF/DWG save/reopen lanes, and independent
+LibreDWG parsing of emitted DWGs. The test expansion is commit `b7a24f31e`.
+
+The focused CMake Release case passes 16,087 assertions / 1 case; the exact
+domains and directions are bounded samples, not arbitrary arc sweeps. ODA
+conversion, visible GUI, and AutoCAD semantic acceptance remain open.
