@@ -56318,3 +56318,26 @@ This adds Trim coverage only for the recorded mirrored profile, selected
 offset sides, cutter radii, and file lanes. It does not establish high-origin
 Trim for all tangent layouts or arbitrary source scales/cutters, nor close
 visible-app or independent ODA/AutoCAD acceptance.
+
+## 1715. Persist and Trim Near-vertical Opposing Tangents at `1e12` (2026-11-17)
+
+Test commit `829631e58` adds a scale-`1e3` near-vertical opposing tangent pair
+to the worker/cache and five-format persistence matrix, and Trim profile 216
+for the same source at origin `(1e12,-2e12)`. The direct exact-normal oracle
+already exercises this layout at the same high-origin, large-scale frame
+through the expanded layout table in section 1713.
+
+Validation on the exact macOS arm64 CMake Release tree:
+
+- Trim profile 216: 3,618 assertions / 1 case passed.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across
+  file lanes`: 449,074 assertions / 1 case passed across R14 DXF, R2000
+  DXF/DWG, and R2018 DXF/DWG; `dwgread` was available for independent DWG
+  parsing.
+- `librecad_tests` and worker-client targets rebuilt successfully;
+  `git diff --check` passed.
+
+This qualifies only this near-vertical pair at the stated origin, scale,
+offset and cutter grid. It does not close the wider high-origin tangent
+matrix, arbitrary source-conditioning limits, visible-app use, or independent
+ODA/AutoCAD acceptance.
