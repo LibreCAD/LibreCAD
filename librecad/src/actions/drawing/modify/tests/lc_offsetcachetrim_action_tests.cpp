@@ -5393,6 +5393,137 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     }
 }
 
+TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
+          "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]") {
+    REQUIRE(lc::test::ensureSettings());
+    for (const bool ellipseFirst : {false, true}) {
+        CAPTURE(ellipseFirst);
+        Drawing<true> f;
+        constexpr double rotation = .67;
+        constexpr double offsetDistance = 2500;
+        const RS_Vector center{1e12, -2e12};
+        constexpr double zoom = .001;
+        f.view.getViewPort()->setSize(640, 480);
+        f.view.getViewPort()->setOffsetAndFactor(
+            qRound(320.0 - center.x * zoom),
+            qRound(240.0 - center.y * zoom), zoom);
+
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {20000, 0}, .25, 0, 0, false});
+        auto initial = LC_OffsetCurve::create(seed, offsetDistance, true);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+
+        auto* source = new RS_Ellipse(&f.graphic,
+            RS_EllipseData{center, {1e5 * std::cos(rotation), 1e5 * std::sin(rotation)},
+                           .25, 0, 0, false});
+        f.graphic.addEntity(source);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Ellipse);
+        update.use(source);
+        lc::test::awaitUpdate(update);
+        INFO(f.context.messages.join('\n').toStdString());
+        REQUIRE(update.lastReport().updated == 1);
+        REQUIRE(previous->isDeleted());
+
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        CHECK(native->definition().distance == offsetDistance);
+        CHECK(native->definition().towardCentre);
+
+        double first = 0, last = 0;
+        REQUIRE(native->getParameterDomain(first, last));
+        const RS_Vector major{std::cos(rotation), std::sin(rotation)};
+        const RS_Vector target = center + major * 90000;
+        double nativePickParameter = first;
+        double nearestDistance = std::numeric_limits<double>::infinity();
+        for (unsigned i = 0; i <= 8192; ++i) {
+            const double parameter = first + (last - first) * i / 8192.0;
+            const double distance = native->getPointAt(parameter).distanceTo(target);
+            if (distance >= nearestDistance) continue;
+            nearestDistance = distance;
+            nativePickParameter = parameter;
+        }
+        const RS_Vector nativePick = native->getPointAt(nativePickParameter);
+        const RS_Vector minor{-major.y, major.x};
+        const RS_Vector cutterPick = center + minor * 25000;
+        auto* cutter = new RS_Line(&f.graphic,
+            RS_LineData{center - minor * 50000, center + minor * 50000});
+        f.graphic.addEntity(cutter);
+        const auto trimProbe = LC_OffsetCacheTrim::prepare(
+            native->getData(), *cutter, {nativePick});
+        INFO("high-origin ellipse trim probe refusal=" << static_cast<int>(trimProbe.refusal)
+             << " roots=" << trimProbe.rootCount
+             << " fragments=" << trimProbe.fragments.size());
+        REQUIRE(trimProbe.refusal == LC_OffsetCacheTrim::Refusal::None);
+
+        const auto geometryBefore = RS_Spline::geometryFingerprint(native->getData());
+        f.action->click(ellipseFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto undoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(ellipseFirst ? cutterPick : nativePick);
+        f.action->waitForTrim();
+        REQUIRE_FALSE(f.action->m_preview->isEmpty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+        f.action->click(ellipseFirst ? cutterPick : nativePick);
+        INFO(f.context.messages.join('\n').toStdString());
+        REQUIRE(native->isDeleted());
+        REQUIRE(cutter->isDeleted());
+        CHECK(native->hasEditableDefinition());
+        CHECK_FALSE(native->sourceDefinition());
+        std::vector<RS_Entity*> fragments;
+        for (auto* entity : live(f.graphic)) {
+            if (entity == source) continue;
+            CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+            fragments.push_back(entity);
+        }
+        REQUIRE(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntitySpline;
+        }));
+
+        QTemporaryDir directory;
+        REQUIRE(directory.isValid());
+        const std::array<RS2::FormatType, 5> formats{{
+            RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+            RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+        for (std::size_t i = 0; i < formats.size(); ++i) {
+            const bool dwg = formats[i] == RS2::FormatDWG ||
+                             formats[i] == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("high-origin-ellipse-trim-%1-%2")
+                    .arg(ellipseFirst ? 1 : 0).arg(i) + (dwg ? ".dwg" : ".dxf")
+            ).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+            const auto reopenedEntities = live(reopened);
+            CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(),
+                               [](const RS_Entity* entity) {
+                                   return entity->rtti() == RS2::EntityOffsetCurve;
+                               }));
+            CHECK(reopenedEntities.size() == live(f.graphic).size());
+        }
+
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(cutter->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
     for (unsigned profile = 0; profile <= 35; ++profile)
