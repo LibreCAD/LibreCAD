@@ -54987,6 +54987,14 @@ stored-source highlight, changing the family selector, and replacing with a
 parabola), external ODA/AutoCAD acceptance, or the remaining geometry and
 persistence gates recorded above.
 
+The later request to change the source-curve type while choosing a replacement
+and to include parabola was checked against this implementation: the existing
+`All supported types` mode already exposes all nine encodable source families,
+and candidate selection synchronizes the family control to the selected
+entity. The nine-family replacement regression was rerun in section 1738; no
+additional selector implementation is required. Visible packaged-app
+confirmation remains an independent acceptance gate.
+
 ## 1659. Contract Certified Near-tangent Conic Contacts (2026-11-16)
 
 A focused extension of section 1656's asymmetric endpoint-tangent Trim Two
@@ -56706,12 +56714,35 @@ creates a generalized native cache and the vertical center cutter produces
 two certified trim roots and at least one valid retained fragment without
 mutating the document during preparation.
 
-The focused case passes 43 assertions / 1 case on macOS arm64 CMake Release.
-The GUI Trim Two preview did not produce a preview for this closed-loop
-fixture, although entity hit-testing and direct two-root preparation succeed.
-Therefore this receipt closes only cache generation and trim-root preparation;
-closed high-origin application Trim, commit/undo, persistence, and ODA/visible
-CAD acceptance remain open and need a separate investigation.
+The initial 43-assertion receipt covered only cache generation and direct
+trim-root preparation. Its exploratory Trim Two preview did not produce a
+preview. Section 1738 supersedes that action-level status with a successful
+one-sided Trim result; Trim Two, save/reopen persistence, and ODA/visible CAD
+acceptance remain separate gates.
+
+## 1738. Revalidate Source-family Selection and Closed High-origin Trim (2026-11-17)
+
+The requested source-curve selector behavior was checked against the current
+implementation: the Properties source widget supports changing the family
+filter and selecting any of the nine supported source types, including
+parabola; choosing a candidate keeps its actual type synchronized with the
+filter. The existing test explicitly checks filtering, candidate highlight,
+replacement, and preservation of the typed source. The focused nine-family
+replacement case passes 466 assertions / 1 case on macOS arm64 CMake Release.
+
+The high-origin closed square cache from section 1737 now has an application-
+level one-sided Trim test for both signed offset sides. With a vertical center
+cutter, each iteration certifies at least two roots and a retained fragment,
+shows a nonempty preview without mutating the drawing, commits the Trim while
+preserving the cutter and source, then verifies undo and redo. The focused
+case passes 356 assertions / 1 case on macOS arm64 CMake Release.
+
+This closes one-sided Trim for this square, origin, scale, offset, cutter, and
+pick arrangement only. It does not establish closed-loop Trim Two, other closed
+polyline topologies, persistence after editing, visible packaged-app behavior,
+or independent ODA/AutoCAD acceptance. The all-family selector code path needs
+no further implementation; visible packaged-Properties acceptance remains
+open.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
