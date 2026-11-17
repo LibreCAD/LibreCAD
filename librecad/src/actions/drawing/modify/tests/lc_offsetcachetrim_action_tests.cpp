@@ -8960,7 +8960,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {.37, .7, false, 1, 1.0, .001},
         {0.0, 1.0, false, 5, 1.7, 10.0},
         {0.0, 1.0, false, 6, 1.0, 1.0},
-        {0.0, 1.0, false, 7, 1.0, 1.0}}));
+        {0.0, 1.0, false, 7, 1.0, 1.0},
+        {.37, 1.0, false, 7, 1.0, 1.0}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
