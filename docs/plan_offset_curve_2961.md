@@ -280,9 +280,11 @@ operation-8, worker/persistence, and curvature-relative Trim coverage, and
 records a clean rerun of the 84-file ODA audit. Do not inflate this finite
 profile set into general coverage. Section 1700 adds a backward-pointing start
 tangent that creates a backtracking lobe to the same independent oracle,
-worker/persistence, and curvature-relative Trim matrix.
-Continue with materially distinct tangent layouts, scales, and cutter
-conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
+worker/persistence, and curvature-relative Trim matrix. Section 1702 adds a
+stronger backtracking start tangent to the same independent-normal,
+worker/persistence, and three-scale Trim matrices. Continue with materially
+distinct tangent layouts, scales, and cutter conditioning rather than treating
+these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
 automated Properties coverage is revalidated by sections 1649 and 1658 for repeated
@@ -56023,4 +56025,30 @@ for this backtracking tangent pair. Bounded refusal remains valid behavior for
 uncertifiable branch selection, and this is not a guarantee for arbitrary cusp
 topologies, other tangent pairs, AutoCAD acceptance, or visible packaged-app
 GUI behavior.
+
+## 1702. Qualify a Stronger Backtracking Start Tangent (2026-11-16)
+
+Test commit `644a75493` adds the directed endpoint-tangent pair
+`{(-0.6, 0.8), (0.9, -0.4358898943540673)}`. Compared with section 1700, the
+start tangent points more strongly backward while its intersection with the
+second directed tangent remains on both positive tangent rays. The independent
+interior-normal and operation-8 oracle, worker/cache plus five-format
+persistence matrix, and Trim Two action matrix cover forward and reversed
+traversal at source scales `1e-3/1/1e3`, curvature-relative offsets `0.1/0.5/0.9`
+of vertex radius, and both offset signs. Trim also retains the established
+circle/line cutter, pick-order, action preview/commit, undo/redo, and file-lane
+checks.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 14,078 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 361,670 assertions / 1 case; `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1500000`.
+- `T Trim Two trims an endpoint-tangent parabola` over the full profile range 0-170: 552,650 assertions / 1 case.
+- Worker kernel/client and `librecad_tests` targets built successfully.
+- `git diff --check`: passed.
+
+This qualifies the recorded stronger-backtracking pair and sampled scales,
+distances, traversals, and cutters only. It does not establish arbitrary
+endpoint-tangent geometry, cusp topology, visible packaged-app behavior, or
+independent AutoCAD acceptance.
 
