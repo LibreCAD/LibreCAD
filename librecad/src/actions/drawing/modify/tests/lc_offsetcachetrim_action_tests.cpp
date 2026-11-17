@@ -4254,9 +4254,12 @@ TEST_CASE("T Trim Two trims exact and beyond-cusp asymmetric branches",
 
 TEST_CASE("T Trim Two action trims a worker-created typed line offset against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][line][trim-two]") {
+    const std::array<double, 4> orientations{{
+        0.0, 0.37, 1.5707963267948966, 1.5707953267948966}};
     for (const double scale : {1.0, 1e5, 1e6})
+    for (const double angle : orientations)
     for (const bool lineFirst : {false, true}) {
-        CAPTURE(scale, lineFirst);
+        CAPTURE(scale, angle, lineFirst);
         Drawing<true> f;
         const RS_Vector center = scale == 1.0 ? RS_Vector{0, 0}
             : scale == 1e5 ? RS_Vector{1e12, -2e12} : RS_Vector{1e13, -2e13};
@@ -4272,8 +4275,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
+        const RS_Vector direction{std::cos(angle), std::sin(angle)};
+        const RS_Vector normal{-direction.y, direction.x};
         auto* source = new RS_Line(&f.graphic, RS_LineData{
-            {center.x - scale, center.y}, {center.x + scale, center.y}});
+            center - direction * scale, center + direction * scale});
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -4300,12 +4305,6 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
         REQUIRE(breaks.size() >= 2);
         const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
         const RS_Vector intersection = native->getPointAt(parameter);
-        const RS_Vector before = native->getPointAt(parameter - 1e-5);
-        const RS_Vector after = native->getPointAt(parameter + 1e-5);
-        RS_Vector tangent{after.x - before.x, after.y - before.y};
-        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
-        tangent /= tangent.magnitude();
-        const RS_Vector normal{-tangent.y, tangent.x};
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - normal * (2.0 * scale),
                         intersection + normal * (2.0 * scale)});
