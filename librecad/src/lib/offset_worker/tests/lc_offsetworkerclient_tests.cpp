@@ -992,6 +992,119 @@ TEST_CASE("Worker client preserves a high-origin polyline source through persist
     }
 }
 
+TEST_CASE("Worker client preserves ordinary branches for a high-origin polyline corner",
+          "[lc-offsetcurve][worker-client][polyline][origin][branches]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
+    RS_EntityContainer parent;
+    RS_Layer layer{QStringLiteral("high-origin polyline corner")};
+    RS_Line attributes{&parent, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    const RS_Vector center{1e12, -2e12};
+    const RS_Vector corner = center + RS_Vector{1e5, 0};
+    const RS_Vector end = corner + RS_Vector{0, 1e5};
+    const LC_OffsetPolylineData data{center, end, false,
+        {RS_LineData{center, corner}, RS_LineData{corner, end}}};
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, 2500.0, 1e-4, false};
+    REQUIRE(owned.get().submit(
+        {token(112), Req::GenerateSource{definition, {}}}, Client::Mode::Commit,
+        receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 112, 7);
+    const auto& result = std::get<Reply::Native>(completion.reply().result);
+    CAPTURE(result.engineStatus, result.refusal, result.ordinaryStatus,
+            result.ordinary.size());
+    REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+    CHECK(result.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+    REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+    REQUIRE(result.ordinary.size() == 2);
+
+    auto ordinary = completion.ordinary(attributes);
+    REQUIRE(ordinary);
+    REQUIRE(ordinary->size() == 2);
+    REQUIRE(lc::test::ensureSettings());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* outputLayer = graphic.findLayer("0");
+    REQUIRE(outputLayer);
+    std::vector<const RS_Entity*> expected;
+    for (auto& entity : *ordinary) {
+        REQUIRE(entity);
+        CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+        entity->setParent(&graphic);
+        entity->setLayer(outputLayer);
+        expected.push_back(entity.get());
+        graphic.addEntity(entity.get());
+        entity.release();
+    }
+
+    const auto sameGeometry = [](const RS_Entity& a, const RS_Entity& b) {
+        if (a.rtti() != b.rtti()) return false;
+        if (const auto* x = dynamic_cast<const RS_Spline*>(&a)) {
+            const auto* y = dynamic_cast<const RS_Spline*>(&b);
+            if (!y) return false;
+            const auto& xd = x->getData();
+            const auto& yd = y->getData();
+            if (xd.degree != yd.degree || xd.controlPoints.size() != yd.controlPoints.size() ||
+                xd.knotslist != yd.knotslist || xd.weights != yd.weights)
+                return false;
+            for (std::size_t i = 0; i < xd.controlPoints.size(); ++i)
+                if (xd.controlPoints[i].distanceTo(yd.controlPoints[i]) > 1e-3)
+                    return false;
+            return true;
+        }
+        if (const auto* x = dynamic_cast<const RS_Line*>(&a)) {
+            const auto* y = dynamic_cast<const RS_Line*>(&b);
+            if (!y) return false;
+            const auto& xd = x->getData();
+            const auto& yd = y->getData();
+            const bool same = xd.startpoint.distanceTo(yd.startpoint) <= 1e-3 &&
+                              xd.endpoint.distanceTo(yd.endpoint) <= 1e-3;
+            const bool reversed = xd.startpoint.distanceTo(yd.endpoint) <= 1e-3 &&
+                                  xd.endpoint.distanceTo(yd.startpoint) <= 1e-3;
+            return same || reversed;
+        }
+        return false;
+    };
+
+    lc::test::OutputDirectory directory("offset-high-origin-polyline-corner");
+    const std::array<std::pair<RS2::FormatType, const char*>, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+    for (const auto& [format, extension] : lanes) {
+        const auto path = directory.file(extension);
+        REQUIRE(lc::test::exportDrawing(graphic, path, format));
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, path, format));
+        std::vector<const RS_Entity*> actual;
+        for (const RS_Entity* entity : reopened) {
+            if (entity->isDeleted()) continue;
+            CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+            actual.push_back(entity);
+        }
+        REQUIRE(actual.size() == expected.size());
+        std::vector<bool> matched(actual.size(), false);
+        for (const RS_Entity* source : expected) {
+            bool found = false;
+            for (std::size_t i = 0; i < actual.size(); ++i) {
+                if (matched[i] || !sameGeometry(*source, *actual[i])) continue;
+                matched[i] = true;
+                found = true;
+                break;
+            }
+            CAPTURE(format, source->rtti());
+            CHECK(found);
+        }
+    }
+}
+
 TEST_CASE("Worker ordinary completions materialize exact plain output with fresh identities", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt};
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("ordinary local")};
