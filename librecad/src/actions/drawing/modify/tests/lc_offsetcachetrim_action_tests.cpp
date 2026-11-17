@@ -1552,16 +1552,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against circu
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
     for (const bool highOrigin : {false, true})
     for (const bool nearCusp : {false, true})
-    for (const bool asymmetric : {false, true})
+    for (const unsigned shape : {0u, 1u, 2u})
     for (const double scale : {0.1, 1.0, 10.0, 1e6})
     for (const bool transformed : {false, true})
     for (const bool oppositeSide : {false, true})
     for (const unsigned cutterKind : {0u, 1u})
     for (const bool parabolaFirst : {false, true}) {
-        if (nearCusp && (asymmetric || scale != 1.0 || transformed)) continue;
+        if (nearCusp && (shape != 0 || scale != 1.0 || transformed)) continue;
         if (highOrigin && (nearCusp || scale != 1e6)) continue;
-        if (!highOrigin && scale == 1e6) continue;
-        CAPTURE(highOrigin, nearCusp, asymmetric, scale, transformed, oppositeSide, cutterKind, parabolaFirst);
+        if (!highOrigin && (scale == 1e6 || shape == 2)) continue;
+        CAPTURE(highOrigin, nearCusp, shape, scale, transformed, oppositeSide, cutterKind, parabolaFirst);
         Drawing<true> f;
         const double seedRadius = highOrigin ? scale : 1.0;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {seedRadius, 0}, 1, 0, .1, false});
@@ -1587,9 +1587,11 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against circu
             return RS_Vector{cosine * point.x - sine * point.y,
                              sine * point.x + cosine * point.y} + translation;
         };
-        const std::array<RS_Vector, 3> controlPoints = asymmetric
-            ? std::array<RS_Vector, 3>{{{-1, 0}, {0, 1}, {2, 0}}}
-            : std::array<RS_Vector, 3>{{{-1, 1}, {0, -1}, {1, 1}}};
+        const std::array<RS_Vector, 3> controlPoints = shape == 0
+            ? std::array<RS_Vector, 3>{{{-1, 1}, {0, -1}, {1, 1}}}
+            : shape == 1
+                ? std::array<RS_Vector, 3>{{{-1, 0}, {0, 1}, {2, 0}}}
+                : std::array<RS_Vector, 3>{{{-2, .5}, {0, -1.5}, {3, .5}}};
         const LC_ParabolaData sourceData{{mapPoint(controlPoints[0]), mapPoint(controlPoints[1]),
                                           mapPoint(controlPoints[2])}};
         auto* parabola = new LC_Parabola(&f.graphic, sourceData);
