@@ -269,8 +269,10 @@ Section 1694 adds a fifth, oblique tangent-direction layout to the exact-normal,
 operation-8, and forward/reversed five-lane worker matrix. Continue with Trim
 contact conditioning: section 1695 runs that oblique profile through curvature-
 relative Trim Two, tangent-circle classification, scale/traversal, action, and
-file lanes. Continue with other materially distinct tangent directions; do not
-inflate this finite profile set into general coverage.
+file lanes. Section 1696 adds a shallower tangent turn to the exact-normal,
+operation-8, and forward/reversed five-lane worker matrix. Continue with its
+Trim contact conditioning and other materially distinct tangent directions;
+do not inflate this finite profile set into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55846,4 +55848,26 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This qualifies the oblique tangent pair and sampled contact layouts only.
 Other direction pairs, exact cusp/beyond-cusp source offsets, broader
 near-tangency scales, and visible GUI acceptance remain open.
+
+## 1696. Qualify a Shallow-bend Endpoint-tangent Pair (2026-11-16)
+
+Test commit `b86bfb7fc` adds the materially different pair `{(1.0, 0.2),
+(0.7, -0.35)}`, also used by existing Trim action fixtures. The independent
+interior-normal oracle and operation-8 classification cover both traversals,
+three scale/origin frames, curvature ratios `0.1`, `0.5`, and `0.9`, and both
+signed offsets. The real worker/cache and all five save/reopen lanes cover the
+same bounded profiles. Existing Trim action evidence for this tangent pair at
+its earlier fixed-distance fixtures is not treated as curvature-relative Trim
+coverage.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 7,886 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 237,110 assertions / 1 case.
+- Both worker kernel/client CMake targets built successfully.
+- The client case passed with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000`.
+- `git diff --check`: passed.
+
+Shallow-bend Trim at curvature-relative distances, other direction pairs,
+cusp-boundary behavior, and visible GUI acceptance remain open.
 
