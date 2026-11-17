@@ -57296,3 +57296,16 @@ staged run passes 45,009 assertions and contains exactly 248 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 248 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other large-origin notch profiles, topology
 variants, visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1767. Reject Shallow Crossing at `1e13` (2026-11-17)
+
+The source-topology validator now has a second near-parallel crossing guard at
+origin `(1e13,-2e13)` and rotation `0.9`, complementing the existing rotated
+`1e12` case. The crossing remains non-adjacent and shallow; the source must be
+rejected rather than mistaken for the strictly separated line pairs accepted
+by the high-origin performance proof. This pins one additional numeric
+boundary, not arbitrary self-intersection detection.
+
+The focused CMake Release source-topology case passes 17 assertions / 1 case.
+`git diff --check` passes. Other crossing angles, clearances, scales, and
+topologies remain open, as do visible GUI and AutoCAD semantic acceptance.
