@@ -57442,3 +57442,16 @@ The focused CMake Release matrix passes 61,945 assertions / 1 case. The R14
 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen assertions pass within LibreCAD.
 `git diff --check` passes. ODA/AutoCAD and visible GUI acceptance remain open,
 as do other profile dimensions and scale/origin combinations.
+
+## 1778. Trim a High-origin Typed Line at `1e13` (2026-11-17)
+
+Extended worker-created typed-line Trim Two to a line of length `2e6`,
+translated to `(1e13,-2e13)`, with an offset distance proportional to the
+line scale. Both entity-pick orders cover replacement, preview/commit,
+undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The
+viewport uses a scale-aware zoom to keep its pixel offset representable.
+
+The focused CMake Release case passes 2,705 assertions / 1 case across the
+three recorded line scales and both pick orders. Geometry and persistence
+assertions pass within LibreCAD; ODA/AutoCAD and visible GUI acceptance remain
+open, as do other line orientations and scale/origin combinations.
