@@ -2670,7 +2670,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174,
                175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186,
                187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198,
-               199, 200);
+               199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
+               211, 212);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
@@ -2681,14 +2682,16 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       profile >= 153 && profile <= 170;
   const bool strongBacktrackingCuspProfile = profile >= 171 && profile <= 182;
   const bool backtrackingEndCurvatureProfile = profile >= 183 && profile <= 200;
+  const bool backtrackingEndCuspProfile = profile >= 201 && profile <= 212;
   const bool curvatureCuspProfile =
-      backtrackingCuspProfile || strongBacktrackingCuspProfile;
+      backtrackingCuspProfile || strongBacktrackingCuspProfile ||
+      backtrackingEndCuspProfile;
   const bool curvatureActionProfile =
       obliqueCurvatureProfile || shallowBendCurvatureProfile ||
       nearVerticalCurvatureProfile || oppositeBendCurvatureProfile ||
       backtrackingCurvatureProfile || backtrackingCuspProfile ||
       strongBacktrackingCurvatureProfile || strongBacktrackingCuspProfile ||
-      backtrackingEndCurvatureProfile;
+      backtrackingEndCurvatureProfile || backtrackingEndCuspProfile;
   const int curvatureProfileIndex =
       profile <= 59 ? profile - 51
       : profile <= 68 ? profile - 60
@@ -2704,10 +2707,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       : profile <= 152 ? profile - 147
       : profile <= 170 ? profile - 153
       : profile <= 182 ? profile - 171
-                       : profile - 183;
+      : profile <= 200 ? profile - 183
+                       : profile - 201;
   const int curvatureScaleIndex = backtrackingCuspProfile
                                       ? curvatureProfileIndex / 2
                                   : strongBacktrackingCuspProfile
+                                      ? curvatureProfileIndex / 4
+                                  : backtrackingEndCuspProfile
                                       ? curvatureProfileIndex / 4
                                   : strongBacktrackingCurvatureProfile
                                       ? curvatureProfileIndex / 6
@@ -2717,6 +2723,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const int curvatureRatioIndex = backtrackingCuspProfile
                                       ? curvatureProfileIndex % 2
                                   : strongBacktrackingCuspProfile
+                                      ? (curvatureProfileIndex % 4) / 2
+                                  : backtrackingEndCuspProfile
                                       ? (curvatureProfileIndex % 4) / 2
                                   : strongBacktrackingCurvatureProfile
                                       ? (curvatureProfileIndex % 6) / 2
@@ -2733,6 +2741,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         strongBacktrackingCuspProfile) &&
        (curvatureProfileIndex % 2) == 1) ||
       (backtrackingEndCurvatureProfile &&
+       (curvatureProfileIndex % 2) == 1) ||
+      (backtrackingEndCuspProfile &&
        (curvatureProfileIndex % 2) == 1);
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
@@ -2751,7 +2761,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const bool multiRadiusTangentProfile =
       oppositeBend || backtrackingCurvatureProfile || backtrackingCuspProfile ||
       strongBacktrackingCurvatureProfile || strongBacktrackingCuspProfile ||
-      backtrackingEndCurvatureProfile;
+      backtrackingEndCurvatureProfile || backtrackingEndCuspProfile;
   const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
                           (profile >= 29 && profile <= 34) ||
                           (profile >= 45 && profile <= 50) ||
@@ -2874,7 +2884,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                     {0.6, -0.8}}}
         : std::array<RS_Vector, 2>{{{-0.6, 0.8},
                                     {0.9, -0.4358898943540673}}};
-  } else if (backtrackingEndCurvatureProfile) {
+  } else if (backtrackingEndCurvatureProfile ||
+             backtrackingEndCuspProfile) {
     endpointTangents = reversedCurvatureProfile
         ? std::array<RS_Vector, 2>{{{0.2, 0.9797958971132712},
                                     {-0.9, -0.4358898943540673}}}

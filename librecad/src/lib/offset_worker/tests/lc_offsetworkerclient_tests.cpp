@@ -6022,7 +6022,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                          {0.9, -0.4358898943540673},
                          {0.1, 0.5, 0.9, 1.0, 1.02});
     addCurvatureProfiles("backtracking-end", {0.9, 0.4358898943540673},
-                         {-0.2, -0.9797958971132712});
+                         {-0.2, -0.9797958971132712},
+                         {0.1, 0.5, 0.9, 1.0, 1.02});
     addCurvatureProfiles("magnitude-ratio", {8e-151, 6e-151},
                          {6e149, -8e149});
     profiles.push_back({"mirrored-tangents",
