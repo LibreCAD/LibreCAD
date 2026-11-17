@@ -57149,3 +57149,13 @@ staged run passes 31,653 assertions and contains exactly 184 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 184 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. More scales, notch layouts, orientations,
 origins, visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1757. Recheck Polyline Topology Rejection after Separation Proof (2026-11-17)
+
+After adding the strict-side disjointness proof, the existing source-topology
+validation cases still pass (16 assertions / 2 cases), including segment
+self-intersection rejection. The imported self-crossing LWPOLYLINE guard also
+passes independently (54 assertions / 1 case), confirming these drawings
+remain ordinary entities and are not admitted as editable offset sources.
+These are bounded rejection checks, not an exhaustive proof of the geometric
+predicate. `git diff --check` passes.
