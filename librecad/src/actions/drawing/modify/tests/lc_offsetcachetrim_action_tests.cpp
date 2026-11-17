@@ -8519,14 +8519,16 @@ TEST_CASE("R03 Trim Two seals both natives after final peer mutation or late can
 TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][polyline][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
-    const RS_Vector center{1e12, -2e12};
-    constexpr double scale = 1e5;
-    constexpr double distance = 2500.0;
+    for (const double frame : {1e12, 1e13})
     for (const unsigned sourceFamily : {0u, 1u, 2u})
     for (const bool splineFirst : {false, true}) {
-        CAPTURE(sourceFamily, splineFirst);
+        CAPTURE(frame, sourceFamily, splineFirst);
+        const bool largestFrame = frame == 1e13;
+        const RS_Vector center{frame, -2 * frame};
+        const double scale = largestFrame ? 1e6 : 1e5;
+        const double distance = scale * .025;
         Drawing<true> f;
-        constexpr double zoom = .001;
+        const double zoom = largestFrame ? 5e-5 : .001;
         f.view.getViewPort()->setSize(640, 480);
         f.view.getViewPort()->setOffsetAndFactor(
             qRound(320.0 - center.x * zoom),
