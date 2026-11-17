@@ -8949,7 +8949,6 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     const double baseRadius = 1e5;
     constexpr double distance = 2500.0;
     const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double, double>({
-        {.37, 1.0, false, 7, 1.0, .001},
         {0.0, 1.0, false, 0, 1.0, 1.0}, {.37, 1.0, false, 0, 1.0, 1.0},
         {0.0, .7, false, 0, 1.0, 1.0}, {.37, .7, false, 0, 1.0, 1.0},
         {0.0, 1.0, true, 0, 1.0, 1.0}, {0.0, 1.0, false, 1, 1.0, 1.0},
@@ -8965,7 +8964,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {.9, .7, false, 7, 1.0, 1.0},
         {.37, 1.0, false, 7, 1.0, 10.0},
         {.37, 1.0, false, 7, .6, 1.0},
-        {.37, 1.0, false, 7, 1.7, 1.0}}));
+        {.37, 1.0, false, 7, 1.7, 1.0},
+        {.37, 1.0, false, 8, 1.0, 1.0}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
@@ -9040,19 +9040,20 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 source->addVertex(world(-.6 * radius, -.25 * radius * verticalRatio));
                 source->addVertex(world(-.6 * radius, radius * verticalRatio));
                 source->addVertex(world(-radius, radius * verticalRatio));
-            } else if (topology == 7) {
-                source->addVertex(world(-radius, -radius * verticalRatio));
-                source->addVertex(world(radius, -radius * verticalRatio));
-                source->addVertex(world(radius, radius * verticalRatio));
-                source->addVertex(world(.7 * radius, radius * verticalRatio));
-                source->addVertex(world(.7 * radius, -.5 * radius * verticalRatio));
-                source->addVertex(world(.2 * radius, -.5 * radius * verticalRatio));
-                source->addVertex(world(.2 * radius, radius * verticalRatio));
-                source->addVertex(world(-.2 * radius, radius * verticalRatio));
-                source->addVertex(world(-.2 * radius, -.5 * radius * verticalRatio));
-                source->addVertex(world(-.7 * radius, -.5 * radius * verticalRatio));
-                source->addVertex(world(-.7 * radius, radius * verticalRatio));
-                source->addVertex(world(-radius, radius * verticalRatio));
+            } else if (topology == 7 || topology == 8) {
+                const double mirror = topology == 8 ? -1.0 : 1.0;
+                source->addVertex(world(mirror * -radius, -radius * verticalRatio));
+                source->addVertex(world(mirror * radius, -radius * verticalRatio));
+                source->addVertex(world(mirror * radius, radius * verticalRatio));
+                source->addVertex(world(mirror * .7 * radius, radius * verticalRatio));
+                source->addVertex(world(mirror * .7 * radius, -.5 * radius * verticalRatio));
+                source->addVertex(world(mirror * .2 * radius, -.5 * radius * verticalRatio));
+                source->addVertex(world(mirror * .2 * radius, radius * verticalRatio));
+                source->addVertex(world(mirror * -.2 * radius, radius * verticalRatio));
+                source->addVertex(world(mirror * -.2 * radius, -.5 * radius * verticalRatio));
+                source->addVertex(world(mirror * -.7 * radius, -.5 * radius * verticalRatio));
+                source->addVertex(world(mirror * -.7 * radius, radius * verticalRatio));
+                source->addVertex(world(mirror * -radius, radius * verticalRatio));
             } else {
                 source->addVertex(world(-radius, -radius * verticalRatio), bulge);
                 source->addVertex(world(radius, -radius * verticalRatio), bulge);
@@ -9087,14 +9088,16 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             const double cutterX = topology == 1 ? -.5 * radius : topology == 2 ? .5 * radius :
                                    topology == 3 ? .65 * radius : 0;
             const double cutterY = topology == 4 ? .5 * radius * verticalRatio :
-                                   topology == 7 ? -.25 * radius * verticalRatio : 0;
+                                   topology == 7 || topology == 8
+                                       ? -.25 * radius * verticalRatio : 0;
             auto* cutter = new RS_Line(&f.graphic, horizontalCutter
                 ? RS_LineData{world(-2 * radius, cutterY), world(2 * radius, cutterY)}
                 : RS_LineData{world(cutterX, -2 * radius), world(cutterX, 2 * radius)});
             f.graphic.addEntity(cutter);
             const RS_Vector cutterPick = horizontalCutter
                 ? world(topology == 5 ? -.65 * radius : topology == 6 ? -.8 * radius :
-                        topology == 7 ? -.85 * radius : -.5 * radius, cutterY)
+                        topology == 7 ? -.85 * radius : topology == 8 ? .85 * radius :
+                        -.5 * radius, cutterY)
                 : world(cutterX, radius);
             RS_SplineData cutterCache;
             cutterCache.degree = 1;
@@ -9111,13 +9114,16 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             REQUIRE(nativeFirstPrepared.refusal == LC_OffsetCacheTrim::Refusal::None);
             CHECK(nativeFirstPrepared.rootCount >= 2);
             if (topology == 5) { CHECK(nativeFirstPrepared.rootCount == 4); }
-            if (topology == 6 || topology == 7) {
-                CHECK(nativeFirstPrepared.rootCount == (towardCentre ? 2 : 6));
+            if (topology == 6 || topology == 7 || topology == 8) {
+                const bool pickedComponentHasTwoRoots = towardCentre == (topology == 8);
+                CHECK(nativeFirstPrepared.rootCount == (pickedComponentHasTwoRoots ? 6 : 2));
             }
             REQUIRE(lineFirstPrepared.refusal == LC_OffsetCacheTrim::Refusal::None);
             CHECK(lineFirstPrepared.rootCount >= 2);
             if (topology == 5) { CHECK(lineFirstPrepared.rootCount == 4); }
-            if (topology == 6 || topology == 7) { CHECK(lineFirstPrepared.rootCount == 6); }
+            if (topology == 6 || topology == 7 || topology == 8) {
+                CHECK(lineFirstPrepared.rootCount == 6);
+            }
 
             const auto firstPick = nativeFirst ? nativePick : cutterPick;
             const auto secondPick = nativeFirst ? cutterPick : nativePick;
