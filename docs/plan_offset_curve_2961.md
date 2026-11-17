@@ -56228,3 +56228,23 @@ Validation on the exact worktree with macOS arm64 CMake Release:
 This qualifies only the recorded backtracking-start pair at this origin,
 scale, and distance grid. Trim at this origin for the backtracking pair,
 other frames/scales, and other tangent layouts remain open.
+
+## 1711. Trim the Backtracking-start Pair at a `1e12` Origin (2026-11-17)
+
+Test commit `eedc347c1` adds Trim Two profile 214 for the large-scale
+backtracking-start tangent pair from section 1710 at origin
+`(1e12,-2e12)`. It uses the same world-coordinate precision-floor comparison
+as profile 213 and covers both offset-side choices, the three circle-cutter
+radii, preview/commit, undo/redo, and five-format trimmed-result persistence.
+
+Validation on the exact worktree with macOS arm64 CMake Release:
+
+- Isolated profile 214: 3,678 assertions / 1 case passed across six generated variants.
+- The final full `librecad_tests` target rebuilt with profiles 0-214 registered.
+- `git diff --check`: passed.
+
+The preceding complete matrix run through profile 213 passed 697,401
+assertions (section 1709); the full 0-214 matrix was not rerun after adding
+this isolated profile. This qualifies the backtracking pair only at this
+specific origin/scale/profile and does not imply general high-origin Trim
+support.
