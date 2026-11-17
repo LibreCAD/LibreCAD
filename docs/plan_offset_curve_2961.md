@@ -57240,3 +57240,16 @@ staged run passes 44,747 assertions and contains exactly 216 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 216 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other reflected profiles, scales, origins,
 visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1763. Extend Alternate Reflected Frame to `1.7r` (2026-11-17)
+
+The reflected profile at rotation `0.9` and vertical ratio `0.7` also passes at
+radius scale `1.7`, at origin `(1e12,-2e12)` with fixed offset `2500`. This
+adds a larger-scale sample to the alternate frame; it remains a discrete
+fixture result rather than a continuous scale guarantee.
+
+The focused CMake Release matrix passes 39,850 assertions / 1 case; its ODA
+staged run passes 39,961 assertions and contains exactly 224 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 224 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other mirrored frames, scales, origins,
+visible GUI interaction, and AutoCAD semantic acceptance remain open.
