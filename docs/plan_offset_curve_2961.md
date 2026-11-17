@@ -57559,3 +57559,16 @@ workflow.
 The CMake Release test passes 8,318 assertions / 1 case. Visible desktop
 source-picker interaction, family-by-variant geometry qualification, and
 independent CAD acceptance remain separate open gates.
+
+## 1786. Revalidate Filter Switching and Source Highlighting (2026-11-17)
+
+On the current source, reran repeated source-family browsing while retaining
+the highlighted committed source, plus the full tagged source-highlight
+lifecycle suite. These verify the chooser's headless filter/highlight
+contract after the recent family-matrix changes; they do not exercise the
+visible packaged Properties workflow.
+
+`Native source picker preserves highlighted source across family filters`
+passes 161 assertions / 1 case. `[gui][dialog][offsetcurve][source][highlight]`
+passes 481 assertions / 20 cases. Visible interaction, cancellation/refusal
+in the packaged app, and independent CAD acceptance remain open.
