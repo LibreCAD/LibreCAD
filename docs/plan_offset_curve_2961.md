@@ -56913,3 +56913,21 @@ self-event topology only. Other concave corner layouts, notch depth/orientation,
 multiple concavities, broader transforms/scales, visible packaged-app
 interaction, and AutoCAD semantic acceptance remain open. ODA conversion is
 structural interoperability evidence, not viewport or semantic acceptance.
+
+## 1743. Add Mirrored Concave Closed Trim Two Profile (2026-11-17)
+
+The same action/persistence matrix now runs the mirrored L profile with its
+cutter crossing the corresponding mirrored legs. This checks both concave
+orientations at center `(1e12,-2e12)` and radius `1e5`, for both offset signs
+and both operand pick orders; the convex rotated/non-square and bulged rows
+remain in the same matrix. Direct preparation in both operand roles, preview,
+commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen
+remain required per row.
+
+The focused matrix passes 9,437 assertions / 1 case on macOS arm64 CMake
+Release. Its 56 retained DWGs converted to ACAD2018 DXF with ODA File Converter
+27.1.0.0, producing 56 DXFs and no `.err` files. `git diff --check` passes.
+This strengthens the concave evidence only for the original L and its mirror;
+different notch proportions, multiple concavities, other cutter orientations,
+broader transforms/scales, visible GUI interaction, and AutoCAD semantic
+acceptance remain open.
