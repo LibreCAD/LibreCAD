@@ -2661,20 +2661,26 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
                51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
                67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
-               83, 84, 85, 86);
+               83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
+               98, 99, 100, 101, 102, 103, 104);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
+  const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
   const bool curvatureActionProfile =
-      obliqueCurvatureProfile || shallowBendCurvatureProfile;
+      obliqueCurvatureProfile || shallowBendCurvatureProfile ||
+      nearVerticalCurvatureProfile;
   const int curvatureProfileIndex =
       profile <= 59 ? profile - 51
       : profile <= 68 ? profile - 60
       : profile <= 77 ? profile - 69
-                      : profile - 78;
+      : profile <= 86 ? profile - 78
+      : profile <= 95 ? profile - 87
+                      : profile - 96;
   const int curvatureScaleIndex = curvatureProfileIndex / 3;
   const int curvatureRatioIndex = curvatureProfileIndex % 3;
   const bool reversedCurvatureProfile =
-      (profile >= 60 && profile <= 68) || (profile >= 78 && profile <= 86);
+      (profile >= 60 && profile <= 68) || (profile >= 78 && profile <= 86) ||
+      (profile >= 96 && profile <= 104);
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
@@ -2781,6 +2787,12 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     endpointTangents = reversedCurvatureProfile
         ? std::array<RS_Vector, 2>{{{-0.7, 0.35}, {-1.0, -0.2}}}
         : std::array<RS_Vector, 2>{{{1.0, 0.2}, {0.7, -0.35}}};
+  } else if (nearVerticalCurvatureProfile) {
+    endpointTangents = reversedCurvatureProfile
+        ? std::array<RS_Vector, 2>{{{-0.2, 0.9797958971132712},
+                                    {-0.2, -0.9797958971132712}}}
+        : std::array<RS_Vector, 2>{{{0.2, 0.9797958971132712},
+                                    {0.2, -0.9797958971132712}}};
   }
   LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
       reversedTangentTraversal
@@ -2911,7 +2923,12 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         {tangentCircleCenter + normal * radius});
     CAPTURE(tangentTrim.refusal, tangentTrim.rootCount,
             tangentTrim.work.failureStage,
-            tangentTrim.work.hasIntersectionFailureDomain);
+            tangentTrim.work.hasIntersectionFailureDomain,
+            tangentTrim.work.intersections.totalBoxPairs,
+            tangentTrim.work.intersections.generatedLeaves,
+            tangentTrim.work.intersections.generatedItems,
+            tangentTrim.work.intersections.orderingComparisons,
+            tangentTrim.work.intersectionFailureDepth);
     const bool independentlySeparatedSecant =
         tangentOracle.valid && tangentOracle.distinctRoots == 2 &&
         tangentOracle.repeatedRoots == 0 &&

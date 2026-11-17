@@ -33,7 +33,7 @@ struct Limits {
     std::size_t maxOrderingComparisons = std::size_t{1} << 20;
     // Shared kernel snapshot cap; core discovery is separately item-bounded.
     std::size_t maxRoots = 4096;
-    unsigned maxDepth = 48;
+    unsigned maxDepth = 56;
     unsigned maxLeafDepth = 40;
     std::size_t maxFragments = 4097; // retained pieces plus untouched cache components
     std::size_t maxOutputSpans = 4097;
