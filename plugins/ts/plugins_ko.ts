@@ -289,7 +289,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>단색</translation>
+        <translation>솔리드</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -324,7 +324,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="192"/>
         <source>Scale</source>
-        <translation>크기</translation>
+        <translation>축척</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="195"/>
@@ -389,7 +389,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>치수 리더</translation>
+        <translation>치수 지시선</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
@@ -884,7 +884,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -1005,7 +1005,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>추가 원을 그릴까요?</translation>
+        <translation>이끝원을 그릴까요?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

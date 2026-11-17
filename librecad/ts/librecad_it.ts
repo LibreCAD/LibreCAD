@@ -43,7 +43,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
-        <translation>Punto di partenza può essere impostato solo in distanza o stato del punto</translation>
+        <translation>Il punto iniziale può essere impostato solo nello stato distanza o punto</translation>
     </message>
 </context>
 <context>
@@ -196,12 +196,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specificare la posizione della linea di dimensione o inserire l&apos;angolo:</translation>
+        <translation>Specificare la posizione della linea di quota o inserire l&apos;angolo:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation>Inserisci testo di dimensione:</translation>
+        <translation>Inserisci testo di quota:</translation>
     </message>
 </context>
 <context>
@@ -232,7 +232,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Specify dimension line location</source>
-        <translation>Specificare la posizione della linea di dimensione</translation>
+        <translation>Specificare la posizione della linea di quota</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -242,12 +242,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
         <source>Enter dimension text:</source>
-        <translation>Inserisci testo di dimensione:</translation>
+        <translation>Inserisci testo di quota:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Inserire l&apos;angolo della linea di dimensione:</translation>
+        <translation>Inserire l&apos;angolo della linea di quota:</translation>
     </message>
 </context>
 <context>
@@ -265,7 +265,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
-        <translation>Modifica Ordinazione</translation>
+        <translation>Cambia coordinata</translation>
     </message>
 </context>
 <context>
@@ -281,12 +281,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>Specificare la dimensione per scegliere lo stile</translation>
+        <translation>Specificare la quota da cui prendere lo stile</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>Specificare la dimensione per applicare lo stile</translation>
+        <translation>Specificare la quota a cui applicare lo stile</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
@@ -312,7 +312,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="118"/>
         <source>The end point is too close to the start point</source>
-        <translation>Il punto finale è troppo vicino al punto di partenza</translation>
+        <translation>Il punto finale è troppo vicino al punto iniziale</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="159"/>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">Specificare l&apos;angolo di fine o [angolo / cordlen]</translation>
+        <translation type="unfinished">Specificare l&apos;angolo di fine o [angolo/corda]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -467,7 +467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">Specificare la lunghezza di accordo (negativo per il punto di alt):</translation>
+        <translation type="unfinished">Specificare la lunghezza della corda (negativo per il punto alternativo):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -812,7 +812,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Selezionare la dimensione lineare/allineata di base</translation>
+        <translation>Selezionare la quota lineare/allineata di base</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -832,7 +832,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>Specificare la posizione della linea di dimensione</translation>
+        <translation>Specificare la posizione della linea di quota</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -842,7 +842,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>Inserisci testo di dimensione:</translation>
+        <translation>Inserisci testo di quota:</translation>
     </message>
 </context>
 <context>
@@ -920,7 +920,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="104"/>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="257"/>
         <source>Start and end points cannot be the same</source>
-        <translation>I punti di partenza e di fine non possono essere gli stessi</translation>
+        <translation>I punti iniziale e finale non possono coincidere</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="112"/>
@@ -1502,7 +1502,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="131"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="135"/>
@@ -1597,12 +1597,12 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Selezionare la linea che è parallela alla direttarix di parabola o set vertex point</translation>
+        <translation>Selezionare una linea parallela alla direttrice della parabola o impostare il vertice</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
         <source>Specify the start point on parabola</source>
-        <translation>Specificare il punto di partenza su parabola</translation>
+        <translation>Specificare il punto iniziale sulla parabola</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="301"/>
@@ -1681,7 +1681,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished">Specificare secondo punto
-o [number|x|y|angle|p|edges|distance]</translation>
+o [number|x|y|angolo|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1695,7 +1695,7 @@ o [numero]</translation>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished">Specificare la direzione della linea
-[x|y|angle|p|distance]</translation>
+[x|y|angolo|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
@@ -1715,7 +1715,8 @@ o [x|y|p|number|edges|distance]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specificare la distanza fissa tra i punti
+o [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1844,7 +1845,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="581"/>
         <source>Enter the start point x</source>
-        <translation type="unfinished">Inserisci il punto di partenza x</translation>
+        <translation type="unfinished">Inserire la coordinata x del punto iniziale</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="586"/>
@@ -1940,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Specificare punto 1 scatto [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Specificare l&apos;aggancio del punto 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Specificare punto 2 snap [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Specificare l&apos;aggancio del punto 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2063,8 +2064,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="449"/>
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="unfinished">Specificare gli angoli tipo
-Traduzione:</translation>
+        <translation type="unfinished">Specificare il tipo di angoli
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2099,7 +2100,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
@@ -2427,12 +2428,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
         <source>Rectangle (2 Points)</source>
-        <translation>Rettifica (2 Punti)</translation>
+        <translation>Rettangolo (2 punti)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
         <source>Rectangle (3 Points)</source>
-        <translation>Rettifica (3 Punti)</translation>
+        <translation>Rettangolo (3 punti)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
@@ -2660,7 +2661,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Freccia</translation>
+        <translation>&amp;Direttrice</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -2910,7 +2911,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>Ripartizione</translation>
+        <translation>Spezza/Dividi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -2920,7 +2921,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>Unisciti alla linea</translation>
+        <translation>Unisci linee</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -2960,7 +2961,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Applicare la penna all&apos;ingresso</translation>
+        <translation>Applicare la penna all&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
@@ -3001,7 +3002,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
@@ -3061,12 +3062,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
-        <translation>Dimensione</translation>
+        <translation>Quota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
-        <translation>Dimensioni comandi di creazione</translation>
+        <translation>Comandi di creazione quote</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
@@ -3101,7 +3102,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
@@ -3152,12 +3153,12 @@ Traduzione:</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <source>Relative Zero</source>
-        <translation>Relativamente Zero</translation>
+        <translation>Zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polimero</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -3182,7 +3183,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Limitazioni di scatto</translation>
+        <translation>Limitazioni di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3197,7 +3198,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Operazioni di scatto</translation>
+        <translation>Operazioni di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3207,7 +3208,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>Ulteriori scatti</translation>
+        <translation>Ulteriori agganci</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3333,12 +3334,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
-        <translation>Linee guida</translation>
+        <translation>Linea d&apos;asse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
-        <translation>Marco centrale</translation>
+        <translation>Segno di centro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
@@ -3373,7 +3374,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Attività tangenziali &amp;3</translation>
+        <translation>Tangente a &amp;3 entità</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3393,12 +3394,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
         <source>Select Ordinates by base</source>
-        <translation>Seleziona Ordinazioni per base</translation>
+        <translation>Seleziona quote coordinate per base</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Ordinati Rebase</translation>
+        <translation>Cambia base quote coordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3428,7 +3429,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Manuale di scatto medio</translation>
+        <translation>Aggancia al punto medio (manuale)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
@@ -3443,7 +3444,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Centro di scatto</translation>
+        <translation>Aggancia al centro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3453,12 +3454,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Distanza di scatto</translation>
+        <translation>Distanza di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Intersezione a scatto</translation>
+        <translation>Aggancia all&apos;intersezione</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="466"/>
@@ -3538,7 +3539,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>Set UCS Dimensione Ordinata</translation>
+        <translation>Imposta UCS da quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -3568,12 +3569,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Modalità di scatto esclusiva</translation>
+        <translation>Modalità di aggancio esclusiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>Libero scatto</translation>
+        <translation>Aggancio libero</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -3583,12 +3584,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>Distance &amp;Entity to Point</source>
-        <translation>Distanza &amp; Entity a Punto</translation>
+        <translation>Distanza da &amp;entità a punto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>Distanza &amp;Point a Entity</translation>
+        <translation>Distanza da &amp;punto a entità</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
@@ -3603,7 +3604,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>Raccogliere e coordinare</translation>
+        <translation>Raccogli &amp;coordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3978,12 +3979,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>Inferiore dopo l&apos;ingresso</translation>
+        <translation>Porta sotto l&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>Aumentare l&apos;ingresso</translation>
+        <translation>Porta sopra l&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
@@ -4078,12 +4079,12 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
-        <translation>Rigenerare Dimensioni</translation>
+        <translation>Rigenerare Quote</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>&amp;Stili delle dimensioni</translation>
+        <translation>&amp;Stili di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -4148,7 +4149,7 @@ Traduzione:</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>Coordinate &amp;Point</translation>
+        <translation>Coordinate del &amp;punto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -4285,7 +4286,7 @@ End Edge Point: (%9 , %10)</source>
 Angolo complementare: %2
 Angolo supplementare: %3
 Angolo esplementare: %4
-Punto di partenza: (%5 , %6)
+Punto bordo iniziale: (%5 , %6)
 Punto di intersezione: (%7, %8)
 Punto bordo finale: (%9 , %10)</translation>
     </message>
@@ -4356,8 +4357,8 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Distanza: %1
 Cartesiano: (%2 , %3)
 Polare: (%4 &lt; %5)
-Punto sull&apos;ingresso: (%6 , %7)
-Punto: (%8 %, %9)</translation>
+Punto sull&apos;entità: (%6 , %7)
+Punto: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
@@ -4367,7 +4368,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">Non scattare a entità bambino in contenitore</translation>
+        <translation type="unfinished">Non agganciare alle entità figlie nel contenitore</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4487,7 +4488,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>Seleziona le entità dei bambini</translation>
+        <translation>Seleziona le entità figlie</translation>
     </message>
 </context>
 <context>
@@ -4687,7 +4688,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="279"/>
         <source>Start and end points are too close to each other to calculate the distance.</source>
-        <translation>I punti di partenza e di fine sono troppo vicini l&apos;uno all&apos;altro per calcolare la distanza.</translation>
+        <translation>I punti iniziale e finale sono troppo vicini tra loro per calcolare la distanza.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4697,7 +4698,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>Lunghezza della geometria dell&apos;ingresso</translation>
+        <translation>Lunghezza della geometria dell&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4841,7 +4842,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>Seleziona entità bambino di contenitori</translation>
+        <translation>Seleziona le entità figlie dei contenitori</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
@@ -5023,12 +5024,12 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
         <source>Point 1:</source>
-        <translation type="unfinished">N. 1:</translation>
+        <translation type="unfinished">Punto 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="185"/>
         <source>Point 2:</source>
-        <translation type="unfinished">N. 2:</translation>
+        <translation type="unfinished">Punto 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
@@ -5103,21 +5104,21 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>Linea di interruzione/divide</translation>
+        <translation>Spezza/Dividi linea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="371"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="470"/>
         <source>Point 1:</source>
-        <translation>N. 1:</translation>
+        <translation>Punto 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="250"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="373"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="472"/>
         <source>Point 2:</source>
-        <translation>N. 2:</translation>
+        <translation>Punto 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
@@ -5303,7 +5304,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Sfrutta subito dopo la selezione</translation>
+        <translation type="unfinished">Esplodi subito dopo la selezione</translation>
     </message>
 </context>
 <context>
@@ -5347,7 +5348,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="130"/>
         <source>Lines Join</source>
-        <translation>Linee Iscriviti</translation>
+        <translation>Unisci linee</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
@@ -5378,17 +5379,17 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
         <source>Select first line</source>
-        <translation>Selezionare la prima riga</translation>
+        <translation>Selezionare la prima linea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>Selezionare la seconda riga</translation>
+        <translation>Selezionare la seconda linea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Selezionare parte della prima linea che dovrebbe rimanere dopo il trimestre</translation>
+        <translation>Selezionare la parte della prima linea che deve rimanere dopo il taglio</translation>
     </message>
 </context>
 <context>
@@ -5838,7 +5839,7 @@ Punto: (%8 %, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Scatta al centro della selezione</translation>
+        <translation type="unfinished">Aggancia al centro della selezione</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5919,12 +5920,12 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
         <source>Point 1:</source>
-        <translation type="unfinished">N. 1:</translation>
+        <translation type="unfinished">Punto 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="227"/>
         <source>Point 2:</source>
-        <translation type="unfinished">N. 2:</translation>
+        <translation type="unfinished">Punto 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="348"/>
@@ -5993,7 +5994,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Scatta al centro della selezione</translation>
+        <translation type="unfinished">Aggancia al centro della selezione</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6008,7 +6009,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Gratuito scatto</translation>
+        <translation type="unfinished">Aggancio libero</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6033,7 +6034,7 @@ Punto: (%8 %, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="128"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="146"/>
         <source>Stretch</source>
-        <translation type="unfinished">Stretching</translation>
+        <translation type="unfinished">Stira</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -6107,7 +6108,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">Scegli il primo oggetto da raccordare</translation>
+        <translation type="unfinished">Scegli il primo oggetto da tagliare</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
@@ -6117,12 +6118,12 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">Scegli il secondo oggetto da raccordare</translation>
+        <translation type="unfinished">Scegli il secondo oggetto da tagliare</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">Scegli l&apos;oggetto da raccordare</translation>
+        <translation type="unfinished">Scegli l&apos;oggetto da tagliare</translation>
     </message>
 </context>
 <context>
@@ -6135,7 +6136,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">L&apos;oggetto scelto non è un oggetto elementare o non può essere raccordato.</translation>
+        <translation type="unfinished">L&apos;oggetto scelto non è un oggetto elementare o non può essere tagliato.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6153,12 +6154,12 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Distanza di scatto</translation>
+        <translation type="unfinished">Distanza di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">Distanza del punto di scatto inizialmente risolto punto di scatto</translation>
+        <translation type="unfinished">Distanza del punto di aggancio dal punto di aggancio inizialmente risolto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6465,7 +6466,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">L&apos;ingresso non può essere una polilina chiusa.</translation>
+        <translation type="unfinished">L&apos;entità non può essere una polilinea chiusa.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
@@ -6590,7 +6591,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>Seleziona la dimensione ordinata di riferimento</translation>
+        <translation>Seleziona la quota coordinata di riferimento</translation>
     </message>
 </context>
 <context>
@@ -6626,7 +6627,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">Seleziona le entità dei bambini</translation>
+        <translation type="unfinished">Seleziona le entità figlie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6736,7 +6737,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="234"/>
         <source>Specify percentage / start-point</source>
-        <translation>Specificare la percentuale / punto di partenza</translation>
+        <translation>Specificare la percentuale / punto iniziale</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="237"/>
@@ -6839,7 +6840,7 @@ Punto: (%8 %, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>Seleziona la dimensione ordinata per impostare UCS</translation>
+        <translation>Seleziona la quota coordinata per impostare l&apos;UCS</translation>
     </message>
 </context>
 <context>
@@ -7405,7 +7406,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="240"/>
         <source>Center entities horizontally</source>
-        <translation type="unfinished">Unità centrali orizzontalmente</translation>
+        <translation type="unfinished">Centra le entità orizzontalmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="260"/>
@@ -7487,7 +7488,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="143"/>
         <source>Draft Mode</source>
-        <translation>Modalità del progetto</translation>
+        <translation>Modalità bozza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="149"/>
@@ -7537,7 +7538,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="92"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radio d&apos;arco</translation>
+        <translation type="unfinished">Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="95"/>
@@ -7689,7 +7690,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>X Coordinamento del centro dell&apos;arco</translation>
+        <translation>Coordinata X del centro dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
@@ -7714,7 +7715,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="194"/>
         <source>Radius of arc</source>
-        <translation>Radio d&apos;arco</translation>
+        <translation>Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
@@ -7848,7 +7849,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="43"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radio d&apos;arco</translation>
+        <translation type="unfinished">Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
@@ -8222,7 +8223,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="48"/>
         <source>Remove Segments</source>
-        <translation type="unfinished">Rimuovi i segnali</translation>
+        <translation type="unfinished">Rimuovi i segmenti</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="55"/>
@@ -8578,7 +8579,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="66"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">Radio di cerchio</translation>
+        <translation type="unfinished">Raggio del cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="73"/>
@@ -8631,7 +8632,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="134"/>
         <source>Radius of circle</source>
-        <translation>Radio di cerchio</translation>
+        <translation>Raggio del cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="155"/>
@@ -8767,7 +8768,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="207"/>
         <source>Right Angle</source>
-        <translation>Angolo destro</translation>
+        <translation>Angolo retto</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="208"/>
@@ -8782,7 +8783,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="210"/>
         <source>Dot Small Blank</source>
-        <translation>Piccola coperta</translation>
+        <translation>Punto piccolo vuoto</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="211"/>
@@ -8797,22 +8798,22 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="213"/>
         <source>Box Filled</source>
-        <translation>Scatola riempita</translation>
+        <translation>Quadrato pieno</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="214"/>
         <source>Box Blank</source>
-        <translation>Scatola coperta</translation>
+        <translation>Quadrato vuoto</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="215"/>
         <source>Closed Blank</source>
-        <translation>Coperto chiuso</translation>
+        <translation>Chiuso vuoto</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="216"/>
         <source>Datum Filled</source>
-        <translation>Dato riempito</translation>
+        <translation>Triangolo di riferimento pieno</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="217"/>
@@ -8822,7 +8823,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="218"/>
         <source>Integral</source>
-        <translation>Integrazione</translation>
+        <translation>Integrale</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
@@ -8855,7 +8856,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>Ordinazione</translation>
+        <translation>Coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
@@ -8901,7 +8902,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>Non può aprire il file fornito per la scrittura - controllare che la posizione fornita è scrivibile. Gli stili di dimensione non sono stati esportati.</translation>
+        <translation>Non è possibile aprire il file fornito per la scrittura - controllare che la posizione fornita sia scrivibile. Gli stili di quota non sono stati esportati.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
@@ -8911,7 +8912,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>Dimensioni Gli stili sono stati esportati.</translation>
+        <translation>Gli stili di quota sono stati esportati.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
@@ -8921,48 +8922,48 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>Non è possibile aprire file forniti per la lettura. Gli stili di dimensione non sono stati importati.</translation>
+        <translation>Non è possibile aprire il file fornito per la lettura. Gli stili di quota non sono stati importati.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>Errore inaspettato durante la parsing stili di dimensione. Messaggio:</translation>
+        <translation>Errore inaspettato durante l&apos;analisi degli stili di quota. Messaggio:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>Formato inaspettato di file, non contiene stili di dimensione LibreCAD.</translation>
+        <translation>Formato di file inaspettato, non contiene stili di quota LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>Stile di dimensione Import</translation>
+        <translation>Importazione stili di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>Nessuna dimensione stili da importare.</translation>
+        <translation>Nessuno stile di quota da importare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>Gli stili di dimensione sono stati importati.</translation>
+        <translation>Gli stili di quota sono stati importati.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>Importa stili di dimensione</translation>
+        <translation>Importa stili di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>Esportare stili di dimensione</translation>
+        <translation>Esporta stili di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>File di stili di dimensione LibreCAD (*.%1)</translation>
+        <translation>File di stili di quota LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -9079,7 +9080,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>Linee di dimensionamento</translation>
+        <translation>Linee di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
@@ -9090,7 +9091,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>Visualizza e imposta il colore per la linea dimensionale (variabile sistema DIMCLRD).</translation>
+        <translation>Visualizza e imposta il colore per la linea di quota (variabile sistema DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
@@ -9100,17 +9101,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Imposta il linetype della linea dimensionale. (variabile di sistema DIMLTYPE)</translation>
+        <translation>Imposta il tipo di linea della linea di quota. (variabile di sistema DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Larghezza di riga:</translation>
+        <translation>Spessore linea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Imposta il peso lineare della linea dimensionale. (variabile di sistema DIMLWD)</translation>
+        <translation>Imposta lo spessore della linea di quota. (variabile di sistema DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9120,7 +9121,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Specifica una distanza per estendere la linea di dimensione oltre la linea di estensione quando si utilizza obliquo, architettonico, zecca, integrale e nessun segno per i tasti freccia. (variabile di sistema DIMDLE)</translation>
+        <translation>Specifica una distanza per estendere la linea di quota oltre la linea di estensione quando si utilizzano punte di freccia di tipo obliquo, architettonico, tratto, integrale o nessuna. (variabile di sistema DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9130,7 +9131,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Suppressi display della prima linea di dimensione (variabile di sistema DIMSD1)</translation>
+        <translation>Sopprime la visualizzazione della prima linea di quota (variabile di sistema DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
@@ -9140,7 +9141,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Suppressi display della seconda linea di dimensione (variabile di sistema DIMSD2)</translation>
+        <translation>Sopprime la visualizzazione della seconda linea di quota (variabile di sistema DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
@@ -9160,7 +9161,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>Linea di espulsione linea 1:</translation>
+        <translation>Tipo di linea della linea di estensione 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
@@ -9180,12 +9181,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Peso della linea:</translation>
+        <translation>Spessore linea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Imposta il peso della linea di estensione. (variabile di sistema DIMLWE)</translation>
+        <translation>Imposta lo spessore della linea di estensione. (variabile di sistema DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
@@ -9195,7 +9196,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Specifica una distanza per estendere le linee di estensione sopra la linea di dimensione. (variabile del sistema DIMEXE)</translation>
+        <translation>Specifica una distanza per estendere le linee di estensione sopra la linea di quota. (variabile del sistema DIMEXE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9205,7 +9206,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Imposta la distanza per compensare le linee di estensione dai punti sul disegno che definiscono la dimensione. (variabile del sistema DIMEXO)</translation>
+        <translation>Imposta la distanza per scostare le linee di estensione dai punti sul disegno che definiscono la quota. (variabile del sistema DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9215,7 +9216,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Imposta la lunghezza totale delle linee di estensione a partire dalla linea dimensionale verso l&apos;origine della dimensione. (variabile di sistema DIMFXL)</translation>
+        <translation>Imposta la lunghezza totale delle linee di estensione a partire dalla linea di quota verso l&apos;origine della quota. (variabile di sistema DIMFXL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
@@ -9266,7 +9267,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>Dimensione della corsa lineare</translation>
+        <translation>Quota lineare con spezzata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
@@ -9281,17 +9282,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>Radius jog dimensione</translation>
+        <translation>Quota di raggio ridotto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>Angolo di rotazione:</translation>
+        <translation>Angolo della spezzata:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Determina l&apos;angolo del segmento trasversale della linea di dimensione in una dimensione del raggio jogged. (variabile di sistema DIMJOGANG)</translation>
+        <translation>Determina l&apos;angolo del segmento trasversale della linea di quota in una quota di raggio ridotto. (variabile di sistema DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9301,7 +9302,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation>Visualizza e imposta la dimensione dei tasti freccia. (variabile del sistema DIMASZ)</translation>
+        <translation>Visualizza e imposta la dimensione delle punte di freccia. (variabile del sistema DIMASZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
@@ -9316,17 +9317,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Imposta la freccia per la prima linea di dimensione. Quando si modifica il primo tipo freccia, il secondo freccia cambia automaticamente per abbinarlo. (variabile di sistema DIMBLK1)</translation>
+        <translation>Imposta la freccia per la prima linea di quota. Quando si modifica il tipo della prima freccia, la seconda freccia cambia automaticamente per corrispondere. (variabile di sistema DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>Imposta la freccia per la seconda linea di dimensione. (variabile di sistema DIMBLK2)</translation>
+        <translation>Imposta la freccia per la seconda linea di quota. (variabile di sistema DIMBLK2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Utilizzare la stessa freccia per la linea di dimensione</translation>
+        <translation>Utilizzare la stessa freccia per la linea di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9346,12 +9347,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>Dimensione dei segni di graduazione:</translation>
+        <translation>Dimensione tratto obliquo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>Interruzione della dimensione</translation>
+        <translation>Interruzione della quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9378,27 +9379,27 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>I luoghi sono simboli della lunghezza dell&apos;arco prima del testo della dimensione. (variabile di sistema DIMARCSYM)</translation>
+        <translation>Colloca i simboli di lunghezza dell&apos;arco prima del testo di quota. (variabile di sistema DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>Testo di dimensione preceduta</translation>
+        <translation>Prima del testo di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>I simboli della lunghezza dell&apos;arco dei luoghi sopra il testo della dimensione. (variabile di sistema DIMARCSYM)</translation>
+        <translation>Colloca i simboli di lunghezza dell&apos;arco sopra il testo di quota. (variabile di sistema DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>Testo di dimensione superiore</translation>
+        <translation>Sopra il testo di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
         <source>Centermarks</source>
-        <translation>Punti di riferimento</translation>
+        <translation>Segni di centro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
@@ -9464,7 +9465,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>Imposta il colore per lo sfondo del testo in dimensioni (variabile del sistema DIMTFILLCLR)</translation>
+        <translation>Imposta il colore per lo sfondo del testo nelle quote (variabile del sistema DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9479,7 +9480,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>Imposta la scala delle frazioni rispetto al testo di dimensione. (variabile del sistema DIMTFAC)</translation>
+        <translation>Imposta la scala delle frazioni rispetto al testo di quota. (variabile del sistema DIMTFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
@@ -9489,12 +9490,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>Imposta l&apos;altezza dello stile di testo di dimensione corrente. (variabile di sistema DIMTXT)</translation>
+        <translation>Imposta l&apos;altezza dello stile di testo di quota corrente. (variabile di sistema DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>Imposta il colore per il testo di dimensione (variabile di sistema DIMCLRT)</translation>
+        <translation>Imposta il colore per il testo di quota (variabile di sistema DIMCLRT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9509,7 +9510,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>Visualizza una cornice rettangolare intorno al testo di dimensione. Questa opzione cambia il valore memorizzato nella variabile di sistema DIMGAP a un valore negativo.</translation>
+        <translation>Visualizza una cornice rettangolare intorno al testo di quota. Questa opzione cambia il valore memorizzato nella variabile di sistema DIMGAP a un valore negativo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9535,17 +9536,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>Allinea il testo con la linea dimensionale (variabili di sistema DIMTIH e DIMTOH).</translation>
+        <translation>Allinea il testo con la linea di quota (variabili di sistema DIMTIH e DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Allinea il testo con la linea di dimensione quando il testo è all&apos;interno delle linee di estensione, ma lo allinea orizzontalmente quando il testo è al di fuori delle linee di estensione (DIMTIH e DIMTOH variabili di sistema).</translation>
+        <translation>Allinea il testo con la linea di quota quando il testo è all&apos;interno delle linee di estensione, ma lo allinea orizzontalmente quando il testo è al di fuori delle linee di estensione (variabili di sistema DIMTIH e DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>Allineato con linea di dimensione</translation>
+        <translation>Allineato con la linea di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9560,8 +9561,8 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>Specifica la dimensione dei tratti obliqui disegnati al posto dei tasti freccia per dimensionamento lineare, raggio e diametro. Se = 0 – disegna i tasti freccia.
-&gt;0 – Disegna i colpi obliqui invece dei tasti freccia (variabile DIMTSZ).</translation>
+        <translation>Specifica la dimensione dei tratti obliqui disegnati al posto delle punte di freccia per le quote lineari, di raggio e di diametro. Se = 0 – disegna le punte di freccia.
+&gt;0 – Disegna tratti obliqui al posto delle punte di freccia (variabile DIMTSZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9577,7 +9578,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"/>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>Controlla la direzione di visualizzazione del testo di dimensione. (variabile del sistema DIMTXTDIRECTION)</translation>
+        <translation>Controlla la direzione di visualizzazione del testo di quota. (variabile del sistema DIMTXTDIRECTION)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
@@ -9602,7 +9603,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Controlla il posizionamento orizzontale del testo di dimensione lungo la linea di dimensione, in relazione alle linee di estensione. (variabile di sistema DIMJUST)</translation>
+        <translation>Controlla il posizionamento orizzontale del testo di quota lungo la linea di quota, in relazione alle linee di estensione. (variabile di sistema DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9643,7 +9644,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>Controlla il posizionamento verticale del testo di dimensione in relazione alla linea di dimensione. (variabile del sistema DIMTAD)</translation>
+        <translation>Controlla il posizionamento verticale del testo di quota in relazione alla linea di quota. (variabile del sistema DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9668,17 +9669,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>Posizione verticale del testo sopra o sotto la linea di dimensione se il posizionamento verticale (DIMTAD) non è &quot;Centered&quot; (variabile DIMTVP).</translation>
+        <translation>Posizione verticale del testo sopra o sotto la linea di quota se il posizionamento verticale (DIMTAD) non è &quot;Centered&quot; (variabile DIMTVP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Spazzola di testo riga dim rotta:</translation>
+        <translation>Distanza del testo dalla linea di quota interrotta:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Imposta il gap di testo attuale, che è la distanza intorno al testo di dimensione quando la linea di dimensione è spezzata per ospitare il testo di dimensione (variabile di sistema DIMGAP).</translation>
+        <translation>Imposta il gap di testo attuale, che è la distanza intorno al testo di quota quando la linea di quota è spezzata per ospitare il testo di quota (variabile di sistema DIMGAP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9703,7 +9704,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>Disegna le linee di dimensione tra i punti misurati anche quando i tasti freccia sono posizionati al di fuori dei punti misurati. (variabile del sistema DIMTOFL)</translation>
+        <translation>Disegna le linee di quota tra i punti misurati anche quando le punte di freccia sono posizionate al di fuori dei punti misurati. (variabile del sistema DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
@@ -9719,7 +9720,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>Imposta una scala per tutte le impostazioni di stile di dimensione che specificano dimensioni, distanza o spaziatura, comprese le dimensioni del testo e della freccia. Questa scala non cambia i valori di misura delle dimensioni. (variabile sistema DIMSCALE)</translation>
+        <translation>Imposta una scala per tutte le impostazioni di stile di quota che specificano dimensioni, distanza o spaziatura, comprese le dimensioni del testo e delle frecce. Questa scala non cambia i valori di misura delle quote. (variabile sistema DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9739,7 +9740,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>Se selezionato, sposta la linea di dimensione ogni volta che il testo di dimensione viene spostato. (variabile di sistema DIMTMOVE)</translation>
+        <translation>Se selezionato, sposta la linea di quota ogni volta che il testo di quota viene spostato. (variabile di sistema DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -9749,7 +9750,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Se selezionato, le linee di dimensione non vengono spostate quando il testo viene spostato. Se il testo si allontana dalla linea di dimensione, viene creata una linea leader che collega il testo alla linea di dimensione. La linea leader è omessa quando il testo è troppo vicino alla linea di dimensione. (variabile di sistema DIMTMOVE)</translation>
+        <translation>Se selezionato, le linee di quota non vengono spostate quando il testo viene spostato. Se il testo si allontana dalla linea di quota, viene creata una direttrice che collega il testo alla linea di quota. La direttrice è omessa quando il testo è troppo vicino alla linea di quota. (variabile di sistema DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
@@ -9764,7 +9765,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Se selezionato, le linee di dimensione non vengono spostate quando il testo viene spostato. Il testo che si allontana dalla linea di dimensione non è collegato alla linea di dimensione con un leader. (variabile di sistema DIMTMOVE)</translation>
+        <translation>Se selezionato, le linee di quota non vengono spostate quando il testo viene spostato. Il testo che si allontana dalla linea di quota non è collegato alla linea di quota con una direttrice. (variabile di sistema DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
@@ -9784,7 +9785,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Supprime i tasti freccia se non abbastanza spazio è disponibile all&apos;interno delle linee di estensione. (variabile di sistema DIMSOXD)</translation>
+        <translation>Sopprime le punte di freccia se non c&apos;è abbastanza spazio all&apos;interno delle linee di estensione. (variabile di sistema DIMSOXD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
@@ -9804,17 +9805,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>Sposta il testo o i tasti freccia al di fuori delle linee di estensione in base alla migliore vestibilità (variabile del sistema DIMATFIT).</translation>
+        <translation>Sposta il testo o le punte di freccia al di fuori delle linee di estensione in base al miglior adattamento (variabile del sistema DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
         <source>Either text or arrows (best fit)</source>
-        <translation>O testo o frecce (migliora vestibilità)</translation>
+        <translation>O testo o frecce (adattamento migliore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>Sposta i tasti freccia al di fuori delle linee di estensione prima, poi il testo (variabile del sistema DIMATFIT).</translation>
+        <translation>Sposta le punte di freccia al di fuori delle linee di estensione prima, poi il testo (variabile del sistema DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9824,7 +9825,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Sposta il testo al di fuori delle linee di estensione prima, poi i tasti freccia (variabile del sistema DIMATFIT).</translation>
+        <translation>Sposta il testo al di fuori delle linee di estensione prima, poi le punte di freccia (variabile del sistema DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
@@ -9834,7 +9835,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Sempre inserire il testo tra le righe ext</translation>
+        <translation>Inserire sempre il testo tra le linee di estensione</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9844,7 +9845,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>Dimensioni angolari</translation>
+        <translation>Quote angolari</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -9902,7 +9903,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>Imposta il numero di punti decimali per dimensioni angolari. DIMADEC variabile di sistema)</translation>
+        <translation>Imposta il numero di cifre decimali per le quote angolari. (variabile di sistema DIMADEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
@@ -9913,7 +9914,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>Dimensioni lineari</translation>
+        <translation>Quote lineari</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
@@ -9928,17 +9929,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>Imposta un fattore di scala per le misure di dimensione lineare. Si raccomanda di non modificare questo valore dal valore predefinito di 1.00. (variabile del sistema DIMLFAC)</translation>
+        <translation>Imposta un fattore di scala per le misure di quota lineare. Si raccomanda di non modificare questo valore dal valore predefinito di 1.00. (variabile del sistema DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>Riguarda il fattore di scala di misura solo alle dimensioni create nei viewport di layout.</translation>
+        <translation>Applica il fattore di scala di misura solo alle quote create nei viewport di layout. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>Applicare solo alle dimensioni del layout</translation>
+        <translation>Applicare solo alle quote del layout</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
@@ -9958,12 +9959,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Include un suffisso che si specifica nel testo di dimensione. (variabile del sistema DIMPOST)</translation>
+        <translation>Include un suffisso che si specifica nel testo di quota. (variabile del sistema DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>Imposta il formato delle unità correnti per tutti i tipi di dimensione tranne l&apos;angolo. (variabile di sistema DIMLUNIT)</translation>
+        <translation>Imposta il formato delle unità correnti per tutti i tipi di quota tranne Angolare. (variabile di sistema DIMLUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9989,17 +9990,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>Imposta il valore di arrotondamento più vicino per le misure di dimensione per tutti i tipi di dimensione eccetto l&apos;angolo. (variabile del sistema DMRND)</translation>
+        <translation>Imposta il valore di arrotondamento più vicino per le misure di quota per tutti i tipi di quota eccetto Angolare. (variabile del sistema DIMRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>Visualizza e imposta il numero di punti decimali nel testo di dimensione. (variabile del sistema DIMDEC)</translation>
+        <translation>Visualizza e imposta il numero di cifre decimali nel testo di quota. (variabile del sistema DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Include un prefisso che si specifica nel testo di dimensione. (variabile del sistema DIMPOST)</translation>
+        <translation>Include un prefisso che si specifica nel testo di quota. (variabile del sistema DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -10031,12 +10032,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Supprime gli zeri in tutte le dimensioni decimali. (variabile del sistema DIMZIN)</translation>
+        <translation>Sopprime gli zeri finali in tutte le quote decimali. (variabile del sistema DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>Supprime la porzione di pollici di una dimensione di piedi e pollici quando la distanza è un numero integrale di piedi (variabile di sistema DIMZIN)</translation>
+        <translation> Sopprime la parte in pollici di una quota in piedi e pollici quando la distanza è un numero intero di piedi (variabile di sistema DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10049,7 +10050,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>Supprime la porzione di piedi di una dimensione di piedi e pollici quando la distanza è inferiore a un piede. (variabile del sistema DIMZIN)</translation>
+        <translation>Sopprime la parte in piedi di una quota in piedi e pollici quando la distanza è inferiore a un piede. (variabile del sistema DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10062,7 +10063,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>Suppressi zeri leader in tutte le dimensioni decimali (variabile sistema DIMZIN)</translation>
+        <translation>Sopprime gli zeri iniziali in tutte le quote decimali (variabile sistema DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
@@ -10073,12 +10074,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>Imposta il numero di unità sub a un&apos;unità. Viene utilizzato per calcolare la distanza di dimensione in una subunità quando la distanza è inferiore a un&apos;unità.</translation>
+        <translation>Imposta il numero di sottounità per unità. Viene utilizzato per calcolare la distanza di quota in sottounità quando la distanza è inferiore a un&apos;unità. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>Include un suffisso al valore di dimensione sotto unità. È possibile inserire il testo o utilizzare i codici di controllo per visualizzare i simboli speciali.</translation>
+        <translation>Include un suffisso per la sottounità del valore di quota. È possibile inserire il testo o utilizzare i codici di controllo per visualizzare i simboli speciali.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10088,7 +10089,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>Aggiunge unità di misura alternative al testo di dimensione. Imposta la variabile di sistema DIMALT a 1.</translation>
+        <translation>Aggiunge unità di misura alternative al testo di quota. Imposta la variabile di sistema DIMALT a 1.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10103,7 +10104,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>Specifica il moltiplicatore utilizzato come fattore di conversione tra unità primarie e alterne. Ad esempio, per convertire pollici a millimetri, inserire 25.4. Il valore non ha effetto sulle dimensioni angolari, e non viene applicato al valore di arrotondamento o ai valori di tolleranza più o meno. (variabile del sistema DIMALTF)</translation>
+        <translation>Specifica il moltiplicatore utilizzato come fattore di conversione tra unità primarie e alternative. Ad esempio, per convertire pollici in millimetri, inserire 25.4. Il valore non ha effetto sulle quote angolari e non viene applicato al valore di arrotondamento o ai valori di tolleranza più o meno. (variabile del sistema DIMALTF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10113,7 +10114,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>Imposta le regole di arrotondamento per unità alterne per tutti i tipi di dimensione tranne Angolare. Se si immette un valore di 0.25, tutte le misure alternative sono arrotondate all&apos;unità 0.25 più vicina. Se si immette un valore di 1.0, tutte le misure di dimensione sono arrotondate al più vicino integer. Il numero di cifre visualizzate dopo il punto decimale dipende dall&apos;impostazione di precisione. (variabile di sistema DIMALTRND)</translation>
+        <translation>Imposta le regole di arrotondamento per le unità alternative per tutti i tipi di quota tranne Angolare. Se si immette un valore di 0.25, tutte le misure alternative sono arrotondate all&apos;unità 0.25 più vicina. Se si immette un valore di 1.0, tutte le misure di quota sono arrotondate all&apos;intero più vicino. Il numero di cifre visualizzate dopo il punto decimale dipende dall&apos;impostazione di precisione. (variabile di sistema DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -10128,7 +10129,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>Luoghi unità alternative dopo le unità primarie nel testo di dimensione.</translation>
+        <translation>Colloca le unità alternative dopo le unità primarie nel testo di quota.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
@@ -10138,7 +10139,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>Luoghi unità alternative sotto le unità primarie nel testo di dimensione.</translation>
+        <translation>Colloca le unità alternative sotto le unità primarie nel testo di quota.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
@@ -10148,7 +10149,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Include un prefisso nel testo di dimensione alternativa. È possibile inserire il testo o utilizzare i codici di controllo per visualizzare i simboli speciali. Ad esempio, inserire il codice di controllo %%c visualizza il simbolo del diametro. (variabile del sistema DIMAPOST)</translation>
+        <translation>Include un prefisso nel testo di quota alternativa. È possibile inserire il testo o utilizzare i codici di controllo per visualizzare i simboli speciali. Ad esempio, inserire il codice di controllo %%c visualizza il simbolo del diametro. (variabile del sistema DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -10158,22 +10159,22 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>Suppressi zeri leader in tutte le dimensioni decimali. Ad esempio, 0.5000 diventa .5000.</translation>
+        <translation>Sopprime gli zeri iniziali in tutte le quote decimali. Ad esempio, 0.5000 diventa .5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Supprime gli zeri in tutte le dimensioni decimali. Ad esempio, 12.5000 diventa 12.5, e 30.0000 diventa 30 (variabile del sistema DIMALTZ).</translation>
+        <translation>Sopprime gli zeri finali in tutte le quote decimali. Ad esempio, 12.5000 diventa 12.5, e 30.0000 diventa 30 (variabile del sistema DIMALTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>Supprime la porzione di piedi di una dimensione di piedi e pollici quando la distanza è inferiore a 1 piede. Ad esempio, 0&apos;-6 1/2&quot; diventa 6 1/2&quot; (variabile del sistema DIMALTZ)</translation>
+        <translation>Sopprime la parte in piedi di una quota in piedi e pollici quando la distanza è inferiore a 1 piede. Ad esempio, 0&apos;-6 1/2&quot; diventa 6 1/2&quot; (variabile del sistema DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>Supprime la porzione di pollici di una dimensione di piedi e pollici quando la distanza è un numero integrale di piedi. Ad esempio, 1&apos;-0&quot; diventa 1&apos;. (DIMALTZ variabile di sistema)</translation>
+        <translation>Sopprime la parte in pollici di una quota in piedi e pollici quando la distanza è un numero intero di piedi. Ad esempio, 1&apos;-0&quot; diventa 1&apos;. (variabile di sistema DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -10183,7 +10184,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>Include un suffisso nel testo di dimensione alternativa. È possibile inserire il testo o utilizzare i codici di controllo per visualizzare i simboli speciali. Ad esempio, l&apos;inserimento dei risultati del testo cm in testo di dimensione simile a quello mostrato nell&apos;illustrazione. Quando si immette un suffisso, si sovrascrive qualsiasi suffisso predefinito. (variabile del sistema DIMAPOST)</translation>
+        <translation>Include un suffisso nel testo di quota alternativa. È possibile inserire il testo o utilizzare i codici di controllo per visualizzare i simboli speciali. Ad esempio, inserendo il testo cm si ottiene un testo di quota simile a quello mostrato nell&apos;illustrazione. Quando si immette un suffisso, si sovrascrive qualsiasi suffisso predefinito. (variabile del sistema DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10198,22 +10199,22 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Suppressi zeri leader in tutte le dimensioni decimali (variabile sistema DIMTZIN).</translation>
+        <translation>Sopprime gli zeri iniziali in tutte le quote decimali (variabile sistema DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Suppressi che seguono gli zeri in tutte le dimensioni decimali (variabile sistema DIMTZIN).</translation>
+        <translation>Sopprime gli zeri finali in tutte le quote decimali (variabile sistema DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>Supprime la porzione dei piedi di una dimensione dei piedi e pollici quando la distanza è inferiore a 1 piede (variabile del sistema DIMTZIN).</translation>
+        <translation>Sopprime la parte in piedi di una quota in piedi e pollici quando la distanza è inferiore a 1 piede (variabile del sistema DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>Supprime la porzione di pollici di una dimensione di piedi e pollici quando la distanza è un numero integrale di piedi (variabile di sistema DIMTZIN).</translation>
+        <translation>Sopprime la parte in pollici di una quota in piedi e pollici quando la distanza è un numero intero di piedi (variabile di sistema DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
@@ -10293,7 +10294,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>Imposta l&apos;altezza corrente per il testo di tolleranza. Il rapporto tra l&apos;altezza di tolleranza e l&apos;altezza del testo di dimensione principale è calcolato e memorizzato nella variabile di sistema DIMTFAC.</translation>
+        <translation>Imposta l&apos;altezza corrente per il testo di tolleranza. Il rapporto tra l&apos;altezza di tolleranza e l&apos;altezza del testo di quota principale è calcolato e memorizzato nella variabile di sistema DIMTFAC.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -10338,22 +10339,22 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>Suppressi zeri leader in tutte le dimensioni decimali (variabile sistema DIMALTTZ).</translation>
+        <translation>Sopprime gli zeri iniziali in tutte le quote decimali (variabile sistema DIMALTTZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>Suppressi che seguono gli zeri in tutte le dimensioni decimali (variabile sistema DIMALTTZ).</translation>
+        <translation>Sopprime gli zeri finali in tutte le quote decimali (variabile sistema DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>Supprime la porzione dei piedi di una dimensione di piedi e pollici quando la distanza è inferiore a 1 piede (variabile di sistema DIMALTTZ).</translation>
+        <translation>Sopprime la parte in piedi di una quota in piedi e pollici quando la distanza è inferiore a 1 piede (variabile di sistema DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>Supprime la porzione di pollici di una dimensione di piedi e pollici quando la distanza è un numero integrale di piedi (variabile di sistema DIMALTTZ).</translation>
+        <translation>Sopprime la parte in pollici di una quota in piedi e pollici quando la distanza è un numero intero di piedi (variabile di sistema DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10373,7 +10374,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="14"/>
         <source>Dimension</source>
-        <translation>Dimensione</translation>
+        <translation>Quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
@@ -10403,12 +10404,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="260"/>
         <source>Apply style to dimension</source>
-        <translation>Applicare lo stile alla dimensione</translation>
+        <translation>Applicare lo stile alla quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>Seleziona lo stile di dimensione</translation>
+        <translation>Seleziona lo stile di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
@@ -10433,7 +10434,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>Impostare lo stile come quello attivo. Lo stile attivo è applicato alle dimensioni appena create.</translation>
+        <translation>Impostare lo stile come quello attivo. Lo stile attivo è applicato alle quote appena create.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10465,7 +10466,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>Stile attivo che viene applicato quando si crea una nuova dimensione.</translation>
+        <translation>Stile attivo che viene applicato quando si crea una nuova quota.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10505,7 +10506,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>Nome di stile per questa entità di dimensione</translation>
+        <translation>Nome di stile per questa entità di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10531,12 +10532,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="145"/>
         <source>Rotation angle of dimension</source>
-        <translation>Angolo di rotazione della dimensione</translation>
+        <translation>Angolo di rotazione della quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>Ordinazione</translation>
+        <translation>Coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10551,37 +10552,37 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>Ordinare la dimensione</translation>
+        <translation>Quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
         <source>Linear Dimension</source>
-        <translation>Dimensione lineare</translation>
+        <translation>Quota lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>Dimensione allineata</translation>
+        <translation>Quota allineata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
         <source>Angular Dimension</source>
-        <translation>Dimensione angolare</translation>
+        <translation>Quota angolare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>Dimensione dell&apos;arco</translation>
+        <translation>Quota dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
         <source>Diametric Dimension</source>
-        <translation>Dimensione diametrica</translation>
+        <translation>Quota diametrica</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
         <source>Radial Dimension</source>
-        <translation>Dimensione radiale</translation>
+        <translation>Quota radiale</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
@@ -10612,7 +10613,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>Modifica Override stile dimensione -</translation>
+        <translation>Modifica override stile di quota - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
@@ -10747,7 +10748,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>Proprietà in polimero</translation>
+        <translation>Proprietà della polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
@@ -10772,7 +10773,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="241"/>
         <source>Insert Properties</source>
-        <translation>Inserisci le proprietà</translation>
+        <translation>Proprietà dell&apos;inserto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="247"/>
@@ -11009,7 +11010,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>Contesto di ingresso</translation>
+        <translation>Contesto dell&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
@@ -11114,17 +11115,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>O Absent o qualsiasi entrata</translation>
+        <translation>Entità assente o qualsiasi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>Imprenditoria</translation>
+        <translation>Entità assente</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
         <source>Any Entity</source>
-        <translation>Qualsiasi appartenenza</translation>
+        <translation>Qualsiasi entità</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
@@ -11134,7 +11135,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
@@ -11144,7 +11145,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polimero</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11164,7 +11165,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="117"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="118"/>
@@ -11189,17 +11190,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>Dimensione lineare</translation>
+        <translation>Quota lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Dimensione allineata</translation>
+        <translation>Quota allineata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Diametrica della dimensione</translation>
+        <translation>Quota diametrica</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
@@ -11209,12 +11210,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>Ordinazione di Dimensione</translation>
+        <translation>Quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>Arco di dimensione</translation>
+        <translation>Quota dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
@@ -11451,7 +11452,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>Nuovo stile di dimensione</translation>
+        <translation>Nuovo stile di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11461,37 +11462,37 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>Definisce quale tipo di dimensioni sono controllate da questo stile.</translation>
+        <translation>Definisce quale tipo di quote sono controllate da questo stile.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>Tutte le dimensioni</translation>
+        <translation>Tutte le quote</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>Dimensioni lineari</translation>
+        <translation>Quote lineari</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>Dimensioni angolari</translation>
+        <translation>Quote angolari</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
         <source>Radius Dimensions</source>
-        <translation>Dimensioni radiali</translation>
+        <translation>Quote radiali</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>Dimensioni del diametro</translation>
+        <translation>Quote del diametro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>Ordinare le dimensioni</translation>
+        <translation>Quote coordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
@@ -11506,7 +11507,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>Stile di dimensione esistente che nuovo stile si basa su</translation>
+        <translation>Stile di quota esistente su cui si basa il nuovo stile</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11516,7 +11517,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>Nome di nuovo stile di dimensione</translation>
+        <translation>Nome del nuovo stile di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11526,7 +11527,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Il nome fornito di stile di dimensione (%1) non è unico! Inseriscine un&apos;altra.</translation>
+        <translation>Il nome fornito per lo stile di quota (%1) non è unico! Inseriscine un altro.</translation>
     </message>
 </context>
 <context>
@@ -12818,7 +12819,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
@@ -12871,7 +12872,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -13082,7 +13083,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="37"/>
         <source>Minor Radius</source>
-        <translation type="unfinished">Radiazioni minori</translation>
+        <translation type="unfinished">Raggio minore</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="37"/>
@@ -13170,7 +13171,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="129"/>
@@ -13284,7 +13285,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="176"/>
         <source>Radius of major axis of ellipse</source>
-        <translation>Radio dell&apos;asse maggiore dell&apos;ellisse</translation>
+        <translation>Raggio dell&apos;asse maggiore dell&apos;ellisse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="183"/>
@@ -13299,7 +13300,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="225"/>
         <source>Radius of minor axis of the ellipse</source>
-        <translation>Radio di asse minore dell&apos;ellisse</translation>
+        <translation>Raggio dell&apos;asse minore dell&apos;ellisse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="232"/>
@@ -13389,7 +13390,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="80"/>
         <source>Circle</source>
-        <translation type="unfinished">Circolo</translation>
+        <translation type="unfinished">Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
@@ -13399,7 +13400,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13409,7 +13410,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="84"/>
         <source>Point</source>
-        <translation type="unfinished">N</translation>
+        <translation type="unfinished">Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="85"/>
@@ -13444,17 +13445,17 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Dimensione allineata</translation>
+        <translation type="unfinished">Quota allineata</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Dimensione lineare</translation>
+        <translation type="unfinished">Quota lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Ordinazione di Dimensione</translation>
+        <translation type="unfinished">Quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13469,12 +13470,12 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Diametrica della dimensione</translation>
+        <translation type="unfinished">Quota diametrica</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Arco di dimensione</translation>
+        <translation type="unfinished">Quota dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
@@ -13622,7 +13623,7 @@ Sei sicuro di voler scartare i cambiamenti?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
         <source>Stretch</source>
-        <translation type="unfinished">Stretching</translation>
+        <translation type="unfinished">Stira</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
@@ -15347,7 +15348,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="47"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
@@ -15392,7 +15393,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Punto di scatto per la posizione del punto di intersezione tra la linea creata e l&apos;entità sorgente (in linea originale)</translation>
+        <translation type="unfinished">Punto di aggancio per la posizione del punto di intersezione tra la linea creata e l&apos;entità sorgente (in linea originale)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15500,7 +15501,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="70"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
 </context>
 <context>
@@ -15548,7 +15549,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
@@ -15576,12 +15577,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Punto di scatto per la posizione del punto di intersezione tra la linea creata e l&apos;entità sorgente (in linea originale)</translation>
+        <translation type="unfinished">Punto di aggancio per la posizione del punto di intersezione tra la linea creata e l&apos;entità sorgente (in linea originale)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Distanza di scatto</translation>
+        <translation type="unfinished">Distanza di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15591,7 +15592,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Definisce quale parte della linea creata sarà scattata al punto di intersezione</translation>
+        <translation type="unfinished">Definisce quale parte della linea creata sarà agganciata al punto di intersezione</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15601,7 +15602,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Offset di punto di scatto di zecca dal punto di intersezione</translation>
+        <translation type="unfinished">Offset del punto di aggancio della tacca dal punto di intersezione</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15624,18 +15625,18 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Distanza del punto di intersezione da punto di scatto di linea specificato</translation>
+        <translation type="unfinished">Distanza del punto di intersezione dal punto di aggancio della linea specificato</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Punto di scatto per la posizione del punto di intersezione tra la linea creata e l&apos;entità sorgente (in linea originale)</translation>
+        <translation type="unfinished">Punto di aggancio per la posizione del punto di intersezione tra la linea creata e l&apos;entità sorgente (in linea originale)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
         <source>Free</source>
         <comment>linesnap</comment>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="66"/>
@@ -15693,7 +15694,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Linea di scatto:</translation>
+        <translation type="unfinished">Aggancio sulla linea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
@@ -15703,12 +15704,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Distanza di scatto:</translation>
+        <translation type="unfinished">Distanza di aggancio:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15718,12 +15719,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Scegli la distanza di scatto dal disegno</translation>
+        <translation type="unfinished">Scegli la distanza di aggancio dal disegno</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Aggancia all&apos;angolo:</translation>
+        <translation type="unfinished">Aggancio della tacca:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15733,12 +15734,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Offset di punto di scatto di zecca dal punto di intersezione</translation>
+        <translation type="unfinished">Offset del punto di aggancio della tacca dal punto di intersezione</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Definisce quale parte della linea creata sarà scattata al punto di intersezione</translation>
+        <translation type="unfinished">Definisce quale parte della linea creata sarà agganciata al punto di intersezione</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15897,7 +15898,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Punto di scatto per linea creata</translation>
+        <translation type="unfinished">Punto di aggancio per la linea creata</translation>
     </message>
 </context>
 <context>
@@ -15930,7 +15931,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Punto di scatto per linea creata</translation>
+        <translation type="unfinished">Punto di aggancio per la linea creata</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -16033,7 +16034,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
@@ -16061,7 +16062,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Punto di scatto per il gap sulla linea</translation>
+        <translation type="unfinished">Punto di aggancio per il gap sulla linea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16071,7 +16072,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Distanza dal punto di scatto</translation>
+        <translation type="unfinished">Distanza dal punto di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16081,7 +16082,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Punto di scatto del gap al punto di scatto della linea</translation>
+        <translation type="unfinished">Punto di aggancio del gap rispetto al punto di aggancio della linea</translation>
     </message>
 </context>
 <context>
@@ -16094,7 +16095,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Punto di scatto del gap al punto di scatto della linea</translation>
+        <translation type="unfinished">Punto di aggancio del gap rispetto al punto di aggancio della linea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16127,13 +16128,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Punto di scatto per il gap sulla linea</translation>
+        <translation type="unfinished">Punto di aggancio per il gap sulla linea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
         <source>Free</source>
         <comment>snap</comment>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="77"/>
@@ -16156,7 +16157,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Linea di scatto:</translation>
+        <translation type="unfinished">Aggancio sulla linea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16176,22 +16177,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Distanza dal punto di scatto</translation>
+        <translation type="unfinished">Distanza dal punto di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Distanza di scatto:</translation>
+        <translation type="unfinished">Distanza di aggancio:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Scegli la distanza di scatto dal disegno</translation>
+        <translation type="unfinished">Scegli la distanza di aggancio dal disegno</translation>
     </message>
 </context>
 <context>
@@ -16256,7 +16257,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16628,7 +16629,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="118"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Linea di montaggio</translation>
+        <translation type="unfinished">Adatta alla linea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="143"/>
@@ -16696,12 +16697,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="75"/>
         <source>Start point (y):</source>
-        <translation>Punto di partenza (y):</translation>
+        <translation>Punto iniziale (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="107"/>
         <source>Starting point Y coordinate</source>
-        <translation>Coordinata punto di partenza Y</translation>
+        <translation>Coordinata Y del punto iniziale</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="114"/>
@@ -16711,12 +16712,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="130"/>
         <source>Starting point X coordinate</source>
-        <translation>Punto di partenza X coordinate</translation>
+        <translation>Coordinata X del punto iniziale</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="137"/>
         <source>Start point (x):</source>
-        <translation>Punto di partenza (x):</translation>
+        <translation>Punto iniziale (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="153"/>
@@ -16731,7 +16732,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
         <source>Pick start point from the drawing</source>
-        <translation>Scegli il punto di partenza dal disegno</translation>
+        <translation>Scegli il punto iniziale dal disegno</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="214"/>
@@ -16784,7 +16785,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="51"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
@@ -16908,7 +16909,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="163"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
@@ -16997,7 +16998,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="37"/>
         <source>Point</source>
-        <translation type="unfinished">N</translation>
+        <translation type="unfinished">Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="38"/>
@@ -17043,7 +17044,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
@@ -17107,7 +17108,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="171"/>
         <source>Point</source>
-        <translation type="unfinished">N</translation>
+        <translation type="unfinished">Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="190"/>
@@ -17183,7 +17184,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17380,7 +17381,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="42"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radio d&apos;arco</translation>
+        <translation type="unfinished">Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="46"/>
@@ -17592,7 +17593,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="29"/>
         <source>Circle</source>
-        <translation type="unfinished">Circolo</translation>
+        <translation type="unfinished">Cerchio</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="33"/>
@@ -17622,7 +17623,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="41"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">Radio di cerchio</translation>
+        <translation type="unfinished">Raggio del cerchio</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
@@ -17661,7 +17662,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Dimensione allineata</translation>
+        <translation type="unfinished">Quota allineata</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17757,7 +17758,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Arco di dimensione</translation>
+        <translation type="unfinished">Quota dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18231,7 +18232,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Testo di dimensione superiore</translation>
+        <translation type="unfinished">Sopra il testo di quota</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18377,7 +18378,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Testo di dimensione preceduta</translation>
+        <translation type="unfinished">Prima del testo di quota</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
@@ -19037,7 +19038,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Diametrica della dimensione</translation>
+        <translation type="unfinished">Quota diametrica</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19065,7 +19066,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Dimensione lineare</translation>
+        <translation type="unfinished">Quota lineare</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19173,7 +19174,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Ordinazione di Dimensione</translation>
+        <translation type="unfinished">Quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19198,7 +19199,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">Ordinazione</translation>
+        <translation type="unfinished">Coordinata</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19354,7 +19355,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="45"/>
         <source>Minor Radius</source>
-        <translation type="unfinished">Radiazioni minori</translation>
+        <translation type="unfinished">Raggio minore</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="45"/>
@@ -19608,7 +19609,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="58"/>
         <source>Minor Radius</source>
-        <translation type="unfinished">Radiazioni minori</translation>
+        <translation type="unfinished">Raggio minore</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="58"/>
@@ -20355,7 +20356,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_point.cpp" line="29"/>
         <source>Point</source>
-        <translation type="unfinished">N</translation>
+        <translation type="unfinished">Punto</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_point.cpp" line="34"/>
@@ -20383,7 +20384,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20496,7 +20497,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
         <source>Degree</source>
-        <translation type="unfinished">Laurea</translation>
+        <translation type="unfinished">Grado</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20863,17 +20864,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
         <source>Point</source>
-        <translation type="unfinished">N</translation>
+        <translation type="unfinished">Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="151"/>
         <source>Circle</source>
-        <translation type="unfinished">Circolo</translation>
+        <translation type="unfinished">Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
@@ -20907,7 +20908,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="750"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="800"/>
         <source>Add Dimensions</source>
-        <translation type="unfinished">Aggiungi Dimensioni</translation>
+        <translation type="unfinished">Aggiungi Quote</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="213"/>
@@ -21169,7 +21170,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">Prodotti</translation>
+        <translation type="unfinished">&amp;Linea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
@@ -21517,7 +21518,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>Unità centrali orizzontalmente</translation>
+        <translation>Centra le entità orizzontalmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="113"/>
@@ -21882,7 +21883,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
@@ -22445,7 +22446,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
         <source>Remove point</source>
-        <translation type="unfinished">Punto di partenza</translation>
+        <translation type="unfinished">Rimuovi punto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="111"/>
@@ -22897,12 +22898,12 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Dividenze</translation>
+        <translation>Tratto due punti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Linea tratteggiata (piccola)</translation>
+        <translation>Tratto due punti (minuscolo)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
@@ -22912,7 +22913,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
         <source>Divide (large)</source>
-        <translation>Dividere (grande)</translation>
+        <translation>Tratto due punti (grande)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
@@ -23454,7 +23455,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
-        <translation>Tavolo da tavolo</translation>
+        <translation>Tavolozza delle penne</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
@@ -23648,7 +23649,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Linea di montaggio</translation>
+        <translation type="unfinished">Adatta alla linea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
@@ -23701,7 +23702,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23779,7 +23780,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23901,7 +23902,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="51"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radio d&apos;arco</translation>
+        <translation type="unfinished">Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
@@ -24014,7 +24015,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="205"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radio d&apos;arco</translation>
+        <translation type="unfinished">Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="212"/>
@@ -24398,7 +24399,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished">Bilancia non valida fornita</translation>
+        <translation type="unfinished">Scala fornita non valida</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
@@ -24565,7 +24566,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radio d&apos;arco</translation>
+        <translation type="unfinished">Raggio dell&apos;arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
@@ -24650,7 +24651,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Chord Length</source>
-        <translation type="unfinished">Lunghezza del coro</translation>
+        <translation type="unfinished">Lunghezza della corda</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
@@ -24932,7 +24933,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Ripartizione</translation>
+        <translation type="unfinished">Spezza/Dividi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25073,7 +25074,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="37"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">Radio di cerchio</translation>
+        <translation type="unfinished">Raggio del cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
@@ -25296,7 +25297,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Ripartizione</translation>
+        <translation type="unfinished">Spezza/Dividi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -26037,7 +26038,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Testo di dimensione superiore</translation>
+        <translation type="unfinished">Sopra il testo di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -26178,7 +26179,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Testo di dimensione preceduta</translation>
+        <translation type="unfinished">Prima del testo di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
@@ -26834,7 +26835,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">Definizione</translation>
+        <translation type="unfinished">Punto di definizione</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
@@ -27044,7 +27045,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">Definizione</translation>
+        <translation type="unfinished">Punto di definizione</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
@@ -28715,7 +28716,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">Unisciti alla linea</translation>
+        <translation type="unfinished">Unisci linee</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28991,7 +28992,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Ripartizione</translation>
+        <translation type="unfinished">Spezza/Dividi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29001,7 +29002,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
-        <translation type="unfinished">Linee guida</translation>
+        <translation type="unfinished">Linea d&apos;asse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
@@ -29741,7 +29742,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
         <source>Degree</source>
-        <translation type="unfinished">Laurea</translation>
+        <translation type="unfinished">Grado</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
@@ -29851,7 +29852,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="141"/>
         <source>Remove point</source>
-        <translation type="unfinished">Punto di partenza</translation>
+        <translation type="unfinished">Rimuovi punto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="141"/>
@@ -30019,7 +30020,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="105"/>
         <source>Remove point</source>
-        <translation type="unfinished">Punto di partenza</translation>
+        <translation type="unfinished">Rimuovi punto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="105"/>
@@ -30578,7 +30579,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="604"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="619"/>
         <source>CIRCLE</source>
-        <translation>CIRCOLAZIONE</translation>
+        <translation>CERCHIO</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="643"/>
@@ -30846,7 +30847,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="659"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="694"/>
         <source>Chord Length</source>
-        <translation>Lunghezza del coro</translation>
+        <translation>Lunghezza della corda</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="660"/>
@@ -30918,7 +30919,7 @@ Si noti che se si salva la penna tramite l&apos;editor senza riavvio, le penne a
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="807"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="827"/>
         <source>Minor Radius</source>
-        <translation>Radiazioni minori</translation>
+        <translation>Raggio minore</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="718"/>
@@ -31341,7 +31342,7 @@ Livello: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1258"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1275"/>
         <source>Degree</source>
-        <translation>Laurea</translation>
+        <translation>Grado</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
@@ -31506,7 +31507,7 @@ Livello: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1577"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1593"/>
         <source>Definition Point</source>
-        <translation>Definizione</translation>
+        <translation>Punto di definizione</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1483"/>
@@ -31551,19 +31552,19 @@ Livello: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1549"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1562"/>
         <source>DIMORDINATE</source>
-        <translation>DIMORDINAZIONE</translation>
+        <translation>QUOTA COORDINATA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>Ordinazione</translation>
+        <translation>Coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1565"/>
         <source>Origin Point</source>
-        <translation>Punto di partenza</translation>
+        <translation>Punto di origine</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1554"/>
@@ -31603,7 +31604,7 @@ Livello: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="226"/>
         <source>Relative Zero</source>
-        <translation>Relativamente Zero</translation>
+        <translation>Zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="231"/>
@@ -31828,7 +31829,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>Informazioni sull&apos;ingresso</translation>
+        <translation>Informazioni sull&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31838,7 +31839,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Includere le informazioni sulle entità dei bambini polilinee ai vertici</translation>
+        <translation>Includere ai vertici le informazioni sulle entità figlie della polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
@@ -31853,12 +31854,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>Selezione delle entrate</translation>
+        <translation>Selezione delle entità</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>L&apos;ingresso sotto cursore verrà esaminato solo se CTRL viene premuto e nessuna azione attiva</translation>
+        <translation>L&apos;entità sotto il cursore verrà esaminata solo se CTRL è premuto e non c&apos;è alcuna azione attiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
@@ -31991,7 +31992,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32019,7 +32020,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32179,7 +32180,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="339"/>
@@ -32209,12 +32210,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se controllato, specifica che punto di scatto dovrebbe essere spostato per raggio di angoli.</translation>
+        <translation type="unfinished">Se controllato, specifica che il punto di aggancio deve essere spostato del raggio degli angoli.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Cambio di scatto</translation>
+        <translation type="unfinished">Spostamento aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32312,7 +32313,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32330,7 +32331,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="32"/>
         <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="unfinished">Definisce quale punto del rettangolo dovrebbe essere posto in posizione punto di partenza.</translation>
+        <translation type="unfinished">Definisce quale punto del rettangolo deve essere posto nella posizione del punto iniziale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="36"/>
@@ -32364,7 +32365,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32389,7 +32390,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Inizia a scattare:</translation>
+        <translation type="unfinished">Aggancio iniziale:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32479,12 +32480,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se controllato, specifica che i punti di scatto devono essere spostati per raggio di angoli.</translation>
+        <translation type="unfinished">Se controllato, specifica che i punti di aggancio devono essere spostati del raggio degli angoli.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Cambio di scatto</translation>
+        <translation type="unfinished">Spostamento aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
@@ -32562,7 +32563,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32585,7 +32586,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32640,12 +32641,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se controllato, specifica che i punti di scatto devono essere spostati per raggio di angoli.</translation>
+        <translation type="unfinished">Se controllato, specifica che i punti di aggancio devono essere spostati del raggio degli angoli.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Cambio di scatto</translation>
+        <translation type="unfinished">Spostamento aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32813,7 +32814,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se controllato, specifica che punto di scatto dovrebbe essere spostato per raggio di angoli.</translation>
+        <translation type="unfinished">Se controllato, specifica che il punto di aggancio deve essere spostato del raggio degli angoli.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -33564,13 +33565,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
         <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="unfinished">La selezione gratuita del fattore dovrebbe essere eseguita dal mouse se controllato.</translation>
+        <translation type="unfinished">La selezione libera del fattore viene eseguita con il mouse se attivato.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="249"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="236"/>
@@ -33684,7 +33685,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
@@ -33857,7 +33858,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
 </context>
 <context>
@@ -33875,7 +33876,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
         <source>Dimension</source>
-        <translation>Dimensione</translation>
+        <translation>Quota</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"/>
@@ -33890,7 +33891,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="67"/>
@@ -33900,7 +33901,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polimero</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33915,7 +33916,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation>Tipo di entrata</translation>
+        <translation>Tipo di entità</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -33945,7 +33946,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
 </context>
 <context>
@@ -34162,7 +34163,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Se controllato, la distanza fissa specificata tra zecche sarà utilizzata. Altrimenti, la distanza sarà calcolata sulla base della lunghezza dell&apos;entità e del conteggio delle zecche.</translation>
+        <translation type="unfinished">Se controllato, sarà utilizzata la distanza fissa specificata tra le tacche. Altrimenti, la distanza sarà calcolata in base alla lunghezza dell&apos;entità e al numero di tacche. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34202,12 +34203,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">Se controllato, l&apos;angolo di spunta è relativo all&apos;entità selezionata, altrimenti è angolo assoluto.</translation>
+        <translation type="unfinished">Se controllato, l&apos;angolo della tacca è relativo all&apos;entità selezionata, altrimenti è un angolo assoluto.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
@@ -34307,7 +34308,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished">Distanza tra le zecche.</translation>
+        <translation type="unfinished">Distanza tra le tacche.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34344,7 +34345,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">Se controllato, l&apos;entità selezionata sarà divisa da punti di intersezione zecca.</translation>
+        <translation type="unfinished">Se controllato, l&apos;entità selezionata sarà divisa nei punti di intersezione delle tacche. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34369,17 +34370,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished">Lunghezza della zecca.</translation>
+        <translation type="unfinished">Lunghezza della tacca.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation type="unfinished">Scegli l&apos;angolo di spunta dal disegno</translation>
+        <translation type="unfinished">Scegli l&apos;angolo della tacca dal disegno</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">Definisce quale punto di zecca dovrebbe essere posto al punto di intersezione con l&apos;entità selezionata.</translation>
+        <translation type="unfinished">Definisce quale punto della tacca deve essere posto nel punto di intersezione con l&apos;entità selezionata.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34389,12 +34390,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Offset di punto di scatto di zecca a punto di intersezione.</translation>
+        <translation type="unfinished">Offset del punto di aggancio della tacca rispetto al punto di intersezione. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Allineamento ai segni di graduazione:</translation>
+        <translation type="unfinished">Aggancio della tacca:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34404,7 +34405,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">Se controllato, l&apos;angolo di spunta è relativo all&apos;entità selezionata, altrimenti è angolo assoluto.</translation>
+        <translation type="unfinished">Se controllato, l&apos;angolo della tacca è relativo all&apos;entità selezionata, altrimenti è un angolo assoluto.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="315"/>
@@ -34419,7 +34420,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">Avviare angolo per cerchio da cui le zecche inizieranno.</translation>
+        <translation type="unfinished">Angolo iniziale sul cerchio da cui partiranno le tacche. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34434,7 +34435,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Se controllato, la distanza fissa specificata tra zecche sarà utilizzata. Altrimenti, la distanza sarà calcolata sulla base della lunghezza dell&apos;entità e del conteggio delle zecche.</translation>
+        <translation type="unfinished">Se controllato, sarà utilizzata la distanza fissa specificata tra le tacche. Altrimenti, la distanza sarà calcolata in base alla lunghezza dell&apos;entità e al numero di tacche. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34444,7 +34445,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">Conteggio di zecche tra bordi di entità selezionata.</translation>
+        <translation type="unfinished">Numero di tacche tra le estremità dell&apos;entità selezionata.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34454,7 +34455,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">Angolo tra zecca e entità selezionata.</translation>
+        <translation type="unfinished">Angolo tra la tacca e l&apos;entità selezionata.</translation>
     </message>
 </context>
 <context>
@@ -34863,7 +34864,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="61"/>
         <source>Degree:</source>
-        <translation>Laurea:</translation>
+        <translation>Grado:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="86"/>
@@ -34970,7 +34971,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
         <source>Add Control Point Button</source>
-        <translation>Aggiungere il pulsante Control Point</translation>
+        <translation>Pulsante Aggiungi punto di controllo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="325"/>
@@ -34986,7 +34987,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
         <source>Remove Control Point Button</source>
-        <translation>Rimuovi il pulsante Control Point</translation>
+        <translation>Pulsante Rimuovi punto di controllo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
@@ -35102,7 +35103,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polimero</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35132,7 +35133,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="150"/>
         <source>Radius for outer rays (edges).</source>
-        <translation type="unfinished">Radio per raggi esterni (ingotti).</translation>
+        <translation type="unfinished">Raggio dei raggi esterni (punte).</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="157"/>
@@ -35425,7 +35426,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Selezione rapida</translation>
+        <translation>Selezione aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35492,7 +35493,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="328"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="329"/>
@@ -35502,7 +35503,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="330"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
@@ -35522,7 +35523,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polimero</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35533,7 +35534,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336"/>
         <source>Dimension</source>
-        <translation>Dimensione</translation>
+        <translation>Quota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="337"/>
@@ -35585,7 +35586,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
         <source>Splines</source>
-        <translation>Sfruttamento</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
@@ -35600,7 +35601,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
         <source>Dimensions</source>
-        <translation>Dimensioni</translation>
+        <translation>Quote</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="372"/>
@@ -35633,7 +35634,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="31"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">La distanza è intesa come lunghezza totale dopo il raccordo anziché come incremento della lunghezza</translation>
+        <translation type="unfinished">La distanza è intesa come lunghezza totale dopo il taglio anziché come incremento della lunghezza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="37"/>
@@ -35661,17 +35662,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Opzioni raccorda in base ad un valore</translation>
+        <translation type="unfinished">Opzioni taglia in base a un valore</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Inserire valori negativi per raccordare e positivi per estendere.</translation>
+        <translation type="unfinished">Distanza. Valori negativi per tagliare, positivi per estendere.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">La distanza è intesa come lunghezza totale dopo il raccordo anziché come incremento della lunghezza</translation>
+        <translation type="unfinished">La distanza è intesa come lunghezza totale dopo il taglio anziché come incremento della lunghezza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="53"/>
@@ -35686,7 +35687,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="97"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">Distanza. Valori negativi per raccordare e positivi per estendere, i valori negativi sono ignorati se si raccorda alla lunghezza finale totale.</translation>
+        <translation type="unfinished">Distanza. Valori negativi per tagliare e positivi per estendere; il segno negativo è ignorato se si taglia alla lunghezza totale finale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
@@ -35742,7 +35743,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="35"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="42"/>
@@ -35859,7 +35860,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>Impostare UCS per dimensione ordinata</translation>
+        <translation>Impostare UCS da quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -36049,7 +36050,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="133"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="136"/>
@@ -36059,12 +36060,12 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polimero</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
         <source>Dimension</source>
-        <translation>Dimensione</translation>
+        <translation>Quota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
@@ -36085,7 +36086,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>Informazioni sull&apos;ingresso</translation>
+        <translation>Informazioni sull&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36100,7 +36101,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="131"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
@@ -36136,7 +36137,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>User Coordinate Systems</source>
-        <translation>Sistemi di coordinamento utente</translation>
+        <translation>Sistemi di coordinate utente</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
@@ -36213,7 +36214,7 @@ Attenzione: questa azione non può essere annullata!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
         <source>Relative Zero</source>
-        <translation>Relativamente Zero</translation>
+        <translation>Zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
@@ -37169,7 +37170,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="150"/>
         <source>Relative Coordinates (Polar)</source>
-        <translation>Coordinate relative (Polo)</translation>
+        <translation>Coordinate relative (polari)</translation>
     </message>
 </context>
 <context>
@@ -37201,7 +37202,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation>Simbolo prima del testo dimensionale</translation>
+        <translation>Simbolo prima del testo di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -37226,7 +37227,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>Formato del testo di dimensione, &lt;&gt; può essere utilizzato come segnaposto per il valore di misura della dimensione</translation>
+        <translation>Formato del testo di quota, &lt;&gt; può essere utilizzato come segnaposto per il valore di misura della quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37352,12 +37353,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Angolo di rotazione per il portello</translation>
+        <translation>Angolo di rotazione del tratteggio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>Se controllato, solido sarà utilizzato invece di foro modello</translation>
+        <translation>Se attivato, verrà usato un riempimento solido invece del modello di tratteggio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37367,7 +37368,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Modello di portello</translation>
+        <translation>Modello di tratteggio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37392,7 +37393,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Area di taglio</translation>
+        <translation>Area tratteggiata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -38457,17 +38458,17 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>Modifica dello stile delle dimensioni</translation>
+        <translation>Modifica dello stile di quota - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
         <source>Rename Dimension Style</source>
-        <translation>Rinominare lo stile di dimensione</translation>
+        <translation>Rinominare lo stile di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Inserisci nuovo nome unico di stile di dimensione (era &quot;%1&quot;):</translation>
+        <translation>Inserisci nuovo nome unico di stile di quota (era &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38475,27 +38476,27 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>Rimozione dello stile di dimensione</translation>
+        <translation>Rimozione dello stile di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>Non è possibile eliminare lo stile di ultima dimensione. Almeno uno dovrebbe essere presente!</translation>
+        <translation>Non è possibile eliminare l&apos;ultimo stile di quota. Almeno uno dovrebbe essere presente! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>Non è possibile eliminare lo stile di dimensione in quanto i bambini vengono utilizzati nel disegno. Solo lo stile inutilizzato può essere cancellato.</translation>
+        <translation>Non è possibile eliminare lo stile di quota perché i suoi stili figli sono utilizzati nel disegno. Solo uno stile inutilizzato può essere cancellato.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Sei sicuro di voler rimuovere lo stile di dimensione &quot;%1&quot; insieme agli stili di bambino?</translation>
+        <translation>Sei sicuro di voler rimuovere lo stile di quota &quot;%1&quot; insieme agli stili figli?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Sei sicuro di voler rimuovere lo stile di dimensione &quot;%1&quot;?</translation>
+        <translation>Sei sicuro di voler rimuovere lo stile di quota &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38649,7 +38650,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation>Sfruttamento</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
@@ -38687,12 +38688,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
         <source>Tick size:</source>
-        <translation>Dimensione segno:</translation>
+        <translation>Dimensione tratto obliquo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensione segno terminale di quota. Impostarla a 0 disabiliterà la dimensione. La freccia non sarà disegnata se è abilitata la dimensione del segno.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensione del tratto obliquo di quota. Impostandola a 0 il tratto obliquo viene disattivato. La freccia di quota non viene disegnata quando il tratto obliquo è attivo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38772,7 +38773,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Angolo di base zero rispetto al sistema di coordinate utente corrente. Agisce l&apos;ingresso delle coordinate polari, lo scatto all&apos;angolo. 0.0 e&apos; alle 15.</translation>
+        <translation>Angolo di base zero rispetto al sistema di coordinate utente corrente. Influisce sull&apos;immissione delle coordinate polari e sull&apos;aggancio all&apos;angolo. 0.0 è alle ore 15.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38861,7 +38862,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Smerigliatrice automatica:</translation>
+        <translation>Scala automaticamente la griglia:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
@@ -38953,7 +38954,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensione freccia quota. &lt;a name=&quot;result_box&quot;/&gt;senza effetto se dimensione segno &lt;a name=&quot;result_box&quot;/&gt;è diversa da 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensione della freccia di quota. &lt;a name=&quot;result_box&quot;/&gt;Senza effetto se la dimensione del tratto obliquo &lt;a name=&quot;result_box&quot;/&gt;è diversa da 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -38964,7 +38965,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimensioni linee, frecce e segni</translation>
+        <translation>Linee di quota, frecce e tratti obliqui</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -39024,7 +39025,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"/>
         <source>Dimensions</source>
-        <translation>Dimensioni</translation>
+        <translation>Quote</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"/>
@@ -39054,7 +39055,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>Segna lo stile come quello attivo. Lo stile attivo sarà utilizzato durante la creazione di dimensioni.</translation>
+        <translation>Segna lo stile come quello attivo. Lo stile attivo sarà utilizzato durante la creazione di quote.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39121,7 +39122,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Linea di adesione:</translation>
+        <translation>Giunzione linee:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
@@ -39216,7 +39217,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3394"/>
         <source>Floating point variables</source>
-        <translation>Variabili del punto di galleggiamento</translation>
+        <translation>Variabili in virgola mobile</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3400"/>
@@ -39944,7 +39945,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1064"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Distanza aggancio automatico (p&amp;x):</translation>
+        <translation>Spaziatura minima della griglia (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
@@ -39994,12 +39995,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Se controllato, verrà visualizzato l&apos;indicatore di scatto</translation>
+        <translation>Se controllato, verrà visualizzato l&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Tipo di indicatore di linee di scatto</translation>
+        <translation>Tipo di indicatore di linee di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40020,12 +40021,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Linee di Indicatore di scatto</translation>
+        <translation>Linee dell&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Colore per indicatore di linee di scatto</translation>
+        <translation>Colore per indicatore di linee di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -40074,7 +40075,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Tipo di linea per disegnare l&apos;indicatore di scatto</translation>
+        <translation>Tipo di linea per disegnare l&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
@@ -40084,7 +40085,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Larghezza della linea per indicatore a scatto</translation>
+        <translation>Larghezza della linea per l&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
@@ -40094,22 +40095,22 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Forma dell&apos;indicatore di scatto</translation>
+        <translation>Forma dell&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Tipo di forma dell&apos;indicatore di scatto</translation>
+        <translation>Tipo di forma dell&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1668"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1673"/>
@@ -40124,17 +40125,17 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Colore dell&apos;indicatore di scatto:</translation>
+        <translation>Colore dell&apos;indicatore di aggancio:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Colore per la forma dell&apos;indicatore di scatto</translation>
+        <translation>Colore per la forma dell&apos;indicatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Angle scatto singolo passo</translation>
+        <translation>Passo singolo dell&apos;aggancio angolare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
@@ -40184,22 +40185,22 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>Se controllato, il cursore verrà nascosto durante lo scatto</translation>
+        <translation>Se controllato, il cursore verrà nascosto durante l&apos;aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Se controllato, le opzioni di scatto (middle, distanza) saranno mostrate nella barra degli strumenti a scatto invece della barra degli strumenti</translation>
+        <translation>Se controllato, le opzioni di aggancio (punto medio, distanza) saranno mostrate nella barra degli strumenti di aggancio invece che nella barra delle proprietà dello strumento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Mostra le opzioni a scatto nella barra degli strumenti di selezione a scatto</translation>
+        <translation>Mostra le opzioni di aggancio nella barra degli strumenti di selezione aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>Maniglia di ingresso</translation>
+        <translation>Maniglia dell&apos;entità</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
@@ -40375,7 +40376,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>Sullo zoom ruota del mouse, padella al centro della finestra.</translation>
+        <translation>Con lo zoom della rotella, sposta la vista al centro della finestra.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
@@ -40451,12 +40452,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1478"/>
         <source>Line type for grid lines</source>
-        <translation>Tipo di linea per linee di rete</translation>
+        <translation>Tipo di linea per le linee della griglia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1485"/>
         <source>Color for grid lines</source>
-        <translation>Colore per linee di rete</translation>
+        <translation>Colore delle linee della griglia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
@@ -40565,7 +40566,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Color of relative zero marker</source>
-        <translation>Colore del relativo marcatore zero</translation>
+        <translation>Colore del marcatore dello zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
@@ -40829,7 +40830,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft within paning operations</source>
-        <translation>Disegnare il testo come disegno all&apos;interno delle operazioni di panificazione</translation>
+        <translation>Disegnare il testo come bozza durante le operazioni di panoramica</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
@@ -40839,7 +40840,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
         <source>Draw text as draft in preview</source>
-        <translation>Disegnare il testo come progetto in anteprima</translation>
+        <translation>Disegnare il testo come bozza nell&apos;anteprima</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2548"/>
@@ -40864,7 +40865,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Se controllato, i componenti di coordinate saranno disegnati in una riga. In caso contrario, ogni componente sarà sulla propria linea.</translation>
+        <translation>Se selezionato, i componenti delle coordinate saranno disegnati su una riga. Altrimenti, ogni componente sarà su una propria riga. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40930,7 +40931,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
         <source>Cursor position offset:</source>
-        <translation>Compensato posizione del cursore:</translation>
+        <translation>Scostamento della posizione del cursore:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
@@ -40965,12 +40966,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Colore per coordinate a scatto assolute.</translation>
+        <translation>Colore per coordinate di aggancio assolute.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Se controllato, la distanza relativa e l&apos;angolo da punto zero relativo a punto di scatto saranno mostrati.</translation>
+        <translation>Se controllato, la distanza relativa e l&apos;angolo dal punto zero relativo al punto di aggancio saranno mostrati.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40980,7 +40981,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Colore per scatto tipo/restrizione</translation>
+        <translation>Colore per tipo/restrizione di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
@@ -41005,7 +41006,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Se controllato, le informazioni sul tipo di scatto e le restrizioni verranno mostrate per punto di scatto (se presenti)</translation>
+        <translation>Se controllato, le informazioni sul tipo di aggancio e le restrizioni verranno mostrate per il punto di aggancio (se presenti)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
@@ -41025,7 +41026,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Se controllato, verrà mostrata la posizione assoluta del punto di scatto.</translation>
+        <translation>Se controllato, verrà mostrata la posizione assoluta del punto di aggancio.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41217,7 +41218,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="682"/>
         <source>Font that should be used for draft mode marker</source>
-        <translation>Carattere che dovrebbe essere utilizzato per marcatore di modalità di progetto</translation>
+        <translation>Carattere da usare per il marcatore della modalità bozza</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
@@ -41307,17 +41308,17 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>Controlla la frequenza delle principali linee di griglia rispetto alle linee di rete minori.</translation>
+        <translation>Controlla la frequenza delle linee principali della griglia rispetto alle linee secondarie.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Raggio dell&apos;arco all&apos;interno del segno di scatto angolo.</translation>
+        <translation>Raggio dell&apos;arco all&apos;interno del segno di aggancio angolare.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Marcatore di scatto</translation>
+        <translation>Marcatore di aggancio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
@@ -41332,7 +41333,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>Lo scatto su entità sarà invocato se è abilitato e la distanza tra il mouse e il punto a scatto è più grande del valore specificato.</translation>
+        <translation>L&apos;aggancio su entità sarà attivato se è abilitato e la distanza tra il mouse e il punto agganciato è maggiore del valore specificato.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41347,12 +41348,12 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Fattore di scatto della cella della griglia minima:</translation>
+        <translation>Fattore di aggancio della cella minima della griglia:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Distanza di scatto (in pixel) per la cattura di entità.</translation>
+        <translation>Distanza di aggancio (in pixel) per la cattura di entità.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
@@ -42065,7 +42066,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Se abilitato, durante il funzionamento della pentola gli oggetti TEXT e MTEXT saranno disegnati schematicamente</translation>
+        <translation>Se abilitato, durante la panoramica gli oggetti TEXT e MTEXT saranno disegnati schematicamente</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
@@ -42165,7 +42166,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Angolo di base zero rispetto al sistema di coordinate utente corrente. Agisce l&apos;ingresso delle coordinate polari, lo scatto all&apos;angolo. 0.0 e&apos; alle 15.</translation>
+        <translation>Angolo di base zero rispetto al sistema di coordinate utente corrente. Influisce sull&apos;immissione delle coordinate polari e sull&apos;aggancio all&apos;angolo. 0.0 è alle ore 15.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42293,7 +42294,7 @@ Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="219"/>
         <source>Export Points</source>
-        <translation>Punti vendita</translation>
+        <translation>Esporta punti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -43306,7 +43307,7 @@ così il valore di passaggio predefinito richiesto per la cottura</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
         <source>Drawing Exchange %1</source>
-        <translation>DXF (Drawing Exchange %1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="146"/>
@@ -44400,7 +44401,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="468"/>
         <source>Drawing Exchange %1</source>
-        <translation>DXF (Drawing Exchange %1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="473"/>
@@ -44770,7 +44771,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>pu</translation>
+        <translation>po</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
@@ -44788,7 +44789,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="98"/>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>i</translation>
+        <translation>l</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
@@ -44800,7 +44801,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>p</translation>
+        <translation>pl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
@@ -44812,7 +44813,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation>)</translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="457"/>
@@ -44854,13 +44855,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="281"/>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>bilancio</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="289"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation>abbronzatura</translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="308"/>
@@ -44872,19 +44873,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="144"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>recinzione</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="340"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poligon2v</translation>
+        <translation>poligono2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>polipropilene</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="349"/>
@@ -44896,7 +44897,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="350"/>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>ce</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="357"/>
@@ -44914,7 +44915,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>abbronzatura</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="405"/>
@@ -44926,19 +44927,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ellisse</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>i</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="534"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation>i</translation>
+        <translation>ie</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
@@ -44962,7 +44963,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="885"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>mtx</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="890"/>
@@ -44974,7 +44975,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="892"/>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>tx</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
@@ -44992,13 +44993,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>rid</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1046"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>no</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
@@ -45010,13 +45011,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>zf</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zoom auto</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
@@ -45028,7 +45029,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zoom</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
@@ -45040,25 +45041,25 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>zoomprevidente</translation>
+        <translation>zoomprecedente</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>zp</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1012"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>uccidere</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>#</translation>
+        <translation>k</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
@@ -45071,7 +45072,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1265"/>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>an</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
@@ -45101,7 +45102,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>qo</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="677"/>
@@ -45113,7 +45114,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="678"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>qv</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="654"/>
@@ -45125,19 +45126,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>d</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangono</translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>#</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="684"/>
@@ -45161,7 +45162,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>d</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
@@ -45173,7 +45174,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="705"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>qp</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="710"/>
@@ -45185,7 +45186,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>limitareno</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
@@ -45197,31 +45198,31 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>restrittivo</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>r</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>restrittivo orizzontale</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>r</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>restrittiva</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
@@ -45233,31 +45234,31 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>s</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>essere</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>racc</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>#</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>taglia</translation>
+        <translation>dividi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
@@ -45269,55 +45270,55 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>sp</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>arcomp</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>ru</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>sc</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="762"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>rm</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="769"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>t</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="775"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>le donne</translation>
+        <translation>le</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>#</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>e</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
@@ -45329,7 +45330,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="839"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>x</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
@@ -45361,7 +45362,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="920"/>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>o</translation>
+        <translation>os</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="925"/>
@@ -45373,49 +45374,49 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="926"/>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>- si&apos;</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>schizzi</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="932"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>#</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="937"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>snap-in</translation>
+        <translation>snapfine</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="938"/>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>#</translation>
+        <translation>se</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>griglia di aggancio</translation>
+        <translation>snapgriglia</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="944"/>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>#</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>sezione di scatto</translation>
+        <translation>snapintersezione</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -45433,7 +45434,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="956"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>si&apos;</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
@@ -45445,31 +45446,31 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>#</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="963"/>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>n</translation>
+        <translation>np</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>)</translation>
+        <translation>zerorelativo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>r</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>seleziona tutto</translation>
+        <translation>selezionatutto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
@@ -45481,25 +45482,25 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>decidere tutto</translation>
+        <translation>deselezionatutto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="623"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation>)</translation>
+        <translation>tn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="826"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>atteggiamento</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>ma..</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
@@ -45529,13 +45530,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>di</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="856"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>d</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
@@ -45552,7 +45553,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
         <source>dpi</source>
-        <translation>#</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
@@ -45569,7 +45570,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>interasse colonne</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45580,12 +45581,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>lunghezza</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>numero</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45596,12 +45597,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>righe</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>interasse riga</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -45612,7 +45613,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
-        <translation>raccorda</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
@@ -45624,7 +45625,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>un</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
@@ -45641,7 +45642,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1202"/>
         <source>ce</source>
         <comment>center</comment>
-        <translation>ce n&apos;è</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
@@ -45659,37 +45660,37 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>c</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>pilastri</translation>
+        <translation>interassecolonne</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>colpazione</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>c</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>fatto</translation>
+        <translation>fatt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>f</source>
         <comment>factor</comment>
-        <translation>*</translation>
+        <translation>f</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1227"/>
@@ -45718,43 +45719,43 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1232"/>
         <source>l</source>
         <comment>length</comment>
-        <translation>i</translation>
+        <translation>l</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1234"/>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>lunghezza</translation>
+        <translation>lunghezza1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1235"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>len</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1236"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>i</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1238"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>lunghezza</translation>
+        <translation>lunghezza2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>len</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1240"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1242"/>
@@ -45791,7 +45792,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1251"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>revisione:</translation>
+        <translation>inv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
@@ -45803,13 +45804,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>rigaspazio</translation>
+        <translation>interasserighe</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>r</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1258"/>
@@ -45836,7 +45837,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
         <source>redo</source>
-        <translation>rosso</translation>
+        <translation>ripeti</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1270"/>
@@ -45852,12 +45853,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>confezione</translation>
+        <translation>offsetcarta</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
-        <translation>grafite</translation>
+        <translation>offsetgrafico</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -45914,12 +45915,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1273"/>
         <source>bw</source>
-        <translation>#</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
-        <translation>bianco nero</translation>
+        <translation>bianconero</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
@@ -45936,7 +45937,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="768"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>t</translation>
+        <translation>t2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="820"/>
@@ -46009,19 +46010,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>♪</translation>
+        <translation>sline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="104"/>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>♪</translation>
+        <translation>sli</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="105"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>slm</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="110"/>
@@ -46033,13 +46034,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="111"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>#</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="112"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation>rl</translation>
+        <translation>rlx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="117"/>
@@ -46051,37 +46052,37 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="118"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation>#</translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="119"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation>r</translation>
+        <translation>rly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>traduzione:</translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="125"/>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>la mia vita</translation>
+        <translation>la</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>linea</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>#</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
@@ -46093,7 +46094,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>l</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
@@ -46111,25 +46112,25 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="149"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>1</translation>
+        <translation>rett1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="150"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>)</translation>
+        <translation>re1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>retto2</translation>
+        <translation>rett2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="156"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>revisione:</translation>
+        <translation>re2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="161"/>
@@ -46141,31 +46142,31 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="162"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>)</translation>
+        <translation>re3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>fetta</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>#</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="173"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>fetta</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="174"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>slitta</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="179"/>
@@ -46189,13 +46190,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="186"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>#</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="190"/>
         <source>bbox</source>
         <comment>draw bound box</comment>
-        <translation>traduzione:</translation>
+        <translation>bbox</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="191"/>
@@ -46225,19 +46226,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>punti</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
-        <translation>centro</translation>
+        <translation>puntomedio</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="212"/>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
-        <translation>numero</translation>
+        <translation>mpoint</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -46249,19 +46250,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="223"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>duplicati</translation>
+        <translation>duplica</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="224"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>d</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="229"/>
         <source>align</source>
         <comment>align entities</comment>
-        <translation>allineare</translation>
+        <translation>allinea</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
@@ -46273,49 +46274,49 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>align1</source>
         <comment>align entities</comment>
-        <translation>allineare 1</translation>
+        <translation>allinea1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>al1</source>
         <comment>align entities</comment>
-        <translation>alt</translation>
+        <translation>al1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation>allineare</translation>
+        <translation>allinearif</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>alr</source>
         <comment>align references</comment>
-        <translation>al</translation>
+        <translation>alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>fellazioni</translation>
+        <translation>uniscilinee</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>i</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>breakdividere</translation>
+        <translation>spezzadividi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>b</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
@@ -46333,7 +46334,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="264"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>linea</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="265"/>
@@ -46369,19 +46370,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="268"/>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>l&apos;articolo</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>linea</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>i</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
@@ -46393,13 +46394,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>numero di telefono</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="288"/>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation>i</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="294"/>
@@ -46411,7 +46412,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="295"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>i</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
@@ -46423,7 +46424,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>o</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
@@ -46435,7 +46436,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>lo so</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
@@ -46447,13 +46448,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="314"/>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>i</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>poligonale</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
@@ -46465,7 +46466,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="321"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>polittico</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="322"/>
@@ -46477,37 +46478,37 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>poligonale</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="328"/>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>p</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polittico</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>poligono</translation>
+        <translation>poligonovv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="335"/>
         <source>pvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>p</translation>
+        <translation>pvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="341"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>p</translation>
+        <translation>p2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="351"/>
@@ -46537,7 +46538,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="364"/>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>c)</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="369"/>
@@ -46549,25 +46550,25 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="371"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation>c3-</translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>cerchio</translation>
+        <translation>cerchiocr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>c</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="378"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>cfr</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
@@ -46591,7 +46592,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>d</translation>
+        <translation>td</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="396"/>
@@ -46603,19 +46604,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="397"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>articolo</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>cerchionino3</translation>
+        <translation>cerchiotan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="404"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>t</translation>
+        <translation>t3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="413"/>
@@ -46627,7 +46628,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="414"/>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation>a</translation>
+        <translation>ar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="415"/>
@@ -46639,7 +46640,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="420"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation>articolo 3</translation>
+        <translation>arco3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="421"/>
@@ -46651,19 +46652,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="426"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>arcano</translation>
+        <translation>arcotan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>a</translation>
+        <translation>at</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
         <source>arc2p3</source>
         <comment>draw 2pt arc radius</comment>
-        <translation>articolo 2</translation>
+        <translation>arco2p3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="433"/>
@@ -46675,7 +46676,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="438"/>
         <source>arc2pl</source>
         <comment>draw 2pt arc length</comment>
-        <translation>articolo 2</translation>
+        <translation>arco2pl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="439"/>
@@ -46687,7 +46688,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="444"/>
         <source>arc2ph</source>
         <comment>draw 2pt arc height</comment>
-        <translation>arco</translation>
+        <translation>arco2ph</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="445"/>
@@ -46699,7 +46700,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="450"/>
         <source>arc2pa</source>
         <comment>draw 2pt arc angle</comment>
-        <translation>arco 2</translation>
+        <translation>arco2pa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="451"/>
@@ -46711,37 +46712,37 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="458"/>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation>s</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="465"/>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>#</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="471"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation>revisione:</translation>
+        <translation>arcellc2ax</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="472"/>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation>a</translation>
+        <translation>ae</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="476"/>
         <source>arcellc1ax</source>
         <comment>arc ellipse 1 point</comment>
-        <translation>analizzazioni</translation>
+        <translation>arcellc1ax</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="477"/>
         <source>ae1</source>
         <comment>arc ellipse 1 point</comment>
-        <translation>a)</translation>
+        <translation>ae1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="482"/>
@@ -46753,13 +46754,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="483"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation>p</translation>
+        <translation>pl4</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="488"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>parabola</translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="489"/>
@@ -46771,7 +46772,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="495"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>#</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="503"/>
@@ -46783,7 +46784,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="504"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation>a</translation>
+        <translation>ea</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="508"/>
@@ -46795,7 +46796,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="509"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
-        <translation>1</translation>
+        <translation>ea1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="514"/>
@@ -46807,7 +46808,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="515"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation>)</translation>
+        <translation>ef</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="520"/>
@@ -46837,7 +46838,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>linea d&apos;angolo</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
@@ -46861,13 +46862,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>punto2</translation>
+        <translation>punto2linea</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>p</translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
@@ -46879,19 +46880,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>pipi&apos;</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="572"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>politica</translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="573"/>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>*</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
@@ -46903,7 +46904,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>d</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
@@ -46915,31 +46916,31 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>p</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="590"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>politica</translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>p</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="596"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>p</translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="597"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>p</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="602"/>
@@ -46951,7 +46952,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="603"/>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation>p</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="608"/>
@@ -46963,25 +46964,25 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
-        <translation>#</translation>
+        <translation>du</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>#</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="628"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>invertire</translation>
+        <translation>invertiselezione</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>è</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -47011,19 +47012,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>d</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>dimord</source>
         <comment>dimension - ordinate</comment>
-        <translation>dimordante</translation>
+        <translation>dimord</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>fare</translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
@@ -47035,7 +47036,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="666"/>
         <source>dor</source>
         <comment>dimension - ordinate</comment>
-        <translation>d</translation>
+        <translation>dor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="683"/>
@@ -47047,19 +47048,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="685"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>d</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="698"/>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>#</translation>
+        <translation>da</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="711"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>d</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="718"/>
@@ -47077,7 +47078,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>modifica</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -47113,7 +47114,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation>si&apos;</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="748"/>
@@ -47125,7 +47126,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="749"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>r</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="754"/>
@@ -47137,13 +47138,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="755"/>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation>m</translation>
+        <translation>md</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">raccorda</translation>
+        <translation type="unfinished">taglia</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
@@ -47167,7 +47168,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="780"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>come si fa</translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="781"/>
@@ -47185,7 +47186,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="784"/>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>morto</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="789"/>
@@ -47203,7 +47204,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation>filetto</translation>
+        <translation>raccordo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -47239,13 +47240,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>modifiche</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>modalità</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
@@ -47257,7 +47258,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>x</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
@@ -47293,19 +47294,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>informazioni</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>i</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="863"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>depliant</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="868"/>
@@ -47317,7 +47318,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="869"/>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>i</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="875"/>
@@ -47329,7 +47330,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="876"/>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>a</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -47341,13 +47342,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="891"/>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>#</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>così</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
@@ -47365,19 +47366,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="972"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>mi dispiace</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1013"/>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>#</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>non lo so</translation>
+        <translation>un</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
@@ -47389,19 +47390,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>estrazione</translation>
+        <translation>prefdisegno</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>d</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>zoomin</source>
         <comment>zoom - in</comment>
-        <translation>zoom in</translation>
+        <translation>zoomin</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
@@ -47413,7 +47414,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>zoomare</translation>
+        <translation>zoomout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
@@ -47425,19 +47426,19 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
         <source>angle1</source>
-        <translation>angolo 1</translation>
+        <translation>angolo1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1196"/>
         <source>angle2</source>
-        <translation>angolazione</translation>
+        <translation>angolo2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation>chordlen</translation>
+        <translation>corda</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47449,13 +47450,13 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>lunghezza</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>lunghezza</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47465,7 +47466,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
         <source>y</source>
-        <translation>#</translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1112"/>
@@ -47475,12 +47476,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>angolazione</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>inizio</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
@@ -47490,32 +47491,32 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>linena</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
-        <translation>zecchera</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>larghezza</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>altezza</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
-        <translation>po</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>dimensione</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
@@ -47531,12 +47532,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>usarepoly</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>angoli</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -47546,7 +47547,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>tondo</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
@@ -47561,42 +47562,42 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>superiore</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>topr</source>
-        <translation>a)</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>sinistra</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>centro</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>destra</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>fondo</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>inferiore</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>inferiore</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
@@ -47611,22 +47612,22 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>dimensione</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>dimensione</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
         <source>hor</source>
-        <translation>ho</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>vert</source>
-        <translation>vers</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
@@ -47636,17 +47637,17 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>angolo</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>metà giro</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
-        <translation>metà cavallo</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
@@ -47661,52 +47662,52 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>corner inner</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>bordi</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>bordo none</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>bordo-entrambi</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>orlo</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>bordo</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>fine</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>entrambi</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>nessuno</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>vestibilità</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
@@ -47716,17 +47717,17 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>dist fixed</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>dist flex</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>distanza</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -47746,12 +47747,12 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">fisso</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>sym</source>
-        <translation>si&apos;</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
@@ -47785,7 +47786,7 @@ Vuoi sovrascrivere?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1206"/>
         <source>cl</source>
         <comment>chordlen</comment>
-        <translation>#</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
@@ -48269,7 +48270,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Auto vestibilità e disegno centrale a pagina.</translation>
+        <translation>Adatta automaticamente e centra il disegno nella pagina.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
@@ -48414,7 +48415,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>Libero scatto</translation>
+        <translation>Aggancio libero</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -48424,7 +48425,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Scatta a zero relativo</translation>
+        <translation>Aggancia allo zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48709,7 +48710,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
@@ -48719,7 +48720,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Polimero</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48739,7 +48740,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="500"/>
         <source>Point</source>
-        <translation>N</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="504"/>
@@ -48789,7 +48790,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Ordinazione</translation>
+        <translation>Quota coordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
@@ -48960,7 +48961,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="637"/>
         <source>Chord Length:</source>
-        <translation>Lunghezza del coro:</translation>
+        <translation>Lunghezza della corda:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="638"/>
@@ -48970,7 +48971,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="644"/>
         <source>Circle</source>
-        <translation>Circolo</translation>
+        <translation>Cerchio</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="994"/>
@@ -48985,7 +48986,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>Linea di lunghezza</translation>
+        <translation>Allunga linea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
@@ -48995,7 +48996,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Coro di lunghezza</translation>
+        <translation>Allunga corda</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49100,7 +49101,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Aggancia alla dimensione adiacente</translation>
+        <translation>Aggancia alla quota adiacente</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49450,7 +49451,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
         <source>Set point after selection</source>
-        <translation>Set point dopo la selezione</translation>
+        <translation>Imposta il punto dopo la selezione</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -49637,7 +49638,7 @@ Intersezione:@(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="166"/>
         <source>Point: %1</source>
-        <translation>N.: %1</translation>
+        <translation>Punto: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
@@ -49831,7 +49832,7 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>tipo in offset dalla riga di comando per compensare la stampa</translation>
+        <translation>digitare l&apos;offset dalla riga di comando per spostare la stampa</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -50012,7 +50013,7 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
         <source>Free</source>
-        <translation type="unfinished">Gratis</translation>
+        <translation type="unfinished">Libero</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1374"/>
@@ -50196,7 +50197,7 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>Stile di dimensione</translation>
+        <translation>Stile di quota</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50211,7 +50212,7 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation>Etichetta di dimensione specificata dall&apos;utente. Inserire il valore o &quot;ispira&gt;&quot; o semplicemente lasciare vuoto per la misurazione automatica.</translation>
+        <translation>Etichetta di quota specificata dall&apos;utente. Inserire il valore oppure &quot;&lt;&gt;&quot;, o semplicemente lasciare vuoto per la misurazione automatica.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
@@ -50273,17 +50274,17 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation>Angolo di dimensionamento</translation>
+        <translation>Angolo della quota</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation>Dimensione orizzontale</translation>
+        <translation>Quota orizzontale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation>Dimensione verticale</translation>
+        <translation>Quota verticale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -50293,7 +50294,7 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>Distanza tra dimensioni in linea di base</translation>
+        <translation>Distanza tra le quote in linea di base</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
@@ -50304,17 +50305,17 @@ Fine: (%8 , %9)</translation>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation>Gratis</translation>
+        <translation>Libero</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>Angolo per dimensione</translation>
+        <translation>Angolo della quota</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>Se controllato, l&apos;angolo per dimensione è definito dal mouse</translation>
+        <translation>Se controllato, l&apos;angolo della quota è definito dal mouse</translation>
     </message>
 </context>
 <context>
@@ -50327,12 +50328,12 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>Distanza di scatto:</translation>
+        <translation>Distanza di aggancio:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Distanza del punto di scatto inizialmente risolto punto di scatto</translation>
+        <translation>Distanza del punto di aggancio dal punto di aggancio inizialmente risolto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
@@ -50350,7 +50351,7 @@ Fine: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Aggancia i punti centrali:</translation>
+        <translation>Punti medi di aggancio:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

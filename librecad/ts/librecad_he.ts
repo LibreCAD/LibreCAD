@@ -196,12 +196,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>מיקום קו המימד או הזן זווית:</translation>
+        <translation>ציין את מיקום קו המידה או הזן זווית:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation>טקסט ממד:</translation>
+        <translation>הזן טקסט מידה:</translation>
     </message>
 </context>
 <context>
@@ -214,7 +214,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>ציין מימד למיקום הקשת</translation>
+        <translation>ציין את מיקום קשת המידה</translation>
     </message>
 </context>
 <context>
@@ -237,12 +237,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>התאם לקו ממדי סמוך</translation>
+        <translation>הצמדה למידה סמוכה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
         <source>Enter dimension text:</source>
-        <translation>טקסט ממד:</translation>
+        <translation>הזן טקסט מידה:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>נקודת סיום מנהיג</translation>
+        <translation>ציין את נקודת הסיום של קו ההפניה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -281,12 +281,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>ציון מימד כדי לבחור את הסגנון</translation>
+        <translation>ציין את המידה שממנה ייבחר הסגנון</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>סמן ממד כדי ליישם סגנון</translation>
+        <translation>ציין את המידה שעליה יוחל הסגנון</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
@@ -412,7 +412,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="293"/>
         <source>Length of chord should be non-zero</source>
-        <translation type="unfinished">אורך אקורד צריך להיות לא אפס</translation>
+        <translation type="unfinished">אורך המיתר חייב להיות שונה מאפס</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="435"/>
@@ -451,13 +451,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">סמן זווית סיום או [angle/chordlen]</translation>
+        <translation type="unfinished">סמן זווית סיום או [זווית/מיתר]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">פתח חלופי</translation>
+        <translation type="unfinished">קשת חלופית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
@@ -467,12 +467,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">המונחים: to alt point):</translation>
+        <translation type="unfinished">ציין את אורך המיתר (שלילי עבור הנקודה החלופית):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished">שלב קשת חלופי</translation>
+        <translation type="unfinished">השתמש בנקודת קשת חלופית</translation>
     </message>
 </context>
 <context>
@@ -495,7 +495,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Specify end point</source>
-        <translation type="unfinished">המונחים: end point</translation>
+        <translation type="unfinished">ציין נקודת סיום</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
@@ -523,7 +523,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="98"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>הערה: תיבת קולינג נוצרה עבור מערכת תיאום עולמית.</translation>
+        <translation>הערה: התיבה התוחמת נוצרה עבור מערכת הקואורדינטות העולמית.</translation>
     </message>
 </context>
 <context>
@@ -697,17 +697,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="215"/>
         <source>Specify the first line</source>
-        <translation type="unfinished">ציין את השורה הראשונה</translation>
+        <translation type="unfinished">ציין את הקו הראשון</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="218"/>
         <source>Specify the second line</source>
-        <translation type="unfinished">ציין את השורה השנייה</translation>
+        <translation type="unfinished">ציין את הקו השני</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="221"/>
         <source>Specify the third line</source>
-        <translation type="unfinished">ציין את השורה השלישית</translation>
+        <translation type="unfinished">ציין את הקו השלישי</translation>
     </message>
 </context>
 <context>
@@ -720,12 +720,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">ציין את הנקודה הראשונה על מעגל שיזוף</translation>
+        <translation type="unfinished">ציין את הנקודה הראשונה על המעגל המשיק</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="455"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">ציין את הנקודה השנייה על מעגל שיזוף</translation>
+        <translation type="unfinished">ציין את הנקודה השנייה על המעגל המשיק</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
@@ -812,12 +812,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>אתר בסיס ליניארי / Eigned Dimension</translation>
+        <translation>בחר מידת בסיס ליניארית/מיושרת</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select distant extension point</source>
-        <translation>נקודת הרחבה מרחוק</translation>
+        <translation>בחר נקודת קו עזר מרוחקת</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -837,12 +837,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>התאם לקו ממדי סמוך</translation>
+        <translation>הצמדה למידה סמוכה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>טקסט ממד:</translation>
+        <translation>הזן טקסט מידה:</translation>
     </message>
 </context>
 <context>
@@ -998,7 +998,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="293"/>
         <source>Specify next point</source>
-        <translation type="unfinished">המונחים: next point</translation>
+        <translation type="unfinished">ציין את הנקודה הבאה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="325"/>
@@ -1070,7 +1070,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="488"/>
@@ -1298,7 +1298,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="196"/>
         <source>Specify through point</source>
-        <translation type="unfinished">המונחים through point</translation>
+        <translation type="unfinished">ציין נקודת מעבר</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="199"/>
@@ -1403,7 +1403,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="196"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="214"/>
@@ -1597,7 +1597,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>קו בחירה זהה לבימוי של פרבולה או להגדיר נקודת קצה</translation>
+        <translation>בחר קו המקביל למדריך של הפרבולה או קבע את נקודת הקודקוד</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1607,7 +1607,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="301"/>
         <source>Specify the end point on parabola</source>
-        <translation>המונחים: the end point on parabola</translation>
+        <translation>ציין את נקודת הסיום על הפרבולה</translation>
     </message>
 </context>
 <context>
@@ -1656,7 +1656,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="293"/>
         <source>Last point position is adjusted to first</source>
-        <translation>השלב האחרון מותאם לראשונה</translation>
+        <translation>מיקום הנקודה האחרונה מותאם לנקודה הראשונה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="297"/>
@@ -1674,48 +1674,49 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="579"/>
         <source>Specify First Point</source>
-        <translation type="unfinished">המונחים: First Point</translation>
+        <translation type="unfinished">ציין נקודה ראשונה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished">המונחים: Second Point
-(מספר)</translation>
+        <translation type="unfinished">ציין נקודה שנייה
+או [number|x|y|זווית|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
         <source>Specify Second Point
 or [number]</source>
-        <translation type="unfinished">המונחים: Second Point
+        <translation type="unfinished">ציין נקודה שנייה
 או [מספר]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished">המונחים line
-[xy]</translation>
+        <translation type="unfinished">ציין את כיוון הקו
+[x|y|זווית|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished">המונחים: lineכיוון
-[x y] Number[עריכת קוד מקור | עריכה]</translation>
+        <translation type="unfinished">ציין את זווית כיוון הקו
+או [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished">המונחים:
-[הופנה מהדף [שניהם]</translation>
+        <translation type="unfinished">ציין את מצב נקודות הקצה
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ציין מרחק קבוע בין הנקודות
+או [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1869,7 +1870,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">פתח חלופי</translation>
+        <translation type="unfinished">קשת חלופית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="798"/>
@@ -1879,7 +1880,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="800"/>
         <source>Specify next point</source>
-        <translation type="unfinished">המונחים: next point</translation>
+        <translation type="unfinished">ציין את הנקודה הבאה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="821"/>
@@ -1912,7 +1913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>שם מקור:</translation>
+        <translation>ציין נקודת ייחוס [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1940,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>שלב ראשון (ב)</translation>
+        <translation>ציין את מצב ההצמדה של נקודה 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>שלב 2 (ב)</translation>
+        <translation>ציין את מצב ההצמדה של נקודה 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2063,8 +2064,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="449"/>
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="unfinished">המונחים type
-(בסביבות)</translation>
+        <translation type="unfinished">ציין את סוג הפינות
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2080,8 +2081,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="458"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation type="unfinished">המונחים:
-[שניהם]</translation>
+        <translation type="unfinished">ציין את מצב הצלעות
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2209,7 +2210,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="661"/>
         <source>Set rounding radiuses (outer, inner)</source>
-        <translation>סיבוב רדיוס (outer, פנימי)</translation>
+        <translation>קבע את רדיוסי העיגול (חיצוני, פנימי)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="664"/>
@@ -2357,12 +2358,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Parallel through point</source>
-        <translation>המונחים: point</translation>
+        <translation>מקביל דרך נקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Rectangle</source>
-        <translation>מרובע</translation>
+        <translation>מלבן</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
@@ -2452,7 +2453,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>מתוך Point to Line</translation>
+        <translation>מנקודה לקו</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
@@ -2543,7 +2544,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>תגית: spline Point</translation>
+        <translation>&amp;הוסף נקודת ספליין בסוף</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
@@ -2563,12 +2564,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ellipse &amp; Foci Point</translation>
+        <translation>אליפסה &amp;מוקדים ונקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>Ellipse &amp; 4 Point</translation>
+        <translation>אליפסה &amp;4 נקודות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
@@ -2593,7 +2594,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block related operations</source>
-        <translation>לחסום פעולות קשורות</translation>
+        <translation>פעולות הקשורות לבלוקים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
@@ -2603,7 +2604,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
         <source>Circle drawing commands</source>
-        <translation>פיקוד מעגל</translation>
+        <translation>פקודות שרטוט מעגלים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
@@ -2658,7 +2659,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
-        <translation>המימד</translation>
+        <translation>מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
@@ -2965,7 +2966,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>המונחים: 1 Point</translation>
+        <translation>משיק ל-2 ישויות, נקודה אחת</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
@@ -2980,7 +2981,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>ו-Hyperbola &amp; Foci Point</translation>
+        <translation>&amp;היפרבולה מוקדים ונקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
@@ -3065,7 +3066,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
         <source>&amp;Radial</source>
-        <translation>&amp;מעגלי</translation>
+        <translation>&amp;רדיאלי</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
@@ -3255,7 +3256,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>גידול מעל</translation>
+        <translation>העלה מעל ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
@@ -3265,7 +3266,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>ו-Point לתאם</translation>
+        <translation>&amp;קואורדינטות נקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
@@ -3385,7 +3386,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Rotate T&amp;wo</source>
-        <translation>רוטט T&amp;wo</translation>
+        <translation>סובב &amp;פעמיים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
@@ -3415,7 +3416,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;הבלט</translation>
+        <translation>&amp;שיפוע</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
@@ -3455,7 +3456,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
         <source>Pick Point</source>
-        <translation>נקודת Pick Point</translation>
+        <translation>בחירת נקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="773"/>
@@ -3520,7 +3521,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>&amp;Center, Point, Chord</source>
-        <translation>ו-Center, Point, Chord</translation>
+        <translation>&amp;מרכז, נקודה, מיתר</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
@@ -3605,7 +3606,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>פרידה / Divide</translation>
+        <translation>שבירה/חלוקה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -3615,7 +3616,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>קו הצטרף</translation>
+        <translation>חיבור קווים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -3635,7 +3636,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
         <source>Align Reference Points</source>
-        <translation>נקודות מפנה</translation>
+        <translation>יישור לפי נקודות ייחוס</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
@@ -3791,12 +3792,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>Snap חינם</translation>
+        <translation>הצמדה חופשית</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>Distance &amp;Entity to Point</source>
-        <translation>מרחק ויציבות ל Point</translation>
+        <translation>מרחק מ&amp;ישות לנקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
@@ -3811,12 +3812,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Entity Pro&amp;perties</source>
-        <translation>אמינות Pro&amp;perties</translation>
+        <translation>&amp;מאפייני ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>איסוף ותיאום</translation>
+        <translation>איסוף &amp;קואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3976,7 +3977,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
         <source>&amp;Auto Zoom</source>
-        <translation>מרחק &amp;אוטומטי</translation>
+        <translation>&amp;זום אוטומטי</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
@@ -4096,7 +4097,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
         <source>Tr&amp;im Two</source>
-        <translation>טרנדים 2</translation>
+        <translation>קיצוץ &amp;שתי ישויות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
@@ -4239,7 +4240,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>נקודה שנייה (סעיף)</translation>
+        <translation>בחר את הנקודה השנייה (נקודת החיתוך) של הזווית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4285,18 +4286,18 @@ Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>אנגלית: %1
+        <translation>זווית: %1
 זווית המשלימה לזווית ישרה: %2
 זווית המשלימה לזווית שטוחה: %3
 זווית המשלימה לסיבוב מלא: %4
-התחל Edge Point: (%5,%6)
-המונחים: (%7,%8)
-End Edge Point: (%9,%10)</translation>
+נקודת קצה התחלתית: (%5 , %6)
+נקודת חיתוך: (%7, %8)
+נקודת קצה סופית: (%9 , %10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
         <source>Restart with first edge point selection</source>
-        <translation>עקבו אחרי First Edge Point Selection</translation>
+        <translation>התחל מחדש בבחירת נקודת הקצה הראשונה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="191"/>
@@ -4319,7 +4320,7 @@ End Edge Point: (%9,%10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>סעיף:</translation>
+        <translation>נקודת חיתוך:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4334,7 +4335,7 @@ End Edge Point: (%9,%10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="217"/>
         <source>Angle 1:</source>
-        <translation>אנגלית:</translation>
+        <translation>זווית 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="218"/>
@@ -4365,7 +4366,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">אל תזרקו לגורמי ילדים במיכל</translation>
+        <translation type="unfinished">אל תצמיד לישויות צאצא בתוך מכל</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4472,7 +4473,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="123"/>
         <source>Select position for coordinates</source>
-        <translation>מיקום נבחר לתיאום</translation>
+        <translation>בחר מיקום עבור הקואורדינטות</translation>
     </message>
 </context>
 <context>
@@ -4485,7 +4486,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>גורמי ילדים נבחרים</translation>
+        <translation>בחר ישויות צאצא</translation>
     </message>
 </context>
 <context>
@@ -4532,7 +4533,7 @@ Polar: (%4 &lt;%)
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>סעיף:</translation>
+        <translation>נקודת חיתוך:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -4562,7 +4563,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>נקודה שנייה (סעיף)</translation>
+        <translation>בחר את הנקודה השנייה (נקודת החיתוך) של הזווית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4621,7 +4622,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="327"/>
         <source>Angle 1:</source>
-        <translation>אנגלית:</translation>
+        <translation>זווית 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="328"/>
@@ -4700,7 +4701,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Segment length/Diameter</source>
-        <translation>אורך לידה / Diameter</translation>
+        <translation>אורך קטע/קוטר</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="295"/>
@@ -4743,12 +4744,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="152"/>
         <source>Pick coordinates from the drawing</source>
-        <translation>בחרו לתאם מהציור</translation>
+        <translation>בחר קואורדינטות מהשרטוט</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
         <source>Pick relative zero coordinates</source>
-        <translation>עקבו אחרי Zero לתאם</translation>
+        <translation>בחר את קואורדינטות האפס היחסי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
@@ -4804,7 +4805,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
-        <translation>גמישות</translation>
+        <translation>ישות</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
@@ -4844,7 +4845,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
         <source>Specify base alignment point</source>
-        <translation>המונחים: Base Settlement Point</translation>
+        <translation>ציין את נקודת הבסיס ליישור</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="267"/>
@@ -4887,7 +4888,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
-        <translation>סולם:</translation>
+        <translation>קנה מידה:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -4945,7 +4946,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>גמישות</translation>
+        <translation>ישות</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -4970,12 +4971,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
         <source>Specify base alignment point</source>
-        <translation>המונחים: Base Settlement Point</translation>
+        <translation>ציין את נקודת הבסיס ליישור</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>גוף נבחר כדי להתאים</translation>
+        <translation>בחר ישות ליישור</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
@@ -5016,7 +5017,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">סעיף:</translation>
+        <translation type="unfinished">נקודת חיתוך:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5031,7 +5032,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">ישות לא חוקית (לא ניתנת להכחשה).</translation>
+        <translation type="unfinished">נבחרה ישות לא תקינה (לא ניתנת לקיצוץ).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
@@ -5126,7 +5127,7 @@ Polar: (%4 &lt;%)
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="469"/>
         <source>Angle 1:</source>
-        <translation>אנגלית:</translation>
+        <translation>זווית 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="372"/>
@@ -5170,7 +5171,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">Entity חייב להיות קו, קשת, מעגל, אליפזה או ספירה של אינטרפולציה.</translation>
+        <translation type="unfinished">הישות חייבת להיות קו, קשת, מעגל, אליפסה או ספליין אינטרפולציה.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
@@ -5265,17 +5266,17 @@ Polar: (%4 &lt;%)
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="226"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="262"/>
         <source>Duplicate Offset</source>
-        <translation>להורדה</translation>
+        <translation>היסט שכפול</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Select entity to duplicate</source>
-        <translation>גוף נבחר לשכפל</translation>
+        <translation>בחר ישות לשכפול</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Interactive Offset</source>
-        <translation>הופעות אינטראקטיביות</translation>
+        <translation>היסט אינטראקטיבי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="290"/>
@@ -5345,7 +5346,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="130"/>
         <source>Lines Join</source>
-        <translation>קווים להצטרף</translation>
+        <translation>חיבור קווים</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
@@ -5355,7 +5356,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>סעיף:</translation>
+        <translation>נקודת חיתוך:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -5386,7 +5387,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>בחר חלק מהשורה הראשונה שצריכה להישאר אחרי הטרים</translation>
+        <translation>בחר את החלק של הקו הראשון שצריך להישאר לאחר הקיצוץ</translation>
     </message>
 </context>
 <context>
@@ -5825,7 +5826,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="702"/>
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished">רוטט מיד לאחר בחירת</translation>
+        <translation type="unfinished">סובב מיד לאחר הבחירה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
@@ -5859,7 +5860,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="145"/>
         <source>Rotating Twice</source>
-        <translation type="unfinished">רוטט פעמיים</translation>
+        <translation type="unfinished">סיבוב כפול</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
@@ -5869,7 +5870,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="147"/>
         <source>Angle 1:</source>
-        <translation type="unfinished">אנגלית:</translation>
+        <translation type="unfinished">זווית 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="148"/>
@@ -5894,7 +5895,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="215"/>
         <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="unfinished">רוטט 2 ציר מיד לאחר בחירת</translation>
+        <translation type="unfinished">סיבוב סביב 2 צירים מיד לאחר הבחירה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="221"/>
@@ -5951,7 +5952,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="223"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
@@ -5981,12 +5982,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="231"/>
         <source>Scale by Y:</source>
-        <translation type="unfinished">סולם Y:</translation>
+        <translation type="unfinished">קנה מידה לפי Y:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">מרכז סולם</translation>
+        <translation type="unfinished">ציין את מרכז קנה המידה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
@@ -6006,7 +6007,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">משחק חינם</translation>
+        <translation type="unfinished">הצמדה חופשית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6095,12 +6096,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">סעיף:</translation>
+        <translation type="unfinished">נקודת חיתוך:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">סעיף 2:</translation>
+        <translation type="unfinished">נקודת חיתוך 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
@@ -6120,7 +6121,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">גוף נבחר ל- Trim</translation>
+        <translation type="unfinished">בחר ישות לקיצוץ</translation>
     </message>
 </context>
 <context>
@@ -6133,7 +6134,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">הישות שנבחרה אינה ישות אטומית או אינה יכולה להיות מפורצת.</translation>
+        <translation type="unfinished">הישות שנבחרה אינה ישות אטומית או שלא ניתן לקצץ אותה.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6156,7 +6157,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">מרחק של נקודת מפנה בהתחלה נפתרה נקודה</translation>
+        <translation type="unfinished">מרחק נקודת ההצמדה מנקודת ההצמדה שחושבה תחילה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6189,12 +6190,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="133"/>
         <source>Order immediately after selection</source>
-        <translation type="unfinished">הזמנה מיד לאחר בחירת</translation>
+        <translation type="unfinished">סדר מיד לאחר הבחירה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="137"/>
         <source>Choose entity for order</source>
-        <translation type="unfinished">בחר ישות להזמנת</translation>
+        <translation type="unfinished">בחר ישות לסידור</translation>
     </message>
 </context>
 <context>
@@ -6272,7 +6273,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
         <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished">המונחים: node&apos;s point</translation>
+        <translation type="unfinished">ציין את הנקודה של הצומת המתווסף</translation>
     </message>
 </context>
 <context>
@@ -6336,7 +6337,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="246"/>
         <source>Select segment of polyline to modify</source>
-        <translation>סעיף נבחר של פולילין כדי לשנות</translation>
+        <translation>בחר קטע של הפוליליין לשינוי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
@@ -6506,7 +6507,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="194"/>
         <source>Specify second segment</source>
-        <translation type="unfinished">סעיף שני</translation>
+        <translation type="unfinished">ציין את הקטע השני</translation>
     </message>
 </context>
 <context>
@@ -6588,7 +6589,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>המונחים: תואמים</translation>
+        <translation>בחר מידת קואורדינטה לייחוס</translation>
     </message>
 </context>
 <context>
@@ -6614,7 +6615,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="191"/>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished">בחר נקודת מפנה ראשונה</translation>
+        <translation type="unfinished">בחר את הנקודה הראשונה של קו החיתוך</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6624,7 +6625,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">גורמי ילדים נבחרים</translation>
+        <translation type="unfinished">בחר ישויות צאצא</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6734,7 +6735,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="234"/>
         <source>Specify percentage / start-point</source>
-        <translation>אחוז ממוצע / Start-point</translation>
+        <translation>ציין אחוז / נקודת התחלה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="237"/>
@@ -6744,7 +6745,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="240"/>
         <source>Specify end point</source>
-        <translation>המונחים: end point</translation>
+        <translation>ציין נקודת סיום</translation>
     </message>
 </context>
 <context>
@@ -6762,12 +6763,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Specify control point</source>
-        <translation>המונחים Control Point</translation>
+        <translation>ציין נקודת בקרה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Insert AFTER selected point</source>
-        <translation>שלב לאחר שנבחר</translation>
+        <translation>הוסף אחרי הנקודה שנבחרה</translation>
     </message>
 </context>
 <context>
@@ -6785,7 +6786,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="266"/>
         <source>Specify control point</source>
-        <translation>המונחים Control Point</translation>
+        <translation>ציין נקודת בקרה</translation>
     </message>
 </context>
 <context>
@@ -6801,7 +6802,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>בחר פולילין כדי ליצור נקודות ספירה או ספירה</translation>
+        <translation>בחר פוליליין כדי ליצור ספליין או נקודות ספליין</translation>
     </message>
 </context>
 <context>
@@ -6809,7 +6810,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
-        <translation>לא מספיק נקודות נשארות לשורה</translation>
+        <translation>לא נותרו מספיק נקודות לספליין</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
@@ -6837,7 +6838,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>בחר ממד תואמים כדי להגדיר UCS</translation>
+        <translation>בחר מידת קואורדינטה כדי להגדיר UCS</translation>
     </message>
 </context>
 <context>
@@ -6985,7 +6986,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="149"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>קובץ LibreCAD Shortcuts (*%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="181"/>
@@ -7066,7 +7067,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">גמישות</translation>
+        <translation type="unfinished">ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
@@ -7156,12 +7157,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="33"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">אם תבדקו, הגופים יסולקו במידת הצורך. אחרת, הם רק יקומו ויסתובבו.</translation>
+        <translation type="unfinished">אם מסומן, קנה המידה של הישויות ישונה לפי הצורך. אחרת, הן רק ימוקמו ויסובבו.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7204,7 +7205,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">אם תבדוק, תכונות נוכחיות ישמשו עבור ישויות ממושכות, אחרת - מקוריות.</translation>
+        <translation type="unfinished">אם מסומן, התכונות הנוכחיות ישמשו עבור הישויות המשוקפות, אחרת – התכונות המקוריות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
@@ -7234,12 +7235,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">אם תבדקו, הגופים יסולקו במידת הצורך. אחרת, הם רק יקומו ויסתובבו.</translation>
+        <translation type="unfinished">אם מסומן, קנה המידה של הישויות ישונה לפי הצורך. אחרת, הן רק ימוקמו ויסובבו.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
 </context>
 <context>
@@ -7247,7 +7248,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">גמישות</translation>
+        <translation type="unfinished">ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
@@ -7372,7 +7373,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
         <source>Entity</source>
-        <translation type="unfinished">גמישות</translation>
+        <translation type="unfinished">ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="166"/>
@@ -7440,7 +7441,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="80"/>
         <source>Positive angles direction is clockwise.</source>
-        <translation>זווית חיובית היא שעון חכם.</translation>
+        <translation>זוויות חיוביות נמדדות בכיוון השעון.</translation>
     </message>
 </context>
 <context>
@@ -7504,12 +7505,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="44"/>
         <source>Clockwise</source>
-        <translation type="unfinished">שעון חכם</translation>
+        <translation type="unfinished">בכיוון השעון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished">גובה קשת (The distanсe Between chord and Top arc Point)</translation>
+        <translation type="unfinished">גובה הקשת (המרחק בין המיתר לנקודה העליונה של הקשת)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="64"/>
@@ -7653,7 +7654,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="56"/>
         <source>Clockwise</source>
-        <translation type="unfinished">שעון חכם</translation>
+        <translation type="unfinished">בכיוון השעון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="85"/>
@@ -7681,12 +7682,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>X תואם את מרכז קשת</translation>
+        <translation>קואורדינטת X של מרכז הקשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
         <source>Pick center coordinate from the drawing</source>
-        <translation>מרכז Pick לתאם מהציור</translation>
+        <translation>בחר את קואורדינטת המרכז מהשרטוט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="131"/>
@@ -7696,7 +7697,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y לתאם את מרכז קשת</translation>
+        <translation>קואורדינטת Y של מרכז הקשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
@@ -7746,7 +7747,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
         <source>Sweep Angle:</source>
-        <translation>אנגלית:</translation>
+        <translation>זווית הקשת:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="359"/>
@@ -7802,7 +7803,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>Defines if arc הוא הפוך (שעון חכם)</translation>
+        <translation>קובע אם הקשת הפוכה (בכיוון השעון)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="570"/>
@@ -7868,7 +7869,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished">Total subtending זווית של קשת שיזוף</translation>
+        <translation type="unfinished">הזווית המרכזית הכוללת של הקשת המשיקה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="67"/>
@@ -7913,7 +7914,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">בדקו את שני הגופים להתגלות</translation>
+        <translation type="unfinished">סמן כדי לקצץ את שתי הישויות עד לשיפוע</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7946,7 +7947,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">בדקו את שני הגופים להתגלות</translation>
+        <translation type="unfinished">סמן כדי לקצץ את שתי הישויות עד לשיפוע</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -7961,7 +7962,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">אורך של קטיפה בכיוון X.</translation>
+        <translation type="unfinished">אורך השיפוע בכיוון X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
@@ -7976,7 +7977,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">אורך של קטיפה בכיוון Y.</translation>
+        <translation type="unfinished">אורך השיפוע בכיוון Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
@@ -7999,7 +8000,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="36"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="36"/>
@@ -8072,7 +8073,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="157"/>
@@ -8135,7 +8136,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="37"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="37"/>
@@ -8158,7 +8159,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="75"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="88"/>
@@ -8308,7 +8309,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">מימד רציונאלי של הצלב</translation>
+        <translation type="unfinished">הממד האנכי של הצלב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
@@ -8336,7 +8337,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="63"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">מימד רציונאלי של הצלב</translation>
+        <translation type="unfinished">הממד האנכי של הצלב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="83"/>
@@ -8371,7 +8372,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="193"/>
         <source>Defines how to apply dimensions of cross</source>
-        <translation type="unfinished">Defines כיצד ליישם ממדים של הצלב</translation>
+        <translation type="unfinished">קובע כיצד להחיל את מידות הצלב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="209"/>
@@ -8409,7 +8410,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">אם תבדוק, הקיר המקורי יוסר</translation>
+        <translation type="unfinished">אם מסומן, הקשת המקורית תוסר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
@@ -8501,7 +8502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">עונש על יצירת מעגל</translation>
+        <translation type="unfinished">העט שיוחל על המעגל שנוצר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8529,7 +8530,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">אם תבדוק, הקיר המקורי יוסר</translation>
+        <translation type="unfinished">אם מסומן, הקשת המקורית תוסר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
@@ -8539,7 +8540,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">הורידו את הערך מהציור</translation>
+        <translation type="unfinished">בחר את ערך ההיסט מהשרטוט</translation>
     </message>
 </context>
 <context>
@@ -8598,7 +8599,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="63"/>
         <source>X Coordinate of circle&apos;s center</source>
-        <translation>X תואם את מרכז המעגל</translation>
+        <translation>קואורדינטת X של מרכז המעגל</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="88"/>
@@ -8613,7 +8614,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation>Y לתאם את מרכז המעגל</translation>
+        <translation>קואורדינטת Y של מרכז המעגל</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="118"/>
@@ -8633,7 +8634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="171"/>
         <source>Diameter of circle</source>
-        <translation>מדחום מעגל</translation>
+        <translation>קוטר המעגל</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
@@ -8669,7 +8670,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; Radius of the tangential Circle toמשוך&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;רדיוס המעגל המשיק שיצויר&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="59"/>
@@ -8744,12 +8745,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="204"/>
         <source>Origin Indicator</source>
-        <translation>מקור:</translation>
+        <translation>סמן נקודת מוצא</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="205"/>
         <source>Origin Indicator 2</source>
-        <translation>מקור: 2</translation>
+        <translation>סמן נקודת מוצא 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="206"/>
@@ -8852,7 +8853,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>מנהיג וסובלנות</translation>
+        <translation>קו הפניה וסבולת</translation>
     </message>
 </context>
 <context>
@@ -8893,7 +8894,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>לא יכול לפתוח קובץ עבור כתיבה - לבדוק כי המיקום מסופק הוא עצבני. סגנונות ממדיים לא ייצואו.</translation>
+        <translation>לא ניתן לפתוח את הקובץ שסופק לכתיבה - ודא שניתן לכתוב במיקום שסופק. סגנונות המידה לא יוצאו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
@@ -8913,17 +8914,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>לא ניתן לפתוח קובץ לקריאה. סגנונות ממדים לא יובאו.</translation>
+        <translation>לא ניתן לפתוח את הקובץ שסופק לקריאה. סגנונות המידה לא יובאו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>שגיאות בלתי צפויות במהלך סגנונות המימד. הודעה:</translation>
+        <translation>שגיאה בלתי צפויה במהלך ניתוח סגנונות המידה. הודעה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>פורמט בלתי צפוי של קובץ, הוא אינו מכיל סגנונות ממד LibreCAD.</translation>
+        <translation>פורמט קובץ בלתי צפוי: הקובץ אינו מכיל סגנונות מידה של LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
@@ -8934,12 +8935,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>אין סגנונות מימד לייבוא.</translation>
+        <translation>אין סגנונות מידה לייבוא.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>סגנונות ממדיים מיובאים.</translation>
+        <translation>סגנונות המידה יובאו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
@@ -8954,7 +8955,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD סגנונות קובץ (*%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9082,7 +9083,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>מציג ולהגדיר את הצבע עבור קו המימד (DIMCLRD מערכת משתנה).</translation>
+        <translation>מציג וקובע את הצבע של קו המידה (משתנה המערכת DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
@@ -9092,7 +9093,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>הגדר את קו הטיפוס של קו המימד. (DIMLTYPE משתנה)</translation>
+        <translation>קובע את סוג הקו של קו המידה. (משתנה המערכת DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
@@ -9102,17 +9103,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>הגדר את משקל הקו של קו המימד. (DIMLWD Systemמשתנה)</translation>
+        <translation>קובע את עובי הקו של קו המידה. (משתנה המערכת DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
         <source>Extend beyond</source>
-        <translation>סוף מעבר</translation>
+        <translation>הארכה מעבר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>מפרט מרחק להרחיב את קו המימד מעבר לקו הסיומת כאשר אתה משתמש oblique, ארכיטקטוני, קרקה, אינטגרלי, ללא סימני חצים. (DIMDLE מערכת משתנה)</translation>
+        <translation>קובע את המרחק שבו קו המידה מוארך מעבר לקו העזר כאשר משתמשים בחצים מסוג אלכסוני, ארכיטקטוני, סימון, אינטגרלי או ללא סימון. (משתנה המערכת DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9122,7 +9123,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>תצוגה של קו המימד הראשון (DIMSD1 משתנה)</translation>
+        <translation>מבטל את הצגת קו המידה הראשון (משתנה המערכת DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
@@ -9132,7 +9133,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>תצוגה של קו הממד השני (DIMSD2 משתנה)</translation>
+        <translation>מבטל את הצגת קו המידה השני (משתנה המערכת DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
@@ -9142,17 +9143,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>הרחבת השורות</translation>
+        <translation>קווי עזר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>הגדר את הצבע עבור קו הרחבה (DIMCLRE משתנה.)</translation>
+        <translation>קובע את הצבע של קו העזר (משתנה המערכת DIMCLRE).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>שורה 1:</translation>
+        <translation>סוג קו של קו עזר 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
@@ -9187,17 +9188,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>מפרט מרחק להרחיב את קווי הארכה מעל קו הממד. (משתנה מערכת DIMEXE)</translation>
+        <translation>קובע את המרחק שבו קווי העזר מוארכים מעבר לקו המידה. (משתנה המערכת DIMEXE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>התחלה ממקור:</translation>
+        <translation>היסט מנקודת המוצא:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>הגדר את המרחק כדי להסיר את קווי הרחבה מן הנקודות על הציור המגדירים את הממד. (משתנה מערכת DIMEXO)</translation>
+        <translation>קובע את מרחק ההיסט של קווי העזר מהנקודות בשרטוט המגדירות את המידה. (משתנה המערכת DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9207,17 +9208,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>הגדר את אורך הכולל של קווי הרחבה החל קו המימד לקראת המקור. (DIMFXL משתנה)</translation>
+        <translation>קובע את האורך הכולל של קווי העזר, החל מקו המידה ולכיוון נקודת המוצא של המידה. (משתנה המערכת DIMFXL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>קווי הרחבה באורך קבוע. (DIMFXLON)</translation>
+        <translation>מפעיל קווי עזר באורך קבוע. (משתנה המערכת DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>קווי הרחבה קבועים</translation>
+        <translation>קווי עזר באורך קבוע</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
@@ -9232,7 +9233,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Suppresses את התצוגה של קו הרחבה השני (DIMSE2 מערכת משתנה).</translation>
+        <translation>מבטל את הצגת קו העזר השני (משתנה המערכת DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9283,7 +9284,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>לקבוע את הזווית של פלח הפוך של קו המימד בממד רדיוס דחוס. (DIMJOGANG)</translation>
+        <translation>קובע את זווית הקטע הרוחבי של קו המידה במידת רדיוס שבורה. (משתנה המערכת DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9298,27 +9299,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>הגדר את החץ לקו המנהיג. (DIMLDRBLK Systemמשתנה)</translation>
+        <translation>קובע את החץ של קו ההפניה. (משתנה המערכת DIMLDRBLK)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>מנהיג:</translation>
+        <translation>קו הפניה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>הגדר את החץ עבור קו הממד הראשון. כאשר אתה משנה את הסוג הראשון של החצים, החצים השני משתנה באופן אוטומטי כדי להתאים אותו. (DIMBLK1 systemמשתנה)</translation>
+        <translation>קובע את החץ של קו המידה הראשון. כאשר משנים את סוג החץ הראשון, החץ השני משתנה אוטומטית בהתאם לו. (משתנה המערכת DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>הגדר את החץ עבור קו הממד השני. (DIMBLK2 מערכת משתנה)</translation>
+        <translation>קובע את החץ של קו המידה השני. (משתנה המערכת DIMBLK2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>השתמש באותו חץ קו מימד</translation>
+        <translation>השתמש באותו חץ עבור קו המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9343,7 +9344,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>שלב שלישי לשבור</translation>
+        <translation>שבירת מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9370,7 +9371,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>מקומות אורך קשת סמלים לפני טקסט הממד. (DIMARCSYM Systemמשתנה)</translation>
+        <translation>ממקם את סמלי אורך הקשת לפני טקסט המידה. (משתנה המערכת DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
@@ -9380,12 +9381,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>מקומות אורך קשת סמלים מעל טקסט הממד. (DIMARCSYM Systemמשתנה)</translation>
+        <translation>ממקם את סמלי אורך הקשת מעל טקסט המידה. (משתנה המערכת DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>מעל מימד טקסט</translation>
+        <translation>מעל טקסט המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
@@ -9456,7 +9457,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>הגדר את הצבע לרקע הטקסט בממדים (DIMTFILLCLR systemמשתנה)</translation>
+        <translation>קובע את צבע רקע הטקסט במידות (משתנה המערכת DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9471,22 +9472,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>הגדר את היקף השברים ביחס לטקסט ממדי. (DIMTFAC משתנה)</translation>
+        <translation>קובע את קנה המידה של שברים ביחס לטקסט המידה. (משתנה המערכת DIMTFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>גובה הונאה:</translation>
+        <translation>קנה מידה לגובה השברים:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>הגדר את הגובה של סגנון הטקסט של הממד הנוכחי. (DIMTXT משתנה)</translation>
+        <translation>קובע את גובה הטקסט בסגנון המידה הנוכחי. (משתנה המערכת DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>הגדר את הצבע לטקסט המימד (DIMCLRT systemמשתנה)</translation>
+        <translation>קובע את הצבע של טקסט המידה (משתנה המערכת DIMCLRT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9501,7 +9502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>מציג מסגרת מלבנית סביב טקסט הממד. אפשרות זו משנה את הערך המאוחסן במערכת DIMGAP משתנה לערך שלילי.</translation>
+        <translation>מציג מסגרת מלבנית סביב טקסט המידה. אפשרות זו משנה את הערך המאוחסן במשתנה המערכת DIMGAP לערך שלילי.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9527,12 +9528,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>טקסט Aligns עם קו המימד (DIMTIH ו- DIMTOH משתנה).</translation>
+        <translation>מיישר את הטקסט עם קו המידה (משתני המערכת DIMTIH ו-DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>טקסט Aligns עם קו המימד כאשר הטקסט נמצא בתוך קווי הרחבה, אבל מיישר אותו אופקי כאשר טקסט הוא מחוץ קווי הרחבה (DIMTIH ו DIMTOH משתנה).</translation>
+        <translation>מיישר את הטקסט עם קו המידה כאשר הטקסט נמצא בין קווי העזר, אך מיישר אותו אופקית כאשר הטקסט נמצא מחוץ לקווי העזר (משתני המערכת DIMTIH ו-DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
@@ -9550,8 +9551,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>מפרט את הגודל של שבץ oblique נמשך במקום צמתים עבור ליניארי, רדיוס, וממדת קוטר. אם = 0 - שואב חץ.
-&lt;0 - צייר שבץ אובליק במקום חץ (DIMTSZ משתנה).</translation>
+        <translation>קובע את גודל הקווים האלכסוניים שמצוירים במקום חצים במידות ליניאריות, מידות רדיוס ומידות קוטר. אם = 0 – מצוירים חצים.
+&gt;0 – מצוירים קווים אלכסוניים במקום חצים (משתנה DIMTSZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9582,7 +9583,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>תחילת קו dim:</translation>
+        <translation>היסט מקו המידה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
@@ -9592,7 +9593,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>בקרה על המיקום האופקי של טקסט ממד לאורך קו הממד, ביחס לקווי הרחבה. (DIMJUST מערכת משתנה)</translation>
+        <translation>קובע את המיקום האופקי של טקסט המידה לאורך קו המידה, ביחס לקווי העזר. (משתנה המערכת DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9603,7 +9604,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>בשורה 1</translation>
+        <translation>ליד קו עזר 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
@@ -9633,7 +9634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>בקרה על המיקום האנכי של טקסט ממד ביחס לקו הממד. (DIMTAD מערכת משתנה)</translation>
+        <translation>קובע את המיקום האנכי של טקסט המידה ביחס לקו המידה. (משתנה המערכת DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9658,7 +9659,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>מיקום Vertical של טקסט לעיל או מתחת לקו מימד אם מיקום אנכי (DIMTAD) אינו &quot;Centered&quot; (DIMTVP משתנה).</translation>
+        <translation>המיקום האנכי של הטקסט מעל קו המידה או מתחתיו כאשר המיקום האנכי (DIMTAD) אינו &quot;מרכז&quot; (משתנה DIMTVP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
@@ -9668,7 +9669,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>הגדר את פער הטקסט הנוכחי, שהוא המרחק סביב טקסט המימד כאשר קו המימד שבור כדי להתאים את הטקסט המימד (DIMGAP משתנה).</translation>
+        <translation>קובע את מרווח הטקסט הנוכחי, כלומר המרחק סביב טקסט המידה כאשר קו המידה נקטע כדי לפנות מקום לטקסט המידה (משתנה המערכת DIMGAP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9693,7 +9694,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>צייר קווי מימד בין הנקודות המדוייקות גם כאשר החצים ממוקמים מחוץ לנקודות המדוייקות. (DIMTOFL מערכת משתנה)</translation>
+        <translation>מצייר קווי מידה בין הנקודות הנמדדות גם כאשר החצים ממוקמים מחוץ לנקודות הנמדדות. (משתנה המערכת DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
@@ -9703,13 +9704,13 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
         <source>Scale</source>
-        <translation>סולם</translation>
+        <translation>קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>הגדר סקאלה עבור כל הגדרות סגנון מימד המציין גודל, מרחק או ספאק, כולל טקסט וגדלי החצים. סולם זה אינו משנה את ערכי המדידה. (DIMSCING Systemמשתנה)</translation>
+        <translation>קובע קנה מידה לכל הגדרות סגנון המידה המציינות גודל, מרחק או מרווח, כולל גודל הטקסט וגודל החצים. קנה מידה זה אינו משנה את ערכי המדידה של המידות. (משתנה המערכת DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9729,7 +9730,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>אם נבחר, מעביר את קו המימד בכל פעם שהטקסט נע. (DIMTM Systemמשתנה)</translation>
+        <translation>אם מסומן, קו המידה זז בכל פעם שטקסט המידה מוזז. (משתנה המערכת DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -9739,12 +9740,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>אם נבחר, קווי ממד אינם זזים כאשר הטקסט מועבר. אם הטקסט מתרחק מן קו המימד, קו מוביל נוצר המחבר את הטקסט לקו הממד. קו המנהיג מוזנח כאשר הטקסט קרוב מדי לקו המימד. (DIMTM Systemמשתנה)</translation>
+        <translation>אם מסומן, קווי המידה אינם זזים כאשר הטקסט מוזז. אם הטקסט מורחק מקו המידה, נוצר קו הפניה המחבר את הטקסט לקו המידה. קו ההפניה מושמט כאשר הטקסט קרוב מדי לקו המידה. (משתנה המערכת DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>מעל קו מימד, עם מנהיג</translation>
+        <translation>מעל קו המידה, עם קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9754,12 +9755,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>אם נבחר, קווי ממד אינם זזים כאשר הטקסט מועבר. טקסט שנע הרחק מקו המימד אינו מחובר לקו המימד עם מנהיג. (DIMTM Systemמשתנה)</translation>
+        <translation>אם מסומן, קווי המידה אינם זזים כאשר הטקסט מוזז. טקסט שמורחק מקו המידה אינו מחובר לקו המידה באמצעות קו הפניה. (משתנה המערכת DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>מעל קו מימד, ללא מנהיג</translation>
+        <translation>מעל קו המידה, ללא קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9769,22 +9770,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>אם אין מספיק מקום למקם את הטקסט והחץ בתוך קווי הרחבה, הדבר הראשון לנוע מחוץ לקווי הרחבה הוא:</translation>
+        <translation>אם אין מספיק מקום להציב גם את הטקסט וגם את החץ בין קווי העזר, הרכיב הראשון שיועבר אל מחוץ לקווי העזר הוא:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Suppresses arrowheads אם לא מספיק שטח זמין בתוך קווי הרחבה. (DIMSOXD מערכת משתנה)</translation>
+        <translation>מבטל את הצגת החצים אם אין מספיק מקום בין קווי העזר. (משתנה המערכת DIMSOXD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>חץ מדכא אם הם לא מתאימים בתוך קווי הרחבה</translation>
+        <translation>הסתר חצים אם אינם נכנסים בין קווי העזר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>כאשר לא מספיק שטח זמין עבור טקסט וחץ, נע הן מחוץ קווי הרחבה (DIMATFIT מערכת משתנה).</translation>
+        <translation>כאשר אין מספיק מקום לטקסט ולחצים, מעביר את שניהם אל מחוץ לקווי העזר (משתנה המערכת DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9794,7 +9795,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>מעביר את הטקסט או את החצים מחוץ לקווי הרחבה המבוססים על ההתאמה הטובה ביותר (DIMATFIT משתנה).</translation>
+        <translation>מעביר את הטקסט או את החצים אל מחוץ לקווי העזר, לפי ההתאמה הטובה ביותר (משתנה המערכת DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9804,7 +9805,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>נע חצים מחוץ קווי הרחבה קודם, ולאחר מכן טקסט (DIMATFIT משתנה).</translation>
+        <translation>מעביר תחילה את החצים אל מחוץ לקווי העזר, ואחר כך את הטקסט (משתנה המערכת DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9819,12 +9820,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>תמיד מציב טקסט בין קווי הרחבה. (DIMTIX מערכת משתנה)</translation>
+        <translation>ממקם תמיד את הטקסט בין קווי העזר. (משתנה המערכת DIMTIX)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>תמיד מתאים טקסט בין השורות</translation>
+        <translation>מקם תמיד את הטקסט בין קווי העזר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9843,7 +9844,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2120"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2220"/>
         <source>Precision:</source>
-        <translation>זהירות:</translation>
+        <translation>דיוק:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1346"/>
@@ -9892,7 +9893,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>הגדר את מספר המקומות העשריים עבור ממדים זוויתיים. משתנה מערכת DIMADEC)</translation>
+        <translation>קובע את מספר הספרות אחרי הנקודה העשרונית במידות זוויתיות. (משתנה המערכת DIMADEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
@@ -9908,7 +9909,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
         <source>Measurement scale</source>
-        <translation>סולם</translation>
+        <translation>קנה מידה של מדידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1437"/>
@@ -9918,22 +9919,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>הגדר גורם בקנה מידה למדידות ממד ליניאריות. מומלץ לא לשנות את הערך הזה משווי ברירת המחדל של 1.00. (DIMLFAC משתנה)</translation>
+        <translation>קובע מקדם קנה מידה למדידות של מידות ליניאריות. מומלץ לא לשנות ערך זה מערך ברירת המחדל 1.00. (משתנה המערכת DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>להעריך את מדד קנה המידה המדידה רק לממדים שנוצרו בתצוגות הפריסה.</translation>
+        <translation>מחיל את מקדם קנה המידה של המדידה רק על מידות שנוצרו בחלונות תצוגה של פריסה. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>שימוש במבנים רק</translation>
+        <translation>החל רק על מידות בפריסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
         <source>Fraction format:</source>
-        <translation>פורמט הונאה:</translation>
+        <translation>פורמט שברים:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
@@ -9948,12 +9949,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>כולל suffix שאתה מציין בטקסט הממד. (DIMPOST מערכת משתנה)</translation>
+        <translation>כולל סיומת שתציין בטקסט המידה. (משתנה המערכת DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>הגדר את התבנית הנוכחית של יחידות עבור כל סוגי הממדים למעט Angular. (DIMLUNIT משתנה)</translation>
+        <translation>קובע את פורמט היחידות הנוכחי עבור כל סוגי המידות למעט מידות זוויתיות. (משתנה המערכת DIMLUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9979,17 +9980,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>הגדר ערך עגול הקרוב ביותר למדידות ממד עבור כל סוגי הממדים למעט Angular. (DIMRND מערכת משתנה)</translation>
+        <translation>קובע את ערך העיגול של מדידות המידה עבור כל סוגי המידות למעט מידות זוויתיות. (משתנה המערכת DIMRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>מציג ומגדיר את מספר המקומות העשריים בטקסט המימד. (DIMDEC משתנה)</translation>
+        <translation>מציג וקובע את מספר הספרות אחרי הנקודה העשרונית בטקסט המידה. (משתנה המערכת DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>כולל תיקון שאתה מציין בטקסט המימד. (DIMPOST מערכת משתנה)</translation>
+        <translation>כולל קידומת שתציין בטקסט המידה. (משתנה המערכת DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -10016,17 +10017,17 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1610"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1868"/>
         <source>Sub-units factor:</source>
-        <translation>גורם ענישה:</translation>
+        <translation>מקדם יחידות משנה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>מדכאים רודפים אפסים בכל הממדים העשרניים. (DIMZIN מערכת משתנה)</translation>
+        <translation>משמיט אפסים נגררים בכל המידות העשרוניות. (משתנה המערכת DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>מדכאים את החלק הסנטימטרי של מימד רגליים-וזנים כאשר המרחק הוא מספר אינטגרלי של מטרים (DIMZIN מערכת משתנה)</translation>
+        <translation> משמיט את חלק האינצ&apos;ים במידה ברגליים ואינצ&apos;ים כאשר המרחק הוא מספר שלם של רגליים (משתנה המערכת DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10039,7 +10040,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>מדכאים את החלק הרגליים של מימד רגליים וזנים כאשר המרחק הוא פחות מרגל אחת. (DIMZIN מערכת משתנה)</translation>
+        <translation>משמיט את חלק הרגליים במידה ברגליים ואינצ&apos;ים כאשר המרחק קטן מרגל אחת. (משתנה המערכת DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10063,12 +10064,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>מספר יחידות משנה ליחידה. הוא משמש לחישוב מרחק הממד ביחידה תת-קרקעית כאשר המרחק הוא פחות מיחידה אחת.</translation>
+        <translation>קובע את מספר יחידות המשנה ביחידה אחת. משמש לחישוב מרחק המידה ביחידות משנה כאשר המרחק קטן מיחידה אחת. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>כולל suffix ליחידת ערך הממד. באפשרותך להזין טקסט או להשתמש בקודי בקרה כדי להציג סמלים מיוחדים.</translation>
+        <translation>כולל סיומת ליחידת המשנה של ערך המידה. ניתן להזין טקסט או להשתמש בקודי בקרה להצגת סמלים מיוחדים.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10078,7 +10079,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>הוסף יחידות מדידה חלופיות לטקסט ממדי. מערכת DIMALT משתנה ל-1.</translation>
+        <translation>מוסיף יחידות מדידה חלופיות לטקסט המידה. קובע את משתנה המערכת DIMALT ל-1.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10093,7 +10094,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>מפרט את ההכפלה המשמשת כגורם המרה בין יחידות ראשוניות וחלופה. לדוגמה, כדי להמיר ס&quot;מ למילימטרים, הזן 25.4. הערך אין השפעה על ממדים זוויתיים, והוא אינו חל על הערך העגול או על ערכי פלוס או מינוס סובלנות. (משתנה מערכת DIMALTF)</translation>
+        <translation>מציין את המכפיל המשמש כמקדם ההמרה בין היחידות הראשיות ליחידות החלופיות. לדוגמה, כדי להמיר אינצ&apos;ים למילימטרים, הזן 25.4. לערך אין השפעה על מידות זוויתיות, והוא אינו מוחל על ערך העיגול או על ערכי הסבולת בפלוס או במינוס. (משתנה המערכת DIMALTF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10103,7 +10104,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>קביעת כללים עגולים עבור יחידות חלופיות לכל סוגי הממדים למעט Angular. אם אתה נכנס לערך של 0.25, כל המדידות החלופיות מוצפות ליחידת 0.25 הקרובה ביותר. אם אתה נכנס לערך של 1.0, כל המדידות ממדיות מעוגלות ל-Integer הקרוב ביותר. מספר הספרות המוצגת לאחר הנקודה העשרונית תלוי בהגדרה של Precision. (DIMALTRND מערכת משתנה)</translation>
+        <translation>קובע כללי עיגול ליחידות החלופיות עבור כל סוגי המידות למעט מידות זוויתיות. אם תזין ערך של 0.25, כל המדידות החלופיות יעוגלו לכפולה הקרובה ביותר של 0.25 יחידה. אם תזין ערך של 1.0, כל מדידות המידה יעוגלו למספר השלם הקרוב ביותר. מספר הספרות המוצגות אחרי הנקודה העשרונית תלוי בהגדרת הדיוק. (משתנה המערכת DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -10138,7 +10139,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>כולל תיקון בטקסט מימד חלופי. באפשרותך להזין טקסט או להשתמש בקודי בקרה כדי להציג סמלים מיוחדים. לדוגמה, כניסה לקוד הבקרה Code%c מציגה את סמל הקוטר. (DIMAPOST מערכת משתנה)</translation>
+        <translation>כולל קידומת בטקסט המידה החלופי. ניתן להזין טקסט או להשתמש בקודי בקרה להצגת סמלים מיוחדים. לדוגמה, הזנת קוד הבקרה %%c מציגה את סמל הקוטר. (משתנה המערכת DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -10148,22 +10149,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>מדכאים מובילים אפסים בכל הממדים העשרניים. לדוגמה, 0.5000 הופך .5,000.</translation>
+        <translation>משמיט אפסים מובילים בכל המידות העשרוניות. לדוגמה, 0.5000 הופך ל-.5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>מדכאים רודפים אפסים בכל הממדים העשרניים. לדוגמה, 12.5000 הופך 12.5, ו -30.0000 הופך ל -30 (משתנה מערכת DIMALTZ).</translation>
+        <translation>משמיט אפסים נגררים בכל המידות העשרוניות. לדוגמה, 12.5000 הופך ל-12.5, ו-30.0000 הופך ל-30 (משתנה המערכת DIMALTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>מדכאים את החלק הרגליים של מימד רגליים וזנים כאשר המרחק הוא פחות מ 1 רגל. לדוגמה, 0&apos;-6 1/2&quot; הופך ל-6 1/2&quot; (משתנה מערכת DIMALTZ)</translation>
+        <translation>משמיט את חלק הרגליים במידה ברגליים ואינצ&apos;ים כאשר המרחק קטן מ-1 רגל. לדוגמה, 0&apos;-6 1/2&quot; הופך ל-6 1/2&quot; (משתנה המערכת DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>מדכא את החלק הסנטימטרי של מימד רגליים-וזנים כאשר המרחק הוא מספר בלתי נפרד של רגליים. לדוגמה, 1&apos;-0&apos; הופך ל-1&apos;</translation>
+        <translation>משמיט את חלק האינצ&apos;ים במידה ברגליים ואינצ&apos;ים כאשר המרחק הוא מספר שלם של רגליים. לדוגמה, 1&apos;-0&quot; הופך ל-1&apos;. (משתנה המערכת DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -10173,17 +10174,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>כולל suffix בטקסט מימד חלופי. באפשרותך להזין טקסט או להשתמש בקודי בקרה כדי להציג סמלים מיוחדים. לדוגמה, כניסה ל- טקסט ס&quot;מ תוצאות בטקסט בדומה לזה שמוצג באיור. כאשר אתה נכנס suffix, זה מעל לכל suffixes ברירת מחדל. (DIMAPOST מערכת משתנה)</translation>
+        <translation>כולל סיומת בטקסט המידה החלופי. ניתן להזין טקסט או להשתמש בקודי בקרה להצגת סמלים מיוחדים. לדוגמה, הזנת הטקסט cm יוצרת טקסט מידה דומה לזה שמוצג באיור. סיומת שתזין גוברת על כל סיומת ברירת מחדל. (משתנה המערכת DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
         <source>Tolerances</source>
-        <translation>סובלנות</translation>
+        <translation>סבולות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>הגדר את ערך הסובלנות המינימלי או התחתון. (DIMTM Systemמשתנה)</translation>
+        <translation>קובע את ערך הסבולת המזערי או התחתון. (משתנה המערכת DIMTM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
@@ -10193,22 +10194,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>חומרים מדכאים רודפים אפסים בכל הממדים העשריים (DIMTZIN Systemמשתנה).</translation>
+        <translation>משמיט אפסים נגררים בכל המידות העשרוניות (משתנה המערכת DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>מדכאים את החלק הרגליים של מימד רגליים וזנים כאשר המרחק הוא פחות מ 1 רגל (DIMTZIN מערכת משתנה).</translation>
+        <translation>משמיט את חלק הרגליים במידה ברגליים ואינצ&apos;ים כאשר המרחק קטן מ-1 רגל (משתנה המערכת DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>מדכאים את החלק הסנטימטרי של מימד רגליים-וזנים כאשר המרחק הוא מספר בלתי נפרד של רגליים (DIMTZIN מערכת משתנה).</translation>
+        <translation>משמיט את חלק האינצ&apos;ים במידה ברגליים ואינצ&apos;ים כאשר המרחק הוא מספר שלם של רגליים (משתנה המערכת DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
         <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation>הגדר את השיטה לחישוב הסובלנות. (DIMTOL משתנה)</translation>
+        <translation>קובע את השיטה לחישוב הסבולת. (משתנה המערכת DIMTOL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2068"/>
@@ -10233,7 +10234,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>בקרת טקסט הצדקה לסובלנות סימטרית וסטייה (DIMTOLJ systemמשתנה).</translation>
+        <translation>קובע את יישור הטקסט עבור סבולות סימטריות וסבולות סטייה (משתנה המערכת DIMTOLJ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10263,12 +10264,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2134"/>
         <source>Sets the number of decimal places. (DIMTDEC system variable)</source>
-        <translation>הגדר את מספר המקומות הקדושים. (DIMTDEC משתנה)</translation>
+        <translation>קובע את מספר הספרות אחרי הנקודה העשרונית. (משתנה המערכת DIMTDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>הגדר את הערך המקסימלי או העליון של סובלנות. כאשר אתה בוחר סימפמטריות בשיטה, ערך זה משמש לסובלנות. (DIMTP מערכת משתנה)</translation>
+        <translation>קובע את ערך הסבולת המרבי או העליון. כאשר בוחרים &quot;סימטרית&quot; בשיטה, ערך זה משמש כסבולת. (משתנה המערכת DIMTP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10278,22 +10279,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2158"/>
         <source>Vertical position:</source>
-        <translation>מיקום רציונאלי:</translation>
+        <translation>מיקום אנכי:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>הגדר את הגובה הנוכחי לטקסט הסובלנות. היחס של גובה הסובלנות לגובה הטקסט הממד העיקרי מחושב ומאוחסן במשתנה מערכת DIMTFAC.</translation>
+        <translation>קובע את הגובה הנוכחי של טקסט הסבולת. היחס בין גובה הסבולת לגובה טקסט המידה הראשי מחושב ונשמר במשתנה המערכת DIMTFAC.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
         <source>Scaling for height:</source>
-        <translation>סקר גובה:</translation>
+        <translation>קנה מידה לגובה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
         <source>Tolerance Adjustment</source>
-        <translation>הסתגלות</translation>
+        <translation>כוונון סבולת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2188"/>
@@ -10318,12 +10319,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
         <source>Alternate Unit Tolerance</source>
-        <translation>אפשרות חלופית לסובלנות</translation>
+        <translation>סבולת ביחידות חלופיות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
         <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation>הצגות ומגדירות את מספר המקומות הקדושים. (DIMALTTD מערכת משתנה)</translation>
+        <translation>מציג וקובע את מספר הספרות אחרי הנקודה העשרונית. (משתנה המערכת DIMALTTD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
@@ -10333,17 +10334,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>חומרים מדכאים רודפים אפסים בכל הממדים העשריים (DIMALTTZ systemמשתנה).</translation>
+        <translation>משמיט אפסים נגררים בכל המידות העשרוניות (משתנה המערכת DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>מדכאים את החלק הרגליים של מימד רגליים וזנים כאשר המרחק הוא פחות מ 1 רגל (DIMALTTZ משתנה).</translation>
+        <translation>משמיט את חלק הרגליים במידה ברגליים ואינצ&apos;ים כאשר המרחק קטן מ-1 רגל (משתנה המערכת DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>מדכא את החלק הסנטימטרי של מימד רגליים-וזנים כאשר המרחק הוא מספר אינטגרלי של מטרים (DIMALTTZ משתנה).</translation>
+        <translation>משמיט את חלק האינצ&apos;ים במידה ברגליים ואינצ&apos;ים כאשר המרחק הוא מספר שלם של רגליים (משתנה המערכת DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10363,7 +10364,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="14"/>
         <source>Dimension</source>
-        <translation>המימד</translation>
+        <translation>מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
@@ -10393,12 +10394,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="260"/>
         <source>Apply style to dimension</source>
-        <translation>החל סגנון לממד</translation>
+        <translation>החל סגנון על המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>סגנון ממד</translation>
+        <translation>בחר סגנון מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
@@ -10423,7 +10424,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>להגדיר סגנון פעיל כאחד. סגנון פעיל מוחל על ממדים חדשים שנוצרו.</translation>
+        <translation>קבע את הסגנון כסגנון הפעיל. הסגנון הפעיל מוחל על מידות חדשות שנוצרות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10455,7 +10456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>סגנון פעיל מוחל כאשר נוצר מימד חדש.</translation>
+        <translation>הסגנון הפעיל שמוחל בעת יצירת מידה חדשה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10495,7 +10496,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>שם של סגנון עבור ישות ממדית זו</translation>
+        <translation>שם הסגנון של ישות מידה זו</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10521,7 +10522,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="145"/>
         <source>Rotation angle of dimension</source>
-        <translation>זווית רוטציה של מימד</translation>
+        <translation>זווית הסיבוב של המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
@@ -10541,7 +10542,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>מימד אנכי</translation>
+        <translation>מידת קואורדינטה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
@@ -10556,17 +10557,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
         <source>Angular Dimension</source>
-        <translation>מימד זוויתי</translation>
+        <translation>מידה זוויתית</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>מימד קשת</translation>
+        <translation>מידת קשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
         <source>Diametric Dimension</source>
-        <translation>מימד קוטרי</translation>
+        <translation>מידת קוטר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
@@ -10576,7 +10577,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10597,7 +10598,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>החלפת סגנון מימד חדש -</translation>
+        <translation>דריסה חדשה של סגנון מידה - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
@@ -10702,7 +10703,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -11109,7 +11110,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>יושרה</translation>
+        <translation>ישות חסרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
@@ -11184,22 +11185,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>ממד שלישי Aligned</translation>
+        <translation>מידה מיושרת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>המימד דיאמטרי</translation>
+        <translation>מידת קוטר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>מימד Radial</translation>
+        <translation>מידה רדיאלית</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>מימד Ordinate</translation>
+        <translation>מידת קואורדינטה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
@@ -11209,12 +11210,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>מנהיג</translation>
+        <translation>קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>הערה: הקצאת התפריט תתעלמו. היא שמורה ל&quot;נכסים רוחניים&quot;.</translation>
+        <translation>הערה: הקצאת התפריט לא תילקח בחשבון. היא שמורה ל&apos;מאפייני ישות&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
@@ -11441,7 +11442,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>סגנון מימד חדש</translation>
+        <translation>סגנון מידה חדש</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11451,12 +11452,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>Defines סוג של ממדים נשלטים על ידי סגנון זה.</translation>
+        <translation>קובע אילו סוגי מידות נשלטים על ידי סגנון זה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>כל הממדים</translation>
+        <translation>כל המידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
@@ -11486,7 +11487,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>מנהיג וסובלנות</translation>
+        <translation>קו הפניה וסבולות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11496,7 +11497,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>סגנון ממד קיים שסגנון חדש מבוסס</translation>
+        <translation>סגנון המידה הקיים שעליו מבוסס הסגנון החדש</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11516,7 +11517,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>שם של סגנון ממד (%1) אינו ייחודי! אנא כנסו אחד לשני.</translation>
+        <translation>שם סגנון המידה שסופק (%1) אינו ייחודי! הזן שם אחר.</translation>
     </message>
 </context>
 <context>
@@ -11815,7 +11816,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="128"/>
         <source>Grid</source>
-        <translation type="unfinished">גרי</translation>
+        <translation type="unfinished">רשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
@@ -12122,12 +12123,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>שכבת הממד</translation>
+        <translation>שכבת המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>תכונות הפין</translation>
+        <translation>תכונות העט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12147,7 +12148,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="127"/>
         <source>Stated Tolerance</source>
-        <translation>סובלנות</translation>
+        <translation>סבולת מוצהרת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="133"/>
@@ -12173,7 +12174,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
 </context>
 <context>
@@ -12226,7 +12227,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>אם תיבת הסימון מסומנת, תוצג העמודה עם פרטים על מקור וזווית ה-UCS בטבלה.</translation>
+        <translation>אם מסומן, תוצג בטבלה עמודה עם פרטי הראשית והזווית של ה-UCS.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
@@ -12276,7 +12277,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
         <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation>אם מופעל, לחץ על פריט הטבלה יחול על מערכת לתאם. אחרת, יש ליישם את המערכת באופן מפורש.</translation>
+        <translation>אם מופעל, לחיצה על פריט בטבלה תחיל את מערכת הקואורדינטות. אחרת, יש להחיל את מערכת הקואורדינטות במפורש.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="156"/>
@@ -12409,7 +12410,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="69"/>
         <source>Origin:</source>
-        <translation>מקור:</translation>
+        <translation>ראשית:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
@@ -12813,7 +12814,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">אם הוא נבחר, תיבת כיסוי נמשכת כפולילין</translation>
+        <translation type="unfinished">אם מסומן, התיבה התוחמת מצוירת כפוליליין</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12841,7 +12842,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="46"/>
         <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="unfinished">אם נבחר, רק נקודות פינה יימשכו לקופסא. אחרת, קווי קצה יימשכו.</translation>
+        <translation type="unfinished">אם מסומן, יצוירו רק נקודות הפינה של התיבה התוחמת. אחרת, יצוירו קווי הצלעות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="49"/>
@@ -12856,7 +12857,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">אם הוא נבחר, תיבת כיסוי נמשכת כפולילין</translation>
+        <translation type="unfinished">אם מסומן, התיבה התוחמת מצוירת כפוליליין</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
@@ -12899,7 +12900,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">תחילתו של Horizontal של הישות המקורית</translation>
+        <translation type="unfinished">ההיסט האופקי של השכפול מהישות המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12909,7 +12910,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">תחילתה של שכפול מישות מקורית</translation>
+        <translation type="unfinished">ההיסט האנכי של השכפול מהישות המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -12934,7 +12935,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">עונש על ייצור כפול</translation>
+        <translation type="unfinished">העט שיוחל על השכפול שנוצר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12991,7 +12992,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">עונש על ייצור כפול</translation>
+        <translation type="unfinished">העט שיוחל על השכפול שנוצר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13014,12 +13015,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">תחילתו של Horizontal של הישות המקורית</translation>
+        <translation type="unfinished">ההיסט האופקי של השכפול מהישות המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">תחילתה של שכפול מישות מקורית</translation>
+        <translation type="unfinished">ההיסט האנכי של השכפול מהישות המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
@@ -13029,7 +13030,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">הקודם Y:</translation>
+        <translation type="unfinished">היסט Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
@@ -13130,7 +13131,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="32"/>
         <source>Clockwise</source>
-        <translation type="unfinished">שעון חכם</translation>
+        <translation type="unfinished">בכיוון השעון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="71"/>
@@ -13160,7 +13161,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="129"/>
@@ -13221,7 +13222,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="56"/>
         <source>Clockwise</source>
-        <translation type="unfinished">שעון חכם</translation>
+        <translation type="unfinished">בכיוון השעון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="85"/>
@@ -13249,7 +13250,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="81"/>
         <source>X Coordinate of ellipse&apos;s center</source>
-        <translation>X תואם את מרכז אליפס</translation>
+        <translation>קואורדינטת X של מרכז האליפסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="106"/>
@@ -13264,7 +13265,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y לתאם את מרכז קשת</translation>
+        <translation>קואורדינטת Y של מרכז הקשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="154"/>
@@ -13434,7 +13435,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">ממד שלישי Aligned</translation>
+        <translation type="unfinished">מידה מיושרת</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
@@ -13444,7 +13445,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">מימד Ordinate</translation>
+        <translation type="unfinished">מידת קואורדינטה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13454,12 +13455,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">מימד Radial</translation>
+        <translation type="unfinished">מידה רדיאלית</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">המימד דיאמטרי</translation>
+        <translation type="unfinished">מידת קוטר</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
@@ -13474,7 +13475,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">מנהיג</translation>
+        <translation type="unfinished">קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13602,7 +13603,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
@@ -13827,7 +13828,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished">סולם:</translation>
+        <translation type="unfinished">קנה מידה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="88"/>
@@ -14121,7 +14122,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_filler.cpp" line="37"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_filler.cpp" line="37"/>
@@ -14169,7 +14170,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="106"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="113"/>
@@ -14197,7 +14198,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="57"/>
         <source>Scale X:</source>
-        <translation type="unfinished">סולם X:</translation>
+        <translation type="unfinished">קנה מידה X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="70"/>
@@ -14238,7 +14239,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="191"/>
         <source>X coordinate of insertion point</source>
-        <translation>X לתאם נקודה</translation>
+        <translation>קואורדינטת X של נקודת ההכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="212"/>
@@ -14253,7 +14254,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="273"/>
         <source>Scale Y:</source>
-        <translation type="unfinished">סולם Y:</translation>
+        <translation type="unfinished">קנה מידה Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="298"/>
@@ -14268,7 +14269,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="253"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Y לתאם את נקודת הפתיחה</translation>
+        <translation>קואורדינטת Y של נקודת ההכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="50"/>
@@ -14409,7 +14410,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="60"/>
         <source>X coordinate of insertion point</source>
-        <translation>X לתאם נקודה</translation>
+        <translation>קואורדינטת X של נקודת ההכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="85"/>
@@ -14424,12 +14425,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="111"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Y לתאם את נקודת הפתיחה</translation>
+        <translation>קואורדינטת Y של נקודת ההכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="118"/>
         <source>Scale X:</source>
-        <translation>סולם X:</translation>
+        <translation>קנה מידה X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="137"/>
@@ -14444,7 +14445,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
         <source>Scale Y:</source>
-        <translation>סולם Y:</translation>
+        <translation>קנה מידה Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="177"/>
@@ -14514,7 +14515,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="349"/>
         <source>Spacing between columns</source>
-        <translation>ספיגה בין עמודות</translation>
+        <translation>מרווח בין עמודות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="356"/>
@@ -14567,12 +14568,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>שכבה המכילה ממדים</translation>
+        <translation>שכבה המכילה מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>ממדים</translation>
+        <translation>מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
@@ -14723,12 +14724,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>ממדים</translation>
+        <translation>מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>סיומת שם השכבה המגדירה שהשכבה היא שכבת ממדים</translation>
+        <translation>סיומת שם השכבה המציינת שהשכבה היא שכבת מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -14977,7 +14978,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>שכבת ממדים</translation>
+        <translation>שכבת מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15102,7 +15103,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>הוסף שכבת ממדים</translation>
+        <translation>הוסף שכבת מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15162,7 +15163,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>הוס&amp;ף תת-שכבת ממדים</translation>
+        <translation>הוס&amp;ף תת-שכבת מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
@@ -15183,7 +15184,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>המר לשכבת ממדים</translation>
+        <translation>המר לשכבת מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
@@ -15337,7 +15338,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="47"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
@@ -15387,7 +15388,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
         <source>To Angles Basis</source>
-        <translation type="unfinished">אנגלית Basis</translation>
+        <translation type="unfinished">לבסיס הזוויות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="99"/>
@@ -15450,7 +15451,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="179"/>
         <source>To Angles Basis</source>
-        <translation type="unfinished">אנגלית Basis</translation>
+        <translation type="unfinished">לבסיס הזוויות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="198"/>
@@ -15490,7 +15491,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="70"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
 </context>
 <context>
@@ -15538,7 +15539,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
@@ -15581,7 +15582,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Defines אשר חלק של קו שנוצר יהיה מצופה נקודת צומת</translation>
+        <translation type="unfinished">קובע איזה חלק של הקו שנוצר יוצמד לנקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15591,7 +15592,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">נקודת התחלה של סמן מנקודת מפנה</translation>
+        <translation type="unfinished">היסט נקודת ההצמדה של הסימון מנקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15614,7 +15615,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">מרחק נקודת צומת מ-Square Line Point</translation>
+        <translation type="unfinished">מרחק נקודת החיתוך מנקודת ההצמדה שצוינה על הקו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
@@ -15625,7 +15626,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
         <source>Free</source>
         <comment>linesnap</comment>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="66"/>
@@ -15693,7 +15694,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
@@ -15723,12 +15724,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">נקודת התחלה של סמן מנקודת מפנה</translation>
+        <translation type="unfinished">היסט נקודת ההצמדה של הסימון מנקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Defines אשר חלק של קו שנוצר יהיה מצופה נקודת צומת</translation>
+        <translation type="unfinished">קובע איזה חלק של הקו שנוצר יוצמד לנקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15827,7 +15828,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">לשלב</translation>
+        <translation type="unfinished">עד נקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -15852,7 +15853,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">המונחים: created line from point</translation>
+        <translation type="unfinished">היסט הקו הנוצר מנקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15887,7 +15888,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snap Point for created line</translation>
+        <translation type="unfinished">נקודת הצמדה לקו הנוצר</translation>
     </message>
 </context>
 <context>
@@ -15920,7 +15921,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snap Point for created line</translation>
+        <translation type="unfinished">נקודת הצמדה לקו הנוצר</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15960,12 +15961,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">המונחים: created line from point</translation>
+        <translation type="unfinished">היסט הקו הנוצר מנקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
         <source>End offset:</source>
-        <translation type="unfinished">סוף התחלה:</translation>
+        <translation type="unfinished">היסט סיום:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="273"/>
@@ -15980,7 +15981,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">לשלב</translation>
+        <translation type="unfinished">עד נקודת החיתוך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -16023,7 +16024,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
@@ -16071,7 +16072,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">נקודת סניפי של פער לשורה</translation>
+        <translation type="unfinished">נקודת ההצמדה של המרווח לנקודת ההצמדה של הקו</translation>
     </message>
 </context>
 <context>
@@ -16084,7 +16085,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">נקודת סניפי של פער לשורה</translation>
+        <translation type="unfinished">נקודת ההצמדה של המרווח לנקודת ההצמדה של הקו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16123,7 +16124,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
         <source>Free</source>
         <comment>snap</comment>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="77"/>
@@ -16166,7 +16167,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
@@ -16210,7 +16211,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">מדיניות ההצטרפות לשורה שנבחרה לראשונה</translation>
+        <translation type="unfinished">מדיניות החיבור עבור הקו שנבחר ראשון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
@@ -16317,7 +16318,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">מדיניות ההצטרפות לשורה שנבחרה לראשונה</translation>
+        <translation type="unfinished">מדיניות החיבור עבור הקו שנבחר ראשון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
@@ -16370,7 +16371,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="31"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">יצירת קונוס סגור מן השורות</translation>
+        <translation type="unfinished">צור קונטור סגור מהקווים ששורטטו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="36"/>
@@ -16395,7 +16396,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo השורה האחרונה</translation>
+        <translation type="unfinished">בצע שוב את שרטוט הקו האחרון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="46"/>
@@ -16413,7 +16414,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">יצירת קונוס סגור מן השורות</translation>
+        <translation type="unfinished">צור קונטור סגור מהקווים ששורטטו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="56"/>
@@ -16433,7 +16434,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo השורה האחרונה</translation>
+        <translation type="unfinished">בצע שוב את שרטוט הקו האחרון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="85"/>
@@ -16578,7 +16579,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="38"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">אם תבדוק, קו הנקודות יימשכו עם זווית מוגדרת</translation>
+        <translation type="unfinished">אם מסומן, קו הנקודות יצויר בזווית שצוינה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="41"/>
@@ -16691,7 +16692,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="107"/>
         <source>Starting point Y coordinate</source>
-        <translation>נקודת התחלה Y לתאם</translation>
+        <translation>קואורדינטת Y של נקודת ההתחלה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="114"/>
@@ -16701,7 +16702,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="130"/>
         <source>Starting point X coordinate</source>
-        <translation>שלב X לתאם</translation>
+        <translation>קואורדינטת X של נקודת ההתחלה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="137"/>
@@ -16711,12 +16712,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="153"/>
         <source>Ending point Y coordinate</source>
-        <translation>שלב Y לתאם</translation>
+        <translation>קואורדינטת Y של נקודת הסיום</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="166"/>
         <source>Ending point X coordinate</source>
-        <translation>שלב X לתאם</translation>
+        <translation>קואורדינטת X של נקודת הסיום</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
@@ -16774,7 +16775,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="51"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
@@ -16898,7 +16899,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="163"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
@@ -17018,7 +17019,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
         <source>If checked, angle is relative to previous segment</source>
-        <translation type="unfinished">אם בודקים, זווית היא יחסית למגזר הקודם</translation>
+        <translation type="unfinished">אם מסומן, הזווית יחסית לקטע הקודם</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
@@ -17028,7 +17029,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">יצירת קונוס סגור מן השורות</translation>
+        <translation type="unfinished">צור קונטור סגור מהקווים ששורטטו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
@@ -17064,7 +17065,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo השורה האחרונה</translation>
+        <translation type="unfinished">בצע שוב את שרטוט הקו האחרון</translation>
     </message>
 </context>
 <context>
@@ -17127,7 +17128,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="247"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo השורה האחרונה</translation>
+        <translation type="unfinished">בצע שוב את שרטוט הקו האחרון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="250"/>
@@ -17147,7 +17148,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="267"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">יצירת קונוס סגור מן השורות</translation>
+        <translation type="unfinished">צור קונטור סגור מהקווים ששורטטו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="270"/>
@@ -17158,7 +17159,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="unfinished">אם בודקים, זווית היא יחסית למגזר הקודם</translation>
+        <translation type="unfinished">אם מסומן, הזווית יחסית לקטע הקודם</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="314"/>
@@ -17622,7 +17623,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">מדחום מעגל</translation>
+        <translation type="unfinished">קוטר המעגל</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="49"/>
@@ -17651,7 +17652,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">ממד שלישי Aligned</translation>
+        <translation type="unfinished">מידה מיושרת</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -18221,7 +18222,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">מעל מימד טקסט</translation>
+        <translation type="unfinished">מעל טקסט המידה</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18507,7 +18508,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="578"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="679"/>
         <source>Fractional</source>
-        <translation type="unfinished">הונאה</translation>
+        <translation type="unfinished">שברים</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="579"/>
@@ -19027,7 +19028,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">המימד דיאמטרי</translation>
+        <translation type="unfinished">מידת קוטר</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19163,7 +19164,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">מימד Ordinate</translation>
+        <translation type="unfinished">מידת קואורדינטה</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19281,7 +19282,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">מימד Radial</translation>
+        <translation type="unfinished">מידה רדיאלית</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19499,7 +19500,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="42"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="42"/>
@@ -19754,7 +19755,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_image.cpp" line="47"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_image.cpp" line="47"/>
@@ -19872,7 +19873,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="66"/>
         <source>Scale X</source>
-        <translation type="unfinished">סולם X</translation>
+        <translation type="unfinished">קנה מידה X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="66"/>
@@ -19882,7 +19883,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="70"/>
         <source>Scale Y</source>
-        <translation type="unfinished">סולם Y</translation>
+        <translation type="unfinished">קנה מידה Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="70"/>
@@ -19935,7 +19936,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">מנהיג</translation>
+        <translation type="unfinished">קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20486,7 +20487,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
         <source>Degree</source>
-        <translation type="unfinished">תואר</translation>
+        <translation type="unfinished">דרגה</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20908,7 +20909,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation type="unfinished">הזמנה</translation>
+        <translation type="unfinished">סדר שרטוט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -21066,7 +21067,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1083"/>
         <source>Order</source>
-        <translation type="unfinished">הזמנה</translation>
+        <translation type="unfinished">סדר</translation>
     </message>
 </context>
 <context>
@@ -21240,7 +21241,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="230"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="270"/>
         <source>&amp;Order</source>
-        <translation type="unfinished">הזמנה</translation>
+        <translation type="unfinished">&amp;סדר</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
@@ -21532,7 +21533,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
         <source>Entity</source>
-        <translation>גמישות</translation>
+        <translation>ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
@@ -21610,7 +21611,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">אם תבדוק, תכונות נוכחיות ישמשו עבור ישויות ממושכות, אחרת - מקוריות.</translation>
+        <translation type="unfinished">אם מסומן, התכונות הנוכחיות ישמשו עבור הישויות המשוקפות, אחרת – התכונות המקוריות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
@@ -21731,7 +21732,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="98"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished">מספר שוטרים</translation>
+        <translation type="unfinished">עותקים מרובים</translation>
     </message>
 </context>
 <context>
@@ -21822,7 +21823,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">אפשרויות רוטט</translation>
+        <translation type="unfinished">אפשרויות הזזה וסיבוב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
@@ -21872,7 +21873,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
@@ -21897,7 +21898,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="176"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished">מספר שוטרים</translation>
+        <translation type="unfinished">עותקים מרובים</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="183"/>
@@ -22071,7 +22072,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="611"/>
         <source>Paper space view is not fully supported yet.</source>
-        <translation>ראיית חלל הנייר עדיין לא נתמכת באופן מלא.</translation>
+        <translation>תצוגה במרחב הנייר עדיין אינה נתמכת במלואה.</translation>
     </message>
 </context>
 <context>
@@ -22174,7 +22175,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="404"/>
         <source>In Paperspace: </source>
-        <translation>בחלל נייר:</translation>
+        <translation>במרחב הנייר: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="404"/>
@@ -22207,7 +22208,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">מרחק ליציאה מהישות המקורית</translation>
+        <translation type="unfinished">מרחק ההיסט מהישות המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22280,7 +22281,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="79"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished">מספר שוטרים</translation>
+        <translation type="unfinished">עותקים מרובים</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
@@ -22325,7 +22326,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">מרחק ליציאה מהישות המקורית</translation>
+        <translation type="unfinished">מרחק ההיסט מהישות המקורית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22387,7 +22388,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="31"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">זווית רוטציה לגופים שעברו</translation>
+        <translation type="unfinished">זווית סיבוב לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
@@ -22397,7 +22398,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">גורם בינוני לגופים שעברו</translation>
+        <translation type="unfinished">מקדם קנה מידה לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22407,7 +22408,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">אם נבחר, הישות הנקודה המשמשת כנקודת ההכנסה תימחק לאחר ניתוח פסים. אחרת, זה ישרוד.</translation>
+        <translation type="unfinished">אם נבחר, ישות הנקודה המשמשת כנקודת הכנסה תימחק לאחר פעולת ההדבקה. אחרת, היא תישמר.</translation>
     </message>
 </context>
 <context>
@@ -22420,17 +22421,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="73"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">זווית רוטציה לגופים שעברו</translation>
+        <translation type="unfinished">זווית סיבוב לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">אם נבחר, הישות הנקודה המשמשת כנקודת ההכנסה תימחק לאחר ניתוח פסים. אחרת, זה ישרוד.</translation>
+        <translation type="unfinished">אם נבחר, ישות הנקודה המשמשת כנקודת הכנסה תימחק לאחר פעולת ההדבקה. אחרת, היא תישמר.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22445,7 +22446,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">גורם בינוני לגופים שעברו</translation>
+        <translation type="unfinished">מקדם קנה מידה לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
@@ -22463,7 +22464,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">זווית רוטציה לגופים שעברו</translation>
+        <translation type="unfinished">זווית סיבוב לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
@@ -22473,7 +22474,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">גורם בינוני לגופים שעברו</translation>
+        <translation type="unfinished">מקדם קנה מידה לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22556,7 +22557,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">זווית רוטציה לגופים שעברו</translation>
+        <translation type="unfinished">זווית סיבוב לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
@@ -22571,7 +22572,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="85"/>
         <source>Spacing between entities insertion points in rows. </source>
-        <translation type="unfinished">ספיגה בין נקודות כניסה לשורה.</translation>
+        <translation type="unfinished">מרווח בין נקודות ההכנסה של הישויות בשורות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="92"/>
@@ -22596,17 +22597,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="158"/>
         <source>Array rows number.</source>
-        <translation type="unfinished">מספר שורות אריות.</translation>
+        <translation type="unfinished">מספר השורות במערך.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">גורם בינוני לגופים שעברו</translation>
+        <translation type="unfinished">מקדם קנה מידה לישויות המודבקות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">מקדם קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="207"/>
@@ -22621,12 +22622,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="235"/>
         <source>Array Angle:</source>
-        <translation type="unfinished">קשת:</translation>
+        <translation type="unfinished">זווית המערך:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="260"/>
         <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="unfinished">ספיגה בין נקודות כניסה של ישויות בעמודות.</translation>
+        <translation type="unfinished">מרווח בין נקודות ההכנסה של הישויות בעמודות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
@@ -22867,7 +22868,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
         <source>Dash Dot</source>
-        <translation>דש דואט</translation>
+        <translation>קו-נקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
@@ -23289,7 +23290,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>החל את הפין לבחירה</translation>
+        <translation>החל את העט על הבחירה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
@@ -23339,7 +23340,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="242"/>
         <source>Delete Pen</source>
-        <translation>ניקוי הפין</translation>
+        <translation>מחק עט</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="339"/>
@@ -23485,7 +23486,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="63"/>
         <source>Position of point by Y coordinate</source>
-        <translation>מיקום של Y לתאם</translation>
+        <translation>מיקום הנקודה לפי קואורדינטת Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="70"/>
@@ -23500,7 +23501,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="96"/>
         <source>Position of point by X coordinate</source>
-        <translation>מיקום: X לתאם</translation>
+        <translation>מיקום הנקודה לפי קואורדינטת X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
@@ -23589,7 +23590,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="35"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">אם תבדוק, קו הנקודות יימשכו עם זווית מוגדרת</translation>
+        <translation type="unfinished">אם מסומן, קו הנקודות יצויר בזווית שצוינה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
@@ -23727,7 +23728,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="70"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">אם נבחר, נקודות ההתייחסות הן למניעים של פוליגון. אחרת, הם מהווים נקודת ביניים של קצוות.</translation>
+        <translation type="unfinished">אם מסומן, נקודות הייחוס הן קודקודי המצולע. אחרת, הן נקודות האמצע של הצלעות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
@@ -23762,7 +23763,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">אם תבדוק, הפוליגון יימשכו כפולילין. אחרת, ישויות אינדיבידואליות ייצרו.</translation>
+        <translation type="unfinished">אם מסומן, המצולע יצויר כפוליליין. אחרת, ייווצרו ישויות נפרדות. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -23785,7 +23786,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">אם נבחר, נקודות ההתייחסות הן למניעים של פוליגון. אחרת, הם מהווים נקודת ביניים של קצוות.</translation>
+        <translation type="unfinished">אם מסומן, נקודות הייחוס הן קודקודי המצולע. אחרת, הן נקודות האמצע של הצלעות. </translation>
     </message>
 </context>
 <context>
@@ -24027,7 +24028,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="293"/>
         <source>Clockwise</source>
-        <translation type="unfinished">שעון חכם</translation>
+        <translation type="unfinished">בכיוון השעון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="307"/>
@@ -24073,7 +24074,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="44"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="44"/>
@@ -24291,7 +24292,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="164"/>
         <source>Scale:</source>
-        <translation type="unfinished">סולם:</translation>
+        <translation type="unfinished">קנה מידה:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="183"/>
@@ -24386,17 +24387,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished">סולם Invalid</translation>
+        <translation type="unfinished">צוין קנה מידה לא תקין</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
         <source>Paper scale factor larger than max print ratio</source>
-        <translation type="unfinished">שיעור נייר גדול יותר מ יחס הדפסה מקסימלי</translation>
+        <translation type="unfinished">מקדם קנה המידה של הנייר גדול מיחס ההדפסה המרבי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="432"/>
         <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="unfinished">שיעור נייר קטן יותר מיחס הדפסה</translation>
+        <translation type="unfinished">מקדם קנה המידה של הנייר קטן מיחס ההדפסה המזערי</translation>
     </message>
 </context>
 <context>
@@ -24414,7 +24415,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="124"/>
         <source>Invalid center coordinates</source>
-        <translation type="unfinished">Invalid Center לתאם</translation>
+        <translation type="unfinished">קואורדינטות מרכז לא תקינות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="128"/>
@@ -24920,7 +24921,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">פרידה / Divide</translation>
+        <translation type="unfinished">שבירה/חלוקה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25071,7 +25072,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">מדחום מעגל</translation>
+        <translation type="unfinished">קוטר המעגל</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
@@ -25284,7 +25285,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">פרידה / Divide</translation>
+        <translation type="unfinished">שבירה/חלוקה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -25364,7 +25365,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">מנהיג</translation>
+        <translation type="unfinished">קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -26025,7 +26026,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">מעל מימד טקסט</translation>
+        <translation type="unfinished">מעל טקסט המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -26516,7 +26517,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerances</source>
-        <translation type="unfinished">סובלנות</translation>
+        <translation type="unfinished">סבולות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
@@ -26799,7 +26800,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="237"/>
         <source>Fractional</source>
-        <translation type="unfinished">הונאה</translation>
+        <translation type="unfinished">שברים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="238"/>
@@ -26822,7 +26823,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">המונחים: point</translation>
+        <translation type="unfinished">נקודת הגדרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
@@ -27032,7 +27033,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">המונחים: point</translation>
+        <translation type="unfinished">נקודת הגדרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
@@ -27323,7 +27324,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
         <source>Grid</source>
-        <translation type="unfinished">גרי</translation>
+        <translation type="unfinished">רשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
@@ -27478,7 +27479,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">ממדים</translation>
+        <translation type="unfinished">מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -28109,7 +28110,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
@@ -28341,7 +28342,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">המונחים Point</translation>
+        <translation type="unfinished">נקודת הכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
@@ -28351,7 +28352,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="71"/>
         <source>Scale</source>
-        <translation type="unfinished">סולם</translation>
+        <translation type="unfinished">קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="71"/>
@@ -28466,7 +28467,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">המונחים Point</translation>
+        <translation type="unfinished">נקודת הכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
@@ -28476,7 +28477,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="60"/>
         <source>Scale X</source>
-        <translation type="unfinished">סולם X</translation>
+        <translation type="unfinished">קנה מידה X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="60"/>
@@ -28486,7 +28487,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="71"/>
         <source>Scale Y</source>
-        <translation type="unfinished">סולם Y</translation>
+        <translation type="unfinished">קנה מידה Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="71"/>
@@ -28703,7 +28704,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">קו הצטרף</translation>
+        <translation type="unfinished">חיבור קווים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28979,7 +28980,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">פרידה / Divide</translation>
+        <translation type="unfinished">שבירה/חלוקה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29077,7 +29078,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">המונחים Point</translation>
+        <translation type="unfinished">נקודת הכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
@@ -29729,7 +29730,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
         <source>Degree</source>
-        <translation type="unfinished">תואר</translation>
+        <translation type="unfinished">דרגה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
@@ -30095,7 +30096,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">המונחים Point</translation>
+        <translation type="unfinished">נקודת הכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
@@ -30978,19 +30979,19 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1220"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1244"/>
         <source>Insertion Point</source>
-        <translation>המונחים Point</translation>
+        <translation>נקודת הכנסה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="941"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="962"/>
         <source>Scale X</source>
-        <translation>סולם X</translation>
+        <translation>קנה מידה X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="942"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="963"/>
         <source>Scale Y</source>
-        <translation>סולם Y</translation>
+        <translation>קנה מידה Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="943"/>
@@ -31257,7 +31258,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1144"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1177"/>
         <source>Line Spacing</source>
-        <translation>קו ספיגה</translation>
+        <translation>מרווח שורות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1188"/>
@@ -31329,7 +31330,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1258"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1275"/>
         <source>Degree</source>
-        <translation>תואר</translation>
+        <translation>דרגה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
@@ -31369,7 +31370,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1555"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1568"/>
         <source>Feature Point</source>
-        <translation>תגית: Point</translation>
+        <translation>נקודה אופיינית</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1281"/>
@@ -31380,7 +31381,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
         <source>Spline Point </source>
-        <translation>תגית: Point</translation>
+        <translation>נקודת ספליין </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1328"/>
@@ -31421,7 +31422,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1378"/>
         <source>Solid</source>
-        <translation>סולידריות</translation>
+        <translation>מלא</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1361"/>
@@ -31435,7 +31436,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1362"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1385"/>
         <source>Scale</source>
-        <translation>סולם</translation>
+        <translation>קנה מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
@@ -31494,7 +31495,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1577"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1593"/>
         <source>Definition Point</source>
-        <translation>המונחים: point</translation>
+        <translation>נקודת הגדרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1483"/>
@@ -31514,7 +31515,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1578"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1594"/>
         <source>Extension Point 1</source>
-        <translation>ההרחבה Point 1</translation>
+        <translation>נקודת קו עזר 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1525"/>
@@ -31522,12 +31523,12 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1579"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1595"/>
         <source>Extension Point 2</source>
-        <translation>נקודת הרחבה 2</translation>
+        <translation>נקודת קו עזר 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1557"/>
         <source>Text Middle Point </source>
-        <translation>המונחים: middle Point</translation>
+        <translation>נקודת אמצע של הטקסט </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1528"/>
@@ -31551,7 +31552,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1565"/>
         <source>Origin Point</source>
-        <translation>מקור: Point</translation>
+        <translation>נקודת מוצא</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1554"/>
@@ -31572,7 +31573,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1580"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1596"/>
         <source>Text Middle Point</source>
-        <translation>המונחים: middle Point</translation>
+        <translation>נקודת אמצע של הטקסט</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
@@ -31618,7 +31619,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="274"/>
         <source>No data - select coordinates first...</source>
-        <translation>אין נתונים – בחרו לתאם תחילה...</translation>
+        <translation>אין נתונים – בחרו קואורדינטות תחילה...</translation>
     </message>
 </context>
 <context>
@@ -31631,7 +31632,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="61"/>
         <source>Select entity for properties</source>
-        <translation>גוף נבחר לנכסים</translation>
+        <translation>בחר ישות להצגת המאפיינים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="64"/>
@@ -31652,7 +31653,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="89"/>
         <source>Properties Edit</source>
-        <translation>נכסים Edit</translation>
+        <translation>עריכת מאפיינים</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="103"/>
@@ -31672,7 +31673,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="151"/>
         <source>Coordinates:</source>
-        <translation>לתאם:</translation>
+        <translation>קואורדינטות:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="170"/>
@@ -31778,7 +31779,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>אין נתונים - ישות נבחרת של לתאם קודם...</translation>
+        <translation>אין נתונים - בחרו תחילה ישות או קואורדינטות...</translation>
     </message>
 </context>
 <context>
@@ -31801,7 +31802,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="39"/>
         <source>Display distance and angle to point in addition to coordinates</source>
-        <translation>מרחק תצוגה וזווית לנקודה בנוסף לתאם</translation>
+        <translation>הצג מרחק וזווית לנקודה בנוסף לקואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
@@ -31816,7 +31817,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>מידע אמין</translation>
+        <translation>מידע על ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31831,12 +31832,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>אם נבחר, תיאום של שטח תיבת גבול עבור הישות יוצג גם</translation>
+        <translation>אם מסומן, יוצגו גם הקואורדינטות של התיבה התוחמת של הישות</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>גבולות הישות (Min, Max) לתאם</translation>
+        <translation>הצג את קואורדינטות גבולות הישות (Min, Max)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
@@ -31846,7 +31847,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>נטיות תחת cursor יבחן רק אם CTRL הוא לחץ ולא פעולה פעילה</translation>
+        <translation>הישות שמתחת לסמן תיבדק רק אם CTRL לחוץ ואין פעולה פעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
@@ -31856,7 +31857,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation>אם נבחר, ישויות תחת עכבר cursor יבחן עבור הגדרות אם אין פעולה פעילה</translation>
+        <translation>אם נבחר, הישויות שמתחת לסמן העכבר ייבדקו לגבי ההגדרות שלהן, אם אין פעולה פעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
@@ -32072,7 +32073,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">אורך הפינה של קטיפה לכיוון X.</translation>
+        <translation type="unfinished">אורך שיפוע הפינה בכיוון X. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
@@ -32167,7 +32168,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="339"/>
@@ -32347,7 +32348,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished">אם תבדוק, כל המלבן יימשכו כפולילין.</translation>
+        <translation type="unfinished">אם מסומן, המלבן כולו יצויר כפוליליין.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
@@ -32407,7 +32408,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">אורך של קטיפה בכיוון Y.</translation>
+        <translation type="unfinished">אורך השיפוע בכיוון Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="197"/>
@@ -32442,7 +32443,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">אורך של קטיפה בכיוון X מציור.</translation>
+        <translation type="unfinished">בחר מהשרטוט את אורך השיפוע בכיוון X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
@@ -32467,7 +32468,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">אם תבדוק, specifies כי נקודות תמונה צריך לעבור על ידי רדיוס של פינות.</translation>
+        <translation type="unfinished">אם מסומן, נקודות ההצמדה יוזזו לפי רדיוס הפינות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
@@ -32477,7 +32478,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">אורך של קטיפה בכיוון X.</translation>
+        <translation type="unfinished">אורך השיפוע בכיוון X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
@@ -32628,7 +32629,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">אם תבדוק, specifies כי נקודות תמונה צריך לעבור על ידי רדיוס של פינות.</translation>
+        <translation type="unfinished">אם מסומן, נקודות ההצמדה יוזזו לפי רדיוס הפינות.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
@@ -32648,12 +32649,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">אורך של קטיפה בכיוון X.</translation>
+        <translation type="unfinished">אורך השיפוע בכיוון X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">אורך של קטיפה בכיוון Y.</translation>
+        <translation type="unfinished">אורך השיפוע בכיוון Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="322"/>
@@ -32698,7 +32699,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">אורך של קטיפה בכיוון X מציור.</translation>
+        <translation type="unfinished">בחר מהשרטוט את אורך השיפוע בכיוון X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
@@ -33015,7 +33016,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="609"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">הקודם Y:</translation>
+        <translation type="unfinished">היסט Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="654"/>
@@ -33231,7 +33232,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">אפשרויות רוטט</translation>
+        <translation type="unfinished">אפשרויות הזזה וסיבוב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
@@ -33311,7 +33312,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="221"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished">מספר שוטרים</translation>
+        <translation type="unfinished">עותקים מרובים</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="228"/>
@@ -33399,7 +33400,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="89"/>
         <source>Angle for additional rotation around refrence point</source>
-        <translation type="unfinished">המונחים: refrence Point</translation>
+        <translation type="unfinished">זווית לסיבוב נוסף סביב נקודת הייחוס</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
@@ -33467,7 +33468,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">אפשרויות רוטט</translation>
+        <translation type="unfinished">אפשרויות הזזה וסיבוב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="63"/>
@@ -33502,7 +33503,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="158"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished">מספר שוטרים</translation>
+        <translation type="unfinished">עותקים מרובים</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
@@ -33537,7 +33538,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="202"/>
         <source>Rotate twice</source>
-        <translation type="unfinished">רוטט פעמיים</translation>
+        <translation type="unfinished">סובב פעמיים</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
@@ -33558,7 +33559,7 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="249"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="236"/>
@@ -33578,7 +33579,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="262"/>
         <source>Angle for additional rotation around refrence point</source>
-        <translation type="unfinished">המונחים: refrence Point</translation>
+        <translation type="unfinished">זווית לסיבוב נוסף סביב נקודת הייחוס</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="269"/>
@@ -33611,7 +33612,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">בדקו את שני הקצוות לסיבוב</translation>
+        <translation type="unfinished">סמן כדי לקצץ את שני הקצוות עד לעיגול</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
@@ -33634,7 +33635,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">בדקו את שני הקצוות לסיבוב</translation>
+        <translation type="unfinished">סמן כדי לקצץ את שני הקצוות עד לעיגול</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
@@ -33672,7 +33673,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
@@ -33755,7 +33756,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">אפשרויות רוטט</translation>
+        <translation type="unfinished">אפשרויות הזזה וסיבוב</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="50"/>
@@ -33770,7 +33771,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="66"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished">מספר שוטרים</translation>
+        <translation type="unfinished">עותקים מרובים</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
@@ -33845,7 +33846,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
 </context>
 <context>
@@ -33863,7 +33864,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
         <source>Dimension</source>
-        <translation>המימד</translation>
+        <translation>מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"/>
@@ -33967,7 +33968,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="46"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>קובץ הגדרות LibreCAD (*%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="52"/>
@@ -34150,7 +34151,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">אם תבדוק, מרחק קבוע בין קרציות ישמש. אחרת, המרחק יחושב בהתבסס על אורך הישות וספירת הקרציות.</translation>
+        <translation type="unfinished">אם מסומן, ייעשה שימוש במרחק הקבוע שצוין בין הסימונים. אחרת, המרחק יחושב על סמך אורך הישות ומספר הסימונים. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34190,12 +34191,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">אם תבדוק, זווית מתקתקת קשורה לישות שנבחרה, אחרת זו היא זווית מוחלטת.</translation>
+        <translation type="unfinished">אם מסומן, זווית הסימון יחסית לישות שנבחרה, אחרת זוהי זווית מוחלטת.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
@@ -34295,7 +34296,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished">מרחק בין קרציות.</translation>
+        <translation type="unfinished">המרחק בין הסימונים.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34327,12 +34328,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="169"/>
         <source>Edge Tick:</source>
-        <translation type="unfinished">צוק:</translation>
+        <translation type="unfinished">סימון קצה:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">אם תבדוק, ישות שנבחרה תתפצל על ידי נקודות צומת קרציות.</translation>
+        <translation type="unfinished">אם מסומן, הישות שנבחרה תחולק בנקודות החיתוך של הסימונים. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34367,7 +34368,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">Defines אשר נקודה של מתקתק צריך להיות ממוקם נקודת צומת עם ישות נבחרת.</translation>
+        <translation type="unfinished">קובע איזו נקודה של הסימון תמוקם בנקודת החיתוך עם הישות שנבחרה.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34377,7 +34378,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">תחילתו של סמן נקודה לנקודה צומת.</translation>
+        <translation type="unfinished">היסט נקודת ההצמדה של הסימון ביחס לנקודת החיתוך. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
@@ -34392,7 +34393,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">אם תבדוק, זווית מתקתקת קשורה לישות שנבחרה, אחרת זו היא זווית מוחלטת.</translation>
+        <translation type="unfinished">אם מסומן, זווית הסימון יחסית לישות שנבחרה, אחרת זוהי זווית מוחלטת.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="315"/>
@@ -34402,12 +34403,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished">אורך מתקתק מציור</translation>
+        <translation type="unfinished">בחר את אורך הסימון מהשרטוט</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">התחל זווית לעיגול שממנו יתחילו הקרציות.</translation>
+        <translation type="unfinished">זווית ההתחלה במעגל שממנה יתחילו הסימונים. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34422,7 +34423,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">אם תבדוק, מרחק קבוע בין קרציות ישמש. אחרת, המרחק יחושב בהתבסס על אורך הישות וספירת הקרציות.</translation>
+        <translation type="unfinished">אם מסומן, ייעשה שימוש במרחק הקבוע שצוין בין הסימונים. אחרת, המרחק יחושב על סמך אורך הישות ומספר הסימונים. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34432,7 +34433,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">ספירת קרציות בין הקצוות של ישות נבחרת.</translation>
+        <translation type="unfinished">מספר הסימונים בין קצוות הישות שנבחרה.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34442,7 +34443,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">זווית בין סיגנל לבין ישות נבחרת.</translation>
+        <translation type="unfinished">הזווית בין הסימון לבין הישות שנבחרה.</translation>
     </message>
 </context>
 <context>
@@ -34463,7 +34464,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">אם תבדוק, ניתן לציין כמות אישית של מגזרי קו. אחרת, הערך מהגדרות לציור הנוכחי ישמש.</translation>
+        <translation type="unfinished">אם מסומן, ניתן לציין מספר מותאם אישית של קטעי קו. אחרת, ישמש הערך מהגדרות השרטוט הנוכחי.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34531,7 +34532,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">אם לא נבדק, קו מקורי יוסר, אחרת זה ישרוד.</translation>
+        <translation type="unfinished">אם לא מסומן, הספליין המקורי יוסר, אחרת הוא יישמר.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34561,7 +34562,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">אם תבדוק, ניתן לציין כמות אישית של מגזרי קו. אחרת, הערך מהגדרות לציור הנוכחי ישמש.</translation>
+        <translation type="unfinished">אם מסומן, ניתן לציין מספר מותאם אישית של קטעי קו. אחרת, ישמש הערך מהגדרות השרטוט הנוכחי.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34609,7 +34610,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">כמות הנקודות האמצעיות של פלח פוליליין שיתווספו לספירה.</translation>
+        <translation type="unfinished">מספר נקודות הביניים של קטע הפוליליין שיתווספו לספליין. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
@@ -34662,7 +34663,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">כמות הנקודות האמצעיות של פלח פוליליין שיתווספו לספירה.</translation>
+        <translation type="unfinished">מספר נקודות הביניים של קטע הפוליליין שיתווספו לספליין. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
@@ -34682,7 +34683,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="78"/>
         <source>Mid points:</source>
-        <translation type="unfinished">נקודות מיידיות:</translation>
+        <translation type="unfinished">נקודות אמצע:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
@@ -34730,7 +34731,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">אם נבחר, נוצר ספירה סגורה</translation>
+        <translation type="unfinished">אם מסומן, נוצר ספליין סגור</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
@@ -34740,7 +34741,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">יצירת קונוס סגור מן השורות</translation>
+        <translation type="unfinished">צור קונטור סגור מהקווים ששורטטו</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="51"/>
@@ -34763,12 +34764,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished">תוארו של Spline משמש להתאמה בין נקודות</translation>
+        <translation type="unfinished">דרגת הספליין המשמשת לקירוב בין נקודות</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">אם נבחר, נוצר ספירה סגורה</translation>
+        <translation type="unfinished">אם מסומן, נוצר ספליין סגור</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="97"/>
@@ -34806,7 +34807,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="62"/>
         <source>If selected, spline points are used</source>
-        <translation>אם נבחר, נקודות ספיר משמשים</translation>
+        <translation>אם מסומן, נעשה שימוש בנקודות ספליין</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="65"/>
@@ -34841,7 +34842,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>Edit Properties of a splineישות, כולל תואר, מדינה סגורה, נקודות שליטה וקטור קשר</translation>
+        <translation>עריכת מאפייני ישות ספליין, כולל דרגה, מצב סגור, נקודות בקרה ווקטור קשרים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34861,7 +34862,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="89"/>
         <source>Select the degree of the spline curve</source>
-        <translation>בחר את התואר של עקומת spline</translation>
+        <translation>בחר את דרגת עקומת הספליין</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="119"/>
@@ -34896,12 +34897,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
         <source>Control Points Table</source>
-        <translation>שולחן בקרה</translation>
+        <translation>טבלת נקודות בקרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>Edit נקודות שליטה לתאם ומשקלים עבור ספירה</translation>
+        <translation>עריכת הקואורדינטות והמשקלים של נקודות הבקרה של הספליין</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34927,17 +34928,17 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>ערכי קנוט שולטים בצורת העקומה של ספיר (רצף לא הולך)</translation>
+        <translation>ערכי הקשרים קובעים את צורת העקומה של הספליין (סדרה לא יורדת)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
         <source>Knot Vector Table</source>
-        <translation>שולחן קנוט Vector</translation>
+        <translation>טבלת וקטור קשרים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="261"/>
         <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation>יצירת ערכי קשר עבור ספירה (חייב להיות לא הולך)</translation>
+        <translation>ערוך את ערכי הקשרים של הספליין (חייבים להיות לא יורדים)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="276"/>
@@ -34953,12 +34954,12 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>הוסף נקודת שליטה חדשה לשורה</translation>
+        <translation>הוסף נקודת בקרה חדשה לספליין</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
         <source>Add Control Point Button</source>
-        <translation>תגית: Control Point Button</translation>
+        <translation>לחצן הוספת נקודת בקרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="325"/>
@@ -34969,12 +34970,12 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>להסיר את נקודת השליטה שנבחרה מהשורה</translation>
+        <translation>הסר את נקודת הבקרה שנבחרה מהספליין</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
         <source>Remove Control Point Button</source>
-        <translation>עקבו אחרי Control Point Button</translation>
+        <translation>לחצן הסרת נקודת בקרה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
@@ -35065,7 +35066,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="32"/>
         <source>If checked, outer edges will be rounded. </source>
-        <translation type="unfinished">אם תבדקו, ניתן יהיה לעקוף את הקצוות החיצוניים.</translation>
+        <translation type="unfinished">אם מסומן, הקצוות החיצוניים יעוגלו. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="35"/>
@@ -35085,7 +35086,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">אם תבדקו, הכוכב יימשכו כפולילין.</translation>
+        <translation type="unfinished">אם מסומן, הכוכב יצויר כפוליליין. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
@@ -35403,7 +35404,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35435,7 +35436,7 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="163"/>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="373"/>
         <source>Order</source>
-        <translation>הזמנה</translation>
+        <translation>סדר</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="174"/>
@@ -35521,7 +35522,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336"/>
         <source>Dimension</source>
-        <translation>המימד</translation>
+        <translation>מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="337"/>
@@ -35588,7 +35589,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
         <source>Dimensions</source>
-        <translation>ממדים</translation>
+        <translation>מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="372"/>
@@ -35621,7 +35622,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="31"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">אורך הקלט משמש כאורך מוחלט לאחר הזינוק, במקום עלייה ממושכת</translation>
+        <translation type="unfinished">אורך הקלט משמש כאורך הכולל לאחר הקיצוץ, במקום כתוספת אורך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="37"/>
@@ -35659,7 +35660,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">אורך הקלט משמש כאורך מוחלט לאחר הזינוק, במקום עלייה ממושכת</translation>
+        <translation type="unfinished">אורך הקלט משמש כאורך הכולל לאחר הקיצוץ, במקום כתוספת אורך</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="53"/>
@@ -35712,7 +35713,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_filler.cpp" line="42"/>
         <source>Angle X-axis of new coordinate system</source>
-        <translation type="unfinished">זווית X-Axis של מערכת לתאם חדשה</translation>
+        <translation type="unfinished">זווית ציר X של מערכת הקואורדינטות החדשה</translation>
     </message>
 </context>
 <context>
@@ -35730,7 +35731,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="35"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="42"/>
@@ -35740,7 +35741,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="61"/>
         <source>Angle X-axis of new coordinate system</source>
-        <translation type="unfinished">זווית X-Axis של מערכת לתאם חדשה</translation>
+        <translation type="unfinished">זווית ציר X של מערכת הקואורדינטות החדשה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="68"/>
@@ -35784,12 +35785,12 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="329"/>
         <source>Origin X: </source>
-        <translation>מקור X:</translation>
+        <translation>ראשית X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="330"/>
         <source>Origin Y: </source>
-        <translation>מקור:</translation>
+        <translation>ראשית Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="331"/>
@@ -35799,7 +35800,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="332"/>
         <source>Grid: </source>
-        <translation>גרי:</translation>
+        <translation>רשת: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
@@ -35827,17 +35828,17 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="35"/>
         <source>Create new user coordinates system.</source>
-        <translation>צור מערכת לתאם משתמשים חדשה.</translation>
+        <translation>צור מערכת קואורדינטות משתמש חדשה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="52"/>
         <source>Restores selected user coordinates system.</source>
-        <translation>שחזורים נבחרים של מערכת לתאם משתמשים.</translation>
+        <translation>משחזר את מערכת הקואורדינטות של המשתמש שנבחרה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="107"/>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>סקירה של מערכת תיאום מקור וזווית.</translation>
+        <translation>תצוגה מקדימה של ראשית מערכת הקואורדינטות והזווית שלה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
@@ -35847,7 +35848,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>הגדרת UCS על ידי תואמים</translation>
+        <translation>הגדרת UCS לפי מידת קואורדינטה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -35857,7 +35858,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="148"/>
         <source>Removes selected user coordinates system.</source>
-        <translation>להסיר את מערכת לתאם משתמשים נבחרים.</translation>
+        <translation>מסיר את מערכת הקואורדינטות של המשתמש שנבחרה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="151"/>
@@ -35982,23 +35983,23 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="44"/>
         <source>Type of current coordinate system</source>
-        <translation>סוג מערכת התיאום הנוכחית</translation>
+        <translation>סוג מערכת הקואורדינטות הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="96"/>
         <source>Name of selected coordinate system</source>
-        <translation>שם של מערכת לתאם שנבחרה</translation>
+        <translation>שם מערכת הקואורדינטות שנבחרה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="105"/>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="124"/>
         <source>Coordinates</source>
-        <translation>לתאם</translation>
+        <translation>קואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>מיקום מקור וזווית של ה- UCS הנוכחי בקואורדינטות בעולם.</translation>
+        <translation>מיקום הראשית והזווית של ה-UCS הנוכחי בקואורדינטות עולמיות.</translation>
     </message>
 </context>
 <context>
@@ -36068,7 +36069,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
         <source>Dimension</source>
-        <translation>המימד</translation>
+        <translation>מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
@@ -36084,7 +36085,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="143"/>
         <source>Order</source>
-        <translation>הזמנה</translation>
+        <translation>סדר</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
@@ -36094,7 +36095,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
-        <translation>עונשים</translation>
+        <translation>עטים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
@@ -36139,7 +36140,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="307"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="336"/>
         <source>Command Line</source>
-        <translation>פיקוד קו</translation>
+        <translation>שורת פקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="337"/>
@@ -36165,7 +36166,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>מידע אמין</translation>
+        <translation>מידע על ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36196,7 +36197,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="536"/>
         <source>Coordinates</source>
-        <translation>לתאם</translation>
+        <translation>קואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
@@ -36226,7 +36227,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="543"/>
         <source>Angles Basis</source>
-        <translation>אנגלית Basis</translation>
+        <translation>בסיס הזוויות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
@@ -37069,7 +37070,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="14"/>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="343"/>
         <source>Command Line</source>
-        <translation>פיקוד קו</translation>
+        <translation>שורת פקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="44"/>
@@ -37084,7 +37085,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="77"/>
         <source>Command:</source>
-        <translation>פיקוד:</translation>
+        <translation>פקודה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="210"/>
@@ -37137,12 +37138,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="140"/>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="153"/>
         <source>Coordinates</source>
-        <translation>לתאם</translation>
+        <translation>קואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="70"/>
         <source>Absolute Coordinates (Cartesian)</source>
-        <translation>מתאם מוחלט (Cartesian)</translation>
+        <translation>קואורדינטות מוחלטות (קרטזיות)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="89"/>
@@ -37174,7 +37175,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>מותג</translation>
+        <translation>עורך תווית מידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
@@ -37189,7 +37190,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation>סמל לפני טקסט ממדי</translation>
+        <translation>סמל לפני טקסט המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -37214,7 +37215,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>פורמט של טקסט המימד, &lt;&gt; ניתן להשתמש כבעל מקום לערך המדידה של הממד</translation>
+        <translation>פורמט טקסט המידה, ניתן להשתמש ב-&lt;&gt; כמציין מיקום לערך המדידה של המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37290,7 +37291,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>תכונות הפין</translation>
+        <translation>תכונות העט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
@@ -37307,7 +37308,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
 </context>
 <context>
@@ -37335,17 +37336,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="45"/>
         <source>Scale:</source>
-        <translation>סולם:</translation>
+        <translation>קנה מידה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>זווית רוטציה עבור הבקתה</translation>
+        <translation>זווית הסיבוב של הקווקוו</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>אם תבדוק, מוצק ישמש במקום תבנית</translation>
+        <translation>אם מסומן, ייעשה שימוש במילוי מלא במקום קווקוו בתבנית</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37365,7 +37366,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>אם ניתן, תצוגה מקדימה של תבנית הסימון תופיע להלן</translation>
+        <translation>אם מופעל, תוצג למטה תצוגה מקדימה של תבנית הקווקוו</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37413,7 +37414,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
-        <translation>שפת פיקוד:</translation>
+        <translation>שפת הפקודות:</translation>
     </message>
 </context>
 <context>
@@ -37436,7 +37437,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="147"/>
         <source>&amp;Default line spacing</source>
-        <translation>קו ספיגה</translation>
+        <translation>&amp;מרווח שורות ברירת מחדל</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="150"/>
@@ -37511,7 +37512,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="260"/>
         <source>Specific line spacing factor is used</source>
-        <translation>גורם ספיגה קו ספציפי משמש</translation>
+        <translation>נעשה שימוש במקדם מרווח שורות מסוים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="289"/>
@@ -38266,7 +38267,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
 </context>
 <context>
@@ -38304,7 +38305,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1943"/>
         <source>Fractional</source>
-        <translation>הונאה</translation>
+        <translation>שברים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="504"/>
@@ -38339,7 +38340,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="551"/>
         <source>angular</source>
-        <translation>מעגלי</translation>
+        <translation>זוויתי</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1272"/>
@@ -38388,7 +38389,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="413"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>האם אתם בטוחים שאתם רוצים למחוק נכסים?</translation>
+        <translation>האם אתה בטוח שברצונך למחוק את המאפיין [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="432"/>
@@ -38455,7 +38456,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>הזן שם ייחודי חדש של סגנון ממד (היה &quot;%1&quot;):</translation>
+        <translation>הזן שם ייחודי חדש לסגנון המידה (היה &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38468,22 +38469,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>אי אפשר למחוק את סגנון הממד האחרון. לפחות אחד צריך להיות נוכח!</translation>
+        <translation>לא ניתן למחוק את סגנון המידה האחרון. חייב להישאר לפחות סגנון אחד! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>לא יכול למחוק את סגנון המימד כפי שילדים משמשים בציור. רק סגנון לא בשימוש עשוי להימחק.</translation>
+        <translation>לא ניתן למחוק את סגנון המידה מכיוון שסגנונות הצאצא שלו נמצאים בשימוש בשרטוט. ניתן למחוק רק סגנון שאינו בשימוש.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>האם אתה בטוח שאתה רוצה להסיר את סגנון הממד &quot;%1&quot; יחד עם סגנונות ילדים?</translation>
+        <translation>האם אתה בטוח שברצונך להסיר את סגנון המידה &quot;%1&quot; יחד עם סגנונות הצאצא שלו?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>האם אתה בטוח שאתה רוצה להסיר את סגנון הממד &quot;%1&quot;?</translation>
+        <translation>האם אתה בטוח שברצונך להסיר את סגנון המידה &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38537,7 +38538,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>פער קו מימדי:</translation>
+        <translation>מרווח קו המידה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -38587,12 +38588,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="513"/>
         <source>Pre&amp;cision:</source>
-        <translation>עדיפות:</translation>
+        <translation>&amp;דיוק:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;מימדים</translation>
+        <translation>&amp;מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
@@ -38632,7 +38633,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
         <source>&amp;Splines and Lines</source>
-        <translation>קווים וקווים</translation>
+        <translation>&amp;ספליינים וקווים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
@@ -38642,7 +38643,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>מספר פלחי קו לכל תיקון:</translation>
+        <translation>מספר קטעי קו לכל מקטע ספליין:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
@@ -38680,7 +38681,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; גודל ה-Dick הגדר את זה ל 0 תבטל את מדקת הממד. חצים ממד לא יימשכו כאשר ניתן לדגמת ממד.&lt;/p&gt;&lt;/body&gt;&lt;/body&gt;&lt;/html&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;גודל סימון המידה. ערך 0 מבטל את סימון המידה. חץ המידה לא יצויר כאשר סימון המידה מופעל.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38690,17 +38691,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
         <source>General Scale:</source>
-        <translation>סולם כללי:</translation>
+        <translation>קנה מידה כללי:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; קנה מידה להכפיל את כל ערכי הממד.&lt;/p&gt;&lt;/body&gt;&lt;/body&gt;&lt;/body&gt;html&gt;&gt;&lt;/body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;קנה מידה להכפלת כל ערכי המידות.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale כדי להכפיל את כל סוגי הגיאוגרפיה ממדיים.&lt;/p&gt;body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;קנה מידה להכפלת כל הגיאומטריות של המידות.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -38755,12 +38756,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="564"/>
         <source>Angles Basis</source>
-        <translation>אנגלית Basis</translation>
+        <translation>בסיס הזוויות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Zero בסיס זווית יחסית למערכת הקואורדינטות של המשתמש הנוכחית. משפיע על קואורדינטות הקוטביות קלט, תמונה לזווית. 0.0 הוא 3pm.</translation>
+        <translation>זווית הבסיס של האפס ביחס למערכת הקואורדינטות הנוכחית של המשתמש. משפיעה על הזנת קואורדינטות קוטביות ועל הצמדה לזווית. 0.0 הוא כיוון השעה 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38830,7 +38831,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="858"/>
         <source>Draw Grid:</source>
-        <translation>צייר גרי:</translation>
+        <translation>צייר רשת:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="865"/>
@@ -38849,17 +38850,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>מהדורה אוטומטית:</translation>
+        <translation>שינוי קנה מידה אוטומטי של הרשת:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>עקבו אחרי Meta Grid:</translation>
+        <translation>צייר רשת-על:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
         <source>Grid Spacing</source>
-        <translation>גרי ספיגה</translation>
+        <translation>מרווח רשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="955"/>
@@ -38869,12 +38870,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
         <source>Select or input grid spacing value by Y axis</source>
-        <translation>בחר או קלט רשת ספיגה ערך על ידי Y ציר</translation>
+        <translation>בחר או הזן את ערך מרווח הרשת בציר Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>בחר או הזן ערכים עבור ספיגה ברשת (הם ישפיעו על ציור ו- Snapd לרשת):</translation>
+        <translation>בחר או הזן ערכים עבור מרווח הרשת (הם ישפיעו על ציור הרשת ועל ההצמדה לרשת):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -38936,12 +38937,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>אורך להרחבת קו הממד</translation>
+        <translation>אורך ההארכה מעבר לקו המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; גודל החץ של המימד &lt;a name=&quot;result box&quot;/&gt;ללא אפקט כאשר גודל קרציות &lt;a name=&quot;result box&quot;/&gt; הוא אחר מ- 0&lt;/p&gt;&lt;/body&gt;html&gt;&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;גודל חץ המידה. &lt;a name=&quot;result_box&quot;/&gt;ללא השפעה כאשר גודל הסימון &lt;a name=&quot;result_box&quot;/&gt;אינו 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -38952,7 +38953,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>קווים ממדיים, חצים וטעים</translation>
+        <translation>קווי מידה, חצים וסימונים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -38992,7 +38993,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; מקור:&lt;/p&gt;&lt;/body&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;היסט מנקודת המוצא.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39002,7 +39003,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>הרחבת שורות</translation>
+        <translation>קווי עזר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39012,7 +39013,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"/>
         <source>Dimensions</source>
-        <translation>ממדים</translation>
+        <translation>מידות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"/>
@@ -39042,7 +39043,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>סגנון מארק פעיל כאחד. סגנון פעיל ישמש במהלך יצירת ממדים.</translation>
+        <translation>מסמן את הסגנון כסגנון הפעיל. הסגנון הפעיל ישמש בעת יצירת מידות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39109,12 +39110,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>קו הצטרף:</translation>
+        <translation>חיבור קווים:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>מצב קווים ההצטרפות בפוליקווירים או בנתיבים</translation>
+        <translation>אופן חיבור הקווים בפוליליינים או בנתיבים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39347,7 +39348,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>קו הרחבה קבוע</translation>
+        <translation>אורך קבוע של קו העזר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
@@ -39610,7 +39611,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt;&lt;body&gt;&lt;p&gt; התכווצויות חופשיות באופן זמני כאשר ה-Spacebar נלחץ וחלון הפיקוד מופעל&lt;/p&gt;&lt;/body&gt;html&gt;&lt;/body&gt;html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;הפעלה/כיבוי זמני של ההצמדה החופשית בלחיצת מקש הרווח כאשר חלון הפקודה פעיל&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
@@ -39693,17 +39694,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
         <source>Explanatory Reference Point Size</source>
-        <translation>המונחים: point</translation>
+        <translation>גודל נקודת ייחוס להמחשה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3891"/>
         <source>Explanatory Reference Point Style</source>
-        <translation>המונחים: point</translation>
+        <translation>סגנון נקודת ייחוס להמחשה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation>אם נבחר, הזווית של מגזר האינטרפולציה קו מחושבת על מנת להבטיח כי התוצאה של סאגיטה (שמונה של פלח קשת) היא פחות ממפורט.</translation>
+        <translation>אם מסומן, זווית קטע האינטרפולציה מחושבת כך שחץ הקשת המתקבל (גובה קטע הקשת) יהיה קטן מהערך שצוין.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
@@ -39718,7 +39719,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5453"/>
         <source>Show current command icon in options toolbar</source>
-        <translation>הצגת סמל הפיקוד הנוכחי באפשרויות</translation>
+        <translation>הצג את סמל הפקודה הנוכחית בסרגל האפשרויות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
@@ -39733,7 +39734,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation>אם נבחר, ישויות יישארו נבחרות לאחר השלמת פעולות Modify. אחרת הם לא ייבחרו.</translation>
+        <translation>אם נבחר, הישויות יישארו נבחרות לאחר השלמת פעולות שינוי. אחרת, הן לא יישארו נבחרות. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
@@ -39758,7 +39759,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Grid is Off </source>
-        <translation>גרי הוא Off</translation>
+        <translation>הרשת כבויה </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5841"/>
@@ -40077,7 +40078,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>אם תבדקו, גילוח ל-Switch יימשכו</translation>
+        <translation>אם מסומן, תצויר צורת ההצמדה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
@@ -40177,7 +40178,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>אם תבדוק, אפשרויות תמונה (middle, Distance) יוצגו ב-Sle Toolbar במקום Toolbar</translation>
+        <translation>אם מסומן, אפשרויות ההצמדה (אמצע, מרחק) יוצגו בסרגל ההצמדה במקום בסרגל מאפייני הכלי</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
@@ -40192,32 +40193,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation>גודל הכיכר הוא מדגיש נקודות התייחסות של גופים (נקודות וכו &apos;)</translation>
+        <translation>גודל הריבוע המדגיש את נקודות הייחוס של ישויות (נקודות קצה וכו&apos;)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>צבע של טיפול קצה לישות</translation>
+        <translation>צבע ידית הסיום של ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>צבע כדי להתחיל לטפל בישות</translation>
+        <translation>צבע ידית ההתחלה של ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>צבע של טיפול לא קצה של ישות</translation>
+        <translation>צבע ידית שאינה בנקודת קצה של ישות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
         <source>Handle Size:</source>
-        <translation>גודל יד:</translation>
+        <translation>גודל ידית:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>אם ניתן, מטפלים בישות מודגשים על מרחף (נדרש &quot;ישויות אור גבוה על מרחף&quot; כדי להיות מופעל)</translation>
+        <translation>אם מופעל, ידיות הישות מודגשות במעבר העכבר (נדרש להפעיל את &quot;הדגש ישויות במעבר עכבר&quot;)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
@@ -40298,7 +40299,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="214"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation>אם נבחר, הציור יהיה מטופל באופן אוטומטי אם העכבר קרוב לגבולות תצוגה</translation>
+        <translation>אם מסומן, תצוגת השרטוט תוזז אוטומטית כאשר העכבר קרוב לגבולות התצוגה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="166"/>
@@ -40338,7 +40339,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="592"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation>צבע נשיות נבחר:</translation>
+        <translation>צבע &amp;ישות נבחרת:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
@@ -40358,12 +40359,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
         <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation>שליטה כמה מהר גלגל המגילה ינשום פנימה והחוצה. ערכים גבוהים יותר – מהיר יותר.</translation>
+        <translation>קובע באיזו מהירות גלגל הגלילה יבצע זום פנימה והחוצה. ערכים גבוהים יותר – זום מהיר יותר.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>על גלגל העכבר, מחבת עד אמצע החלון.</translation>
+        <translation>בזום באמצעות גלגל העכבר, הזז את התצוגה אל אמצע החלון.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
@@ -40373,14 +40374,14 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>בפעם הראשונה רק מחבת</translation>
+        <translation>בפעם הראשונה – הזזת תצוגה בלבד</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1195"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1456"/>
         <source>Grid</source>
-        <translation>גרי</translation>
+        <translation>רשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1176"/>
@@ -40395,12 +40396,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>סוג של קו Meta Grid אם הרשת נמשכת כנקודות</translation>
+        <translation>סוג קו רשת-העל כאשר הרשת מצוירת כנקודות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Width של Meta Grid קו אם הרשת נמשכת על ידי נקודות</translation>
+        <translation>רוחב קו רשת-העל כאשר הרשת מצוירת בנקודות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40418,7 +40419,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>צבע עבור קווי Meta Grid אם הרשת נמשכת על ידי נקודות</translation>
+        <translation>צבע קווי רשת-העל כאשר הרשת מצוירת בנקודות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
@@ -40429,7 +40430,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
         <source>Lines Grid</source>
-        <translation>קווים חמים</translation>
+        <translation>רשת קווים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
@@ -40449,22 +40450,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>סוג של קווי Meta Grid אם הרשת נמשכת על ידי קווים</translation>
+        <translation>סוג קווי רשת-העל כאשר הרשת מצוירת בקווים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>קווי Wid של Meta Grid אם הרשת נמשכת על ידי קווים</translation>
+        <translation>רוחב קווי רשת-העל כאשר הרשת מצוירת בקווים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>צבע של Meta Grid אם הרשת נמשכת באמצעות קווים</translation>
+        <translation>צבע רשת-העל כאשר הרשת מצוירת בקווים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
         <source>Axis Lines</source>
-        <translation>קווי מדינות</translation>
+        <translation>קווי ציר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3361"/>
@@ -40538,7 +40539,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation>גודל קווי הציר הנמשכים בנקודת אפס מוחלטת</translation>
+        <translation>גודל קווי הציר המצוירים בנקודת האפס המוחלטת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3428"/>
@@ -40558,7 +40559,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>אם בודקים, סימן אפס יחסית לא יימשכו</translation>
+        <translation>אם מסומן, סמן האפס היחסי לא יצויר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
@@ -40568,12 +40569,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
         <source>Grid General</source>
-        <translation>גרי גנרל</translation>
+        <translation>רשת - כללי</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
         <source>If checked, grid wil be drawn</source>
-        <translation>אם תבדקו, תשקעו</translation>
+        <translation>אם מסומן, הרשת תצויר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1054"/>
@@ -40588,22 +40589,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>אם תבדוק, רשת לא תמשוך בתוך מחבת תצוגה על ידי פעולת עכברים</translation>
+        <translation>אם מסומן, הרשת לא תצויר בזמן הזזת התצוגה בעכבר</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>אל תמשוך רשת על panning</translation>
+        <translation>אל תצייר את הרשת בזמן הזזת התצוגה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>אם תבדוק, קווי Meta Grid יימשכו על גבי הרשת. רשת פשוטה היא מהירה יותר אך היא פחות רזה מבחינה ויזואלית.</translation>
+        <translation>אם מסומן, קווי רשת-העל יצוירו מעל הרשת. רשת פשוטה מהירה יותר, אך פחות נוחה מבחינה חזותית.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
         <source>Minimal spacing between grid until grid rescale</source>
-        <translation>ספיגה מינימלית בין רשת עד רשת</translation>
+        <translation>המרווח המזערי בין קווי הרשת עד לשינוי קנה המידה של הרשת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1031"/>
@@ -40618,7 +40619,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="982"/>
         <source>If checked, the grid will be scalled automatically</source>
-        <translation>אם תבדוק, הרשת תהיה אוטומטית</translation>
+        <translation>אם מסומן, קנה המידה של הרשת ישתנה אוטומטית</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
@@ -40633,7 +40634,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation>אם לא נבדק, קו אנכי לא ימשוך עבור &quot;Top&quot; תצוגת איזומטרית</translation>
+        <translation>אם לא מסומן, הקו האנכי לא יצויר בתצוגה האיזומטרית &quot;Top&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
@@ -40717,7 +40718,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>אם נבחר, הישות תודגש במצב &quot;Draft&quot; באמצעות קו השושלת של הישות במקום 1px</translation>
+        <translation>אם מסומן, הישות תודגש במצב &quot;טיוטה&quot; לפי עובי הקו של הישות במקום 1px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40757,7 +40758,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>אם גובה קו טקסט על המסך הוא פחות מפיקסלים מוגדרים, בעל שרוול ימשוך במקום טקסט</translation>
+        <translation>אם גובה שורת הטקסט על המסך קטן ממספר הפיקסלים שצוין, יצויר מציין מיקום במקום הטקסט</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
@@ -40797,7 +40798,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation>אם רדיוס מסך של קשת הוא פחות ערך, קשת נמשכת כנקודה</translation>
+        <translation>אם רדיוס הקשת על המסך קטן מהערך, הקשת מצוירת כנקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
@@ -40812,7 +40813,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>אם נבחר, קווי בסיס טקסט יימשכו במקום מכתבי הטקסט (בדומה לניסוח מצב) במהלך הפנינה.</translation>
+        <translation>אם מסומן, במהלך הזזת התצוגה יצוירו קווי הבסיס של הטקסט במקום האותיות (בדומה למצב טיוטה). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
@@ -40822,7 +40823,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>אם נבחר, קווי בסיס טקסט יימשכו במקום מכתבי הטקסט (מדומה לנסח מצב) בתצוגה מקדימה.</translation>
+        <translation>אם מסומן, יצוירו בתצוגה המקדימה קווי הבסיס של הטקסט במקום האותיות (בדומה למצב טיוטה). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
@@ -40852,7 +40853,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>אם תבדוק, רכיבים של קואורדינט יימשכו בקו אחד. אחרת, כל מרכיב יהיה על קו משלו.</translation>
+        <translation>אם מסומן, רכיבי הקואורדינטה יוצגו בשורה אחת. אחרת, כל רכיב יוצג בשורה משלו. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40871,12 +40872,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3078"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation>אם תבדוק, יופיעו תוויות עבור רכיבי לתאם. אחרת, צורה סטנדרטית של קואורדינטות תוצג.</translation>
+        <translation>אם מסומן, יוצגו תוויות לרכיבי הקואורדינטות. אחרת, הקואורדינטות יוצגו בצורה הרגילה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
         <source>Show labels for coordinates</source>
-        <translation>הצג תוויות עבור לתאם</translation>
+        <translation>הצג תוויות לקואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3088"/>
@@ -40903,17 +40904,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>אם נבדק, &quot;Snap to Grid&quot; מתעלמים אם הרשת אינה נמשכת.</translation>
+        <translation>אם מסומן, המערכת תתעלם מ&quot;הצמדה לרשת&quot; כאשר הרשת אינה מצוירת.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>להתעלם &quot;Snap to Grid&quot; אם הרשת לא נמשכת</translation>
+        <translation>התעלם מ&quot;הצמדה לרשת&quot; כאשר הרשת אינה מצוירת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation>הורדת תוויות מנקודת cursor.</translation>
+        <translation>היסט התוויות מנקודת הסמן.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
@@ -40943,7 +40944,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>הצג תכונות עבור ישות אשר נערך על ידי מטפלים</translation>
+        <translation>הצג מאפיינים של ישות הנערכת באמצעות ידיות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -40958,7 +40959,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>אם תבדוק, מרחק יחסית וזווית מנקודת אפס יחסית לנקודת ציון יופיעו.</translation>
+        <translation>אם מסומן, יוצגו המרחק והזווית היחסיים מנקודת האפס היחסי אל נקודת ההצמדה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40973,17 +40974,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation>אם תבדקו, יוצגו מהירות הפיקוד הפעיל.</translation>
+        <translation>אם מסומן, תוצג ההנחיה של הפקודה הפעילה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2847"/>
         <source>Show active command prompt</source>
-        <translation>הצג פיקוד פעיל</translation>
+        <translation>הצג את הנחיית הפקודה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2771"/>
         <source>If checked, show relative coordinate</source>
-        <translation>אם תבדוק, הצג מתאם יחסי</translation>
+        <translation>אם מסומן, הצג קואורדינטה יחסית</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
@@ -40993,7 +40994,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>אם תבדקו, מידע על סוג החיתוך וההגבלות יוצג לנקודת ציון (אם בכלל)</translation>
+        <translation>אם מסומן, יוצג מידע על סוג ההצמדה וההגבלות עבור נקודת ההצמדה (אם יש)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
@@ -41018,17 +41019,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
         <source>Show absolute coordinate</source>
-        <translation>הצג מתאם מוחלט</translation>
+        <translation>הצג קואורדינטה מוחלטת</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3009"/>
         <source>If checked, name of active command will be shown before command prompt</source>
-        <translation>אם תבדוק, שם הפיקוד הפעיל יוצג לפני פקודה</translation>
+        <translation>אם מסומן, שם הפקודה הפעילה יוצג לפני הנחיית הפקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3015"/>
         <source>Show active command name</source>
-        <translation>שם פיקוד פעיל</translation>
+        <translation>הצג את שם הפקודה הפעילה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
@@ -41184,18 +41185,18 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>יש להשתמש בפונט כדי לצייר שם של ציר במערכת לתאם אפס.</translation>
+        <translation>הגופן שישמש לציור שם הציר בנקודת האפס של מערכת הקואורדינטות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3552"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>גודל פונטי שיש להשתמש כדי לצייר שם של ציר במערכת לתאם אפס.</translation>
+        <translation>גודל הגופן שישמש לציור שם הציר בנקודת האפס של מערכת הקואורדינטות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>אם נבחר, סימון עבור מערכת coodinate יופיע באפס נקודה של מערכת לתאם משתמשים נוכחית.</translation>
+        <translation>אם מסומן, הסמן של מערכת הקואורדינטות יוצג בנקודת האפס של מערכת הקואורדינטות הנוכחית של המשתמש. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -41230,7 +41231,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation>אם נבחר ונוף הוא במערכת לתאם משתמשים, הסמן למערכת coodinate יוצג באפס נקודה של מערכת תיאום עולמית.</translation>
+        <translation>אם מסומן והתצוגה נמצאת במערכת קואורדינטות משתמש, הסמן של מערכת הקואורדינטות יוצג בנקודת האפס של מערכת הקואורדינטות העולמית. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
@@ -41245,12 +41246,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3156"/>
         <source>Angles Basis Marker</source>
-        <translation>אנגלית Basis Marker</translation>
+        <translation>סמן בסיס הזוויות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3147"/>
         <source>Coordinate System</source>
-        <translation>מערכת תיאום</translation>
+        <translation>מערכת קואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
@@ -41315,12 +41316,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Snap on Entity &quot;Free תמונה&quot; מתג מרחק:</translation>
+        <translation>מרחק המעבר בין &quot;הצמדה לישות&quot; ל&quot;הצמדה חופשית&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>סנייפ על ישות יפעיל אם היא מופעלת והמרחק בין עכבר לנקודה מפולגת הוא גדול יותר מערך מוגדר.</translation>
+        <translation>ההצמדה לישות תופעל אם היא מופעלת והמרחק בין העכבר לנקודה המוצמדת גדול מהערך שצוין.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41340,7 +41341,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>מרחק סניפי (בפיקסלים) לקליטת ישויות.</translation>
+        <translation>מרחק ההצמדה (בפיקסלים) לתפיסת ישויות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
@@ -41366,22 +41367,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3206"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
-        <translation>אם מופעל, זוויות בסיס סימן יופיע באור הזר של מערכת לתאם</translation>
+        <translation>אם מופעל, סמן בסיס הזוויות יוצג בראשית מערכת הקואורדינטות</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3256"/>
         <source>Color of the ray that displays zero angle position</source>
-        <translation>צבע של הרנטגן המציג מיקום אפס זווית</translation>
+        <translation>צבע הקרן המציגה את מיקום זווית האפס</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5101"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation>אם תבדקו, ניתן יהיה להזין ערך של זווית בדרגות דרומיות בלבד. אחרת, זוויות בסקר, רדיונט, תארים אימפריאליים ופורמטים נושאים מותרות לקלט.</translation>
+        <translation>אם מסומן, ניתן יהיה להזין זוויות במעלות עשרוניות בלבד. אחרת, מותרת הזנת זוויות ביחידות מודדים, ברדיאנים, במעלות אימפריאליות ובפורמט אזימוט.  </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5104"/>
         <source>Allow angles input in decimal degrees only</source>
-        <translation>לאפשר לזווית קלט במדרגות decimal רק</translation>
+        <translation>אפשר הזנת זוויות במעלות עשרוניות בלבד</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5417"/>
@@ -42018,12 +42019,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>אם בודקים, הקשתות נמשכות באמצעות פלחי קו. זה רזה ציור חפצים ליד נקודות קצה, אך עשוי לגרום ציור של קשתות פחות חלקה. אין לצייר שגיאות ליד נקודות קצה על גניבות גדולות.</translation>
+        <translation>אם מסומן, קשתות מצוירות באמצעות קירוב בקטעי קו. כך נמנעים פגמי ציור ליד נקודות הקצה, אך הקשתות עשויות להיראות פחות חלקות. אין שגיאות ציור ליד נקודות הקצה בהגדלות זום גדולות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation>אם שיטה זו נבחרת, קשתות נמשכות באמצעות שיטת ספריית QT. בגני חיות גדולות, קשתות ניתן לעשות עם שגיאות ליד נקודות קצה.</translation>
+        <translation>אם שיטה זו נבחרת, הקשתות מצוירות בשיטה של ספריית QT. בזום גדול, הקשתות עלולות להיות מוצגות עם שגיאות ליד נקודות הקצה.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
@@ -42053,7 +42054,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>אם ניתן, במהלך פעולת פאן TEXT ו- MTEXT אובייקטים יימשכו schematicallyly</translation>
+        <translation>אם מופעל, במהלך הזזת התצוגה אובייקטי TEXT ו-MTEXT יצוירו באופן סכמטי</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
@@ -42088,7 +42089,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation>אם נבחר, הזווית הקבועה של מגזר האינטרפולציה קו ישמש. זווית קטנה יותר מספקת קשת חלקה יותר אך היא איטית יותר.</translation>
+        <translation>אם מסומן, תשמש זווית קבועה לקטע האינטרפולציה. זווית קטנה יותר נותנת קשת חלקה יותר, אך איטית יותר.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
@@ -42108,27 +42109,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>מרחק מקסימאלי להמר על קשת ושורה של אינטרפולציה</translation>
+        <translation>המרחק המרבי בין הקשת לבין קו האינטרפולציה של הקטע</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
         <source>Render circles in the same way as arcs.</source>
-        <translation>רנדר חוצה באותה צורה כמו קשתות.</translation>
+        <translation>הצג מעגלים באותו אופן כמו קשתות.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>אם מערכת קואורדינט של סט ומשתמש היא פעילה, כפייה מוחלטת במערכת תיאום עולמית תופיע גם כן.</translation>
+        <translation>אם מסומן ומערכת קואורדינטות משתמש פעילה, תוצג גם הקואורדינטה המוחלטת במערכת הקואורדינטות העולמית.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation>הצג את העולם לתאם אם במערכת לתאם משתמשים</translation>
+        <translation>הצג קואורדינטות עולמיות כאשר נמצאים במערכת קואורדינטות משתמש</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>אם תבדוק, כל שינוי של זום או מחבת לציור יסמן שינוי. אחרת, שינוי מראה רק לא ישפיע על מצב שונה של הציור.</translation>
+        <translation>אם מסומן, כל שינוי בזום או בהזזת התצוגה יסמן שהשרטוט שונה. אחרת, שינוי התצוגה בלבד לא ישפיע על מצב השינוי של השרטוט. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
@@ -42153,7 +42154,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Zero בסיס זווית יחסית למערכת הקואורדינטות של המשתמש הנוכחית. משפיע על קואורדינטות הקוטביות קלט, תמונה לזווית. 0.0 הוא 3pm.</translation>
+        <translation>זווית הבסיס של האפס ביחס למערכת הקואורדינטות הנוכחית של המשתמש. משפיעה על הזנת קואורדינטות קוטביות ועל הצמדה לזווית. 0.0 הוא כיוון השעה 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42187,7 +42188,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>שחזור תכנית גיאומטריה / עיכוב למדינה מקורית</translation>
+        <translation>שחזור הגיאומטריה/הפריסה של התוכנית למצב המקורי</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42233,7 +42234,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5084"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>ציור גן עדן אוטומטי בעת פתיחה</translation>
+        <translation>זום אוטומטי לשרטוט בעת פתיחה</translation>
     </message>
 </context>
 <context>
@@ -42366,8 +42367,8 @@ but ignored by other</source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="44"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>אורך תבנית קו הקשורה לגן עדן,
-ערך שלב ברירת מחדל הנדרש לאפיה</translation>
+        <translation>אורך תבנית הקו ביחס לזום,
+ולכן נדרש ערך צעד ברירת מחדל לאפייה</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
@@ -43248,7 +43249,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
 </context>
 <context>
@@ -43269,7 +43270,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>החלפת DXF 2000%</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="137"/>
@@ -43279,7 +43280,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="140"/>
         <source>LFF Font %1</source>
-        <translation>המונחים:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="144"/>
@@ -43361,7 +43362,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="142"/>
         <source>dwg Drawing %1</source>
-        <translation>המונחים:1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="248"/>
@@ -43697,7 +43698,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Dash Dot</source>
-        <translation>דש דואט</translation>
+        <translation>קו-נקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
@@ -43905,7 +43906,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>Relative zero position is %1</source>
-        <translation>קיבולת אפסית היא %1</translation>
+        <translation>מיקום האפס היחסי הוא %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
@@ -43920,7 +43921,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>Coordinate system: %1</source>
-        <translation>מערכת תיאום: %1</translation>
+        <translation>מערכת קואורדינטות: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
@@ -43939,7 +43940,7 @@ P, Li {לבן-space: pre-wrap; }
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="53"/>
         <source>Pen</source>
-        <translation>הפין</translation>
+        <translation>עט</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="97"/>
@@ -44016,7 +44017,7 @@ P, Li {לבן-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="407"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>חסם &quot;%1&quot; וכל ישויותיו יוסרו.</translation>
+        <translation>הבלוק &quot;%1&quot; וכל ישויותיו יוסרו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -44173,7 +44174,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>ניתן להוסיף שכבת ממדים רק עבור שכבה פעילה רגילה.
+        <translation>ניתן להוסיף שכבת מידות רק עבור שכבה פעילה רגילה.
 </translation>
     </message>
     <message>
@@ -44216,7 +44217,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>הפין יוסר מן הצבעים, ישויות הציור לא יושפעו.</translation>
+        <translation>העט יוסר מהפלטה, ישויות השרטוט לא יושפעו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44227,7 +44228,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
-        <translation>עונש להסרת:</translation>
+        <translation>עט להסרה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
@@ -44237,12 +44238,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>פנינים יוסרו מן הצבעים, ישויות הציור לא יושפעו.</translation>
+        <translation>העטים יוסרו מהפלטה, ישויות השרטוט לא יושפעו.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
         <source>Pens for removal:</source>
-        <translation>עונש להסרת:</translation>
+        <translation>עטים להסרה:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
@@ -44392,7 +44393,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="517"/>
         <source>All Files (*.*)</source>
-        <translation>כל הקבצים (*)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="612"/>
@@ -44450,7 +44451,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="474"/>
         <source>LFF Font %1</source>
-        <translation>המונחים:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="476"/>
@@ -44520,7 +44521,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
         <source>dwg Drawing %1</source>
-        <translation>המונחים:1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="515"/>
@@ -44542,7 +44543,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>חזיר</translation>
+        <translation>po</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
@@ -44554,7 +44555,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="96"/>
         <source>li</source>
         <comment>draw line</comment>
-        <translation>מכסה</translation>
+        <translation>li</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="98"/>
@@ -44566,19 +44567,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>פולי</translation>
+        <translation>פוליליין</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>בשפע</translation>
+        <translation>pl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>חינם</translation>
+        <translation>חופשי</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
@@ -44590,19 +44591,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="457"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>המונחים</translation>
+        <translation>ספליין</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="459"/>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>המונחים</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="464"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>המונחים:</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="466"/>
@@ -44626,37 +44627,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="281"/>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>דו</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="289"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation>שיזוף</translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="308"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation>אות</translation>
+        <translation>אורתו</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="144"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>תיקון</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="340"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>פוליגון2v</translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>פולי2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="349"/>
@@ -44686,7 +44687,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>3</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="405"/>
@@ -44698,7 +44699,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>המונחים:</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
@@ -44716,19 +44717,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>בכי</translation>
+        <translation>קווקוו</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>הו</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="883"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation>המונחים</translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="885"/>
@@ -44758,7 +44759,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>מחדש</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
@@ -44776,7 +44777,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>גן החיות</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
@@ -44800,7 +44801,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>גן החיות</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
@@ -44812,7 +44813,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>גן החיות</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
@@ -44836,7 +44837,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>לא</translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
@@ -44849,7 +44850,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>אדום</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
@@ -44873,7 +44874,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>תגית:</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="677"/>
@@ -44891,7 +44892,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>דילמה</translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
@@ -44933,7 +44934,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>d</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
@@ -44957,19 +44958,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>לא להגביל שום דבר</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>er</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>המונחים: closed</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
@@ -44981,7 +44982,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>הגבלות על proizontal</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
@@ -44993,7 +44994,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>הגבלות</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
@@ -45017,7 +45018,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>כל</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
@@ -45041,13 +45042,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>מייל</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>מחדש</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
@@ -45083,7 +45084,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>s</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
@@ -45095,7 +45096,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>דל</translation>
+        <translation>del</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="839"/>
@@ -45107,7 +45108,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="918"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>נקי</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="920"/>
@@ -45125,79 +45126,79 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="926"/>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>מספר</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>תגית:</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="932"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>s</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="937"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>עקבו</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="938"/>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>זרע</translation>
+        <translation>se</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>עקבו אחרי</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="944"/>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>s</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>המונחים</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>אח</translation>
+        <translation>si</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>המונחים:</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="956"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>s</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>המונחים:</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>הנחנח</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="963"/>
@@ -45209,7 +45210,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>תגית: zero</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
@@ -45221,19 +45222,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>בוחרים</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>חבל</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>סלקטו</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="623"/>
@@ -45251,13 +45252,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>אמא</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>פרופיל</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
@@ -45277,7 +45278,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
         <source>csly</source>
-        <translation>cs</translation>
+        <translation>csly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="200"/>
@@ -45301,19 +45302,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>דיסק</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="856"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>dp</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>אנג</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
@@ -45330,7 +45331,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1208"/>
         <source>close</source>
-        <translation>קרוב</translation>
+        <translation>סגור</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
@@ -45341,7 +45342,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>תגית:spacing</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45352,12 +45353,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>אורך</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>מספר</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45368,12 +45369,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>שורות</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>המונחים:</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -45384,19 +45385,19 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
-        <translation>שלישי</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>אנג</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>a</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
@@ -45407,7 +45408,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
         <source>cen</source>
         <comment>center</comment>
-        <translation>תגית:</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1202"/>
@@ -45425,25 +45426,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>קולות</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>קו משותף</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>תגית:spacing</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>עקבו אחרי</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
@@ -45455,7 +45456,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>עובדה</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -45472,7 +45473,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1228"/>
         <source>?</source>
         <comment>help</comment>
-        <translation>??</translation>
+        <translation>?</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1230"/>
@@ -45514,7 +45515,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1238"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>אורך 2</translation>
+        <translation>אורך2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
@@ -45538,7 +45539,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
         <source>num</source>
         <comment>number</comment>
-        <translation>מספר</translation>
+        <translation>num</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1244"/>
@@ -45563,19 +45564,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1251"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>מחדש</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>שורות</translation>
+        <translation>שורה</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>המונחים:</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
@@ -45603,12 +45604,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
         <source>undo</source>
-        <translation>לא</translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
         <source>redo</source>
-        <translation>אדום</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1270"/>
@@ -45624,12 +45625,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>ניירoffset</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
-        <translation>גרף</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -45685,7 +45686,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
-        <translation>שחור לבן</translation>
+        <translation>blackwhite</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
@@ -45696,7 +45697,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>די</translation>
+        <translation>di</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="768"/>
@@ -45769,13 +45770,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>קו 2p</translation>
+        <translation>line2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>המונחים</translation>
+        <translation>sline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="104"/>
@@ -45787,7 +45788,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="105"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>תגית</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="110"/>
@@ -45799,7 +45800,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="111"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>סלקס</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="112"/>
@@ -45811,7 +45812,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="117"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>המונחים</translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="118"/>
@@ -45823,13 +45824,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="119"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation>נדיר</translation>
+        <translation>rly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>קונגו</translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="125"/>
@@ -45841,7 +45842,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>קו</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
@@ -45853,7 +45854,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>קוver</translation>
+        <translation>linever</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
@@ -45865,19 +45866,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>המונחים</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>מחדש</translation>
+        <translation>re</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="149"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>ret1</translation>
+        <translation>rect1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="150"/>
@@ -45889,7 +45890,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>2</translation>
+        <translation>rect2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="156"/>
@@ -45901,7 +45902,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="161"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>3</translation>
+        <translation>rect3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="162"/>
@@ -45919,19 +45920,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>ll</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="173"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>פרוס</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="174"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>סלאק</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="179"/>
@@ -45949,7 +45950,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="185"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation>צלב הצלב</translation>
+        <translation>צלב</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="186"/>
@@ -45973,13 +45974,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation>אמצע</translation>
+        <translation>midline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="196"/>
         <source>ml</source>
         <comment>draw mid line</comment>
-        <translation>מ&quot;ל</translation>
+        <translation>ml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
@@ -45991,19 +45992,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>נקודות</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
-        <translation>נקודת אמצע</translation>
+        <translation>midpoint</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="212"/>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
-        <translation>נקודות</translation>
+        <translation>mpoint</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -46033,37 +46034,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>al</source>
         <comment>align entities</comment>
-        <translation>אל</translation>
+        <translation>al</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>align1</source>
         <comment>align entities</comment>
-        <translation>1</translation>
+        <translation>align1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>al1</source>
         <comment>align entities</comment>
-        <translation>אל1</translation>
+        <translation>al1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation>המונחים:</translation>
+        <translation>alignref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>alr</source>
         <comment>align references</comment>
-        <translation>אלר</translation>
+        <translation>alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>קוjoin</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
@@ -46075,7 +46076,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>פרידה</translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
@@ -46093,13 +46094,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>קרחונים</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="264"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>קו מפריד</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="265"/>
@@ -46129,7 +46130,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="267"/>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>אבא</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="268"/>
@@ -46141,25 +46142,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>קו מפריד</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>דולפינים</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>המונחים: linebisect</translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>המונחים:</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="288"/>
@@ -46171,7 +46172,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="294"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>קו 2c</translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="295"/>
@@ -46183,37 +46184,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>המונחים:</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>או</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>המונחים</translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>lol</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>המונחים</translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="314"/>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>l</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
@@ -46225,7 +46226,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>p</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="321"/>
@@ -46243,7 +46244,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>פוליגון</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="328"/>
@@ -46255,13 +46256,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>פוליקט</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>פוליגון</translation>
+        <translation>polygonvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="335"/>
@@ -46285,7 +46286,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="356"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>מעגל 2p</translation>
+        <translation>circle2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="358"/>
@@ -46297,7 +46298,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>מעגל 2pr</translation>
+        <translation>circle2pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="364"/>
@@ -46309,7 +46310,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>מעגל 3p</translation>
+        <translation>circle3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="371"/>
@@ -46321,7 +46322,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>מעגל</translation>
+        <translation>circlecr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
@@ -46339,7 +46340,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>עיגול 2cpp</translation>
+        <translation>circletan2cp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="385"/>
@@ -46351,7 +46352,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>עיגול 2p</translation>
+        <translation>circletan2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
@@ -46363,7 +46364,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="396"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>מעגל 2</translation>
+        <translation>circletan2cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="397"/>
@@ -46375,7 +46376,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>עיגול 3</translation>
+        <translation>circletan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="404"/>
@@ -46405,7 +46406,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="420"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation>קשת3p</translation>
+        <translation>arc3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="421"/>
@@ -46417,7 +46418,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="426"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>קשת</translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
@@ -46441,7 +46442,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="438"/>
         <source>arc2pl</source>
         <comment>draw 2pt arc length</comment>
-        <translation>קשת 2pl</translation>
+        <translation>arc2pl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="439"/>
@@ -46567,7 +46568,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="514"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>3p</translation>
+        <translation>ellipse3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="515"/>
@@ -46579,7 +46580,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="520"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>3p</translation>
+        <translation>ellipse4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="521"/>
@@ -46603,13 +46604,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>זווית</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
         <source>aline</source>
         <comment>draw angle from line</comment>
-        <translation>קו</translation>
+        <translation>aline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="553"/>
@@ -46621,13 +46622,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="554"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>תגית:</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>נקודה 2</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -46639,7 +46640,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>המונחים:</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
@@ -46657,7 +46658,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="573"/>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation>p</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
@@ -46669,7 +46670,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>p</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
@@ -46699,7 +46700,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="596"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>המונחים</translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="597"/>
@@ -46723,13 +46724,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="608"/>
         <source>dual</source>
         <comment>create dual geometries</comment>
-        <translation>כפול</translation>
+        <translation>dual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
-        <translation>דוכס</translation>
+        <translation>du</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
@@ -46747,7 +46748,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>הוא</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -46777,7 +46778,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>d</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
@@ -46789,13 +46790,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>לעשות</translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
         <source>dimordrebase</source>
         <comment>dimension - ordinate</comment>
-        <translation>המונחים:</translation>
+        <translation>dimordrebase</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="666"/>
@@ -46813,7 +46814,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="685"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>ד&quot;ר</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="698"/>
@@ -46843,7 +46844,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>המונחים</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -46855,7 +46856,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>מודול</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="765"/>
@@ -46867,13 +46868,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="736"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>המונחים</translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>המונחים</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
@@ -46909,13 +46910,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">שלישי</translation>
+        <translation type="unfinished">קיצוץ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>המונחים</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
@@ -46927,7 +46928,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="774"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>המונחים</translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="780"/>
@@ -46969,7 +46970,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation>מילוי</translation>
+        <translation>פילט</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -46999,25 +47000,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>המונחים:</translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>מודלים</translation>
+        <translation>מאפיינים</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>מודול</translation>
+        <translation>תכונות</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>המונחים</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
@@ -47035,19 +47036,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>מודל</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="844"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>המונחים</translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="853"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>מידע</translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="854"/>
@@ -47059,7 +47060,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>מידע על</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
@@ -47077,7 +47078,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="868"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>מידע</translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="869"/>
@@ -47089,7 +47090,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="875"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>מידע</translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="876"/>
@@ -47113,19 +47114,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>כך</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>המונחים:</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="971"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>תגית:</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="972"/>
@@ -47137,13 +47138,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1013"/>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation>קי</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>לא</translation>
+        <translation>un</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
@@ -47155,7 +47156,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>איפור</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
@@ -47179,7 +47180,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>גן החיות</translation>
+        <translation>התרחק</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
@@ -47203,7 +47204,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation>אקורדים</translation>
+        <translation>מיתר</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47215,13 +47216,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>אורך1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>אורך 2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47241,12 +47242,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>זווית</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>להתחיל</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
@@ -47256,32 +47257,32 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>קווים</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
-        <translation>קרציות</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>רוחב</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>גובה הגובה</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
-        <translation>נקבוב</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>גודל</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
@@ -47292,17 +47293,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
         <source>nopoly</source>
-        <translation>ללא מילים</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>שימוש בpoly</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>פינות</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -47312,12 +47313,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>עגול</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>snap1</source>
-        <translation>תמונה1</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
@@ -47327,62 +47328,62 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>העליון</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>topr</source>
-        <translation>המונחים</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>שמאל</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>אמצע</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>ימין צודק</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>תחתית</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>תחתית</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>תחתית</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
         <source>snapcorner</source>
-        <translation>snaper</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>snapshift</source>
-        <translation>המונחים</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>גודל</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>גודל</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
@@ -47397,22 +47398,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
-        <translation>2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>פינה</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>אמצע</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
-        <translation>אמצע ההר</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
@@ -47427,72 +47428,72 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>ממזר</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>הקצוות</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>המונחים:</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>קצה - both</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>קצה-start</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>קצה-end</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>סוף</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>שניהם</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>אף אחד לא</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>מתאים</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>nofit</source>
-        <translation>לא מתאים</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>המונחים:</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>t flex</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>מרחק</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -47512,12 +47513,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">קבוע</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>sym</source>
-        <translation>סימס</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
@@ -47551,7 +47552,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1206"/>
         <source>cl</source>
         <comment>chordlen</comment>
-        <translation>קליטה</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
@@ -47660,7 +47661,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>סולם בחוץ E.g: 0.01 (עבור 1:100 קנה מידה).</translation>
+        <translation>קנה מידה של הפלט. לדוגמה: 0.01 (עבור קנה מידה 1:100).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="133"/>
@@ -47765,7 +47766,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>Snap חינם</translation>
+        <translation>הצמדה חופשית</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -47775,7 +47776,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>התאמה לנקודת אפס יחסית</translation>
+        <translation>הצמדה לאפס יחסי</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -47802,7 +47803,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>אייל: שום דפוס לא נמצא. אנא הגדרת נתיב דפוס בהעדפות יישום</translation>
+        <translation>קווקוו: לא נמצאה תבנית. הגדר את נתיב התבניות בהעדפות היישום</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
@@ -47872,7 +47873,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="214"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Mil</source>
-        <translation>מייל</translation>
+        <translation>מיל</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
@@ -47902,7 +47903,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="291"/>
         <source>Decimeter</source>
-        <translation>משמעת</translation>
+        <translation>דצימטר</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -47914,7 +47915,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="297"/>
         <source>Hectometer</source>
-        <translation>מסוק</translation>
+        <translation>הקטומטר</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
@@ -47986,7 +47987,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="927"/>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation>חוקי</translation>
+        <translation>Legal</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="929"/>
@@ -48082,7 +48083,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="985"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>מכתב</translation>
+        <translation>letter</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="988"/>
@@ -48243,7 +48244,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1030"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>dXF/DWG חוסם</translation>
+        <translation>שגיאה בקריאת בלוקים של DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1032"/>
@@ -48613,7 +48614,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="165"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation>קבצי PDF (*.pdf); כל הקבצים (*.*</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
@@ -48776,7 +48777,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>מנהיג</translation>
+        <translation>קו הפניה</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48967,7 +48968,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>קו אורך</translation>
+        <translation>הארכת קו</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
@@ -48997,7 +48998,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>זום, מחבת או ישות נבחרת</translation>
+        <translation>זום, הזזת תצוגה או בחירת ישות</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49045,7 +49046,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
         <source>Enter dimension text:</source>
-        <translation>טקסט ממד:</translation>
+        <translation>הזן טקסט מידה:</translation>
     </message>
 </context>
 <context>
@@ -49058,7 +49059,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="173"/>
         <source>Specify next point</source>
-        <translation>המונחים: next point</translation>
+        <translation>ציין את הנקודה הבאה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="173"/>
@@ -49092,7 +49093,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>התאמה למימד סמוך</translation>
+        <translation>הצמדה למידה סמוכה</translation>
     </message>
 </context>
 <context>
@@ -49206,7 +49207,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>ציין נקודה על allipse, או מרחק מוחלט ליריבים</translation>
+        <translation>ציין נקודה על האליפסה, או את המרחק הכולל למוקדים</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="196"/>
@@ -49219,22 +49220,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="308"/>
         <source>Specify the first line</source>
-        <translation>ציין את השורה הראשונה</translation>
+        <translation>ציין את הקו הראשון</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="311"/>
         <source>Specify the second line</source>
-        <translation>ציין את השורה השנייה</translation>
+        <translation>ציין את הקו השני</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="314"/>
         <source>Specify the third line</source>
-        <translation>ציין את השורה השלישית</translation>
+        <translation>ציין את הקו השלישי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="317"/>
         <source>Specify the fourth line</source>
-        <translation>ציין את השורה הרביעית</translation>
+        <translation>ציין את הקו הרביעי</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="227"/>
@@ -49247,12 +49248,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>אזור בטנה לא חוקי אנא בדוק כי הגופים שנבחרו ליצור קוטור אחד או יותר סגור.</translation>
+        <translation>שטח קווקוו לא תקין. ודא שהישויות שנבחרו יוצרות קונטור סגור אחד או יותר.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>הכובען יצר בהצלחה.</translation>
+        <translation>הקווקוו נוצר בהצלחה.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49265,7 +49266,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>שגיאה: סיור לא חוקי נמצא!</translation>
+        <translation>שגיאת קווקוו: נמצא קונטור לא תקין!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
@@ -49290,7 +49291,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>שטח הבטן הכולל = %1</translation>
+        <translation>שטח הקווקוו הכולל = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49327,7 +49328,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
         <source>Alternate Point</source>
-        <translation>נקודת מפנה</translation>
+        <translation>נקודה חלופית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
@@ -49379,12 +49380,12 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="202"/>
         <source>Specify point</source>
-        <translation>המונחים point</translation>
+        <translation>ציין נקודה</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Alternate Point</source>
-        <translation>נקודת מפנה</translation>
+        <translation>נקודה חלופית</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
@@ -49407,7 +49408,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="226"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>בחרו את השורה הקרובה ביותר ל-cursor</translation>
+        <translation>בחר את הקו המשיק הקרוב ביותר לסמן</translation>
     </message>
 </context>
 <context>
@@ -49487,10 +49488,11 @@ Supplementary: %3
 Explementary angle: %4
 </source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>אנגלית: %1
+        <translation>זווית: %1
 זווית המשלימה לזווית ישרה: %2
 זווית המשלימה לזווית שטוחה: %3
-זווית המשלימה לסיבוב מלא: %4</translation>
+זווית המשלימה לסיבוב מלא: %4
+</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
@@ -49501,12 +49503,12 @@ Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>אנגלית: %1
+        <translation>זווית: %1
 זווית המשלימה לזווית ישרה: %2
 זווית המשלימה לזווית שטוחה: %3
 זווית המשלימה לסיבוב מלא: %4
-סעיף: (%5,%6)
-המונחים:@%7,%8)</translation>
+נקודת חיתוך: (%5 , %6)
+נקודת חיתוך: @(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
@@ -49590,7 +49592,7 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>סעיף:</translation>
+        <translation>נקודת חיתוך:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49788,7 +49790,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="210"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>הורדת הדפסה בתיאום נייר (%1,%2)</translation>
+        <translation>היסט ההדפסה בקואורדינטות נייר לפי (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="215"/>
@@ -49803,7 +49805,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Printout offset in נייר לתאם</translation>
+        <translation>היסט ההדפסה בקואורדינטות נייר</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
@@ -49833,12 +49835,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
         <source>Move Vertically</source>
-        <translation>לנוע באופן רציונאלי</translation>
+        <translation>הזז אנכית</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>הורדת הדפסה מתעלמת מאפס יחסי. מתוך &quot;@&quot;</translation>
+        <translation>היסט ההדפסה מתעלם מהאפס היחסי. מתעלם מ-&apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49890,7 +49892,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>לא נמצאו ישויות ממד</translation>
+        <translation>לא נמצאו ישויות מידה</translation>
     </message>
 </context>
 <context>
@@ -49939,12 +49941,12 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1341"/>
         <source>Grid</source>
-        <translation>גרי</translation>
+        <translation>רשת</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Entity</source>
-        <translation>גמישות</translation>
+        <translation>ישות</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>
@@ -49984,7 +49986,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1359"/>
         <source>Angle (on Entity)</source>
-        <translation>אנגלית (on Entity)</translation>
+        <translation>זווית (על ישות)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1361"/>
@@ -49994,7 +49996,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
         <source>Free</source>
-        <translation type="unfinished">חינם</translation>
+        <translation type="unfinished">חופשי</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1374"/>
@@ -50090,7 +50092,7 @@ Polar: (%4 &lt;%)
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
         <source>Entity</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">גמישות</translation>
+        <translation type="unfinished">ישות</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
@@ -50244,7 +50246,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="218"/>
         <source>Tolerance - Lower Limit</source>
-        <translation>סובלנות - Lower Limit</translation>
+        <translation>סבולת - גבול תחתון</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="243"/>
@@ -50260,7 +50262,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation>ממד אופקי</translation>
+        <translation>מידה אופקית</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
@@ -50275,7 +50277,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>מרחק בין ממדים בקו הבסיס</translation>
+        <translation>מרחק בין מידות בקו הבסיס</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
@@ -50286,17 +50288,17 @@ Polar: (%4 &lt;%)
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation>חינם</translation>
+        <translation>חופשי</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>זווית לממד</translation>
+        <translation>זווית המידה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>אם נבדק, זווית לממד מוגדרת על ידי עכבר</translation>
+        <translation>אם מסומן, זווית המידה נקבעת באמצעות העכבר</translation>
     </message>
 </context>
 <context>
@@ -50314,7 +50316,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>מרחק של נקודת מפנה בהתחלה נפתרה נקודה</translation>
+        <translation>מרחק נקודת ההצמדה מנקודת ההצמדה שחושבה תחילה</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>

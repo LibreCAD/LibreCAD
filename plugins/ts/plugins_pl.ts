@@ -692,7 +692,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Pusta jednostka</translation>
+        <translation>Pusty obiekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>

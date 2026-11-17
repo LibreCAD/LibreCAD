@@ -379,7 +379,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>CERCE</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
@@ -889,7 +889,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -904,7 +904,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&quot;Nouveau&quot;. Entrez le nom d&apos;une nouvelle couche (si nécessaire) pour y dessiner les graduations.</translation>
+        <translation>&lt;i&gt;&quot;Nouveau&quot;&lt;/i&gt;&lt;br&gt;Entrez le nom&lt;br&gt;d&apos;un nouveau calque&lt;br&gt;(si nécessaire) sur&lt;br&gt;lequel dessiner les graduations.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
@@ -980,12 +980,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Déduction (par rapport au module)</translation>
+        <translation>Creux (par rapport au module)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Nombre de segments à dessiner (déduction)</translation>
+        <translation>Nombre de segments à dessiner (creux)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>

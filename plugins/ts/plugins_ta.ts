@@ -692,7 +692,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>வெற்று நிறுவனம்</translation>
+        <translation>வெற்று பொருள்</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -732,7 +732,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="469"/>
         <source>LINE</source>
-        <translation>வரி</translation>
+        <translation>கோடு</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
@@ -975,22 +975,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>கூடுதல் (மாடுலஸுடன் தொடர்புடையது)</translation>
+        <translation>பல் தலை உயரம் (மாடுலஸுடன் தொடர்புடையது)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>குறைவு (மாடுலஸுடன் தொடர்புடையது)</translation>
+        <translation>பல் அடி ஆழம் (மாடுலஸுடன் தொடர்புடையது)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>வரைய வேண்டிய பிரிவுகளின் எண்ணிக்கை (குறைவு)</translation>
+        <translation>வரைய வேண்டிய பிரிவுகளின் எண்ணிக்கை (பல் அடி ஆழம்)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>வரைய வேண்டிய பிரிவுகளின் எண்ணிக்கை (கூடுதல்)</translation>
+        <translation>வரைய வேண்டிய பிரிவுகளின் எண்ணிக்கை (பல் தலை உயரம்)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1010,7 +1010,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>கூடுதல் வட்டத்தை வரையவா?</translation>
+        <translation>பல் முனை வட்டத்தை வரையவா?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

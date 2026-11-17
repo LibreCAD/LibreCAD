@@ -182,7 +182,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="86"/>
         <source>POINT</source>
-        <translation>UDPEG</translation>
+        <translation>PUNKT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="87"/>
@@ -438,12 +438,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>vælg oprindelige helhed:</translation>
+        <translation>vælg oprindeligt objekt:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>Vægl helheder at ændre</translation>
+        <translation>vælg objekter, der skal ændres</translation>
     </message>
 </context>
 <context>
@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Tom enhed</translation>
+        <translation>Tomt objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>Vis enheder</translation>
+        <translation>Vis objekter</translation>
     </message>
 </context>
 <context>

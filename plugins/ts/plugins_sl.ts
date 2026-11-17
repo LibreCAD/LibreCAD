@@ -107,18 +107,19 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>Vtičnik za ustvarjanje prestave</translation>
+        <translation>Vtičnik za ustvarjanje zobnikov</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="41"/>
         <source>Gear plugin</source>
-        <translation>Vtičnik za prestavo</translation>
+        <translation>Vtičnik za zobnike</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="42"/>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation>Izberite točko za središče prestave in pritisnite levi gumb miške. Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
+        <translation>Izberite točko za središče zobnika in pritisnite levi gumb miške.
+Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     </message>
 </context>
 <context>
@@ -384,7 +385,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>LOPUTA</translation>
+        <translation>ŠRAFURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -821,7 +822,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="529"/>
         <source>Vertices</source>
-        <translation>Vrhovi</translation>
+        <translation>Oglišča</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>

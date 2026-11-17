@@ -1072,7 +1072,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>free</source>
-        <translation>フリーハンド</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="488"/>
@@ -1405,7 +1405,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="196"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>free</source>
-        <translation>フリーハンド</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="214"/>
@@ -1683,7 +1683,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation>2番目の点を指定
-または [数値|x|y|角度|p|端点|距離]</translation>
+または [number|x|y|角度|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1697,27 +1697,28 @@ or [number]</source>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation>線の方向を指定
-[x|y|角度|p|距離]</translation>
+[x|y|角度|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation>線の方向角度を指定
-または [x|y|p|数値|端点|距離]</translation>
+または [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation>端点モードを指定
-[なし|始点|終点|両方|距離]</translation>
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">点間の固定距離を指定
+または [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1914,7 +1915,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>基準点を指定 [左上|上|右上|左|中央|右|左下|下|右下]</translation>
+        <translation>基準点を指定 [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1942,12 +1943,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>点1のスナップ [角|垂直中点|水平中点|中央]</translation>
+        <translation>点1のスナップ [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>点2のスナップ [角|垂直中点|水平中点|中央]</translation>
+        <translation>点2のスナップ [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2066,7 +2067,7 @@ or [%2]</source>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation>角のタイプを指定
-[直角|丸み|面取り]</translation>
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2083,7 +2084,7 @@ or [%2]</source>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation>辺のモードを指定
-[両方|水平|垂直]</translation>
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2459,7 +2460,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>切り取り線/分割線</translation>
+        <translation>線をスライス/分割</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
@@ -2469,7 +2470,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>点線</translation>
+        <translation>点列</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
@@ -5923,7 +5924,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="225"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
@@ -8837,7 +8838,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>建築用チェックマーク</translation>
+        <translation>建築用ティック</translation>
     </message>
 </context>
 <context>
@@ -9130,7 +9131,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>矢印に斜線、建築用チェックマーク、インテグラル、なしなどを使用する場合に、寸法補助線を超えて寸法線を延長する距離を指定します。 (システム変数 DIMDLE)</translation>
+        <translation>矢印に斜線、建築用ティック、インテグラル、なしなどを使用する場合に、寸法補助線を超えて寸法線を延長する距離を指定します。 (システム変数 DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9356,7 +9357,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>チェックマークサイズ:</translation>
+        <translation>ティックサイズ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
@@ -12455,7 +12456,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="97"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="113"/>
         <source>Ortho</source>
-        <translation>正面</translation>
+        <translation>直交</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="100"/>
@@ -22109,7 +22110,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="302"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="314"/>
         <source>Ortho</source>
-        <translation>正面</translation>
+        <translation>直交</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="304"/>
@@ -28973,7 +28974,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
@@ -32146,7 +32147,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="245"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
@@ -32386,7 +32387,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="78"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
@@ -32702,7 +32703,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="377"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
@@ -32785,7 +32786,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
@@ -35773,7 +35774,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="241"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="253"/>
         <source>Ortho</source>
-        <translation>正面</translation>
+        <translation>直交</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="243"/>
@@ -39008,7 +39009,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
         <source>Aligned</source>
-        <translation>両端揃え</translation>
+        <translation>寸法線に合わせる</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
@@ -45240,7 +45241,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>フリーハンド</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
@@ -45667,13 +45668,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>移動/コピー</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>面取り</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
@@ -45685,7 +45686,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>フィレット</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
@@ -45703,55 +45704,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>ミラー</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>方向反転</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>回転</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>拡大/縮小</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="762"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>トリム</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="769"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>複数トリム</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="775"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>延長</translation>
+        <translation>le</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>ストレッチ</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>削除</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
@@ -45763,7 +45764,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="839"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>分解</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="83"/>
@@ -45927,7 +45928,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="826"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>属性</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="827"/>
@@ -45939,7 +45940,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>プロパティ</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="200"/>
@@ -45963,7 +45964,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>距離計測</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="856"/>
@@ -45975,7 +45976,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>角度計測</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
@@ -46003,7 +46004,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>列間隔</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -46014,12 +46015,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>長さ</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>数</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -46030,12 +46031,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>行</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>行間隔</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -46046,13 +46047,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
-        <translation>トリム</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>角度計測</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
@@ -46225,13 +46226,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1251"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>方向反転</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>行</translation>
+        <translation>row</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
@@ -46751,7 +46752,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>分割/切断</translation>
+        <translation>分割切断</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
@@ -46835,7 +46836,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>接線 (点と円)</translation>
+        <translation>点円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="288"/>
@@ -46847,7 +46848,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="294"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>接線 (2円)</translation>
+        <translation>2円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="295"/>
@@ -46859,7 +46860,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>接線 (線と円)</translation>
+        <translation>直交接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
@@ -46895,7 +46896,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>多角形 (中心・頂点)</translation>
+        <translation>多角形中心頂点</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
@@ -46919,7 +46920,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>多角形 (中心・接線)</translation>
+        <translation>多角形中心接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="328"/>
@@ -46973,7 +46974,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>2点・半径円</translation>
+        <translation>2点半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="364"/>
@@ -46997,7 +46998,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>中心・半径円</translation>
+        <translation>中心半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
@@ -47015,7 +47016,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>接線円 (2接線1点)</translation>
+        <translation>接円2図形1点</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="385"/>
@@ -47027,7 +47028,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>接線円 (2接線1点)</translation>
+        <translation>接円1図形2点</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
@@ -47039,7 +47040,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="396"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>接線円 (2円・半径)</translation>
+        <translation>接円2図形半径</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="397"/>
@@ -47063,7 +47064,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="413"/>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>円弧 (中心・半径)</translation>
+        <translation>円弧</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="414"/>
@@ -47219,7 +47220,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="503"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>楕円 (軸)</translation>
+        <translation>楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="504"/>
@@ -47243,7 +47244,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="514"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>楕円 (焦点)</translation>
+        <translation>焦点楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="515"/>
@@ -47267,7 +47268,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="526"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>楕円 (中心・3点)</translation>
+        <translation>中心3点楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="527"/>
@@ -47327,7 +47328,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="572"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>ノード追加 (末尾)</translation>
+        <translation>ノード末尾追加</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="573"/>
@@ -47531,7 +47532,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>拡大/縮小</translation>
+        <translation>拡大縮小</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="765"/>
@@ -47549,7 +47550,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>移動・回転</translation>
+        <translation>移動回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
@@ -47561,7 +47562,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="748"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>2要素間回転</translation>
+        <translation>2参照回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="749"/>
@@ -47735,7 +47736,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>エンティティ-点間距離</translation>
+        <translation>図形点間距離</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
@@ -47879,7 +47880,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation>chordlen</translation>
+        <translation>弦長</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47891,13 +47892,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>長さ1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>長さ2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47922,12 +47923,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>開始</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>オフセット</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
@@ -47942,12 +47943,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>幅</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>高さ</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
@@ -47957,7 +47958,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>サイズ</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
@@ -48003,7 +48004,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>上</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
@@ -48013,17 +48014,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>左</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>中央</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>右</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
@@ -48033,7 +48034,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>下</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
@@ -48138,17 +48139,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>両方</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>なし</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>フィット</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
@@ -48168,17 +48169,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>距離</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
         <source>radiant</source>
-        <translation>放射線</translation>
+        <translation>radiant</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1177"/>
         <source>active</source>
-        <translation>アクティブ</translation>
+        <translation>active</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1178"/>
@@ -48188,7 +48189,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation>固定</translation>
+        <translation>fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
@@ -48203,7 +48204,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
         <source>snap</source>
-        <translation>スナップ</translation>
+        <translation>snap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1185"/>
@@ -50356,7 +50357,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>中点スナップオプション</translation>
+        <translation>距離スナップオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>

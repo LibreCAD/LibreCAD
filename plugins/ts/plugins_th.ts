@@ -390,7 +390,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>เส้นแร</translation>
+        <translation>แฮทช์</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>

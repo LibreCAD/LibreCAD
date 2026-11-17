@@ -2424,7 +2424,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -11121,7 +11121,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="116"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="117"/>
@@ -13386,7 +13386,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="85"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="86"/>
@@ -20460,7 +20460,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="30"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -21240,7 +21240,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="268"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">Dime&amp;nsiones</translation>
+        <translation type="unfinished">Aco&amp;tación</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="281"/>
@@ -29630,7 +29630,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="128"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="128"/>
@@ -33835,7 +33835,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="53"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
@@ -35462,7 +35462,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="333"/>
@@ -35530,7 +35530,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
         <source>Splines</source>
-        <translation type="unfinished">Curvas</translation>
+        <translation type="unfinished">Splines</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="365"/>
@@ -35994,7 +35994,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -37131,12 +37131,12 @@ Por favor, comprueba que exista y sus permisos.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Editor de etiquetas de dimensión</translation>
+        <translation>Editor de etiquetas de cota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Etiqueta de dimensión:</translation>
+        <translation>Etiqueta de cota:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -38708,7 +38708,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation>Curvas</translation>
+        <translation>Splines</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
@@ -38736,7 +38736,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
         <source>Use orthogonal grid</source>
-        <translation>Usar red ortogonal</translation>
+        <translation>Usar grilla ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
@@ -38751,7 +38751,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensión Tamaño de marca. Establecerlo en 0 desactivará el tick de dimensión. La flecha de dimensión no se dibujará cuando la marca de dimensión esté habilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño de la marca de cota. Establecerlo en 0 desactivará la marca de cota. La flecha de cota no se dibujará cuando la marca de cota esté habilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38766,12 +38766,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todos los valores de dimensión.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todos los valores de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todas las dimensiones geométricas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todas las geometrías de las cotas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -39055,7 +39055,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Longitud para agrandar la dimensión de la línea</translation>
+        <translation>Longitud que se prolonga más allá de la línea de cota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
@@ -39071,7 +39071,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimensiones de las líneas, flechas y remates</translation>
+        <translation>Líneas de cota, flechas y marcas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -39101,7 +39101,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alineamiento del texto &lt;a name=&quot;result_box&quot;/&gt;relativo a las dimensiones de la línea.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alineación del texto &lt;a name=&quot;result_box&quot;/&gt;respecto a la línea de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -44401,7 +44401,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="490"/>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="494"/>
@@ -45322,19 +45322,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="171"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>rectificado</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="367"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poligon2v</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poli2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
@@ -45376,7 +45376,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ellipseinscribe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -45400,7 +45400,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>#</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="916"/>
@@ -45490,7 +45490,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1085"/>
         <source>zi</source>
         <comment>zoom - in</comment>
-        <translation type="unfinished">zd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
@@ -45502,13 +45502,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <source>zo</source>
         <comment>zoom - out</comment>
-        <translation type="unfinished">zf</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1108"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoom ventana</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
@@ -45532,7 +45532,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zoom</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
@@ -45605,7 +45605,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>♪</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
@@ -45629,7 +45629,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="682"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>♪</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
@@ -46945,7 +46945,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="865"/>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished">me</translation>
+        <translation type="unfinished">xt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="871"/>
@@ -47053,7 +47053,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1018"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>no hay nada que hacer</translation>
+        <translation>sinrestricción</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
@@ -47089,7 +47089,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>restrictivas</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1037"/>
@@ -47107,7 +47107,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation type="unfinished">longitud1</translation>
+        <translation type="unfinished">length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
@@ -47185,7 +47185,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>#</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="786"/>
@@ -47203,7 +47203,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="753"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>#</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -47347,7 +47347,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="988"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>#</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="989"/>
@@ -47431,13 +47431,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="888"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>no</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="889"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>♪</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="903"/>
@@ -47472,7 +47472,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1241"/>
         <source>close</source>
-        <translation>cerca</translation>
+        <translation>cerrar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
@@ -47521,13 +47521,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>rowspacing</source>
-        <translation>filaspacientes</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1294"/>
         <source>through</source>
-        <translation>a través de</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
@@ -47823,7 +47823,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>fixed</source>
-        <translation type="unfinished">fijo</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
@@ -47921,13 +47921,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1250"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>c</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>hecho</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1254"/>
@@ -47992,7 +47992,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1269"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>i1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1271"/>
@@ -48059,7 +48059,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1288"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>filaspacientes</translation>
+        <translation>espaciofilas</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1289"/>
@@ -48113,7 +48113,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1310"/>
         <source>graphoffset</source>
-        <translation>gráficooffset</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="297"/>
@@ -48180,7 +48180,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1307"/>
         <source>blackwhite</source>
-        <translation>blanco negro</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1308"/>
@@ -50094,7 +50094,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Opciones de dimensión</translation>
+        <translation>Opciones de cota</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"/>

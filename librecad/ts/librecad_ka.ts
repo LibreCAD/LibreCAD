@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>არ არის დაყოფილი, რადგან იგი არის მრავალკუთხედის ნაწილი. ჯერ მრავალკუთხედი გაშვით.</translation>
+        <translation> არ დაიყოფა, რადგან პოლიხაზის ნაწილია. ჯერ დაშალეთ პოლიხაზი.</translation>
     </message>
 </context>
 <context>
@@ -209,12 +209,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>აირჩიეთ მრუდი ენტიტეტი</translation>
+        <translation>აირჩიეთ რკალი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>მიუთითეთ ზომის მრუდის მდებარეობა</translation>
+        <translation>მიუთითეთ ზომის რკალის მდებარეობა</translation>
     </message>
 </context>
 <context>
@@ -237,7 +237,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>მიამსგავსეთ მეზობელ ზომას</translation>
+        <translation>მიაბით მეზობელ ზომას</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>მხარის ბოლო წერტილის განსაზღვრა</translation>
+        <translation>მიმთითებელი ხაზის ბოლო წერტილის განსაზღვრა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -281,12 +281,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>განსაზღვრეთ განზომილება, რომლის სტილიც უნდა გამოიყენოთ</translation>
+        <translation>განსაზღვრეთ ზომა, რომლის სტილიც უნდა გამოიყენოთ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>განსაზღვრეთ განზომილება, რომელსაც სტილი უნდა დაუმატოთ</translation>
+        <translation>განსაზღვრეთ ზომა, რომელსაც სტილი უნდა დაუმატოთ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">მითითეთ დამთავრებული კუთხე ან [კუთხე/სიგრძე]</translation>
+        <translation type="unfinished">მიუთითეთ ბოლო კუთხე ან [კუთხე/ქორდა]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -551,7 +551,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
         <source>Enter offset value</source>
-        <translation type="unfinished">შეიყვანეთ გადახრის მნიშვნელობა</translation>
+        <translation type="unfinished">შეიყვანეთ წანაცვლების მნიშვნელობა</translation>
     </message>
 </context>
 <context>
@@ -715,7 +715,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">მიუთითეთ ხაზი/სიმრუვე/წრე</translation>
+        <translation type="unfinished">მიუთითეთ ხაზი/რკალი/წრე</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
@@ -738,12 +738,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">მიუთითეთ ხაზი/სიმრუვე/წრე</translation>
+        <translation type="unfinished">მიუთითეთ ხაზი/რკალი/წრე</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">მიუთითეთ სხვა ხაზი/სიმრუვე/წრე</translation>
+        <translation type="unfinished">მიუთითეთ სხვა ხაზი/რკალი/წრე</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -799,7 +799,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="526"/>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">აირჩიეთ მესამე ხაზი/სიმრუვე/წრე</translation>
+        <translation type="unfinished">აირჩიეთ მესამე ხაზი/რკალი/წრე</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
@@ -812,7 +812,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>ძირითადი ხაზოვანი/გადახრილი განზომილება აირჩიეთ</translation>
+        <translation>აირჩიეთ საბაზისო ხაზოვანი/გასწორებული ზომა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -832,17 +832,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>განზომილების ხაზის მდებარეობა მიუთითეთ</translation>
+        <translation>ზომის ხაზის მდებარეობა მიუთითეთ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>გადააქვს მომდევნო განზომილებაზე</translation>
+        <translation>მიაბით მეზობელ ზომას</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>განზომილების ტექსტის შეყვანა:</translation>
+        <translation>ზომის ტექსტის შეყვანა:</translation>
     </message>
 </context>
 <context>
@@ -893,12 +893,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="340"/>
         <source>Set start angle of arc</source>
-        <translation>მრუდის საწყისი კუთხის დაყენება</translation>
+        <translation>რკალის საწყისი კუთხის დაყენება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="344"/>
         <source>Set end angle of arc</source>
-        <translation>მრუდის საბოლოო კუთხის დაყენება</translation>
+        <translation>რკალის საბოლოო კუთხის დაყენება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="382"/>
@@ -1355,7 +1355,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="51"/>
         <source>Specify second tangent</source>
-        <translation type="unfinished">მითითებული მეორე მხედარი</translation>
+        <translation type="unfinished">მიუთითეთ მეორე მხები</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="56"/>
@@ -1365,7 +1365,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="58"/>
         <source>Specify first tangent</source>
-        <translation type="unfinished">მითითებული პირველი მხედარი</translation>
+        <translation type="unfinished">მიუთითეთ პირველი მხები</translation>
     </message>
 </context>
 <context>
@@ -1681,41 +1681,42 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished">მიუთითეთ მეორე წერტილი
-ან [რიცხვი|x|y|კუთხე|p|გვერდები| მანძილი]</translation>
+ან [number|x|y|კუთხე|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
         <source>Specify Second Point
 or [number]</source>
         <translation type="unfinished">მიუთითეთ მეორე წერტილი
-ან [რიცხვი]</translation>
+ან [რაოდენობა]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished">მიუთითეთ ხაზის მიმართულება
-[x|y|კუთხე|p|მანძილი]</translation>
+[x|y|კუთხე|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation type="unfinished">მიუთითეთ ხაზის მიმართულების კუთხე
-ან [x|y|p|რიცხვი|გვერდები|მანძილი]</translation>
+ან [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished">მითითებული კვეთის წერტილების რეჟიმი
-[არცერთი|დასაწყისი|დასასრული|ორივე|მანძილი]</translation>
+        <translation type="unfinished">მიუთითეთ კიდის წერტილების რეჟიმი
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">მიუთითეთ ფიქსირებული მანძილი წერტილებს შორის
+ან [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1912,7 +1913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>მითითეთ მითითების წერტილი [ზემო-მარცხნივ|ზემო|ზემო-მარჯვნივ|მარცხნივ|შუაში|მარჯვნივ|ქვემო-მარცხნივ|ქვემო|ქვემო-მარჯვნივ]</translation>
+        <translation>მიუთითეთ საბაზისო წერტილი [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1940,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>მითითებული უნდა იყოს პირველი წერტილის მიახლოება [კუთხე|ვერტიკალური ცენტრი|ჰორიზონტალური ცენტრი|ცენტრი]</translation>
+        <translation>მიუთითეთ პირველი წერტილის მიბმა [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>მითითებული უნდა იყოს მეორე წერტილის მიახლოება [კუთხე|ვერტიკალური ცენტრი|ჰორიზონტალური ცენტრი|ცენტრი]</translation>
+        <translation>მიუთითეთ მეორე წერტილის მიბმა [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2063,13 +2064,13 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="449"/>
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="unfinished">უთითეთ კუთხეების ტიპი
-[კვადრატი|სწრული|მრგვლოვანი]</translation>
+        <translation type="unfinished">მიუთითეთ კუთხეების ტიპი
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">უთითეთ კუთხის მოხრილის სიგრძე (x, y)</translation>
+        <translation type="unfinished">მიუთითეთ კუთხის ნაზოლის სიგრძე (x, y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
@@ -2080,8 +2081,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="458"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation type="unfinished">უთითეთ კიდეების რეჟიმი
-[ორივე|ჰორიზონტალური|ვერტიკალური]</translation>
+        <translation type="unfinished">მიუთითეთ კიდეების რეჟიმი
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2094,7 +2095,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>მრუდი</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2477,7 +2478,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>მრუდით</translation>
+        <translation>რკალით</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
@@ -2558,7 +2559,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>ელიფსი &amp;მრუდი (ღერძი)</translation>
+        <translation>ელიფსის &amp;რკალი (ღერძი)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
@@ -2653,7 +2654,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Aligned</source>
-        <translation>&amp;შეწეულია</translation>
+        <translation>&amp;გასწორებული</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
@@ -2683,7 +2684,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp;წამყვანი</translation>
+        <translation>&amp;მიმთითებელი ხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -2718,7 +2719,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;ასლი</translation>
+        <translation>&amp;სარკული ასახვა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
@@ -2753,7 +2754,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;ჩასმა</translation>
+        <translation>&amp;ნაზოლი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
@@ -2868,7 +2869,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>დააყენეთ UCS ორდინატის განზომილების მიხედვით</translation>
+        <translation>დააყენეთ UCS ორდინატის ზომის მიხედვით</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -3083,7 +3084,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
-        <translation>პოლიგონი (კოსინუსი, კოსინუსი)</translation>
+        <translation>&amp;მრავალკუთხედი (მხები, მხები)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
@@ -3108,12 +3109,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>სექტორი</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>სექტორის დახატვის ბრძანებები</translation>
+        <translation>რკალის დახატვის ბრძანებები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3269,7 +3270,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>Pen related operations</source>
-        <translation>ქანჩის ოპერაციები</translation>
+        <translation>კალმის ოპერაციები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
@@ -3294,17 +3295,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>დაკავშირების ოპერაციები</translation>
+        <translation>მიბმის ოპერაციები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>დაკავშირების დამატებები</translation>
+        <translation>მიბმის დამატებები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>დამატებითი დაკავშირებები</translation>
+        <translation>დამატებითი მიბმები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3490,7 +3491,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Dual Curve</source>
-        <translation>&amp;ორმაგი კვერცხი</translation>
+        <translation>&amp;დუალური მრუდი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
@@ -3555,7 +3556,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>&amp;ძირი</translation>
+        <translation>&amp;საბაზისო</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
@@ -3711,37 +3712,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>მიამსგავსე ცენტრთან (ხელით)</translation>
+        <translation>მიბმა შუაზე (ხელით)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>მიამსგავსე ბოლო წერტილებთან</translation>
+        <translation>მიბმა ბოლო წერტილებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>მიამსგავსე ობიექტთან</translation>
+        <translation>მიბმა ობიექტზე</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>მიამსგავსე ცენტრთან</translation>
+        <translation>მიბმა ცენტრზე</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>მიამსგავსე ცენტრთან</translation>
+        <translation>მიბმა შუა წერტილზე</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>მიამსგავსე მანძილის მიხედვით</translation>
+        <translation>მიბმა მანძილით</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>მიამსგავსე გადაკვეთის წერტილთან</translation>
+        <translation>მიბმა გადაკვეთაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3981,7 +3982,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>გადიდება</translation>
+        <translation>&amp;დაპატარავება</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
@@ -4365,7 +4366,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">ნუ მიამსგავსებთ კონტეინერის შვილ ობიექტებს</translation>
+        <translation type="unfinished">ნუ მიაბამთ კონტეინერის შვილ ობიექტებს</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4935,7 +4936,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
         <source>Offset:</source>
-        <translation>გადახრა:</translation>
+        <translation>წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="201"/>
@@ -4955,7 +4956,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="212"/>
         <source>Drawing</source>
-        <translation>გამოხატულება</translation>
+        <translation>ნახაზი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="219"/>
@@ -5047,7 +5048,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished">შერჩეული ხაზები არ არის ერთი და იმავე მრავალკუთხედის შვილობილი</translation>
+        <translation type="unfinished">შერჩეული ხაზები არ არის ერთი და იმავე პოლიხაზის შვილობილი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
@@ -5096,12 +5097,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation>არასწორი ობიექტია არჩეული - არ არსებობს სეგმენტები გადაკვეთის წერტილებს შორის, რომლითაც შეიძლება გაიხსნას/გაიყოს</translation>
+        <translation>არასწორი ობიექტია არჩეული - გადაკვეთის წერტილებს შორის არ არის სეგმენტები გასაწყვეტად/გასაყოფად.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>გახსნა/გაყრა ხაზზე</translation>
+        <translation>ხაზის გაწყვეტა/გაყოფა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
@@ -5120,7 +5121,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>გახსნა/გაყრა წრეზე</translation>
+        <translation>წრის გაწყვეტა/გაყოფა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5137,12 +5138,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>მრუდის გაწყვეტა/გაყოფა</translation>
+        <translation>რკალის გაწყვეტა/გაყოფა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Select line, arc or circle</source>
-        <translation>აირჩიეთ ხაზი, მრუდული ან წრე</translation>
+        <translation>აირჩიეთ ხაზი, რკალი ან წრე</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5301,7 +5302,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">გაშლის დაუყოვნებლივ, არჩევის შემდეგ</translation>
+        <translation type="unfinished">დაშლა დაუყოვნებლივ, არჩევის შემდეგ</translation>
     </message>
 </context>
 <context>
@@ -5394,7 +5395,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="148"/>
         <source>Mirror</source>
-        <translation type="unfinished">გადატრიალება</translation>
+        <translation type="unfinished">სარკული ასახვა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="149"/>
@@ -5462,7 +5463,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="140"/>
         <source>Moving Offset</source>
-        <translation type="unfinished">გადაადგილების შეცდომა</translation>
+        <translation type="unfinished">გადაადგილების წანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="204"/>
@@ -5564,7 +5565,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="375"/>
         <source>Move and rotate immediately after selection</source>
-        <translation type="unfinished">გადაადგილება და გასხივება მყისიერად, არჩევის შემდეგ</translation>
+        <translation type="unfinished">გადაადგილება და შემობრუნება მყისიერად, არჩევის შემდეგ</translation>
     </message>
 </context>
 <context>
@@ -6006,7 +6007,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">თავისუფალი შეხამება</translation>
+        <translation type="unfinished">თავისუფალი მიბმა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6143,7 +6144,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">აირჩიეთ ხაზი/სიმრუვე გასაჭრელად ან შეიყვანეთ სიგრძის მნიშვნელობა:</translation>
+        <translation type="unfinished">აირჩიეთ ხაზი/რკალი გასაჭრელად ან შეიყვანეთ სიგრძის მნიშვნელობა:</translation>
     </message>
 </context>
 <context>
@@ -6151,12 +6152,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">მიამსგავსე მანძილის მიხედვით</translation>
+        <translation type="unfinished">მიბმა მანძილით</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">მიახლოების წერტილის მანძილი თავდაპირველად განსაზღვრულ წერტილამდე</translation>
+        <translation type="unfinished">მიბმის წერტილის მანძილი თავდაპირველად განსაზღვრული მიბმის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6588,7 +6589,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>აირჩიეთ მითითებული ორდინატის განზომილება</translation>
+        <translation>აირჩიეთ მითითებული ორდინატის ზომა</translation>
     </message>
 </context>
 <context>
@@ -6614,7 +6615,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="191"/>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished">აირჩიეთ გადაკვეთის პირველი წერტილი</translation>
+        <translation type="unfinished">აირჩიეთ გადამკვეთი ხაზის პირველი წერტილი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6629,7 +6630,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished">აირჩიეთ გადაკვეთის მეორე წერტილი</translation>
+        <translation type="unfinished">აირჩიეთ გადამკვეთი ხაზის მეორე წერტილი</translation>
     </message>
 </context>
 <context>
@@ -6785,7 +6786,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="266"/>
         <source>Specify control point</source>
-        <translation>მითითებული კონტროლის წერტილი</translation>
+        <translation>მიუთითეთ საკონტროლო წერტილი</translation>
     </message>
 </context>
 <context>
@@ -6837,7 +6838,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>აირჩიეთ ორდინატული განზომილება, რათა დაინიშნოს UCS</translation>
+        <translation>აირჩიეთ ორდინატული ზომა, რათა დაინიშნოს UCS</translation>
     </message>
 </context>
 <context>
@@ -7397,7 +7398,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="240"/>
         <source>Center entities horizontally</source>
-        <translation type="unfinished">გაატრიალეთ ობიექტები ჰორიზონტალურად</translation>
+        <translation type="unfinished">ობიექტების ჰორიზონტალური ცენტრირება</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="260"/>
@@ -7509,7 +7510,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished">სიმის სიმაღლე (ხაზის და ზედა წერტილის შორის მანძილი)</translation>
+        <translation type="unfinished">რკალის სიმაღლე (მანძილი ქორდასა და რკალის ზედა წერტილს შორის)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="64"/>
@@ -7539,7 +7540,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="105"/>
         <source>Central angle of the arc</source>
-        <translation type="unfinished">სიმრუტის ცენტრალური კუთხე</translation>
+        <translation type="unfinished">რკალის ცენტრალური კუთხე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="108"/>
@@ -7681,7 +7682,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>სიმრუტის ცენტრის X კოორდინატი</translation>
+        <translation>რკალის ცენტრის X კოორდინატი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
@@ -7696,7 +7697,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>სიმრუტის ცენტრის Y კოორდინატი</translation>
+        <translation>რკალის ცენტრის Y კოორდინატი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
@@ -7706,7 +7707,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="194"/>
         <source>Radius of arc</source>
-        <translation>სიმრუტის რადიუსი</translation>
+        <translation>რკალის რადიუსი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
@@ -7721,7 +7722,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="249"/>
         <source>Diameter of arc</source>
-        <translation>სიმრუტის დიამეტრი</translation>
+        <translation>რკალის დიამეტრი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
@@ -7731,17 +7732,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
         <source>Arc Length:</source>
-        <translation>სიმის სიგრძე:</translation>
+        <translation>რკალის სიგრძე:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="304"/>
         <source>Length of the arc</source>
-        <translation>სიმის სიგრძე</translation>
+        <translation>რკალის სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>აირჩიეთ სიმის სიგრძე ნახატზე</translation>
+        <translation>აირჩიეთ რკალის სიგრძე ნახატზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
@@ -7751,7 +7752,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="359"/>
         <source>Sweep angle of the arc (degrees)</source>
-        <translation>სიმის გადახვევის კუთხე (გრადუსებში)</translation>
+        <translation>რკალის გადახვევის კუთხე (გრადუსებში)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="366"/>
@@ -7766,7 +7767,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>სიმის ამოზნექა (საგიტა)</translation>
+        <translation>რკალის ამოზნექა (საგიტა)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
@@ -7781,7 +7782,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="469"/>
         <source>Starting angle of arc</source>
-        <translation>სიმრუტის საწყისი კუთხე</translation>
+        <translation>რკალის საწყისი კუთხე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
@@ -7797,12 +7798,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="524"/>
         <source>End angle of arc</source>
-        <translation>სიმრუტის დასასრული კუთხე</translation>
+        <translation>რკალის დასასრული კუთხე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>განისაზღვრეთ, არის თუ არა სიმრუტი შებრუნებული (საათის ისრის მიმართულებით)</translation>
+        <translation>განსაზღვრავს, არის თუ არა რკალი შებრუნებული (საათის ისრის მიმართულებით)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="570"/>
@@ -7850,7 +7851,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
         <source>Central angle of the arc</source>
-        <translation type="unfinished">სიმრუტის ცენტრალური კუთხე</translation>
+        <translation type="unfinished">რკალის ცენტრალური კუთხე</translation>
     </message>
 </context>
 <context>
@@ -8404,12 +8405,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>Replace arc</source>
-        <translation type="unfinished">მრუდის ჩანაცვლება</translation>
+        <translation type="unfinished">რკალის ჩანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">თუ მონიშნულია, ორიგინალი სიმრუტი წაიშლება</translation>
+        <translation type="unfinished">თუ მონიშნულია, ორიგინალი რკალი წაიშლება</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
@@ -8529,17 +8530,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">თუ მონიშნულია, ორიგინალი სიმრუტი წაიშლება</translation>
+        <translation type="unfinished">თუ მონიშნულია, ორიგინალი რკალი წაიშლება</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
         <source>Replace arc</source>
-        <translation type="unfinished">მრუდის ჩანაცვლება</translation>
+        <translation type="unfinished">რკალის ჩანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">შერჩიეთ შეცდომის მნიშვნელობა ნახატიდან</translation>
+        <translation type="unfinished">აირჩიეთ წანაცვლების მნიშვნელობა ნახაზიდან</translation>
     </message>
 </context>
 <context>
@@ -8669,7 +8670,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;გასასვლელი წრის რადიუსი&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;დასახატი მხები წრის რადიუსი&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="59"/>
@@ -8784,7 +8785,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="212"/>
         <source>Oblique</source>
-        <translation>ხაზოვანი</translation>
+        <translation>დახრილი</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="213"/>
@@ -8852,7 +8853,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>ხაზი და ტოლერანტი</translation>
+        <translation>მიმთითებელი ხაზი და დაშვება</translation>
     </message>
 </context>
 <context>
@@ -8893,53 +8894,53 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>შესაძლებელია, ვერ ხსნა მითითებული ფაილი წერისთვის - შეამოწმე, რომ მითითებული ადგილი ხელმისაწვდომია. განზომილების სტილები არ იქნა ექსპორტირებული.</translation>
+        <translation>მითითებული ფაილის ჩასაწერად გახსნა ვერ მოხერხდა - შეამოწმეთ, რომ მითითებულ ადგილას ჩაწერა შესაძლებელია. ზომის სტილები არ იქნა ექსპორტირებული.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>განზომილების სტილების ექსპორტი</translation>
+        <translation>ზომის სტილების ექსპორტი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>განზომილების სტილები ექსპორტირებული იქნა.</translation>
+        <translation>ზომის სტილები ექსპორტირებული იქნა.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
         <source>Dimension Styles Import Error</source>
-        <translation>განზომილების სტილების იმპორტის შეცდომა</translation>
+        <translation>ზომის სტილების იმპორტის შეცდომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>შესაძლებელია, ვერ ხსნა მითითებული ფაილი კითხვისთვის. განზომილების სტილები არ იქნა იმპორტირებული.</translation>
+        <translation>მითითებული ფაილის წასაკითხად გახსნა ვერ მოხერხდა. ზომის სტილები არ იქნა იმპორტირებული.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>უეცარი შეცდომა განზომილების სტილების ანალიზის დროს. შეტყობინება:</translation>
+        <translation>უეცარი შეცდომა ზომის სტილების ანალიზის დროს. შეტყობინება:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>ფაილის მოულოდნელი ფორმატი, მას არ შეიცავს LibreCAD-ის განზომილების სტილებს.</translation>
+        <translation>ფაილის მოულოდნელი ფორმატი, ის არ შეიცავს LibreCAD-ის ზომის სტილებს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>განზომილების სტილების იმპორტი</translation>
+        <translation>ზომის სტილების იმპორტი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>იმპორტისთვის განზომილების სტილი არ არის.</translation>
+        <translation>იმპორტისთვის ზომის სტილი არ არის.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>განზომილების სტილები იმპორტირებული იქნა.</translation>
+        <translation>ზომის სტილები იმპორტირებული იქნა.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
@@ -9102,7 +9103,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>ადგენს განზომილების ხაზის სისქეს. (DIMLWD სისტემური ცვლადი)</translation>
+        <translation>ადგენს ზომის ხაზის სისქეს. (DIMLWD სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9112,32 +9113,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>უზრუნველყოფს განზომილების ხაზის გაგრძელების მანძილს, როდესაც იყენებთ კუთხოვან, არქიტექტურულ, ნიშან, ინტეგრალურ და ისრის თავების გარეშე მონიშვნებს. (DIMDLE სისტემური ცვლადი)</translation>
+        <translation>განსაზღვრავს მანძილს, რომლითაც ზომის ხაზი გაგრძელების ხაზს გასცდება, როდესაც ისრის თავების ნაცვლად იყენებთ დახრილ, არქიტექტურულ, ირიბი შტრიხის ან ინტეგრალურ ნიშნებს, ან ნიშნების გარეშე ვარიანტს. (DIMDLE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>ძირითადი ხაზის ინტერვალი:</translation>
+        <translation>საბაზისო ხაზებს შორის ინტერვალი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>პირველი განზომილების ხაზის ჩვენების დათრგუნვა (DIMSD1 სისტემური ცვლადი)</translation>
+        <translation>პირველი ზომის ხაზის ჩვენების დათრგუნვა (DIMSD1 სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>დათრგუნა 1-ლი განზომილების ხაზი და ისარი</translation>
+        <translation>პირველი ზომის ხაზის და ისრის დათრგუნვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>მეორე განზომილების ხაზის ჩვენების დათრგუნვა (DIMSD2 სისტემური ცვლადი)</translation>
+        <translation>მეორე ზომის ხაზის ჩვენების დათრგუნვა (DIMSD2 სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>დათრგუნა 2-ლი განზომილების ხაზი და ისარი</translation>
+        <translation>მეორე ზომის ხაზის და ისრის დათრგუნვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9147,7 +9148,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>ადგენს დამატებითი ხაზის ფერს (DIMCLRE სისტემური ცვლადი).</translation>
+        <translation>ადგენს გაგრძელების ხაზის ფერს (DIMCLRE სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
@@ -9157,7 +9158,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>ადგენს პირველი დამატებითი ხაზის ტიპს. (DIMLTEX1 სისტემური ცვლადი)</translation>
+        <translation>ადგენს პირველი გაგრძელების ხაზის ტიპს. (DIMLTEX1 სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9167,7 +9168,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>ადგენს მეორე დამატებითი ხაზის ტიპს. (DIMLTEX2 სისტემური ცვლადი)</translation>
+        <translation>ადგენს მეორე გაგრძელების ხაზის ტიპს. (DIMLTEX2 სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
@@ -9177,27 +9178,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>ადგენს დამატებითი ხაზის სისქეს. (DIMLWE სისტემური ცვლადი)</translation>
+        <translation>ადგენს გაგრძელების ხაზის სისქეს. (DIMLWE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>გაგრძელება განზომილების ხაზებს მიღმა:</translation>
+        <translation>გაგრძელება ზომის ხაზებს მიღმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>ადგენს მანძილს, რომლის მიხედვითაც დამატებითი ხაზები განზომილების ხაზის ზემოთ უნდა გაგრძელდეს. (DIMEXE სისტემური ცვლადი)</translation>
+        <translation>ადგენს მანძილს, რომლის მიხედვითაც გაგრძელების ხაზები ზომის ხაზის ზემოთ უნდა გაგრძელდეს. (DIMEXE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>გადახრა სათავიდან:</translation>
+        <translation>წანაცვლება სათავიდან:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>აყენებს მანძილს, რომლითაც გამავითარებელი ხაზები არის გადახვეული ნახაზზე არსებული წერტილებიდან, რომლებიც განსაზღვრავენ ზომას. (DIMEXO სისტემური ცვლადი)</translation>
+        <translation>აყენებს მანძილს, რომლითაც გაგრძელების ხაზები წანაცვლებულია ნახაზზე არსებული წერტილებიდან, რომლებიც განსაზღვრავენ ზომას. (DIMEXO სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9207,37 +9208,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>აყენებს გამავითარებელი ხაზების საერთო სიგრძეს, რომელიც იწყება ზომის ხაზიდან და მიემართება ზომის სათავისკენ. (DIMFXL სისტემური ცვლადი)</translation>
+        <translation>აყენებს გაგრძელების ხაზების საერთო სიგრძეს, რომელიც იწყება ზომის ხაზიდან და მიემართება ზომის სათავისკენ. (DIMFXL სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>აქტიურია ფიქსირებული სიგრძის გამავითარებელი ხაზები. (DIMFXLON სისტემური ცვლადი)</translation>
+        <translation>აქტიურია ფიქსირებული სიგრძის გაგრძელების ხაზები. (DIMFXLON სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>ფიქსირებული სიგრძის გამავითარებელი ხაზები</translation>
+        <translation>ფიქსირებული სიგრძის გაგრძელების ხაზები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>მალავს პირველი გამავითარებელი ხაზის ჩვენებას (DIMSE1 სისტემური ცვლადი).</translation>
+        <translation>მალავს პირველი გაგრძელების ხაზის ჩვენებას (DIMSE1 სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>მალავს 1-ელ გამავითარებელ ხაზს</translation>
+        <translation>მალავს პირველ გაგრძელების ხაზს</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>მალავს მეორე გამავითარებელი ხაზის ჩვენებას (DIMSE2 სისტემური ცვლადი).</translation>
+        <translation>მალავს მეორე გაგრძელების ხაზის ჩვენებას (DIMSE2 სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>მალავს 2-ელ გამავითარებელ ხაზს</translation>
+        <translation>მალავს მეორე გაგრძელების ხაზს</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9258,12 +9259,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>ხაზოვანი გადაადგილებული განზომილება</translation>
+        <translation>ხაზოვანი გატეხილი ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>გადაადგილების სიმაღლის კოეფიციენტი:</translation>
+        <translation>გატეხვის სიმაღლის კოეფიციენტი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9273,17 +9274,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>რადიუსული გადაადგილებული განზომილება</translation>
+        <translation>რადიუსული გატეხილი ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>გადაადგილების კუთხე:</translation>
+        <translation>გატეხვის კუთხე:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>განისაზღვრავს განზომილების ხაზის განივი სეგმენტის კუთხეს გადაადგილებულ რადიუსულ განზომილებაში. (DIMJOGANG სისტემური ცვლადი)</translation>
+        <translation>განსაზღვრავს ზომის ხაზის განივი სეგმენტის კუთხეს გატეხილ რადიუსულ ზომაში. (DIMJOGANG სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9303,7 +9304,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>წამყვანი:</translation>
+        <translation>მიმთითებელი ხაზი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
@@ -9370,22 +9371,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>რკალის სიგრძის სიმბოლოები განთავსებულია განზომილების ტექსტის წინ. (DIMARCSYM სისტემური ცვლადი)</translation>
+        <translation>რკალის სიგრძის სიმბოლოები განთავსებულია ზომის ტექსტის წინ. (DIMARCSYM სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>განზომილების ტექსტის წინ</translation>
+        <translation>ზომის ტექსტის წინ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>რკალის სიგრძის სიმბოლოები განთავსებულია განზომილების ტექსტის ზემოთ. (DIMARCSYM სისტემური ცვლადი)</translation>
+        <translation>რკალის სიგრძის სიმბოლოები განთავსებულია ზომის ტექსტის ზემოთ. (DIMARCSYM სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>განზომილების ტექსტის ზემოთ</translation>
+        <translation>ზომის ტექსტის ზემოთ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
@@ -9456,7 +9457,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>აყენებს ფერს ტექსტის ფონზე განზომილებებში (DIMTFILLCLR სისტემური ცვლადი)</translation>
+        <translation>აყენებს ფერს ტექსტის ფონზე ზომებში (DIMTFILLCLR სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9471,7 +9472,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>აყენებს წილადების მასშტაბს, შედარებით განზომილების ტექსტთან. (DIMTFAC სისტემური ცვლადი)</translation>
+        <translation>აყენებს წილადების მასშტაბს, შედარებით ზომის ტექსტთან. (DIMTFAC სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
@@ -9481,12 +9482,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>აყენებს მიმდინარე განზომილების ტექსტის სტილის სიმაღლეს. (DIMTXT სისტემური ცვლადი)</translation>
+        <translation>აყენებს მიმდინარე ზომის ტექსტის სტილის სიმაღლეს. (DIMTXT სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>აყენებს ფერს განზომილების ტექსტისთვის (DIMCLRT სისტემური ცვლადი)</translation>
+        <translation>აყენებს ფერს ზომის ტექსტისთვის (DIMCLRT სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9501,7 +9502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>აჩვენებს მართკუთხა ჩარჩოს განზომილების ტექსტის გარშემო. ეს პარამეტრი ცვლის DIMGAP სისტემურ ცვლადში შენახულ მნიშვნელობას უარყოფით მნიშვნელობად.</translation>
+        <translation>აჩვენებს მართკუთხა ჩარჩოს ზომის ტექსტის გარშემო. ეს პარამეტრი ცვლის DIMGAP სისტემურ ცვლადში შენახულ მნიშვნელობას უარყოფით მნიშვნელობად.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9527,17 +9528,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>გაასწორებს ტექსტს განზომილების ხაზთან (DIMTIH და DIMTOH სისტემური ცვლადები).</translation>
+        <translation>გაასწორებს ტექსტს ზომის ხაზთან (DIMTIH და DIMTOH სისტემური ცვლადები).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>გაასწორებს ტექსტს განზომილების ხაზთან, როდესაც ტექსტი მდებარეობს დაგრძელების ხაზებში, მაგრამ ჰორიზონტალურად გასწორებს, როდესაც ტექსტი მდებარეობს დაგრძელების ხაზების გარეთ (DIMTIH და DIMTOH სისტემური ცვლადები).</translation>
+        <translation>გაასწორებს ტექსტს ზომის ხაზთან, როდესაც ტექსტი მდებარეობს გაგრძელების ხაზებს შორის, მაგრამ ჰორიზონტალურად გაასწორებს, როდესაც ტექსტი მდებარეობს გაგრძელების ხაზების გარეთ (DIMTIH და DIMTOH სისტემური ცვლადები).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>გაასწორებულია განზომილების ხაზთან</translation>
+        <translation>გასწორებულია ზომის ხაზთან</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9550,8 +9551,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>უზრუნველყოფს დახრილი ხაზების ზომას, რომლებიც ხატავენ ისრების ნაცვლად, ხაზოვანი, რადიუსული და დიამეტრული განზომილებისთვის. თუ = 0, ხატავს ისრებს.
-&gt;0, ხატავს დახრილ ხაზებს ისრების ნაცვლად (DIMTSZ ცვლადი).</translation>
+        <translation>უზრუნველყოფს დახრილი ხაზების ზომას, რომლებიც ხატავენ ისრების ნაცვლად, ხაზოვანი, რადიუსული და დიამეტრული ზომისთვის. თუ = 0, ხატავს ისრებს.
+&gt;0, ხატავს დახრილ ხაზებს ისრების ნაცვლად (DIMTSZ ცვლადი). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9567,7 +9568,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"/>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>აკონტროლებს განზომილების ტექსტის ჩვენების მიმართულებას. (DIMTXTDIRECTION სისტემური ცვლადი)</translation>
+        <translation>აკონტროლებს ზომის ტექსტის ჩვენების მიმართულებას. (DIMTXTDIRECTION სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
@@ -9582,7 +9583,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>მანძილი განზომილების ხაზიდან:</translation>
+        <translation>მანძილი ზომის ხაზიდან:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
@@ -9592,7 +9593,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>აკონტროლებს განზომილების ტექსტის ჰორიზონტალურ განლაგებას განზომილების ხაზზე, დანამატის ხაზებთან მიმართებაში. (DIMJUST სისტემური ცვლადი)</translation>
+        <translation>აკონტროლებს ზომის ტექსტის ჰორიზონტალურ განლაგებას ზომის ხაზზე, გაგრძელების ხაზებთან მიმართებაში. (DIMJUST სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9603,17 +9604,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>დანამატის ხაზზე 1</translation>
+        <translation>გაგრძელების ხაზთან 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>დანამატის ხაზზე 2</translation>
+        <translation>გაგრძელების ხაზთან 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>დანამატის ხაზზე 1</translation>
+        <translation>გაგრძელების ხაზის ზემოთ 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
@@ -9633,7 +9634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>მართავს განზომილების ტექსტის ვერტიკალურ განლაგებას განზომილების ხაზთან მიმართებაში. (DIMTAD სისტემური ცვლადი)</translation>
+        <translation>მართავს ზომის ტექსტის ვერტიკალურ განლაგებას ზომის ხაზთან მიმართებაში. (DIMTAD სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9658,17 +9659,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>ტექსტის ვერტიკალური პოზიცია განზომილების ხაზის ზემოთ ან ქვემოთ, თუ ვერტიკალური განლაგება (DIMTAD) არ არის „ცენტრში“ (DIMTVP ცვლადი).</translation>
+        <translation>ტექსტის ვერტიკალური პოზიცია ზომის ხაზის ზემოთ ან ქვემოთ, თუ ვერტიკალური განლაგება (DIMTAD) არ არის „ცენტრში“ (DIMTVP ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>წყვეტილი განზომილების ხაზის ტექსტის ინტერვალი:</translation>
+        <translation>წყვეტილი ზომის ხაზის ტექსტის ინტერვალი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>უწესებს მიმდინარე ტექსტის ინტერვალს, რაც არის მანძილი განზომილების ტექსტის გარშემო, როდესაც განზომილების ხაზი იყოფა, რათა განზომილების ტექსტი მოთავსდეს (DIMGAP სისტემური ცვლადი).</translation>
+        <translation>უწესებს მიმდინარე ტექსტის ინტერვალს, რაც არის მანძილი ზომის ტექსტის გარშემო, როდესაც ზომის ხაზი იყოფა, რათა ზომის ტექსტი მოთავსდეს (DIMGAP სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9683,7 +9684,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>უგულებელყოფს ჰორიზონტალურ გასწორების პარამეტრებს და განთავსებს ტექსტს იმ ადგილას, რომელიც მითითებულია განზომილების ხაზის მდებარეობის მოთხოვნაში. (DIMUPT სისტემური ცვლადი)</translation>
+        <translation>უგულებელყოფს ჰორიზონტალურ გასწორების პარამეტრებს და განთავსებს ტექსტს იმ ადგილას, რომელიც მითითებულია ზომის ხაზის მდებარეობის მოთხოვნაში. (DIMUPT სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9693,12 +9694,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>ხატავს განზომილების ხაზებს გაზომილ წერტილებს შორის, მაშინაც კი, როდესაც ისრისთავები განთავსებულია გაზომილ წერტილებს გარეთ. (DIMTOFL სისტემური ცვლადი)</translation>
+        <translation>ხატავს ზომის ხაზებს გაზომილ წერტილებს შორის, მაშინაც კი, როდესაც ისრისთავები განთავსებულია გაზომილ წერტილებს გარეთ. (DIMTOFL სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>ხატავს განზომილების ხაზს გარე ხაზებს შორის</translation>
+        <translation>ხატავს ზომის ხაზს გაგრძელების ხაზებს შორის</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9709,7 +9710,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>უწესებს მასშტაბს ყველა განზომილების სტილის პარამეტრისთვის, რომელიც განსაზღვრავს ზომას, მანძილს ან ინტერვალს, მათ შორის ტექსტის და ისრისთავების ზომებს. ეს მასშტაბი არ ცვლის განზომილების ზომის მნიშვნელობებს. (DIMSCALE სისტემური ცვლადი)</translation>
+        <translation>უწესებს მასშტაბს ყველა ზომის სტილის პარამეტრისთვის, რომელიც განსაზღვრავს ზომას, მანძილს ან ინტერვალს, მათ შორის ტექსტის და ისრისთავების ზომებს. ეს მასშტაბი არ ცვლის ზომების გაზომილ მნიშვნელობებს. (DIMSCALE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9729,22 +9730,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>თუ ეს არეა მონიშნულია, განზომილების ხაზი გადაადგილდება, როდესაც განზომილების ტექსტი გადაადგილდება. (DIMTMOVE სისტემური ცვლადი)</translation>
+        <translation>თუ მონიშნულია, ზომის ხაზი გადაადგილდება, როდესაც ზომის ტექსტი გადაადგილდება. (DIMTMOVE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
         <source>Beside the dimention line</source>
-        <translation>განზომილების ხაზის გვერდით</translation>
+        <translation>ზომის ხაზის გვერდით</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>თუ ეს არეა მონიშნულია, განზომილების ხაზი არ გადაადგილდება, როდესაც ტექსტი გადაადგილდება. თუ ტექსტი გადაადგილებულია განზომილების ხაზიდან, შეიქმნება დამხმარე ხაზი, რომელიც ტექსტს განზომილების ხაზთან აკავშირებს. დამხმარე ხაზი გამოტოვებულია, როდესაც ტექსტი ძალიან ახლოს არის განზომილების ხაზთან. (DIMTMOVE სისტემური ცვლადი)</translation>
+        <translation>თუ მონიშნულია, ზომის ხაზი არ გადაადგილდება, როდესაც ტექსტი გადაადგილდება. თუ ტექსტი გადაადგილებულია ზომის ხაზიდან, შეიქმნება მიმთითებელი ხაზი, რომელიც ტექსტს ზომის ხაზთან აკავშირებს. მიმთითებელი ხაზი გამოტოვებულია, როდესაც ტექსტი ძალიან ახლოს არის ზომის ხაზთან. (DIMTMOVE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>განზომილების ხაზზე, დამხმარე ხაზით</translation>
+        <translation>ზომის ხაზზე, მიმთითებელი ხაზით</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9754,12 +9755,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>თუ ეს არეა მონიშნულია, განზომილების ხაზი არ გადაადგილდება, როდესაც ტექსტი გადაადგილდება. გადაადგილებული ტექსტი, რომელიც განზომილების ხაზიდან არის მოშორებული, არ არის დაკავშირებული განზომილების ხაზთან დამხმარე ხაზით. (DIMTMOVE სისტემური ცვლადი)</translation>
+        <translation>თუ მონიშნულია, ზომის ხაზი არ გადაადგილდება, როდესაც ტექსტი გადაადგილდება. გადაადგილებული ტექსტი, რომელიც ზომის ხაზიდან არის მოშორებული, არ არის დაკავშირებული ზომის ხაზთან მიმთითებელი ხაზით. (DIMTMOVE სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>განზომილების ხაზზე, დამხმარე ხაზის გარეშე</translation>
+        <translation>ზომის ხაზზე, მიმთითებელი ხაზის გარეშე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9774,7 +9775,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>საკმარისი ადგილის არარსებობის შემთხვევაში, ხსნის ხაზებში ისრისთავების ჩვენება შეწყვეტილია. (DIMSOXD სისტემური ცვლადი)</translation>
+        <translation>საკმარისი ადგილის არარსებობის შემთხვევაში, გაგრძელების ხაზებს შორის ისრისთავების ჩვენება შეწყვეტილია. (DIMSOXD სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
@@ -9834,7 +9835,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>კუთხოვანი განზომილებები</translation>
+        <translation>კუთხოვანი ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -9892,7 +9893,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>ადგენს ათწილადი ციფრების რაოდენობას კუთხური განზომილებებისთვის. (DIMADEC სისტემური ცვლადი)</translation>
+        <translation>ადგენს ათწილადი ციფრების რაოდენობას კუთხური ზომებისთვის. (DIMADEC სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
@@ -9903,7 +9904,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>ხაზოვანი განზომილებები</translation>
+        <translation>ხაზოვანი ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
@@ -9918,17 +9919,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>ადგენს მასშტაბის კოეფიციენტს ხაზოვანი განზომილებების ზომებისთვის. რეკომენდებულია, რომ არ შეცვალოთ ეს მნიშვნელობა მის ნაგულისხმევ მნიშვნელობიდან, რომელიც 1.00-ია. (DIMLFAC სისტემური ცვლადი)</translation>
+        <translation>ადგენს მასშტაბის კოეფიციენტს ხაზოვანი ზომების გაზომვებისთვის. რეკომენდებულია, რომ არ შეცვალოთ ეს მნიშვნელობა მის ნაგულისხმევ მნიშვნელობიდან, რომელიც 1.00-ია. (DIMLFAC სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>მიმართავს ზომის მასშტაბის კოეფიციენტს მხოლოდ განლაგების ხედებში შექმნილ განზომილებებზე.</translation>
+        <translation>იყენებს გაზომვის მასშტაბის კოეფიციენტს მხოლოდ განლაგების ხედებში შექმნილ ზომებზე. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>მიმართეთ მხოლოდ განლაგების განზომილებებზე</translation>
+        <translation>გამოიყენეთ მხოლოდ განლაგების ზომებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
@@ -9948,12 +9949,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>მოიცავს თქვენს მიერ განსაზღვრულ შეკვეთას განზომილების ტექსტში. (DIMPOST სისტემური ცვლადი)</translation>
+        <translation>მოიცავს თქვენს მიერ განსაზღვრულ სუფიქსს ზომის ტექსტში. (DIMPOST სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>ადგენს მიმდინარე ერთეულების ფორმატს ყველა განზომილების ტიპისთვის, გარდა კუთხოვანი განზომილებებისა. (DIMLUNIT სისტემური ცვლადი)</translation>
+        <translation>ადგენს მიმდინარე ერთეულების ფორმატს ყველა ზომის ტიპისთვის, გარდა კუთხოვანი ზომებისა. (DIMLUNIT სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9979,17 +9980,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>ადგენს ყველაზე ახლო მომრგვალების მნიშვნელობას ყველა განზომილების ტიპისთვის, გარდა კუთხოვანი განზომილებებისა. (DIMRND სისტემური ცვლადი)</translation>
+        <translation>ადგენს ყველაზე ახლო დამრგვალების მნიშვნელობას ყველა ზომის ტიპისთვის, გარდა კუთხოვანი ზომებისა. (DIMRND სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>აჩვენებს და ადგენს ათწილადების რაოდენობას განზომილების ტექსტში. (DIMDEC სისტემური ცვლადი)</translation>
+        <translation>აჩვენებს და ადგენს ათწილადების რაოდენობას ზომის ტექსტში. (DIMDEC სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>მოიცავს პრეფიქსს, რომელსაც განსაზღვრავთ განზომილების ტექსტში. (DIMPOST სისტემური ცვლადი)</translation>
+        <translation>მოიცავს პრეფიქსს, რომელსაც განსაზღვრავთ ზომის ტექსტში. (DIMPOST სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -10016,17 +10017,17 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1610"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1868"/>
         <source>Sub-units factor:</source>
-        <translation>ქვედანაყოფების ფაქტორი:</translation>
+        <translation>ქვეერთეულების კოეფიციენტი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>მალავს ყველა ათწილადიანი განზომილების ბოლო ნულებს. (DIMZIN სისტემური ცვლადი)</translation>
+        <translation>მალავს ყველა ათწილადიანი ზომის ბოლო ნულებს. (DIMZIN სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>მალავს დიუმების ნაწილს ფუტ-და-დიუმის განზომილებაში, როდესაც მანძილი არის ფუტის მთელი რიცხვი. (DIMZIN სისტემური ცვლადი)</translation>
+        <translation> მალავს დიუმების ნაწილს ფუტ-და-დიუმის ზომაში, როდესაც მანძილი არის ფუტის მთელი რიცხვი. (DIMZIN სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10039,7 +10040,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>მალავს ფუტის ნაწილს ფუტ-და-დიუმის განზომილებაში, როდესაც მანძილი ნაკლებია ერთ ფუტზე. (DIMZIN სისტემური ცვლადი)</translation>
+        <translation>მალავს ფუტის ნაწილს ფუტ-და-დიუმის ზომაში, როდესაც მანძილი ნაკლებია ერთ ფუტზე. (DIMZIN სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10052,23 +10053,23 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>სუპრესირებს წამყვან ნულებს ყველა ათწილადი განზომილებაში (DIMZIN სისტემური ცვლადი)</translation>
+        <translation>სუპრესირებს წამყვან ნულებს ყველა ათწილად ზომაში (DIMZIN სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1898"/>
         <source>Sub-unit suffix:</source>
-        <translation>ქვედანაყოფის შეკვეთილი:</translation>
+        <translation>ქვეერთეულის სუფიქსი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>ადგენს ქვედანაყოფების რაოდენობას ერთ ერთეულში. იგი გამოიყენება ქვედანაყოფში განზომილების მანძილის გამოთვლაში, როდესაც მანძილი ერთ ერთეულზე ნაკლებია.</translation>
+        <translation>ადგენს ქვეერთეულების რაოდენობას ერთ ერთეულში. იგი გამოიყენება ქვეერთეულში ზომის მანძილის გამოთვლაში, როდესაც მანძილი ერთ ერთეულზე ნაკლებია. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>მოიცავს შეკვეთილს განზომილების მნიშვნელობის ქვედანაყოფში. შეგიძლიათ შეიყვანოთ ტექსტი ან გამოიყენოთ კონტროლის კოდები, რათა გამოჩინდეს სპეციალური სიმბოლოები.</translation>
+        <translation>მოიცავს სუფიქსს ზომის მნიშვნელობის ქვეერთეულში. შეგიძლიათ შეიყვანოთ ტექსტი ან გამოიყენოთ კონტროლის კოდები, რათა გამოჩინდეს სპეციალური სიმბოლოები.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10078,7 +10079,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>ამატებს ალტერნატიულ საზომ ერთეულებს განზომილების ტექსტში. აყენებს DIMALT სისტემურ ცვლადს 1-ზე.</translation>
+        <translation>ამატებს ალტერნატიულ საზომ ერთეულებს ზომის ტექსტში. აყენებს DIMALT სისტემურ ცვლადს 1-ზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10093,7 +10094,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>უზრუნველყოფს მრავლების მნიშვნელობას, რომელიც გამოიყენება პირველადი და ალტერნატიული ერთეულების გადამრთველ ფაქტორად. მაგალითად, სანტიმეტრებიდან მილიმეტრებში გადასასვლელად, შეიყვანეთ 25.4. ამ მნიშვნელობას არ აქვს გავლენა კუთხოვან განზომილებებზე და არ გამოიყენება მომრგვალების მნიშვნელობაზე ან პლიუსის ან მინუსის ტოლერანტიულ მნიშვნელობებზე. (DIMALTF სისტემური ცვლადი)</translation>
+        <translation>განსაზღვრავს მამრავლს, რომელიც გამოიყენება პირველადი და ალტერნატიული ერთეულების გადაყვანის კოეფიციენტად. მაგალითად, დიუმების მილიმეტრებში გადასაყვანად შეიყვანეთ 25.4. ეს მნიშვნელობა გავლენას არ ახდენს კუთხოვან ზომებზე და არ გამოიყენება დამრგვალების მნიშვნელობაზე ან პლუს-მინუს დაშვების მნიშვნელობებზე. (DIMALTF სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10103,7 +10104,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>ადგენს დამრგვალების წესებს ალტერნატიული ერთეულებისთვის ყველა განზომილების ტიპისთვის, გარდა კუთხოვანი. თუ შეიყვანთ 0.25-ს, ყველა ალტერნატიული გაზომვა დამრგვალდება 0.25 ერთეულამდე. თუ შეიყვანთ 1.0-ს, ყველა განზომილების გაზომვა დამრგვალდება უახლოეს მთელ რიცხვამდე. ათწილად ნიშნების შემდეგ გამოჩენილი ციფრების რაოდენობა დამოკიდებულია სიზუსტის პარამეტრზე. (DIMALTRND სისტემური ცვლადი)</translation>
+        <translation>ადგენს დამრგვალების წესებს ალტერნატიული ერთეულებისთვის ყველა ზომის ტიპისთვის, გარდა კუთხოვანი. თუ შეიყვანთ 0.25-ს, ყველა ალტერნატიული გაზომვა დამრგვალდება 0.25 ერთეულამდე. თუ შეიყვანთ 1.0-ს, ყველა ზომის გაზომვა დამრგვალდება უახლოეს მთელ რიცხვამდე. ათწილად ნიშნების შემდეგ გამოჩენილი ციფრების რაოდენობა დამოკიდებულია სიზუსტის პარამეტრზე. (DIMALTRND სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -10118,7 +10119,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>ალტერნატიული ერთეულები განლაგებულია პირველადი ერთეულების შემდეგ განზომილების ტექსტში.</translation>
+        <translation>ალტერნატიული ერთეულები განლაგებულია პირველადი ერთეულების შემდეგ ზომის ტექსტში.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
@@ -10128,7 +10129,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>ალტერნატიული ერთეულები განლაგებულია პირველადი ერთეულების ქვეშ განზომილების ტექსტში.</translation>
+        <translation>ალტერნატიული ერთეულები განლაგებულია პირველადი ერთეულების ქვეშ ზომის ტექსტში.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
@@ -10138,7 +10139,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>მოიცავს პრეფიქსს ალტერნატიულ განზომილების ტექსტში. შეგიძლიათ შეიყვანოთ ტექსტი ან გამოიყენოთ კონტროლის კოდები, რათა გამოჩინდეს სპეციალური სიმბოლოები. მაგალითად, კონტროლის კოდის %%c შეყვანით გამოჩნდება დიამეტრის სიმბოლო. (DIMAPOST სისტემური ცვლადი)</translation>
+        <translation>მოიცავს პრეფიქსს ალტერნატიულ ზომის ტექსტში. შეგიძლიათ შეიყვანოთ ტექსტი ან გამოიყენოთ კონტროლის კოდები, რათა გამოჩინდეს სპეციალური სიმბოლოები. მაგალითად, კონტროლის კოდის %%c შეყვანით გამოჩნდება დიამეტრის სიმბოლო. (DIMAPOST სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -10148,22 +10149,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>ათობითი მნიშვნელობების ყველა განზომილებაში წამყვანი ნულების გამოტოვება. მაგალითად, 0.5000 ხდება .5000.</translation>
+        <translation>ათობითი მნიშვნელობების ყველა ზომაში წამყვანი ნულების გამოტოვება. მაგალითად, 0.5000 ხდება .5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>ათობითი მნიშვნელობების ყველა განზომილებაში მომდევნო ნულების გამოტოვება. მაგალითად, 12.5000 ხდება 12.5, ხოლო 30.0000 ხდება 30 (DIMALTZ სისტემური ცვლადი).</translation>
+        <translation>ათობითი მნიშვნელობების ყველა ზომაში მომდევნო ნულების გამოტოვება. მაგალითად, 12.5000 ხდება 12.5, ხოლო 30.0000 ხდება 30 (DIMALTZ სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>ფუტის ნაწილის გამოტოვება ფუტ-და-ინჩის განზომილებაში, როდესაც მანძილი 1 ფუტზე ნაკლებია. მაგალითად, 0&apos;-6 1/2&quot; ხდება 6 1/2&quot; (DIMALTZ სისტემური ცვლადი).</translation>
+        <translation>ფუტის ნაწილის გამოტოვება ფუტ-და-ინჩის ზომაში, როდესაც მანძილი 1 ფუტზე ნაკლებია. მაგალითად, 0&apos;-6 1/2&quot; ხდება 6 1/2&quot; (DIMALTZ სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>ინჩების ნაწილის გამოტოვება ფუტ-და-ინჩის განზომილებაში, როდესაც მანძილი მთელ ფუტს შეადგენს. მაგალითად, 1&apos;-0&quot; ხდება 1&apos;. (DIMALTZ სისტემური ცვლადი).</translation>
+        <translation>ინჩების ნაწილის გამოტოვება ფუტ-და-ინჩის ზომაში, როდესაც მანძილი მთელ ფუტს შეადგენს. მაგალითად, 1&apos;-0&quot; ხდება 1&apos;. (DIMALTZ სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -10173,27 +10174,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>შეკვეთილი დამატება ალტერნატიული განზომილების ტექსტში. შეგიძლიათ შეიყვანოთ ტექსტი ან გამოიყენოთ კონტროლის კოდები, რათა გამოჩენილი იყოს სპეციალური სიმბოლოები. მაგალითად, ტექსტის შეყვანით cm, მიიღება განზომილების ტექსტი, რომელიც ჰგავს ილუსტრაციაში ნაჩვენებ ტექსტს. როდესაც შეკვეთილს შეყავთ, ის გადაწერს ნებისმიერ ნაგულისხმევ შეკვეთილს. (DIMAPOST სისტემური ცვლადი).</translation>
+        <translation>სუფიქსის დამატება ალტერნატიული ზომის ტექსტში. შეგიძლიათ შეიყვანოთ ტექსტი ან გამოიყენოთ კონტროლის კოდები, რათა გამოჩენილი იყოს სპეციალური სიმბოლოები. მაგალითად, ტექსტის შეყვანით cm, მიიღება ზომის ტექსტი, რომელიც ჰგავს ილუსტრაციაში ნაჩვენებ ტექსტს. როდესაც სუფიქსს შეიყვანთ, ის გადაწერს ნებისმიერ ნაგულისხმევ სუფიქსს. (DIMAPOST სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
         <source>Tolerances</source>
-        <translation>ტოლერანტობები</translation>
+        <translation>დაშვებები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>მინიმალური ან ქვედა ტოლერანტობის მნიშვნელობის დაყენება. (DIMTM სისტემური ცვლადი).</translation>
+        <translation>მინიმალური ან ქვედა დაშვების მნიშვნელობის დაყენება. (DIMTM სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>წამყვანი ნულების გამოტოვება ყველა ათობითი მნიშვნელობის განზომილებაში (DIMTZIN სისტემური ცვლადი).</translation>
+        <translation>წამყვანი ნულების გამოტოვება ყველა ათობითი მნიშვნელობის ზომაში (DIMTZIN სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>მომდევნო ნულების გამოტოვება ყველა ათობითი მნიშვნელობის განზომილებაში (DIMTZIN სისტემური ცვლადი).</translation>
+        <translation>მომდევნო ნულების გამოტოვება ყველა ათობითი მნიშვნელობის ზომაში (DIMTZIN სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
@@ -10208,7 +10209,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
         <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation>ადგენს ტოლერანტის გამოთვლის მეთოდს (DIMTOL სისტემური ცვლადი).</translation>
+        <translation>ადგენს დაშვების გამოთვლის მეთოდს (DIMTOL სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2068"/>
@@ -10268,7 +10269,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>ადგენს მაქსიმალურ ან ზედა ტოლერანტობის მნიშვნელობას. როდესაც მეთოდში ირჩევთ „სიმეტრიულს“, ეს მნიშვნელობა გამოიყენება ტოლერანტობისთვის. (DIMTP სისტემური ცვლადი)</translation>
+        <translation>ადგენს მაქსიმალურ ან ზედა დაშვების მნიშვნელობას. როდესაც მეთოდში ირჩევთ „სიმეტრიულს“, ეს მნიშვნელობა გამოიყენება დაშვებისთვის. (DIMTP სისტემური ცვლადი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10283,7 +10284,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>ადგენს ტოლერანტობის ტექსტის მიმდინარე სიმაღლეს. ტოლერანტობის სიმაღლის და მთავარი განზომილების ტექსტის სიმაღლის შეფარდება ითვლება და ინახება DIMTFAC სისტემურ ცვლადში.</translation>
+        <translation>ადგენს დაშვების ტექსტის მიმდინარე სიმაღლეს. დაშვების სიმაღლის და მთავარი ზომის ტექსტის სიმაღლის შეფარდება ითვლება და ინახება DIMTFAC სისტემურ ცვლადში.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -10293,7 +10294,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
         <source>Tolerance Adjustment</source>
-        <translation>ტოლერანტობის კორექტირება</translation>
+        <translation>დაშვების კორექტირება</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2188"/>
@@ -10318,7 +10319,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
         <source>Alternate Unit Tolerance</source>
-        <translation>ალტერნატიული ერთეულის ტოლერანტობა</translation>
+        <translation>ალტერნატიული ერთეულის დაშვება</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
@@ -10328,22 +10329,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>სუპრესირებს წამყვან ნულებს ყველა ათწილად განზომილებაში (DIMALTTZ სისტემური ცვლადი).</translation>
+        <translation>სუპრესირებს წამყვან ნულებს ყველა ათწილად ზომაში (DIMALTTZ სისტემური ცვლადი). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>სუპრესირებს კერძო ნულებს ყველა ათწილად განზომილებაში (DIMALTTZ სისტემური ცვლადი).</translation>
+        <translation>სუპრესირებს ბოლო ნულებს ყველა ათწილად ზომაში (DIMALTTZ სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>სუპრესირებს ფუტის ნაწილს ფუტ-და-ინჩის განზომილებაში, როდესაც მანძილი 1 ფუტზე ნაკლებია (DIMALTTZ სისტემური ცვლადი).</translation>
+        <translation>სუპრესირებს ფუტის ნაწილს ფუტ-და-ინჩის ზომაში, როდესაც მანძილი 1 ფუტზე ნაკლებია (DIMALTTZ სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>სუპრესირებს ინჩების ნაწილს ფუტ-და-ინჩის განზომილებაში, როდესაც მანძილი ფუტის მთელ რიცხვს წარმოადგენს (DIMALTTZ სისტემური ცვლადი).</translation>
+        <translation>სუპრესირებს ინჩების ნაწილს ფუტ-და-ინჩის ზომაში, როდესაც მანძილი ფუტის მთელ რიცხვს წარმოადგენს (DIMALTTZ სისტემური ცვლადი).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10423,7 +10424,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>დანიშნეთ სტილი, როგორც აქტიური. აქტიური სტილი გამოიყენება ახლად შექმნილ განზომილებებზე.</translation>
+        <translation>დანიშნეთ სტილი, როგორც აქტიური. აქტიური სტილი გამოიყენება ახლად შექმნილ ზომებზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10455,7 +10456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>აქტიური სტილი, რომელიც გამოიყენება ახალი განზომილების შექმნისას.</translation>
+        <translation>აქტიური სტილი, რომელიც გამოიყენება ახალი ზომის შექმნისას.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10495,7 +10496,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>ამ განზომილების ელემენტის სტილის სახელი</translation>
+        <translation>ამ ზომის ელემენტის სტილის სახელი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10551,7 +10552,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>გადაწყობილი ზომა</translation>
+        <translation>გასწორებული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
@@ -10561,7 +10562,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>სარკისებრი ზომა</translation>
+        <translation>რკალის ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
@@ -10576,7 +10577,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>ხატვა</translation>
+        <translation>კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10702,7 +10703,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>ხატვა</translation>
+        <translation>კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -10717,7 +10718,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>სიმრუტის თვისებები</translation>
+        <translation>რკალის თვისებები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
@@ -11129,12 +11130,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>სიმრუვე</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>მრავალკუთხედი</translation>
+        <translation>პოლიხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11169,7 +11170,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>ხატვა</translation>
+        <translation>დაშტრიხვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11179,37 +11180,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>ხაზოვანი განზომილება</translation>
+        <translation>ხაზოვანი ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>გადახრილი განზომილება</translation>
+        <translation>გასწორებული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>დიამეტრული განზომილება</translation>
+        <translation>დიამეტრული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>რადიალური განზომილება</translation>
+        <translation>რადიალური ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>ორდინატული განზომილება</translation>
+        <translation>ორდინატული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>სარკისებრი განზომილება</translation>
+        <translation>რკალის ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>ხაზი</translation>
+        <translation>მიმთითებელი ხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
@@ -11302,7 +11303,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>გისოს ტიპის ხატის სვეტი</translation>
+        <translation>ბადის ტიპის ხატის სვეტი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
@@ -11337,7 +11338,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>თუ მონიშნულია, აჩვენებს შექმნილი ხედის გისოს ტიპს.</translation>
+        <translation>თუ მონიშნულია, აჩვენებს შენახული ხედის ბადის ტიპს.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
@@ -11441,7 +11442,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>ახალი განზომილების სტილი</translation>
+        <translation>ახალი ზომის სტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11451,42 +11452,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>განისაზღვრება, რომელი ტიპის განზომილებებს მართავს ეს სტილი.</translation>
+        <translation>განსაზღვრავს, რომელი ტიპის ზომებს მართავს ეს სტილი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>ყველა განზომილება</translation>
+        <translation>ყველა ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>ხაზოვანი განზომილებები</translation>
+        <translation>ხაზოვანი ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>კუთხოვანი განზომილებები</translation>
+        <translation>კუთხოვანი ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
         <source>Radius Dimensions</source>
-        <translation>რადიუსის განზომილებები</translation>
+        <translation>რადიუსის ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>დიამეტრის განზომილებები</translation>
+        <translation>დიამეტრის ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>ორდინატის განზომილებები</translation>
+        <translation>ორდინატის ზომები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>ხაზოვანი და ტოლერანტული განზომილებები</translation>
+        <translation>მიმთითებელი ხაზი და დაშვებები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11496,7 +11497,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>არსებული განზომილების სტილი, რომლის მიხედვითაც შეიქმნება ახალი სტილი</translation>
+        <translation>არსებული ზომის სტილი, რომლის მიხედვითაც შეიქმნება ახალი სტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11506,7 +11507,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>ახალი განზომილების სტილის სახელი</translation>
+        <translation>ახალი ზომის სტილის სახელი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11516,7 +11517,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>მითითებული განზომილების სტილის სახელი (%1) არ არის უნიკალური! გთხოვთ, შეიყვანეთ სხვა სახელი.</translation>
+        <translation>მითითებული ზომის სტილის სახელი (%1) არ არის უნიკალური! გთხოვთ, შეიყვანეთ სხვა სახელი.</translation>
     </message>
 </context>
 <context>
@@ -12147,7 +12148,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="127"/>
         <source>Stated Tolerance</source>
-        <translation>მითითებული ტოლერანტობა</translation>
+        <translation>მითითებული დაშვება</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="133"/>
@@ -12206,7 +12207,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>გისოს ტიპის სვეტი</translation>
+        <translation>ბადის ტიპის სვეტი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="66"/>
@@ -12236,7 +12237,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>თუ მონიშნულია, ცხრილში გამოჩნდება სვეტი, რომელშიც იქნება UCS-ის წარმოშობისა და კუთხის დეტალური ინფორმაცია.</translation>
+        <translation>თუ მონიშნულია, ცხრილში გამოჩნდება სვეტი, რომელშიც იქნება UCS-ის სათავისა და კუთხის დეტალური ინფორმაცია.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
@@ -12276,7 +12277,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>გადაადგილება, UCS-ის წარმოშობა ცენტრში</translation>
+        <translation>ხედის გადაადგილება, UCS-ის სათავე ცენტრში</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
@@ -12414,7 +12415,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
         <source>Grid Type:</source>
-        <translation>გისოს ტიპი:</translation>
+        <translation>ბადის ტიპი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
@@ -13434,17 +13435,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">გადახრილი განზომილება</translation>
+        <translation type="unfinished">გასწორებული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">ხაზოვანი განზომილება</translation>
+        <translation type="unfinished">ხაზოვანი ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">ორდინატული განზომილება</translation>
+        <translation type="unfinished">ორდინატული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13454,17 +13455,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">რადიალური განზომილება</translation>
+        <translation type="unfinished">რადიალური ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">დიამეტრული განზომილება</translation>
+        <translation type="unfinished">დიამეტრული ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">სარკისებრი განზომილება</translation>
+        <translation type="unfinished">რკალის ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
@@ -13474,7 +13475,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">ხაზი</translation>
+        <translation type="unfinished">მიმთითებელი ხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13587,7 +13588,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
-        <translation type="unfinished">გადატრიალება</translation>
+        <translation type="unfinished">სარკული ასახვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
@@ -14350,7 +14351,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">მიამსგავსება ობიექტთან</translation>
+        <translation type="unfinished">მიბმა ობიექტზე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14373,7 +14374,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">მიამსგავსება ობიექტთან</translation>
+        <translation type="unfinished">მიბმა ობიექტზე</translation>
     </message>
 </context>
 <context>
@@ -15465,7 +15466,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
         <source>PIck line length from drawing</source>
-        <translation type="unfinished">ხატზე ხაზის სიგრძე აირჩიეთ</translation>
+        <translation type="unfinished">აირჩიეთ ხაზის სიგრძე ნახაზზე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="246"/>
@@ -15571,7 +15572,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">მიამსგავსე მანძილის მიხედვით</translation>
+        <translation type="unfinished">მიბმა მანძილით</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15581,7 +15582,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">განისაზღვრავს შექმნილი ხაზის რომელი ნაწილი მიახლოვდება გადაკვეთის წერტილს</translation>
+        <translation type="unfinished">განსაზღვრავს, შექმნილი ხაზის რომელი ნაწილი მიებმება გადაკვეთის წერტილს</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15591,7 +15592,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">ნიშნის მიახლოების წერტილის შეხვევითი მანძილი გადაკვეთის წერტილიდან</translation>
+        <translation type="unfinished">ნიშნის მიბმის წერტილის წანაცვლება გადაკვეთის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15614,7 +15615,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">გადაკვეთის წერტილის მანძილი მითითებული ხაზის მიახლოების წერტილიდან</translation>
+        <translation type="unfinished">გადაკვეთის წერტილის მანძილი ხაზის მითითებული მიბმის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
@@ -15723,12 +15724,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">ნიშნის მიახლოების წერტილის შეხვევითი მანძილი გადაკვეთის წერტილიდან</translation>
+        <translation type="unfinished">ნიშნის მიბმის წერტილის წანაცვლება გადაკვეთის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">განისაზღვრავს შექმნილი ხაზის რომელი ნაწილი მიახლოვდება გადაკვეთის წერტილს</translation>
+        <translation type="unfinished">განსაზღვრავს, შექმნილი ხაზის რომელი ნაწილი მიებმება გადაკვეთის წერტილს</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15842,7 +15843,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="56"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">განისაზღვრეთ, უნდა შეიქმნას ხაზი გადაკვეთის წერტილამდე, თუ უნდა ჰქონდეს ფიქსირებული სიგრძე</translation>
+        <translation type="unfinished">განსაზღვრავს, უნდა შეიქმნას ხაზი გადაკვეთის წერტილამდე, თუ უნდა ჰქონდეს ფიქსირებული სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
@@ -15852,7 +15853,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">შექმნილი ხაზის გადახრა გადაკვეთის წერტილიდან</translation>
+        <translation type="unfinished">შექმნილი ხაზის წანაცვლება გადაკვეთის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15960,7 +15961,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">შექმნილი ხაზის გადახრა გადაკვეთის წერტილიდან</translation>
+        <translation type="unfinished">შექმნილი ხაზის წანაცვლება გადაკვეთის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
@@ -15975,7 +15976,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">განისაზღვრეთ, უნდა შეიქმნას ხაზი გადაკვეთის წერტილამდე, თუ უნდა ჰქონდეს ფიქსირებული სიგრძე</translation>
+        <translation type="unfinished">განსაზღვრავს, უნდა შეიქმნას ხაზი გადაკვეთის წერტილამდე, თუ უნდა ჰქონდეს ფიქსირებული სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
@@ -16008,7 +16009,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="32"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="unfinished">თუ მონიშნულია, ხარვეზის ზომა განისაზღვრება თაგვით</translation>
+        <translation type="unfinished">თუ მონიშნულია, შუალედის ზომა განისაზღვრება თაგვით</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
@@ -16018,7 +16019,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">ხარვეზის ზომა, თუ არ არის თავისუფალი</translation>
+        <translation type="unfinished">შუალედის ზომა, თუ არ არის თავისუფალი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
@@ -16061,7 +16062,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">მანათობელ წერტილამდე მანძილი</translation>
+        <translation type="unfinished">მანძილი მიბმის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16151,17 +16152,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">ხარვეზის ზომა, თუ არ არის თავისუფალი</translation>
+        <translation type="unfinished">შუალედის ზომა, თუ არ არის თავისუფალი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">აირჩიეთ ხარვეზის ზომა ნახატზე</translation>
+        <translation type="unfinished">აირჩიეთ შუალედის ზომა ნახაზზე</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="unfinished">თუ მონიშნულია, ხარვეზის ზომა განისაზღვრება თაგვით</translation>
+        <translation type="unfinished">თუ მონიშნულია, შუალედის ზომა განისაზღვრება თაგვით</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
@@ -16171,7 +16172,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">მანათობელ წერტილამდე მანძილი</translation>
+        <translation type="unfinished">მანძილი მიბმის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
@@ -16681,7 +16682,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="68"/>
         <source>Pick endpoint from the drawing</source>
-        <translation>აირჩიეთ წერილის ბოლო წერტილი</translation>
+        <translation>აირჩიეთ ბოლო წერტილი ნახაზზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="75"/>
@@ -16721,7 +16722,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
         <source>Pick start point from the drawing</source>
-        <translation>აირჩიეთ წერილის დასაწყისი წერტილი</translation>
+        <translation>აირჩიეთ საწყისი წერტილი ნახაზზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="214"/>
@@ -17390,7 +17391,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">სიმრუტის დიამეტრი</translation>
+        <translation type="unfinished">რკალის დიამეტრი</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="54"/>
@@ -17491,7 +17492,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="90"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">სიმრუტის დასასრული კუთხე</translation>
+        <translation type="unfinished">რკალის დასასრული კუთხე</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -17651,7 +17652,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">გადახრილი განზომილება</translation>
+        <translation type="unfinished">გასწორებული ზომა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17747,7 +17748,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">სარკისებრი განზომილება</translation>
+        <translation type="unfinished">რკალის ზომა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18221,7 +18222,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">განზომილების ტექსტის ზემოთ</translation>
+        <translation type="unfinished">ზომის ტექსტის ზემოთ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18367,7 +18368,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">განზომილების ტექსტის წინ</translation>
+        <translation type="unfinished">ზომის ტექსტის წინ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
@@ -19027,7 +19028,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">დიამეტრული განზომილება</translation>
+        <translation type="unfinished">დიამეტრული ზომა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19055,7 +19056,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">ხაზოვანი განზომილება</translation>
+        <translation type="unfinished">ხაზოვანი ზომა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19163,7 +19164,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">ორდინატული განზომილება</translation>
+        <translation type="unfinished">ორდინატული ზომა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19281,7 +19282,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">რადიალური განზომილება</translation>
+        <translation type="unfinished">რადიალური ზომა</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19466,7 +19467,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="93"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">სიმრუტის დასასრული კუთხე</translation>
+        <translation type="unfinished">რკალის დასასრული კუთხე</translation>
     </message>
 </context>
 <context>
@@ -19912,7 +19913,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="82"/>
         <source>Rows</source>
-        <translation type="unfinished">სარკმელები</translation>
+        <translation type="unfinished">მწკრივები</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="82"/>
@@ -19935,12 +19936,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">ხაზი</translation>
+        <translation type="unfinished">მიმთითებელი ხაზი</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
         <source>Arrow Head</source>
-        <translation type="unfinished">სწრაფი თავი</translation>
+        <translation type="unfinished">ისრის თავი</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20878,7 +20879,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">მრავალკუთხედი/სპლინი</translation>
+        <translation type="unfinished">პოლიხაზი/სპლაინი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -21031,7 +21032,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="705"/>
         <source>Modify Arc</source>
-        <translation type="unfinished">სიმრუტის შეცვლა</translation>
+        <translation type="unfinished">რკალის შეცვლა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
@@ -21341,7 +21342,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
         <source>&amp;Drawings</source>
-        <translation type="unfinished">&amp;გამოხატულებები</translation>
+        <translation type="unfinished">&amp;ნახაზები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="589"/>
@@ -21507,7 +21508,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>გაატრიალეთ ობიექტები ჰორიზონტალურად</translation>
+        <translation>ობიექტების ჰორიზონტალური ცენტრირება</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="113"/>
@@ -22796,7 +22797,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="300"/>
         <source>No Pen</source>
-        <translation>ხატვა არ არის</translation>
+        <translation>კალმის გარეშე</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="301"/>
@@ -23368,7 +23369,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="436"/>
         <source>Name of pen</source>
-        <translation>ხატის სახელი</translation>
+        <translation>კალმის სახელი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="455"/>
@@ -23383,7 +23384,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="518"/>
         <source>Filtering pens by name</source>
-        <translation>ხატების ფილტრაცია სახელის მიხედვით</translation>
+        <translation>კალმების ფილტრაცია სახელის მიხედვით</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="521"/>
@@ -23941,12 +23942,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">მრავალკუთხედის პარამეტრები</translation>
+        <translation type="unfinished">პოლიხაზის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">მრავალკუთხედის ბოლოები ერთმანეთთან აკავშირებს, რათა შეიქმნას დახურული კონტური</translation>
+        <translation type="unfinished">პოლიხაზის ბოლოებს ერთმანეთთან აკავშირებს, რათა შეიქმნას დახურული კონტური</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -23976,17 +23977,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
         <source>Tangential arc</source>
-        <translation type="unfinished">კაშხლის არკი</translation>
+        <translation type="unfinished">მხები რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">ფიქსირებული რადიუსით კაშხლის არკი</translation>
+        <translation type="unfinished">ფიქსირებული რადიუსით მხები რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">ფიქსირებული კუთხით კაშხლის არკი</translation>
+        <translation type="unfinished">ფიქსირებული კუთხით მხები რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
@@ -24562,7 +24563,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">სიმრუტის დიამეტრი</translation>
+        <translation type="unfinished">რკალის დიამეტრი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
@@ -24592,7 +24593,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">სიმრუტის დასასრული კუთხე</translation>
+        <translation type="unfinished">რკალის დასასრული კუთხე</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
@@ -24622,7 +24623,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">სიმის სიგრძე</translation>
+        <translation type="unfinished">რკალის სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -25363,7 +25364,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">ხაზი</translation>
+        <translation type="unfinished">მიმთითებელი ხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -26024,7 +26025,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">განზომილების ტექსტის ზემოთ</translation>
+        <translation type="unfinished">ზომის ტექსტის ზემოთ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -26165,7 +26166,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">განზომილების ტექსტის წინ</translation>
+        <translation type="unfinished">ზომის ტექსტის წინ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
@@ -26515,7 +26516,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerances</source>
-        <translation type="unfinished">ტოლერანტობები</translation>
+        <translation type="unfinished">დაშვებები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
@@ -28515,7 +28516,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="95"/>
         <source>Rows</source>
-        <translation type="unfinished">სარკმელები</translation>
+        <translation type="unfinished">მწკრივები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="95"/>
@@ -28943,7 +28944,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">ჩასმული</translation>
+        <translation type="unfinished">ნაზოლი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -29758,7 +29759,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="90"/>
         <source>Control Point</source>
-        <translation type="unfinished">კონტროლის პუნქტი</translation>
+        <translation type="unfinished">საკონტროლო წერტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="90"/>
@@ -29936,7 +29937,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="66"/>
         <source>Control Point</source>
-        <translation type="unfinished">კონტროლის პუნქტი</translation>
+        <translation type="unfinished">საკონტროლო წერტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="66"/>
@@ -31007,7 +31008,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="945"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="966"/>
         <source>Rows</source>
-        <translation>სარკმელები</translation>
+        <translation>მწკრივები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="946"/>
@@ -31334,7 +31335,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1291"/>
         <source>Control Points</source>
-        <translation>კონტროლის წერტილები</translation>
+        <translation>საკონტროლო წერტილები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
@@ -31346,7 +31347,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1312"/>
         <source>Use Control Points</source>
-        <translation>გამოიყენეთ კონტროლის წერტილები</translation>
+        <translation>გამოიყენეთ საკონტროლო წერტილები</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
@@ -31368,18 +31369,18 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1555"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1568"/>
         <source>Feature Point</source>
-        <translation>თვის პუნქტი</translation>
+        <translation>მახასიათებელი წერტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1281"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1316"/>
         <source>Control Point </source>
-        <translation>კონტროლის პუნქტი</translation>
+        <translation>საკონტროლო წერტილი </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
         <source>Spline Point </source>
-        <translation>სპლაინის პუნქტი</translation>
+        <translation>სპლაინის წერტილი </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1328"/>
@@ -31408,13 +31409,13 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1351"/>
         <source>Control Point</source>
-        <translation>კონტროლის პუნქტი</translation>
+        <translation>საკონტროლო წერტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
         <source>HATCH</source>
-        <translation>ხაზები</translation>
+        <translation>დაშტრიხვა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
@@ -31457,7 +31458,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1394"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1405"/>
         <source>Arrow Head</source>
-        <translation>სწრაფი თავი</translation>
+        <translation>ისრის თავი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1409"/>
@@ -31469,7 +31470,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1434"/>
         <source>Arc Length</source>
-        <translation>სიმის სიგრძე</translation>
+        <translation>რკალის სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
@@ -31562,7 +31563,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>ხაზის ბოლო წერტილი</translation>
+        <translation>მიმთითებელი ხაზის ბოლო წერტილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -32067,7 +32068,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">სწორკუთხედის კუთხის მოხრის სიგრძე X მიმართულებით.</translation>
+        <translation type="unfinished">მართკუთხედის კუთხის ნაზოლის სიგრძე X მიმართულებით. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
@@ -32107,7 +32108,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Y მიმართულების ჩაღრმავებული კუთხის სიგრძე.</translation>
+        <translation type="unfinished">Y მიმართულებით კუთხის ნაზოლის სიგრძე. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
@@ -32127,7 +32128,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">ჩასმული</translation>
+        <translation type="unfinished">ნაზოლი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
@@ -32222,12 +32223,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">აირჩიეთ X მიმართულების ჩაღრმავებული კუთხის სიგრძე ნახატზე.</translation>
+        <translation type="unfinished">აირჩიეთ X მიმართულებით კუთხის ნაზოლის სიგრძე ნახაზზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">აირჩიეთ Y მიმართულების ჩაღრმავებული კუთხის სიგრძე ნახატზე.</translation>
+        <translation type="unfinished">აირჩიეთ Y მიმართულებით კუთხის ნაზოლის სიგრძე ნახაზზე.</translation>
     </message>
 </context>
 <context>
@@ -32367,7 +32368,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">ჩასმული</translation>
+        <translation type="unfinished">ნაზოლი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
@@ -32487,7 +32488,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished">აირჩიეთ მოხაზულობაზე Y მიმართულების ჩაღრმავების სიგრძე.</translation>
+        <translation type="unfinished">აირჩიეთ Y მიმართულებით ნაზოლის სიგრძე ნახაზზე. </translation>
     </message>
 </context>
 <context>
@@ -32613,7 +32614,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="194"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="unfinished">თუ მონიშნულია, შეიქმნება კვადრატი, ნაცვლად კვადრატისა.</translation>
+        <translation type="unfinished">თუ მონიშნულია, მართკუთხედის ნაცვლად შეიქმნება ოთხკუთხედი.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="197"/>
@@ -32683,7 +32684,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">ჩასმული</translation>
+        <translation type="unfinished">ნაზოლი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32698,7 +32699,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished">აირჩიეთ მოხრილის სიგრძე Y მიმართულებით ნახატზე.</translation>
+        <translation type="unfinished">აირჩიეთ ნაზოლის სიგრძე Y მიმართულებით ნახაზზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
@@ -32723,7 +32724,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="450"/>
         <source>Pick base angle of rectangle from drawing</source>
-        <translation type="unfinished">აირჩიეთ კვადრატის ძირითადი კუთხე ნახატზე.</translation>
+        <translation type="unfinished">აირჩიეთ მართკუთხედის საბაზისო კუთხე ნახაზზე</translation>
     </message>
 </context>
 <context>
@@ -32766,7 +32767,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">ჩასმული</translation>
+        <translation type="unfinished">ნაზოლი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -33908,7 +33909,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>შაბლონი</translation>
+        <translation>დაშტრიხვა</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -33918,7 +33919,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>სიმრუვე</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
@@ -34327,7 +34328,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">თუ მონიშნულია, არჩეული ობიექტი გაიყოფა მონიშვნის წერტილების გადაკვეთის მიხედვით.</translation>
+        <translation type="unfinished">თუ მონიშნულია, არჩეული ობიექტი გაიყოფა ნიშნების გადაკვეთის წერტილებში. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34362,7 +34363,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">განისაზღვრება, რომელი მონიშვნის წერტილი უნდა განთავსდეს არჩეული ობიექტის გადაკვეთის წერტილზე.</translation>
+        <translation type="unfinished">განსაზღვრავს, ნიშნის რომელი წერტილი უნდა განთავსდეს არჩეულ ობიექტთან გადაკვეთის წერტილზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34372,7 +34373,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">ნიშნის მიმღებ წერტილის შეხვევითი მანძილი გადაკვეთის წერტილამდე.</translation>
+        <translation type="unfinished">ნიშნის მიბმის წერტილის წანაცვლება გადაკვეთის წერტილამდე. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
@@ -34811,12 +34812,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
         <source>If selected, control points are used</source>
-        <translation>თუ არჩეულია, გამოიყენება კონტროლის წერტილები</translation>
+        <translation>თუ არჩეულია, გამოიყენება საკონტროლო წერტილები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="78"/>
         <source>Control Points</source>
-        <translation>კონტროლის წერტილები</translation>
+        <translation>საკონტროლო წერტილები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
@@ -34836,7 +34837,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>სპლაინის ობიექტის თვისებების რედაქტირება, მათ შორის ხარისხი, დახურული მდგომარეობა, კონტროლის წერტილები და კვანძების ვექტორი</translation>
+        <translation>სპლაინის ობიექტის თვისებების რედაქტირება, მათ შორის ხარისხი, დახურული მდგომარეობა, საკონტროლო წერტილები და კვანძების ვექტორი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34881,22 +34882,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="141"/>
         <source>Control Points:</source>
-        <translation>კონტროლის წერტილები:</translation>
+        <translation>საკონტროლო წერტილები:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="177"/>
         <source>Control points with coordinates and weights</source>
-        <translation>კონტროლის წერტილები კოორდინატებით და წონით</translation>
+        <translation>საკონტროლო წერტილები კოორდინატებით და წონებით</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
         <source>Control Points Table</source>
-        <translation>კონტროლის წერტილების ცხრილი</translation>
+        <translation>საკონტროლო წერტილების ცხრილი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>რედაქტირეთ სპლაინის კონტროლის წერტილების კოორდინატები და წონა</translation>
+        <translation>რედაქტირეთ სპლაინის საკონტროლო წერტილების კოორდინატები და წონები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34948,7 +34949,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>დაამატეთ ახალი კონტროლის წერტილი სპლაინში</translation>
+        <translation>დაამატეთ ახალი საკონტროლო წერტილი სპლაინს</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
@@ -35350,17 +35351,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="52"/>
         <source>Baseline Left</source>
-        <translation type="unfinished">ძირითადი ხაზის მარჯვენა მხარე</translation>
+        <translation type="unfinished">საბაზისო ხაზის მარცხენა მხარე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="53"/>
         <source>Baseline Center</source>
-        <translation type="unfinished">ძირითადი ხაზის ცენტრი</translation>
+        <translation type="unfinished">საბაზისო ხაზის ცენტრი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="54"/>
         <source>Baseline Right</source>
-        <translation type="unfinished">ძირითადი ხაზის მარცხენა მხარე</translation>
+        <translation type="unfinished">საბაზისო ხაზის მარჯვენა მხარე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="55"/>
@@ -35398,7 +35399,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>ხატვა</translation>
+        <translation>კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35408,7 +35409,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>შერჩევის დაფიქსირება</translation>
+        <translation>მიბმის არჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35490,7 +35491,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>სიმრუ</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
@@ -35563,7 +35564,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="363"/>
         <source>Arcs</source>
-        <translation>სიმები</translation>
+        <translation>რკალები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
@@ -35779,12 +35780,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="329"/>
         <source>Origin X: </source>
-        <translation>წარმოშობის X:</translation>
+        <translation>სათავის X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="330"/>
         <source>Origin Y: </source>
-        <translation>წარმოშობის Y:</translation>
+        <translation>სათავის Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="331"/>
@@ -35842,7 +35843,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>კოორდინატების სისტემის დაყენება ორდინატის განზომილების მიხედვით.</translation>
+        <translation>კოორდინატების სისტემის დაყენება ორდინატის ზომის მიხედვით.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -36087,7 +36088,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>სიმები</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
@@ -36097,12 +36098,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens Palette</source>
-        <translation>ხატების პალიტრა</translation>
+        <translation>კალმების პალიტრა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
-        <translation>ხატები</translation>
+        <translation>კალმები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
@@ -37168,12 +37169,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>განზომილების ჭდის რედაქტორი</translation>
+        <translation>ზომის ჭდის რედაქტორი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>განზომილების ჭდე:</translation>
+        <translation>ზომის ჭდე:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37183,7 +37184,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation>სიმბოლო, რომელიც განთავსდება განზომილების ტექსტის წინ</translation>
+        <translation>სიმბოლო, რომელიც განთავსდება ზომის ტექსტის წინ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -37208,7 +37209,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>განზომილების ტექსტის ფორმატი, &lt;&gt; შეიძლება გამოყენებულ იქნას განზომილების მნიშვნელობის ჩასასმელად</translation>
+        <translation>ზომის ტექსტის ფორმატი, &lt;&gt; შეიძლება გამოყენებულ იქნას ზომის მნიშვნელობის ჩასასმელად</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37301,7 +37302,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>ხაზი</translation>
+        <translation>კალამი</translation>
     </message>
 </context>
 <context>
@@ -37344,7 +37345,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
         <source>Solid Fill</source>
-        <translation>მუქი ფერით შევსება</translation>
+        <translation>მყარი ფერით შევსება</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
@@ -38260,7 +38261,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>ხატვა</translation>
+        <translation>კალამი</translation>
     </message>
 </context>
 <context>
@@ -38273,7 +38274,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="408"/>
         <source>Length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1943"/>
@@ -38449,7 +38450,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>შეიყვანეთ განზომილების სტილის ახალი, უნიკალური სახელი (იყო &quot;%1&quot;):</translation>
+        <translation>შეიყვანეთ ზომის სტილის ახალი, უნიკალური სახელი (იყო &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38457,27 +38458,27 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>განზომილების სტილის წაშლა</translation>
+        <translation>ზომის სტილის წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>ვერ მოხერხდება ბოლო განზომილების სტილის წაშლა. მინიმუმ ერთი უნდა იყოს!</translation>
+        <translation>ვერ მოხერხდება ბოლო ზომის სტილის წაშლა. მინიმუმ ერთი უნდა იყოს! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>ვერ მოხერხდება განზომილების სტილის წაშლა, რადგან მისი ქვესტილები გამოიყენება ნახატში. მხოლოდ გამოუყენებელი სტილი შეიძლება წავშალოთ.</translation>
+        <translation>ვერ მოხერხდება ზომის სტილის წაშლა, რადგან მისი ქვესტილები გამოიყენება ნახატში. მხოლოდ გამოუყენებელი სტილი შეიძლება წავშალოთ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>ხართ თუ არა დარწმუნებული, რომ გსურთ განზომილების სტილის &quot;%1&quot; და მისი ქვესტილების წაშლა?</translation>
+        <translation>ხართ თუ არა დარწმუნებული, რომ გსურთ ზომის სტილის &quot;%1&quot; და მისი ქვესტილების წაშლა?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>ხართ თუ არა დარწმუნებული, რომ გსურთ განზომილების სტილის &quot;%1&quot; წაშლა?</translation>
+        <translation>ხართ თუ არა დარწმუნებული, რომ გსურთ ზომის სტილის &quot;%1&quot; წაშლა?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38764,7 +38765,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="593"/>
         <source>degrees.</source>
-        <translation>ხარისხი.</translation>
+        <translation>გრადუსი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="600"/>
@@ -38986,7 +38987,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;გადახრა საწყისი წერტილიდან.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;წანაცვლება საწყისი წერტილიდან.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39036,7 +39037,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>ნიშნავს, რომ ეს არის აქტიური სტილი. აქტიური სტილი გამოიყენება განზომილებების შექმნისას.</translation>
+        <translation>ნიშნავს, რომ ეს არის აქტიური სტილი. აქტიური სტილი გამოიყენება ზომების შექმნისას.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39108,7 +39109,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>ხაზების შეერთების რეჟიმი მრავალკუთხედებში ან გზებზე</translation>
+        <translation>ხაზების შეერთების რეჟიმი პოლიხაზებში ან გზებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39173,7 +39174,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3341"/>
         <source>Provides a space to add comments to the drawing.</source>
-        <translation>დარტყმისთვის კომენტარების დამატების შესაძლებლობა.</translation>
+        <translation>ნახაზისთვის კომენტარების დამატების შესაძლებლობა.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3349"/>
@@ -39507,7 +39508,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1201"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1523"/>
         <source>G&amp;rid Color:</source>
-        <translation>ბაზის &amp;ფერი:</translation>
+        <translation>ბადის &amp;ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="985"/>
@@ -39552,17 +39553,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="761"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>დასაწყისი მართვის ფერი:</translation>
+        <translation>&amp;დასაწყისი სახელურის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>მართვის ფერი:</translation>
+        <translation>&amp;სახელურის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
         <source>&amp;End Handle Color:</source>
-        <translation>დასასრული მართვის ფერი:</translation>
+        <translation>&amp;დასასრული სახელურის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -40106,22 +40107,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>მიმზიდველი ინდიკატორის ფერი:</translation>
+        <translation>მიბმის ინდიკატორის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>მიმზიდველი ინდიკატორის ფორმის ფერი</translation>
+        <translation>მიბმის ინდიკატორის ფორმის ფერი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>კუთხის მიმზიდველობის ერთეული ნაბიჯი</translation>
+        <translation>კუთხური მიბმის ერთეული ნაბიჯი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>კუთხის მიმზიდველობის ნაბიჯებს შორის კუთხე (რომელიც, როგორც წესი, შეესაბამება შესაბამის მოქმედებებს, როდესაც SHIFT არის დაჭერილი)</translation>
+        <translation>კუთხური მიბმის ნაბიჯებს შორის კუთხე (რომელიც, როგორც წესი, შეესაბამება შესაბამის მოქმედებებს, როდესაც SHIFT არის დაჭერილი)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40307,12 +40308,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="198"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>მოცულობის მიმართულების შეცვლა, როდესაც გამოიყენება თაგვის ბორბალი.</translation>
+        <translation>მასშტაბირების მიმართულების შეცვლა, როდესაც გამოიყენება თაგვის ბორბალი.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="201"/>
         <source>Invert zoom direction</source>
-        <translation>მოცულობის მიმართულების შეცვლა</translation>
+        <translation>მასშტაბირების მიმართულების შეცვლა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="526"/>
@@ -40374,27 +40375,27 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1195"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1456"/>
         <source>Grid</source>
-        <translation>გისოსები</translation>
+        <translation>ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1176"/>
         <source>Points Grid</source>
-        <translation>წერტილებიანი გისოსები</translation>
+        <translation>წერტილებიანი ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Color for grid points</source>
-        <translation>გისოსების წერტილების ფერი</translation>
+        <translation>ბადის წერტილების ფერი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>მეტა-გისოსების ტიპი, თუ გისოსები იხატება წერტილებად</translation>
+        <translation>მეტა-ბადის ხაზის ტიპი, თუ ბადე იხატება წერტილებად</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>მეტა-გისოსების სისქე, თუ გისოსები იხატება წერტილებად</translation>
+        <translation>მეტა-ბადის ხაზის სისქე, თუ ბადე იხატება წერტილებად</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40412,48 +40413,48 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>ფერი მეტა-ქსელის ხაზებისთვის, თუ ქსელი იხატება წერტილებზე</translation>
+        <translation>ფერი მეტა-ბადის ხაზებისთვის, თუ ბადე იხატება წერტილებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>&amp;მეტა-ქსელის ფერი:</translation>
+        <translation>&amp;მეტა-ბადის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
         <source>Lines Grid</source>
-        <translation>ხაზოვანი ქსელი</translation>
+        <translation>ხაზოვანი ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
         <source>Width of grid lines</source>
-        <translation>ქსელის ხაზების სიგანე</translation>
+        <translation>ბადის ხაზების სიგანე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1478"/>
         <source>Line type for grid lines</source>
-        <translation>ქსელის ხაზების ტიპი</translation>
+        <translation>ბადის ხაზების ტიპი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1485"/>
         <source>Color for grid lines</source>
-        <translation>ქსელის ხაზების ფერი</translation>
+        <translation>ბადის ხაზების ფერი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>მეტა-ქსელის ხაზების ტიპი, თუ ქსელი იხატება ხაზებით</translation>
+        <translation>მეტა-ბადის ხაზების ტიპი, თუ ბადე იხატება ხაზებით</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>მეტა-ქსელის ხაზების სიგანე, თუ ქსელი იხატება ხაზებით</translation>
+        <translation>მეტა-ბადის ხაზების სიგანე, თუ ბადე იხატება ხაზებით</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>მეტა-ქსელის ფერი, თუ ქსელი იხატება ხაზებით</translation>
+        <translation>მეტა-ბადის ფერი, თუ ბადე იხატება ხაზებით</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40562,7 +40563,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
         <source>Grid General</source>
-        <translation>ქსელის ზოგადი პარამეტრები</translation>
+        <translation>ბადის ზოგადი პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
@@ -40617,12 +40618,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&amp;გისოს ტიპი:</translation>
+        <translation>&amp;ბადის ტიპი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>თუ მონიშნულია, მეტა-გისო იხატება გისოს ხატვის ნაწილად.</translation>
+        <translation>თუ მონიშნულია, მეტა-ბადე იხატება ბადის ხატვის ნაწილად.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
@@ -40632,7 +40633,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>გახატეთ ვერტიკალური ხაზები „ზემოდან“ იზომეტრიული გისოსთვის.</translation>
+        <translation>გახატეთ ვერტიკალური ხაზები „ზემოდან“ იზომეტრიული ბადისთვის.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40786,12 +40787,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>სიმრუტის რადიუსი:</translation>
+        <translation>რკალის რადიუსი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation>თუ ეკრანზე სიმრუტის რადიუსი ნაკლებია ამ მნიშვნელობაზე, სიმრუტი იხატება წერტილად.</translation>
+        <translation>თუ ეკრანზე რკალის რადიუსი ნაკლებია ამ მნიშვნელობაზე, რკალი იხატება წერტილად.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
@@ -40907,12 +40908,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation>ნიშნულების გადახრა კურსორის წერტილიდან.</translation>
+        <translation>ნიშნულების წანაცვლება კურსორის წერტილიდან.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
         <source>Cursor position offset:</source>
-        <translation>კურსორის პოზიციის გადახრა:</translation>
+        <translation>კურსორის პოზიციის წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
@@ -41047,7 +41048,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
         <source>Show Close button on drawings tabs</source>
-        <translation>ჩვენოთ დიაგრამების ჩანართებზე დახურვის ღილაკი</translation>
+        <translation>ნახაზების ჩანართებზე დახურვის ღილაკის ჩვენება</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3166"/>
@@ -41143,7 +41144,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>კუთხის დაფიქსირება</translation>
+        <translation>კუთხური მიბმა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41189,7 +41190,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>თუ ეს არე არის არჩეული, კოორდინატების სისტემის მარკერი აჩვენებს მიმდინარე მომხმარებლის კოორდინატების სისტემის ნულ პუნქტს.</translation>
+        <translation>თუ ეს არე არის არჩეული, კოორდინატების სისტემის მარკერი აჩვენებს მიმდინარე მომხმარებლის კოორდინატების სისტემის ნულოვან წერტილს. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -41294,7 +41295,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>სიმრუდის რადიუსი კუთხის დაჭერის მარკირებაში.</translation>
+        <translation>რკალის რადიუსი კუთხური მიბმის ნიშანში.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
@@ -42062,7 +42063,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6189"/>
         <source>Arcs Rendering Method</source>
-        <translation>სიმრუტის რენდერინგის მეთოდი</translation>
+        <translation>რკალების რენდერინგის მეთოდი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
@@ -42082,7 +42083,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation>თუ არჩეულია, გამოიყენება ხაზოვანი ინტერპოლაციის სეგმენტის ფიქსირებული კუთხე. უფრო მცირე კუთხე უფრო გლუვ სიმრუტას იძლევა, მაგრამ უფრო ნელია.</translation>
+        <translation>თუ არჩეულია, გამოიყენება ხაზოვანი ინტერპოლაციის სეგმენტის ფიქსირებული კუთხე. უფრო მცირე კუთხე უფრო გლუვ რკალს იძლევა, მაგრამ უფრო ნელია.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
@@ -42102,7 +42103,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>მაქსიმალური მანძილი სიმრუტასა და სეგმენტის ინტერპოლაციის ხაზს შორის</translation>
+        <translation>მაქსიმალური მანძილი რკალსა და სეგმენტის ინტერპოლაციის ხაზს შორის</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
@@ -42197,7 +42198,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>დირექტორია, სადაც შრიფტების ნიმუშებია.</translation>
+        <translation>დირექტორია, სადაც დაშტრიხვის ნიმუშებია.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42300,7 +42301,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="167"/>
         <source>Dash/Dot Lines</source>
-        <translation>ხაზები: ჭრელ-მხატვარი/მხატვარი</translation>
+        <translation>შტრიხ-პუნქტირული ხაზები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="177"/>
@@ -42310,7 +42311,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>ჭრელ-მხატვარი/მხატვარი ხაზების ჩატანა SVG გზად</translation>
+        <translation>შტრიხ-პუნქტირული ხაზების ჩატანა SVG გზად</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
@@ -42341,7 +42342,8 @@ but avoided in some CAM&apos;s.</source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>მრავალი CAM (MakerCAM, EleskCAM, LaserWeb) არ ითვალისწინებს ჭრელ-მხატვარი/მხატვარი ხაზის სტილს, რაც შეიძლება იყოს სასარგებლო მუყაოს ან ქაღალდის ნაკეთობების ლაზერული ჭრისთვის.</translation>
+        <translation>მრავალი CAM (MakerCAM, EleskCAM, LaserWeb) არ ითვალისწინებს შტრიხ-პუნქტირული ხაზის სტილს, 
+რაც შეიძლება იყოს სასარგებლო მუყაოს ან ქაღალდის ნაკეთობების ლაზერული ჭრისთვის. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
@@ -42358,7 +42360,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
         <source>Whether to export points</source>
-        <translation>გამოიყოს პუნქტები?</translation>
+        <translation>გავიტანოთ თუ არა წერტილები</translation>
     </message>
 </context>
 <context>
@@ -43191,7 +43193,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="830"/>
         <source>Baseline Left</source>
-        <translation>ძირითადი ხაზის მარჯვენა მხარე</translation>
+        <translation>საბაზისო ხაზის მარცხენა მხარე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="575"/>
@@ -43203,12 +43205,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="690"/>
         <source>Baseline Right</source>
-        <translation>ძირითადი ხაზის მარცხენა მხარე</translation>
+        <translation>საბაზისო ხაზის მარჯვენა მხარე</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="572"/>
         <source>Baseline Center</source>
-        <translation>ძირითადი ხაზის ცენტრი</translation>
+        <translation>საბაზისო ხაზის ცენტრი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="547"/>
@@ -43234,7 +43236,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>ხატვა</translation>
+        <translation>კალამი</translation>
     </message>
 </context>
 <context>
@@ -43326,7 +43328,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>დაბლოკვა</translation>
+        <translation>ბლოკი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="152"/>
@@ -43623,7 +43625,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
         <source>No Pen</source>
-        <translation>ხაზი</translation>
+        <translation>კალმის გარეშე</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="89"/>
@@ -43648,7 +43650,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="94"/>
         <source>Dash</source>
-        <translation>პანელი</translation>
+        <translation>შტრიხი</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="96"/>
@@ -43683,7 +43685,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Dash Dot</source>
-        <translation>ტირე, წერტილი</translation>
+        <translation>შტრიხ-პუნქტირი</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
@@ -44193,12 +44195,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1402"/>
         <source>Remove pen</source>
-        <translation>წაშალეთ ფერი</translation>
+        <translation>კალმის წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ფერი წაიშლება პალიტრადან, ეს არ იმოქმედებს ნახაზის ობიექტებზე.</translation>
+        <translation>კალამი წაიშლება პალიტრიდან, ეს არ იმოქმედებს ნახაზის ობიექტებზე.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44655,7 +44657,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>წრტ</translation>
+        <translation>po</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
@@ -44667,13 +44669,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="96"/>
         <source>li</source>
         <comment>draw line</comment>
-        <translation>ხაზ</translation>
+        <translation>li</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="98"/>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>ხ</translation>
+        <translation>l</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
@@ -44691,7 +44693,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>თავისუფალია</translation>
+        <translation>თავისუფალი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
@@ -44709,7 +44711,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="459"/>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>სპლ</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="464"/>
@@ -44769,7 +44771,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>პოლი2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="349"/>
@@ -44781,43 +44783,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="350"/>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>ცი</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="357"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation>ც2</translation>
+        <translation>c2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="370"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation>ც3</translation>
+        <translation>c3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ტან3</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="405"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ცტ3</translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ელიფსში ჩახაზული</translation>
+        <translation>ჩახაზულიელიფსი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation>ეი</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="534"/>
@@ -44829,7 +44831,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>ხაზები</translation>
+        <translation>დაშტრიხვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -44859,13 +44861,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="892"/>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>ტქსტ</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>გაახლებული</translation>
+        <translation>განახლება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
@@ -44889,7 +44891,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>ფანჯრის მასშტაბი</translation>
+        <translation>ფანჯრისმასშტაბი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
@@ -44901,55 +44903,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>ავტომატური მასშტაბი</translation>
+        <translation>ავტომასშტაბი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>ზა</translation>
+        <translation>za</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>ზუმი და პანორამირება</translation>
+        <translation>პანორამირება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>ზპ</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>წინასწარი ზუმი</translation>
+        <translation>წინახედი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>ზვ</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1012"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>მოკვლა</translation>
+        <translation>შეწყვეტა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>კ</translation>
+        <translation>k</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>უარყოფა</translation>
+        <translation>დაბრუნება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
@@ -44962,37 +44964,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>გაუქმება</translation>
+        <translation>გამეორება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>რ</translation>
+        <translation>r</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>ჰორიზონტალურად გასწორება</translation>
+        <translation>გასწორებულიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>ჰორიზონტალური განლაგება</translation>
+        <translation>ჰორიზონტალურიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>დჰ</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="677"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>ვერტიკალური განზომილება</translation>
+        <translation>ვერტიკალურიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="678"/>
@@ -45004,37 +45006,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>ხაზოვანი განზომილება</translation>
+        <translation>ხაზოვანიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>დლ</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>კუთხოვანი განზომილება</translation>
+        <translation>კუთხოვანიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>დან</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="684"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>რადიალური განზომილება</translation>
+        <translation>რადიალურიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="692"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>დიამეტრული განზომილება</translation>
+        <translation>დიამეტრულიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="690"/>
@@ -45046,91 +45048,91 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>დდ</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>ხაზის სიგრძე</translation>
+        <translation>მიმთითებელიხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="705"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>ლდ</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="710"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>ზომის შექმნა</translation>
+        <translation>ზომებისგანახლება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>არანაირი შეზღუდვა</translation>
+        <translation>შეზღუდვისგარეშე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>ზ.შ.</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>ორთოგონალური შეზღუდვა</translation>
+        <translation>ორთოგონალურიშეზღუდვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>ო.შ.</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>ჰორიზონტალური შეზღუდვა</translation>
+        <translation>ჰორიზონტალურიშეზღუდვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>ჰ.შ.</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>ვერტიკალური შეზღუდვა</translation>
+        <translation>ვერტიკალურიშეზღუდვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>ვ.შ.</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="719"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>მ.შ.</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>გაუმჯობესება</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>ჩ</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
@@ -45142,25 +45144,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ამოჭრა</translation>
+        <translation>გაყოფა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>გაყოფა</translation>
+        <translation>div</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>მი</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>გადატრიალება</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
@@ -45172,25 +45174,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="731"/>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>ზომა</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="762"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>დრო</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="769"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>დრო 2</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="775"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>მარცხნივ</translation>
+        <translation>le</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -45202,13 +45204,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>შეცდომა</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>წაშლა</translation>
+        <translation>del</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="839"/>
@@ -45220,19 +45222,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="918"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>თავისუფალი შეკავშირება</translation>
+        <translation>თავისუფალიმიბმა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="920"/>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>ოპერაციული სისტემა</translation>
+        <translation>os</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="925"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>შეკავშირება ცენტრში</translation>
+        <translation>მიბმაცენტრზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="926"/>
@@ -45244,7 +45246,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>შეკავშირების მანძილი</translation>
+        <translation>მიბმამანძილით</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="932"/>
@@ -45256,7 +45258,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="937"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>შეკავშირების დასასრული</translation>
+        <translation>მიბმაბოლოებზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="938"/>
@@ -45268,7 +45270,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>შეკავშირება გრიდზე</translation>
+        <translation>მიბმაბადეზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="944"/>
@@ -45280,7 +45282,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>შეკავშირება გადაკვეთის წერტილზე</translation>
+        <translation>მიბმაგადაკვეთაზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -45292,61 +45294,61 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>შუაში გასწორება</translation>
+        <translation>მიბმაშუაზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="956"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>შ</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>ობიექტზე გასწორება</translation>
+        <translation>მიბმაობიექტზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>გ</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="963"/>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>არ არის</translation>
+        <translation>np</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>შედარებითი ნულის დაყენება</translation>
+        <translation>შედარებითინული</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>შნ</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>ყველაფრის არჩევა</translation>
+        <translation>ყველაფრისარჩევა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>სან</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>ყველაფრის არჩევის გაუქმება</translation>
+        <translation>არჩევისგაუქმება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="623"/>
@@ -45364,7 +45366,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>მ</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
@@ -45380,7 +45382,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
         <source>cnly</source>
-        <translation>შრის სახელი</translation>
+        <translation>cnly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
@@ -45390,7 +45392,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="89"/>
         <source>csly</source>
-        <translation>სტილის შრის სახელი</translation>
+        <translation>csly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="200"/>
@@ -45420,13 +45422,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="856"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation>მომხმარებლის თვისებები</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>კუთხე</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
@@ -45454,7 +45456,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>სვეტის მანძილი</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45465,12 +45467,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>ნომერი</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45481,35 +45483,35 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>მწკრივები</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>ხაზის მანძილი</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1261"/>
         <source>through</source>
-        <translation>სადამდე</translation>
+        <translation>გავლით</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
-        <translation>გაჭრა</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>კუთხე</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>ან</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
@@ -45520,7 +45522,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
         <source>cen</source>
         <comment>center</comment>
-        <translation>ცენტრი</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1202"/>
@@ -45532,31 +45534,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
         <source>c</source>
         <comment>close</comment>
-        <translation>ც</translation>
+        <translation>c</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>სვეტები</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>კო</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>სვეტებს შორის მანძილი</translation>
+        <translation>სვეტებისშუალედი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>სვეტებს შორის მანძილი</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
@@ -45568,7 +45570,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>ფაქტი</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -45591,13 +45593,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1230"/>
         <source>length</source>
         <comment>length</comment>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>len</source>
         <comment>length</comment>
-        <translation>სიგრძე</translation>
+        <translation>სგრ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1232"/>
@@ -45645,13 +45647,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1242"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>ნომერი</translation>
+        <translation>რაოდენობა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
         <source>num</source>
         <comment>number</comment>
-        <translation>რიცხვ</translation>
+        <translation>num</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1244"/>
@@ -45663,7 +45665,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1247"/>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>რა</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1249"/>
@@ -45688,13 +45690,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ხაზებს შორის მანძილი</translation>
+        <translation>მწკრივებისშუალედი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ხმ</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1258"/>
@@ -45716,12 +45718,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
         <source>undo</source>
-        <translation>უარყოფა</translation>
+        <translation>დაბრუნება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
         <source>redo</source>
-        <translation>გაიმეორე</translation>
+        <translation>გამეორება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1270"/>
@@ -45737,12 +45739,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>ფურცლის შეწევა</translation>
+        <translation>ფურცლისწანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
-        <translation>გრაფიკის შეწევა</translation>
+        <translation>გრაფიკისწანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -45798,7 +45800,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
-        <translation>შავი-თეთრი</translation>
+        <translation>შავთეთრი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
@@ -45809,7 +45811,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>დი</translation>
+        <translation>di</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="768"/>
@@ -45821,7 +45823,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="820"/>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation>მპ</translation>
+        <translation>mp</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="97"/>
@@ -45882,25 +45884,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>ხაზი 2 წერტილამდე</translation>
+        <translation>ხაზი2წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>ხაზი</translation>
+        <translation>გველი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="104"/>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation>ხაზი</translation>
+        <translation>sli</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="105"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation>ხაზი</translation>
+        <translation>sl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="110"/>
@@ -45942,7 +45944,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>ხაზის კუთხე</translation>
+        <translation>ხაზისკუთხე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="125"/>
@@ -45954,7 +45956,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>ხაზის ჰორიზონტალური</translation>
+        <translation>ჰორიზონტალურიხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
@@ -45966,7 +45968,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>ხაზი</translation>
+        <translation>ვერტიკალურიხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
@@ -45978,61 +45980,61 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>ხაზი</translation>
+        <translation>მართკუთხედი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>პას</translation>
+        <translation>re</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="149"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>მკვრივი</translation>
+        <translation>მართკუთხედი1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="150"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>მკვრივი</translation>
+        <translation>re1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>მკვრივი 2</translation>
+        <translation>მართკუთხედი2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="156"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>მკვრივი 2</translation>
+        <translation>re2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="161"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>მკვრივი 3</translation>
+        <translation>მართკუთხედი3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="162"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>მკვრივი 3</translation>
+        <translation>re3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>სექცია</translation>
+        <translation>ხაზისდაჭრა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>სექცია</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="173"/>
@@ -46056,7 +46058,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="180"/>
         <source>st</source>
         <comment>draw star</comment>
-        <translation>ვ</translation>
+        <translation>st</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="185"/>
@@ -46068,7 +46070,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="186"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>ჯ</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="190"/>
@@ -46080,25 +46082,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="191"/>
         <source>bb</source>
         <comment>draw bound box</comment>
-        <translation>შ</translation>
+        <translation>bb</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation>მხარის ხაზი</translation>
+        <translation>შუახაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="196"/>
         <source>ml</source>
         <comment>draw mid line</comment>
-        <translation>მხ</translation>
+        <translation>ml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>ხაზის წერტილები</translation>
+        <translation>წერტილებისხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
@@ -46110,19 +46112,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
-        <translation>შუა წერტილი</translation>
+        <translation>შუაწერტილი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="212"/>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
-        <translation>წერტილი</translation>
+        <translation>mpoint</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation>რკალი</translation>
+        <translation>cba</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="223"/>
@@ -46134,7 +46136,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="224"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>კოპირ.</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="229"/>
@@ -46146,7 +46148,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>al</source>
         <comment>align entities</comment>
-        <translation>გა.</translation>
+        <translation>al</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
@@ -46158,61 +46160,61 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>al1</source>
         <comment>align entities</comment>
-        <translation>გ1</translation>
+        <translation>al1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation>გადაწყობის მითითება</translation>
+        <translation>გადაწყობისმითითება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>alr</source>
         <comment>align references</comment>
-        <translation>გმ</translation>
+        <translation>alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>ხაზის შეერთება</translation>
+        <translation>ხაზისშეერთება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>ხშ</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>ნაწილის დაყოფა</translation>
+        <translation>გაწყვეტა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>ნდ</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>ხაზის ინტერვალი</translation>
+        <translation>ხაზისშუალედი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>ხი</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="264"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>ხაზის პარალელობა</translation>
+        <translation>პარალელურიხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="265"/>
@@ -46236,7 +46238,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>ხაზის გათიშვა</translation>
+        <translation>ხაზისწანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="267"/>
@@ -46248,31 +46250,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="268"/>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>ხაზი</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>ხაზის პარალელობის კუთხე</translation>
+        <translation>პარალელურიწერტილით</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>ხაზის პარალელობა</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>ხაზის ორნახევრად გაყოფა</translation>
+        <translation>ბისექტრისა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>ხაზის ტანგენტი</translation>
+        <translation>მხებიწერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="288"/>
@@ -46284,31 +46286,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="294"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>ხაზის ტანგენტი 2</translation>
+        <translation>მხები2წრეზე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="295"/>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>ხაზი</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>ხაზის სიგრძე</translation>
+        <translation>მხებიმართობული</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>ან</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>ხაზის სიგრძე</translation>
+        <translation>მართობულიხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
@@ -46320,43 +46322,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>ხაზის სიგრძის შეფარდება</translation>
+        <translation>ხაზისშედარებითიკუთხე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="314"/>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>მემარცხენი</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>მრავალკუთხედის ცენტრი</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>წერტილები</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="321"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>მრავალკუთხედის ცენტრი</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="322"/>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation>წერტილის ცენტრი</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>მრავალკუთხედის ცენტრი</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="328"/>
@@ -46368,13 +46370,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>პოლიგონი</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>პოლიგონის წვეროები</translation>
+        <translation>polygonvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="335"/>
@@ -46398,7 +46400,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="356"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>წრე, 2 წერტილი</translation>
+        <translation>წრე2წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="358"/>
@@ -46410,7 +46412,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>წრე, 2 წერტილი, რადიუსი</translation>
+        <translation>წრე2წრ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="364"/>
@@ -46422,7 +46424,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>წრე, 3 წერტილი</translation>
+        <translation>წრე3წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="371"/>
@@ -46434,25 +46436,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>წრე</translation>
+        <translation>წრეცრ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>წრე</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="378"/>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation>წრე</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>წრე</translation>
+        <translation>circletan2cp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="385"/>
@@ -46464,37 +46466,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>წრე</translation>
+        <translation>circletan2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation>დრო</translation>
+        <translation>td</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="396"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>წრე</translation>
+        <translation>circletan2cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="397"/>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>დრო</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>წრე</translation>
+        <translation>circletan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="404"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>დრო</translation>
+        <translation>t3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="413"/>
@@ -46644,55 +46646,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="489"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>პლანი</translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="495"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>ფოკუსი</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="503"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>ელიფსის 2 წერტილი</translation>
+        <translation>ელიფსიც2წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="504"/>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation>ექსცენტრიკული</translation>
+        <translation>ea</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="508"/>
         <source>ellipsec1p</source>
         <comment>ellipse 1 point</comment>
-        <translation>ელიფსის 1 წერტილი</translation>
+        <translation>ელიფსიც1წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="509"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
-        <translation>ექსცენტრიკული 1</translation>
+        <translation>ea1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="514"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>ელიფსი 3 წერტილი</translation>
+        <translation>ელიფსი3წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="515"/>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation>ეფ</translation>
+        <translation>ef</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="520"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>ელიფსი 4 წერტილი</translation>
+        <translation>ელიფსი4წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="521"/>
@@ -46704,7 +46706,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="526"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>ელიფსისკ3პ</translation>
+        <translation>ელიფსიც3წ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="527"/>
@@ -46716,19 +46718,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>კუთხოვანი ხაზი</translation>
+        <translation>კუთხეხაზიდან</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
         <source>aline</source>
         <comment>draw angle from line</comment>
-        <translation>ხაზი</translation>
+        <translation>aline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="553"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>რორტო ხაზი</translation>
+        <translation>რორტოხაზი</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="554"/>
@@ -46740,25 +46742,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>წერტილიდან ხაზამდე</translation>
+        <translation>წერტილიდანხაზამდე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>წერტილიდან ხაზამდე</translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>ხაზის დამატება</translation>
+        <translation>კვანძისდამატება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation>პი</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="572"/>
@@ -46806,7 +46808,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>წრტ</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="596"/>
@@ -46842,7 +46844,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
-        <translation>ორმაგი</translation>
+        <translation>du</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
@@ -46854,13 +46856,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="628"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>შერჩევის ინვერსია</translation>
+        <translation>შერჩევისინვერსია</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>არის</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -46890,13 +46892,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>დწმ</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>dimord</source>
         <comment>dimension - ordinate</comment>
-        <translation>განათების რეჟიმი</translation>
+        <translation>ორდინატულიზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
@@ -46908,7 +46910,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
         <source>dimordrebase</source>
         <comment>dimension - ordinate</comment>
-        <translation>განათების რეჟიმის ბაზა</translation>
+        <translation>ორდინატისბაზა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="666"/>
@@ -46920,13 +46922,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="683"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>განათების რადიუსი</translation>
+        <translation>რადიუსისზომა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="685"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>თარგმნა</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="698"/>
@@ -46938,7 +46940,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="711"/>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation>დგ</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="718"/>
@@ -46980,13 +46982,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="736"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>გადმოტრიალება</translation>
+        <translation>არეკვლა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>გადაადგილება და როტაცია</translation>
+        <translation>გადატანაროტაციით</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
@@ -46998,7 +47000,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="748"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>ორმაგი როტაცია</translation>
+        <translation>ორმაგიროტაცია</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="749"/>
@@ -47010,7 +47012,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="754"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>გაუქმება</translation>
+        <translation>მიმართულებისშებრუნება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="755"/>
@@ -47028,7 +47030,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>შემცირება</translation>
+        <translation>მოჭრა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
@@ -47058,7 +47060,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="783"/>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>თვ</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="784"/>
@@ -47112,31 +47114,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>მოდელში გაჭიმვა</translation>
+        <translation>გაწელვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>მოდელის თვისებები</translation>
+        <translation>თვისებები</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>მოდელის ატრიბუტები</translation>
+        <translation>ატრიბუტები</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>მოდელის გასაშლელი ტექსტი</translation>
+        <translation>ტექსტისდაშლა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation>ტექსტი</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
@@ -47148,19 +47150,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>მოდელის გაშლა</translation>
+        <translation>დაშლა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="844"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>მოდელის წაშლა</translation>
+        <translation>წაშლა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="853"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>ინფორმაცია: მანძილი</translation>
+        <translation>მანძილისგაზომვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="854"/>
@@ -47172,7 +47174,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>ინფორმაცია: ნაბიჯის მანძილი</translation>
+        <translation>მანძილიობიექტამდე</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
@@ -47184,31 +47186,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="863"/>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>დამოკიდებულება</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="868"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>ინფორმაციის კუთხე</translation>
+        <translation>კუთხისგაზომვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="869"/>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation>ინფორმაციის არე</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="875"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>ინფორმაციის არე</translation>
+        <translation>ფართობისგაზომვა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="876"/>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation>ინფორმაციის არე</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -47220,7 +47222,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="891"/>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation>ტექსტი</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
@@ -47232,7 +47234,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>შუაში ხელით</translation>
+        <translation>შუაშიხელით</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="971"/>
@@ -47244,7 +47246,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="972"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation>შუაში ხელით</translation>
+        <translation>smm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1013"/>
@@ -47256,7 +47258,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>გაუქმება</translation>
+        <translation>un</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
@@ -47268,7 +47270,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>დახატვის პარამეტრები</translation>
+        <translation>ნახაზისპარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
@@ -47286,55 +47288,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
         <source>zi</source>
         <comment>zoom - in</comment>
-        <translation>გადიდება</translation>
+        <translation>zi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>გადიდება</translation>
+        <translation>დაპატარავება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
         <source>zo</source>
         <comment>zoom - out</comment>
-        <translation>გადიდება</translation>
+        <translation>zo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
         <source>angle1</source>
-        <translation>კუთხე 1</translation>
+        <translation>კუთხე1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1196"/>
         <source>angle2</source>
-        <translation>კუთხე 2</translation>
+        <translation>კუთხე2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation>ხორდის სიგრძე</translation>
+        <translation>ქორდა</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1223"/>
         <source>equation</source>
-        <translation>ტოლობა</translation>
+        <translation>განტოლება</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>სიგრძე1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>სიგრძე2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47354,258 +47356,258 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>კუთხოვანი შეფარდება</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>დასაწყისი</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>გადახრა</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>ხაზის გასწორება</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
-        <translation>ნიშნის გასწორება</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>სიგანე</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>სიმაღლე</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
-        <translation>პოზიცია</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>ზომა</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
-        <translation>ჩრდილები</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
         <source>nopoly</source>
-        <translation>პოლიგონი არ გამოიყენება</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>პოლიგონი გამოიყენება</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>კუთხეები</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
         <source>str</source>
-        <translation>ტექსტი</translation>
+        <translation>str</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>გლუვი</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>snap1</source>
-        <translation>პირველი</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>topl</source>
-        <translation>ზემო</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>ზემო</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>topr</source>
-        <translation>ზემო მარჯვენა</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>მარცხნივ</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>შუაში</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>მარჯვენა</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>ქვედა მარცხნივ</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>ქვედა</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>ქვედა მარჯვენა</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
         <source>snapcorner</source>
-        <translation>კუთხეზე</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>snapshift</source>
-        <translation>გადაადგილება</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>ზომა</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>გარეთ</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
         <source>hor</source>
-        <translation>ჰორიზონტალური</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>vert</source>
-        <translation>ვერტიკალური</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
-        <translation>მიიზიდა</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>კუთხე</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>ვერტიკალურად შუაში</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
-        <translation>ჰორიზონტალურად შუაში</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
         <source>quad</source>
-        <translation>ოთხკუთხედი</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
         <source>noquad</source>
-        <translation>ოთხკუთხედის გარეშე</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>შიდა კუთხე</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>წირები</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>წირი არ არის</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>წირები ორივე მხარეს</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>წირი - დასაწყისი</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>წირი - ბოლო</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>დასასრული</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>ორივე</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>არცერთი</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>მორგება</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>nofit</source>
-        <translation>არ შეესაბამება</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>ფიქსირებული მანძილი</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>მზიდი მანძილი</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>მანძილი</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -47625,17 +47627,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">ფიქსირებული</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>sym</source>
-        <translation>სიმეტრიული</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
         <source>nosym</source>
-        <translation>არასიმეტრიული</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
@@ -47664,19 +47666,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1206"/>
         <source>cl</source>
         <comment>chordlen</comment>
-        <translation>კლასტერი</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>ტოლობა</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1225"/>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>ტოლი</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1268"/>
@@ -48113,12 +48115,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>კუთხის დაფიქსირება</translation>
+        <translation>კუთხური მიბმა</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>თავისუფალი დაფიქსირება</translation>
+        <translation>თავისუფალი მიბმა</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -48128,7 +48130,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>დაფიქსირება ნულიდან</translation>
+        <translation>მიბმა შედარებით ნულზე</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48150,7 +48152,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>შაბლონის შექმნა ვერ მოხერხდა, რადგან (%2, %3) და (%4, %5) შორის არის უფსკრული=%1</translation>
+        <translation>დაშტრიხვა ვერ შეიქმნა, რადგან (%2, %3)-სა და (%4, %5)-ს შორის არის შუალედი=%1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -48678,7 +48680,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>სიმრგვლე</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
@@ -48718,7 +48720,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>შაბლონი</translation>
+        <translation>დაშტრიხვა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48733,7 +48735,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>გადაწყობა</translation>
+        <translation>გასწორებული</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
@@ -48748,7 +48750,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>სიმრუვე</translation>
+        <translation>რკალის ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
@@ -48758,7 +48760,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>ხაზი</translation>
+        <translation>მიმთითებელი ხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48882,12 +48884,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>სიმრუვე</translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
         <source>Offset</source>
-        <translation>გადახრა</translation>
+        <translation>წანაცვლება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="507"/>
@@ -48924,7 +48926,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="637"/>
         <source>Chord Length:</source>
-        <translation>სიმის სიგრძე:</translation>
+        <translation>ქორდის სიგრძე:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="638"/>
@@ -48949,17 +48951,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>ხაზის გახანგრძლივება</translation>
+        <translation>ხაზის დაგრძელება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen/Scale</source>
-        <translation>ხაზის გახანგრძლივება/მასშტაბი</translation>
+        <translation>ხაზის დაგრძელება/მასშტაბი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>აკორდის გახანგრძლივება</translation>
+        <translation>ქორდის დაგრძელება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49022,12 +49024,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>მიუთითეთ განზომილების რკალური ხაზის მდებარეობა</translation>
+        <translation>მიუთითეთ ზომის რკალური ხაზის მდებარეობა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
         <source>Enter dimension text:</source>
-        <translation>შეიყვანეთ განზომილების ტექსტი:</translation>
+        <translation>შეიყვანეთ ზომის ტექსტი:</translation>
     </message>
 </context>
 <context>
@@ -49058,7 +49060,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>მიუთითეთ მეორე დამატებითი ხაზის სათავე</translation>
+        <translation>მიუთითეთ მეორე გაგრძელების ხაზის სათავე</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49069,12 +49071,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>მიუთითეთ განზომილების ხაზის მდებარეობა</translation>
+        <translation>მიუთითეთ ზომის ხაზის მდებარეობა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>მიიერთეთ მეზობელ განზომილებასთან</translation>
+        <translation>მიაბით მეზობელ ზომას</translation>
     </message>
 </context>
 <context>
@@ -49686,17 +49688,17 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
         <source>Point is inside selected contour.</source>
-        <translation>პუნქტი მდებარეობს არჩეულ კონტურში.</translation>
+        <translation>წერტილი მდებარეობს არჩეულ კონტურში.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="59"/>
         <source>Point is outside selected contour.</source>
-        <translation>პუნქტი მდებარეობს არჩეული კონტურის გარეთ.</translation>
+        <translation>წერტილი მდებარეობს არჩეული კონტურის გარეთ.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="85"/>
         <source>Specify point</source>
-        <translation>მონიშნეთ პუნქტი</translation>
+        <translation>მონიშნეთ წერტილი</translation>
     </message>
 </context>
 <context>
@@ -49867,12 +49869,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>გაუმჯობესდა %1 განზომილების ობიექტი</translation>
+        <translation>განახლდა %1 ზომის ობიექტი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>განზომილების ობიექტი არ მოიძებნა</translation>
+        <translation>ზომის ობიექტი არ მოიძებნა</translation>
     </message>
 </context>
 <context>
@@ -50150,7 +50152,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>განზომილების მორგება</translation>
+        <translation>ზომის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"/>
@@ -50286,17 +50288,17 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>მიახლოების მანძილის პარამეტრები</translation>
+        <translation>მიბმის მანძილის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>მიახლოების მანძილი:</translation>
+        <translation>მიბმის მანძილი:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>მიახლოების წერტილის მანძილი თავდაპირველად განსაზღვრულ წერტილამდე</translation>
+        <translation>მიბმის წერტილის მანძილი თავდაპირველად განსაზღვრული მიბმის წერტილიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
@@ -50309,12 +50311,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>მიახლოების მანძილის პარამეტრები</translation>
+        <translation>მიბმის მანძილის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>მიახლოების საშუალო წერტილები:</translation>
+        <translation>მიბმის შუა წერტილები:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

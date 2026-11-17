@@ -344,7 +344,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>VIIVAPIIRROS</translation>
+        <translation>MURTOVIIVA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -801,7 +801,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>MONIVIVA</translation>
+        <translation>MURTOVIIVA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>

@@ -1007,7 +1007,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Dibuixar el cercle addicional?</translation>
+        <translation>Dibuixar el cercle de cap?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1196,7 +1196,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Connector d&apos;impressió</translation>
+        <translation>Connector de traçat d&apos;equacions</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="38"/>

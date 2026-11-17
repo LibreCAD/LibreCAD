@@ -992,7 +992,7 @@ desenhar as marcas.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Número de segmentos a desenhar (adição)</translation>
+        <translation>Número de segmentos a desenhar (adendo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1012,7 +1012,7 @@ desenhar as marcas.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Desenhar círculo de adição?</translation>
+        <translation>Desenhar círculo de cabeça (adendo)?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

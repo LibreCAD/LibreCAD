@@ -107,12 +107,12 @@ Ok to accept and start alignment.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>Rīku izveides spraudnis</translation>
+        <translation>Zobratu izveides spraudnis</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="41"/>
         <source>Gear plugin</source>
-        <translation>Rīku spraudnis</translation>
+        <translation>Zobratu spraudnis</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="42"/>
@@ -673,7 +673,7 @@ Tad aizpildiet laukus un nospiediet pogu &apos;Akceptēt&apos;.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Atlasiet līniju, apli vai arku un nospiediet taustiņu Enter</translation>
+        <translation>Atlasiet līniju, apli vai loku un nospiediet taustiņu Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>

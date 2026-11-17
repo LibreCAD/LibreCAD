@@ -210,7 +210,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="105"/>
         <location filename="../list/list.cpp" line="129"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="110"/>
@@ -743,7 +743,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="482"/>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>

@@ -289,7 +289,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>VOLLEDIG</translation>
+        <translation>SOLID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -389,7 +389,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEIDER</translation>
+        <translation>DIMLEADER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
@@ -1028,7 +1028,7 @@ markeringen op te tekenen.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>Teken de cirkel van de wortel?</translation>
+        <translation>Teken de voetcirkel?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>

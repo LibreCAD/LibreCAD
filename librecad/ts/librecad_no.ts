@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>kan ikke deles fordi den er del av en flerlinje. Utvid flerlinjen først.</translation>
+        <translation> kan ikke deles fordi den er del av en polylinje. Utvid polylinjen først.</translation>
     </message>
 </context>
 <context>
@@ -176,7 +176,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
-        <translation>Ikke en sirkel- eller bueenhet</translation>
+        <translation>Ikke et sirkel- eller bueobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
@@ -186,7 +186,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Select arc or circle entity</source>
-        <translation>Velg bue- eller sirkelenhet</translation>
+        <translation>Velg bue- eller sirkelobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
@@ -209,7 +209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>Velg bueenhet</translation>
+        <translation>Velg bueobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Angi sluttpunkt for leder</translation>
+        <translation>Angi sluttpunkt for henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">Angi sluttvinkel eller [vinkel/buelengde]</translation>
+        <translation type="unfinished">Angi sluttvinkel eller [vinkel/kordelengde]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -467,7 +467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">Angi buelengde (negativ verdi for alternativt punkt):</translation>
+        <translation type="unfinished">Angi kordelengde (negativ verdi for alternativt punkt):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -855,17 +855,17 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation>Ingen enheter valgt. Dobbel opprettelse avbrutt.</translation>
+        <translation>Ingen objekter valgt. Dobbel opprettelse avbrutt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
         <source>No supported entities could be dualized.</source>
-        <translation>Ingen støttede enheter kunne gjøres dobbelte.</translation>
+        <translation>Ingen støttede objekter kunne gjøres dobbelte.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dobbel opprettet rundt senter (%1 enheter)</translation>
+        <translation>Dobbel opprettet rundt senter (%1 objekter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
@@ -1264,7 +1264,7 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished">Angi avstand &lt;%1&gt; eller velg enhet eller [%2]</translation>
+        <translation type="unfinished">Angi avstand &lt;%1&gt; eller velg objekt eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="159"/>
@@ -1457,7 +1457,7 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="266"/>
         <source>Select base entity</source>
-        <translation type="unfinished">Velg basisenhet</translation>
+        <translation type="unfinished">Velg basisobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="269"/>
@@ -1681,7 +1681,7 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished">Angi andre punkt
-eller [antall|x|y|vinkel|p|kanter|avstand]</translation>
+eller [number|x|y|vinkel|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1695,27 +1695,28 @@ eller [antall]</translation>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished">Angi linjeretning
-[x|y|vinkel|p|avstand]</translation>
+[x|y|vinkel|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation type="unfinished">Angi linjeretningsvinkel
-eller [x|y|p|antall|kanter|avstand]</translation>
+eller [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation type="unfinished">Angi kantpunktsmodus
-[ingen|start|slutt|begge|avstand]</translation>
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Angi fast avstand mellom punkter
+eller [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1884,12 +1885,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="821"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished">Kan ikke lukke en linjesekvens: Ikke nok enheter definert ennå.</translation>
+        <translation type="unfinished">Kan ikke lukke en linjesekvens: Ikke nok objekter definert ennå.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="844"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Kan ikke angre: Ikke nok enheter definert ennå.</translation>
+        <translation type="unfinished">Kan ikke angre: Ikke nok objekter definert ennå.</translation>
     </message>
 </context>
 <context>
@@ -1912,7 +1913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>Angi referansepunkt [øvre venstre|øvre|øvre høyre|venstre|midt|høyre|nedre venstre|nedre|nedre høyre]</translation>
+        <translation>Angi referansepunkt [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1940,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Angi punkt 1 feste [hjørne|midt vertikal|midt horisontal|midt]</translation>
+        <translation>Angi snap for punkt 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Angi punkt 2 feste [hjørne|midt vertikal|midt horisontal|midt]</translation>
+        <translation>Angi snap for punkt 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2064,7 +2065,7 @@ or [%2]</source>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished">Angi hjørnetype
-[rett|avrundet|skrå]</translation>
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2081,7 +2082,7 @@ or [%2]</source>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished">Angi kantmodus
-[begge|horisontal|vertikal]</translation>
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2142,7 +2143,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="309"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Kan ikke angre: Ikke nok enheter definert ennå.</translation>
+        <translation type="unfinished">Kan ikke angre: Ikke nok objekter definert ennå.</translation>
     </message>
 </context>
 <context>
@@ -2171,7 +2172,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="269"/>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="291"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan ikke angre: Ikke nok enheter definert ennå.</translation>
+        <translation>Kan ikke angre: Ikke nok objekter definert ennå.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="308"/>
@@ -2286,7 +2287,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Select Entity</source>
-        <translation>Velg enhet</translation>
+        <translation>Velg objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
@@ -2306,12 +2307,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Velg skjærende enheter</translation>
+        <translation>Velg skjærende objekter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Avvelg skjærende enheter</translation>
+        <translation>Avvelg skjærende objekter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2457,12 +2458,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Del/linje</translation>
+        <translation>Skjær/del linje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>Del/sirkel</translation>
+        <translation>Skjær/del sirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
@@ -2593,7 +2594,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Flerlinje</translation>
+        <translation>&amp;Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2623,17 +2624,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Opprett &amp;likeavstandsflerlinjer</translation>
+        <translation>Opprett &amp;likeavstandspolylinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Flerlinjebuer til korder</translation>
+        <translation>Polylinjebuer til korder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>&amp;Flersidig tekst</translation>
+        <translation>&amp;Flerlinjet tekst</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
@@ -2683,7 +2684,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leder</translation>
+        <translation>&amp;Henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -2708,7 +2709,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Caught Entity</source>
-        <translation>Fanget enhet</translation>
+        <translation>Fanget objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
@@ -2813,12 +2814,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>Senk etter enhet</translation>
+        <translation>Senk etter objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>Hev over enhet</translation>
+        <translation>Hev over objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
@@ -3023,7 +3024,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
-        <translation>Gjenopprett dimensjoner</translation>
+        <translation>Regenerer dimensjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
@@ -3138,7 +3139,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp;Spline fra flerlinje</translation>
+        <translation>&amp;Spline fra polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3158,12 +3159,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Flerlinje fra eksisterende &amp;segmenter</translation>
+        <translation>Polylinje fra eksisterende &amp;segmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Endre segmenttype for flerlinje</translation>
+        <translation>Endre segmenttype for polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3188,7 +3189,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
         <source>Line Gap</source>
-        <translation>Linjeavstand</translation>
+        <translation>Linjeåpning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
@@ -3223,17 +3224,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Velg penn fra enhet</translation>
+        <translation>&amp;Velg penn fra objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Velg penn fra enhet (løst)</translation>
+        <translation>&amp;Velg penn fra objekt (løst)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Bruk penn på enhet</translation>
+        <translation>Bruk penn på objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
@@ -3243,7 +3244,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
-        <translation>Vis enhetsbeskrivelse</translation>
+        <translation>Vis objektbeskrivelse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
@@ -3259,7 +3260,7 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap</source>
-        <translation>Fest</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
@@ -3430,12 +3431,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Flerlinje</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Flerlinjetegnekommandoer</translation>
+        <translation>Polylinjetegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3465,7 +3466,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>Enhetsvelgoperasjoner</translation>
+        <translation>Objektvalgoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
@@ -3636,17 +3637,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>Tangent 2 enheter, radius</translation>
+        <translation>Tangent 2 objekter, radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>Tangent 2 enheter, 1 punkt</translation>
+        <translation>Tangent 2 objekter, 1 punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Tangent &amp;3 enheter</translation>
+        <translation>Tangent &amp;3 objekter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3951,7 +3952,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
-        <translation>E&amp;kspander</translation>
+        <translation>E&amp;ksploder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
@@ -4480,12 +4481,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>Velg enhet</translation>
+        <translation>Velg objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>Velg underliggende enheter</translation>
+        <translation>Velg underliggende objekter</translation>
     </message>
 </context>
 <context>
@@ -4945,7 +4946,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>Enhet</translation>
+        <translation>Objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -4965,7 +4966,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="273"/>
         <source>Select base alignment entity</source>
-        <translation>Velg grunnleggende justeringsenhet</translation>
+        <translation>Velg grunnleggende justeringsobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
@@ -4975,7 +4976,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>Velg enhet som skal justeres</translation>
+        <translation>Velg objekt som skal justeres</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
@@ -5037,7 +5038,7 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="272"/>
         <source>Invalid entity selected (non-atomic).</source>
-        <translation type="unfinished">Ugyldig enhet valgt (ikke-atomisk).</translation>
+        <translation type="unfinished">Ugyldig objekt valgt (ikke-atomisk).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
@@ -5057,7 +5058,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished">Ugyldig enhet valgt (kan ikke trimmes med den første enheten).</translation>
+        <translation type="unfinished">Ugyldig objekt valgt (kan ikke trimmes med det første objektet).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="338"/>
@@ -5096,7 +5097,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation>Ugyldig enhet valgt – ingen segmenter mellom skjæringspunktene som kan deles/brytes.</translation>
+        <translation>Ugyldig objekt valgt – ingen segmenter mellom skjæringspunktene som kan deles/brytes.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
@@ -5165,22 +5166,22 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">Enheten må være en linje, bue, sirkel, ellipse eller interpoleringskurve.</translation>
+        <translation type="unfinished">Objektet må være en linje, bue, sirkel, ellipse eller interpoleringskurve.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="unfinished">Klippepunktet kan ikke være endepunktet til en enhet.</translation>
+        <translation type="unfinished">Klippepunktet kan ikke være endepunktet til et objekt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
         <source>Specify entity to cut</source>
-        <translation type="unfinished">Angi enheten som skal klippes.</translation>
+        <translation type="unfinished">Angi objektet som skal klippes.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="156"/>
@@ -5211,42 +5212,42 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="79"/>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">Enhetene er ikke i samme polylinje.</translation>
+        <translation type="unfinished">Objektene er ikke i samme polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">Foreldreenheten til den andre enheten er ikke en polylinje</translation>
+        <translation type="unfinished">Foreldreobjektet til det andre objektet er ikke en polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished">Foreldreenheten til den andre enheten er null</translation>
+        <translation type="unfinished">Foreldreobjektet til det andre objektet er null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="91"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished">En av de valgte enhetene er null</translation>
+        <translation type="unfinished">Ett av de valgte objektene er null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">Foreldreenheten til den første enheten er ikke en polylinje</translation>
+        <translation type="unfinished">Foreldreobjektet til det første objektet er ikke en polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished">Foreldreenheten til den første enheten er null</translation>
+        <translation type="unfinished">Foreldreobjektet til det første objektet er null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="117"/>
         <source>First entity is nullptr</source>
-        <translation type="unfinished">Første enhet er null</translation>
+        <translation type="unfinished">Første objekt er null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="129"/>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished">Andre enhet er null</translation>
+        <translation type="unfinished">Andre objekt er null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
@@ -5288,7 +5289,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_entity.cpp" line="223"/>
         <source>Click on entity to modify</source>
-        <translation type="unfinished">Klikk på en enhet for å redigere</translation>
+        <translation type="unfinished">Klikk på et objekt for å redigere</translation>
     </message>
 </context>
 <context>
@@ -5310,7 +5311,7 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="116"/>
         <source>Line Gap</source>
-        <translation>Linjeavstand</translation>
+        <translation>Linjeåpning</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="92"/>
@@ -5337,7 +5338,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
         <source>Select endpoint of gap</source>
-        <translation>Velg endepunkt for avstand</translation>
+        <translation>Velg endepunkt for åpningen</translation>
     </message>
 </context>
 <context>
@@ -5933,12 +5934,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="408"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished">Angi første enhet eller skriv inn radius &lt;%1&gt;</translation>
+        <translation type="unfinished">Angi første objekt eller skriv inn radius &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="411"/>
         <source>Specify second entity</source>
-        <translation type="unfinished">Angi andre enhet</translation>
+        <translation type="unfinished">Angi andre objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="414"/>
@@ -6105,22 +6106,22 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">Velg første beskjæringsenhet</translation>
+        <translation type="unfinished">Velg første beskjæringsobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished">Velg begrensende enhet</translation>
+        <translation type="unfinished">Velg begrensende objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">Velg andre beskjæringsenhet</translation>
+        <translation type="unfinished">Velg andre beskjæringsobjekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">Velg enhet å beskjære</translation>
+        <translation type="unfinished">Velg objekt å beskjære</translation>
     </message>
 </context>
 <context>
@@ -6128,12 +6129,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="200"/>
         <source>No entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">Den valgte enheten er ikke en atomisk enhet eller kan ikke beskjæres.</translation>
+        <translation type="unfinished">Det valgte objektet er ikke et atomisk objekt eller kan ikke beskjæres.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6174,7 +6175,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="115"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="132"/>
@@ -6194,7 +6195,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="137"/>
         <source>Choose entity for order</source>
-        <translation type="unfinished">Velg enhet for rekkefølge</translation>
+        <translation type="unfinished">Velg objekt for rekkefølge</translation>
     </message>
 </context>
 <context>
@@ -6220,7 +6221,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Angi enheten som skal brukes til å velge penn</translation>
+        <translation>Angi objektet som skal brukes til å velge penn</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6247,12 +6248,12 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="111"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="135"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Enheten må være en flerlinje.</translation>
+        <translation type="unfinished">Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
@@ -6262,12 +6263,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="147"/>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished">Punktet som legges til ligger ikke på enheten.</translation>
+        <translation type="unfinished">Punktet som legges til ligger ikke på objektet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Angi flerlinje for å legge til noder</translation>
+        <translation type="unfinished">Angi polylinje for å legge til noder</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
@@ -6280,22 +6281,22 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Enheten må være en flerlinje.</translation>
+        <translation type="unfinished">Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Kan ikke legge til noder i en lukket flerlinje.</translation>
+        <translation type="unfinished">Kan ikke legge til noder i en lukket polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Klikk et sted nær begynnelsen eller slutten av eksisterende flerlinje.</translation>
+        <translation type="unfinished">Klikk et sted nær begynnelsen eller slutten av eksisterende polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
@@ -6305,12 +6306,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Angi flerlinjen et sted nær begynnelsen eller sluttpunktet</translation>
+        <translation type="unfinished">Angi polylinjen et sted nær begynnelsen eller sluttpunktet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Kan ikke angre: Ikke nok enheter definert ennå.</translation>
+        <translation type="unfinished">Kan ikke angre: Ikke nok objekter definert ennå.</translation>
     </message>
 </context>
 <context>
@@ -6350,17 +6351,17 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="105"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="125"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Enheten må være en flerlinje.</translation>
+        <translation type="unfinished">Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">Punktet som slettes ligger ikke på enheten.</translation>
+        <translation type="unfinished">Punktet som slettes ligger ikke på objektet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="141"/>
@@ -6370,7 +6371,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished">Angi flerlinje for å slette node</translation>
+        <translation type="unfinished">Angi polylinje for å slette node</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
@@ -6384,18 +6385,18 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="128"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="150"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Enheten må være en flerlinje.</translation>
+        <translation type="unfinished">Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="184"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">Punktet som slettes ligger ikke på enheten.</translation>
+        <translation type="unfinished">Punktet som slettes ligger ikke på objektet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="167"/>
@@ -6406,17 +6407,17 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Ingen flerlinje funnet.</translation>
+        <translation type="unfinished">Ingen polylinje funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Minst to segmenter av flerlinjen bør være mellom valgte punkter.</translation>
+        <translation type="unfinished">Minst to segmenter av polylinjen bør være mellom valgte punkter.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished">Angi flerlinje for å slette mellom to noder</translation>
+        <translation type="unfinished">Angi polylinje for å slette mellom to noder</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="216"/>
@@ -6434,17 +6435,17 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="335"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Enheten må være en flerlinje.</translation>
+        <translation type="unfinished">Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
         <source>Choose the original polyline</source>
-        <translation type="unfinished">Velg den opprinnelige flerlinjen</translation>
+        <translation type="unfinished">Velg den opprinnelige polylinjen</translation>
     </message>
 </context>
 <context>
@@ -6453,22 +6454,22 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Flerlinje opprettet</translation>
+        <translation type="unfinished">Polylinje opprettet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">Enheten kan ikke være en lukket flerlinje.</translation>
+        <translation type="unfinished">Objektet kan ikke være en lukket polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Velg ett av segmentene på den opprinnelige flerlinjen</translation>
+        <translation type="unfinished">Velg ett av segmentene på den opprinnelige polylinjen</translation>
     </message>
 </context>
 <context>
@@ -6476,27 +6477,27 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">Ingen enhet funnet.</translation>
+        <translation type="unfinished">Ingen objekt funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Enheten må være en flerlinje.</translation>
+        <translation type="unfinished">Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Første segment bør være på valgt flerlinje.</translation>
+        <translation type="unfinished">Første segment bør være på valgt polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished">Andre segment bør være på valgt flerlinje og ikke lik det første.</translation>
+        <translation type="unfinished">Andre segment bør være på valgt polylinje og ikke lik det første.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished">Angi flerlinje for å beskjære</translation>
+        <translation type="unfinished">Angi polylinje for å beskjære</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -6524,7 +6525,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
         <source> entities </source>
-        <translation>enheter</translation>
+        <translation> objekter </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6544,7 +6545,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select/Deselect entities</source>
-        <translation>Velg/fjern enheter</translation>
+        <translation>Velg/fjern objekter</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
@@ -6554,7 +6555,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
         <source>No valid entities selected, select them first</source>
-        <translation>Ingen gyldige enheter er valgt, velg dem først</translation>
+        <translation>Ingen gyldige objekter er valgt, velg dem først</translation>
     </message>
 </context>
 <context>
@@ -6567,7 +6568,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>Velg kontrollpunkt for enheten</translation>
+        <translation>Velg kontrollpunkt for objektet</translation>
     </message>
 </context>
 <context>
@@ -6575,12 +6576,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="66"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished">Enheten må være en atomisk enhet.</translation>
+        <translation type="unfinished">Objektet må være et atomisk objekt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="90"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Angi enhet å velge</translation>
+        <translation type="unfinished">Angi objekt å velge</translation>
     </message>
 </context>
 <context>
@@ -6596,7 +6597,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="30"/>
         <source>Select entities</source>
-        <translation type="unfinished">Velg enheter</translation>
+        <translation type="unfinished">Velg objekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="31"/>
@@ -6619,7 +6620,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Velg skjærende enhet</translation>
+        <translation type="unfinished">Velg skjærende objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6663,7 +6664,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Angi enhet å velge</translation>
+        <translation type="unfinished">Angi objekt å velge</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
@@ -6711,12 +6712,12 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>De-select entities</source>
-        <translation type="unfinished">Avvelg enheter</translation>
+        <translation type="unfinished">Avvelg objekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>Select entities</source>
-        <translation type="unfinished">Velg enheter</translation>
+        <translation type="unfinished">Velg objekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
@@ -7761,17 +7762,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
         <source>Bulge:</source>
-        <translation>Buelengde:</translation>
+        <translation>Bulge:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>Buelengde (sagitta) for buen</translation>
+        <translation>Bulge (pilhøyde) for buen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>Velg buelengde fra tegningen</translation>
+        <translation>Velg bulge-verdi fra tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
@@ -7913,7 +7914,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Merk av for å beskjære begge enheter til avfasning</translation>
+        <translation type="unfinished">Merk av for å beskjære begge objektene til avfasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7946,7 +7947,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Merk av for å beskjære begge enheter til avfasning</translation>
+        <translation type="unfinished">Merk av for å beskjære begge objektene til avfasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -8814,7 +8815,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="218"/>
         <source>Integral</source>
-        <translation>Heltall</translation>
+        <translation>Integral</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
@@ -8852,7 +8853,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Lederlinje og toleranse</translation>
+        <translation>Henvisningslinje og toleranse</translation>
     </message>
 </context>
 <context>
@@ -9112,7 +9113,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Angir en avstand for å forlenge dimensjonslinjen forbi forlengelseslinjen når du bruker skrå, arkitektonisk, merke, integrert og ingen markeringer for pilhoder. (DIMDLE-systemvariabelen)</translation>
+        <translation>Angir en avstand for å forlenge dimensjonslinjen forbi forlengelseslinjen når du bruker skrå, arkitektonisk, merke, integral og ingen markeringer som pilspisser. (DIMDLE-systemvariabelen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9298,12 +9299,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Angir pilspissen for lederlinjen. (DIMLDRBLK-systemvariabel)</translation>
+        <translation>Angir pilspissen for henvisningslinjen. (DIMLDRBLK-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>Leder:</translation>
+        <translation>Henvisningslinje:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
@@ -9370,7 +9371,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Plasserer buesymboler før dimensjonsteksten. (DIMARCSYM-systemvariabel)</translation>
+        <translation>Plasserer buelengdesymboler før dimensjonsteksten. (DIMARCSYM-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
@@ -9550,7 +9551,8 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>Angir størrelsen på skråstreker som tegnes i stedet for pilhoder for lineære, radius- og diameterdimensjoner. Hvis = 0, tegnes pilhoder. &gt;0 – Tegner skråstreker i stedet for pilhoder (DIMTSZ-variabelen).</translation>
+        <translation>Angir størrelsen på skråstreker som tegnes i stedet for pilspisser for lineære, radius- og diameterdimensjoner. Hvis = 0 – tegnes pilspisser.
+&gt;0 – Tegner skråstreker i stedet for pilspisser (DIMTSZ-variabelen). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9662,7 +9664,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Avstand for brutt dimensjonslinje:</translation>
+        <translation>Tekstavstand ved brutt dimensjonslinje:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
@@ -9697,7 +9699,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>Tegn dimensjonslinje mellom de ytre linjene</translation>
+        <translation>Tegn dimensjonslinje mellom forlengelseslinjene</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9738,12 +9740,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Hvis valgt, flyttes ikke dimensjonslinjene når teksten flyttes. Hvis teksten flyttes bort fra dimensjonslinjen, opprettes en lederlinje som kobler teksten til dimensjonslinjen. Lederlinjen utelates når teksten er for nær dimensjonslinjen. (DIMTMOVE-systemvariabel)</translation>
+        <translation>Hvis valgt, flyttes ikke dimensjonslinjene når teksten flyttes. Hvis teksten flyttes bort fra dimensjonslinjen, opprettes en henvisningslinje som kobler teksten til dimensjonslinjen. Henvisningslinjen utelates når teksten er for nær dimensjonslinjen. (DIMTMOVE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Over dimensjonslinje, med lederlinje</translation>
+        <translation>Over dimensjonslinje, med henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9753,12 +9755,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Hvis valgt, vil ikke dimensjonslinjene flyttes når teksten flyttes. Tekst som flyttes bort fra dimensjonslinjen, vil ikke være koblet til dimensjonslinjen med en lederlinje. (DIMTMOVE-systemvariabel)</translation>
+        <translation>Hvis valgt, vil ikke dimensjonslinjene flyttes når teksten flyttes. Tekst som flyttes bort fra dimensjonslinjen, vil ikke være koblet til dimensjonslinjen med en henvisningslinje. (DIMTMOVE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Over dimensjonslinje, uten lederlinje</translation>
+        <translation>Over dimensjonslinje, uten henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9773,7 +9775,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Undertrykker pilhoder hvis det ikke er nok plass inne i forlengelseslinjene. (DIMSOXD-systemvariabel)</translation>
+        <translation>Undertrykker pilspisser hvis det ikke er nok plass inne i forlengelseslinjene. (DIMSOXD-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
@@ -9783,7 +9785,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>Når det ikke er nok plass til tekst og pilhoder, flyttes både tekst og piler utenfor forlengelseslinjene (DIMATFIT-systemvariabel).</translation>
+        <translation>Når det ikke er nok plass til tekst og pilspisser, flyttes begge utenfor forlengelseslinjene (DIMATFIT-systemvariabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -10147,7 +10149,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>Fjerner ledende nuller i alle desimaldimensjoner. For eksempel blir 0,5000 til 0,5000.</translation>
+        <translation>Fjerner ledende nuller i alle desimaldimensjoner. For eksempel blir 0,5000 til ,5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
@@ -10464,7 +10466,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="457"/>
         <source>Indicates whether style is overriden for specific entity (and so is unique for it).</source>
-        <translation>Angir om stilen er overskrevet for en bestemt enhet (og dermed er unik for den).</translation>
+        <translation>Angir om stilen er overskrevet for et bestemt objekt (og dermed er unik for det).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="499"/>
@@ -10494,7 +10496,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>Navn på stil for denne dimensjon</translation>
+        <translation>Navn på stil for denne dimensjonen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10540,7 +10542,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>Ordinate-dimensjon</translation>
+        <translation>Ordinatdimensjon</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
@@ -10596,17 +10598,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>Ny dimensjonsstiloverstyring -</translation>
+        <translation>Ny dimensjonsstiloverstyring - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>Rediger dimensjonsstiloverstyring -</translation>
+        <translation>Rediger dimensjonsstiloverstyring - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
         <source>View Dimension Style - </source>
-        <translation>Vis dimensjonsstil -</translation>
+        <translation>Vis dimensjonsstil - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
@@ -10998,7 +11000,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>Enhetskontekst</translation>
+        <translation>Objektkontekst</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
@@ -11008,7 +11010,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>Definerer konteksten for menyen og om et klikk på en bestemt enhet vil utløse menyvisning.</translation>
+        <translation>Definerer konteksten for menyen og om et klikk på et bestemt objekt vil utløse menyvisning. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
@@ -11103,17 +11105,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>Enten fraværende eller hvilken som helst enhet</translation>
+        <translation>Enten fraværende eller hvilket som helst objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>Fraværende enhet</translation>
+        <translation>Fraværende objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
         <source>Any Entity</source>
-        <translation>Hvilken som helst enhet</translation>
+        <translation>Hvilket som helst objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
@@ -11168,7 +11170,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Mønster</translation>
+        <translation>Skravering</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11208,7 +11210,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>Linje</translation>
+        <translation>Henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
@@ -11485,7 +11487,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Lederlinje og toleranser</translation>
+        <translation>Henvisningslinje og toleranser</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -12898,7 +12900,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Horisontal forskyvning av duplikat fra originalenhet</translation>
+        <translation type="unfinished">Horisontal forskyvning av duplikat fra originalobjekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12908,7 +12910,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Vertikal forskyvning av duplikat fra originalenhet</translation>
+        <translation type="unfinished">Vertikal forskyvning av duplikat fra originalobjekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -13013,12 +13015,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Horisontal forskyvning av duplikat fra originalenhet</translation>
+        <translation type="unfinished">Horisontal forskyvning av duplikat fra originalobjekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Vertikal forskyvning av duplikat fra originalenhet</translation>
+        <translation type="unfinished">Vertikal forskyvning av duplikat fra originalobjekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
@@ -14349,12 +14351,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Fest til enhet</translation>
+        <translation type="unfinished">Fest til objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Hvis dette er valgt, vil punktet alltid være inne i den valgte enheten</translation>
+        <translation type="unfinished">Hvis dette er valgt, vil punktet alltid være inne i det valgte objektet</translation>
     </message>
 </context>
 <context>
@@ -14367,12 +14369,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Hvis dette er valgt, vil punktet alltid være inne i den valgte enheten</translation>
+        <translation type="unfinished">Hvis dette er valgt, vil punktet alltid være inne i det valgte objektet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Fest til enhet</translation>
+        <translation type="unfinished">Fest til objekt</translation>
     </message>
 </context>
 <context>
@@ -15600,7 +15602,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Hvis merket av, vil den opprinnelige enheten bli delt ved skjæringspunktet.</translation>
+        <translation type="unfinished">Hvis merket av, vil det opprinnelige objektet bli delt ved skjæringspunktet.</translation>
     </message>
 </context>
 <context>
@@ -15652,7 +15654,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Hvis merket av, vil den opprinnelige enheten bli delt ved skjæringspunktet.</translation>
+        <translation type="unfinished">Hvis merket av, vil det opprinnelige objektet bli delt ved skjæringspunktet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
@@ -15881,7 +15883,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap</source>
-        <translation type="unfinished">Fest</translation>
+        <translation type="unfinished">Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
@@ -16450,7 +16452,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="31"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Avstand til opprinnelig enhet</translation>
+        <translation type="unfinished">Avstand til opprinnelig objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
@@ -16478,7 +16480,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Avstand til opprinnelig enhet</translation>
+        <translation type="unfinished">Avstand til opprinnelig objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
@@ -16526,7 +16528,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Hvis merket, opprettes paralleller på begge sider av enheten</translation>
+        <translation type="unfinished">Hvis merket, opprettes paralleller på begge sider av objektet</translation>
     </message>
 </context>
 <context>
@@ -16549,7 +16551,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="101"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Hvis merket, opprettes paralleller på begge sider av enheten</translation>
+        <translation type="unfinished">Hvis merket, opprettes paralleller på begge sider av objektet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="104"/>
@@ -17037,7 +17039,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Oppretter flerlinje fra linjesegmenter</translation>
+        <translation type="unfinished">Oppretter polylinje fra linjesegmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17167,7 +17169,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Oppretter flerlinje fra linjesegmenter</translation>
+        <translation type="unfinished">Oppretter polylinje fra linjesegmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17495,7 +17497,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
         <source>Bulge</source>
-        <translation type="unfinished">Buelengde</translation>
+        <translation type="unfinished">Bulge</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -22206,7 +22208,7 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Avstand for forskyvning fra opprinnelig enhet</translation>
+        <translation type="unfinished">Avstand for forskyvning fra opprinnelig objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22324,7 +22326,7 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Avstand for forskyvning fra opprinnelig enhet</translation>
+        <translation type="unfinished">Avstand for forskyvning fra opprinnelig objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22886,17 +22888,17 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Linje</translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Linje (liten)</translation>
+        <translation>Del (liten)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
         <source>Divide (small)</source>
-        <translation>Linje (små)</translation>
+        <translation>Del (små)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
@@ -23418,12 +23420,12 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Velg enheter med attributtpenn</translation>
+        <translation>&amp;Velg objekter med attributtpenn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Velg enheter med tegnepenn</translation>
+        <translation>&amp;Velg objekter med tegnepenn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
@@ -23761,7 +23763,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">Hvis merket, tegnes polygonet som flerlinje. Ellers opprettes individuelle enheter.</translation>
+        <translation type="unfinished">Hvis merket, tegnes polygonet som polylinje. Ellers opprettes individuelle objekter. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -23941,12 +23943,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">Flerlinjealternativer</translation>
+        <translation type="unfinished">Polylinjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">Kobler ender av flerlinjen slik at lukket kontur opprettes</translation>
+        <translation type="unfinished">Kobler ender av polylinjen slik at lukket kontur opprettes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -24657,7 +24659,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
-        <translation type="unfinished">Buelengde</translation>
+        <translation type="unfinished">Bulge</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
@@ -28757,7 +28759,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
-        <translation type="unfinished">Linjeavstand</translation>
+        <translation type="unfinished">Linjeåpning</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
@@ -30897,7 +30899,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="698"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="896"/>
         <source>Bulge</source>
-        <translation>Buelengde</translation>
+        <translation>Bulge</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="717"/>
@@ -31562,7 +31564,7 @@ Lag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>Sluttpunkt for lederlinje</translation>
+        <translation>Sluttpunkt for henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31630,7 +31632,7 @@ Lag: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="61"/>
         <source>Select entity for properties</source>
-        <translation>Velg enhet for egenskaper</translation>
+        <translation>Velg objekt for egenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="64"/>
@@ -31646,7 +31648,7 @@ Lag: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="75"/>
         <source>Select current entity in drawing</source>
-        <translation>Velg gjeldende enhet i tegningen</translation>
+        <translation>Velg gjeldende objekt i tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="89"/>
@@ -31748,7 +31750,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>Velg enhet</translation>
+        <translation>&amp;Velg objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31773,7 +31775,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>Ingen data – velg en enhet eller koordinater først...</translation>
+        <translation>Ingen data – velg et objekt eller koordinater først...</translation>
     </message>
 </context>
 <context>
@@ -31934,7 +31936,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
         <source>Snap</source>
-        <translation type="unfinished">Fest</translation>
+        <translation type="unfinished">Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
@@ -32067,7 +32069,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">Lengde på avrundet hjørne i X-retningen.</translation>
+        <translation type="unfinished">Lengde på avfaset hjørne i X-retningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
@@ -32107,7 +32109,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Lengden på avrundet hjørne for Y-retningen.</translation>
+        <translation type="unfinished">Lengde på avfaset hjørne i Y-retningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
@@ -32222,12 +32224,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">Velg lengden på avrundingshjørnet for X-retningen fra tegningen.</translation>
+        <translation type="unfinished">Velg lengden på det avfasede hjørnet i X-retningen fra tegningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">Velg lengden på avrundingshjørnet for Y-retningen fra tegningen.</translation>
+        <translation type="unfinished">Velg lengden på det avfasede hjørnet i Y-retningen fra tegningen.</translation>
     </message>
 </context>
 <context>
@@ -34377,7 +34379,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Merkjustering:</translation>
+        <translation type="unfinished">Merkesnap:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -36159,7 +36161,7 @@ Advarsel: Denne handlingen kan IKKE angres!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>Enhetsinformasjon</translation>
+        <translation>Objektinformasjon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -37168,7 +37170,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Dimensjonsalternativer</translation>
+        <translation>Redigering av dimensjonsetikett</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
@@ -38444,7 +38446,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>Redigering av dimensjonsstil -</translation>
+        <translation>Redigering av dimensjonsstil - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
@@ -38531,7 +38533,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Avstand mellom dimensjonslinjer:</translation>
+        <translation>Åpning i dimensjonslinjen:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -38930,7 +38932,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Lengde for å forstørre over dimensjonslinjen</translation>
+        <translation>Lengde for å forlenge ut over dimensjonslinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
@@ -39108,7 +39110,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>Modus for hvordan linjer kobles sammen i polygoner eller stier</translation>
+        <translation>Modus for hvordan linjer kobles sammen i polylinjer eller stier</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39667,17 +39669,17 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Farge for forklarende enhet i aktiv forhåndsvisning:</translation>
+        <translation>Farge for forklarende objekt i aktiv forhåndsvisning:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Farge for forklarende enhet i forhåndsvisning:</translation>
+        <translation>Farge for forklarende objekt i forhåndsvisning:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>&amp;Farge for fremhevet enhet:</translation>
+        <translation>&amp;Farge for fremhevet objekt:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
@@ -39717,22 +39719,22 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation>Hvis dette er aktivert, vil den interne ID-en til enheten vises i dialogboksen for egenskaper og widgeten for enhetsinformasjon.</translation>
+        <translation>Hvis dette er aktivert, vil den interne ID-en til objektet vises i dialogboksen for egenskaper og widgeten for objektinformasjon.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
         <source>Show internal IDs of entities</source>
-        <translation>Vis interne ID-er for enheter.</translation>
+        <translation>Vis interne ID-er for objekter.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation>Hvis dette er valgt, vil enheter forbli valgt etter at endringsoperasjoner er fullført. Ellers vil de ikke være valgt.</translation>
+        <translation>Hvis dette er valgt, vil objekter forbli valgt etter at endringsoperasjoner er fullført. Ellers vil de ikke være valgt. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
         <source>Keep modified entities selected</source>
-        <translation>Behold valgte enheter etter endring.</translation>
+        <translation>Behold valgte objekter etter endring.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
@@ -39971,7 +39973,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1571"/>
         <source>Snap</source>
-        <translation>Fest</translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
@@ -40101,7 +40103,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
-        <translation>Avstand</translation>
+        <translation>Åpning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
@@ -40884,7 +40886,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3091"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3555"/>
         <source> pt</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="735"/>
@@ -40932,7 +40934,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2748"/>
         <source>Show properties for entity that will be created</source>
-        <translation>Vis egenskaper for enheten som skal opprettes</translation>
+        <translation>Vis egenskaper for objektet som skal opprettes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
@@ -41294,27 +41296,27 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Radius for buen innenfor vinkeljusteringsmerket.</translation>
+        <translation>Radius for buen innenfor vinkelsnap-merket.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Justeringsmerke</translation>
+        <translation>Snap-markør</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Avanserte justeringsinnstillinger</translation>
+        <translation>Avanserte innstillinger for finjustering av snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Bryter for «fri justering»-avstand for justering på enhet:</translation>
+        <translation>Bryter for «fritt snap»-avstand ved snap til objekt:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>Justering på enhet vil bli aktivert hvis den er aktivert og avstanden mellom musen og det justerte punktet er større enn den angitte verdien.</translation>
+        <translation>Snap til objekt brukes hvis det er aktivert og avstanden mellom musen og snap-punktet er større enn den angitte verdien.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41324,12 +41326,12 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>Avstand i skjermkoordinater som brukes til å fange opp enheter</translation>
+        <translation>Avstand i skjermkoordinater som brukes til å fange opp objekter </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Minimumsjusteringsfaktor for rutenettceller:</translation>
+        <translation>Minste snap-faktor for rutenettceller:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
@@ -41344,7 +41346,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Faktor for rutenettceller som brukes for rutenettjustering.</translation>
+        <translation>Faktor for rutenettceller som brukes ved snap til rutenett.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -43783,7 +43785,7 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Divide (tiny)</source>
-        <translation>Linje (liten)</translation>
+        <translation>Del (liten)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
@@ -44738,13 +44740,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1043"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>generer på nytt</translation>
+        <translation>regenerer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>tegn på nytt</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
@@ -44774,7 +44776,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>automatisk zoom</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
@@ -44835,7 +44837,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>gjør om</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1028"/>
@@ -44847,7 +44849,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimalignert</translation>
+        <translation>dimjustert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
@@ -44925,7 +44927,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>dimleder</translation>
+        <translation>dimhenvisning</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="705"/>
@@ -44955,7 +44957,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>begrensorthogonalt</translation>
+        <translation>begrensortogonalt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
@@ -44967,7 +44969,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>begrens horisontalt</translation>
+        <translation>begrenshorisontalt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
@@ -44979,7 +44981,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>begrens vertikalt</translation>
+        <translation>begrensvertikalt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
@@ -45099,19 +45101,19 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="920"/>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>OS</translation>
+        <translation>os</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="925"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>snapmidten</translation>
+        <translation>snapsenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="926"/>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>SC</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
@@ -45123,7 +45125,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="932"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>SD</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="937"/>
@@ -45135,7 +45137,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="938"/>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>SE</translation>
+        <translation>se</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
@@ -45153,7 +45155,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>fest punkt i skjæringspunkt</translation>
+        <translation>snapskjæring</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -45165,7 +45167,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>fest punkt i midten</translation>
+        <translation>snapmidtpunkt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="956"/>
@@ -45177,7 +45179,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>fest punkt på objekt</translation>
+        <translation>snapobjekt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
@@ -45195,7 +45197,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>sett relativt nullpunkt</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
@@ -45207,25 +45209,25 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>velg alt</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>va</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>fjern markering fra alt</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="623"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation>fn</translation>
+        <translation>tn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="826"/>
@@ -45253,7 +45255,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="84"/>
         <source>cnly</source>
-        <translation>lag</translation>
+        <translation>cnly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="88"/>
@@ -45327,7 +45329,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>kolonneavstand</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45338,12 +45340,12 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>lengde</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>antall</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45354,12 +45356,12 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>rader</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>radavstand</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -45370,19 +45372,19 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
-        <translation>beskjær</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>vinkel</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>en</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
@@ -45393,31 +45395,31 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
         <source>cen</source>
         <comment>center</comment>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1202"/>
         <source>ce</source>
         <comment>center</comment>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
         <source>c</source>
         <comment>close</comment>
-        <translation>translation 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>translation 4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>translation 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
@@ -45429,7 +45431,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>kolonneavstand</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
@@ -45441,7 +45443,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>faktum</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -45470,7 +45472,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>len</source>
         <comment>length</comment>
-        <translation>lengde</translation>
+        <translation>len</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1232"/>
@@ -45488,7 +45490,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1235"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>lengde1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1236"/>
@@ -45506,7 +45508,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>lengde2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1240"/>
@@ -45518,13 +45520,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1242"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>tall</translation>
+        <translation>antall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
         <source>num</source>
         <comment>number</comment>
-        <translation>antall</translation>
+        <translation>num</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1244"/>
@@ -45594,7 +45596,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
         <source>redo</source>
-        <translation>gjør om</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1270"/>
@@ -45666,12 +45668,12 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1273"/>
         <source>bw</source>
-        <translation>sv/hv</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
-        <translation>svart/hvitt</translation>
+        <translation>svarthvitt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
@@ -45827,31 +45829,31 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>horisontal linje</translation>
+        <translation>linjehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation>hl</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>vertikal linje</translation>
+        <translation>linjever</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation>vl</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>rektangul</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
@@ -45863,7 +45865,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="149"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>rektangel 1</translation>
+        <translation>rektangel1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="150"/>
@@ -45875,7 +45877,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>rektangel 2</translation>
+        <translation>rektangel2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="156"/>
@@ -45887,7 +45889,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="161"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>rektangel 3</translation>
+        <translation>rektangel3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="162"/>
@@ -45899,25 +45901,25 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>utskåret</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation>utsk</translation>
+        <translation>sll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="173"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>utskåret</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="174"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>utsk</translation>
+        <translation>slc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="179"/>
@@ -45941,7 +45943,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="186"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation>kx</translation>
+        <translation>cx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="190"/>
@@ -45971,7 +45973,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>linepunkter</translation>
+        <translation>linjepunkter</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
@@ -46019,7 +46021,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>al</source>
         <comment>align entities</comment>
-        <translation>ju</translation>
+        <translation>al</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
@@ -46031,7 +46033,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>al1</source>
         <comment>align entities</comment>
-        <translation>ju1</translation>
+        <translation>al1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
@@ -46043,7 +46045,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>alr</source>
         <comment>align references</comment>
-        <translation>jur</translation>
+        <translation>alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
@@ -46055,19 +46057,19 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation>lf</translation>
+        <translation>lj</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>brytlinje</translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>bl</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
@@ -46079,13 +46081,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation>ml</translation>
+        <translation>gl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="264"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>linjeparallel</translation>
+        <translation>linjepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="265"/>
@@ -46115,7 +46117,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="267"/>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>fo</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="268"/>
@@ -46175,7 +46177,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>eller</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
@@ -46409,7 +46411,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>ved</translation>
+        <translation>at</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
@@ -46613,7 +46615,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>punkt til linje</translation>
+        <translation>punkt2linje</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -46625,7 +46627,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>legg til linje</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
@@ -46637,7 +46639,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="572"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>legg til linjepunkt</translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="573"/>
@@ -46649,7 +46651,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>slett linje</translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
@@ -46661,7 +46663,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>slett linje (valgt)</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
@@ -46727,13 +46729,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="628"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>inverter utvalg</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>er</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -46775,7 +46777,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>gjør</translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
@@ -46859,7 +46861,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>flytt og roter</translation>
+        <translation>modflyttrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
@@ -46883,7 +46885,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="754"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>angre endring</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="755"/>
@@ -46979,31 +46981,31 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>modulusdeling</translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>modulstrekk</translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>modusegenskaper</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>modusattributt</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>modusekspandertekst</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
@@ -47021,13 +47023,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>modusekspander</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="844"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>moduslett</translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="853"/>
@@ -47039,7 +47041,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="854"/>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation>ID</translation>
+        <translation>id</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
@@ -47099,19 +47101,19 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>så</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>sentrér manuelt</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="971"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>sentrer manuelt</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="972"/>
@@ -47147,13 +47149,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation>tp</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>zoomin</source>
         <comment>zoom - in</comment>
-        <translation>zoom inn</translation>
+        <translation>zoominn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
@@ -47165,7 +47167,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>zoom ut</translation>
+        <translation>zoomut</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
@@ -47177,13 +47179,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
         <source>angle1</source>
-        <translation>vinkel 1</translation>
+        <translation>vinkel1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1196"/>
         <source>angle2</source>
-        <translation>vinkel 2</translation>
+        <translation>vinkel2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
@@ -47201,13 +47203,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>lengde 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>lengde 2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47227,7 +47229,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>angrel</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
@@ -47237,248 +47239,248 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>forskyvning</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>linjesnapp</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
-        <translation>tikksnapp</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>bredde</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>høyde</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
-        <translation>posisjon</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>størrelse</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
-        <translation>fas</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
         <source>nopoly</source>
-        <translation>ingen polygon</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>bruk polygon</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>hjørner</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
         <source>str</source>
-        <translation>streng</translation>
+        <translation>str</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>rund</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>snap1</source>
-        <translation>fest</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>topl</source>
-        <translation>topp</translation>
+        <translation>topl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>topp</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>topr</source>
-        <translation>øverst</translation>
+        <translation>topr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>venstre</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>midten</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>høyre</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>nederst til venstre</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>nederst</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>nederst til høyre</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
         <source>snapcorner</source>
-        <translation>fest hjørne</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>snapshift</source>
-        <translation>fest forskyvning</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>størrelse</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>størrelse</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
         <source>hor</source>
-        <translation>horisontal</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>vert</source>
-        <translation>vertikal</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
-        <translation>fest til</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>hjørne</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>midten (vertikal)</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
-        <translation>midten (horisontal)</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
         <source>quad</source>
-        <translation>kvadratisk</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
         <source>noquad</source>
-        <translation>ikke kvadratisk</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>indre vinkel</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>kanter</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>ingen kanter</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>kanter på begge sider</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>kanter i starten</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>kanter på slutten</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>slutt</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>begge</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>ingen</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>tilpass</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>nofit</source>
-        <translation>ikke tilpass</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>fast distanse</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>fleksibel distanse</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>distanse</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -47498,17 +47500,17 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">fast</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>sym</source>
-        <translation>symmetrisk</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
         <source>nosym</source>
-        <translation>ikke symmetrisk</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
@@ -47543,13 +47545,13 @@ Vil du erstatte den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation>ligning</translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1225"/>
         <source>eq</source>
         <comment>equation</comment>
-        <translation>lik</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1268"/>
@@ -47746,7 +47748,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>Vinkeljustering</translation>
+        <translation>Vinkelsnap</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
@@ -47788,12 +47790,12 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Mønstertegning: Ingen mønster funnet. Angi mønsterbanen i programinnstillingene.</translation>
+        <translation>Skravering: Fant ikke noe mønster. Angi mønsterbanen i programinnstillingene.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Mønstertegning: Kunne ikke laste inn mønster: %1</translation>
+        <translation>Skravering: Kunne ikke laste inn mønster: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="198"/>
@@ -48104,31 +48106,31 @@ Vil du erstatte den?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="1009"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1015"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>translation 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>translation 4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1021"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>translation 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -48762,7 +48764,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>Leder</translation>
+        <translation>Henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48928,7 +48930,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="637"/>
         <source>Chord Length:</source>
-        <translation>Buelengde:</translation>
+        <translation>Kordelengde:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="638"/>
@@ -48963,7 +48965,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Forleng akkord</translation>
+        <translation>Forleng korde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -48983,7 +48985,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>Zoom, panorér eller velg enhet</translation>
+        <translation>Zoom, panorér eller velg objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -48993,12 +48995,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Panorér / rull vertikalt / velg underordnede enheter</translation>
+        <translation>Panorér / rull vertikalt / velg underordnede objekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
-        <translation>Velg/fjern merking av enheter</translation>
+        <translation>Velg/fjern merking av objekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49256,12 +49258,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Feil ved mønsterfylling: Mønster ikke funnet!</translation>
+        <translation>Skraveringsfeil: Mønster ikke funnet!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Feil ved mønsterfylling: Kontur eller mønster for lite!</translation>
+        <translation>Skraveringsfeil: Kontur eller mønster for lite!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
@@ -49858,12 +49860,12 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="131"/>
         <source>Select first entity</source>
-        <translation>Velg første enhet</translation>
+        <translation>Velg første objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="134"/>
         <source>Select second entity</source>
-        <translation>Velg andre enhet</translation>
+        <translation>Velg andre objekt</translation>
     </message>
 </context>
 <context>
@@ -49871,12 +49873,12 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Gjenopprettet %1 dimensjonsenheter</translation>
+        <translation>Regenererte %1 dimensjonsobjekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>Ingen dimensjonsenheter funnet</translation>
+        <translation>Ingen dimensjonsobjekter funnet</translation>
     </message>
 </context>
 <context>
@@ -49930,7 +49932,7 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Entity</source>
-        <translation>Enhet</translation>
+        <translation>Objekt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>
@@ -49970,7 +49972,7 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1359"/>
         <source>Angle (on Entity)</source>
-        <translation>Vinkel (på enhet)</translation>
+        <translation>Vinkel (på objekt)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1361"/>

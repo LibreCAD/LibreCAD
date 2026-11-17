@@ -69,19 +69,21 @@
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished">القفل لا يمكن أن يحتوي على إضافة لنفسه.</translation>
+        <translation type="unfinished">لا يمكن أن تحتوي الكتلة على إدراج لنفسها.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished">)أ( أضيفت القفل الحالي إلى:</translation>
+        <translation type="unfinished"> يحتوي على إدراج متداخل للكتلة الحالية في:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished">هذا المبنى لا يمكن ادخاله.</translation>
+        <translation type="unfinished">
+لا يمكن إدراج هذه الكتلة.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="226"/>
@@ -121,7 +123,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="388"/>
         <source>Enter column spacing:</source>
-        <translation type="unfinished">الجدول الزمني:</translation>
+        <translation type="unfinished">أدخل تباعد الأعمدة:</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="391"/>
@@ -176,7 +178,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
-        <translation>ليس دائرة أو كيان دائري</translation>
+        <translation>ليس كيان دائرة أو قوس</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
@@ -304,7 +306,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
         <source>Alternate angle to outer arc</source>
-        <translation>الزاوية البديلة إلى القطب الخارجي</translation>
+        <translation>الزاوية البديلة إلى القوس الخارجي</translation>
     </message>
 </context>
 <context>
@@ -337,7 +339,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="219"/>
         <source>Opposite Arc direction</source>
-        <translation>اتجاه القطب الشمالي المعارض</translation>
+        <translation>عكس اتجاه القوس</translation>
     </message>
 </context>
 <context>
@@ -376,7 +378,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="55"/>
         <source>Enter radius of arc</source>
-        <translation>محيط القطب الشمالي</translation>
+        <translation>أدخل نصف قطر القوس</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="59"/>
@@ -436,7 +438,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="539"/>
         <source>Specify radius</source>
-        <translation type="unfinished">تحديد النطاقات</translation>
+        <translation type="unfinished">حدد نصف القطر</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="542"/>
@@ -451,7 +453,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">تحديد زاوية النهاية أو [زاوية/زاوية]</translation>
+        <translation type="unfinished">تحديد زاوية النهاية أو [زاوية/chordlen]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -467,12 +469,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">يحدد طول الكيلوغرامات (محدد لنقطة الذروة):</translation>
+        <translation type="unfinished">حدد طول الوتر (قيمة سالبة للنقطة البديلة):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished">استخدام نقطة بديلة للرسم البياني</translation>
+        <translation type="unfinished">استخدام نقطة قوس بديلة</translation>
     </message>
 </context>
 <context>
@@ -523,7 +525,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="98"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>ملاحظة: أُنشئ صندوق بناء لنظام التنسيق العالمي.</translation>
+        <translation>ملاحظة: أُنشئ الصندوق المحيط في نظام الإحداثيات العالمي.</translation>
     </message>
 </context>
 <context>
@@ -551,7 +553,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
         <source>Enter offset value</source>
-        <translation type="unfinished">القيمة المعايدة</translation>
+        <translation type="unfinished">أدخل قيمة الإزاحة</translation>
     </message>
 </context>
 <context>
@@ -586,8 +588,8 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="178"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished">نصف قطري = %1 صغير جداً للنقاط المختارة
-المسافة بين النقاط = %2 أكبر من قطر %3</translation>
+        <translation type="unfinished">نصف القطر=%1 صغير جدًا للنقاط المحددة
+المسافة بين النقاط=%2 أكبر من القطر=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="191"/>
@@ -730,7 +732,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">إختار مركز الدائرة الشيطانية</translation>
+        <translation type="unfinished">اختر مركز الدائرة المماسة</translation>
     </message>
 </context>
 <context>
@@ -743,7 +745,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">تحديد الخط/الغرف/الركن الآخر</translation>
+        <translation type="unfinished">حدد الخط/القوس/الدائرة الأخرى</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -753,7 +755,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">إختار مركز الدائرة الشيطانية</translation>
+        <translation type="unfinished">اختر مركز الدائرة المماسة</translation>
     </message>
 </context>
 <context>
@@ -761,7 +763,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="262"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished">لا توجد دائرة سماوية مشتركة من أجل نصف قطر</translation>
+        <translation type="unfinished">لا توجد دائرة مماسة مشتركة لنصف القطر &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
@@ -776,7 +778,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">إختار مركز الدائرة الشيطانية</translation>
+        <translation type="unfinished">اختر مركز الدائرة المماسة</translation>
     </message>
 </context>
 <context>
@@ -804,7 +806,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">إختار مركز الدائرة الشيطانية</translation>
+        <translation type="unfinished">اختر مركز الدائرة المماسة</translation>
     </message>
 </context>
 <context>
@@ -812,7 +814,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>خط أساس مختار/بعد منحاز</translation>
+        <translation>حدد البعد الخطي/المحاذى الأساسي</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -827,7 +829,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Mirror offset direction</source>
-        <translation>اتجاه تعويض المرايا</translation>
+        <translation>عكس اتجاه الإزاحة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -883,7 +885,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="332"/>
         <source>Specify ellipse center</source>
-        <translation>تحديد مركز الشفاه</translation>
+        <translation>حدد مركز القطع الناقص</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="336"/>
@@ -925,12 +927,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="112"/>
         <source>Invalid foci or point</source>
-        <translation>الجنين أو النقطة</translation>
+        <translation>بؤرتان أو نقطة غير صالحة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="124"/>
         <source>Points not on hyperbola</source>
-        <translation>النقاط ليست على فرط الدم</translation>
+        <translation>النقاط ليست على القطع الزائد</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="276"/>
@@ -1051,7 +1053,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>line</source>
-        <translation type="unfinished">السطر</translation>
+        <translation type="unfinished">خط</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="406"/>
@@ -1070,7 +1072,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="488"/>
@@ -1251,7 +1253,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="446"/>
         <source>Select Line</source>
-        <translation>الخط الحرفي</translation>
+        <translation>اختر خطًا</translation>
     </message>
 </context>
 <context>
@@ -1379,7 +1381,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="180"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>line</source>
-        <translation type="unfinished">السطر</translation>
+        <translation type="unfinished">خط</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="184"/>
@@ -1403,7 +1405,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="196"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="214"/>
@@ -1597,7 +1599,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>خط إختياري يوازي توجيه الفقرة أو تحديد نقطة منحرفة</translation>
+        <translation>اختر خطًا موازيًا لدليل القطع المكافئ أو حدد نقطة الرأس</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1661,12 +1663,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="297"/>
         <source>Enter number of points by X</source>
-        <translation>عدد النقاط الواردة في الوثيقة X</translation>
+        <translation>أدخل عدد النقاط في اتجاه X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="301"/>
         <source>Enter number of points by Y</source>
-        <translation>عدد النقاط</translation>
+        <translation>أدخل عدد النقاط في اتجاه Y</translation>
     </message>
 </context>
 <context>
@@ -1681,7 +1683,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished">تحديد النقطة الثانية
-أو [العدد xx]]angle]p]edges]distance]</translation>
+أو [number|x|y|زاوية|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1694,28 +1696,29 @@ or [number]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished">تحديد الاتجاه
-[x]]angle]p]distance]</translation>
+        <translation type="unfinished">تحديد اتجاه الخط
+[x|y|زاوية|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished">تحديد زاوية الاتجاه
-أو [x]y]p] number]edges]distance]</translation>
+        <translation type="unfinished">تحديد زاوية اتجاه الخط
+أو [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished">طريقة تحديد نقاط الحافة
-[الوحدة الأولى]</translation>
+        <translation type="unfinished">تحديد وضع نقاط الحافة
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تحديد مسافة ثابتة بين النقاط
+أو [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1751,7 +1754,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
         <source>Specify points count</source>
-        <translation type="unfinished">عدد النقاط المحددة</translation>
+        <translation type="unfinished">حدد عدد النقاط</translation>
     </message>
 </context>
 <context>
@@ -1829,7 +1832,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">عدد الشركات</translation>
+        <translation type="unfinished">إدخال عدد الخطوط المتعددة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
@@ -1912,12 +1915,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>يرجى تحديد نقطة مرجعية [يُرجى توبلوفيرهلوت]</translation>
+        <translation>تحديد النقطة المرجعية [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
         <source>Specify point that defines base angle for rectangle</source>
-        <translation>تحديد نقطة تحدد زاوية الأساس للتراجع</translation>
+        <translation>حدد النقطة التي تحدد زاوية أساس المستطيل</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1940,12 +1943,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>يرجى تحديد النقطة 1 [الضربة الخافتة الفاسدة]</translation>
+        <translation>حدد التقاط النقطة 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Secify point 2 snap [corner]mid-vert]mid-hor]middle]</translation>
+        <translation>حدد التقاط النقطة 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2064,12 +2067,12 @@ or [%2]</source>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished">تحديد نوع الزوايا
-♪ ♪</translation>
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">تحديد طول الكوابيس (x,y)</translation>
+        <translation type="unfinished">حدد طول شطف الزاوية (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
@@ -2080,8 +2083,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="458"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation type="unfinished">تحديد طريقة الحواف
-♪ ♪</translation>
+        <translation type="unfinished">تحديد وضع الحواف
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2104,7 +2107,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
         <source>Select line</source>
-        <translation>الخط الحرفي</translation>
+        <translation>اختر خطًا</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
@@ -2255,7 +2258,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_paste_transform.cpp" line="169"/>
         <source>Paste Multiple</source>
-        <translation>المراعي المتعددة</translation>
+        <translation>لصق متعدد</translation>
     </message>
 </context>
 <context>
@@ -2321,7 +2324,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>&quot; النقاط</translation>
+        <translation>&amp;النقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
@@ -2367,7 +2370,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Bisector</source>
-        <translation>قطاع الأعمال</translation>
+        <translation>منصف</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
@@ -2543,12 +2546,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>&quot; خلاصة</translation>
+        <translation>&amp;إلحاق نقطة بالمنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>&apos; &apos; نقاط الترميز</translation>
+        <translation>&amp;إدراج نقاط في المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -2593,7 +2596,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&quot; بولندا</translation>
+        <translation>&amp;خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2618,7 +2621,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>&quot; الأجزاء</translation>
+        <translation>&amp;قص المقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
@@ -2653,7 +2656,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Aligned</source>
-        <translation>أنغولا</translation>
+        <translation>&amp;محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
@@ -2673,7 +2676,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
-        <translation>&quot; القياس</translation>
+        <translation>&amp;قطري</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
@@ -2688,7 +2691,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&quot; الخصوم</translation>
+        <translation>&amp;السمات</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2948,12 +2951,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
         <source>&amp;Properties</source>
-        <translation>&quot; الممتلكات</translation>
+        <translation>&amp;الخصائص</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>&quot; تريم</translation>
+        <translation>&amp;قص</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -2983,7 +2986,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&quot; نشر النص في الرسائل</translation>
+        <translation>&amp;تفكيك النص إلى حروف</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
@@ -3043,22 +3046,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="237"/>
         <source>Middle Points</source>
-        <translation>النقاط المتوسطة</translation>
+        <translation>نقاط المنتصف</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="238"/>
         <source>Lattice of Points</source>
-        <translation>عدد النقاط</translation>
+        <translation>شبكة نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
         <source>Select Points</source>
-        <translation>النقاط المختارة</translation>
+        <translation>تحديد النقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
         <source>Paste to Points</source>
-        <translation>المراعي إلى النقاط</translation>
+        <translation>لصق عند النقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
@@ -3093,7 +3096,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
         <source>&amp;Remove spline points</source>
-        <translation>إزالة النقاط</translation>
+        <translation>&amp;إزالة نقاط المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
@@ -3148,7 +3151,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>كسر/ديفيد</translation>
+        <translation>كسر/تقسيم</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -3158,7 +3161,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>خط الانضمام</translation>
+        <translation>وصل الخطوط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -3208,7 +3211,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
-        <translation>بيان الهيئة</translation>
+        <translation>إظهار وصف الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
@@ -3234,7 +3237,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block related operations</source>
-        <translation>العمليات المتصلة بالحواجز</translation>
+        <translation>العمليات المتعلقة بالكتل</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
@@ -3254,7 +3257,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>أوامر سحب القوس</translation>
+        <translation>أوامر رسم الأقواس</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3264,7 +3267,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
-        <translation>أوامر رسم خطية</translation>
+        <translation>أوامر رسم المنحنيات الشريحية</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
@@ -3284,7 +3287,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse drawing commands</source>
-        <translation>أوامر سحب الشفاه</translation>
+        <translation>أوامر رسم القطوع الناقصة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
@@ -3354,7 +3357,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
-        <translation>أوامر سحب بوليغون</translation>
+        <translation>أوامر رسم المضلعات</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
@@ -3400,7 +3403,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>أوامر السحب عبر الخط</translation>
+        <translation>أوامر رسم الخطوط المتعددة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3420,7 +3423,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>القيود على الاختناق</translation>
+        <translation>قيود الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3435,7 +3438,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>عمليات الاختطاف</translation>
+        <translation>عمليات الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3445,7 +3448,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>النوافذ الإضافية</translation>
+        <translation>أوضاع التقاط إضافية</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3491,7 +3494,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
         <source>UCS operations</source>
-        <translation>عمليات جامعة الدول الأمريكية</translation>
+        <translation>عمليات نظام إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="85"/>
@@ -3556,7 +3559,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>تبديل وضع التشييد لطبقة الكيان</translation>
+        <translation>تبديل وضع الإنشاء لطبقة الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
@@ -3631,12 +3634,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
         <source>Select Ordinates by base</source>
-        <translation>الترتيبات المختارة حسب القاعدة</translation>
+        <translation>اختيار الأبعاد الإحداثية حسب الأساس</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>القاعدة العادية</translation>
+        <translation>إعادة تعيين أساس الأبعاد الإحداثية</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3666,7 +3669,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>الدليل المتوسط</translation>
+        <translation>التقاط المنتصف يدويًا</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
@@ -3731,7 +3734,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>Set UCS بالبعد العادي</translation>
+        <translation>تعيين نظام إحداثيات المستخدم حسب البعد الإحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -3776,7 +3779,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>&quot; تنسيق المهام</translation>
+        <translation>&amp;إحداثيات النقطة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3801,7 +3804,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>جمع &quot; التنسيق &quot;</translation>
+        <translation>&amp;جمع الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3811,7 +3814,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>&quot; خطوط السحب</translation>
+        <translation>&amp;خطوط المسودة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
@@ -3826,7 +3829,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>&quot; يسار غير متماثل</translation>
+        <translation>&amp;الشبكة متساوية القياس اليسرى</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
@@ -3836,7 +3839,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>&quot; مقياس اليمين</translation>
+        <translation>&amp;الشبكة متساوية القياس اليمنى</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -3871,7 +3874,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>تب&amp;ديل طبقة التشييد</translation>
+        <translation>تب&amp;ديل طبقة الإنشاء</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
@@ -4181,12 +4184,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>&amp;Show all blocks</source>
-        <translation>&quot; جميع المباني</translation>
+        <translation>&amp;إظهار جميع الكتل</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&quot; على جميع المباني</translation>
+        <translation>&amp;إخفاء جميع الكتل</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
@@ -4365,7 +4368,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">لا تقطعوا أمام كيانات الأطفال في الحاويات</translation>
+        <translation type="unfinished">عدم الالتقاط إلى الكيانات الفرعية داخل الحاوية</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4442,7 +4445,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
         <source>Point Coordinates</source>
-        <translation>تنسيق النقاط</translation>
+        <translation>إحداثيات النقطة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="71"/>
@@ -4485,7 +4488,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>كيانات الأطفال المختارة</translation>
+        <translation>اختيار الكيانات الفرعية</translation>
     </message>
 </context>
 <context>
@@ -4537,7 +4540,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
-        <translation>السطر 1:</translation>
+        <translation>زاوية الخط 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
@@ -4695,12 +4698,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>طول الجسم</translation>
+        <translation>الطول الهندسي للكيان</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Segment length/Diameter</source>
-        <translation>طول الجزء/المقياس</translation>
+        <translation>طول المقطع/القطر</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="295"/>
@@ -4713,7 +4716,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="75"/>
         <source>Pick Coordinates</source>
-        <translation>أجهزة التنسيق</translation>
+        <translation>اختيار الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="76"/>
@@ -4794,7 +4797,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>والعمل الضار في الوقت الحاضر لا يدعم إلا نظام التنسيق العالمي، ولا يمكن التذرع به إذا كان نظام تنسيق المستعملين نشطا.</translation>
+        <translation>تدعم عملية المحاذاة حاليًا نظام الإحداثيات العالمي فقط، ولا يمكن استدعاؤها إذا كان نظام إحداثيات المستخدم نشطًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
@@ -4809,7 +4812,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
         <source>Position</source>
-        <translation>المنصب</translation>
+        <translation>الموضع</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="158"/>
@@ -4824,12 +4827,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="181"/>
         <source>Offset:</source>
-        <translation>خارج:</translation>
+        <translation>الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>تم قبول التنسيق فقط لـ (أليغن) لـ &quot;الطلب&quot;</translation>
+        <translation>تُقبل الإحداثيات فقط في المحاذاة إلى &quot;الموضع&quot;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
@@ -4877,7 +4880,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="118"/>
         <source>Offset:</source>
-        <translation>خارج:</translation>
+        <translation>الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="119"/>
@@ -4930,12 +4933,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>والعمل الضار في الوقت الحاضر لا يدعم إلا نظام التنسيق العالمي، ولا يمكن التذرع به إذا كان نظام تنسيق المستعملين نشطا.</translation>
+        <translation>تدعم عملية المحاذاة حاليًا نظام الإحداثيات العالمي فقط، ولا يمكن استدعاؤها إذا كان نظام إحداثيات المستخدم نشطًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
         <source>Offset:</source>
-        <translation>خارج:</translation>
+        <translation>الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="201"/>
@@ -4950,7 +4953,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
         <source>Position</source>
-        <translation>المنصب</translation>
+        <translation>الموضع</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="212"/>
@@ -4985,7 +4988,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="378"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>تم قبول التنسيق فقط لـ (أليغن) لـ &quot;الطلب&quot;</translation>
+        <translation>تُقبل الإحداثيات فقط في المحاذاة إلى &quot;الموضع&quot;</translation>
     </message>
 </context>
 <context>
@@ -5120,7 +5123,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>دائرة كسر/ديفيد</translation>
+        <translation>كسر/تقسيم الدائرة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5137,7 +5140,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>كسر/ديفيد القطب الشمالي</translation>
+        <translation>كسر/تقسيم القوس</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5265,7 +5268,7 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="226"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="262"/>
         <source>Duplicate Offset</source>
-        <translation>الجرم المزدوج</translation>
+        <translation>إزاحة النسخة المكررة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
@@ -5275,12 +5278,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Interactive Offset</source>
-        <translation>عرض تفاعلي</translation>
+        <translation>إزاحة تفاعلية</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="290"/>
         <source>Select direction of offset</source>
-        <translation>الاتجاه الصحيح للتعويض</translation>
+        <translation>اختر اتجاه الإزاحة</translation>
     </message>
 </context>
 <context>
@@ -5327,7 +5330,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Select line</source>
-        <translation>الخط الحرفي</translation>
+        <translation>اختر خطًا</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
@@ -5345,7 +5348,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="130"/>
         <source>Lines Join</source>
-        <translation>خطوط الانضمام</translation>
+        <translation>وصل الخطوط</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
@@ -5381,12 +5384,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>الخط الثاني المختارة</translation>
+        <translation>اختر الخط الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>اختيار جزء من الخط الأول الذي ينبغي أن يبقى بعد ثلاث سنوات</translation>
+        <translation>اختر جزء الخط الأول الذي يجب أن يبقى بعد القص</translation>
     </message>
 </context>
 <context>
@@ -5462,7 +5465,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="140"/>
         <source>Moving Offset</source>
-        <translation type="unfinished">التخلص التدريجي</translation>
+        <translation type="unfinished">إزاحة النقل</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="204"/>
@@ -5524,7 +5527,7 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="125"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="154"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="155"/>
@@ -5766,7 +5769,7 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="288"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="322"/>
         <source>Rotation</source>
-        <translation type="unfinished">التناوب</translation>
+        <translation type="unfinished">الدوران</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="203"/>
@@ -5793,7 +5796,7 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="289"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="323"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="288"/>
@@ -5825,7 +5828,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="702"/>
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished">التناوب على الفور بعد الاختيار</translation>
+        <translation type="unfinished">التدوير فور الاختيار</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
@@ -5841,7 +5844,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Specify rotation center</source>
-        <translation type="unfinished">مركز التناوب</translation>
+        <translation type="unfinished">حدد مركز الدوران</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="714"/>
@@ -5912,7 +5915,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="225"/>
         <source>Round</source>
-        <translation type="unfinished">الجولة</translation>
+        <translation type="unfinished">تقويس</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
@@ -5971,7 +5974,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="227"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="230"/>
@@ -5986,7 +5989,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">مركز تحديد النطاق</translation>
+        <translation type="unfinished">حدد مركز التحجيم</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
@@ -6006,7 +6009,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">لحظه مجانيه</translation>
+        <translation type="unfinished">التقاط حر</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6057,7 +6060,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="147"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="230"/>
@@ -6085,7 +6088,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">تقليم الطرفين</translation>
+        <translation type="unfinished">قص كيانين</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
@@ -6100,12 +6103,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">التداخل 2:</translation>
+        <translation type="unfinished">التقاطع 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">اختيار أول كيان ثلاثي</translation>
+        <translation type="unfinished">اختر الكيان الأول للقص</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
@@ -6115,12 +6118,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">Reect second trim entity</translation>
+        <translation type="unfinished">اختر الكيان الثاني للقص</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">اِخْتار كيان للتقليم</translation>
+        <translation type="unfinished">اختر الكيان المراد قصه</translation>
     </message>
 </context>
 <context>
@@ -6133,7 +6136,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">الكيان المختار ليست كيان ذري أو لا يمكن تقليمه.</translation>
+        <translation type="unfinished">الكيان المختار ليس كيانًا ذريًا أو لا يمكن قصه.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6143,7 +6146,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">(أ) أن يكون خطاً مختاراً أو متراً إلى ثلاثية أو ذات قيمة مطولة:</translation>
+        <translation type="unfinished">اختر خطًا/قوسًا للقص أو أدخل قيمة الطول:</translation>
     </message>
 </context>
 <context>
@@ -6156,7 +6159,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">نقطة الانقطاع من نقطة البداية</translation>
+        <translation type="unfinished">مسافة نقطة الالتقاط عن نقطة الالتقاط المحددة مبدئيًا</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6300,7 +6303,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">عدد الشركات</translation>
+        <translation type="unfinished">إدخال عدد الخطوط المتعددة</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
@@ -6318,7 +6321,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>تحديد البوليلين مع الأجزاء القطبية</translation>
+        <translation>حدد الخط المتعدد ذا المقاطع القوسية</translation>
     </message>
 </context>
 <context>
@@ -6468,7 +6471,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">اختار واحد من القطاعات في متعدّد الخطوط الأصلي</translation>
+        <translation type="unfinished">اختر أحد المقاطع في الخط المتعدد الأصلي</translation>
     </message>
 </context>
 <context>
@@ -6496,7 +6499,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished">تحديد البوليلين إلى ثلاثة</translation>
+        <translation type="unfinished">حدد الخط المتعدد المراد قصه</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -6567,7 +6570,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>نقطة المراقبة المختارة للكيان</translation>
+        <translation>اختر نقطة تحكم الكيان</translation>
     </message>
 </context>
 <context>
@@ -6588,7 +6591,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>بُعد مرجعي ثابت</translation>
+        <translation>اختر بُعدًا إحداثيًا مرجعيًا</translation>
     </message>
 </context>
 <context>
@@ -6624,7 +6627,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">كيانات الأطفال المختارة</translation>
+        <translation type="unfinished">اختيار الكيانات الفرعية</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6757,12 +6760,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="210"/>
         <source>Select control point to insert before</source>
-        <translation>نقطة مراقبة مختارة تدرج قبل ذلك</translation>
+        <translation>اختر نقطة التحكم المراد الإدراج قبلها</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Specify control point</source>
-        <translation>تحديد نقطة المراقبة</translation>
+        <translation>حدد نقطة التحكم</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
@@ -6780,12 +6783,12 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="262"/>
         <source>Specify first control point</source>
-        <translation>تحديد نقطة المراقبة الأولى</translation>
+        <translation>حدد نقطة التحكم الأولى</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="266"/>
         <source>Specify control point</source>
-        <translation>تحديد نقطة المراقبة</translation>
+        <translation>حدد نقطة التحكم</translation>
     </message>
 </context>
 <context>
@@ -6801,7 +6804,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>اختيار البوليلين لخلق التلميذات أو نقاط التلميح</translation>
+        <translation>اختر خطًا متعددًا لإنشاء منحنى شريحي أو منحنى شريحي بالنقاط</translation>
     </message>
 </context>
 <context>
@@ -6809,7 +6812,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
-        <translation>لا يوجد ما يكفي من النقاط</translation>
+        <translation>لم يتبقَّ عدد كافٍ من النقاط للمنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
@@ -6837,7 +6840,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>بُعد منسق مختار لوضع نظام المنسق الموحد</translation>
+        <translation>اختر بعدًا إحداثيًا لتعيين نظام إحداثيات المستخدم</translation>
     </message>
 </context>
 <context>
@@ -7082,7 +7085,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="37"/>
         <source>Position</source>
-        <translation type="unfinished">المنصب</translation>
+        <translation type="unfinished">الموضع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="41"/>
@@ -7114,7 +7117,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="54"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="58"/>
@@ -7167,7 +7170,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">وإذا تم فحصها، سيتم تصفية الكيانات إذا لزم الأمر. و إلا سيكونون في موقعهم و متناوبين.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُحجَّم الكيانات عند الحاجة. وإلا فستُوضع وتُدوَّر فقط.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7210,7 +7213,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">وإذا تم فحصها، ستستخدم المواصفات الحالية للكيانات المرفوضة، خلافا لذلك - الأصلية.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُستخدم السمات الحالية للكيانات المعكوسة، وإلا فالأصلية. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
@@ -7240,7 +7243,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">وإذا تم فحصها، سيتم تصفية الكيانات إذا لزم الأمر. و إلا سيكونون في موقعهم و متناوبين.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُحجَّم الكيانات عند الحاجة. وإلا فستُوضع وتُدوَّر فقط.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
@@ -7263,7 +7266,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="37"/>
         <source>Position</source>
-        <translation type="unfinished">المنصب</translation>
+        <translation type="unfinished">الموضع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="41"/>
@@ -7295,7 +7298,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="56"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
@@ -7383,7 +7386,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="166"/>
         <source>Position</source>
-        <translation type="unfinished">المنصب</translation>
+        <translation type="unfinished">الموضع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="171"/>
@@ -7485,7 +7488,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="143"/>
         <source>Draft Mode</source>
-        <translation>مشروع مقترح</translation>
+        <translation>وضع المسودة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="149"/>
@@ -7515,7 +7518,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished">ارتفاع القوس (الدجاجة بين الشورد ونقطة القطب العلوي)</translation>
+        <translation type="unfinished">ارتفاع القوس (المسافة بين الوتر وأعلى نقطة في القوس)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="64"/>
@@ -7654,7 +7657,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">الخيارات القطبية</translation>
+        <translation type="unfinished">خيارات القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="56"/>
@@ -7687,7 +7690,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>تنسيق مركز القوس</translation>
+        <translation>الإحداثي X لمركز القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
@@ -7702,7 +7705,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>تنسيق مركز القوس</translation>
+        <translation>الإحداثي Y لمركز القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
@@ -7722,17 +7725,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="227"/>
         <source>Diameter:</source>
-        <translation>قياس:</translation>
+        <translation>القطر:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="249"/>
         <source>Diameter of arc</source>
-        <translation>قياس القطب الشمالي</translation>
+        <translation>قطر القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
         <source>Pick diameter value from the drawing</source>
-        <translation>قيمة قياس العين من الرسم</translation>
+        <translation>اختر قيمة القطر من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
@@ -7777,7 +7780,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>قيمة الخيط من الرسم</translation>
+        <translation>اختر قيمة الانتفاخ من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
@@ -7864,7 +7867,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished">خيارات القطبية</translation>
+        <translation type="unfinished">خيارات القوس المماسي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="47"/>
@@ -7874,7 +7877,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished">مجموع الزاوية الفرعية للقوس الشيطاني</translation>
+        <translation type="unfinished">الزاوية المركزية الكلية للقوس المماسي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="67"/>
@@ -7919,7 +7922,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">تحقق من كل من الكيانين إلى الخريف</translation>
+        <translation type="unfinished">حدد لقص كلا الكيانين حتى الشطف</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7947,12 +7950,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation type="unfinished">الخيارات البديلة</translation>
+        <translation type="unfinished">خيارات الشطف</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">تحقق من كل من الكيانين إلى الخريف</translation>
+        <translation type="unfinished">حدد لقص كلا الكيانين حتى الشطف</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -7967,7 +7970,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">طول الخنفساء في الإتجاه العاشر.</translation>
+        <translation type="unfinished">طول الشطف في اتجاه X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
@@ -7982,7 +7985,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">طول العشب في (ي).</translation>
+        <translation type="unfinished">طول الشطف في اتجاه Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
@@ -8000,7 +8003,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="30"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">خط التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="36"/>
@@ -8073,7 +8076,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished">المباعدة بين السحب</translation>
+        <translation type="unfinished">اختر تباعد الأعمدة من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
@@ -8098,7 +8101,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="215"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">خط التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="234"/>
@@ -8136,7 +8139,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="31"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">خط التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="37"/>
@@ -8174,7 +8177,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="104"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">خط التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="111"/>
@@ -8220,7 +8223,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="48"/>
         <source>Remove Segments</source>
-        <translation type="unfinished">قطع الغيار</translation>
+        <translation type="unfinished">حذف المقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="55"/>
@@ -8256,7 +8259,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="32"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="39"/>
@@ -8266,7 +8269,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="46"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">تعادل من الرسم</translation>
+        <translation type="unfinished">اختر الإزاحة من الرسم</translation>
     </message>
 </context>
 <context>
@@ -8324,7 +8327,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">زاوية التناوب للعبور حول المركز</translation>
+        <translation type="unfinished">زاوية دوران علامة التقاطع حول المركز</translation>
     </message>
 </context>
 <context>
@@ -8352,7 +8355,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="108"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">زاوية التناوب للعبور حول المركز</translation>
+        <translation type="unfinished">زاوية دوران علامة التقاطع حول المركز</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="133"/>
@@ -8425,7 +8428,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="unfinished">دلتا من نطاق الدائرة إلى نصف قطر القطب الشمالي</translation>
+        <translation type="unfinished">فرق نصف قطر الدائرة عن نصف قطر القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
@@ -8475,12 +8478,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="32"/>
         <source>Pen:</source>
-        <translation type="unfinished">بين:</translation>
+        <translation type="unfinished">القلم:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="unfinished">دلتا من نطاق الدائرة إلى نصف قطر القطب الشمالي</translation>
+        <translation type="unfinished">فرق نصف قطر الدائرة عن نصف قطر القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="42"/>
@@ -8507,7 +8510,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">(بين) يقدم طلباً إلى الدائرة المُنشأة</translation>
+        <translation type="unfinished">القلم المطبَّق على الدائرة المُنشأة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8604,12 +8607,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="63"/>
         <source>X Coordinate of circle&apos;s center</source>
-        <translation>تنسيق مركز الدائرة</translation>
+        <translation>الإحداثي X لمركز الدائرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="88"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>تنسيق مركز الاختيار من الرسم</translation>
+        <translation>اختر إحداثيات المركز من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="95"/>
@@ -8619,7 +8622,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation>تنسيق مركز الدائرة</translation>
+        <translation>الإحداثي Y لمركز الدائرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="118"/>
@@ -8634,17 +8637,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="155"/>
         <source>Diameter:</source>
-        <translation>قياس:</translation>
+        <translation>القطر:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="171"/>
         <source>Diameter of circle</source>
-        <translation>قياس الدائرة</translation>
+        <translation>قطر الدائرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
         <source>Pick diameter value from drawing</source>
-        <translation>قيمة قياس العين من الرسم</translation>
+        <translation>اختيار قيمة القطر من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="141"/>
@@ -8825,7 +8828,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>معدات الهندسة</translation>
+        <translation>علامة معمارية</translation>
     </message>
 </context>
 <context>
@@ -8843,7 +8846,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
         <source>Diametric</source>
-        <translation>القياس</translation>
+        <translation>قطري</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="103"/>
@@ -8853,12 +8856,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>أمر</translation>
+        <translation>إحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>القيادة والتسامح</translation>
+        <translation>خط الإشارة والتفاوت</translation>
     </message>
 </context>
 <context>
@@ -8904,12 +8907,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>قطع الغيار</translation>
+        <translation>تصدير أنماط الأبعاد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>تم تصدير قطع الغيار.</translation>
+        <translation>تم تصدير أنماط الأبعاد.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
@@ -8935,12 +8938,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>قطع الغيار</translation>
+        <translation>استيراد أنماط الأبعاد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>لا طرق للإستيراد.</translation>
+        <translation>لا توجد أنماط أبعاد للاستيراد.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
@@ -8950,12 +8953,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>طوابق استيراد</translation>
+        <translation>استيراد أنماط الأبعاد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>سلالات التصدير</translation>
+        <translation>تصدير أنماط الأبعاد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
@@ -9098,7 +9101,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>يحدد نمط خط البعد. (متغير نظام التحويلات المالية)</translation>
+        <translation>يحدد نوع الخط لخط البعد. (متغير النظام DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
@@ -9118,7 +9121,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>يحدد مسافة لتمديد خط البُعد عبر خط التوسيع عندما تستخدم البُعد، الهندسة المعمارية، الدغدغة، المُتكاملة، (متغير نظام DIMDLE)</translation>
+        <translation>يحدد مسافة تمديد خط البعد إلى ما بعد خط التمديد عند استخدام العلامات المائلة أو المعمارية أو الشَّرطية أو التكاملية أو عدم استخدام علامات لرؤوس الأسهم. (متغير النظام DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9143,7 +9146,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>سطر القمع 2 والسهم</translation>
+        <translation>إخفاء خط البعد 2 والسهم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9168,12 +9171,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>السطر الثاني</translation>
+        <translation>نوع خط التمديد 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>يحدد نموذج خط التمديد الثاني. (متغير نظام DIMLTEX2)</translation>
+        <translation>يحدد نوع الخط لخط التمديد الثاني. (متغير نظام DIMLTEX2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
@@ -9198,12 +9201,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>مسقط من الأصل:</translation>
+        <translation>الإزاحة عن نقطة الأصل:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>يحدد المسافة لتعويض خطوط التمديد من النقاط التي تحدد البعد. (متغير نظام DIMEXO)</translation>
+        <translation>يحدد مسافة إزاحة خطوط التمديد عن النقاط في الرسم التي تحدد البعد. (متغير النظام DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9233,17 +9236,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>الفصل الأول</translation>
+        <translation>إخفاء خط التمديد 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>يُوقف عرض خط التمديد الثاني (متغير نظام دي إم إس إي 2).</translation>
+        <translation>يُوقف عرض خط التمديد الثاني (متغير نظام DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>الفصل الثاني</translation>
+        <translation>إخفاء خط التمديد 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9264,12 +9267,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>بُعد الركض الخطي</translation>
+        <translation>بُعد خطي منكسر</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>عامل ارتفاع الزئبق:</translation>
+        <translation>معامل ارتفاع الانكسار:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9304,17 +9307,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>يضع رأس السهم لخط القائد (متغير نظام DIMLDRBLK)</translation>
+        <translation>يحدد رأس السهم لخط الإشارة. (متغير النظام DIMLDRBLK)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>القائد:</translation>
+        <translation>خط الإشارة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>يضع رأس السهم لخط البعد الأول عندما تُغيّرُ النوعَ الأولَ مِنْ رأسِ السهامِ الثانيِ يَتغيّرُ تلقائياً لمُطابقته. (متغير نظام DIMBLK1)</translation>
+        <translation>يحدد رأس السهم لخط البعد الأول. عند تغيير نوع رأس السهم الأول، يتغير رأس السهم الثاني تلقائيًا لمطابقته. (متغير نظام DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
@@ -9344,12 +9347,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>الحجم الصغير:</translation>
+        <translation>حجم العلامة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>قطع الغيار</translation>
+        <translation>كسر البعد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9462,7 +9465,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>يحدد لون خلفية النص بأبعاده (متغير نظام إدارة الديون والتحليل المالي)</translation>
+        <translation>يحدد لون خلفية النص في الأبعاد (متغير النظام DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9482,7 +9485,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>مستوى ارتفاع درجة الحرارة:</translation>
+        <translation>مقياس ارتفاع الكسور:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
@@ -9590,7 +9593,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>مقتطف من خط الدسم:</translation>
+        <translation>الإزاحة عن خط البعد:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
@@ -9621,12 +9624,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>تجاوز الخط الخارجي 1</translation>
+        <translation>فوق خط التمديد 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>تجاوز الخط الخارجي 2</translation>
+        <translation>فوق خط التمديد 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -9641,7 +9644,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>يتحكم في التنسيب الرأسي لنص البُعد فيما يتعلق بخط البعد. (متغير نظام إدارة الديون الخارجية)</translation>
+        <translation>يتحكم في الموضع الرأسي لنص البعد بالنسبة لخط البعد. (متغير النظام DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9666,7 +9669,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>الوضع الحرفي للنص فوق خط البعد أو تحته إذا لم يكن التنسيب العمودي (DIMTAD) متغيراً.</translation>
+        <translation>الموضع العمودي للنص فوق خط البعد أو تحته إذا لم يكن الوضع العمودي (DIMTAD) &quot;متوسطًا&quot; (متغير DIMTVP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
@@ -9701,7 +9704,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>يرسم بُعداً بين النقاط المقاسة حتى عندما توضع رؤوس الأسهم خارج النقاط المقاسة. (متغير نظام DIMTOFL)</translation>
+        <translation>يرسم خطوط الأبعاد بين النقاط المقاسة حتى عندما توضع رؤوس الأسهم خارج النقاط المقاسة. (متغير نظام DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
@@ -9717,17 +9720,17 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>يحدد جدولاً لجميع الأطر البُعدية التي تحدد الحجم أو المسافات أو المباعدة، بما في ذلك حجم النصوص والرؤوس السهمية. ولا يغير هذا الجدول قيم قياس البعد. (متغير نظام ديسيمسيل)</translation>
+        <translation>يحدد مقياسًا لجميع إعدادات نمط الأبعاد التي تحدد الحجم أو المسافة أو التباعد، بما في ذلك أحجام النصوص ورؤوس الأسهم. لا يغيّر هذا المقياس قيم قياس الأبعاد. (متغير النظام DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
         <source>Use overall scale of:</source>
-        <translation>استخدام النطاق العام لما يلي:</translation>
+        <translation>استخدام المقياس العام:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation>يحدد عامل مقياس يستند إلى التصعيد بين المشهد الفضائي النموذجي الحالي والحيز الورقي. (متغير نظام ديسيمسيل)</translation>
+        <translation>يحدد معامل مقياس استنادًا إلى التحجيم بين إطار العرض الحالي في فضاء النموذج وفضاء الورق. (متغير النظام DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
@@ -9747,12 +9750,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>وإذا اختيرت خطوط البُعد لا تُنقل عند نقل النص. وإذا تم نقل النص بعيدا عن خط البعد، يُنشأ خط قائد يربط النص بخط البعد. ويُحذف خط الزعيم عندما يكون النص قريبا جدا من خط البعد. (متغير نظام ديميتموف)</translation>
+        <translation>إذا تم الاختيار، لا تُنقل خطوط البعد عند نقل النص. وإذا نُقل النص بعيدًا عن خط البعد، يُنشأ خط إشارة يربط النص بخط البعد. ويُحذف خط الإشارة عندما يكون النص قريبًا جدًا من خط البعد. (متغير النظام DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>مع القائد</translation>
+        <translation>فوق خط البعد، مع خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9762,17 +9765,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>وإذا اختيرت خطوط البُعد لا تُنقل عند نقل النص. أما النص الذي يُنقل بعيداً عن خط البعد فهو لا يرتبط بخط البعد مع زعيم. (متغير نظام ديميتموف)</translation>
+        <translation>إذا تم الاختيار، لا تُنقل خطوط البعد عند نقل النص. ولا يُربط النص الذي يُنقل بعيدًا عن خط البعد بخط البعد بخط إشارة. (متغير النظام DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>عبر خط البعد، بدون قائد</translation>
+        <translation>فوق خط البعد، بدون خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
         <source>Fit Options</source>
-        <translation>الخيارات المالية</translation>
+        <translation>خيارات الملاءمة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
@@ -9787,12 +9790,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>السهام القمعية إن لم تكن متوافقة مع خطوط التمديد</translation>
+        <translation>إخفاء الأسهم إذا لم تتسع داخل خطوط التمديد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>وعندما لا يكون هناك حيز كاف للنص والرؤوس السهمية، ينتقل كل من خارج خطوط التمديد (متغير نظام صندوق النقد الدولي).</translation>
+        <translation>عندما لا تتوفر مساحة كافية للنص ورؤوس الأسهم، ينقلهما معًا خارج خطوط التمديد (متغير النظام DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9812,7 +9815,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>تنقل رؤوس الأسهم خارج خطوط التمديد أولا، ثم النص (متغير نظام صندوق النقد الدولي).</translation>
+        <translation>ينقل رؤوس الأسهم خارج خطوط التمديد أولاً، ثم النص (متغير النظام DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9827,12 +9830,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>دائما يضع النص بين خطوط الإرشاد (متغير نظام DIMTIX)</translation>
+        <translation>يضع النص دائمًا بين خطوط التمديد. (متغير النظام DIMTIX)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>دائماً ما يلائم النص بين الخطوط الخارجية</translation>
+        <translation>وضع النص دائمًا بين خطوط التمديد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9842,7 +9845,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>الأبعاد الشاذة</translation>
+        <translation>الأبعاد الزاوية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -9874,7 +9877,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2019"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2243"/>
         <source>Leading</source>
-        <translation>القيادة</translation>
+        <translation>البادئة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
@@ -9900,7 +9903,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>يحدد عدد الأماكن العشرية للأبعاد المنفردة. متغير نظام DIMADEC</translation>
+        <translation>يحدد عدد المنازل العشرية للأبعاد الزاوية (متغير النظام DIMADEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
@@ -9911,17 +9914,17 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>الأبعاد الخفية</translation>
+        <translation>الأبعاد الخطية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
         <source>Measurement scale</source>
-        <translation>جدول القياس</translation>
+        <translation>مقياس القياسات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1437"/>
         <source>Scale factor:</source>
-        <translation>عامل الجدول:</translation>
+        <translation>معامل المقياس:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
@@ -9946,7 +9949,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
         <source>Round off:</source>
-        <translation>الجولة قبالة:</translation>
+        <translation>التقريب:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1487"/>
@@ -9992,7 +9995,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>Displays and sets the number of decimal places in the dimension text. (متغير نظام إدارة الديون الخارجية)</translation>
+        <translation>يعرض ويحدد عدد المنازل العشرية في نص البعد. (متغير النظام DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
@@ -10034,7 +10037,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>يقطع الجزء من بُعد الأقدام والشطرنج عندما تكون المسافة هي عدد لا يتجزأ من الأقدام (متغير نظام (ديمزين</translation>
+        <translation> يُخفي جزء البوصات من بُعد الأقدام والبوصات عندما تكون المسافة عددًا صحيحًا من الأقدام (متغير النظام DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10047,7 +10050,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>يقطع جزء الأقدام من بعد الأقدام و الشطرنج عندما تكون المسافة أقل من قدم (متغير نظام DIMZIN)</translation>
+        <translation>يُخفي جزء الأقدام من بُعد الأقدام والبوصات عندما تكون المسافة أقل من قدم واحدة. (متغير النظام DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10151,7 +10154,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>المسافات المستديرة:</translation>
+        <translation>تقريب المسافات إلى:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
@@ -10186,17 +10189,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
         <source>Tolerances</source>
-        <translation>التسامح</translation>
+        <translation>التفاوتات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>يحدد الحد الأدنى أو القيمة الدنيا للتسامح. (متغير نظام إدارة الديون والتحليل المالي)</translation>
+        <translation>يحدد القيمة الدنيا أو السفلى للتفاوت. (متغير النظام DIMTM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>(د) يُعمد إلى قطع الأصفار في جميع الأبعاد العشرية (متغير نظام DIMTZIN).</translation>
+        <translation>يُخفي الأصفار البادئة في جميع الأبعاد العشرية (متغير نظام DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
@@ -10276,7 +10279,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>يحدد القيمة القصوى أو العليا للتسامح. عندما تختارين التماثل في الطريقة هذه القيمة تستخدم للتسامح (متغير نظام إدارة الديون والتحليلات)</translation>
+        <translation>يحدد القيمة القصوى أو العليا للتفاوت. عند اختيار &quot;متماثل&quot; في الطريقة، تُستخدم هذه القيمة للتفاوت. (متغير النظام DIMTP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10326,7 +10329,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
         <source>Alternate Unit Tolerance</source>
-        <translation>وحدة المناوبة</translation>
+        <translation>تفاوت الوحدات البديلة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
@@ -10534,7 +10537,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>أمر</translation>
+        <translation>إحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10549,7 +10552,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>البعد العادي</translation>
+        <translation>البعد الإحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
@@ -10559,12 +10562,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>ألف - الأبعاد المترابطة</translation>
+        <translation>بُعد محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
         <source>Angular Dimension</source>
-        <translation>البعد العنصري</translation>
+        <translation>البعد الزاوي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
@@ -10579,7 +10582,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
         <source>Radial Dimension</source>
-        <translation>البعد الإشعاعي</translation>
+        <translation>البعد نصف القطري</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
@@ -10615,7 +10618,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
         <source>View Dimension Style - </source>
-        <translation>مسلسل &quot;فيو دايمنشن&quot;</translation>
+        <translation>عرض نمط البعد - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
@@ -10715,12 +10718,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
         <source>Point Properties</source>
-        <translation>النقاط</translation>
+        <translation>خصائص النقطة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>الصف</translation>
+        <translation>خصائص الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
@@ -10755,17 +10758,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>الأرباح</translation>
+        <translation>خصائص المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
         <source>Spline Points Properties</source>
-        <translation>أوجه النجاح</translation>
+        <translation>خصائص المنحنى الشريحي بالنقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="235"/>
         <source>Image Properties</source>
-        <translation>امتيازات التصوير</translation>
+        <translation>خصائص الصورة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="241"/>
@@ -11087,7 +11090,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="99"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="106"/>
@@ -11117,7 +11120,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>هيئة الغائبة</translation>
+        <translation>بدون كيان</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
@@ -11187,7 +11190,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>خط البعد</translation>
+        <translation>بُعد خطي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
@@ -11197,7 +11200,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>قياس البعد</translation>
+        <translation>بُعد قطري</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
@@ -11207,7 +11210,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>ترتيب البعد</translation>
+        <translation>بُعد إحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
@@ -11217,17 +11220,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>قائد</translation>
+        <translation>خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>ملاحظة: سيتم تجاهل مهمة منينو. إنها محجوزة لـ &quot;العائدات السامية&quot;.</translation>
+        <translation>ملاحظة: سيتم تجاهل تعيين القائمة. إنه محجوز لـ &apos;خصائص الكيان&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation>ملاحظة: سيتم تجاهل مهمة منينو. إنها محجوزة من أجل &quot;الحياة المختارة&quot;.</translation>
+        <translation>ملاحظة: سيتم تجاهل تعيين القائمة. إنه محجوز لـ &apos;اختيار الكيان&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
@@ -11310,7 +11313,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>العمود الشائكي</translation>
+        <translation>عمود أيقونة نوع الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
@@ -11345,7 +11348,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="115"/>
         <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation>وإذا تم فحصها، سيُعرض العمود الذي يحتوي على رمز من نوع نظام التنسيق لهذا الرأي.</translation>
+        <translation>إذا تم التحديد، سيُعرض العمود الذي يحتوي على أيقونة نوع نظام الإحداثيات للعرض.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="118"/>
@@ -11424,7 +11427,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="14"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp" line="50"/>
         <source>New Custom Property</source>
-        <translation>الممتلكات العرفية الجديدة</translation>
+        <translation>خاصية مخصصة جديدة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="36"/>
@@ -11439,7 +11442,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp" line="50"/>
         <source>Property with provided name already exists. Please specify unique name.</source>
-        <translation>توجد بالفعل ممتلكات مزودة بالاسم. يرجى تحديد اسم فريد.</translation>
+        <translation>توجد بالفعل خاصية بالاسم المحدد. يرجى تحديد اسم فريد.</translation>
     </message>
 </context>
 <context>
@@ -11469,12 +11472,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>الأبعاد الخفية</translation>
+        <translation>الأبعاد الخطية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>الأبعاد الشاذة</translation>
+        <translation>الأبعاد الزاوية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
@@ -11489,12 +11492,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>الأبعاد العادية</translation>
+        <translation>الأبعاد الإحداثية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>القادة والتسامح</translation>
+        <translation>خطوط الإشارة والتفاوتات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -12155,7 +12158,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="127"/>
         <source>Stated Tolerance</source>
-        <translation>الدولة للتسامح</translation>
+        <translation>التفاوت المحدد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="133"/>
@@ -12244,7 +12247,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
         <source>Ask for confirmation before UCS removal</source>
-        <translation>طلب تأكيد قبل إزالة الذخائر العنقودية</translation>
+        <translation>طلب التأكيد قبل حذف نظام إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="105"/>
@@ -12254,7 +12257,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="108"/>
         <source>Silently update existing UCS if the same exists</source>
-        <translation>التحديث الحرفي لدائرة خدمات الاتصالات السلكية واللاسلكية القائمة إذا كانت موجودة</translation>
+        <translation>تحديث نظام إحداثيات المستخدم الموجود بصمت إذا وُجد نظام مماثل</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="118"/>
@@ -12339,7 +12342,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="179"/>
         <source>Edit UCS</source>
-        <translation>تحرير نظام الإحداثيات العالمي (UCS)</translation>
+        <translation>تحرير نظام إحداثيات المستخدم (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="184"/>
@@ -12354,7 +12357,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="124"/>
         <source>As UCS is applied, perform</source>
-        <translation>كما يُطبَّق نظام الخدمات الموحَّدة،</translation>
+        <translation>عند تطبيق نظام إحداثيات المستخدم، نفِّذ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="207"/>
@@ -12432,7 +12435,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="48"/>
         <source>Please specify name of UCS</source>
-        <translation>يرجى تحديد اسم جامعة الدول العربية</translation>
+        <translation>يرجى تحديد اسم نظام إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="51"/>
@@ -12453,7 +12456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="104"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="109"/>
@@ -12636,7 +12639,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="394"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="399"/>
@@ -12806,7 +12809,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="36"/>
         <source>Corner points only</source>
-        <translation type="unfinished">النقاط الرئيسية فقط</translation>
+        <translation type="unfinished">نقاط الزوايا فقط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="36"/>
@@ -12821,7 +12824,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">إذا تم اختياره، يُسحب الصندوق المقيد كبوليلين</translation>
+        <translation type="unfinished">إذا تم الاختيار، يُرسم الصندوق المحيط كخط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12854,17 +12857,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="49"/>
         <source>Corner points only</source>
-        <translation type="unfinished">النقاط الرئيسية فقط</translation>
+        <translation type="unfinished">نقاط الزوايا فقط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="56"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">إذا تم اختياره، يُسحب الصندوق المقيد كبوليلين</translation>
+        <translation type="unfinished">إذا تم الاختيار، يُرسم الصندوق المحيط كخط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
@@ -12884,7 +12887,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">تعادل من الرسم</translation>
+        <translation type="unfinished">اختر الإزاحة من الرسم</translation>
     </message>
 </context>
 <context>
@@ -12907,7 +12910,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">التعويض الأفقي للازدواجية من الكيان الأصلي</translation>
+        <translation type="unfinished">الإزاحة الأفقية للنسخة المكررة عن الكيان الأصلي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12917,7 +12920,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">التعويض الرأسي للازدواجية من الكيان الأصلي</translation>
+        <translation type="unfinished">الإزاحة الرأسية للنسخة المكررة عن الكيان الأصلي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -12942,7 +12945,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">طلب من وزارة الدفاع</translation>
+        <translation type="unfinished">القلم المطبَّق على النسخة المكررة المُنشأة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12994,12 +12997,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="62"/>
         <source>Offset X:</source>
-        <translation type="unfinished">الهدف العاشر:</translation>
+        <translation type="unfinished">الإزاحة X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">طلب من وزارة الدفاع</translation>
+        <translation type="unfinished">القلم المطبَّق على النسخة المكررة المُنشأة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13022,17 +13025,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">التعويض الأفقي للازدواجية من الكيان الأصلي</translation>
+        <translation type="unfinished">الإزاحة الأفقية للنسخة المكررة عن الكيان الأصلي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">التعويض الرأسي للازدواجية من الكيان الأصلي</translation>
+        <translation type="unfinished">الإزاحة الرأسية للنسخة المكررة عن الكيان الأصلي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
         <source>Pick offset by X from drawing</source>
-        <translation type="unfinished">بيك قابله X من الرسم</translation>
+        <translation type="unfinished">اختر الإزاحة على X من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
@@ -13042,7 +13045,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
         <source>Pen:</source>
-        <translation type="unfinished">بين:</translation>
+        <translation type="unfinished">القلم:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
@@ -13143,12 +13146,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="71"/>
         <source>Length of minor radius of ellipse</source>
-        <translation type="unfinished">طول الشوائب</translation>
+        <translation type="unfinished">طول نصف المحور الأصغر للقطع الناقص</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="90"/>
         <source>Length of major radius of ellipse</source>
-        <translation type="unfinished">طول الشلالات الرئيسية</translation>
+        <translation type="unfinished">طول نصف المحور الأكبر للقطع الناقص</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="97"/>
@@ -13168,7 +13171,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="129"/>
@@ -13224,7 +13227,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">الخيارات القطبية</translation>
+        <translation type="unfinished">خيارات القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="56"/>
@@ -13257,12 +13260,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="81"/>
         <source>X Coordinate of ellipse&apos;s center</source>
-        <translation>تنسيق مركز الشفاه</translation>
+        <translation>الإحداثي X لمركز القطع الناقص</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="106"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>تنسيق مركز الاختيار من الرسم</translation>
+        <translation>اختر إحداثيات المركز من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="119"/>
@@ -13272,7 +13275,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>تنسيق مركز القوس</translation>
+        <translation>الإحداثي Y لمركز القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="154"/>
@@ -13319,12 +13322,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="277"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation>زاوية التناوب للمحور الرئيسي للهجاء، الدرجات</translation>
+        <translation>زاوية دوران المحور الأكبر للقطع الناقص، بالدرجات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="284"/>
         <source>Pick rotation angle from drawing</source>
-        <translation>زاوية التناوب من الرسم</translation>
+        <translation>اختر زاوية الدوران من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="307"/>
@@ -13349,7 +13352,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="381"/>
         <source>End angle of elliptic arc, degrees</source>
-        <translation>نهاية زاوية النسيج، الدرجات</translation>
+        <translation>زاوية نهاية القوس الناقصي، بالدرجات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="388"/>
@@ -13447,12 +13450,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">خط البعد</translation>
+        <translation type="unfinished">بُعد خطي</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">ترتيب البعد</translation>
+        <translation type="unfinished">بُعد إحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13467,7 +13470,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">قياس البعد</translation>
+        <translation type="unfinished">بُعد قطري</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
@@ -13482,7 +13485,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">قائد</translation>
+        <translation type="unfinished">خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13741,7 +13744,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">خط الأرملة</translation>
+        <translation type="unfinished">عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14035,7 +14038,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="35"/>
         <source>Center X:</source>
-        <translation>المركز العاشر:</translation>
+        <translation>المركز X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="45"/>
@@ -14109,12 +14112,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="206"/>
         <source>Point on Curve X:</source>
-        <translation>نقطة على المحور العاشر:</translation>
+        <translation>نقطة على المنحنى X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="229"/>
         <source>Derived Properties (Read-only)</source>
-        <translation>حالات الطوارئ (إعادة فقط)</translation>
+        <translation>الخصائص المشتقة (للقراءة فقط)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="235"/>
@@ -14170,7 +14173,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="63"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">خط التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="70"/>
@@ -14254,7 +14257,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="191"/>
         <source>X coordinate of insertion point</source>
-        <translation>تنسيق نقطة الإدراج X</translation>
+        <translation>الإحداثي X لنقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="212"/>
@@ -14279,12 +14282,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="91"/>
         <source>Insert Point (y):</source>
-        <translation>نقطة الإرسال:</translation>
+        <translation>نقطة الإدراج (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="253"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Y ينسق نقطة الإدخال</translation>
+        <translation>الإحداثي Y لنقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="50"/>
@@ -14420,12 +14423,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="41"/>
         <source>Insertion point (x):</source>
-        <translation>نقطة الإرسال (x):</translation>
+        <translation>نقطة الإدراج (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="60"/>
         <source>X coordinate of insertion point</source>
-        <translation>تنسيق نقطة الإدراج X</translation>
+        <translation>الإحداثي X لنقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="85"/>
@@ -14435,12 +14438,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="92"/>
         <source>Insertion point (y):</source>
-        <translation>نقطة الإرسال (ذ):</translation>
+        <translation>نقطة الإدراج (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="111"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Y ينسق نقطة الإدخال</translation>
+        <translation>الإحداثي Y لنقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="118"/>
@@ -14450,12 +14453,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="137"/>
         <source>Scaling factor by X axis</source>
-        <translation>معامل التصعيد بالمحور X</translation>
+        <translation>معامل التحجيم على المحور X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
         <source>Pick scale by X value from drawing</source>
-        <translation>الجدول المختار حسب القيمة العاشرة من الرسم</translation>
+        <translation>اختر قيمة المقياس X من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
@@ -14465,12 +14468,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="177"/>
         <source>Scaling factor by Y axis</source>
-        <translation>معامل التصعيد</translation>
+        <translation>معامل التحجيم على المحور Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="184"/>
         <source>Pick scale Y value from drawing</source>
-        <translation>قيمة السحب</translation>
+        <translation>اختر قيمة المقياس Y من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="198"/>
@@ -14480,7 +14483,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="217"/>
         <source>Rotation angle</source>
-        <translation>زاوية التناوب</translation>
+        <translation>زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="224"/>
@@ -14535,7 +14538,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="356"/>
         <source>Pick column spacing from drawing</source>
-        <translation>المباعدة بين السحب</translation>
+        <translation>اختر تباعد الأعمدة من الرسم</translation>
     </message>
 </context>
 <context>
@@ -14604,13 +14607,13 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>تحتوي طبقة التشييد على كيانات من خطوط مستقيمة لا نهائية مخصصة للاستخدام في الإنشاء الهندسي.
-       يجب ألا تظهر محتويات طبقة التشييد في النسخة المطبوعة.</translation>
+        <translation>تحتوي طبقة الإنشاء على كيانات من خطوط مستقيمة لا نهائية مخصصة للاستخدام في الإنشاء الهندسي.
+       يجب ألا تظهر محتويات طبقة الإنشاء في النسخة المطبوعة.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
         <source>Construction Layer</source>
-        <translation>طبقة تشييد</translation>
+        <translation>طبقة إنشاء</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="181"/>
@@ -15353,7 +15356,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="47"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
@@ -15426,7 +15429,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">نقطة الالتقاء:</translation>
+        <translation type="unfinished">نقطة الالتقاط:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15481,7 +15484,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
         <source>PIck line length from drawing</source>
-        <translation type="unfinished">طول خط السحب</translation>
+        <translation type="unfinished">اختر طول الخط من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="246"/>
@@ -15506,7 +15509,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="70"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
 </context>
 <context>
@@ -15554,7 +15557,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
@@ -15641,7 +15644,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
         <source>Free</source>
         <comment>linesnap</comment>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="66"/>
@@ -15679,7 +15682,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="132"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="139"/>
@@ -15709,12 +15712,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">الاختصار:</translation>
+        <translation type="unfinished">مسافة الالتقاط:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15759,7 +15762,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="329"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">تعادل من الرسم</translation>
+        <translation type="unfinished">اختر الإزاحة من الرسم</translation>
     </message>
 </context>
 <context>
@@ -15772,7 +15775,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="32"/>
         <source>Length of bisector</source>
-        <translation type="unfinished">طول القطاع</translation>
+        <translation type="unfinished">طول المنصف</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="38"/>
@@ -15790,7 +15793,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation type="unfinished">خيارات قطاع الأعمال</translation>
+        <translation type="unfinished">خيارات المنصف</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="56"/>
@@ -15800,12 +15803,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="72"/>
         <source>Length of bisector</source>
-        <translation type="unfinished">طول القطاع</translation>
+        <translation type="unfinished">طول المنصف</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="79"/>
         <source>Pick line length from drawing</source>
-        <translation type="unfinished">طول خط السحب</translation>
+        <translation type="unfinished">اختر طول الخط من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="93"/>
@@ -15868,7 +15871,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">مقتطفات من نقطة التقاطع</translation>
+        <translation type="unfinished">إزاحة الخط المُنشأ عن نقطة التقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15976,17 +15979,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">مقتطفات من نقطة التقاطع</translation>
+        <translation type="unfinished">إزاحة الخط المُنشأ عن نقطة التقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
         <source>End offset:</source>
-        <translation type="unfinished">التعويض النهائي:</translation>
+        <translation type="unfinished">إزاحة النهاية:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="273"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">تعادل من الرسم</translation>
+        <translation type="unfinished">اختر الإزاحة من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
@@ -16034,12 +16037,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">حجم الفجوة، إن لم تكن مجانية</translation>
+        <translation type="unfinished">حجم الفجوة، إن لم تكن حرة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
@@ -16067,7 +16070,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">نقطة انطلاق للثغرة على الخط</translation>
+        <translation type="unfinished">نقطة الالتقاط للفجوة على الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16077,7 +16080,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">المسافة من نقطة الانقطاع</translation>
+        <translation type="unfinished">المسافة من نقطة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16087,7 +16090,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">نقطة اندفاع</translation>
+        <translation type="unfinished">نقطة التقاط الفجوة عند نقطة التقاط الخط</translation>
     </message>
 </context>
 <context>
@@ -16100,7 +16103,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">نقطة اندفاع</translation>
+        <translation type="unfinished">نقطة التقاط الفجوة عند نقطة التقاط الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16128,18 +16131,18 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">محاذاة الفراغ:</translation>
+        <translation type="unfinished">التقاط الفجوة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">نقطة انطلاق للثغرة على الخط</translation>
+        <translation type="unfinished">نقطة الالتقاط للفجوة على الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
         <source>Free</source>
         <comment>snap</comment>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="77"/>
@@ -16167,12 +16170,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">حجم الفجوة، إن لم تكن مجانية</translation>
+        <translation type="unfinished">حجم الفجوة، إن لم تكن حرة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">حجم الفجوة من السحب</translation>
+        <translation type="unfinished">اختر حجم الفجوة من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
@@ -16182,17 +16185,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">المسافة من نقطة الانقطاع</translation>
+        <translation type="unfinished">المسافة من نقطة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">الاختصار:</translation>
+        <translation type="unfinished">مسافة الالتقاط:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
@@ -16205,7 +16208,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extend/Trim</translation>
+        <translation type="unfinished">تمديد/قص</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16221,23 +16224,23 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">البند 1</translation>
+        <translation type="unfinished">الخط 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">سياسة الانضمام إلى الخط الذي تم اختياره أولا</translation>
+        <translation type="unfinished">سياسة وصل الخط الذي تم اختياره أولاً</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">البند 2</translation>
+        <translation type="unfinished">الخط 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">اختيرت سياسة الخط الثاني</translation>
+        <translation type="unfinished">سياسة الخط المحدد ثانيًا</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
@@ -16295,18 +16298,18 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">الإبداع</translation>
+        <translation type="unfinished">إنشاء خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">اختيرت سياسة الخط الثاني</translation>
+        <translation type="unfinished">سياسة الخط المحدد ثانيًا</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extend/Trim</translation>
+        <translation type="unfinished">تمديد/قص</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16333,7 +16336,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">سياسة الانضمام إلى الخط الذي تم اختياره أولا</translation>
+        <translation type="unfinished">سياسة وصل الخط الذي تم اختياره أولاً</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
@@ -16348,12 +16351,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">البند 1</translation>
+        <translation type="unfinished">الخط 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">البند 2</translation>
+        <translation type="unfinished">الخط 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
@@ -16594,7 +16597,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="38"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">إذا تم فحصها، سيتم رسم خط النقاط مع زاوية محددة</translation>
+        <translation type="unfinished">عند التحديد، يُرسم خط النقاط بالزاوية المحددة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="41"/>
@@ -16649,12 +16652,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="176"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="unfinished">وإذا تم فحصها، ستستخدم مسافة محددة ثابتة بين النقاط. وإلا ستحسب المسافة.</translation>
+        <translation type="unfinished">عند التحديد، تُستخدم مسافة ثابتة محددة بين النقاط. وإلا فتُحسب المسافة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="179"/>
         <source>Fixed Distance</source>
-        <translation type="unfinished">المختفين</translation>
+        <translation type="unfinished">مسافة ثابتة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="193"/>
@@ -16674,7 +16677,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="257"/>
         <source>Edge Points:</source>
-        <translation type="unfinished">نقطة الحضيض:</translation>
+        <translation type="unfinished">نقاط الحافة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="264"/>
@@ -16732,7 +16735,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="166"/>
         <source>Ending point X coordinate</source>
-        <translation>نقطة النهاية x التنسيق</translation>
+        <translation>الإحداثي X لنقطة النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
@@ -16790,7 +16793,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="51"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
@@ -16914,7 +16917,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="163"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
@@ -17118,7 +17121,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="190"/>
         <source>Vertical line</source>
-        <translation type="unfinished">الخط الحرفي</translation>
+        <translation type="unfinished">خط رأسي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="193"/>
@@ -17245,7 +17248,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="110"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="117"/>
@@ -17401,12 +17404,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter</source>
-        <translation type="unfinished">القياس</translation>
+        <translation type="unfinished">القطر</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">قياس القطب الشمالي</translation>
+        <translation type="unfinished">قطر القوس</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="54"/>
@@ -17555,7 +17558,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">خط الأرملة</translation>
+        <translation type="unfinished">عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17633,12 +17636,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
         <source>Diameter</source>
-        <translation type="unfinished">القياس</translation>
+        <translation type="unfinished">القطر</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">قياس الدائرة</translation>
+        <translation type="unfinished">قطر الدائرة</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="49"/>
@@ -19043,7 +19046,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">قياس البعد</translation>
+        <translation type="unfinished">بُعد قطري</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19071,7 +19074,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">خط البعد</translation>
+        <translation type="unfinished">بُعد خطي</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19179,7 +19182,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">ترتيب البعد</translation>
+        <translation type="unfinished">بُعد إحداثي</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19204,7 +19207,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">أمر</translation>
+        <translation type="unfinished">إحداثي</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19951,7 +19954,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">قائد</translation>
+        <translation type="unfinished">خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20192,7 +20195,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="66"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="71"/>
@@ -20758,12 +20761,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="69"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="70"/>
         <source>Aligned</source>
-        <translation type="unfinished">منحاز</translation>
+        <translation type="unfinished">محاذى</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="71"/>
@@ -20924,7 +20927,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation type="unfinished">برمجة</translation>
+        <translation type="unfinished">ترتيب الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -21027,7 +21030,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="667"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="722"/>
         <source>Draw Circle</source>
-        <translation type="unfinished">دراجة</translation>
+        <translation type="unfinished">رسم دائرة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="629"/>
@@ -21057,12 +21060,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
         <source>Modify Spline</source>
-        <translation type="unfinished">تعديل الخط</translation>
+        <translation type="unfinished">تعديل المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="831"/>
         <source>Modify Spline Points</source>
-        <translation type="unfinished">تعديل النقاط الفرعية</translation>
+        <translation type="unfinished">تعديل نقاط المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="854"/>
@@ -21082,7 +21085,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1083"/>
         <source>Order</source>
-        <translation type="unfinished">الأمر</translation>
+        <translation type="unfinished">الترتيب</translation>
     </message>
 </context>
 <context>
@@ -21222,7 +21225,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&quot; بولندا</translation>
+        <translation type="unfinished">&amp;خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
@@ -21232,7 +21235,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
         <source>&amp;Draw</source>
-        <translation type="unfinished">اسحب</translation>
+        <translation type="unfinished">&amp;رسم</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
@@ -21261,7 +21264,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished">&quot; الفوائد</translation>
+        <translation type="unfinished">&amp;الأبعاد</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
@@ -21357,7 +21360,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
         <source>&amp;Drawings</source>
-        <translation type="unfinished">&quot; سحب</translation>
+        <translation type="unfinished">&amp;الرسومات</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="589"/>
@@ -21372,7 +21375,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">&quot; لا</translation>
+        <translation type="unfinished">&amp;التخطيط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -21553,7 +21556,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
         <source>Position</source>
-        <translation>المنصب</translation>
+        <translation>الموضع</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="164"/>
@@ -21626,7 +21629,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">وإذا تم فحصها، ستستخدم المواصفات الحالية للكيانات المرفوضة، خلافا لذلك - الأصلية.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُستخدم السمات الحالية للكيانات المعكوسة، وإلا فالأصلية. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
@@ -21770,7 +21773,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="39"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="48"/>
@@ -21838,7 +21841,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">خيارات التناوب</translation>
+        <translation type="unfinished">خيارات النقل والتدوير</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
@@ -21888,7 +21891,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
@@ -21931,7 +21934,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation>إيجاد رؤية لحديقة الحيوان الحالية ومقابلة الرسم</translation>
+        <translation>إنشاء عرض للتكبير والإزاحة الحاليين للرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="164"/>
@@ -22118,7 +22121,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="307"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="311"/>
@@ -22139,7 +22142,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="383"/>
         <source>Center X: </source>
-        <translation>المركز العاشر:</translation>
+        <translation>المركز X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="384"/>
@@ -22208,7 +22211,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="33"/>
         <source>Fixed Distance</source>
-        <translation type="unfinished">المختفين</translation>
+        <translation type="unfinished">مسافة ثابتة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="34"/>
@@ -22281,7 +22284,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation type="unfinished">تعديل خيارات التوريد</translation>
+        <translation type="unfinished">خيارات تعديل الإزاحة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="63"/>
@@ -22316,7 +22319,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="112"/>
         <source>Fixed Distance</source>
-        <translation type="unfinished">المختفين</translation>
+        <translation type="unfinished">مسافة ثابتة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
@@ -22385,12 +22388,12 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="59"/>
         <source>Points on Spline</source>
-        <translation>النقاط على Spline</translation>
+        <translation>النقاط على المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
         <source>Control Points</source>
-        <translation>نقاط المراقبة</translation>
+        <translation>نقاط التحكم</translation>
     </message>
 </context>
 <context>
@@ -22403,7 +22406,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="31"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">زاوية التناوب بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">زاوية الدوران للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
@@ -22413,7 +22416,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">عامل الجدول بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">معامل المقياس للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22436,7 +22439,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="73"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">زاوية التناوب بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">زاوية الدوران للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
@@ -22461,7 +22464,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">عامل الجدول بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">معامل المقياس للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
@@ -22479,7 +22482,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">زاوية التناوب بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">زاوية الدوران للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
@@ -22489,7 +22492,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">عامل الجدول بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">معامل المقياس للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22572,12 +22575,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">زاوية التناوب بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">زاوية الدوران للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
         <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="unfinished">وإذا تم فحصها، ستُنشأ صفائف من النسخ على المراعي.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُنشأ مصفوفات من النسخ عند اللصق.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="60"/>
@@ -22617,7 +22620,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">عامل الجدول بالنسبة للكيانات المرعية</translation>
+        <translation type="unfinished">معامل المقياس للكيانات الملصقة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
@@ -22813,7 +22816,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="300"/>
         <source>No Pen</source>
-        <translation>لا</translation>
+        <translation>بلا قلم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="301"/>
@@ -22848,7 +22851,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="307"/>
         <source>Dash (tiny)</source>
-        <translation>داش (القصدير)</translation>
+        <translation>شرطة (صغيرة جداً)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="308"/>
@@ -22888,7 +22891,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
         <source>Dash Dot (tiny)</source>
-        <translation>داش دوت (قصدير)</translation>
+        <translation>شرطة نقطة (صغيرة جداً)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
@@ -23076,7 +23079,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>السّيد Width:</translation>
+        <translation>عرض الخط:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23120,12 +23123,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>خط الأرملة Icon</translation>
+        <translation>أيقونة عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>اسم الأرملة</translation>
+        <translation>اسم عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23151,7 +23154,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>طاولات كاملة جريئة للسجائر النشطة</translation>
+        <translation>يُعرض صف الجدول كاملًا بخط عريض للقلم النشط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -23266,7 +23269,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>بيع الكيانات بالقلم</translation>
+        <translation>اختيار الكيانات حسب قلم الرسم</translation>
     </message>
 </context>
 <context>
@@ -23274,7 +23277,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>لوحة الألوان</translation>
+        <translation>لوحة الأقلام</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
@@ -23375,7 +23378,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
         <source>Width of line</source>
-        <translation>زوج الخط</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
@@ -23518,7 +23521,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="96"/>
         <source>Position of point by X coordinate</source>
-        <translation>تنسيق موقف النقطة X</translation>
+        <translation>موضع النقطة حسب الإحداثي X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
@@ -23536,7 +23539,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="31"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished">عدد النقاط حسب اتجاه &quot; X lattice &quot; (حساب الأعمدة الصفراء)</translation>
+        <translation type="unfinished">عدد النقاط في اتجاه X للشبكة (عدد أعمدة الشبكة)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="38"/>
@@ -23546,7 +23549,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="38"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished">عدد النقاط حسب اتجاه &quot; لاتيسي &quot; (حساب الصفوف الصفراء)</translation>
+        <translation type="unfinished">عدد النقاط في اتجاه Y للشبكة (عدد صفوف الشبكة)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="47"/>
@@ -23569,7 +23572,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="32"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished">عدد النقاط حسب اتجاه &quot; لاتيسي &quot; (حساب الصفوف الصفراء)</translation>
+        <translation type="unfinished">عدد النقاط في اتجاه Y للشبكة (عدد صفوف الشبكة)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="42"/>
@@ -23584,7 +23587,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="56"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished">عدد النقاط حسب اتجاه &quot; X lattice &quot; (حساب الأعمدة الصفراء)</translation>
+        <translation type="unfinished">عدد النقاط في اتجاه X للشبكة (عدد أعمدة الشبكة)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="66"/>
@@ -23607,7 +23610,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="35"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">إذا تم فحصها، سيتم رسم خط النقاط مع زاوية محددة</translation>
+        <translation type="unfinished">عند التحديد، يُرسم خط النقاط بالزاوية المحددة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
@@ -23634,12 +23637,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="61"/>
         <source>Fixed Distance</source>
-        <translation type="unfinished">المختفين</translation>
+        <translation type="unfinished">مسافة ثابتة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="62"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="unfinished">وإذا تم فحصها، ستستخدم مسافة محددة ثابتة بين النقاط. وإلا ستحسب المسافة.</translation>
+        <translation type="unfinished">عند التحديد، تُستخدم مسافة ثابتة محددة بين النقاط. وإلا فتُحسب المسافة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="70"/>
@@ -23755,7 +23758,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished">إذا تم فحصها، ستُجمع مناديل البوليجون.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُقوَّس رؤوس المضلع. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="83"/>
@@ -23775,12 +23778,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">تقريب نصف قطره من أجل الغطس.</translation>
+        <translation type="unfinished">نصف قطر التقويس لشطف الرأس.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">إذا تم فحصها، سيتم سحب البوليجون كبوليلين. وإلا، سيتم إنشاء فرادى الكيانات.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُرسم المضلع كخط متعدد. وإلا فستُنشأ كيانات منفصلة. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -23947,7 +23950,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="79"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">العصيان لللافت السابق</translation>
+        <translation type="unfinished">تراجع عن الرأس السابق</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="86"/>
@@ -23965,7 +23968,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">الحشرات تنتهي من البوليلين لذا تم إنشاء مخزن مغلق</translation>
+        <translation type="unfinished">يصل طرفي الخط المتعدد فيُنشأ كفاف مغلق</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -23975,7 +23978,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="63"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">العصيان لللافت السابق</translation>
+        <translation type="unfinished">تراجع عن الرأس السابق</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="66"/>
@@ -23995,7 +23998,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
         <source>Tangential arc</source>
-        <translation type="unfinished">الدائرة التنظيمية</translation>
+        <translation type="unfinished">قوس مماسي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
@@ -24156,7 +24159,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">تطبيق المطبوع Scale إلى خط الاستطلاع</translation>
+        <translation type="unfinished">تطبيق مقياس الطباعة على عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24299,7 +24302,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">تطبيق المطبوع Scale إلى خط الاستطلاع</translation>
+        <translation type="unfinished">تطبيق مقياس الطباعة على عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24329,7 +24332,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="243"/>
         <source>Drawing units</source>
-        <translation type="unfinished">وحدات سحب</translation>
+        <translation type="unfinished">وحدات الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="250"/>
@@ -24404,7 +24407,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished">الجدول غير المستوفى</translation>
+        <translation type="unfinished">المقياس المُدخل غير صالح</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
@@ -24414,7 +24417,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="432"/>
         <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="unfinished">عامل الجدول الورقي أقل من نسبة المطبوعات</translation>
+        <translation type="unfinished">معامل مقياس الورق أصغر من الحد الأدنى لنسبة الطباعة</translation>
     </message>
 </context>
 <context>
@@ -24455,7 +24458,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.cpp" line="93"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation type="unfinished">نقاط مراقبة البارابولا لا يمكن أن تكون شاملة</translation>
+        <translation type="unfinished">لا يمكن أن تكون نقاط تحكم القطع المكافئ على استقامة واحدة</translation>
     </message>
 </context>
 <context>
@@ -24483,7 +24486,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">خط الأرملة</translation>
+        <translation type="unfinished">عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24576,12 +24579,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter</source>
-        <translation type="unfinished">القياس</translation>
+        <translation type="unfinished">القطر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">قياس القطب الشمالي</translation>
+        <translation type="unfinished">قطر القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
@@ -24938,7 +24941,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">كسر/ديفيد</translation>
+        <translation type="unfinished">كسر/تقسيم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25046,7 +25049,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="44"/>
         <source>Name of the block</source>
-        <translation type="unfinished">اسم المبنى</translation>
+        <translation type="unfinished">اسم الكتلة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="54"/>
@@ -25084,12 +25087,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter</source>
-        <translation type="unfinished">القياس</translation>
+        <translation type="unfinished">القطر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">قياس الدائرة</translation>
+        <translation type="unfinished">قطر الدائرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
@@ -25302,7 +25305,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">كسر/ديفيد</translation>
+        <translation type="unfinished">كسر/تقسيم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -25382,7 +25385,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">قائد</translation>
+        <translation type="unfinished">خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -26534,7 +26537,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerances</source>
-        <translation type="unfinished">التسامح</translation>
+        <translation type="unfinished">التفاوتات</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
@@ -26913,7 +26916,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="51"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="57"/>
@@ -27366,12 +27369,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="70"/>
         <source>Isometric Left</source>
-        <translation type="unfinished">يسار غير متماثل</translation>
+        <translation type="unfinished">منظر متساوي الأبعاد أيسر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="71"/>
         <source>Isometric Right</source>
-        <translation type="unfinished">الحق غير المتكافئ</translation>
+        <translation type="unfinished">منظر متساوي الأبعاد أيمن</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="72"/>
@@ -27783,12 +27786,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="108"/>
         <source>Isometric Left</source>
-        <translation type="unfinished">يسار غير متماثل</translation>
+        <translation type="unfinished">منظر متساوي الأبعاد أيسر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="112"/>
         <source>Isometric Right</source>
-        <translation type="unfinished">الحق غير المتكافئ</translation>
+        <translation type="unfinished">منظر متساوي الأبعاد أيمن</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="116"/>
@@ -28000,7 +28003,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">إيجاد رؤية لحديقة الحيوان الحالية ومقابلة الرسم</translation>
+        <translation type="unfinished">إنشاء عرض للتكبير والإزاحة الحاليين للرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
@@ -28359,7 +28362,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">نقطة الإرسال</translation>
+        <translation type="unfinished">نقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
@@ -28484,7 +28487,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">نقطة الإرسال</translation>
+        <translation type="unfinished">نقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
@@ -28721,7 +28724,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">خط الانضمام</translation>
+        <translation type="unfinished">وصل الخطوط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28751,7 +28754,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">تقليم الطرفين</translation>
+        <translation type="unfinished">قص كيانين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28821,7 +28824,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Bisector</source>
-        <translation type="unfinished">قطاع الأعمال</translation>
+        <translation type="unfinished">منصف</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
@@ -28972,7 +28975,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation type="unfinished">الجولة</translation>
+        <translation type="unfinished">تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
@@ -28997,7 +29000,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">كسر/ديفيد</translation>
+        <translation type="unfinished">كسر/تقسيم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29095,7 +29098,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">نقطة الإرسال</translation>
+        <translation type="unfinished">نقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
@@ -29165,7 +29168,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="75"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="79"/>
@@ -29376,7 +29379,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="31"/>
         <source>Position</source>
-        <translation type="unfinished">المنصب</translation>
+        <translation type="unfinished">الموضع</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="31"/>
@@ -29777,7 +29780,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="90"/>
         <source>Control Point</source>
-        <translation type="unfinished">نقطة المراقبة</translation>
+        <translation type="unfinished">نقطة التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="90"/>
@@ -29955,7 +29958,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="66"/>
         <source>Control Point</source>
-        <translation type="unfinished">نقطة المراقبة</translation>
+        <translation type="unfinished">نقطة التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="66"/>
@@ -30113,7 +30116,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">نقطة الإرسال</translation>
+        <translation type="unfinished">نقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
@@ -30153,12 +30156,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="55"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="56"/>
         <source>Aligned</source>
-        <translation type="unfinished">منحاز</translation>
+        <translation type="unfinished">محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="57"/>
@@ -30467,7 +30470,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/rect/lc_property_rect.cpp" line="60"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/rect/lc_property_rect.cpp" line="64"/>
@@ -30566,7 +30569,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="413"/>
         <source>CONSTRUCTION</source>
-        <translation>الصناعة</translation>
+        <translation>خط إنشاء</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="267"/>
@@ -30684,12 +30687,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1033"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1051"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1053"/>
         <source>Aligned</source>
-        <translation>منحاز</translation>
+        <translation>محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="570"/>
@@ -30706,7 +30709,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="440"/>
         <source>Set Relative Zero</source>
-        <translation>ثابت</translation>
+        <translation>تعيين الصفر النسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="450"/>
@@ -30738,7 +30741,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>خط الأرملة</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30836,7 +30839,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="657"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="692"/>
         <source>Diameter</source>
-        <translation>القياس</translation>
+        <translation>القطر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
@@ -30946,7 +30949,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="846"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="851"/>
         <source>Position</source>
-        <translation>المنصب</translation>
+        <translation>الموضع</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="860"/>
@@ -30996,7 +30999,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1220"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1244"/>
         <source>Insertion Point</source>
-        <translation>نقطة الإرسال</translation>
+        <translation>نقطة الإدراج</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="941"/>
@@ -31353,7 +31356,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1291"/>
         <source>Control Points</source>
-        <translation>نقاط المراقبة</translation>
+        <translation>نقاط التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
@@ -31365,7 +31368,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1312"/>
         <source>Use Control Points</source>
-        <translation>نقاط مراقبة الاستعمال</translation>
+        <translation>استخدام نقاط التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
@@ -31393,12 +31396,12 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1281"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1316"/>
         <source>Control Point </source>
-        <translation>نقطة المراقبة</translation>
+        <translation>نقطة التحكم </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
         <source>Spline Point </source>
-        <translation>نقطة انطلاق</translation>
+        <translation>نقطة المنحنى الشريحي </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1328"/>
@@ -31427,7 +31430,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1351"/>
         <source>Control Point</source>
-        <translation>نقطة المراقبة</translation>
+        <translation>نقطة التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
@@ -31458,7 +31461,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
         <source>Spline Points</source>
-        <translation>النقاط الجانبية</translation>
+        <translation>نقاط المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="817"/>
@@ -31563,7 +31566,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>أمر</translation>
+        <translation>إحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
@@ -31620,7 +31623,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="233"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="250"/>
         <source>Set Relative Zero</source>
-        <translation>ثابت</translation>
+        <translation>تعيين الصفر النسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="235"/>
@@ -31631,7 +31634,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="270"/>
         <source>Points Path Distance:</source>
-        <translation>النقاط:</translation>
+        <translation>مسافة مسار النقاط:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="274"/>
@@ -31649,7 +31652,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="61"/>
         <source>Select entity for properties</source>
-        <translation>الكيان المختار للممتلكات</translation>
+        <translation>اختر كيانًا لعرض خصائصه</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="64"/>
@@ -31685,12 +31688,12 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="134"/>
         <source>Collect Coordinates</source>
-        <translation>جمع التنسيق</translation>
+        <translation>جمع الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="151"/>
         <source>Coordinates:</source>
-        <translation>التنسيق:</translation>
+        <translation>الإحداثيات:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="170"/>
@@ -31756,12 +31759,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
         <source>&amp;Remove Coordinate</source>
-        <translation>&quot; تنسيق الإزالة</translation>
+        <translation>&amp;إزالة الإحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="372"/>
         <source>&amp;Insert Coordinates</source>
-        <translation>&quot; التنسيقيات الداخلية</translation>
+        <translation>&amp;إدراج الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
@@ -31771,7 +31774,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>&quot; الهيئة المنتخبة</translation>
+        <translation>&amp;اختيار كيان</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31809,7 +31812,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="30"/>
         <source>Collected Coordinates</source>
-        <translation>التنسيقات المجمعة</translation>
+        <translation>الإحداثيات المجمعة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="36"/>
@@ -31824,12 +31827,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
         <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation>وإذا اختيرت جميع النقاط التي يتم جمعها سيتم ربطها عن طريق يبين كيفية اختيارها خلال مرحلة ما قبل الاستعراض</translation>
+        <translation>عند التحديد، تُوصل جميع النقاط المجمّعة بمسار يبيّن ترتيب اختيارها أثناء معاينة النقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
         <source>Draw points path on preview</source>
-        <translation>مسار نقاط السحب على ما قبل الاستعراض</translation>
+        <translation>رسم مسار النقاط في المعاينة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
@@ -31884,7 +31887,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>النقاط تسلط الضوء على القلم</translation>
+        <translation>قلم تمييز النقاط</translation>
     </message>
 </context>
 <context>
@@ -31897,7 +31900,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="32"/>
         <source>Width of rectangle</source>
-        <translation type="unfinished">أرملة الركود</translation>
+        <translation type="unfinished">عرض المستطيل</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="38"/>
@@ -31907,7 +31910,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="38"/>
         <source>Height of rectangle</source>
-        <translation type="unfinished">ارتفاع الركود</translation>
+        <translation type="unfinished">ارتفاع المستطيل</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="47"/>
@@ -31937,7 +31940,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="52"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="53"/>
@@ -31952,7 +31955,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="55"/>
         <source>Bottom-right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">أسفل اليمين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
@@ -31992,7 +31995,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="79"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32020,7 +32023,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">وإذا تم التحقق من ذلك، سيُنشأ التراجع كبوليلين بدلاً من فرادى القطاعات.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُنشأ المستطيل كخط متعدد بدلاً من مقاطع منفردة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
@@ -32035,12 +32038,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="75"/>
         <source>Height of rectangle</source>
-        <translation type="unfinished">ارتفاع الركود</translation>
+        <translation type="unfinished">ارتفاع المستطيل</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="82"/>
         <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="unfinished">نقطة الحكة الملتوية ستوضع لنقطة الإدراج.</translation>
+        <translation type="unfinished">نقطة المستطيل التي ستوضع عند نقطة الإدراج.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="86"/>
@@ -32070,7 +32073,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="111"/>
         <source>Right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="116"/>
@@ -32085,17 +32088,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="126"/>
         <source>Bottom-right</source>
-        <translation type="unfinished">الحق</translation>
+        <translation type="unfinished">أسفل اليمين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">طول الركن الخفي للإتجاه العاشر.</translation>
+        <translation type="unfinished">طول شطف الزاوية في اتجاه X. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">زاوية التناوب من الرسم</translation>
+        <translation type="unfinished">اختر زاوية الدوران من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="174"/>
@@ -32105,12 +32108,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="181"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">اختر نصف قطرة الزوايا المتجمعة من الرسم.</translation>
+        <translation type="unfinished">اختر نصف قطر الزوايا المقوّسة من الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="195"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
+        <translation type="unfinished">يحدد أضلاع المستطيل التي يجب رسمها (بحيث يمكن إنشاء خطين متوازيين فقط بدلاً من المستطيل)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="199"/>
@@ -32130,12 +32133,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">&quot;مؤخرة الركن الخفي لـ &quot;ي.</translation>
+        <translation type="unfinished">طول شطف الزاوية في اتجاه Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
         <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="unfinished">يتحكم في كيفية سحب زوايا التراجع.</translation>
+        <translation type="unfinished">يتحكم في كيفية رسم زوايا المستطيل.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="240"/>
@@ -32145,7 +32148,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="245"/>
         <source>Round</source>
-        <translation type="unfinished">الجولة</translation>
+        <translation type="unfinished">تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
@@ -32165,12 +32168,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="300"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="307"/>
         <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="unfinished">وإذا تم فحصها، سيتم تناوب التراجع على زاوية محددة.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُدوَّر المستطيل بالزاوية المحددة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="310"/>
@@ -32185,22 +32188,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="339"/>
         <source>Width of rectangle</source>
-        <translation type="unfinished">أرملة الركود</translation>
+        <translation type="unfinished">عرض المستطيل</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="346"/>
         <source>Pick height of rectangle from drawing</source>
-        <translation type="unfinished">ارتفاع التراجع من الرسم</translation>
+        <translation type="unfinished">اختر ارتفاع المستطيل من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="360"/>
         <source>Pick width of rectangle from drawing</source>
-        <translation type="unfinished">اختر باروكة من الرسم</translation>
+        <translation type="unfinished">اختر عرض المستطيل من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="374"/>
@@ -32215,12 +32218,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">إذا تم فحصها، يحدد أن نقطة الانقسام يجب أن تتحول من نطاق الزاوية.</translation>
+        <translation type="unfinished">إذا تم التحديد، تُزاح نقطة الالتقاط بمقدار نصف قطر الزوايا.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">نوبة نوبة</translation>
+        <translation type="unfinished">إزاحة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32240,17 +32243,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished">(راديوس) من زوايا محاصرة.</translation>
+        <translation type="unfinished">نصف قطر الزوايا المقوّسة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">إخترْ طول زاويةِ الغطسِ للإتجاهِ X مِنْ الرسمِ.</translation>
+        <translation type="unfinished">اختر طول شطف الزاوية في اتجاه X من الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">إخترْ طول زاويةِ الغطسِ للإتجاهِ Y مِنْ الرسمِ.</translation>
+        <translation type="unfinished">اختر طول شطف الزاوية في اتجاه Y من الرسم.</translation>
     </message>
 </context>
 <context>
@@ -32303,7 +32306,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="57"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">ويسمح، إذا تم فحصه، بتحديد زاوية التناوب للتراجع.</translation>
+        <translation type="unfinished">إذا تم التحديد، يمكن تحديد زاوية دوران المستطيل.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="64"/>
@@ -32313,7 +32316,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="64"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32336,7 +32339,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="32"/>
         <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="unfinished">يحدد نقطة التراجع التي ينبغي وضعها في نقطة البداية.</translation>
+        <translation type="unfinished">يحدد نقطة المستطيل التي توضع في موضع نقطة البداية.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="36"/>
@@ -32365,7 +32368,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished">إذا تم فحصها، سيتم سحب الركاز بأكمله كبوليلين.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُرسم المستطيل بأكمله كخط متعدد.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
@@ -32375,7 +32378,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
         <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="unfinished">يُحدّدُ كَمْ زاويةِ التراجعِ يَجِبُ أَنْ تَسْحبَ.</translation>
+        <translation type="unfinished">يحدد كيفية رسم زوايا المستطيل. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="73"/>
@@ -32385,7 +32388,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="78"/>
         <source>Round</source>
-        <translation type="unfinished">الجولة</translation>
+        <translation type="unfinished">تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
@@ -32405,12 +32408,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="131"/>
         <source>Radius of rounded corners. </source>
-        <translation type="unfinished">(راديوس) من زوايا محاصرة.</translation>
+        <translation type="unfinished">نصف قطر الزوايا المقوّسة. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="138"/>
         <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="unfinished">اختر نصف قطرة الزوايا المتجمعة من الرسم.</translation>
+        <translation type="unfinished">اختر نصف قطر الزوايا المقوّسة من الرسم. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="164"/>
@@ -32425,12 +32428,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">طول العشب في (ي).</translation>
+        <translation type="unfinished">طول الشطف في اتجاه Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="197"/>
         <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="unfinished">يحدد نقطة التراجع التي ينبغي وضعها في نقطة النهاية.</translation>
+        <translation type="unfinished">يحدد نقطة المستطيل التي توضع في موضع نقطة النهاية. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="231"/>
@@ -32440,7 +32443,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="251"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
+        <translation type="unfinished">يحدد أضلاع المستطيل التي يجب رسمها (بحيث يمكن إنشاء خطين متوازيين فقط بدلاً من المستطيل)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="255"/>
@@ -32460,12 +32463,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">اختر طول الخنفساء في الاتجاه العاشر من الرسم.</translation>
+        <translation type="unfinished">اختر طول الشطف في اتجاه X من الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">ويسمح، إذا تم فحصه، بتحديد زاوية التناوب للتراجع.</translation>
+        <translation type="unfinished">إذا تم التحديد، يمكن تحديد زاوية دوران المستطيل.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="297"/>
@@ -32485,22 +32488,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">إذا تم فحصها، يحدد أن نقاط الكسر يجب أن تتحول من نطاق الزاوية.</translation>
+        <translation type="unfinished">إذا تم التحديد، تُزاح نقاط الالتقاط بمقدار نصف قطر الزوايا.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">نوبة نوبة</translation>
+        <translation type="unfinished">إزاحة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">طول الخنفساء في الإتجاه العاشر.</translation>
+        <translation type="unfinished">طول الشطف في اتجاه X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">نهاية الحلقة:</translation>
+        <translation type="unfinished">التقاط النهاية:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32510,7 +32513,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished">اختر طول السائل في الاتجاه Y من الرسم.</translation>
+        <translation type="unfinished">اختر طول الشطف في اتجاه Y من الرسم. </translation>
     </message>
 </context>
 <context>
@@ -32553,7 +32556,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="53"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">ويسمح، إذا تم فحصه، بتحديد زاوية التناوب للتراجع.</translation>
+        <translation type="unfinished">إذا تم التحديد، يمكن تحديد زاوية دوران المستطيل.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="60"/>
@@ -32563,7 +32566,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="60"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32621,7 +32624,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="159"/>
         <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="unfinished">وإذا تم فحصها، سيتم تحويل التراجع إلى زاوية أساس محددة. وإلا، ستحدد زاوية القاعدة بزاوية بين نقطة التراجع الأولى والثانية.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُدوَّر المستطيل إلى زاوية الأساس المحددة. وإلا فستُحدَّد زاوية الأساس بالزاوية بين النقطتين الأولى والثانية للمستطيل.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="162"/>
@@ -32636,7 +32639,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="194"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="unfinished">إذا تم فحصها، سيتم إنشاء أربع مرات بدلا من التراجع.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُنشأ شكل رباعي بدلاً من المستطيل.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="197"/>
@@ -32646,12 +32649,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">إذا تم فحصها، يحدد أن نقاط الكسر يجب أن تتحول من نطاق الزاوية.</translation>
+        <translation type="unfinished">إذا تم التحديد، تُزاح نقاط الالتقاط بمقدار نصف قطر الزوايا.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">نوبة نوبة</translation>
+        <translation type="unfinished">إزاحة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32666,12 +32669,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">طول الخنفساء في الإتجاه العاشر.</translation>
+        <translation type="unfinished">طول الشطف في اتجاه X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">طول العشب في (ي).</translation>
+        <translation type="unfinished">طول الشطف في اتجاه Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="322"/>
@@ -32681,17 +32684,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="347"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished">(راديوس) من زوايا محاصرة.</translation>
+        <translation type="unfinished">نصف قطر الزوايا المقوّسة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="354"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">اختر نصف قطرة الزوايا المتجمعة من الرسم.</translation>
+        <translation type="unfinished">اختر نصف قطر الزوايا المقوّسة من الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="368"/>
         <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="unfinished">يُحددُ كَمْ الزوايا يَجِبُ أَنْ تَسْحبَ للتراجع.</translation>
+        <translation type="unfinished">يحدد كيفية رسم زوايا المستطيل. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="372"/>
@@ -32701,7 +32704,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="377"/>
         <source>Round</source>
-        <translation type="unfinished">الجولة</translation>
+        <translation type="unfinished">تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
@@ -32716,17 +32719,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">اختر طول الخنفساء في الاتجاه العاشر من الرسم.</translation>
+        <translation type="unfinished">اختر طول الشطف في اتجاه X من الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished">اختر طول السائل في الاتجاه Y من الرسم.</translation>
+        <translation type="unfinished">اختر طول الشطف في اتجاه Y من الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
+        <translation type="unfinished">يحدد أضلاع المستطيل التي يجب رسمها (بحيث يمكن إنشاء خطين متوازيين فقط بدلاً من المستطيل)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="432"/>
@@ -32774,7 +32777,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="42"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
+        <translation type="unfinished">يحدد أضلاع المستطيل التي يجب رسمها (بحيث يمكن إنشاء خطين متوازيين فقط بدلاً من المستطيل)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="56"/>
@@ -32784,7 +32787,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
         <source>Round</source>
-        <translation type="unfinished">الجولة</translation>
+        <translation type="unfinished">تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
@@ -32819,7 +32822,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">إذا تم فحصها، يحدد أن نقطة الانقسام يجب أن تتحول من نطاق الزاوية.</translation>
+        <translation type="unfinished">إذا تم التحديد، تُزاح نقطة الالتقاط بمقدار نصف قطر الزوايا.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -32867,7 +32870,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation>زيرو (بولندا)</translation>
+        <translation>الصفر النسبي (قطبي)</translation>
     </message>
 </context>
 <context>
@@ -32913,7 +32916,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="112"/>
         <source>Offset X:</source>
-        <translation type="unfinished">الهدف العاشر:</translation>
+        <translation type="unfinished">الإزاحة X:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="119"/>
@@ -33191,7 +33194,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="52"/>
         <source>Angle to rotate over secondary reference point</source>
-        <translation type="unfinished">التناوب على النقطة المرجعية الثانوية</translation>
+        <translation type="unfinished">زاوية التدوير حول النقطة المرجعية الثانوية</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="61"/>
@@ -33249,7 +33252,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">خيارات التناوب</translation>
+        <translation type="unfinished">خيارات النقل والتدوير</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
@@ -33294,7 +33297,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="170"/>
         <source>Angle to rotate over secondary reference point</source>
-        <translation type="unfinished">التناوب على النقطة المرجعية الثانوية</translation>
+        <translation type="unfinished">زاوية التدوير حول النقطة المرجعية الثانوية</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="177"/>
@@ -33485,7 +33488,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">خيارات التناوب</translation>
+        <translation type="unfinished">خيارات النقل والتدوير</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="63"/>
@@ -33510,7 +33513,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">زاوية التناوب من الرسم</translation>
+        <translation type="unfinished">اختر زاوية الدوران من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="155"/>
@@ -33555,7 +33558,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="202"/>
         <source>Rotate twice</source>
-        <translation type="unfinished">تناوب مرتين</translation>
+        <translation type="unfinished">التدوير مرتين</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
@@ -33576,12 +33579,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="249"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="236"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="239"/>
@@ -33629,7 +33632,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">تحقق من كل الحافة إلى الجولة</translation>
+        <translation type="unfinished">حدد لقص كلتا الحافتين حتى التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
@@ -33647,12 +33650,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="32"/>
         <source>Round Options</source>
-        <translation type="unfinished">خيارات الجولة</translation>
+        <translation type="unfinished">خيارات التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">تحقق من كل الحافة إلى الجولة</translation>
+        <translation type="unfinished">حدد لقص كلتا الحافتين حتى التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
@@ -33685,12 +33688,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="31"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">وإذا تم فحصه، سيطبق نفس عامل التصعيد للمحورين العاشر والعام.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُطبَّق معامل التحجيم نفسه على المحورين X و Y.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
@@ -33705,7 +33708,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="48"/>
         <source>Scale factor for X axis</source>
-        <translation type="unfinished">عامل جدول المحور X</translation>
+        <translation type="unfinished">معامل المقياس للمحور X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="56"/>
@@ -33773,7 +33776,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">خيارات التناوب</translation>
+        <translation type="unfinished">خيارات النقل والتدوير</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="50"/>
@@ -33828,7 +33831,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="147"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">وإذا تم فحصه، سيطبق نفس عامل التصعيد للمحورين العاشر والعام.</translation>
+        <translation type="unfinished">إذا تم التحديد، سيُطبَّق معامل التحجيم نفسه على المحورين X و Y.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="150"/>
@@ -33838,7 +33841,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="169"/>
         <source>Scale factor for X axis</source>
-        <translation type="unfinished">عامل جدول المحور X</translation>
+        <translation type="unfinished">معامل المقياس للمحور X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="176"/>
@@ -33863,7 +33866,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
 </context>
 <context>
@@ -34163,12 +34166,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="43"/>
         <source>Fixed Distance</source>
-        <translation type="unfinished">المختفين</translation>
+        <translation type="unfinished">مسافة ثابتة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">وإذا تم فحصها، ستستخدم مسافات محددة ثابتة بين الأقراص. وإلا، ستُحسب المسافة على أساس طول الكيان وتحسب دقاته.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُستخدم المسافة الثابتة المحددة بين العلامات. وإلا فستُحسب المسافة بناءً على طول الكيان وعدد العلامات. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34208,12 +34211,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">وإذا تم فحصها، فإن زاوية الدقائق ترتبط بكيان مختار، وإلا فهي زاوية مطلقة.</translation>
+        <translation type="unfinished">إذا تم التحديد، تكون زاوية العلامة نسبية إلى الكيان المحدد، وإلا فهي زاوية مطلقة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
@@ -34313,7 +34316,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished">المسافة بين الدقائق.</translation>
+        <translation type="unfinished">المسافة بين العلامات.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34360,7 +34363,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="189"/>
         <source>Offset:</source>
-        <translation type="unfinished">خارج:</translation>
+        <translation type="unfinished">الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="196"/>
@@ -34370,12 +34373,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation type="unfinished">ضربة نقيض من الرسم</translation>
+        <translation type="unfinished">اختر إزاحة العلامة من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished">طول الوقت.</translation>
+        <translation type="unfinished">طول العلامة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
@@ -34400,7 +34403,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">تيك دق:</translation>
+        <translation type="unfinished">التقاط العلامة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34410,7 +34413,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">وإذا تم فحصها، فإن زاوية الدقائق ترتبط بكيان مختار، وإلا فهي زاوية مطلقة.</translation>
+        <translation type="unfinished">إذا تم التحديد، تكون زاوية العلامة نسبية إلى الكيان المحدد، وإلا فهي زاوية مطلقة.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="315"/>
@@ -34420,12 +34423,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished">اختر طول السحب</translation>
+        <translation type="unfinished">اختر طول العلامة من الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">ابدأ من زاوية الدائرة التي ستبدأ منها الدقائق.</translation>
+        <translation type="unfinished">زاوية البدء على الدائرة التي ستبدأ منها العلامات. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34440,7 +34443,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">وإذا تم فحصها، ستستخدم مسافات محددة ثابتة بين الأقراص. وإلا، ستُحسب المسافة على أساس طول الكيان وتحسب دقاته.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُستخدم المسافة الثابتة المحددة بين العلامات. وإلا فستُحسب المسافة بناءً على طول الكيان وعدد العلامات. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34450,7 +34453,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">عد للدغات بين حواف كيان مختار.</translation>
+        <translation type="unfinished">عدد العلامات بين حواف الكيان المحدد.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34460,7 +34463,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">انغمس بين التدغدغ والكيان المختار.</translation>
+        <translation type="unfinished">الزاوية بين العلامة والكيان المحدد.</translation>
     </message>
 </context>
 <context>
@@ -34481,7 +34484,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">ويمكن، إذا تم فحصها، تحديد الكمية العرفية من أجزاء السطر. وخلافا لذلك، ستُستخدم القيمة من البيئات للرسم الحالي.</translation>
+        <translation type="unfinished">إذا تم التحديد، يمكن تحديد عدد مخصص من المقاطع الخطية. وإلا فستُستخدم القيمة من إعدادات الرسم الحالي.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34549,7 +34552,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">إذا لم يتم فحصه، سيتم إزالة التلميح الأصلي، وإلا سيبقى على قيد الحياة.</translation>
+        <translation type="unfinished">إذا لم يتم التحديد، سيُحذف المنحنى الشريحي الأصلي، وإلا فسيبقى.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34579,7 +34582,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">ويمكن، إذا تم فحصها، تحديد الكمية العرفية من أجزاء السطر. وخلافا لذلك، ستُستخدم القيمة من البيئات للرسم الحالي.</translation>
+        <translation type="unfinished">إذا تم التحديد، يمكن تحديد عدد مخصص من المقاطع الخطية. وإلا فستُستخدم القيمة من إعدادات الرسم الحالي.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34607,7 +34610,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="31"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">يحدد درجة التلميح</translation>
+        <translation type="unfinished">يحدد درجة المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="38"/>
@@ -34685,7 +34688,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">يحدد درجة التلميح</translation>
+        <translation type="unfinished">يحدد درجة المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
@@ -34738,7 +34741,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="33"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">يحدد درجة التلميح</translation>
+        <translation type="unfinished">يحدد درجة المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
@@ -34771,7 +34774,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="32"/>
         <source>Spline Options</source>
-        <translation type="unfinished">الخيارات الشاملة</translation>
+        <translation type="unfinished">خيارات المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="56"/>
@@ -34781,7 +34784,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished">درجة سبلين تستخدم للتقريب بين النقاط</translation>
+        <translation type="unfinished">درجة المنحنى الشريحي المستخدمة للتقريب بين النقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
@@ -34824,28 +34827,28 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="62"/>
         <source>If selected, spline points are used</source>
-        <translation>إذا اختيرت، تُستخدم نقاط الترميز</translation>
+        <translation>إذا تم الاختيار، تُستخدم نقاط المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="65"/>
         <source>Spline Points</source>
-        <translation>النقاط الجانبية</translation>
+        <translation>نقاط المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
         <source>If selected, control points are used</source>
-        <translation>إذا اختيرت نقاط المراقبة تستخدم</translation>
+        <translation>إذا تم الاختيار، تُستخدم نقاط التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="78"/>
         <source>Control Points</source>
-        <translation>نقاط المراقبة</translation>
+        <translation>نقاط التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="96"/>
         <source>Points on Spline</source>
-        <translation>النقاط على Spline</translation>
+        <translation>النقاط على المنحنى الشريحي</translation>
     </message>
 </context>
 <context>
@@ -34859,7 +34862,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>(أ) ممتلكات الكيان المختلط، بما في ذلك الدرجة، والولاية المغلقة، ونقاط المراقبة، وناقل عقدة</translation>
+        <translation>تحرير خصائص كيان المنحنى الشريحي، بما في ذلك الدرجة وحالة الإغلاق ونقاط التحكم ومتجه العُقد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34884,7 +34887,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="119"/>
         <source>Defines whether spline defines closed contour</source>
-        <translation>تحديد ما إذا كان التلميذ يعرّف الملتقى المغلقة</translation>
+        <translation>يحدد ما إذا كان المنحنى الشريحي يشكّل كفافًا مغلقًا</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="122"/>
@@ -34894,7 +34897,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="125"/>
         <source>Toggle whether the spline forms a closed contour</source>
-        <translation>للتغلب على ما إذا كان التلميذ يشكل محنة مغلقة</translation>
+        <translation>تبديل ما إذا كان المنحنى الشريحي يشكّل كفافًا مغلقًا</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="128"/>
@@ -34904,22 +34907,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="141"/>
         <source>Control Points:</source>
-        <translation>نقاط المراقبة:</translation>
+        <translation>نقاط التحكم:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="177"/>
         <source>Control points with coordinates and weights</source>
-        <translation>نقاط المراقبة مع الإحداثيات والوزن</translation>
+        <translation>نقاط التحكم مع الإحداثيات والأوزان</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
         <source>Control Points Table</source>
-        <translation>نقاط المراقبة</translation>
+        <translation>جدول نقاط التحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>نقاط مراقبة الإصطناعي</translation>
+        <translation>تحرير إحداثيات نقاط التحكم وأوزانها للمنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34945,17 +34948,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>وتتحكم قيم النوت في شكل منحنى التلميذ (تسلسل غير مخفف)</translation>
+        <translation>تتحكم قيم العُقد في شكل المنحنى الشريحي (تسلسل غير متناقص)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
         <source>Knot Vector Table</source>
-        <translation>الجدول الزمني</translation>
+        <translation>جدول متجه العُقد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="261"/>
         <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation>قيم عقدة إيديت للمسارح (لا بد أنها غير مخففة)</translation>
+        <translation>تحرير قيم العُقد للمنحنى الشريحي (يجب أن تكون غير متناقصة)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="276"/>
@@ -34971,12 +34974,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>أضف نقطة سيطرة جديدة إلى التلميذ</translation>
+        <translation>إضافة نقطة تحكم جديدة إلى المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
         <source>Add Control Point Button</source>
-        <translation>نقطة المراقبة بوتون</translation>
+        <translation>زر إضافة نقطة تحكم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="325"/>
@@ -34987,7 +34990,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>إزالة نقطة المراقبة المختارة من التلال</translation>
+        <translation>إزالة نقطة التحكم المحددة من المنحنى الشريحي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
@@ -34997,7 +35000,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
-        <translation>درجة اعتادت على التلميح التقريبي</translation>
+        <translation>الدرجة المستخدمة لتقريب المنحنى الشريحي</translation>
     </message>
 </context>
 <context>
@@ -35103,7 +35106,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">إذا تم فحصه، النجمة سوف تسحب كبوليلين.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُرسم النجمة كخط متعدد. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
@@ -35123,7 +35126,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="121"/>
         <source>If checked, inner edges will be rounded. </source>
-        <translation type="unfinished">إذا تم فحص الحواف الداخلية سيتم تجميعها.</translation>
+        <translation type="unfinished">إذا تم التحديد، ستُقوَّس الحواف الداخلية. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="124"/>
@@ -35225,7 +35228,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_widget.ui" line="76"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">زاوية التناوب</translation>
+        <translation type="unfinished">زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_widget.ui" line="83"/>
@@ -35408,7 +35411,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="59"/>
         <source>Aligned</source>
-        <translation>منحاز</translation>
+        <translation>محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="60"/>
@@ -35431,7 +35434,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>محاذاة التحديد</translation>
+        <translation>اختيار الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35453,7 +35456,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="163"/>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="373"/>
         <source>Order</source>
-        <translation>الأمر</translation>
+        <translation>الترتيب</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="174"/>
@@ -35576,7 +35579,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="362"/>
         <source>Circles</source>
-        <translation>السيرك</translation>
+        <translation>الدوائر</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="365"/>
@@ -35596,7 +35599,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
         <source>Ellipses</source>
-        <translation>الشحوم</translation>
+        <translation>القطوع الناقصة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
@@ -35639,7 +35642,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="31"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">ويُستخدم طول المدخلات كطول إجمالي بعد الترميم، بدلاً من زيادة الطول</translation>
+        <translation type="unfinished">يُستخدم طول الإدخال كطول كلي بعد القص بدلاً من مقدار زيادة الطول</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="37"/>
@@ -35659,7 +35662,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">وإذا تم فحص الترم/التكثيف يتم على جانبي الخط.</translation>
+        <translation type="unfinished">إذا تم التحديد، يُنفَّذ القص/التمديد على جانبي الخط.</translation>
     </message>
 </context>
 <context>
@@ -35667,17 +35670,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">المبلغ</translation>
+        <translation type="unfinished">خيارات مقدار القص</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">توقف القيم السلبية للثأر والقيم الإيجابية للتوسع.</translation>
+        <translation type="unfinished">المسافة. القيم السالبة للقص، والقيم الموجبة للتمديد.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">ويُستخدم طول المدخلات كطول إجمالي بعد الترميم، بدلاً من زيادة الطول</translation>
+        <translation type="unfinished">يُستخدم طول الإدخال كطول كلي بعد القص بدلاً من مقدار زيادة الطول</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="53"/>
@@ -35692,7 +35695,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="97"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">توقف القيم السلبية للثأر والقيم الإيجابية للتوسع وتُتجاهل الإشارة السلبية عند التقريب إلى الطول الكلي النهائي.</translation>
+        <translation type="unfinished">المسافة. القيم السالبة للقص، والقيم الموجبة للتمديد. تُتجاهل الإشارة السالبة عند القص إلى الطول الكلي النهائي.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
@@ -35702,7 +35705,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">وإذا تم فحص الترم/التكثيف يتم على جانبي الخط.</translation>
+        <translation type="unfinished">إذا تم التحديد، يُنفَّذ القص/التمديد على جانبي الخط.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -35730,7 +35733,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_filler.cpp" line="42"/>
         <source>Angle X-axis of new coordinate system</source>
-        <translation type="unfinished">نظام التنسيق الجديد</translation>
+        <translation type="unfinished">زاوية المحور X لنظام الإحداثيات الجديد</translation>
     </message>
 </context>
 <context>
@@ -35748,7 +35751,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="35"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="42"/>
@@ -35758,7 +35761,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="61"/>
         <source>Angle X-axis of new coordinate system</source>
-        <translation type="unfinished">نظام التنسيق الجديد</translation>
+        <translation type="unfinished">زاوية المحور X لنظام الإحداثيات الجديد</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="68"/>
@@ -35782,7 +35785,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="246"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="250"/>
@@ -35860,12 +35863,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
         <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation>الوفورات المستخدمة حالياً في نظام التنسيق (من المفيد أن يأتي النظام الموحد من وجهة النظر المحتفظ بها)</translation>
+        <translation>يحفظ نظام الإحداثيات المستخدم حاليًا (مفيد إذا كان نظام إحداثيات المستخدم مأخوذًا من عرض محفوظ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>وضع النظام الموحد لمراقبة المناخ بالبعد المنسق</translation>
+        <translation>تعيين نظام إحداثيات المستخدم حسب البعد الإحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -35895,7 +35898,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="350"/>
         <source>Delete All UCS</source>
-        <translation>تحذف جميع الولايات المتحدة الأمريكية</translation>
+        <translation>حذف جميع أنظمة إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="351"/>
@@ -35921,7 +35924,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="412"/>
         <source>Delete UCSs</source>
-        <translation>تحذف سلاسل الإمداد الموحدة</translation>
+        <translation>حذف أنظمة إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="413"/>
@@ -36000,23 +36003,23 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="44"/>
         <source>Type of current coordinate system</source>
-        <translation>نوع نظام التنسيق الحالي</translation>
+        <translation>نوع نظام الإحداثيات الحالي</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="96"/>
         <source>Name of selected coordinate system</source>
-        <translation>اسم نظام تنسيق مختار</translation>
+        <translation>اسم نظام الإحداثيات المحدد</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="105"/>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="124"/>
         <source>Coordinates</source>
-        <translation>التنسيق</translation>
+        <translation>الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>موقع المنشأ وزاوية الأشعة المقطعية الحالية في إحداثيات العالم.</translation>
+        <translation>موضع نقطة الأصل وزاوية نظام إحداثيات المستخدم الحالي بالإحداثيات العالمية.</translation>
     </message>
 </context>
 <context>
@@ -36086,7 +36089,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="143"/>
         <source>Order</source>
-        <translation>الأمر</translation>
+        <translation>الترتيب</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
@@ -36142,7 +36145,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>User Coordinate Systems</source>
-        <translation>نظم تنسيق المستعملين</translation>
+        <translation>أنظمة إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
@@ -36165,7 +36168,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="276"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="276"/>
         <source>Blocks</source>
-        <translation>حواجز</translation>
+        <translation>الكتل</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="291"/>
@@ -36182,7 +36185,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="307"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="336"/>
         <source>Command Line</source>
-        <translation>خط القيادة</translation>
+        <translation>سطر الأوامر</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="337"/>
@@ -36193,7 +36196,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
         <source>Pen Wizard</source>
-        <translation>بين الساحر</translation>
+        <translation>معالج الأقلام</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
@@ -36214,7 +36217,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="536"/>
         <source>Coordinates</source>
-        <translation>التنسيق</translation>
+        <translation>الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
@@ -36335,7 +36338,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="367"/>
         <source>Main Color:</source>
-        <translation>العقيد الرئيسي:</translation>
+        <translation>اللون الرئيسي:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="103"/>
@@ -36468,7 +36471,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="788"/>
         <source>Allow nested docking</source>
-        <translation>السماح بحجز السفن</translation>
+        <translation>السماح بالإرساء المتداخل</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="772"/>
@@ -36589,7 +36592,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="41"/>
         <source>remove right</source>
-        <translation>إزالة الحق</translation>
+        <translation>إزالة الأصفار من اليمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lg_dimzerosbox.cpp" line="59"/>
@@ -36607,7 +36610,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
         <source>Select object:</source>
-        <translation>المادة المختارة:</translation>
+        <translation>اختر كائنًا:</translation>
     </message>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="44"/>
@@ -36667,7 +36670,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>حظر &apos;%1&apos;</translation>
+        <translation>الكتلة &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="906"/>
@@ -36727,7 +36730,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="242"/>
         <source>Draft Mode</source>
-        <translation>مشروع مقترح</translation>
+        <translation>وضع المسودة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1089"/>
@@ -36902,12 +36905,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="43"/>
         <source>Block Name:</source>
-        <translation>اسم القفل:</translation>
+        <translation>اسم الكتلة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
-        <translation>اسم المبنى</translation>
+        <translation>اسم الكتلة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -37110,7 +37113,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="77"/>
         <source>Command:</source>
-        <translation>القيادة:</translation>
+        <translation>الأمر:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="210"/>
@@ -37120,7 +37123,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="102"/>
         <source>Command history and output</source>
-        <translation>تاريخ القيادة والناتج</translation>
+        <translation>سجل الأوامر والمخرجات</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
@@ -37136,7 +37139,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="177"/>
         <source>Enter Command:</source>
-        <translation>القيادة</translation>
+        <translation>أدخل الأمر:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="250"/>
@@ -37163,27 +37166,27 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="140"/>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="153"/>
         <source>Coordinates</source>
-        <translation>التنسيق</translation>
+        <translation>الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="70"/>
         <source>Absolute Coordinates (Cartesian)</source>
-        <translation>التنسيق المطلق (الكاريزي)</translation>
+        <translation>الإحداثيات المطلقة (الديكارتية)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="89"/>
         <source>Absolute Cordinates (Polar)</source>
-        <translation>أجهزة تنسيق مطلقة</translation>
+        <translation>الإحداثيات المطلقة (القطبية)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="137"/>
         <source>Relative Coordinates (Cartesian)</source>
-        <translation>التنسيقيات النسبية (الكاريزية)</translation>
+        <translation>الإحداثيات النسبية (الديكارتية)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="150"/>
         <source>Relative Coordinates (Polar)</source>
-        <translation>التنسيقيات النسبية (الرجال)</translation>
+        <translation>الإحداثيات النسبية (القطبية)</translation>
     </message>
 </context>
 <context>
@@ -37366,7 +37369,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>زاوية التناوب للهاتش</translation>
+        <translation>زاوية دوران التهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
@@ -37381,7 +37384,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>نمط الصيد</translation>
+        <translation>نمط التهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37391,7 +37394,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>وإذا مُكِّن من ذلك، سيُعرض أدناه عرض مسبق لنمط الصيد:</translation>
+        <translation>إذا تم التمكين، ستُعرض أدناه معاينة لنمط التهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37406,7 +37409,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>منطقة محمية</translation>
+        <translation>المساحة المهشّرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37439,7 +37442,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
-        <translation>لغة القيادة:</translation>
+        <translation>لغة الأوامر:</translation>
     </message>
 </context>
 <context>
@@ -37462,7 +37465,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="147"/>
         <source>&amp;Default line spacing</source>
-        <translation>وتباعد السطر الافتراضي</translation>
+        <translation>&amp;تباعد الأسطر الافتراضي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="150"/>
@@ -37552,7 +37555,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="643"/>
         <source>Rotation angle</source>
-        <translation>زاوية التناوب</translation>
+        <translation>زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="674"/>
@@ -38247,7 +38250,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1558"/>
         <source>Selection of character to insert</source>
-        <translation>اختيار الشخصية لإدراجها</translation>
+        <translation>اختيار المحرف المراد إدراجه</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1583"/>
@@ -38257,7 +38260,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="876"/>
         <source>Diameter (⌀)</source>
-        <translation>مقياس (ث)</translation>
+        <translation>القطر (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
@@ -38365,7 +38368,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="551"/>
         <source>angular</source>
-        <translation>غير نظامي</translation>
+        <translation>زاوي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1272"/>
@@ -38409,7 +38412,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="412"/>
         <source>Delete Custom Property</source>
-        <translation>تحذف الممتلكات العرفية</translation>
+        <translation>حذف الخاصية المخصصة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="413"/>
@@ -38618,7 +38621,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"/>
         <source>&amp;Dimensions</source>
-        <translation>&quot; الفوائد</translation>
+        <translation>&amp;الأبعاد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
@@ -38686,7 +38689,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="223"/>
         <source>Right</source>
-        <translation>الحق</translation>
+        <translation>يمين</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
@@ -38706,7 +38709,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>◂ يُستَخدَمُ / /      BAR  حجم التذكرة وضعه إلى صفر سيعطل البُعد سهم البعد لن يُستَخلص عندما يُمكّن البُعد من التدخّل</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;حجم علامة البعد. ضبطه على 0 يعطّل علامة البعد. لا يُرسم سهم البعد عند تمكين علامة البعد.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38716,7 +38719,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
         <source>General Scale:</source>
-        <translation>الجنرال سكالي:</translation>
+        <translation>المقياس العام:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
@@ -38786,7 +38789,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>زاوية القاعدة صفرية مقارنة بنظام المستعمل الحالي التأثيرات القطبية تُحدّثُ المدخلاتَ، تُقطّعُ إلى الزاويةِ. 0.0 هو 3pm.</translation>
+        <translation>زاوية الأساس الصفرية بالنسبة لنظام إحداثيات المستخدم الحالي. تؤثر على إدخال الإحداثيات القطبية والالتقاط إلى الزاوية. 0.0 تقابل اتجاه الساعة 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38816,22 +38819,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>الشبكة الأيزومرية الصحيحة</translation>
+        <translation>الشبكة متساوية القياس اليمنى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
         <source>Isometric Right</source>
-        <translation>الحق غير المتكافئ</translation>
+        <translation>منظر متساوي الأبعاد أيمن</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>الشبكة الأرضية اليسرى</translation>
+        <translation>الشبكة متساوية القياس اليسرى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
         <source>Isometric Left</source>
-        <translation>يسار غير متماثل</translation>
+        <translation>منظر متساوي الأبعاد أيسر</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
@@ -38861,7 +38864,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="865"/>
         <source>Unitless Grid:</source>
-        <translation>الغريق الوحدوي:</translation>
+        <translation>شبكة بلا وحدات:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="872"/>
@@ -38937,7 +38940,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1259"/>
         <source>Angular units:</source>
-        <translation>الوحدات المحلية:</translation>
+        <translation>الوحدات الزاوية:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1282"/>
@@ -38983,7 +38986,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
         <source>Angular zeros:</source>
-        <translation>الأصفار العصبية:</translation>
+        <translation>أصفار الزوايا:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1564"/>
@@ -38998,7 +39001,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1587"/>
         <source>Offset:</source>
-        <translation>خارج:</translation>
+        <translation>الإزاحة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1600"/>
@@ -39013,12 +39016,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
         <source>Aligned</source>
-        <translation>منحاز</translation>
+        <translation>محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>◂ يُستَخدَمُ / /      BAR  خروج من نقطة المنشأ</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;الإزاحة عن نقطة الأصل.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39093,12 +39096,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1986"/>
         <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation>إذا تم فحصها، ستُضاف كتل السهم التي لا تُقَبَّل خلال عملية السحب وهناك حاجة إلى قطع الأسهم المتحركة للرسومات التي فتحت فيما بعد في أوتاكاد. وقد يكون هذا الشيك غير مستقر إذا تم إجراء جميع التحرير في ليبركاد.</translation>
+        <translation>إذا تم التحديد، ستُضاف كتل الأسهم غير الافتراضية المستخدمة عند حفظ الرسم. تضمين كتل الأسهم ضروري للرسومات التي تُفتح لاحقًا في AutoCAD. يمكن إلغاء تحديد هذا الخيار إذا تم إجراء كل التحرير في LibreCAD. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
         <source>Embed arrows blocks on save</source>
-        <translation>السهام المتحركة على قيد الحياة</translation>
+        <translation>تضمين كتل الأسهم عند الحفظ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2069"/>
@@ -39125,7 +39128,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2125"/>
         <source>Round</source>
-        <translation>الجولة</translation>
+        <translation>تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2101"/>
@@ -39215,7 +39218,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3355"/>
         <source>Custom Properties</source>
-        <translation>الممتلكات العرفية</translation>
+        <translation>الخصائص المخصصة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3361"/>
@@ -39295,7 +39298,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3542"/>
         <source>Drawing&apos;s Variables</source>
-        <translation>السحب متغير</translation>
+        <translation>متغيرات الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3548"/>
@@ -39378,7 +39381,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>&quot; النقاط</translation>
+        <translation>&amp;النقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
@@ -39636,12 +39639,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>◂ يُستَخدَمُ / /      BAR  &quot;مُؤقتاً لِتَنَقُّع المُحرّرِ عندما يُضْحَطُ الحاجز الفضائي ويُشغّلُ نافذة القيادة&quot;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;تبديل الالتقاط الحر مؤقتًا عند الضغط على مفتاح المسافة وتنشيط نافذة الأوامر&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
         <source>Left  Isometric Grid</source>
-        <translation>المقياس اليساري</translation>
+        <translation>الشبكة متساوية القياس اليسرى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
@@ -39656,7 +39659,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
-        <translation>المقياس الأعظم</translation>
+        <translation>الشبكة متساوية القياس العلوية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
@@ -39689,7 +39692,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
         <source>Draw grid</source>
-        <translation>شبكة سحب</translation>
+        <translation>رسم الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1047"/>
@@ -39699,7 +39702,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>مُستشفى مُسبقاً للمُستشفى</translation>
+        <translation>لون الكيان التوضيحي في المعاينة النشطة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
@@ -39744,7 +39747,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5453"/>
         <source>Show current command icon in options toolbar</source>
-        <translation>دليل القيادة الحالي</translation>
+        <translation>إظهار أيقونة الأمر الحالي في شريط أدوات الخيارات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
@@ -39859,7 +39862,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>اختبئوا عندما تنفجر</translation>
+        <translation>إخفاء المؤشر عند الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39973,7 +39976,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="217"/>
         <source>Auto-panning</source>
-        <translation>الاستقلال الذاتي</translation>
+        <translation>التحريك التلقائي للعرض</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
@@ -40008,12 +40011,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>إذا تم فحصه، سيظهر مؤشر الكسر</translation>
+        <translation>إذا تم التحديد، سيظهر مؤشر الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>نوع مؤشر خطوط العرض</translation>
+        <translation>نوع مؤشر خطوط الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40023,7 +40026,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
         <source>Crosshair</source>
-        <translation>الصليب</translation>
+        <translation>مؤشر متقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1783"/>
@@ -40093,17 +40096,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>خط الأرملة</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>الجدول الزمني لمؤشر الكسر</translation>
+        <translation>عرض خط مؤشر الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>إذا تم فحصها، سيتم سحب الشظية</translation>
+        <translation>إذا تم التحديد، سيُرسم شكل للالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
@@ -40113,7 +40116,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>نوع شكل مؤشر العضلات</translation>
+        <translation>نوع شكل مؤشر الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40203,7 +40206,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>وإذا تم فحصها، ستُعرض خيارات الكسر (المتوسط، المسافة) في مجموعة الأدوات بدلاً من مجموعة الأدوات</translation>
+        <translation>إذا تم التحديد، ستُعرض خيارات الالتقاط (المنتصف، المسافة) في شريط أدوات الالتقاط بدلاً من شريط أدوات خصائص الأداة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
@@ -40228,7 +40231,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>كولور لبدء التعامل مع الكيان</translation>
+        <translation>لون مقبض البداية للكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -40238,7 +40241,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
         <source>Handle Size:</source>
-        <translation>الحجم اليدوي:</translation>
+        <translation>حجم المقبض:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
@@ -40248,7 +40251,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>مُعالجات الكيان المُشوّف على هوايات الفأر</translation>
+        <translation>إظهار مقابض الكيان عند مرور الفأرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40258,7 +40261,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="312"/>
         <source>Inverted Line Color:</source>
-        <translation>عقيد الخط المحجوب:</translation>
+        <translation>لون الخط المعكوس:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="294"/>
@@ -40364,7 +40367,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="592"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation>عضو هيئة مختارة:</translation>
+        <translation>&amp;لون الكيان المحدد:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
@@ -40379,7 +40382,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="258"/>
         <source>Default zoom factor:</source>
-        <translation>عامل الحدوث الافتراضي:</translation>
+        <translation>معامل التكبير الافتراضي:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
@@ -40389,7 +40392,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>على زوم عجلات الفأر، مقلاة إلى منتصف النافذة.</translation>
+        <translation>عند التكبير بعجلة الفأرة، حرّك العرض إلى منتصف النافذة.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
@@ -40426,7 +40429,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>أرملة (ميتا غريد) إذا تم سحب الشبكة من نقاط</translation>
+        <translation>عرض خط الشبكة الوصفية إذا رُسمت الشبكة بالنقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40439,7 +40442,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>السّيد Width:</translation>
+        <translation>عرض الخط:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40574,7 +40577,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3318"/>
         <source>Defines how to draw extended X axis</source>
-        <translation>تحديد كيفية سحب محور X ممتد</translation>
+        <translation>يحدد كيفية رسم محور X الممتد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
@@ -40584,7 +40587,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>إذا تم فحصها، لن يتم سحب علامة الصفر النسبية</translation>
+        <translation>إذا تم التحديد، لن تُرسم علامة الصفر النسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
@@ -40599,7 +40602,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
         <source>If checked, grid wil be drawn</source>
-        <translation>إذا تم فحصها، سيتم سحب شبكة &quot;ويل&quot;</translation>
+        <translation>إذا تم التحديد، ستُرسم الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1054"/>
@@ -40614,12 +40617,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>إذا تم فحصها، الشبكة لن تُسحب داخل المنظر</translation>
+        <translation>إذا تم التحديد، لن تُرسم الشبكة أثناء تحريك العرض بالفأرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>لا ترسم شبكة على البنكر</translation>
+        <translation>لا ترسم الشبكة أثناء تحريك العرض</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
@@ -40649,12 +40652,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&quot; النوع الرهيب:</translation>
+        <translation>&amp;نوع الشبكة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>إذا تم فحصها، سيتم سحب (ميتاغريد) كجزء من رسم الشبكة.</translation>
+        <translation>إذا تم التحديد، ستُرسم الشبكة الوصفية كجزء من رسم الشبكة.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
@@ -40708,7 +40711,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation>وإذا كان هناك عدد أكبر من الكيانات في مرحلة ما قبل الاستعراض أكثر مما هو محدد، يُسحب الاسترداد بدلا من الكيانات.</translation>
+        <translation>إذا كان عدد الكيانات في المعاينة أكبر من العدد المحدد، فسيُرسم مستطيل بدلاً من الكيانات.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
@@ -40743,7 +40746,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>إذا تم اختيار الكيان سيتم تسليط الضوء عليه في طريقة &quot;السرقة&quot; باستخدام موقع الكيان بدلا من 1px</translation>
+        <translation>إذا تم الاختيار، سيُبرز الكيان في وضع &quot;المسودة&quot; باستخدام عرض خط الكيان بدلاً من 1px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40783,7 +40786,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>إذا كان طول خط النص على الشاشة أقل من أكاذيب محددة، يُسحب الملصق بدلا من النص</translation>
+        <translation>إذا كان ارتفاع سطر النص على الشاشة أقل من عدد البكسلات المحدد، فسيُرسم عنصر نائب بدلاً من النص</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
@@ -40798,7 +40801,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation>إذا كان حجم الشاشة أقل من القيمة، يُسحب النسيج كخط</translation>
+        <translation>إذا كان حجم المحور الأصغر للقطع الناقص على الشاشة أقل من القيمة، يُرسم القطع الناقص كخط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
@@ -40833,27 +40836,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation>إذا كان حجم الشاشة بالنسبة للمحور الرئيسي للملفات أقل من القيمة، يُسحب النسيج كنقطة</translation>
+        <translation>إذا كان حجم المحور الأكبر للقطع الناقص على الشاشة أقل من القيمة، يُرسم القطع الناقص كنقطة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>وإذا وقع الاختيار على خطوط أساس نصوص بدلاً من الرسائل النصية (البسيطة إلى مشروع النموذج) أثناء الفرز.</translation>
+        <translation>إذا تم الاختيار، ستُرسم خطوط أساس النص بدلاً من حروفه (كما في وضع المسودة) أثناء تحريك العرض. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft within paning operations</source>
-        <translation>وضع نص في شكل مسودة في إطار عمليات الصرافة</translation>
+        <translation>رسم النص كمسودة أثناء عمليات تحريك العرض</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>وإذا وقع الاختيار على خطوط أساس نصوص بدلاً من الرسائل النصية (البسيطة إلى مشروع النموذج) في مرحلة ما قبل النظر.</translation>
+        <translation>إذا تم الاختيار، ستُرسم خطوط أساس النص بدلاً من حروفه (كما في وضع المسودة) في المعاينة. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
         <source>Draw text as draft in preview</source>
-        <translation>صياغة نص في مرحلة ما قبل الاستعراض</translation>
+        <translation>رسم النص كمسودة في المعاينة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2548"/>
@@ -40878,12 +40881,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>وإذا تم فحصها، ستوضع عناصر التنسيق في خط واحد. وإلا، سيكون كل عنصر على خط واحد.</translation>
+        <translation>إذا تم التحديد، ستُرسم مكونات الإحداثي في سطر واحد. وإلا فسيكون كل مكون في سطر خاص به. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
         <source>Draw coordinates in one line</source>
-        <translation>إحداثيات سحب في خط واحد</translation>
+        <translation>رسم الإحداثيات في سطر واحد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
@@ -40897,7 +40900,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3078"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation>وإذا تم فحصها، ستظهر علامات لتنسيق العناصر. وإلا، سيتم عرض الشكل الموحد للإحداثيات.</translation>
+        <translation>إذا تم التحديد، ستظهر تسميات مكونات الإحداثي. وإلا فسيُعرض الشكل القياسي للإحداثيات.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
@@ -40929,22 +40932,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>إذا تم فحصها، &quot;سناب إلى جريد&quot; يتم تجاهلها إذا لم يتم سحب الشبكة.</translation>
+        <translation>إذا تم التحديد، يتم تجاهل &quot;الالتقاط إلى الشبكة&quot; إذا لم تكن الشبكة مرسومة.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>&quot;إغنور&quot; &quot;سناب إلى جريد&quot; إذا لم يتم سحب الشبكة</translation>
+        <translation>تجاهل &quot;الالتقاط إلى الشبكة&quot; إذا لم تكن الشبكة مرسومة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation>خارج الملصقات من نقطة الضمادات.</translation>
+        <translation>إزاحة التسميات عن نقطة المؤشر.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
         <source>Cursor position offset:</source>
-        <translation>التعويض عن وظيفة السكرتارية:</translation>
+        <translation>إزاحة موضع المؤشر:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
@@ -40964,12 +40967,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2748"/>
         <source>Show properties for entity that will be created</source>
-        <translation>الممتلكات العرضية للكيان الذي سينشأ</translation>
+        <translation>إظهار خصائص الكيان الذي سيُنشأ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>تبين الممتلكات للكيانات التي يتم تحريرها من قبل المتعاملين</translation>
+        <translation>إظهار خصائص الكيان الذي يُحرَّر بالمقابض</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -40984,7 +40987,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>وإذا تم فحصها، ستظهر المسافة والزاوية النسبية من نقطة الصفر النسبية إلى نقطة الكسر.</translation>
+        <translation>إذا تم التحديد، ستظهر المسافة والزاوية النسبيتان من نقطة الصفر النسبي إلى نقطة الالتقاط.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40999,7 +41002,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation>وإذا تم فحصها، سيظهر حافز القيادة النشطة.</translation>
+        <translation>إذا تم التحديد، ستظهر مطالبة الأمر النشط.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2847"/>
@@ -41009,22 +41012,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2771"/>
         <source>If checked, show relative coordinate</source>
-        <translation>إذا تم فحصها، يُظهر التنسيق النسبي</translation>
+        <translation>إذا تم التحديد، يُعرض الإحداثي النسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
         <source>Show relative coordinate</source>
-        <translation>التنسيق النسبي</translation>
+        <translation>إظهار الإحداثي النسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>وإذا تم فحصها، ستُعرض معلومات عن نوع الكسر والقيود لنقطة الكسر (إن وجدت)</translation>
+        <translation>إذا تم التحديد، ستُعرض معلومات عن نوع الالتقاط والقيود لنقطة الالتقاط (إن وجدت)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>معلومات سريعة/تقييد</translation>
+        <translation>إظهار معلومات الالتقاط/القيود</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
@@ -41039,22 +41042,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>وإذا تم فحصه، سيظهر الموقف المطلق لنقطة الانقطاع.</translation>
+        <translation>إذا تم التحديد، سيظهر الموضع المطلق لنقطة الالتقاط.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
         <source>Show absolute coordinate</source>
-        <translation>التنسيق المطلق</translation>
+        <translation>إظهار الإحداثي المطلق</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3009"/>
         <source>If checked, name of active command will be shown before command prompt</source>
-        <translation>إذا تم فحص اسم القيادة النشطة سيظهر قبل القيادة بسرعة</translation>
+        <translation>إذا تم التحديد، سيظهر اسم الأمر النشط قبل مطالبة الأمر</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3015"/>
         <source>Show active command name</source>
-        <translation>إظهار اسم القيادة</translation>
+        <translation>إظهار اسم الأمر النشط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
@@ -41145,7 +41148,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
         <source>Drawing units</source>
-        <translation>وحدات سحب</translation>
+        <translation>وحدات الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
@@ -41165,7 +41168,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
         <source>Controls default mode for drawings</source>
-        <translation>طريقة التخلف عن الدفع</translation>
+        <translation>يتحكم في الوضع الافتراضي للرسومات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5756"/>
@@ -41175,7 +41178,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>تدوير الزاوية:</translation>
+        <translation>التقاط الزاوية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41216,7 +41219,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3552"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>حجم الفونت الذي ينبغي استخدامه لسحب اسم المحور في نظام التنسيق صفر.</translation>
+        <translation>حجم الخط المستخدم لرسم اسم المحور عند صفر نظام الإحداثيات.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
@@ -41226,7 +41229,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
         <source>Show Draft mode marker</source>
-        <translation>مشروع مؤشر النموذج</translation>
+        <translation>إظهار علامة وضع المسودة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="682"/>
@@ -41236,7 +41239,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
         <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation>إذا تم اختياره، في مشروع الوسم النصي سيرسم في زوايا النظر</translation>
+        <translation>إذا تم الاختيار، ستُرسم في وضع المسودة تسمية نصية في زوايا العرض</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3509"/>
@@ -41251,7 +41254,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3536"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
-        <translation>حجم محور نظام التنسيق صفر علامة</translation>
+        <translation>حجم محور علامة صفر نظام الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
@@ -41276,7 +41279,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3147"/>
         <source>Coordinate System</source>
-        <translation>النظام المنسق</translation>
+        <translation>نظام الإحداثيات</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
@@ -41311,12 +41314,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
-        <translation>نوع الشبكة التي سيتم سحبها</translation>
+        <translation>نوع الشبكة المراد رسمها</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>الوجبة الوهمية</translation>
+        <translation>الشبكة الوصفية العشرية كل:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
@@ -41331,7 +41334,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>علامة التدوير:</translation>
+        <translation>علامة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
@@ -41346,7 +41349,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>وسيتم الاستشهاد بالاختناق على الكيان إذا مُكِّن من ذلك، كما أن المسافة بين الفأر ونقطة الكسر أكبر من قيمة محددة.</translation>
+        <translation>سيُفعَّل الالتقاط على الكيان إذا كان ممكَّنًا وكانت المسافة بين الفأرة والنقطة الملتقطة أكبر من القيمة المحددة.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41371,7 +41374,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>اقبضوا على الكيانات</translation>
+        <translation>مسافة التقاط الكيانات:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
@@ -41422,7 +41425,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>وفي حالة اختيار القائمة، ستُنشأ قائمة منفصلة لكل مجموعة من القيادات ذات الصلة بالكيانات. وإلا، ستكون هذه القيادة تحت القائمة نفسها.</translation>
+        <translation>إذا تم الاختيار، ستُنشأ قائمة منفصلة لكل مجموعة من الأوامر المتعلقة بالكيانات. وإلا فستكون هذه الأوامر تحت القائمة نفسها. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
@@ -41437,7 +41440,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5500"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation>وفي حالة اختيارها، تكون الضوابط المفروضة على اختيار القيم من السحب متاحة في مجموعة أدوات الخيارات المتعلقة بالنقل، مما يسمح باختيار قيم الطول والزاوية من السحب.</translation>
+        <translation>إذا تم الاختيار، تتوفر في شريط أدوات خيارات الأداة عناصر تحكم لاختيار القيم من الرسم، مما يسمح باختيار قيم الطول والزاوية من الرسم. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5503"/>
@@ -42044,7 +42047,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>وإذا تم فحصها، تُسحب المحفوظات باستخدام أجزاء خطية للاستقراء. هذا يُخفّفُ تَسْحبُ القطع الأثريةَ قريباً إلى نقطةِ النهايةِ، مع ذلك قَدْ يَحْصلُ على قوس أقل سلاسة. لا أخطاء سحب قرب نقاط النهاية على زووم كبيرة.</translation>
+        <translation>إذا تم التحديد، تُرسم الأقواس بالاستيفاء بمقاطع خطية. يزيل هذا عيوب الرسم قرب نقاط النهاية، لكنه قد ينتج أقواسًا أقل نعومة. لا أخطاء في الرسم قرب نقاط النهاية عند التكبير الكبير.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
@@ -42099,7 +42102,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
-        <translation>الإنتربول حسب القطاعات</translation>
+        <translation>الاستيفاء بمقاطع خطية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
@@ -42109,7 +42112,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6224"/>
         <source>Determine segments by max sagitta</source>
-        <translation>تحديد القطاعات حسب الحد الأقصى</translation>
+        <translation>تحديد المقاطع حسب الحد الأقصى لسهم القوس</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
@@ -42129,12 +42132,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6244"/>
         <source> degrees</source>
-        <translation>درجة الحرارة</translation>
+        <translation> درجة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>الحد الأقصى للمسافة الرهينة وجزء من خط الاستقطاب</translation>
+        <translation>أقصى مسافة بين القوس وخط الاستيفاء المقطعي</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
@@ -42144,17 +42147,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>وإذا كان نظام تحديد المواقع وتنسيق المستعملين نشطا، سيظهر أيضا تدوين مطلق في نظام التنسيق العالمي.</translation>
+        <translation>إذا تم التعيين وكان نظام إحداثيات المستخدم نشطًا، فسيُعرض أيضًا الإحداثي المطلق في نظام الإحداثيات العالمي.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation>إحداثيات العالم إذا كان المستخدم ينسق النظام</translation>
+        <translation>إظهار الإحداثيات العالمية عند العمل في نظام إحداثيات المستخدم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>إذا تم فحصها، أي تغيير في الزوم أو المقلاة للرسم سيسجل الرسم على النحو المعدل. وإلا، فإن تغيير الرأي لن يؤثر فقط على الوضع المعدل للرسم.</translation>
+        <translation>إذا تم التحديد، فإن أي تغيير في التكبير أو تحريك العرض للرسم سيجعل الرسم معدَّلًا. وإلا فلن يؤثر تغيير العرض وحده على حالة التعديل للرسم. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
@@ -42179,7 +42182,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>زاوية القاعدة صفرية مقارنة بنظام المستعمل الحالي التأثيرات القطبية تُحدّثُ المدخلاتَ، تُقطّعُ إلى الزاويةِ. 0.0 هو 3pm.</translation>
+        <translation>زاوية الأساس الصفرية بالنسبة لنظام إحداثيات المستخدم الحالي. تؤثر على إدخال الإحداثيات القطبية والالتقاط إلى الزاوية. 0.0 تقابل اتجاه الساعة 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42213,7 +42216,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>برنامج استعادة الهندسة/النقل إلى الولاية الأصلية</translation>
+        <translation>يستعيد أبعاد نوافذ البرنامج وتخطيطها إلى الحالة الأصلية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42229,7 +42232,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>الطريق إلى الملف مع أنماط الصيد</translation>
+        <translation>مسار المجلد الذي يحتوي على أنماط التهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42249,7 +42252,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>تَضْربُ مُحرّرَةَ عندما SPACE BAR</translation>
+        <translation>تبديل وضع الالتقاط الحر عند الضغط على مفتاح المسافة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -42277,12 +42280,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Export visible construction layers</source>
-        <translation>تصدير طبقات التشييد المرئية</translation>
+        <translation>تصدير طبقات الإنشاء المرئية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
         <source>Blocks</source>
-        <translation>حواجز</translation>
+        <translation>الكتل</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="112"/>
@@ -42297,7 +42300,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="135"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>النسيج التقريبي وقوس النسيج مع المربيات</translation>
+        <translation>تقريب القطوع الناقصة وأقواسها بمنحنيات بيزييه تكعيبية</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="211"/>
@@ -42332,7 +42335,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="167"/>
         <source>Dash/Dot Lines</source>
-        <translation>خطوط الداش/الدبابات</translation>
+        <translation>خطوط متقطعة/منقطة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="177"/>
@@ -42363,9 +42366,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>لا يمكن للكيمياء حتى آذار/مارس 2015 أن يكشفوا عن الأنابيب و القوس المصنوعة بشكل صحيح
-عندما يُنشأون بإستخدام بطاقة الـ&quot;سيليبس&quot; مع تناوب في
-The transform. attribute or as ventpath. using elliptic arc segments.</translation>
+        <translation>لا يستطيع MakerCAM حتى آذار/مارس 2015 عرض القطوع الناقصة وأقواسها بشكل صحيح 
+عند إنشائها باستخدام الوسم &lt;ellipse&gt; مع دوران في 
+السمة &lt;transform&gt; أو كمسار &lt;path&gt; باستخدام مقاطع أقواس ناقصية.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -42378,8 +42381,8 @@ but avoided in some CAM&apos;s.</source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>العديد من الـ (ماكركام) و(إليزككام) و(لاسر ويب) يتجاهلون أسلوب الخط الفاشل
-الذي يمكن أن يكون مفيداً في ليزركو من خشب الخشب أو للحرف الورقي.</translation>
+        <translation>تتجاهل كثير من برامج CAM (MakerCAM وEleksCAM وLaserWeb) نمط الخط المتقطع/المنقط، 
+وهو ما قد يفيد في القص بالليزر للخشب الرقائقي أو في الأعمال الورقية. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
@@ -42616,12 +42619,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
         <source>Rotation angle</source>
-        <translation>زاوية التناوب</translation>
+        <translation>زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="294"/>
         <source>Width factor</source>
-        <translation>عامل الأرملة</translation>
+        <translation>معامل العرض</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="330"/>
@@ -42631,7 +42634,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="499"/>
         <source>Aligned</source>
-        <translation>منحاز</translation>
+        <translation>محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="630"/>
@@ -43196,7 +43199,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1648"/>
         <source>Selection of character to insert</source>
-        <translation>اختيار الشخصية لإدراجها</translation>
+        <translation>اختيار المحرف المراد إدراجه</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="353"/>
@@ -43259,7 +43262,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="938"/>
         <source>Diameter (⌀)</source>
-        <translation>مقياس (ث)</translation>
+        <translation>القطر (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="502"/>
@@ -43295,7 +43298,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>الصرف DXF 2000 %1</translation>
+        <translation>تبادل الرسومات DXF 2000 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="137"/>
@@ -43315,12 +43318,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="145"/>
         <source>Jww Drawing %1</source>
-        <translation>سحب ٪ 1</translation>
+        <translation>رسم Jww %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
         <source>Drawing Exchange %1</source>
-        <translation>٪ بورصة الرسم</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="146"/>
@@ -43355,7 +43358,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="136"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>الصرف DXF R14٪1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="164"/>
@@ -43602,13 +43605,13 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>تحتوي طبقة التشييد على كيانات من خطوط مستقيمة لا نهائية مخصصة للاستخدام في الإنشاء الهندسي.
-يجب ألا تظهر محتويات طبقة التشييد في النسخة المطبوعة.</translation>
+        <translation>تحتوي طبقة الإنشاء على كيانات من خطوط مستقيمة لا نهائية مخصصة للاستخدام في الإنشاء الهندسي.
+يجب ألا تظهر محتويات طبقة الإنشاء في النسخة المطبوعة.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>طبقة تشييد</translation>
+        <translation>طبقة إنشاء</translation>
     </message>
 </context>
 <context>
@@ -43663,7 +43666,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
         <source>No Pen</source>
-        <translation>لا</translation>
+        <translation>بلا قلم</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="89"/>
@@ -43813,12 +43816,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="95"/>
         <source>Dash (tiny)</source>
-        <translation>داش (القصدير)</translation>
+        <translation>شرطة (صغيرة جداً)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
         <source>Dash Dot (tiny)</source>
-        <translation>داش دوت (قصدير)</translation>
+        <translation>شرطة نقطة (صغيرة جداً)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
@@ -43882,7 +43885,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>خط الاستطلاع</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43980,7 +43983,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>زوج الخط</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
@@ -44042,7 +44045,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="407"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>القفل &quot;%1&quot; وجميع كياناته سيتم إزالتها.</translation>
+        <translation>ستتم إزالة الكتلة &quot;%1&quot; وجميع كياناتها.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -44126,7 +44129,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
         <source>Blocks for removal:</source>
-        <translation>حواجز للإبعاد:</translation>
+        <translation>الكتل المراد إزالتها:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
@@ -44256,7 +44259,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>سيتم إزالة (بين) من (باليت) ولن تتأثر كيانات الرسم.</translation>
+        <translation>سيُزال القلم من اللوحة، ولن تتأثر كيانات الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44277,7 +44280,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ستُزال القلنسوة من (باليت)، ولن تتأثر كيانات الرسم.</translation>
+        <translation>ستُزال الأقلام من اللوحة، ولن تتأثر كيانات الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44357,7 +44360,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="500"/>
         <source>Open Drawing</source>
-        <translation>فتح الباب</translation>
+        <translation>فتح رسم</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="522"/>
@@ -44417,7 +44420,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="468"/>
         <source>Drawing Exchange %1</source>
-        <translation>٪ بورصة الرسم</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="473"/>
@@ -44432,7 +44435,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="517"/>
         <source>All Files (*.*)</source>
-        <translation>جميع الملفات (*. *)</translation>
+        <translation>جميع الملفات (*.*)</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="612"/>
@@ -44836,7 +44839,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>فشل التضليل بسبب وجود فجوة =1٪ بين (2٪، 3٪) و (4٪، 5٪)</translation>
+        <translation>فشل التهشير بسبب وجود فجوة =%1 بين (%2، %3) و (%4، %5)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="515"/>
@@ -44846,7 +44849,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="69"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: ازدواجية القيادة: النسبة المئوية 1 أخذت بالفعل بنسبة مئوية(2)</translation>
+        <translation>: أمر مكرر: %1 مأخوذ بالفعل بواسطة %2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="903"/>
@@ -44858,13 +44861,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>♪</translation>
+        <translation>po</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>السطر</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="96"/>
@@ -44894,7 +44897,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>مجانا</translation>
+        <translation>حر</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
@@ -44906,19 +44909,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="457"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>التلميذ</translation>
+        <translation>منحنى</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="459"/>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>شظية</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="464"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>المخطط العام</translation>
+        <translation>منحنى2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="466"/>
@@ -44942,7 +44945,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="281"/>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>ثنائي</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="289"/>
@@ -44960,7 +44963,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="144"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>الحساب</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="340"/>
@@ -45032,13 +45035,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>هاتش</translation>
+        <translation>تظليل</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>ها</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="883"/>
@@ -45050,7 +45053,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="885"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>mtx</translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="890"/>
@@ -45074,7 +45077,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>إعادة سحب</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
@@ -45104,7 +45107,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>زووماتو</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
@@ -45116,7 +45119,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>زومبان</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
@@ -45152,14 +45155,14 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>غير صحيح</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1265"/>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>ش</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
@@ -45177,13 +45180,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimarange</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>نهاية الموسم</translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
@@ -45195,7 +45198,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="677"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>فظي</translation>
+        <translation>dimvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="678"/>
@@ -45207,19 +45210,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>ثنائي</translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>♪</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>ثنائي</translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
@@ -45237,7 +45240,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="692"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>المقاييس</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="690"/>
@@ -45249,13 +45252,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>d</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>متصدر</translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="705"/>
@@ -45273,7 +45276,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>لا يقيد</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
@@ -45285,7 +45288,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>التقييد</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
@@ -45297,19 +45300,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>التقييد الأفقي</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>ح</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>القيود الافتراضية</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
@@ -45339,7 +45342,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>في</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
@@ -45357,13 +45360,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>أنا</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="756"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>إلغاء</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
@@ -45405,7 +45408,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>..</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
@@ -45455,7 +45458,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="925"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>المفاجئة</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="926"/>
@@ -45467,7 +45470,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>عاصفة</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="932"/>
@@ -45491,19 +45494,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>مصيدة</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="944"/>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>كيلوغرام</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>قطع</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -45527,7 +45530,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>السخرية</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
@@ -45545,7 +45548,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>مصمم</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
@@ -45557,7 +45560,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>مختارة</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
@@ -45581,19 +45584,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="826"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>عطر</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>أمي</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>الدعامة</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="200"/>
@@ -45611,13 +45614,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="217"/>
         <source>circlebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>دائرةبقوس</translation>
+        <translation>circlebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>لا</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="856"/>
@@ -45646,7 +45649,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1208"/>
         <source>close</source>
-        <translation>قريبا</translation>
+        <translation>إغلاق</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
@@ -45657,7 +45660,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>الأعمدة المباعدة</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45668,12 +45671,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>طول المدة</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>العدد</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45684,18 +45687,18 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>الصفوف</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>الصفوف</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1261"/>
         <source>through</source>
-        <translation>من خلال</translation>
+        <translation>عبر</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
@@ -45712,7 +45715,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>a</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
@@ -45735,13 +45738,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
         <source>c</source>
         <comment>close</comment>
-        <translation>ج</translation>
+        <translation>c</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>سلاسل</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
@@ -45753,31 +45756,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>الأعمدة المباعدة</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>التواطؤ</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>(ج)</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>الحقيقة</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>f</source>
         <comment>factor</comment>
-        <translation>و</translation>
+        <translation>f</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1227"/>
@@ -45788,19 +45791,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1228"/>
         <source>?</source>
         <comment>help</comment>
-        <translation>؟?</translation>
+        <translation>?</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1230"/>
         <source>length</source>
         <comment>length</comment>
-        <translation>طول المدة</translation>
+        <translation>الطول</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>len</source>
         <comment>length</comment>
-        <translation>لين</translation>
+        <translation>len</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1232"/>
@@ -45812,7 +45815,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1234"/>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>طولها 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1235"/>
@@ -45824,13 +45827,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1236"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1238"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>الطول</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
@@ -45866,7 +45869,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1247"/>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>را</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1249"/>
@@ -45879,7 +45882,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1251"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>إلغاء</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
@@ -45891,7 +45894,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>الصفوف</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
@@ -45908,18 +45911,18 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1259"/>
         <source>t</source>
         <comment>text</comment>
-        <translation>♪</translation>
+        <translation>t</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1262"/>
         <source>t</source>
         <comment>through</comment>
-        <translation>♪</translation>
+        <translation>t</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
         <source>undo</source>
-        <translation>غير صحيح</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
@@ -45935,23 +45938,23 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1271"/>
         <source>b</source>
         <comment>back</comment>
-        <translation>(ب)</translation>
+        <translation>b</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>الأوراق</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
-        <translation>الرسم البياني</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>لا يمكن تغيير معنى الأوامر رفض إعادة استخدام القيادة ٪ 1 ل يعني٪2</translation>
+        <translation>لا يمكن تغيير معنى الأوامر. رُفضت إعادة استخدام الأمر %1 ليعني %2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
@@ -45981,7 +45984,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>Command not found: %1</source>
-        <translation>لم يتم العثور على القيادة: ٪</translation>
+        <translation>لم يتم العثور على الأمر: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
@@ -46331,7 +46334,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
-        <translation>أسود</translation>
+        <translation>blackwhite</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
@@ -46342,7 +46345,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>الدين</translation>
+        <translation>di</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="768"/>
@@ -46415,13 +46418,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>السطر 2</translation>
+        <translation>line2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>خط</translation>
+        <translation>sline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="104"/>
@@ -46463,7 +46466,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="118"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation>حيل</translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="119"/>
@@ -46475,19 +46478,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>الخط</translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="125"/>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>لا</translation>
+        <translation>la</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>السطر</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
@@ -46499,7 +46502,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>خط</translation>
+        <translation>linever</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
@@ -46511,13 +46514,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>السطر(ج)</translation>
+        <translation>مستطيل</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation>إعادة</translation>
+        <translation>re</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="149"/>
@@ -46535,7 +46538,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>الحساب</translation>
+        <translation>مستطيل2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="156"/>
@@ -46559,7 +46562,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>شرائح</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
@@ -46595,7 +46598,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="185"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation>الصليب</translation>
+        <translation>cross</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="186"/>
@@ -46619,7 +46622,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation>منتصف الخط</translation>
+        <translation>midline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="196"/>
@@ -46631,19 +46634,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>النقاط</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>نقاط</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
-        <translation>نقطة الوسط</translation>
+        <translation>midpoint</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="212"/>
@@ -46673,7 +46676,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="229"/>
         <source>align</source>
         <comment>align entities</comment>
-        <translation>الاتساق</translation>
+        <translation>محاذاة</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
@@ -46685,19 +46688,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>align1</source>
         <comment>align entities</comment>
-        <translation>الاتساق 1</translation>
+        <translation>محاذاة1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
         <source>al1</source>
         <comment>align entities</comment>
-        <translation>1</translation>
+        <translation>al1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation>الاتساق(و)</translation>
+        <translation>alignref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
@@ -46709,7 +46712,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>السطر</translation>
+        <translation>وصل</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
@@ -46721,13 +46724,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>انفصال</translation>
+        <translation>كسر</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation>(ب)</translation>
+        <translation>bd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
@@ -46745,7 +46748,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="264"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>السطر</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="265"/>
@@ -46769,13 +46772,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>الخصم</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="267"/>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation>أبي</translation>
+        <translation>pa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="268"/>
@@ -46787,7 +46790,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>السطر</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
@@ -46799,7 +46802,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>الفرز</translation>
+        <translation>منصف</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
@@ -46817,7 +46820,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="294"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>السطر ٢)ج(</translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="295"/>
@@ -46829,19 +46832,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>الكاتب</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>أو</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>السطر</translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
@@ -46853,7 +46856,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>السطر</translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="314"/>
@@ -46865,7 +46868,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>البوليجونسينكور</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
@@ -46907,13 +46910,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>polygonv</translation>
+        <translation>polygonvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="335"/>
         <source>pvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>pv</translation>
+        <translation>pvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="341"/>
@@ -46925,13 +46928,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="351"/>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation>ج</translation>
+        <translation>c</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="356"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>circ2p</translation>
+        <translation>circle2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="358"/>
@@ -46943,7 +46946,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>الدائرة 2</translation>
+        <translation>circle2pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="364"/>
@@ -46955,7 +46958,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>الدائرة 3p</translation>
+        <translation>circle3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="371"/>
@@ -46967,7 +46970,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>الدائرة</translation>
+        <translation>circlecr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
@@ -46985,7 +46988,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>circtan2cp</translation>
+        <translation>circletan2cp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="385"/>
@@ -46997,7 +47000,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>circtan2p</translation>
+        <translation>circletan2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
@@ -47009,7 +47012,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="396"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>الدائرة 2</translation>
+        <translation>circletan2cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="397"/>
@@ -47021,7 +47024,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>الدائرة 3</translation>
+        <translation>circletan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="404"/>
@@ -47045,7 +47048,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="415"/>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>(أ)</translation>
+        <translation>a</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="420"/>
@@ -47057,7 +47060,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="421"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation>(أ) 3</translation>
+        <translation>a3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="426"/>
@@ -47069,7 +47072,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>في</translation>
+        <translation>at</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
@@ -47093,7 +47096,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="439"/>
         <source>a2l</source>
         <comment>draw 2pt arc length</comment>
-        <translation>(أ)</translation>
+        <translation>a2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="444"/>
@@ -47105,7 +47108,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="445"/>
         <source>a2h</source>
         <comment>draw 2pt arc height</comment>
-        <translation>(أ)</translation>
+        <translation>a2h</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="450"/>
@@ -47117,7 +47120,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="451"/>
         <source>a2a</source>
         <comment>draw 2pt arc angle</comment>
-        <translation>(أ)</translation>
+        <translation>a2a</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="458"/>
@@ -47153,7 +47156,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="477"/>
         <source>ae1</source>
         <comment>arc ellipse 1 point</comment>
-        <translation>(أ)</translation>
+        <translation>ae1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="482"/>
@@ -47183,7 +47186,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="495"/>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation>و</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="503"/>
@@ -47249,13 +47252,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>زاوية</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
         <source>aline</source>
         <comment>draw angle from line</comment>
-        <translation>خط</translation>
+        <translation>aline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="553"/>
@@ -47267,13 +47270,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="554"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>الدوار</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>النقطة 2</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -47285,7 +47288,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>plinead</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
@@ -47309,7 +47312,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>خط</translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
@@ -47321,7 +47324,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>ملصق</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
@@ -47381,19 +47384,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation>س</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="628"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>اللافتر</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>هو</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -47429,13 +47432,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>dimord</source>
         <comment>dimension - ordinate</comment>
-        <translation>الديمور</translation>
+        <translation>dimord</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>نعم</translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
@@ -47459,13 +47462,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="685"/>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation>د</translation>
+        <translation>dr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="698"/>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation>♪</translation>
+        <translation>da</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="711"/>
@@ -47489,7 +47492,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>الموز</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -47501,7 +47504,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>النطاق</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="765"/>
@@ -47561,7 +47564,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>الطراز</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
@@ -47585,13 +47588,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="781"/>
         <source>offset</source>
         <comment>modify - offset</comment>
-        <translation>التعويض</translation>
+        <translation>إزاحة</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="783"/>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>#</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="784"/>
@@ -47609,13 +47612,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="796"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>موديل</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation>الملاءة</translation>
+        <translation>تقويس</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -47645,13 +47648,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>نموذج</translation>
+        <translation>مط</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>الأشكال</translation>
+        <translation>خصائص</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
@@ -47663,7 +47666,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>النموذج</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
@@ -47681,7 +47684,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>وسيط</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="844"/>
@@ -47693,7 +47696,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="853"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>المعلومات</translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="854"/>
@@ -47705,7 +47708,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>المعلومات</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
@@ -47723,7 +47726,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="868"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>المعلومات</translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="869"/>
@@ -47747,7 +47750,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation>m</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="891"/>
@@ -47759,19 +47762,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>هكذا</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>ضربة قلبية</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="971"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>ضربة سريعة</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="972"/>
@@ -47789,7 +47792,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1020"/>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation>غير معقول</translation>
+        <translation>un</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
@@ -47801,7 +47804,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>السحب</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
@@ -47813,7 +47816,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>zoomin</source>
         <comment>zoom - in</comment>
-        <translation>حديقة الحيوان</translation>
+        <translation>تكبير</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
@@ -47825,7 +47828,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>زومو</translation>
+        <translation>تصغير</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
@@ -47837,13 +47840,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1195"/>
         <source>angle1</source>
-        <translation>الزاوية 1</translation>
+        <translation>angle1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1196"/>
         <source>angle2</source>
-        <translation>الزاوية 2</translation>
+        <translation>angle2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
@@ -47861,13 +47864,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>طولها 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>الطول</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47887,53 +47890,53 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>زاوية</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>البدء</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>التعويض</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>خطوط الهاتف</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
-        <translation>دغدغة</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>شعر مستعار</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>الارتفاع</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
-        <translation>بو</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>الحجم</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
-        <translation>الخفافيش</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
@@ -47943,12 +47946,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>الاستخدام</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>زوايا</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -47958,7 +47961,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>الجولة</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
@@ -47973,7 +47976,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>أعلى</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
@@ -47983,37 +47986,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>يسار</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>وسط</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>الحق</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>أسفل</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>أسفل</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>القاع</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
         <source>snapcorner</source>
-        <translation>الفشار</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
@@ -48023,12 +48026,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>الحجم</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>الحجم</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
@@ -48038,32 +48041,32 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>vert</source>
-        <translation>منحرف</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
-        <translation>المشهد 2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>الزاوية</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>منتصف المنعطف</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
-        <translation>منتصف الهضبة</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
         <source>quad</source>
-        <translation>أربعة</translation>
+        <translation>quad</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1157"/>
@@ -48073,52 +48076,52 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>زاوية</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>الحواف</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>حافة واحدة</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>الحافة</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>الحافة</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>حافة نهاية</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>النهاية</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>كلاهما</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>لا</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>مناسبة</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
@@ -48128,17 +48131,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>غير محدد</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>dist flex</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>المسافة</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -48158,7 +48161,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">ثابتة</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
@@ -48266,12 +48269,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>التأقلم والرسم المركزي للصفحة.</translation>
+        <translation>ملاءمة الرسم وتوسيطه تلقائيًا في الصفحة.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Auto center drawing on page.</source>
-        <translation>مركز السيارات على الصفحة.</translation>
+        <translation>توسيط الرسم تلقائيًا على الصفحة.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
@@ -48306,7 +48309,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>جدول النواتج E.g.: 0.01 (for 1:100 scale).</translation>
+        <translation>مقياس الإخراج. مثال: 0.01 (لمقياس 1:100).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="133"/>
@@ -48358,7 +48361,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="67"/>
         <source>Load command file</source>
-        <translation>ملف القيادة</translation>
+        <translation>تحميل ملف الأوامر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="71"/>
@@ -48406,12 +48409,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>تثبيت الزاوية</translation>
+        <translation>التقاط الزاوية</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>تثبيت حر</translation>
+        <translation>التقاط حر</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -48659,7 +48662,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>الجدول غير القابل للطباعة لا يُمكنُ أَنْ يُلائمَ الطبعةَ قبل العرض للصفحةِ</translation>
+        <translation>مقياس الطباعة %1 غير صالح. لا يمكن ملاءمة معاينة الطباعة مع الصفحة</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="164"/>
@@ -48669,7 +48672,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="165"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation>PDF files (*.pdf); All files (*.*)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
@@ -48807,12 +48810,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>ديم منحاز</translation>
+        <translation>بُعد محاذى</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>ديم القياس</translation>
+        <translation>بُعد قطري</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
@@ -48827,12 +48830,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>ديم أمر</translation>
+        <translation>بُعد إحداثي</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>قائد</translation>
+        <translation>خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48908,7 +48911,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
         <source>No block activated to save</source>
-        <translation>لم يتم تفعيل أي حجب</translation>
+        <translation>لا توجد كتلة مفعّلة للحفظ</translation>
     </message>
 </context>
 <context>
@@ -49053,7 +49056,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>زوم أو بن أو كيان مختار</translation>
+        <translation>تكبير أو تحريك العرض أو اختيار كيان</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49262,12 +49265,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>تحديد نقطة على النسيج، أو المسافة الكاملة إلى الجنين</translation>
+        <translation>حدد نقطة على القطع الناقص، أو المسافة الكلية إلى البؤرتين</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="196"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>النسبة المئوية الإجمالية للمسافة 1 أصغر من المسافة بين الجنين</translation>
+        <translation>المسافة الكلية %1 أصغر من المسافة بين البؤرتين</translation>
     </message>
 </context>
 <context>
@@ -49457,17 +49460,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="220"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>الدائرة الأولى المختارة/الألياف/البارابولا</translation>
+        <translation>اختر الدائرة/القطع الناقص/القطع المكافئ الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="223"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>الدائرة الثانية المختارة/الألياف/البارابولا</translation>
+        <translation>اختر الدائرة/القطع الناقص/القطع المكافئ الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="226"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>إختار خط الشتات أقرب إلى الستار</translation>
+        <translation>اختر الخط المماس الأقرب إلى المؤشر</translation>
     </message>
 </context>
 <context>
@@ -49534,7 +49537,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Paste Multiple</source>
-        <translation>المراعي المتعددة</translation>
+        <translation>لصق متعدد</translation>
     </message>
 </context>
 <context>
@@ -49650,7 +49653,7 @@ Intersection :@(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>السطر 1:</translation>
+        <translation>زاوية الخط 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49764,12 +49767,12 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
         <source>Point is inside selected contour.</source>
-        <translation>المغزى هو داخل وحدة مختارة.</translation>
+        <translation>النقطة داخل الكفاف المحدد.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="59"/>
         <source>Point is outside selected contour.</source>
-        <translation>المغزى هو خارج ملتقى مختار.</translation>
+        <translation>النقطة خارج الكفاف المحدد.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="85"/>
@@ -49848,32 +49851,32 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="210"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>طباعة معادلة في الإحداثيات الورقية (%1, %2)</translation>
+        <translation>إزاحة الطباعة بإحداثيات الورقة بمقدار (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="215"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>طباعة معادلة في الإحداثيات البيانية (%1, %2)</translation>
+        <translation>إزاحة الطباعة بإحداثيات الرسم بمقدار (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="240"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>طباعة معادلة في إحداثيات الرسم البياني</translation>
+        <translation>إزاحة الطباعة بإحداثيات الرسم</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>مطبوع قابل في الإحداثيات الورقية</translation>
+        <translation>إزاحة الطباعة بإحداثيات الورقة</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>: select printout offset coordinates</source>
-        <translation>:: اختيار إحداثيات معادلة للطباعة</translation>
+        <translation>: اختر إحداثيات إزاحة الطباعة</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>نوع مقابل من خط القيادة لتعويض الطباعة</translation>
+        <translation>إدخال الإزاحة من سطر الأوامر لإزاحة الطباعة</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49898,7 +49901,7 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>ويتجاهل التعويض المطبوع الصفر النسبي. Ignoring &apos;@</translation>
+        <translation>إزاحة الطباعة تتجاهل الصفر النسبي. سيتم تجاهل &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49963,7 +49966,7 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>مقلاة زووم</translation>
+        <translation>تحريك العرض</translation>
     </message>
 </context>
 <context>
@@ -50054,7 +50057,7 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
         <source>Free</source>
-        <translation type="unfinished">مجانا</translation>
+        <translation type="unfinished">حر</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1374"/>
@@ -50340,13 +50343,13 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>إذا تم فحص المسافة بين الديدان تحدد بواسطة الفأر</translation>
+        <translation>إذا تم التحديد، تُحدَّد المسافة بين الأبعاد بالفأرة</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation>مجانا</translation>
+        <translation>حر</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
@@ -50369,12 +50372,12 @@ Cartesian: (%2, %3)
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>الاختصار:</translation>
+        <translation>مسافة الالتقاط:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>نقطة الانقطاع من نقطة البداية</translation>
+        <translation>مسافة نقطة الالتقاط عن نقطة الالتقاط المحددة مبدئيًا</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>

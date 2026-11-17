@@ -374,12 +374,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>LINHA SUAVE</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>PONTOS DA LINHA SUAVE</translation>
+        <translation>PONTOS DE SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -1005,7 +1005,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Desenhar círculo de adição?</translation>
+        <translation>Desenhar círculo de adendo?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

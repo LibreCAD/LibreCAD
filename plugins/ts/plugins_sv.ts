@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Tom enhet</translation>
+        <translation>Tom entitet</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -753,12 +753,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="489"/>
         <source>Inc.</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>

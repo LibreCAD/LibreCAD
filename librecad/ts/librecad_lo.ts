@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ກຳນົດມຸມສິ້ນສຸດ ຫຼື [ມຸມ/chordlen]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -1062,7 +1062,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="411"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>y</source>
-        <translation type="unfinished">ຄ່າ</translation>
+        <translation type="unfinished">y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="416"/>
@@ -1390,7 +1390,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="188"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>y</source>
-        <translation type="unfinished">ຄ່າ</translation>
+        <translation type="unfinished">y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="192"/>
@@ -1679,7 +1679,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸຈຸດທີສອງ
+ຫຼື [number|x|y|ມຸມ|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1691,19 +1692,22 @@ or [number]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸທິດທາງຂອງເສັ້ນ
+[x|y|ມຸມ|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸມຸມທິດທາງຂອງເສັ້ນ
+ຫຼື [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸໂໝດຈຸດຂອບ
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
@@ -2175,7 +2179,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182"></location>
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation>ຈໍານວນແສງບໍ່ຖືກຕ້ອງ, ຄວນຢູ່ໃນຊ່ວງ [3..99]</translation>
+        <translation>ຈຳນວນແຂນດາວ (ລັງສີ) ບໍ່ຖືກຕ້ອງ, ຄວນຢູ່ໃນຊ່ວງ [3..99]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190"></location>
@@ -2205,7 +2209,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="628"></location>
         <source>Set rays number</source>
-        <translation>ກຳນົດຈໍານວນແສງ</translation>
+        <translation>ກຳນົດຈຳນວນແຂນດາວ (ລັງສີ)</translation>
     </message>
 </context>
 <context>
@@ -3817,7 +3821,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="506"></location>
         <source>Entity Pro&amp;perties</source>
-        <translation>ຄຸນ&amp;ລັກສະນະອົງປະກອບ</translation>
+        <translation>ຄຸນ&amp;ສົມບັດອົງປະກອບ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="507"></location>
@@ -3972,12 +3976,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="631"></location>
         <source>Zoom &amp;In</source>
-        <translation>ຂະຫຍາຍ&amp;ເຂົ້າ</translation>
+        <translation>ຊູມ&amp;ເຂົ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="632"></location>
         <source>Zoom &amp;Out</source>
-        <translation>ຂະຫຍາຍ&amp;ອອກ</translation>
+        <translation>ຊູມ&amp;ອອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"></location>
@@ -6552,7 +6556,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="201"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="205"></location>
@@ -6742,7 +6746,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="209"></location>
@@ -6765,7 +6769,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp" line="251"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp" line="255"></location>
@@ -6783,7 +6787,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="203"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
 </context>
 <context>
@@ -6791,7 +6795,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplinefrompolyline.cpp" line="137"></location>
         <source>Select polyline to create spline or spline points</source>
-        <translation>ເລືອກເສັ້ນຕໍ່ເນື່ອງເພື່ອສ້າງເສັ້ນໂຄ້ງ ຫຼື ຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນຕໍ່ເນື່ອງເພື່ອສ້າງເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ຈຸດສະປຼາຍ</translation>
     </message>
 </context>
 <context>
@@ -6799,12 +6803,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="42"></location>
         <source>Not enough points remains for the spline</source>
-        <translation>ຈຸດທີ່ເຫຼືອບໍ່ພໍສຳລັບເສັ້ນໂຄ້ງ</translation>
+        <translation>ຈຸດທີ່ເຫຼືອບໍ່ພໍສຳລັບເສັ້ນໂຄ້ງສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="232"></location>
@@ -9139,7 +9143,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"></location>
         <source>Extension Lines</source>
-        <translation>ເສັ້ນຊ່ວຍຂະໜາດ</translation>
+        <translation>ເສັ້ນຊ່ວຍມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"></location>
@@ -9214,7 +9218,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"></location>
         <source>Fixed length extension lines</source>
-        <translation>ເສັ້ນຊ່ວຍຂະໜາດແບບຄົງທີ່</translation>
+        <translation>ເສັ້ນຊ່ວຍມິຕິແບບຄວາມຍາວຄົງທີ່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"></location>
@@ -13824,7 +13828,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="75"></location>
         <source>Scale:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ມາດຕາສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="88"></location>
@@ -14239,7 +14243,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="57"/>
         <source>Scale X:</source>
-        <translation type="unfinished">ຂະໜາດ X:</translation>
+        <translation type="unfinished">ມາດຕາສ່ວນ X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="70"/>
@@ -14249,7 +14253,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_imagepropertieseditingwidget.ui" line="333"></location>
         <source>Pick scale from drawing</source>
-        <translation>ເລືອກຂະໜາດຈາກຮູບແຕ້ມ</translation>
+        <translation>ເລືອກມາດຕາສ່ວນຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="121"/>
@@ -14300,7 +14304,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="273"/>
         <source>Scale Y:</source>
-        <translation type="unfinished">ຂະໜາດ Y:</translation>
+        <translation type="unfinished">ມາດຕາສ່ວນ Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="312"/>
@@ -14425,7 +14429,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="118"></location>
         <source>Scale X:</source>
-        <translation>ຂະໜາດ X:</translation>
+        <translation>ມາດຕາສ່ວນ X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="137"></location>
@@ -14435,12 +14439,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="144"></location>
         <source>Pick scale by X value from drawing</source>
-        <translation>ເລືອກຂະໜາດແກນ X ຈາກຮູບແຕ້ມ</translation>
+        <translation>ເລືອກມາດຕາສ່ວນແກນ X ຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="158"></location>
         <source>Scale Y:</source>
-        <translation>ຂະໜາດ Y:</translation>
+        <translation>ມາດຕາສ່ວນ Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="177"></location>
@@ -14450,7 +14454,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="184"></location>
         <source>Pick scale Y value from drawing</source>
-        <translation>ເລືອກຂະໜາດແກນ Y ຈາກຮູບແຕ້ມ</translation>
+        <translation>ເລືອກມາດຕາສ່ວນແກນ Y ຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="198"></location>
@@ -20480,7 +20484,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
         <source>Degree</source>
-        <translation type="unfinished">ອົງສາ (Degree)</translation>
+        <translation type="unfinished">ລະດັບ (Degree)</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -24635,7 +24639,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="98"/>
         <source>Chord Length</source>
-        <translation type="unfinished">ຄວາມຍາວເສັ້ນຂອດ</translation>
+        <translation type="unfinished">ຄວາມຍາວຄອດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="98"/>
@@ -26815,7 +26819,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">ຈຸດກຳນົດຂະໜາດ</translation>
+        <translation type="unfinished">ຈຸດກຳນົດມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
@@ -27025,7 +27029,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">ຈຸດກຳນົດຂະໜາດ</translation>
+        <translation type="unfinished">ຈຸດກຳນົດມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
@@ -29718,7 +29722,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
         <source>Degree</source>
-        <translation type="unfinished">ອົງສາ (Degree)</translation>
+        <translation type="unfinished">ລະດັບ (Degree)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
@@ -30812,7 +30816,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="629"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="663"></location>
         <source>Chord Length</source>
-        <translation>ຄວາມຍາວເສັ້ນຂອດ</translation>
+        <translation>ຄວາມຍາວຄອດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="630"></location>
@@ -31291,7 +31295,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1167"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1184"></location>
         <source>Degree</source>
-        <translation>ອົງສາ (Degree)</translation>
+        <translation>ລະດັບ (Degree)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1168"></location>
@@ -31455,7 +31459,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1464"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1479"></location>
         <source>Definition Point</source>
-        <translation>ຈຸດກຳນົດຂະໜາດ</translation>
+        <translation>ຈຸດກຳນົດມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1386"></location>
@@ -31475,7 +31479,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1465"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1480"></location>
         <source>Extension Point 1</source>
-        <translation>ຈຸດເສັ້ນຊ່ວຍບອກຂະໜາດ 1</translation>
+        <translation>ຈຸດເສັ້ນຊ່ວຍມິຕິ 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1416"></location>
@@ -31483,7 +31487,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1466"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1481"></location>
         <source>Extension Point 2</source>
-        <translation>ຈຸດເສັ້ນຊ່ວຍບອກຂະໜາດ 2</translation>
+        <translation>ຈຸດເສັ້ນຊ່ວຍມິຕິ 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"></location>
@@ -35533,7 +35537,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="305"></location>
         <source>Splines</source>
-        <translation>ເສັ້ນໂຄ້ງ (Splines)</translation>
+        <translation>ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="307"></location>
@@ -35744,12 +35748,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"></location>
         <source>Origin X: </source>
-        <translation>ຈຸດເລີ່ມຕົ້ນ X: </translation>
+        <translation>ຈຸດກຳເນີດ X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="334"></location>
         <source>Origin Y: </source>
-        <translation>ຈຸດເລີ່ມຕົ້ນ Y: </translation>
+        <translation>ຈຸດກຳເນີດ Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="335"></location>
@@ -35797,7 +35801,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="68"></location>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>ເບິ່ງຕົວຢ່າງຈຸດເລີ່ມຕົ້ນ ແລະ ມຸມຂອງລະບົບພິກັດ.</translation>
+        <translation>ເບິ່ງຕົວຢ່າງຈຸດກຳເນີດ ແລະ ມຸມຂອງລະບົບພິກັດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="82"></location>
@@ -35959,7 +35963,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"></location>
         <source>Position of origin and angle of current UCS's in world coordinates.</source>
-        <translation>ຕຳແໜ່ງຈຸດເລີ່ມຕົ້ນ ແລະ ມຸມຂອງ UCS ປັດຈຸບັນໃນພິກັດໂລກ.</translation>
+        <translation>ຕຳແໜ່ງຈຸດກຳເນີດ ແລະ ມຸມຂອງ UCS ປັດຈຸບັນໃນພິກັດໂລກ.</translation>
     </message>
 </context>
 <context>
@@ -37290,7 +37294,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="45"></location>
         <source>Scale:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ມາດຕາສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="55"></location>
@@ -37391,7 +37395,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="147"></location>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;ໄລຍະຫ່າງບັນທຶກເລີ່ມຕົ້ນ</translation>
+        <translation>&amp;ໄລຍະຫ່າງບັນທັດເລີ່ມຕົ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="150"></location>
@@ -38587,7 +38591,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"></location>
         <source>&amp;Splines and Lines</source>
-        <translation>ເສັ້ນ&amp;ໂຄ້ງ ແລະ ເສັ້ນຊື່</translation>
+        <translation>ເສັ້ນໂຄ້ງ&amp;ສະປຼາຍ ແລະ ເສັ້ນຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"></location>
@@ -38957,7 +38961,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"></location>
         <source>Extension lines</source>
-        <translation>ເສັ້ນຊ່ວຍບອກຂະໜາດ (Extension lines)</translation>
+        <translation>ເສັ້ນຊ່ວຍມິຕິ (Extension lines)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"></location>
@@ -41202,7 +41206,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2102"></location>
         <source>Base Angle Ray Color:</source>
-        <translation>ສີລັດສະໝີມຸມພື້ນຖານ:</translation>
+        <translation>ສີຂອງລັງສີມຸມພື້ນຖານ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2135"></location>
@@ -41308,7 +41312,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2142"></location>
         <source>Color of the ray that displays zero angle position</source>
-        <translation>ສີຂອງລັດສະໝີທີ່ສະແດງຕຳແໜ່ງມຸມສູນ</translation>
+        <translation>ສີຂອງລັງສີທີ່ສະແດງຕຳແໜ່ງມຸມສູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4264"></location>
@@ -45281,7 +45285,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1080"></location>
         <source>length</source>
-        <translation>ຄວາມຍາວ</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1083"></location>
@@ -45313,7 +45317,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1088"></location>
         <source>trim</source>
-        <translation>ຕັດຂອບ</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"></location>
@@ -46340,7 +46344,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="407"></location>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>ແມ່ນ</translation>
+        <translation>a</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="412"></location>
@@ -47172,7 +47176,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1092"></location>
         <source>y</source>
-        <translation>ຄ່າ</translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"></location>
@@ -47192,7 +47196,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"></location>
         <source>offset</source>
-        <translation>ອອບເຊັດ</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"></location>
@@ -47283,7 +47287,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"></location>
         <source>middle</source>
-        <translation>ຈຸດກາງ</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1120"></location>
@@ -47348,12 +47352,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"></location>
         <source>mid-vert</source>
-        <translation>ຂະໜາດປານກາງ</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"></location>
         <source>mid-hor</source>
-        <translation>ກາງ</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"></location>
@@ -47378,22 +47382,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"></location>
         <source>edge-none</source>
-        <translation>ບໍ່ມີຂອບ</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"></location>
         <source>edge-both</source>
-        <translation>ຂອບທັງ:</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"></location>
         <source>edge-start</source>
-        <translation>ເລີ່ມຂອບ</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"></location>
         <source>edge-end</source>
-        <translation>ຂອບ</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"></location>
@@ -47433,7 +47437,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"></location>
         <source>distance</source>
-        <translation>ໄລຍະຫ່າງ</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
@@ -47710,7 +47714,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"></location>
         <source>Use Mirrored Angle</source>
-        <translation>ໃຊ້ສາຍແວ່ນມຸມ</translation>
+        <translation>ໃຊ້ມຸມທີ່ສະທ້ອນ</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"></location>
@@ -49014,7 +49018,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"></location>
         <source>Specify second extension line origin</source>
-        <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
+        <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນຂອງເສັ້ນຊ່ວຍມິຕິທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"></location>

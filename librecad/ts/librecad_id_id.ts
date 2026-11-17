@@ -168,7 +168,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">Pilih dan ledakkan</translation>
+        <translation type="unfinished">Pilih dan uraikan</translation>
     </message>
 </context>
 <context>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Tentukan titik akhir pemimpin</translation>
+        <translation>Tentukan titik akhir garis penunjuk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -412,7 +412,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="293"/>
         <source>Length of chord should be non-zero</source>
-        <translation type="unfinished">Panjang dari akord seharusnya bukan -nol</translation>
+        <translation type="unfinished">Panjang tali busur seharusnya bukan nol</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="435"/>
@@ -426,7 +426,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="510"/>
         <source>Not a valid chord length</source>
-        <translation type="unfinished">Bukan panjang akord yang valid</translation>
+        <translation type="unfinished">Bukan panjang tali busur yang valid</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="535"/>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">Spesifikasikan akhir angle atau [angle / chordlen]</translation>
+        <translation type="unfinished">Tentukan sudut akhir atau [sudut/chordlen]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -467,7 +467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">Tentukan panjang akord (negatif untuk titik alt):</translation>
+        <translation type="unfinished">Tentukan panjang tali busur (negatif untuk titik alt):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -697,17 +697,17 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="215"/>
         <source>Specify the first line</source>
-        <translation type="unfinished">Nyatakan baris pertama</translation>
+        <translation type="unfinished">Nyatakan garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="218"/>
         <source>Specify the second line</source>
-        <translation type="unfinished">Nyatakan baris kedua</translation>
+        <translation type="unfinished">Nyatakan garis kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="221"/>
         <source>Specify the third line</source>
-        <translation type="unfinished">Nyatakan baris ketiga</translation>
+        <translation type="unfinished">Nyatakan garis ketiga</translation>
     </message>
 </context>
 <context>
@@ -715,7 +715,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Nyatakan garis / lengkungan / lingkaran</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
@@ -738,12 +738,12 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Nyatakan garis / lengkungan / lingkaran</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">Nyatakan baris / busur / lingkaran lain</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran lain</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -766,12 +766,12 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Nyatakan baris / busur / lingkaran pertama</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="295"/>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Nyatakan baris kedua / lengkungan / lingkaran</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
@@ -789,17 +789,17 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Nyatakan baris / busur / lingkaran pertama</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="523"/>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Nyatakan baris kedua / lengkungan / lingkaran</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="526"/>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">Nyatakan baris ketiga / lengkungan / lingkaran</translation>
+        <translation type="unfinished">Nyatakan garis / busur / lingkaran ketiga</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
@@ -822,7 +822,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Nyatakan asal baris ekstensi kedua</translation>
+        <translation>Nyatakan asal garis ekstensi kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -832,12 +832,12 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>Spesifikasikan lokasi baris dimensi</translation>
+        <translation>Spesifikasikan lokasi garis dimensi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Kancingkan ke Dim</translation>
+        <translation>Snap ke Dimensi Berdekatan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
@@ -1003,7 +1003,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="325"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished">Tidak dapat menutup urutan baris: Entiti yang belum didefinisikan, atau sudah ditutup.</translation>
+        <translation type="unfinished">Tidak dapat menutup urutan garis: Entitas yang didefinisikan belum cukup, atau sudah ditutup.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="387"/>
@@ -1051,7 +1051,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>line</source>
-        <translation type="unfinished">baris</translation>
+        <translation type="unfinished">garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="406"/>
@@ -1113,7 +1113,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="494"/>
         <source>Select base line</source>
-        <translation>Pilih baris dasar</translation>
+        <translation>Pilih garis dasar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="497"/>
@@ -1143,12 +1143,12 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="282"/>
         <source>Select first line</source>
-        <translation type="unfinished">Pilih baris pertama</translation>
+        <translation type="unfinished">Pilih garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="285"/>
         <source>Select second line</source>
-        <translation type="unfinished">Pilih baris kedua</translation>
+        <translation type="unfinished">Pilih garis kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="288"/>
@@ -1238,7 +1238,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp" line="121"/>
         <source>Click and drag to draw a line</source>
-        <translation type="unfinished">Klik dan tarik untuk menggambar sebuah baris</translation>
+        <translation type="unfinished">Klik dan tarik untuk menggambar sebuah garis</translation>
     </message>
 </context>
 <context>
@@ -1251,7 +1251,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="446"/>
         <source>Select Line</source>
-        <translation>Pilih Baris</translation>
+        <translation>Pilih Garis</translation>
     </message>
 </context>
 <context>
@@ -1379,7 +1379,7 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="180"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>line</source>
-        <translation type="unfinished">baris</translation>
+        <translation type="unfinished">garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="184"/>
@@ -1680,8 +1680,8 @@ jarak antara titik =%2 lebih besar dari diameter =%3</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished">Nyatakan Titik Kedua
-atau [nomor 124; x = 124; y = 124; sudut 124; p = 124; pinggiran 124; jarak 124;]</translation>
+        <translation type="unfinished">Tentukan titik kedua
+atau [number|x|y|sudut|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1694,28 +1694,29 @@ atau [angka]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished">Nyatakan arah baris
-[x 126; y 126; angle 124; p 12.4; distance]</translation>
+        <translation type="unfinished">Nyatakan arah garis
+[x|y|sudut|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished">Nyatakan sudut arah baris
-atau [x 12.4; y = 124; p = 124; nomor 124; pinggiran 124; jarak 124;]</translation>
+        <translation type="unfinished">Tentukan sudut arah garis
+atau [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished">Spesifikasikan mode titik tepi
-[None 124; start 12.4; end 124; both 124; both 124; distance]</translation>
+        <translation type="unfinished">Tentukan mode titik tepi
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tentukan jarak tetap antar titik
+atau [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1751,7 +1752,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
         <source>Specify points count</source>
-        <translation type="unfinished">Nyatakan jumlah poin</translation>
+        <translation type="unfinished">Nyatakan jumlah titik</translation>
     </message>
 </context>
 <context>
@@ -1884,7 +1885,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="821"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished">Tidak dapat menutup urutan baris: Entiti yang belum didefinisikan.</translation>
+        <translation type="unfinished">Tidak dapat menutup urutan garis: Entitas yang didefinisikan belum cukup.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="844"/>
@@ -1912,7 +1913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>Tentukan titik referensi [atas-kiri|atas|atas-kanan|kiri|tengah|kanan|bawah-kiri|bawah|bawah-kanan]</translation>
+        <translation>Tentukan titik referensi [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1940,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Tentukan snap titik 1 [sudut|tengah-vertikal|tengah-horisontal|tengah]</translation>
+        <translation>Tentukan snap titik 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Tentukan snap titik 2 [sudut|tengah-vertikal|tengah-horisontal|tengah]</translation>
+        <translation>Tentukan snap titik 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2064,7 +2065,7 @@ or [%2]</source>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished">Tentukan jenis sudut
-[str|bulat|bevel]</translation>
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2081,7 +2082,7 @@ or [%2]</source>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished">Tentukan mode tepi
-[keduanya|horisontal|vertikal]</translation>
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2089,7 +2090,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="238"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
@@ -2104,7 +2105,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
         <source>Select line</source>
-        <translation>Pilih baris</translation>
+        <translation>Pilih garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
@@ -2321,12 +2322,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>&amp; Poin</translation>
+        <translation>&amp;Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;2 Points</source>
-        <translation>&amp; 2 Poin</translation>
+        <translation>&amp;2 Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
@@ -2347,7 +2348,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Freehand Line</source>
-        <translation>&amp; Baris Lengkap</translation>
+        <translation>Garis &amp;Tangan Bebas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
@@ -2447,7 +2448,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Angle From Line</source>
-        <translation>Sudut Baris Dari</translation>
+        <translation>Sudut Dari Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
@@ -2457,7 +2458,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>Dari Titik Ke Baris</translation>
+        <translation>Dari Titik Ke Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
@@ -2472,7 +2473,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>Baris Titik</translation>
+        <translation>Garis Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
@@ -2492,17 +2493,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>2 Points</source>
-        <translation>2 Poin</translation>
+        <translation>2 Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
         <source>2 Points, Radius</source>
-        <translation>2 Poin, Radius</translation>
+        <translation>2 Titik, Radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
         <source>3 Points</source>
-        <translation>3 Poin</translation>
+        <translation>3 Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
@@ -2513,7 +2514,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>Undo-type</translation>
+        <translation>Lingkaran &amp;Dalam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
@@ -2528,17 +2529,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
         <source>&amp;3 Points</source>
-        <translation>&amp; 3 Poin</translation>
+        <translation>&amp;3 Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
-        <translation>&amp; 2 Poin, Panjang</translation>
+        <translation>&amp;2 Titik, Panjang</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
         <source>&amp;2 Points, Height</source>
-        <translation>&amp; 2 Poin, Tinggi</translation>
+        <translation>&amp;2 Titik, Tinggi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
@@ -2683,7 +2684,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
         <source>&amp;Angular</source>
-        <translation>&amp; Anular</translation>
+        <translation>&amp;Sudut</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
@@ -2693,7 +2694,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp; Pemimpin</translation>
+        <translation>&amp;Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -3068,7 +3069,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>An&amp;gle between two lines</source>
-        <translation>Sebuah &amp; gle di antara dua baris</translation>
+        <translation>Sudut di antara dua &amp;garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
@@ -3163,7 +3164,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Putar dan Putar</translation>
+        <translation>Pin&amp;dah dan Putar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
@@ -3203,17 +3204,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
         <source>&amp;2 Points, Angle</source>
-        <translation>&amp; 2 Poin, Sudut</translation>
+        <translation>&amp;2 Titik, Sudut</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
         <source>&amp;2 Points, Radius</source>
-        <translation>&amp; 2 Poin, Radius</translation>
+        <translation>&amp;2 Titik, Radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>Para &amp; bola 4 poin</translation>
+        <translation>Para&amp;bola 4 titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
@@ -3228,7 +3229,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp; Explode spline ke baris</translation>
+        <translation>&amp;Uraikan spline menjadi garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
@@ -3268,7 +3269,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>&amp; Dasar</translation>
+        <translation>&amp;Garis Dasar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
@@ -3293,12 +3294,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
         <source>Line Gap</source>
-        <translation>Potong Baris</translation>
+        <translation>Celah Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>Gabung Baris</translation>
+        <translation>Gabung Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -3469,12 +3470,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line drawing commands</source>
-        <translation>Perintah menggambar baris</translation>
+        <translation>Perintah menggambar garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
@@ -3560,7 +3561,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Batas jentikan</translation>
+        <translation>Batasan snap</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3575,7 +3576,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Operasi penangkapan</translation>
+        <translation>Operasi snap</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3766,17 +3767,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
-        <translation>&amp; Biasa</translation>
+        <translation>&amp;Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
         <source>Select Ordinates by base</source>
-        <translation>Pilih Biasa berdasarkan dasar</translation>
+        <translation>Pilih Ordinat berdasarkan dasar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Biasa Re- base</translation>
+        <translation>Ordinat Re-base</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3811,12 +3812,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>Kancing Endpoints</translation>
+        <translation>Snap pada Titik Akhir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Kancing Entiti</translation>
+        <translation>Snap pada Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
@@ -3871,7 +3872,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>Set UCS Dengan Dimensi Biasa</translation>
+        <translation>Atur UCS Dengan Dimensi Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -3946,12 +3947,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
         <source>Ang&amp;le between 3 points</source>
-        <translation>Ang &amp; le antara 3 poin</translation>
+        <translation>Sudut antara 3 &amp;titik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>Baris &amp; Draft</translation>
+        <translation>Garis &amp;Draft</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
@@ -4056,7 +4057,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
-        <translation>&amp; Plot</translation>
+        <translation>U&amp;raikan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
@@ -4211,7 +4212,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Fokus pada Baris Perintah</translation>
+        <translation>Fokus pada &amp;Baris Perintah</translation>
     </message>
 </context>
 <context>
@@ -4493,7 +4494,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="139"/>
         <source>Lines are parallel</source>
-        <translation>Baris paralel</translation>
+        <translation>Garis paralel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="159"/>
@@ -4537,12 +4538,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
-        <translation>Sudut 1 Baris:</translation>
+        <translation>Sudut Garis 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 2 Angle:</source>
-        <translation>Sudut 2 Baris:</translation>
+        <translation>Sudut Garis 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4552,12 +4553,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first line/Pick Supplementary</source>
-        <translation>Pilih baris pertama / Pilih Tambahan</translation>
+        <translation>Pilih garis pertama / Pilih Tambahan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Pick from line</source>
-        <translation>Pilih dari baris</translation>
+        <translation>Pilih dari garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4583,7 +4584,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Specify second line</source>
-        <translation>Nyatakan baris kedua</translation>
+        <translation>Nyatakan garis kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
@@ -5026,7 +5027,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="185"/>
         <source>Point 2:</source>
-        <translation type="unfinished">Poin 2:</translation>
+        <translation type="unfinished">Titik 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
@@ -5042,12 +5043,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
         <source>Selected lines are parallel</source>
-        <translation type="unfinished">Baris yang dipilih paralel</translation>
+        <translation type="unfinished">Garis yang dipilih paralel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished">Baris yang dipilih bukan anak-anak dari poliline yang sama</translation>
+        <translation type="unfinished">Garis yang dipilih bukan anak-anak dari poliline yang sama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
@@ -5115,7 +5116,7 @@ Titik: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="373"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="472"/>
         <source>Point 2:</source>
-        <translation>Poin 2:</translation>
+        <translation>Titik 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
@@ -5251,12 +5252,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished">Spesifikasikan titik istirahat pertama pada sebuah poliline</translation>
+        <translation type="unfinished">Spesifikasikan titik putus pertama pada sebuah poliline</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="148"/>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished">Spesifikasikan titik istirahat kedua pada polyline yang sama</translation>
+        <translation type="unfinished">Spesifikasikan titik putus kedua pada polyline yang sama</translation>
     </message>
 </context>
 <context>
@@ -5301,7 +5302,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Meledak segera setelah seleksi</translation>
+        <translation type="unfinished">Uraikan segera setelah seleksi</translation>
     </message>
 </context>
 <context>
@@ -5310,7 +5311,7 @@ Titik: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="116"/>
         <source>Line Gap</source>
-        <translation>Potong Baris</translation>
+        <translation>Celah Garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="92"/>
@@ -5327,12 +5328,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Select line</source>
-        <translation>Pilih baris</translation>
+        <translation>Pilih garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>Gunakan Endpoint Baris Alternatif</translation>
+        <translation>Gunakan Titik Akhir Garis Alternatif</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
@@ -5345,12 +5346,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="130"/>
         <source>Lines Join</source>
-        <translation>Baris Gabung</translation>
+        <translation>Gabung Garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
         <source>Lines are parallel</source>
-        <translation>Baris paralel</translation>
+        <translation>Garis paralel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
@@ -5361,12 +5362,12 @@ Titik: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="240"/>
         <source>No line selected</source>
-        <translation>Tidak ada baris yang dipilih</translation>
+        <translation>Tidak ada garis yang dipilih</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="210"/>
         <source>Lines are parallel, can&apos;t merge</source>
-        <translation>Baris paralel, tidak dapat bergabung</translation>
+        <translation>Garis paralel, tidak dapat digabung</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="215"/>
@@ -5376,17 +5377,17 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
         <source>Select first line</source>
-        <translation>Pilih baris pertama</translation>
+        <translation>Pilih garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>Pilih baris kedua</translation>
+        <translation>Pilih garis kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Pilih bagian dari baris pertama yang harus tetap setelah trim</translation>
+        <translation>Pilih bagian dari garis pertama yang harus tetap setelah pemangkasan</translation>
     </message>
 </context>
 <context>
@@ -5409,12 +5410,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="151"/>
         <source>Line From:</source>
-        <translation type="unfinished">Baris Dari:</translation>
+        <translation type="unfinished">Garis Dari:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="152"/>
         <source>Line To:</source>
-        <translation type="unfinished">Baris Ke:</translation>
+        <translation type="unfinished">Garis Ke:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="251"/>
@@ -5429,7 +5430,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="258"/>
         <source>Specify mirror line</source>
-        <translation type="unfinished">Nyatakan baris cermin</translation>
+        <translation type="unfinished">Nyatakan garis cermin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="258"/>
@@ -5444,12 +5445,12 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="261"/>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished">Nyatakan titik pertama dari baris cermin</translation>
+        <translation type="unfinished">Nyatakan titik pertama dari garis cermin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="266"/>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished">Nyatakan titik kedua dari baris cermin</translation>
+        <translation type="unfinished">Nyatakan titik kedua dari garis cermin</translation>
     </message>
 </context>
 <context>
@@ -5836,7 +5837,7 @@ Titik: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Kancing ke tengah seleksi</translation>
+        <translation type="unfinished">Snap ke tengah seleksi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5922,7 +5923,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="227"/>
         <source>Point 2:</source>
-        <translation type="unfinished">Poin 2:</translation>
+        <translation type="unfinished">Titik 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="348"/>
@@ -5991,7 +5992,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Kancing ke tengah seleksi</translation>
+        <translation type="unfinished">Snap ke tengah seleksi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6006,7 +6007,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Jepretan bebas</translation>
+        <translation type="unfinished">Snap bebas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6120,7 +6121,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">Pilih entitas untuk digaris</translation>
+        <translation type="unfinished">Pilih entitas untuk dipangkas</translation>
     </message>
 </context>
 <context>
@@ -6143,7 +6144,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">Pilih baris / arc untuk memangkas atau masukkan nilai panjang:</translation>
+        <translation type="unfinished">Pilih garis / busur untuk memangkas atau masukkan nilai panjang:</translation>
     </message>
 </context>
 <context>
@@ -6166,7 +6167,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished">Jumlah poin pembagian yang sama jauh</translation>
+        <translation type="unfinished">Jumlah titik pembagian yang sama jauh</translation>
     </message>
 </context>
 <context>
@@ -6411,7 +6412,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Setidaknya dua segmen poliline harus antara poin yang dipilih.</translation>
+        <translation type="unfinished">Setidaknya dua segmen poliline harus berada di antara titik yang dipilih.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
@@ -6614,7 +6615,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="191"/>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished">Pilih titik pertama dari baris persimpangan</translation>
+        <translation type="unfinished">Pilih titik pertama dari garis persimpangan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6629,7 +6630,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished">Pilih titik kedua dari baris persimpangan</translation>
+        <translation type="unfinished">Pilih titik kedua dari garis persimpangan</translation>
     </message>
 </context>
 <context>
@@ -6809,7 +6810,7 @@ Titik: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
-        <translation>Tidak cukup poin tetap untuk spline</translation>
+        <translation>Tidak cukup titik tersisa untuk spline</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
@@ -7766,7 +7767,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>Gelembung (sagita) busur</translation>
+        <translation>Tonjolan (sagita) busur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
@@ -8832,7 +8833,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="95"/>
         <source>Angular</source>
-        <translation>Anular</translation>
+        <translation>Sudut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
@@ -8847,12 +8848,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>Biasa</translation>
+        <translation>Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Pemimpin dan Tolerance</translation>
+        <translation>Garis Penunjuk dan Toleransi</translation>
     </message>
 </context>
 <context>
@@ -9066,7 +9067,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="43"/>
         <source>Lines</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
@@ -9082,7 +9083,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>Tampilkan dan atur warna untuk baris dimensi (variabel sistem DIMCRD).</translation>
+        <translation>Tampilkan dan atur warna untuk garis dimensi (variabel sistem DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
@@ -9092,7 +9093,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Mengatur linetype dari baris dimensi. (DIMLTYPE variabel sistem)</translation>
+        <translation>Mengatur tipe garis dari garis dimensi. (variabel sistem DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
@@ -9102,7 +9103,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Mengatur berat badan dari garis dimensi. (DIMLWD variabel sistem)</translation>
+        <translation>Mengatur tebal garis dari garis dimensi. (variabel sistem DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9112,32 +9113,32 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Tentukan jarak untuk memperpanjang garis dimensi melewati garis ekstensi ketika Anda menggunakan miring, arsitektur, kutu, integral, dan tidak ada tanda untuk panah. (DIMDLE variabel sistem)</translation>
+        <translation>Tentukan jarak untuk memperpanjang garis dimensi melewati garis ekstensi ketika Anda menggunakan miring, arsitektur, tik, integral, atau tanpa tanda untuk panah. (variabel sistem DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>Jarak dasar:</translation>
+        <translation>Jarak garis dasar:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Menekan tampilan dari baris dimensi pertama (variabel sistem DIMSD1)</translation>
+        <translation>Menekan tampilan dari garis dimensi pertama (variabel sistem DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Tekan garis Dim 1 dan panah</translation>
+        <translation>Sembunyikan garis dimensi 1 dan panahnya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Menekan tampilan baris dimensi kedua (variabel sistem DIMSD2)</translation>
+        <translation>Menekan tampilan garis dimensi kedua (variabel sistem DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>Tekan garis Dim 2 dan panah</translation>
+        <translation>Sembunyikan garis dimensi 2 dan panahnya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9147,7 +9148,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>Tata warna untuk baris ekstensi (variabel sistem DIMCRE.)</translation>
+        <translation>Tata warna untuk garis ekstensi (variabel sistem DIMCLRE.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
@@ -9157,7 +9158,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Tata tipe baris dari baris ekstensi pertama. (DIMLTEX1 variabel sistem)</translation>
+        <translation>Tata tipe garis dari garis ekstensi pertama. (variabel sistem DIMLTEX1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9167,7 +9168,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>Tata tipe baris dari baris ekstensi kedua. (DIMLTEX2 variabel sistem)</translation>
+        <translation>Tata tipe garis dari garis ekstensi kedua. (variabel sistem DIMLTEX2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
@@ -9177,12 +9178,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Mengatur berat baris ekstensi. (DIMLWE variabel sistem)</translation>
+        <translation>Mengatur tebal garis dari garis ekstensi. (variabel sistem DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Ekstensi di luar baris dim:</translation>
+        <translation>Ekstensi di luar garis dimensi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
@@ -9197,7 +9198,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Mengatur jarak untuk mengimbangi garis ekstensi dari titik pada gambar yang mendefinisikan dimensi. (DIMEXO variabel sistem)</translation>
+        <translation>Mengatur jarak ofset garis ekstensi dari titik pada gambar yang mendefinisikan dimensi. (variabel sistem DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9212,32 +9213,32 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Aktifkan baris ekstensi tetap. (DIMFXLON variabel sistem)</translation>
+        <translation>Aktifkan garis ekstensi dengan panjang tetap. (variabel sistem DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Panjang baris ekstensi tetap</translation>
+        <translation>Panjang garis ekstensi tetap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Tekan tampilan dari baris ekstensi pertama (variabel sistem DIMSE1).</translation>
+        <translation>Tekan tampilan dari garis ekstensi pertama (variabel sistem DIMSE1).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>Tekan baris Ext 1</translation>
+        <translation>Tekan garis Ext 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Menekan tampilan baris ekstensi kedua (variabel sistem DIMSE2).</translation>
+        <translation>Menekan tampilan garis ekstensi kedua (variabel sistem DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>Tekan Ext baris 2</translation>
+        <translation>Tekan garis Ext 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9258,7 +9259,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>Dimensi joging Linear</translation>
+        <translation>Dimensi linear bertekuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
@@ -9273,7 +9274,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>Radius joging dimensi</translation>
+        <translation>Dimensi radius bertekuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
@@ -9283,7 +9284,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Menentukan sudut segmen transverse dari baris dimensi dalam dimensi radius berlari. (DIMJOGANG variabel sistem)</translation>
+        <translation>Menentukan sudut segmen melintang dari garis dimensi dalam dimensi radius bertekuk. (variabel sistem DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9298,12 +9299,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Mengatur panah untuk garis depan. (DIMLDRBLK variabel sistem)</translation>
+        <translation>Mengatur panah untuk garis penunjuk. (variabel sistem DIMLDRBLK)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>Pemimpin:</translation>
+        <translation>Garis Penunjuk:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
@@ -9343,7 +9344,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>Dimensi istirahat</translation>
+        <translation>Pemutusan dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9415,7 +9416,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="699"/>
@@ -9527,17 +9528,17 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>Teks aligns dengan baris dimensi (DIMTIH dan variabel sistem DIMTOH).</translation>
+        <translation>Menyejajarkan teks dengan garis dimensi (variabel sistem DIMTIH dan DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Aligns teks dengan baris dimensi ketika teks berada di dalam baris ekstensi, tetapi align secara horizontal ketika teks berada di luar baris ekstensi (DIMTIH dan variabel sistem DIMTOH).</translation>
+        <translation>Menyejajarkan teks dengan garis dimensi ketika teks berada di dalam garis ekstensi, tetapi menyejajarkannya secara horizontal ketika teks berada di luar garis ekstensi (variabel sistem DIMTIH dan DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>Dialign dengan baris dimensi</translation>
+        <translation>Sejajar dengan garis dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9582,7 +9583,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>Ofset dari baris dim:</translation>
+        <translation>Ofset dari garis dimensi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
@@ -9592,7 +9593,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Mengendalikan penempatan horisontal teks dimensi sepanjang baris dimensi, dalam hubungan dengan baris ekstensi. (DIMJust variabel sistem)</translation>
+        <translation>Mengendalikan penempatan horisontal teks dimensi sepanjang garis dimensi, dalam hubungan dengan garis ekstensi. (variabel sistem DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9633,7 +9634,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>Mengendalikan penempatan vertikal teks dimensi dalam hubungan dengan baris dimensi. (DIMTAD variabel sistem)</translation>
+        <translation>Mengendalikan penempatan vertikal teks dimensi dalam hubungan dengan garis dimensi. (variabel sistem DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9658,17 +9659,17 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>Posisi teks vertikal di atas atau di bawah baris dimensi jika penempatan vertikal (DIMTAD) bukan variabel &quot;Tengah&quot; (DIMTVP).</translation>
+        <translation>Posisi teks vertikal di atas atau di bawah garis dimensi jika penempatan vertikal (DIMTAD) bukan &quot;Tengah&quot; (variabel DIMTVP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Celah teks baris redup rusak:</translation>
+        <translation>Celah teks garis dimensi terputus:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Tata kesenjangan teks saat ini, yang merupakan jarak sekitar teks dimensi ketika baris dimensi rusak untuk mengakomodasi teks dimensi (variabel sistem DIMGAP).</translation>
+        <translation>Tata celah teks saat ini, yang merupakan jarak di sekitar teks dimensi ketika garis dimensi diputus untuk mengakomodasi teks dimensi (variabel sistem DIMGAP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9693,12 +9694,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>Gambar garis dimensi antara diukur titik bahkan ketika panah ditempatkan di luar poin diukur. (DIMTOFL variabel sistem)</translation>
+        <translation>Gambar garis dimensi di antara titik yang diukur bahkan ketika panah ditempatkan di luar titik yang diukur. (variabel sistem DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>Gambar baris dim betren baris teks</translation>
+        <translation>Gambar garis dimensi di antara garis ekstensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9729,7 +9730,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>Jika dipilih, memindahkan baris dimensi kapanpun teks dimensi dipindahkan. (DIMTMOVE variabel sistem)</translation>
+        <translation>Jika dipilih, memindahkan garis dimensi kapanpun teks dimensi dipindahkan. (variabel sistem DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -9739,12 +9740,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Jika dipilih, baris dimensi tidak dipindahkan ketika teks dipindahkan. Jika teks dipindahkan dari garis dimensi, garis pemimpin diciptakan menghubungkan teks ke baris dimensi. Garis pemimpin diabaikan ketika teks terlalu dekat dengan garis dimensi. (DIMTMOVE variabel sistem)</translation>
+        <translation>Jika dipilih, garis dimensi tidak dipindahkan ketika teks dipindahkan. Jika teks dipindahkan dari garis dimensi, garis penunjuk dibuat yang menghubungkan teks ke garis dimensi. Garis penunjuk dihilangkan ketika teks terlalu dekat dengan garis dimensi. (variabel sistem DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Selama garis dimensi, dengan pemimpin</translation>
+        <translation>Di atas garis dimensi, dengan garis penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9754,12 +9755,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Jika dipilih, baris dimensi tidak dipindahkan ketika teks dipindahkan. Teks yang dipindahkan dari garis dimensi tidak terhubung ke garis dimensi dengan seorang pemimpin. (DIMTMOVE variabel sistem)</translation>
+        <translation>Jika dipilih, garis dimensi tidak dipindahkan ketika teks dipindahkan. Teks yang dipindahkan dari garis dimensi tidak dihubungkan ke garis dimensi dengan garis penunjuk. (variabel sistem DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Selama garis dimensi, tanpa pemimpin</translation>
+        <translation>Di atas garis dimensi, tanpa garis penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9774,17 +9775,17 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Tekan panah jika tidak cukup ruang tersedia di dalam baris ekstensi. (DIMSOXD variabel sistem)</translation>
+        <translation>Tekan panah jika tidak cukup ruang tersedia di dalam garis ekstensi. (variabel sistem DIMSOXD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Tekan panah jika tidak muat di dalam baris ekstensi</translation>
+        <translation>Tekan panah jika tidak muat di dalam garis ekstensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>Ketika tidak cukup ruang tersedia untuk teks dan panah, bergerak baik diluar baris ekstensi (DIMATFIT variabel sistem).</translation>
+        <translation>Ketika tidak cukup ruang tersedia untuk teks dan panah, pindahkan keduanya ke luar garis ekstensi (variabel sistem DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9814,17 +9815,17 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Pindahkan teks di luar baris ekstensi pertama, kemudian panah (variabel sistem DIMATFIT).</translation>
+        <translation>Pindahkan teks ke luar garis ekstensi terlebih dahulu, kemudian panah (variabel sistem DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>Selalu menempatkan teks antara baris ekstensi. (DIMTIX variabel sistem)</translation>
+        <translation>Selalu menempatkan teks di antara garis ekstensi. (variabel sistem DIMTIX)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Selalu muat teks antar baris teks</translation>
+        <translation>Selalu muat teks di antara garis ekstensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -10143,7 +10144,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>Jarak putaran ke:</translation>
+        <translation>Bulatkan jarak ke:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
@@ -10526,7 +10527,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>Biasa</translation>
+        <translation>Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10541,7 +10542,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>Dimensi Biasa</translation>
+        <translation>Dimensi Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
@@ -10712,7 +10713,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>Properti Baris</translation>
+        <translation>Properti Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
@@ -11119,7 +11120,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
@@ -11189,7 +11190,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Dimensi Dimensi</translation>
+        <translation>Dimensi Diametrik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
@@ -11199,7 +11200,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>Dimensi Biasa</translation>
+        <translation>Dimensi Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
@@ -11209,7 +11210,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>Pemimpin</translation>
+        <translation>Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
@@ -11481,12 +11482,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>Dimensi Biasa</translation>
+        <translation>Dimensi Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Pemimpin dan Toleransi</translation>
+        <translation>Garis Penunjuk dan Toleransi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -13374,7 +13375,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="79"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="80"/>
@@ -13444,7 +13445,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Dimensi Biasa</translation>
+        <translation type="unfinished">Dimensi Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13459,7 +13460,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Dimensi Dimensi</translation>
+        <translation type="unfinished">Dimensi Diametrik</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
@@ -13474,7 +13475,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">Pemimpin</translation>
+        <translation type="unfinished">Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13723,7 +13724,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Line Type</source>
-        <translation type="unfinished">Tipe Baris</translation>
+        <translation type="unfinished">Tipe Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
@@ -13733,7 +13734,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lebar Baris</translation>
+        <translation type="unfinished">Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -15319,7 +15320,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="44"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="45"/>
@@ -15355,7 +15356,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="68"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="77"/>
@@ -15380,7 +15381,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Titik jenuh dari posisi titik persimpangan antara entitas baris dan sumber (dalam baris asli)</translation>
+        <translation type="unfinished">Titik snap untuk posisi titik persimpangan antara garis yang dibuat dan entitas sumber (di dalam garis asli)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15398,7 +15399,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation type="unfinished">Opsi Sudut Baris</translation>
+        <translation type="unfinished">Opsi Sudut Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="62"/>
@@ -15418,7 +15419,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="135"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished">Titik pada baris yang dibuat yang akan ditempatkan ke dalam titik penyisipan</translation>
+        <translation type="unfinished">Titik pada garis yang dibuat yang akan ditempatkan ke dalam titik penyisipan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="139"/>
@@ -15438,7 +15439,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="169"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="176"/>
@@ -15463,7 +15464,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
         <source>PIck line length from drawing</source>
-        <translation type="unfinished">Panjang baris pick dari gambar</translation>
+        <translation type="unfinished">Pilih panjang garis dari gambar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="246"/>
@@ -15473,7 +15474,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="65"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="67"/>
@@ -15501,7 +15502,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Jika dicontreng, panjang baris didefinisikan oleh posisi tetikus daripada konfigurasi</translation>
+        <translation type="unfinished">Jika dicontreng, panjang garis didefinisikan oleh posisi tetikus daripada konfigurasi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
@@ -15511,7 +15512,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
@@ -15564,7 +15565,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Titik jenuh dari posisi titik persimpangan antara entitas baris dan sumber (dalam baris asli)</translation>
+        <translation type="unfinished">Titik snap untuk posisi titik persimpangan antara garis yang dibuat dan entitas sumber (di dalam garis asli)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
@@ -15579,7 +15580,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Menentukan bagian mana dari baris yang dibuat akan diputus ke titik persimpangan</translation>
+        <translation type="unfinished">Menentukan bagian mana dari garis yang dibuat yang akan di-snap ke titik perpotongan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15612,12 +15613,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Jarak dari titik persimpangan dari titik snap baris yang dinyatakan</translation>
+        <translation type="unfinished">Jarak dari titik persimpangan dari titik snap garis yang dinyatakan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Titik jenuh dari posisi titik persimpangan antara entitas baris dan sumber (dalam baris asli)</translation>
+        <translation type="unfinished">Titik snap untuk posisi titik persimpangan antara garis yang dibuat dan entitas sumber (di dalam garis asli)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15681,12 +15682,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Jepitan Garis:</translation>
+        <translation type="unfinished">Snap Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Jika dicontreng, panjang baris didefinisikan oleh posisi tetikus daripada konfigurasi</translation>
+        <translation type="unfinished">Jika dicontreng, panjang garis didefinisikan oleh posisi tetikus daripada konfigurasi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
@@ -15701,7 +15702,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
@@ -15711,7 +15712,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Jepitan Tanda:</translation>
+        <translation type="unfinished">Snap Tanda:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15726,7 +15727,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Menentukan bagian mana dari baris yang dibuat akan diputus ke titik persimpangan</translation>
+        <translation type="unfinished">Menentukan bagian mana dari garis yang dibuat yang akan di-snap ke titik perpotongan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15772,7 +15773,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation type="unfinished">Opsi Bisektor Baris</translation>
+        <translation type="unfinished">Opsi Bisektor Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="56"/>
@@ -15787,7 +15788,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="79"/>
         <source>Pick line length from drawing</source>
-        <translation type="unfinished">Pilih panjang baris dari gambar</translation>
+        <translation type="unfinished">Pilih panjang garis dari gambar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="93"/>
@@ -15810,7 +15811,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Bila dicontreng, baris yang dibuat akan ortogonal ke baris yang dipilih</translation>
+        <translation type="unfinished">Bila dicontreng, garis yang dibuat akan ortogonal ke garis yang dipilih</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15820,7 +15821,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
         <source>Angle between original line and created one</source>
-        <translation type="unfinished">Sudut antara baris asli dan dibuat satu</translation>
+        <translation type="unfinished">Sudut antara garis asli dan garis yang dibuat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
@@ -15840,7 +15841,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="56"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">Menentukan apakah baris yang dibuat mesti dibuat ke titik persimpangan atau mesti memiliki panjang tetap</translation>
+        <translation type="unfinished">Menentukan apakah garis yang dibuat mesti dibuat ke titik persimpangan atau mesti memiliki panjang tetap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
@@ -15850,7 +15851,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Ofset untuk baris dibuat dari titik persimpangan</translation>
+        <translation type="unfinished">Ofset untuk garis yang dibuat dari titik persimpangan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15860,7 +15861,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
         <source>Fixed length of created line</source>
-        <translation type="unfinished">Panjang tetap dari baris yang dibuat</translation>
+        <translation type="unfinished">Panjang tetap dari garis yang dibuat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
@@ -15885,7 +15886,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Titik jenuh bagi baris yang dibuat</translation>
+        <translation type="unfinished">Titik snap untuk garis yang dibuat</translation>
     </message>
 </context>
 <context>
@@ -15898,7 +15899,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="44"/>
         <source>Angle between original line and created one</source>
-        <translation type="unfinished">Sudut antara baris asli dan dibuat satu</translation>
+        <translation type="unfinished">Sudut antara garis asli dan garis yang dibuat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="51"/>
@@ -15908,7 +15909,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Bila dicontreng, baris yang dibuat akan ortogonal ke baris yang dipilih</translation>
+        <translation type="unfinished">Bila dicontreng, garis yang dibuat akan ortogonal ke garis yang dipilih</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15918,7 +15919,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Titik jenuh bagi baris yang dibuat</translation>
+        <translation type="unfinished">Titik snap untuk garis yang dibuat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15948,7 +15949,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="196"/>
         <source>Fixed length of created line</source>
-        <translation type="unfinished">Panjang tetap dari baris yang dibuat</translation>
+        <translation type="unfinished">Panjang tetap dari garis yang dibuat</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="203"/>
@@ -15958,7 +15959,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Ofset untuk baris dibuat dari titik persimpangan</translation>
+        <translation type="unfinished">Ofset untuk garis yang dibuat dari titik persimpangan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
@@ -15973,7 +15974,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">Menentukan apakah baris yang dibuat mesti dibuat ke titik persimpangan atau mesti memiliki panjang tetap</translation>
+        <translation type="unfinished">Menentukan apakah garis yang dibuat mesti dibuat ke titik persimpangan atau mesti memiliki panjang tetap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
@@ -16006,7 +16007,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="32"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="unfinished">Jika dikunyah, ukuran dari jeda ditentukan oleh tetikus</translation>
+        <translation type="unfinished">Jika dicentang, ukuran celah ditentukan oleh tetikus</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
@@ -16016,7 +16017,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">Ukuran kesenjangan, jika tidak bebas</translation>
+        <translation type="unfinished">Ukuran celah, jika tidak bebas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
@@ -16049,7 +16050,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Titik tanda jeda pada baris</translation>
+        <translation type="unfinished">Titik snap untuk celah pada garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16069,7 +16070,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Titik kancingan ke titik titik snap baris</translation>
+        <translation type="unfinished">Titik snap celah ke titik snap garis</translation>
     </message>
 </context>
 <context>
@@ -16082,7 +16083,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Titik kancingan ke titik titik snap baris</translation>
+        <translation type="unfinished">Titik snap celah ke titik snap garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16110,12 +16111,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Jepitan Celah:</translation>
+        <translation type="unfinished">Snap Celah:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Titik tanda jeda pada baris</translation>
+        <translation type="unfinished">Titik snap untuk celah pada garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16144,22 +16145,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Jepitan Garis:</translation>
+        <translation type="unfinished">Snap Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">Ukuran kesenjangan, jika tidak bebas</translation>
+        <translation type="unfinished">Ukuran celah, jika tidak bebas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">Ukuran jeda pick dari gambar</translation>
+        <translation type="unfinished">Pilih ukuran celah dari gambar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="unfinished">Jika dikunyah, ukuran dari jeda ditentukan oleh tetikus</translation>
+        <translation type="unfinished">Jika dicentang, ukuran celah ditentukan oleh tetikus</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
@@ -16203,23 +16204,23 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">Baris 1</translation>
+        <translation type="unfinished">Garis 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">Kebijakan untuk bergabung baris yang dipilih pertama</translation>
+        <translation type="unfinished">Kebijakan untuk menggabungkan garis yang dipilih pertama</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">Baris 2</translation>
+        <translation type="unfinished">Garis 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">Kebijakan bagi baris dipilih kedua</translation>
+        <translation type="unfinished">Kebijakan bagi garis yang dipilih kedua</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
@@ -16249,7 +16250,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Jika dicontreng, poliline akan dibuat bukan baris individu</translation>
+        <translation type="unfinished">Jika dicontreng, poliline akan dibuat bukan garis individu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16259,7 +16260,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Bila dicontreng, baris asli akan dihapus</translation>
+        <translation type="unfinished">Bila dicontreng, garis asli akan dihapus</translation>
     </message>
 </context>
 <context>
@@ -16272,7 +16273,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Jika dicontreng, poliline akan dibuat bukan baris individu</translation>
+        <translation type="unfinished">Jika dicontreng, poliline akan dibuat bukan garis individu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
@@ -16282,7 +16283,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">Kebijakan bagi baris dipilih kedua</translation>
+        <translation type="unfinished">Kebijakan bagi garis yang dipilih kedua</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
@@ -16305,17 +16306,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="88"/>
         <source>Line 1:</source>
-        <translation type="unfinished">Baris 1:</translation>
+        <translation type="unfinished">Garis 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="95"/>
         <source>Line 2:</source>
-        <translation type="unfinished">Baris 2:</translation>
+        <translation type="unfinished">Garis 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">Kebijakan untuk bergabung baris yang dipilih pertama</translation>
+        <translation type="unfinished">Kebijakan untuk menggabungkan garis yang dipilih pertama</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
@@ -16330,17 +16331,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">Baris 1</translation>
+        <translation type="unfinished">Garis 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">Baris 2</translation>
+        <translation type="unfinished">Garis 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
         <source>Both lines</source>
-        <translation type="unfinished">Kedua baris</translation>
+        <translation type="unfinished">Kedua garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="187"/>
@@ -16350,7 +16351,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Bila dicontreng, baris asli akan dihapus</translation>
+        <translation type="unfinished">Bila dicontreng, garis asli akan dihapus</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="210"/>
@@ -16383,7 +16384,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Batalkan gambar baris terakhir</translation>
+        <translation type="unfinished">Batalkan gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
@@ -16393,7 +16394,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Ulangi gambar baris terakhir</translation>
+        <translation type="unfinished">Ulangi gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="46"/>
@@ -16406,7 +16407,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Opsi Baris</translation>
+        <translation type="unfinished">Opsi Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
@@ -16421,7 +16422,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Batalkan gambar baris terakhir</translation>
+        <translation type="unfinished">Batalkan gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="75"/>
@@ -16431,7 +16432,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Ulangi gambar baris terakhir</translation>
+        <translation type="unfinished">Ulangi gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="85"/>
@@ -16467,7 +16468,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation type="unfinished">Opsi Paralel Baris</translation>
+        <translation type="unfinished">Opsi Paralel Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="56"/>
@@ -16611,12 +16612,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="115"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="unfinished">Menentukan apakah semua titik harus cocok antara titik awal / akhir atau apakah panjang baris dihitung berdasarkan jumlah titik dan jarak antara titik.</translation>
+        <translation type="unfinished">Menentukan apakah semua titik harus cocok antara titik awal / akhir garis atau apakah panjang garis dihitung berdasarkan jumlah titik dan jarak antara titik.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="118"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Baris Fit</translation>
+        <translation type="unfinished">Garis Fit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="143"/>
@@ -16646,7 +16647,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="212"/>
         <source>Number of points:</source>
-        <translation type="unfinished">Jumlah poin:</translation>
+        <translation type="unfinished">Jumlah titik:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="250"/>
@@ -16752,7 +16753,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="47"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="48"/>
@@ -16876,7 +16877,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="143"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="148"/>
@@ -16929,7 +16930,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_filler.cpp" line="42"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
 </context>
 <context>
@@ -16937,7 +16938,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Opsi Sudut Relatif Baris</translation>
+        <translation type="unfinished">Opsi Sudut Relatif Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="56"/>
@@ -16962,7 +16963,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="115"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="122"/>
@@ -17036,7 +17037,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Membuat poliline dari segmen baris</translation>
+        <translation type="unfinished">Membuat poliline dari segmen garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17052,7 +17053,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Batalkan gambar baris terakhir</translation>
+        <translation type="unfinished">Batalkan gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
@@ -17062,7 +17063,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Ulangi gambar baris terakhir</translation>
+        <translation type="unfinished">Ulangi gambar garis terakhir</translation>
     </message>
 </context>
 <context>
@@ -17070,7 +17071,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Opsi Baris</translation>
+        <translation type="unfinished">Opsi Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
@@ -17080,7 +17081,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="124"/>
         <source>Horizontal line</source>
-        <translation type="unfinished">Baris horisontal</translation>
+        <translation type="unfinished">Garis horisontal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="127"/>
@@ -17090,7 +17091,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="168"/>
         <source>Line to arbitrary point</source>
-        <translation type="unfinished">Baris ke titik sewenang-wenang</translation>
+        <translation type="unfinished">Garis ke titik sembarang</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="171"/>
@@ -17100,7 +17101,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="190"/>
         <source>Vertical line</source>
-        <translation type="unfinished">Baris vertikal</translation>
+        <translation type="unfinished">Garis vertikal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="193"/>
@@ -17115,7 +17116,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="237"/>
         <source>Line by specified angle</source>
-        <translation type="unfinished">Baris dengan sudut yang ditentukan</translation>
+        <translation type="unfinished">Garis dengan sudut yang ditentukan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="240"/>
@@ -17125,7 +17126,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="247"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Ulangi gambar baris terakhir</translation>
+        <translation type="unfinished">Ulangi gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="250"/>
@@ -17135,7 +17136,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="257"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Batalkan gambar baris terakhir</translation>
+        <translation type="unfinished">Batalkan gambar garis terakhir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="260"/>
@@ -17166,7 +17167,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Membuat poliline dari segmen baris</translation>
+        <translation type="unfinished">Membuat poliline dari segmen garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17537,7 +17538,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lebar Baris</translation>
+        <translation type="unfinished">Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17557,7 +17558,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
         <source>Line Type</source>
-        <translation type="unfinished">Tipe Baris</translation>
+        <translation type="unfinished">Tipe Garis</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
@@ -17863,7 +17864,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="212"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="213"/>
@@ -19025,7 +19026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Dimensi Dimensi</translation>
+        <translation type="unfinished">Dimensi Diametrik</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19161,7 +19162,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Dimensi Biasa</translation>
+        <translation type="unfinished">Dimensi Ordinat</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19186,7 +19187,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">Biasa</translation>
+        <translation type="unfinished">Ordinat</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19933,7 +19934,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">Pemimpin</translation>
+        <translation type="unfinished">Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -19951,7 +19952,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="29"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="33"/>
@@ -20021,7 +20022,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="57"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="61"/>
@@ -20484,7 +20485,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
         <source>Degree</source>
-        <translation type="unfinished">Setuju</translation>
+        <translation type="unfinished">Derajat</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20771,7 +20772,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="78"/>
         <source>Baseline</source>
-        <translation type="unfinished">Dasar</translation>
+        <translation type="unfinished">Garis dasar</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
@@ -20846,7 +20847,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="139"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
@@ -20993,7 +20994,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
         <source>Modify Line</source>
-        <translation type="unfinished">Ubah Baris</translation>
+        <translation type="unfinished">Ubah Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="603"/>
@@ -21157,14 +21158,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">&amp; Baris</translation>
+        <translation type="unfinished">&amp;Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="213"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="247"/>
         <source>Poin&amp;t</source>
-        <translation type="unfinished">Poin &amp; t</translation>
+        <translation type="unfinished">Ti&amp;tik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="182"/>
@@ -21588,12 +21589,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="32"/>
         <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="unfinished">Jika dicontreng, cermin akan dilakukan oleh entitas baris terpilih.</translation>
+        <translation type="unfinished">Jika dicontreng, cermin akan dilakukan oleh entitas garis terpilih.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
         <source>Mirror to selected line</source>
-        <translation type="unfinished">Cermin ke baris yang dipilih</translation>
+        <translation type="unfinished">Cermin ke garis yang dipilih</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
@@ -22367,7 +22368,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="59"/>
         <source>Points on Spline</source>
-        <translation>Poin pada Spline</translation>
+        <translation>Titik pada Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
@@ -22594,7 +22595,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="158"/>
         <source>Array rows number.</source>
-        <translation type="unfinished">Jumlah baris panah.</translation>
+        <translation type="unfinished">Jumlah baris array.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
@@ -23053,12 +23054,12 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="229"/>
         <source>Line Type:</source>
-        <translation>Tipe Baris:</translation>
+        <translation>Tipe Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Lebar Baris:</translation>
+        <translation>Lebar Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23082,7 +23083,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="193"/>
         <source>Line Type Name</source>
-        <translation>Nama Tipe Baris</translation>
+        <translation>Nama Tipe Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="200"/>
@@ -23092,7 +23093,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="207"/>
         <source>Line Type Icon</source>
-        <translation>Ikon Tipe Baris</translation>
+        <translation>Ikon Tipe Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="214"/>
@@ -23102,12 +23103,12 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>Ikon Lebar Baris</translation>
+        <translation>Ikon Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Nama Lebar Baris</translation>
+        <translation>Nama Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23634,7 +23635,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Baris Fit</translation>
+        <translation type="unfinished">Garis Fit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
@@ -23814,7 +23815,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Opsi Sudut Relatif Baris</translation>
+        <translation type="unfinished">Opsi Sudut Relatif Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="56"/>
@@ -23847,7 +23848,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="35"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="36"/>
@@ -23970,7 +23971,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="80"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
@@ -24463,7 +24464,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lebar Baris</translation>
+        <translation type="unfinished">Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24473,7 +24474,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
         <source>Line Type</source>
-        <translation type="unfinished">Tipe Baris</translation>
+        <translation type="unfinished">Tipe Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
@@ -25362,7 +25363,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">Pemimpin</translation>
+        <translation type="unfinished">Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -25435,7 +25436,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Dasar</translation>
+        <translation type="unfinished">Garis dasar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -25664,7 +25665,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="330"/>
         <source>Line</source>
-        <translation type="unfinished">Baris</translation>
+        <translation type="unfinished">Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="331"/>
@@ -26919,7 +26920,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Dasar</translation>
+        <translation type="unfinished">Garis dasar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
@@ -28640,7 +28641,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length of line</source>
-        <translation type="unfinished">Panjang baris</translation>
+        <translation type="unfinished">Panjang garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
@@ -28701,7 +28702,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">Gabung Baris</translation>
+        <translation type="unfinished">Gabung Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28756,7 +28757,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
-        <translation type="unfinished">Potong Baris</translation>
+        <translation type="unfinished">Celah Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
@@ -29727,7 +29728,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
         <source>Degree</source>
-        <translation type="unfinished">Setuju</translation>
+        <translation type="unfinished">Derajat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
@@ -29767,7 +29768,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="103"/>
         <source>Weight</source>
-        <translation type="unfinished">Berat</translation>
+        <translation type="unfinished">Bobot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="103"/>
@@ -30154,7 +30155,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
         <source>Baseline</source>
-        <translation type="unfinished">Dasar</translation>
+        <translation type="unfinished">Garis dasar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
@@ -30576,7 +30577,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE ARC</source>
-        <translation>ELIPS LINGKARAN</translation>
+        <translation>BUSUR ELIPS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="741"/>
@@ -30713,12 +30714,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="543"/>
         <source>Line Type</source>
-        <translation>Tipe Baris</translation>
+        <translation>Tipe Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Lebar Baris</translation>
+        <translation>Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -31190,7 +31191,7 @@ Lapisan: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
         <source>Baseline</source>
-        <translation>Dasar</translation>
+        <translation>Garis dasar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
@@ -31237,7 +31238,7 @@ Lapisan: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1129"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1160"/>
         <source>Lines</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1142"/>
@@ -31327,7 +31328,7 @@ Lapisan: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1258"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1275"/>
         <source>Degree</source>
-        <translation>Setuju</translation>
+        <translation>Derajat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
@@ -31438,7 +31439,7 @@ Lapisan: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
         <source>Spline Points</source>
-        <translation>Titik Seram</translation>
+        <translation>Titik Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="817"/>
@@ -31543,7 +31544,7 @@ Lapisan: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>Biasa</translation>
+        <translation>Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
@@ -31561,7 +31562,7 @@ Lapisan: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>Titik Akhir Pemimpin</translation>
+        <translation>Titik Akhir Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31594,7 +31595,7 @@ Lapisan: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="231"/>
         <source>First point</source>
-        <translation>Poin pertama</translation>
+        <translation>Titik pertama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="233"/>
@@ -31611,7 +31612,7 @@ Lapisan: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="270"/>
         <source>Points Path Distance:</source>
-        <translation>Jarak Lokasi Poin:</translation>
+        <translation>Jarak Lintasan Titik:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="274"/>
@@ -31804,7 +31805,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
         <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation>Jika dipilih, semua poin yang dikumpulkan akan dihubungkan oleh path yang menunjukkan bagaimana mereka akan dipilih selama pratinjau titik</translation>
+        <translation>Jika dipilih, semua titik yang dikumpulkan akan dihubungkan oleh path yang menunjukkan bagaimana mereka akan dipilih selama pratinjau titik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
@@ -32085,7 +32086,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="181"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">Pilih radius putaran sudut dari gambar.</translation>
+        <translation type="unfinished">Pilih radius pembulatan sudut dari gambar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="195"/>
@@ -32390,7 +32391,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="138"/>
         <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="unfinished">Pilih radius putaran sudut dari gambar.</translation>
+        <translation type="unfinished">Pilih radius pembulatan sudut dari gambar. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="164"/>
@@ -32666,7 +32667,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="354"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">Pilih radius putaran sudut dari gambar.</translation>
+        <translation type="unfinished">Pilih radius pembulatan sudut dari gambar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="368"/>
@@ -33627,7 +33628,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="32"/>
         <source>Round Options</source>
-        <translation type="unfinished">Opsi Bundar</translation>
+        <translation type="unfinished">Opsi Bulatkan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
@@ -33926,7 +33927,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
@@ -34148,7 +34149,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Jika dicontreng, dinyatakan jarak tetap antara kutu akan digunakan. Jika tidak, jarak akan dihitung berdasarkan panjang entitas dan jumlah kutu.</translation>
+        <translation type="unfinished">Jika dicontreng, jarak tetap antara tanda yang dinyatakan akan digunakan. Jika tidak, jarak akan dihitung berdasarkan panjang entitas dan jumlah tanda. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34188,7 +34189,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">Jika dicontreng, sudut centang berhubungan dengan entitas yang dipilih, selain itu adalah sudut absolut.</translation>
+        <translation type="unfinished">Jika dicontreng, sudut tanda berhubungan dengan entitas yang dipilih, selain itu adalah sudut absolut.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
@@ -34293,7 +34294,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished">Jarak antara kutu.</translation>
+        <translation type="unfinished">Jarak antara tanda.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34330,7 +34331,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">Jika dicontreng, entitas yang dipilih akan dibagi dengan titik persimpangan centang.</translation>
+        <translation type="unfinished">Jika dicontreng, entitas yang dipilih akan dibagi dengan titik persimpangan tanda. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34355,7 +34356,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished">Panjang kutu.</translation>
+        <translation type="unfinished">Panjang tanda.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
@@ -34375,12 +34376,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Ofset titik tanda centang ke titik persimpangan.</translation>
+        <translation type="unfinished">Ofset titik snap tanda ke titik persimpangan. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Jepitan tanda:</translation>
+        <translation type="unfinished">Snap tanda:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34390,7 +34391,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">Jika dicontreng, sudut centang berhubungan dengan entitas yang dipilih, selain itu adalah sudut absolut.</translation>
+        <translation type="unfinished">Jika dicontreng, sudut tanda berhubungan dengan entitas yang dipilih, selain itu adalah sudut absolut.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="315"/>
@@ -34405,7 +34406,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">Mulai sudut untuk lingkaran dari mana kutu akan mulai.</translation>
+        <translation type="unfinished">Sudut awal untuk lingkaran dari mana tanda akan dimulai. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34420,7 +34421,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Jika dicontreng, dinyatakan jarak tetap antara kutu akan digunakan. Jika tidak, jarak akan dihitung berdasarkan panjang entitas dan jumlah kutu.</translation>
+        <translation type="unfinished">Jika dicontreng, jarak tetap antara tanda yang dinyatakan akan digunakan. Jika tidak, jarak akan dihitung berdasarkan panjang entitas dan jumlah tanda. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34430,7 +34431,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">Cacah kutu antara tepi dari entitas yang dipilih.</translation>
+        <translation type="unfinished">Cacah tanda antara tepi dari entitas yang dipilih.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34440,7 +34441,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">Sudut antara tanda centang dan entitas yang dipilih.</translation>
+        <translation type="unfinished">Sudut antara tanda dan entitas yang dipilih.</translation>
     </message>
 </context>
 <context>
@@ -34461,7 +34462,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Jika dicontreng, mungkin untuk menentukan jumlah gubahan dari segmen baris. Jika tidak, nilai dari pengaturan untuk gambar saat ini akan digunakan.</translation>
+        <translation type="unfinished">Jika dicontreng, jumlah segmen garis dapat ditentukan sendiri. Jika tidak, nilai dari pengaturan untuk gambar saat ini akan digunakan.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34559,7 +34560,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Jika dicontreng, mungkin untuk menentukan jumlah gubahan dari segmen baris. Jika tidak, nilai dari pengaturan untuk gambar saat ini akan digunakan.</translation>
+        <translation type="unfinished">Jika dicontreng, jumlah segmen garis dapat ditentukan sendiri. Jika tidak, nilai dari pengaturan untuk gambar saat ini akan digunakan.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34761,7 +34762,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished">Tingkat Spline digunakan untuk pendekatan antara titik</translation>
+        <translation type="unfinished">Derajat spline yang digunakan untuk aproksimasi antar titik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
@@ -34809,7 +34810,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="65"/>
         <source>Spline Points</source>
-        <translation>Titik Seram</translation>
+        <translation>Titik Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
@@ -34825,7 +34826,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="96"/>
         <source>Points on Spline</source>
-        <translation>Poin pada Spline</translation>
+        <translation>Titik pada Spline</translation>
     </message>
 </context>
 <context>
@@ -34854,7 +34855,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="86"/>
         <source>Spline Degree ComboBox</source>
-        <translation>Kombobox Desain Spline</translation>
+        <translation>Kombobox Derajat Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="89"/>
@@ -34920,7 +34921,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="220"/>
         <source>Weight</source>
-        <translation>Berat</translation>
+        <translation>Bobot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
@@ -35473,7 +35474,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="328"/>
@@ -35546,7 +35547,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="360"/>
         <source>Lines</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="361"/>
@@ -35639,7 +35640,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Jika dicontreng, trim / ekstensi dilakukan untuk kedua sisi baris.</translation>
+        <translation type="unfinished">Jika dicontreng, trim / ekstensi dilakukan untuk kedua sisi garis.</translation>
     </message>
 </context>
 <context>
@@ -35682,7 +35683,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Jika dicontreng, trim / ekstensi dilakukan untuk kedua sisi baris.</translation>
+        <translation type="unfinished">Jika dicontreng, trim / ekstensi dilakukan untuk kedua sisi garis.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -36041,7 +36042,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="130"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
@@ -36229,7 +36230,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Ukuran saat ini dari jaringan / metagrid. Klik untuk mengubah ukuran kisi.</translation>
+        <translation>Ukuran Kisi/MetaGrid saat ini. Klik untuk mengubah ukuran kisi.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
@@ -37220,7 +37221,7 @@ Penyimpanan otomatis dinonaktifkan.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="204"/>
         <source>⌀ (Diameter)</source>
-        <translation>[Dialog]</translation>
+        <translation>⌀ (Diameter)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="209"/>
@@ -37321,7 +37322,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Faktor skala untuk pola menetas</translation>
+        <translation>Faktor skala untuk pola arsir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37336,12 +37337,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Sudut rotasi untuk menetas</translation>
+        <translation>Sudut rotasi untuk arsiran</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>Jika dicontreng, solid akan digunakan bukan palka pola</translation>
+        <translation>Jika dicontreng, isian solid akan digunakan sebagai ganti arsiran berpola</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37351,7 +37352,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Pola menetas</translation>
+        <translation>Pola arsir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37361,7 +37362,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Jika diaktifkan, pratilik dari pola menetas akan ditampilkan di bawah</translation>
+        <translation>Jika diaktifkan, pratilik dari pola arsir akan ditampilkan di bawah</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37376,7 +37377,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Area yang dijahit</translation>
+        <translation>Area yang diarsir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37542,7 +37543,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
         <source>&amp;Line spacing:</source>
-        <translation>Jarak &amp; baris:</translation>
+        <translation>Jarak &amp;baris:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
@@ -38426,7 +38427,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Panjang untuk memperbesar baris dimensi</translation>
+        <translation>Panjang perpanjangan melewati garis dimensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
@@ -38436,12 +38437,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>panjang baris ekstensi tetap</translation>
+        <translation>panjang garis ekstensi tetap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>&amp; Poin</translation>
+        <translation>&amp;Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
@@ -38861,17 +38862,17 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2069"/>
         <source>Lines</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2075"/>
         <source>Line Cap:</source>
-        <translation>Cap Baris:</translation>
+        <translation>Cap Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2082"/>
         <source>End cap for lines</source>
-        <translation>Akhir cap untuk baris</translation>
+        <translation>Cap ujung untuk garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2086"/>
@@ -38893,12 +38894,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Gabung Baris:</translation>
+        <translation>Sambungan Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>Mode baris bergabung dalam poliline atau tapak</translation>
+        <translation>Mode penyambungan garis dalam poliline atau path</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39147,7 +39148,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt; html &gt; &lt; head / &gt; &lt; body &gt; &lt; p &gt; Perataan teks &lt; a nama = &quot;results _ box&quot; / &gt; relatif terhadap baris dimensi. &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Perataan teks &lt;a name=&quot;result_box&quot;/&gt;relatif terhadap garis dimensi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -39167,7 +39168,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Jarak baris dimensi:</translation>
+        <translation>Jarak garis dimensi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
@@ -39182,7 +39183,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt; html &gt; &lt; head / &gt; &lt; body &gt; &lt; p &gt; Dimensi Ukuran Tik. Tata ke 0 akan menonaktifkan tick dimensi. Panah dimensi tidak akan digambar ketika kutu dimensi diaktifkan. &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ukuran tik dimensi. Mengaturnya ke 0 akan menonaktifkan tik dimensi. Panah dimensi tidak akan digambar ketika tik dimensi diaktifkan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -39192,7 +39193,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Baris ekstensi</translation>
+        <translation>Garis ekstensi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39202,7 +39203,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
         <source>&amp;Splines and Lines</source>
-        <translation>&amp; Serpihan dan Garis</translation>
+        <translation>&amp;Spline dan Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
@@ -39212,7 +39213,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Cacah segmen baris per baris patch:</translation>
+        <translation>Jumlah segmen garis per patch spline:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1943"/>
@@ -39499,7 +39500,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>&amp; Menangani Warna:</translation>
+        <translation>Warna &amp;Handle:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
@@ -39536,7 +39537,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>Pola Garis:</translation>
+        <translation>Pola Arsir:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39557,7 +39558,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Path ke folder dengan pola menetas</translation>
+        <translation>Path ke folder dengan pola arsir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -39765,7 +39766,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Tipe indikator baris snap</translation>
+        <translation>Tipe indikator garis snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -39786,12 +39787,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Baris indikator snap</translation>
+        <translation>Garis indikator snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Warna untuk indikator baris snap</translation>
+        <translation>Warna untuk indikator garis snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -39835,22 +39836,22 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1536"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1791"/>
         <source>Line Type:</source>
-        <translation>Tipe Baris:</translation>
+        <translation>Tipe Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Tipe baris untuk menggambar indikator snap</translation>
+        <translation>Tipe garis untuk menggambar indikator snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Lebar Baris</translation>
+        <translation>Lebar Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Lebar baris untuk indikator snap</translation>
+        <translation>Lebar garis untuk indikator snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
@@ -39965,7 +39966,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>Penanganan Entitas</translation>
+        <translation>Handle Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
@@ -39975,17 +39976,17 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Warna penanganan akhir untuk entitas</translation>
+        <translation>Warna handle akhir untuk entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Warna untuk awal penanganan dari entitas</translation>
+        <translation>Warna untuk handle awal dari entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Warna dari penanganan bukan titik-akhir dari entitas</translation>
+        <translation>Warna dari handle bukan titik-akhir dari entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
@@ -39995,12 +39996,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Jika diaktifkan, penanganan entiti disorot pada hover (memerlukan &quot;entities highlight on hover&quot; untuk diaktifkan)</translation>
+        <translation>Jika diaktifkan, handle entitas disorot pada hover (memerlukan &quot;tonjolkan entitas pada hover&quot; untuk diaktifkan)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Tampilkan penanganan entitas pada hover tetikus</translation>
+        <translation>Tampilkan handle entitas pada hover tetikus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40016,7 +40017,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="294"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="654"/>
         <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation>Warna dari baris untuk kotak seleksi overlay jika kotak terbalik (dari kanan ke kiri)</translation>
+        <translation>Warna dari garis untuk kotak seleksi overlay jika kotak terbalik (dari kanan ke kiri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="319"/>
@@ -40041,12 +40042,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="441"/>
         <source>Line Color:</source>
-        <translation>Warna Baris:</translation>
+        <translation>Warna Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="390"/>
         <source>Color for line for overlay box</source>
-        <translation>Warna untuk baris untuk kotak overlay</translation>
+        <translation>Warna untuk garis untuk kotak overlay</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="326"/>
@@ -40146,7 +40147,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Pantang pada zoom roda</translation>
+        <translation>Pan saat zoom roda</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
@@ -40184,14 +40185,14 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1388"/>
         <source>Line Type: </source>
-        <translation>Tipe Baris:</translation>
+        <translation>Tipe Garis: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1291"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Lebar Baris:</translation>
+        <translation>Lebar Garis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40221,22 +40222,22 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Jenis garis Grid Meta jika kisi digambar oleh baris</translation>
+        <translation>Jenis garis Grid Meta jika kisi digambar oleh garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Lebar garis Grid Meta bila kisi digambar oleh baris</translation>
+        <translation>Lebar garis Grid Meta bila kisi digambar oleh garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Warna Kisi Meta bila kisi digambar oleh baris</translation>
+        <translation>Warna Kisi Meta bila kisi digambar oleh garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
         <source>Axis Lines</source>
-        <translation>Baris Sumbu</translation>
+        <translation>Garis Sumbu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3361"/>
@@ -40266,7 +40267,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
         <source>Extend axis lines</source>
-        <translation>Memperpanjang baris sumbu</translation>
+        <translation>Memperpanjang garis sumbu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3475"/>
@@ -40310,7 +40311,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation>Ukuran Sumbu Baris digambar dalam titik nol absolut</translation>
+        <translation>Ukuran Garis Sumbu yang digambar di titik nol absolut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3428"/>
@@ -40370,7 +40371,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>Jika diperiksa, Meta Grid baris akan ditarik di atas grid. Grid sederhana lebih cepat namun kurang visual ramping.</translation>
+        <translation>Jika dicontreng, garis Meta Grid akan digambar di atas grid. Grid sederhana lebih cepat namun kurang ramping secara visual.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
@@ -40385,7 +40386,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1036"/>
         <source>Lines</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="982"/>
@@ -40405,7 +40406,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation>Bila tak dicontreng, baris vertikal tak akan digambar bagi tilikan miring &quot;Top&quot;</translation>
+        <translation>Bila tak dicontreng, garis vertikal tak akan digambar bagi tilikan miring &quot;Top&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
@@ -40529,7 +40530,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>Jika tinggi baris teks pada layar kurang dari piksel yang dispesifikasikan, pacholder akan digambar daripada teks</translation>
+        <translation>Jika tinggi baris teks pada layar kurang dari jumlah piksel yang ditentukan, placeholder akan digambar sebagai pengganti teks</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
@@ -40544,12 +40545,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation>Jika ukuran layar dari sumbu ellipse kecil lebih kecil dari nilai, elips digambar sebagai baris</translation>
+        <translation>Jika ukuran layar dari sumbu minor elips lebih kecil dari nilai, elips digambar sebagai garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation>Jika panjang layar dari baris kurang dari nilai, baris digambar sebagai titik</translation>
+        <translation>Jika panjang layar dari garis kurang dari nilai, garis digambar sebagai titik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6369"/>
@@ -40624,7 +40625,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Jika dicontreng, komponen koordinat akan ditarik dalam satu baris. Jika tidak, setiap komponen akan pada baris sendiri.</translation>
+        <translation>Jika dicontreng, komponen koordinat akan digambar dalam satu baris. Jika tidak, setiap komponen akan berada pada barisnya sendiri. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40715,7 +40716,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>Tampilkan properti untuk entitas yang disunting oleh penanganan</translation>
+        <translation>Tampilkan properti untuk entitas yang disunting oleh handle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -41166,7 +41167,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Faktor snap sel jaringan Min:</translation>
+        <translation>Faktor snap sel kisi min.:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
@@ -41232,7 +41233,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>Jika dipilih, menu terpisah akan dibuat untuk setiap kelompok hak-terkait perintah. Jika tidak, perintah ini akan berada di bawah menu yang sama.</translation>
+        <translation>Jika dipilih, menu terpisah akan dibuat untuk setiap kelompok perintah terkait entitas. Jika tidak, perintah-perintah ini berada di bawah menu yang sama. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
@@ -41854,7 +41855,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Jika dicontreng, lengkungan digambar menggunakan interpolasi segmen garis. Ini sliminates menarik artefak dekat dengan titik akhir, namun mungkin hasil gambar dari lengkungan kurang halus. Tidak ada galat menggambar dekat titik akhir pada zoom besar.</translation>
+        <translation>Jika dicontreng, busur digambar menggunakan interpolasi segmen garis. Ini menghilangkan artefak gambar di dekat titik akhir, namun dapat menghasilkan gambar busur yang kurang halus. Tidak ada galat menggambar di dekat titik akhir pada zoom besar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
@@ -41909,7 +41910,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
-        <translation>Interpolasi dengan segmen baris</translation>
+        <translation>Interpolasi dengan segmen garis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
@@ -41924,7 +41925,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation>Jika dipilih, sudut tetap segmen interpolasi baris akan digunakan. Sudut lebih kecil memberikan lebih halus busur namun lebih lambat.</translation>
+        <translation>Jika dipilih, sudut tetap segmen interpolasi garis akan digunakan. Sudut lebih kecil memberikan busur yang lebih halus namun lebih lambat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
@@ -41944,7 +41945,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>Jarak maksimum busur betren dan baris segmen interpolasi</translation>
+        <translation>Jarak maksimum antara busur dan garis segmen interpolasi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
@@ -42104,7 +42105,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation>Jika dipilih, sudut segmen interpolasi baris dihitung untuk memastikan bahwa menghasilkan sapitta (tinggi segmen busur) kurang dari yang dispesifikasikan.</translation>
+        <translation>Jika dipilih, sudut segmen interpolasi garis dihitung untuk memastikan bahwa sagita yang dihasilkan (tinggi segmen busur) kurang dari yang dispesifikasikan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
@@ -42287,7 +42288,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Baris minus / titik ke path SVG</translation>
+        <translation>Ubah garis putus-putus/titik menjadi path SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="211"/>
@@ -42348,8 +42349,8 @@ tetapi dihindari dalam beberapa CAM &apos;s.</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Banyak CAM (MakerCAM, EleskCAM, LaserWeb) mengabaikan gaya baris yang putus-putus,
-yang dapat berguna dalam lasercut kayu lapis atau untuk kerajinan kertas.</translation>
+        <translation>Banyak CAM (MakerCAM, EleskCAM, LaserWeb) mengabaikan gaya garis putus-putus/titik-titik,
+yang dapat berguna dalam lasercut kayu lapis atau untuk kerajinan kertas. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
@@ -42362,13 +42363,13 @@ tetapi diabaikan oleh yang lain</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="44"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Panjang pola baris yang berhubungan dengan zoom,
+        <translation>Panjang pola garis yang berhubungan dengan zoom,
 sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
         <source>Whether to export points</source>
-        <translation>Apakah untuk mengekspor poin</translation>
+        <translation>Apakah akan mengekspor titik</translation>
     </message>
 </context>
 <context>
@@ -42529,7 +42530,7 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="502"/>
         <source>A&amp;ligned</source>
-        <translation>Sebuah &amp; ligned</translation>
+        <translation>Se&amp;laras</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="633"/>
@@ -43955,7 +43956,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
         <source>Type of line</source>
-        <translation>Tipe baris</translation>
+        <translation>Tipe garis</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
@@ -44173,7 +44174,7 @@ Silakan nyatakan nama lain.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1233"/>
         <source>Move Selection</source>
-        <translation>Undo-type</translation>
+        <translation>Pindahkan Seleksi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1240"/>
@@ -44558,7 +44559,7 @@ Silakan nyatakan nilai yang berbeda.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="985"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>huruf</translation>
+        <translation>letter</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="988"/>
@@ -44594,13 +44595,13 @@ Silakan nyatakan nilai yang berbeda.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="1009"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>lengkung a</translation>
+        <translation>arch a</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>lengkung b</translation>
+        <translation>arch b</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1015"/>
@@ -44755,7 +44756,7 @@ Silakan nyatakan nilai yang berbeda.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="784"/>
         <source>JPEG 2000</source>
-        <translation>[&apos;%n file ditemukan&apos;, &apos;%n file ditemukan&apos;]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="787"/>
@@ -44919,7 +44920,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>baris</translation>
+        <translation>garis</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="96"/>
@@ -45015,7 +45016,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="144"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>tertib</translation>
+        <translation>rect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="340"/>
@@ -45027,7 +45028,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poli2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="349"/>
@@ -45063,13 +45064,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="405"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>kt3</translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>elips ditulis</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
@@ -45087,7 +45088,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>menetas</translation>
+        <translation>arsir</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -45159,7 +45160,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>menggambar ulang</translation>
+        <translation>gambarulang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
@@ -45177,7 +45178,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoemwindow</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
@@ -45189,7 +45190,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zomauto</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
@@ -45201,7 +45202,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zumpan</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
@@ -45225,7 +45226,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1012"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>membunuh</translation>
+        <translation>hentikan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
@@ -45262,13 +45263,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dialigned</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>diphorizontal</translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
@@ -45292,7 +45293,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>digaris linier</translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
@@ -45304,7 +45305,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangularis</translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
@@ -45396,7 +45397,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="117"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>malas</translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="118"/>
@@ -45414,7 +45415,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>lintang</translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="125"/>
@@ -45426,7 +45427,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>garis linehor</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
@@ -45558,7 +45559,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation>garis tengah</translation>
+        <translation>garistengah</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="196"/>
@@ -45570,7 +45571,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>linepoint</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
@@ -45582,7 +45583,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
-        <translation>titik tengah</translation>
+        <translation>titiktengah</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="212"/>
@@ -45660,7 +45661,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="252"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>breakpoint</translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="253"/>
@@ -45672,7 +45673,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>garis gapline</translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
@@ -45720,7 +45721,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="268"/>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation>ii</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="273"/>
@@ -45732,7 +45733,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>ip</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
@@ -45774,13 +45775,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>atau</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>linefiper</translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
@@ -45816,7 +45817,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="321"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>policp</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="322"/>
@@ -45840,7 +45841,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polict</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
@@ -46008,7 +46009,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>di</translation>
+        <translation>at</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
@@ -46074,7 +46075,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="471"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation>arcellac2ax</translation>
+        <translation>arcellc2ax</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="472"/>
@@ -46104,7 +46105,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="483"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation>p4</translation>
+        <translation>pl4</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="488"/>
@@ -46146,7 +46147,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="509"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
-        <translation>ear1</translation>
+        <translation>ea1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="514"/>
@@ -46170,7 +46171,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="521"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>e4paper size</translation>
+        <translation>e4</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="526"/>
@@ -46188,7 +46189,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>garis angline</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
@@ -46212,7 +46213,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>titik 2baris</translation>
+        <translation>titik2garis</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -46248,7 +46249,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>pluinedel</translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
@@ -46272,7 +46273,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="590"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>pluinetrm</translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
@@ -46332,7 +46333,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>adalah</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -46362,7 +46363,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="649"/>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation>d</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
@@ -46374,7 +46375,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>lakukan</translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
@@ -46608,7 +46609,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>modexptext</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
@@ -46650,7 +46651,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>ini</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="863"/>
@@ -46698,7 +46699,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>jadi</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
@@ -46740,13 +46741,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>&quot;</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>batasan</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
@@ -46826,7 +46827,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">tetap</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
@@ -46891,7 +46892,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>dipotong</translation>
+        <translation>potong</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
@@ -47041,7 +47042,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>snapjunction</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -47059,13 +47060,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="956"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>asm</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>snaponentitas</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
@@ -47095,7 +47096,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>selektall</translation>
+        <translation>pilihsemua</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
@@ -47225,7 +47226,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>ruang kompilasi</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47242,12 +47243,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>panjang</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>nomor</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -47258,12 +47259,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>baris</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>rowspace</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -47299,12 +47300,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>awal</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>ofset</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
@@ -47319,12 +47320,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>lebar</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>tinggi</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
@@ -47334,13 +47335,13 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>ukuran</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
-        <translation>sekop</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
@@ -47350,12 +47351,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>biasa</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>pojok</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -47365,7 +47366,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>bulat</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
@@ -47380,7 +47381,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>atas</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
@@ -47390,17 +47391,17 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>kiri</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>tengah</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>kanan</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
@@ -47410,7 +47411,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>dasar</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
@@ -47455,12 +47456,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>pojok</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>mid- vert</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
@@ -47480,47 +47481,47 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>vectors-action</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>pinggiran</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>edge- none</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>edge- keduanya</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>edget-start</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>edge- end</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>akhir</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>keduanya</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>kosong</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
@@ -47530,22 +47531,22 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>nofit</source>
-        <translation>tidak cocok</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>dist _ fixed</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>dist _ flex</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>jarak</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
@@ -47572,7 +47573,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
         <source>center</source>
-        <translation>tengah</translation>
+        <translation>pusat</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1201"/>
@@ -47596,7 +47597,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>♫</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
@@ -47608,13 +47609,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>ruang kompilasi</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>colspace</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
@@ -47626,7 +47627,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>fakta</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -47697,7 +47698,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1238"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>long-2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1239"/>
@@ -47715,7 +47716,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1242"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>nomor</translation>
+        <translation>jumlah</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
@@ -47752,13 +47753,13 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1253"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>baris</translation>
+        <translation>row</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>rowspace</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
@@ -47807,7 +47808,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1273"/>
         <source>bw</source>
-        <translation>b</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
@@ -47822,7 +47823,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>ofset kertas</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
@@ -47875,7 +47876,7 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>long-2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
@@ -48140,7 +48141,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Kancing ke Relatif Zero</translation>
+        <translation>Snap ke Nol Relatif</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48162,7 +48163,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch gagal karena jeda =%1 diantara (%2,%3) dan (%4,%5)</translation>
+        <translation>Arsir gagal karena celah=%1 antara (%2, %3) dan (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -48603,7 +48604,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="165"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation>Berkas PDF (* .pdf);; Semua berkas (*. *)</translation>
+        <translation>Berkas PDF (*.pdf);; Semua berkas (*.*)</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
@@ -48676,7 +48677,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
@@ -48761,12 +48762,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Biasa</translation>
+        <translation>Dim. Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>Pemimpin</translation>
+        <translation>Garis Penunjuk</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48875,7 +48876,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Line</source>
-        <translation>Baris</translation>
+        <translation>Garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
@@ -49020,17 +49021,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
-        <translation>Pilih baris pertama</translation>
+        <translation>Pilih garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
         <source>Select second line</source>
-        <translation>Pilih baris kedua</translation>
+        <translation>Pilih garis kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>Spesifikasikan lokasi baris busur dimensi</translation>
+        <translation>Spesifikasikan lokasi garis busur dimensi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
@@ -49066,7 +49067,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>Nyatakan asal baris ekstensi kedua</translation>
+        <translation>Nyatakan asal garis ekstensi kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49077,12 +49078,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>Spesifikasikan lokasi baris dimensi</translation>
+        <translation>Spesifikasikan lokasi garis dimensi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Kancingkan ke Dim</translation>
+        <translation>Snap ke Dimensi Berdekatan</translation>
     </message>
 </context>
 <context>
@@ -49214,22 +49215,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="308"/>
         <source>Specify the first line</source>
-        <translation>Nyatakan baris pertama</translation>
+        <translation>Nyatakan garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="311"/>
         <source>Specify the second line</source>
-        <translation>Nyatakan baris kedua</translation>
+        <translation>Nyatakan garis kedua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="314"/>
         <source>Specify the third line</source>
-        <translation>Nyatakan baris ketiga</translation>
+        <translation>Nyatakan garis ketiga</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="317"/>
         <source>Specify the fourth line</source>
-        <translation>Nyatakan baris keempat</translation>
+        <translation>Nyatakan garis keempat</translation>
     </message>
 </context>
 <context>
@@ -49274,12 +49275,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>Total area menetas =%1</translation>
+        <translation>Total area arsiran = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Area palka tak valid. Harap periksa bahwa entitas memilih bentuk satu atau lebih tertutup kontur.</translation>
+        <translation>Area arsiran tidak valid. Harap periksa bahwa entitas yang dipilih membentuk satu atau lebih kontur tertutup.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49311,7 +49312,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="256"/>
         <source>Select a line</source>
-        <translation>Pilih sebuah baris</translation>
+        <translation>Pilih sebuah garis</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
@@ -49334,7 +49335,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="105"/>
         <source>Rectangle</source>
-        <translation>Rangkap ulang</translation>
+        <translation>Persegi panjang</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="105"/>
@@ -49472,17 +49473,17 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="202"/>
         <source>Lines are parallel</source>
-        <translation>Baris paralel</translation>
+        <translation>Garis paralel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Specify first line</source>
-        <translation>Nyatakan baris pertama</translation>
+        <translation>Nyatakan garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Single Line Mode</source>
-        <translation>Mode Baris Tunggal</translation>
+        <translation>Mode Garis Tunggal</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="96"/>
@@ -49516,7 +49517,7 @@ Interseksi: @ (%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Restart with first line selection</source>
-        <translation>Mulai lagi dengan seleksi baris pertama</translation>
+        <translation>Mulai lagi dengan seleksi garis pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
@@ -49554,22 +49555,22 @@ Interseksi: @ (%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line From:</source>
-        <translation>Baris Dari:</translation>
+        <translation>Garis Dari:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>Baris Ke:</translation>
+        <translation>Garis Ke:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 1:</source>
-        <translation>Sudut Baris 1:</translation>
+        <translation>Sudut Garis 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 2:</source>
-        <translation>Sudut Baris 2:</translation>
+        <translation>Sudut Garis 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49579,17 +49580,17 @@ Interseksi: @ (%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>Sudut 1 Baris:</translation>
+        <translation>Sudut Garis 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 2 Angle:</source>
-        <translation>Sudut 2 Baris:</translation>
+        <translation>Sudut Garis 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Specify second line</source>
-        <translation>Nyatakan baris kedua</translation>
+        <translation>Nyatakan garis kedua</translation>
     </message>
 </context>
 <context>
@@ -49807,7 +49808,7 @@ Akhir: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>tipe dalam ofset dari baris perintah ke ofset printout</translation>
+        <translation>ketik ofset di baris perintah untuk menggeser hasil cetak</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -50326,7 +50327,7 @@ Akhir: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
-        <translation>Jumlah poin pembagian yang sama jauh</translation>
+        <translation>Jumlah titik pembagian yang sama jauh</translation>
     </message>
 </context>
 </TS>

@@ -379,12 +379,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>[&apos;SPLINE tačka&apos;, &apos;SPLINE tačke&apos;, &apos;SPLINE tačaka&apos;]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>ŠABLON</translation>
+        <translation>ŠRAFURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -970,22 +970,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Додатак (у односу на модул)</translation>
+        <translation>Висина главе зуба (у односу на модул)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Одузетак (у односу на модул)</translation>
+        <translation>Висина подножја зуба (у односу на модул)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Број сегмената за цртање (одузетак)</translation>
+        <translation>Број сегмената за цртање (подножје зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Број сегмената за цртање (додатак)</translation>
+        <translation>Број сегмената за цртање (глава зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1005,12 +1005,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Да ли треба нацртати круг додатка?</translation>
+        <translation>Да ли треба нацртати темени круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw pitch circle?</source>
-        <translation>Да ли треба нацртати основни круг?</translation>
+        <translation>Да ли треба нацртати подеони круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>

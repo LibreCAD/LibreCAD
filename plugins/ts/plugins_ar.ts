@@ -758,13 +758,13 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>تقسيم</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>center point</source>
-        <translation>نقطة المنتصف</translation>
+        <translation>نقطة المركز</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="501"/>

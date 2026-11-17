@@ -314,7 +314,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>BLOCK</translation>
+        <translation>EINFÜGUNG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLYGON</translation>
+        <translation>POLYLINIE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>

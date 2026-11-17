@@ -176,7 +176,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
-        <translation>Nie je kruh alebo oblúková jednotka</translation>
+        <translation>Nie je kružnica ani oblúk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
@@ -196,12 +196,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Uveďte polohu čiary rozmerov alebo zadajte uhol:</translation>
+        <translation>Zadajte polohu kótovacej čiary alebo uhol:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation>Zadajte text s rozmermi:</translation>
+        <translation>Zadajte text kóty:</translation>
     </message>
 </context>
 <context>
@@ -209,12 +209,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>Vybrať oblúkovú jednotku</translation>
+        <translation>Vybrať oblúk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>Uveďte umiestnenie oblúka s rozmermi</translation>
+        <translation>Zadajte umiestnenie kótovacieho oblúka</translation>
     </message>
 </context>
 <context>
@@ -222,17 +222,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Uveďte pôvod prvého rozšírenia trate</translation>
+        <translation>Uveďte počiatok prvej vynášacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>Uveďte pôvod druhej rozšírenia trate</translation>
+        <translation>Uveďte počiatok druhej vynášacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Specify dimension line location</source>
-        <translation>Uveďte umiestnenie čiar rozmerov</translation>
+        <translation>Zadajte umiestnenie kótovacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -242,12 +242,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
         <source>Enter dimension text:</source>
-        <translation>Zadajte text s rozmermi:</translation>
+        <translation>Zadajte text kóty:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Zadajte uhol čiary rozmerov:</translation>
+        <translation>Zadajte uhol kótovacej čiary:</translation>
     </message>
 </context>
 <context>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Uveďte koncový bod vodcu</translation>
+        <translation>Uveďte koncový bod odkazovej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -281,12 +281,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>Zadajte rozmer pre výber štýlu</translation>
+        <translation>Zadajte kótu, z ktorej sa prevezme štýl</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>Zadajte rozmer pre použitie štýlu</translation>
+        <translation>Zadajte kótu, na ktorú sa použije štýl</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
@@ -412,7 +412,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="293"/>
         <source>Length of chord should be non-zero</source>
-        <translation type="unfinished">Dĺžka akordu by nemala byť nula</translation>
+        <translation type="unfinished">Dĺžka tetivy by nemala byť nula</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="435"/>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">Uveďte uhol konca alebo [uhol/chordlen]</translation>
+        <translation type="unfinished">Uveďte koncový uhol alebo [uhol/tetiva]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -467,7 +467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">Uveďte dĺžku akordu (negatívna pre bod alt):</translation>
+        <translation type="unfinished">Uveďte dĺžku tetivy (záporná pre alternatívny bod):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -480,7 +480,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="292"/>
         <source>Specify base entity</source>
-        <translation type="unfinished">Uveďte základný subjekt</translation>
+        <translation type="unfinished">Uveďte základný objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="296"/>
@@ -546,7 +546,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Alternate endpoints</source>
-        <translation type="unfinished">Alternatívne cieľové ukazovatele</translation>
+        <translation type="unfinished">Alternatívne koncové body</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
@@ -697,17 +697,17 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="215"/>
         <source>Specify the first line</source>
-        <translation type="unfinished">Uveďte prvý riadok</translation>
+        <translation type="unfinished">Zvoľte prvú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="218"/>
         <source>Specify the second line</source>
-        <translation type="unfinished">Uveďte druhý riadok</translation>
+        <translation type="unfinished">Zvoľte druhú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="221"/>
         <source>Specify the third line</source>
-        <translation type="unfinished">Uveďte tretí riadok</translation>
+        <translation type="unfinished">Zvoľte tretiu čiaru</translation>
     </message>
 </context>
 <context>
@@ -715,17 +715,17 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Uveďte riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Uveďte prvý bod dotyčnice</translation>
+        <translation type="unfinished">Zadajte prvý bod na dotykovej kružnici</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="455"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">Uveďte druhý bod dotyčnice</translation>
+        <translation type="unfinished">Zadajte druhý bod na dotykovej kružnici</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
@@ -738,12 +738,12 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Uveďte riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">Uveďte ďalší riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte ďalšiu čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -766,12 +766,12 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Uveďte prvý riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte prvú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="295"/>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Uveďte druhý riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte druhú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
@@ -784,22 +784,22 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="435"/>
         <source>No common tangential circle for selected entities</source>
-        <translation type="unfinished">Žiadny spoločný tangenciálny kruh pre vybrané subjekty</translation>
+        <translation type="unfinished">Žiadny spoločný tangenciálny kruh pre vybrané objekty</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Uveďte prvý riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte prvú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="523"/>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Uveďte druhý riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte druhú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="526"/>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">Uveďte tretí riadok/arc/kruh</translation>
+        <translation type="unfinished">Zvoľte tretiu čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
@@ -812,7 +812,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Vybrať základ lineárny/zmenený rozmer</translation>
+        <translation>Vyberte základnú lineárnu/zarovnanú kótu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -822,7 +822,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Uveďte pôvod druhej rozšírenia trate</translation>
+        <translation>Uveďte počiatok druhej vynášacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -832,7 +832,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>Uveďte umiestnenie čiar rozmerov</translation>
+        <translation>Zadajte umiestnenie kótovacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -842,7 +842,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>Zadajte text s rozmermi:</translation>
+        <translation>Zadajte text kóty:</translation>
     </message>
 </context>
 <context>
@@ -855,12 +855,12 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation>Nevybrané žiadne subjekty. Duálna tvorba zrušená.</translation>
+        <translation>Nevybrané žiadne objekty. Duálna tvorba zrušená.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
         <source>No supported entities could be dualized.</source>
-        <translation>Žiadne podporované subjekty nemohli byť dualizované.</translation>
+        <translation>Žiadne podporované objekty nemohli byť dualizované.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
@@ -1070,7 +1070,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>free</source>
-        <translation type="unfinished">bez cla</translation>
+        <translation type="unfinished">voľný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="488"/>
@@ -1113,7 +1113,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="494"/>
         <source>Select base line</source>
-        <translation>Vybrať základný riadok</translation>
+        <translation>Vybrať základnú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="497"/>
@@ -1126,7 +1126,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="149"/>
         <source> entities will be created</source>
-        <translation type="unfinished">budú vytvorené subjekty</translation>
+        <translation type="unfinished"> – počet objektov, ktoré sa vytvoria</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="232"/>
@@ -1138,7 +1138,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="248"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished">Počet sektorových riadkov mimo rozsahu:</translation>
+        <translation type="unfinished">Počet sektorových čiar mimo rozsahu: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="282"/>
@@ -1251,7 +1251,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="446"/>
         <source>Select Line</source>
-        <translation>Vybrať riadok</translation>
+        <translation>Vybrať čiaru</translation>
     </message>
 </context>
 <context>
@@ -1259,7 +1259,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="130"/>
         <source> entities will be created</source>
-        <translation type="unfinished">budú vytvorené subjekty</translation>
+        <translation type="unfinished"> – počet objektov, ktoré sa vytvoria</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
@@ -1288,7 +1288,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="128"/>
         <source> entities will be created</source>
-        <translation type="unfinished">budú vytvorené subjekty</translation>
+        <translation type="unfinished"> – počet objektov, ktoré sa vytvoria</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
@@ -1403,7 +1403,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="196"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>free</source>
-        <translation type="unfinished">bez cla</translation>
+        <translation type="unfinished">voľný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="214"/>
@@ -1681,7 +1681,7 @@ vzdialenosť medzi bodmi =%2 je väčšia ako priemer= %3</translation>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished">Zadajte druhý bod
-alebo [Číslo x x x x y ch ch ch ch y ch ch ch ch ch ch ch ch y ch ch y ch ch ch y ch ch ch y ch ch ch ch ch ch ch y ch ch ch ch ch ch y ch ch ch y ch ch ch ch ch y ch ch ch ch ch ch ch ch ch ch ch y ch ch ch ch ch ch ch</translation>
+alebo [number|x|y|uhol|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1694,28 +1694,29 @@ alebo [číslo]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished">Uveďte smer trate
-[x</translation>
+        <translation type="unfinished">Uveďte smer čiary
+[x|y|uhol|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished">Uveďte smerový uhol čiary
-alebo [x</translation>
+        <translation type="unfinished">Uveďte uhol smeru čiary
+alebo [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation type="unfinished">Zadajte režim okrajových bodov
-[Žiadny chrobák chápavý chrobák]</translation>
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadajte pevnú vzdialenosť medzi bodmi
+alebo [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1889,7 +1890,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="844"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
+        <translation type="unfinished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok objektov.</translation>
     </message>
 </context>
 <context>
@@ -1912,7 +1913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>Uveďte referenčný bod [topl</translation>
+        <translation>Uveďte referenčný bod [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1940,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Zadajte bod 1 snap [rohovník-vert-mid-hormiddle]</translation>
+        <translation>Zadajte prichytenie bodu 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Zadajte bod 2 snap [rohovník-vert-stred-hormed]</translation>
+        <translation>Zadajte prichytenie bodu 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2064,7 +2065,7 @@ or [%2]</source>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished">Uveďte typ rohov
-[Okolie]</translation>
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2081,7 +2082,7 @@ or [%2]</source>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished">Zadajte režim hrán
-[Oboje]</translation>
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2104,7 +2105,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
         <source>Select line</source>
-        <translation>Vybrať riadok</translation>
+        <translation>Vybrať čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
@@ -2142,7 +2143,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="309"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
+        <translation type="unfinished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok objektov.</translation>
     </message>
 </context>
 <context>
@@ -2171,7 +2172,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="269"/>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="291"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
+        <translation>Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok objektov.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="308"/>
@@ -2184,7 +2185,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="222"/>
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation>Neplatné číslo raje by malo byť v rozsahu [3..99]</translation>
+        <translation>Neplatný počet lúčov, musí byť v rozsahu [3..99]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="232"/>
@@ -2286,7 +2287,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Select Entity</source>
-        <translation>Vybrať subjekt</translation>
+        <translation>Vybrať objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
@@ -2306,12 +2307,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Vybrať prepojené subjekty</translation>
+        <translation>Vybrať pretnuté objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Zrušiť výber prerušených subjektov</translation>
+        <translation>Zrušiť výber pretnutých objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2457,7 +2458,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Rozdeľovacia čiara</translation>
+        <translation>Rozdeliť čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
@@ -2467,7 +2468,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>Riadok bodov</translation>
+        <translation>Čiara bodov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
@@ -2628,7 +2629,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Polylínové oblúky pre akordy</translation>
+        <translation>Oblúky polylínie na tetivy</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
@@ -2683,12 +2684,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp; Líder</translation>
+        <translation>&amp;Odkazová čiara</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;Príslušenstvo</translation>
+        <translation>&amp;Atribúty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2738,7 +2739,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Potom</translation>
+        <translation>&amp;Predĺžiť</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
@@ -2868,7 +2869,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>An&amp;gle between two lines</source>
-        <translation>Výstružník medzi dvoma riadkami</translation>
+        <translation>&amp;Uhol medzi dvoma čiarami</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
@@ -3028,7 +3029,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Explode spline na riadky</translation>
+        <translation>&amp;Rozložiť spline na čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
@@ -3078,7 +3079,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>Prestávka/rozdelenie</translation>
+        <translation>Prerušiť/rozdeliť</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -3088,7 +3089,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>Pripojiť riadok</translation>
+        <translation>Spojenie čiar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -3123,12 +3124,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp; Vybrať pero od subjektu (vyriešené)</translation>
+        <translation>&amp;Vybrať pero z objektu (vyriešené)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Aplikujte pero na subjekt</translation>
+        <translation>Použiť pero na objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
@@ -3229,12 +3230,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
-        <translation>Rozmery</translation>
+        <translation>Kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
-        <translation>Rozmery príkazov tvorby</translation>
+        <translation>Príkazy na tvorbu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
@@ -3264,7 +3265,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line drawing commands</source>
-        <translation>Príkazy kreslenia riadkov</translation>
+        <translation>Príkazy kreslenia čiar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
@@ -3350,7 +3351,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Obmedzenia lana</translation>
+        <translation>Obmedzenia prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3360,12 +3361,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>Operácie výberu subjektov</translation>
+        <translation>Operácie výberu objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Operácie splácania</translation>
+        <translation>Operácie prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3531,17 +3532,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>Tangential 2 Subjekty, Radius</translation>
+        <translation>Tangenciálne k 2 objektom, polomer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>Tangencial 2 Subjekty, 1 bod</translation>
+        <translation>Tangenciálne k 2 objektom, 1 bod</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Tangenciálne &amp;3 Subjekty</translation>
+        <translation>Tangenciálne k &amp;3 objektom</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3556,7 +3557,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
-        <translation>&amp; Ordinovať</translation>
+        <translation>&amp;Súradnicová</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
@@ -3566,7 +3567,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Ordinuje re-base</translation>
+        <translation>Zmena základne súradnicových kót</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3596,27 +3597,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Snap stredná príručka</translation>
+        <translation>Prichytiť k strednému bodu ručne</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>Snap na koncových bodoch</translation>
+        <translation>Prichytiť ku koncovým bodom</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Snap o subjekte</translation>
+        <translation>Prichytiť na objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Vyrovnať na stred</translation>
+        <translation>Prichytiť k stredu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Vyrovnať na stred</translation>
+        <translation>Prichytiť k strednému bodu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
@@ -3626,7 +3627,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Vyrovnať na priesečník</translation>
+        <translation>Prichytiť k priesečníku</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3661,7 +3662,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>Nastaviť UCS Od ordinovať rozmer</translation>
+        <translation>Nastaviť UCS podľa súradnicovej kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -3691,12 +3692,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Exkluzívny Snap mód</translation>
+        <translation>Exkluzívny režim prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>Voľné vyrovnávanie</translation>
+        <translation>Voľné prichytenie</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -3716,17 +3717,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>Vzdialenosť &amp; bodu subjektu</translation>
+        <translation>Vzdialenosť &amp;bodu od objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>Total &amp;length of selected entities</source>
-        <translation>Celková dĺžka vybraných subjektov</translation>
+        <translation>Celková &amp;dĺžka vybraných objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Entity Pro&amp;perties</source>
-        <translation>Properties subjektu</translation>
+        <translation>&amp;Vlastnosti objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
@@ -3836,7 +3837,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Prepnúť blokovanie &amp; vizibilitu</translation>
+        <translation>Prepnúť &amp;viditeľnosť bloku</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
@@ -4031,7 +4032,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Caught Entity</source>
-        <translation>Chytený subjekt</translation>
+        <translation>Zachytený objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="572"/>
@@ -4041,12 +4042,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>Nižšia po subjektov</translation>
+        <translation>Posunúť pod objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>Zvýšiť nad subjekt</translation>
+        <translation>Posunúť nad objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
@@ -4091,7 +4092,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
-        <translation>Obnoviť rozmery</translation>
+        <translation>Regenerovať kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
@@ -4239,7 +4240,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Vyberte druhý (rozhranie) bod uhla</translation>
+        <translation>Vyberte druhý bod uhla (priesečník)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4279,13 +4280,13 @@ Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>Uhol:%1
+        <translation>Uhol: %1
 Pravý uhol − uhol: %2
 Priamy uhol − uhol: %3
 Plný uhol − uhol: %4
-Štartovací bod okraja: (%5 ,%6)
-Prierezový bod: (%7, %8)
-Bod konca okraja: (%9 ,%10)</translation>
+Počiatočný bod hrany: (%5, %6)
+Priesečník: (%7, %8)
+Koncový bod hrany: (%9, %10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4319,7 +4320,7 @@ Bod konca okraja: (%9 ,%10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>Prierez:</translation>
+        <translation>Priesečník:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4351,11 +4352,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation type="unfinished">Vzdialenosť:%1
-Kartezián: (%2 , %3)
-Polar: (%4 &lt; %5)
-Bod o subjekte: (%6 , %7)
-Bod: (%8, %9)</translation>
+        <translation type="unfinished">Vzdialenosť: %1
+Karteziánske: (%2 , %3)
+Polárne: (%4 &lt; %5)
+Bod na objekte: (%6 , %7)
+Bod: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
@@ -4365,7 +4366,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">Nepreháňajte s detskými entitami v kontajneri</translation>
+        <translation type="unfinished">Neprichytávať k podradeným objektom v kontajneri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4376,7 +4377,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
         <source>Relative point is on entity</source>
-        <translation type="unfinished">Relatívny bod je na subjekte</translation>
+        <translation type="unfinished">Relatívny bod je na objekte</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="333"/>
@@ -4480,12 +4481,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>Vybrať jednotku</translation>
+        <translation>Vybrať objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>Vybrať detské subjekty</translation>
+        <translation>Vybrať podradené objekty</translation>
     </message>
 </context>
 <context>
@@ -4532,7 +4533,7 @@ Bod: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>Prierez:</translation>
+        <translation>Priesečník:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -4552,7 +4553,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first line/Pick Supplementary</source>
-        <translation>Vyberte prvý riadok/výber doplnkové</translation>
+        <translation>Vyberte prvú čiaru/výber doplnkového uhla</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4562,7 +4563,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Vyberte druhý (rozhranie) bod uhla</translation>
+        <translation>Vyberte druhý bod uhla (priesečník)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4583,7 +4584,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Specify second line</source>
-        <translation>Uveďte druhý riadok</translation>
+        <translation>Zvoľte druhú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
@@ -4695,7 +4696,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>Dĺžka geometrie subjektu</translation>
+        <translation>Dĺžka geometrie objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4804,7 +4805,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
-        <translation>Subjekt</translation>
+        <translation>Objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
@@ -4834,12 +4835,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select base alignment entity</source>
-        <translation>Vybrať jednotku nastavenia základne</translation>
+        <translation>Vyberte základný objekt na zarovnanie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>Vyberte detské jednotky kontajnerov</translation>
+        <translation>Vyberte podradené objekty kontajnerov</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
@@ -4945,7 +4946,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>Subjekt</translation>
+        <translation>Objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -4965,7 +4966,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="273"/>
         <source>Select base alignment entity</source>
-        <translation>Vybrať jednotku nastavenia základne</translation>
+        <translation>Vyberte základný objekt na zarovnanie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
@@ -4975,7 +4976,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>Vybrať jednotku pre zosúladenie</translation>
+        <translation>Vybrať objekt na zarovnanie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
@@ -5016,7 +5017,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Prierez:</translation>
+        <translation type="unfinished">Priesečník:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5031,13 +5032,13 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">Neplatná vybraná jednotka (neodstrániteľná).</translation>
+        <translation type="unfinished">Vybraný neplatný objekt (nedá sa orezať).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="272"/>
         <source>Invalid entity selected (non-atomic).</source>
-        <translation type="unfinished">Neplatná vybraná jednotka (neatómová).</translation>
+        <translation type="unfinished">Vybraný neplatný objekt (nie je atomický).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
@@ -5057,7 +5058,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished">Neplatná jednotka vybraná (neodstrániteľná s prvou jednotkou).</translation>
+        <translation type="unfinished">Vybraný neplatný objekt (nedá sa orezať spolu s prvým objektom).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="338"/>
@@ -5096,12 +5097,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation>Neplatný subjekt vybraný - žiadne segmenty medzi priesečníkmi na prelomenie/rozdelenie.</translation>
+        <translation>Vybraný neplatný objekt - medzi priesečníkmi nie sú žiadne úseky na prerušenie/rozdelenie.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>Zlomová/rozdeľovacia čiara</translation>
+        <translation>Prerušiť/rozdeliť čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
@@ -5120,7 +5121,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>Zlomový/rozdeľovací kruh</translation>
+        <translation>Prerušiť/rozdeliť kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5147,7 +5148,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Proceed even if no intersections</source>
-        <translation>Postupujte aj v prípade, že nie sú križovatky</translation>
+        <translation>Pokračovať aj v prípade, že neexistujú priesečníky</translation>
     </message>
 </context>
 <context>
@@ -5170,12 +5171,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">Subjekt musí byť priamka, oblúk, kruh, elipsa alebo interpolačný spline.</translation>
+        <translation type="unfinished">Objekt musí byť priamka, oblúk, kruh, elipsa alebo interpolačný spline.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="unfinished">Rezný bod nemusí byť koncovým ukazovateľom jednotky.</translation>
+        <translation type="unfinished">Bod rezu nesmie byť koncovým bodom objektu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
@@ -5211,42 +5212,42 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="79"/>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">Subjekty, ktoré nie sú v rovnakej polylínii.</translation>
+        <translation type="unfinished">Objekty, ktoré nie sú v rovnakej polylínii.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">Materská spoločnosť druhej účtovnej jednotky nie je polylín</translation>
+        <translation type="unfinished">Nadradený objekt druhého objektu nie je polylíniou</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished">Materská spoločnosť druhej účtovnej jednotky je neplatná</translation>
+        <translation type="unfinished">Nadradený objekt druhého objektu je neplatný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="91"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished">Jeden z vybraných subjektov je neplatný</translation>
+        <translation type="unfinished">Jeden z vybraných objektov je neplatný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">Materská spoločnosť prvého subjektu nie je polylínou</translation>
+        <translation type="unfinished">Nadradený objekt prvého objektu nie je polylíniou</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished">Materská spoločnosť prvej účtovnej jednotky je neplatná</translation>
+        <translation type="unfinished">Nadradený objekt prvého objektu je neplatný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="117"/>
         <source>First entity is nullptr</source>
-        <translation type="unfinished">Prvá jednotka je neplatná</translation>
+        <translation type="unfinished">Prvý objekt je neplatný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="129"/>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished">Druhá jednotka je neplatná</translation>
+        <translation type="unfinished">Druhý objekt je neplatný</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
@@ -5270,7 +5271,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Select entity to duplicate</source>
-        <translation>Vybrať jednotku na duplikáciu</translation>
+        <translation>Vybrať objekt na duplikáciu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
@@ -5288,7 +5289,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_entity.cpp" line="223"/>
         <source>Click on entity to modify</source>
-        <translation type="unfinished">Kliknite na subjekt pre úpravu</translation>
+        <translation type="unfinished">Kliknite na objekt pre úpravu</translation>
     </message>
 </context>
 <context>
@@ -5327,12 +5328,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Select line</source>
-        <translation>Vybrať riadok</translation>
+        <translation>Vybrať čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>Použiť alternatívny koncový bod riadku</translation>
+        <translation>Použiť alternatívny koncový bod čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
@@ -5345,7 +5346,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="130"/>
         <source>Lines Join</source>
-        <translation>Pripojiť riadky</translation>
+        <translation>Spojiť čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
@@ -5355,13 +5356,13 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>Prierez:</translation>
+        <translation>Priesečník:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="240"/>
         <source>No line selected</source>
-        <translation>Žiadny riadok</translation>
+        <translation>Nie je vybraná žiadna čiara</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="210"/>
@@ -5376,17 +5377,17 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
         <source>Select first line</source>
-        <translation>Vyberte prvý riadok</translation>
+        <translation>Vyberte prvú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>Vyberte druhý riadok</translation>
+        <translation>Vyberte druhú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Vyberte časť prvého riadku, ktorá by mala zostať po vystrihnutí</translation>
+        <translation>Vyberte časť prvej čiary, ktorá má zostať po orezaní</translation>
     </message>
 </context>
 <context>
@@ -5409,12 +5410,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="151"/>
         <source>Line From:</source>
-        <translation type="unfinished">Riadok od:</translation>
+        <translation type="unfinished">Čiara od:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="152"/>
         <source>Line To:</source>
-        <translation type="unfinished">Riadok pre:</translation>
+        <translation type="unfinished">Čiara do:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="251"/>
@@ -5836,7 +5837,7 @@ Bod: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Snap do centra výberu</translation>
+        <translation type="unfinished">Prichytiť k stredu výberu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5912,7 +5913,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="225"/>
         <source>Round</source>
-        <translation type="unfinished">Okrúhle</translation>
+        <translation type="unfinished">Zaoblenie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
@@ -5933,7 +5934,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="408"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished">Zadajte prvý subjekt alebo zadajte polomer &lt;%1&gt;</translation>
+        <translation type="unfinished">Zadajte prvý objekt alebo zadajte polomer &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="411"/>
@@ -5986,12 +5987,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">Zadajte stred stupnice</translation>
+        <translation type="unfinished">Zadajte stred zmeny mierky</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Snap do centra výberu</translation>
+        <translation type="unfinished">Prichytiť k stredu výberu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6006,7 +6007,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Voľný zásah</translation>
+        <translation type="unfinished">Voľné prichytenie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6095,12 +6096,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Prierez:</translation>
+        <translation type="unfinished">Priesečník:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">Prierez 2:</translation>
+        <translation type="unfinished">Priesečník 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
@@ -6143,7 +6144,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">Vyberte čiaru/arc na vyčnievanie OR zadajte hodnotu dĺžky:</translation>
+        <translation type="unfinished">Vyberte čiaru/oblúk na orezanie ALEBO zadajte hodnotu dĺžky:</translation>
     </message>
 </context>
 <context>
@@ -6156,7 +6157,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">Vzdialenosť od pôvodne vyriešeného bodu zlomu</translation>
+        <translation type="unfinished">Vzdialenosť bodu prichytenia od pôvodne určeného bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6220,12 +6221,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Špecifikujte subjekt pre výber pera</translation>
+        <translation>Špecifikujte objekt pre výber pera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Specify entity to apply pen</source>
-        <translation>Uveďte subjekt, ktorý má aplikovať pero</translation>
+        <translation>Uveďte objekt, na ktorý sa má použiť pero</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6238,7 +6239,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Špecifikujte subjekt pre výber pera</translation>
+        <translation>Špecifikujte objekt pre výber pera</translation>
     </message>
 </context>
 <context>
@@ -6252,7 +6253,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Subjekt musí byť polylínia.</translation>
+        <translation type="unfinished">Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
@@ -6262,7 +6263,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="147"/>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished">Pridanie bodu nie je na subjekt.</translation>
+        <translation type="unfinished">Pridávaný bod nie je na objekte.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
@@ -6285,7 +6286,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Subjekt musí byť polylínia.</translation>
+        <translation type="unfinished">Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
@@ -6310,7 +6311,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok subjektov.</translation>
+        <translation type="unfinished">Nie je možné vrátiť späť: Zatiaľ nie je definovaný dostatok objektov.</translation>
     </message>
 </context>
 <context>
@@ -6355,12 +6356,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Subjekt musí byť polylínia.</translation>
+        <translation type="unfinished">Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">Vymazanie nie je na subjekte.</translation>
+        <translation type="unfinished">Odstraňovaný bod nie je na objekte.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="141"/>
@@ -6389,13 +6390,13 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Subjekt musí byť polylínia.</translation>
+        <translation type="unfinished">Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="184"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">Vymazanie nie je na subjekte.</translation>
+        <translation type="unfinished">Odstraňovaný bod nie je na objekte.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="167"/>
@@ -6439,7 +6440,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Subjekt musí byť polylínia.</translation>
+        <translation type="unfinished">Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
@@ -6463,7 +6464,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">Subjekt nemôže byť uzavretá polylínia.</translation>
+        <translation type="unfinished">Objekt nemôže byť uzavretá polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
@@ -6481,7 +6482,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Subjekt musí byť polylínia.</translation>
+        <translation type="unfinished">Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
@@ -6524,7 +6525,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
         <source> entities </source>
-        <translation>subjekty</translation>
+        <translation> objektov </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6554,7 +6555,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
         <source>No valid entities selected, select them first</source>
-        <translation>Nevybrané žiadne platné subjekty, vyberte ich ako prvé</translation>
+        <translation>Nie sú vybrané žiadne platné objekty, najprv ich vyberte</translation>
     </message>
 </context>
 <context>
@@ -6567,7 +6568,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>Vybrať kontrolný bod subjektu</translation>
+        <translation>Vybrať kontrolný bod objektu</translation>
     </message>
 </context>
 <context>
@@ -6580,7 +6581,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="90"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Zadajte typ jednotky, ktorú chcete vybrať</translation>
+        <translation type="unfinished">Zadajte objekt, ktorý chcete vybrať</translation>
     </message>
 </context>
 <context>
@@ -6588,7 +6589,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>Vyberte rozmer referenčných súradníc</translation>
+        <translation>Vyberte referenčnú súradnicovú kótu</translation>
     </message>
 </context>
 <context>
@@ -6596,7 +6597,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="30"/>
         <source>Select entities</source>
-        <translation type="unfinished">Vybrať jednotky</translation>
+        <translation type="unfinished">Vybrať objekty</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="31"/>
@@ -6619,12 +6620,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Vyberte pretínajúci sa subjekt</translation>
+        <translation type="unfinished">Vyberte pretínajúci sa objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">Vybrať detské subjekty</translation>
+        <translation type="unfinished">Vybrať podradené objekty</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6663,7 +6664,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Zadajte typ jednotky, ktorú chcete vybrať</translation>
+        <translation type="unfinished">Zadajte objekt, ktorý chcete vybrať</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
@@ -6686,7 +6687,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="136"/>
         <source> entities </source>
-        <translation type="unfinished">subjekty</translation>
+        <translation type="unfinished"> objektov </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6711,12 +6712,12 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>De-select entities</source>
-        <translation type="unfinished">Vybrané subjekty</translation>
+        <translation type="unfinished">Zrušiť výber objektov</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>Select entities</source>
-        <translation type="unfinished">Vybrať jednotky</translation>
+        <translation type="unfinished">Vybrať objekty</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
@@ -6757,7 +6758,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="210"/>
         <source>Select control point to insert before</source>
-        <translation>Vyberte kontrolný bod, ktorý sa má vložiť pred</translation>
+        <translation>Vyberte riadiaci bod, pred ktorý sa má vložiť nový bod</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
@@ -6829,7 +6830,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Delete from endpoints TO selected points</source>
-        <translation>Odstrániť z cieľov do vybraných bodov</translation>
+        <translation>Odstrániť od koncových bodov po vybrané body</translation>
     </message>
 </context>
 <context>
@@ -6837,7 +6838,7 @@ Bod: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>Vybrať rozmer súradníc pre nastavenie UCS</translation>
+        <translation>Vyberte súradnicovú kótu na nastavenie UCS</translation>
     </message>
 </context>
 <context>
@@ -7066,7 +7067,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">Subjekt</translation>
+        <translation type="unfinished">Objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
@@ -7148,7 +7149,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="84"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation type="unfinished">Ak sa zvolí, relatívne pozície subjektov v rámci výberu budú nezmenené. V opačnom prípade bude každý subjekt umiestnený samostatne.</translation>
+        <translation type="unfinished">Ak sa zvolí, relatívne pozície objektov v rámci výberu budú nezmenené. V opačnom prípade bude každý objekt umiestnený samostatne.</translation>
     </message>
 </context>
 <context>
@@ -7161,7 +7162,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">Ak sa kontroluje, subjekty budú v prípade potreby odstupňované. Inak budú umiestnené a otočené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, objektom sa v prípade potreby zmení mierka. Inak sa len umiestnia a otočia.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7204,7 +7205,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre zrkadlové subjekty, inak - pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre zrkadlené objekty, inak - pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
@@ -7214,7 +7215,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="56"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">Ak sa nekontroluje, pôvodné subjekty budú odstránené, inak prežijú.</translation>
+        <translation type="unfinished">Ak nie je zaškrtnuté, pôvodné objekty sa odstránia, inak sa zachovajú.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="59"/>
@@ -7234,7 +7235,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">Ak sa kontroluje, subjekty budú v prípade potreby odstupňované. Inak budú umiestnené a otočené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, objektom sa v prípade potreby zmení mierka. Inak sa len umiestnia a otočia.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
@@ -7247,7 +7248,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">Subjekt</translation>
+        <translation type="unfinished">Objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
@@ -7342,7 +7343,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="80"/>
         <source>Center entities vertically</source>
-        <translation type="unfinished">Vertikálne jednotky</translation>
+        <translation type="unfinished">Vycentrovať objekty zvislo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="100"/>
@@ -7367,12 +7368,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">Definuje spôsob zosúladenia vybraných subjektov.</translation>
+        <translation type="unfinished">Definuje spôsob zarovnania vybraných objektov.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
         <source>Entity</source>
-        <translation type="unfinished">Subjekt</translation>
+        <translation type="unfinished">Objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="166"/>
@@ -7509,7 +7510,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished">Výška oblúka (distanсe medzi akordom a vrcholovým oblúkovým bodom)</translation>
+        <translation type="unfinished">Výška oblúka (vzdialenosť medzi tetivou a vrcholom oblúka)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="64"/>
@@ -7766,7 +7767,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>Vláknina (sagitta) oblúka</translation>
+        <translation>Vydutie (sagita) oblúka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
@@ -7913,7 +7914,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Zaškrtnite, aby sa oba subjekty pristrihli ku skoseniu</translation>
+        <translation type="unfinished">Zaškrtnite, ak sa majú oba objekty orezať ku skoseniu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7946,7 +7947,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Zaškrtnite, aby sa oba subjekty pristrihli ku skoseniu</translation>
+        <translation type="unfinished">Zaškrtnite, ak sa majú oba objekty orezať ku skoseniu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -8744,12 +8745,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="204"/>
         <source>Origin Indicator</source>
-        <translation>Ukazovateľ pôvodu</translation>
+        <translation>Ukazovateľ počiatku</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="205"/>
         <source>Origin Indicator 2</source>
-        <translation>Ukazovateľ pôvodu 2</translation>
+        <translation>Ukazovateľ počiatku 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="206"/>
@@ -8819,7 +8820,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>Označiť architektúru</translation>
+        <translation>Architektonická značka</translation>
     </message>
 </context>
 <context>
@@ -8898,12 +8899,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>Export štýlov rozmerov</translation>
+        <translation>Export kótovacích štýlov</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>Rozmery štýly boli vyvezené.</translation>
+        <translation>Kótovacie štýly boli exportované.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
@@ -8918,23 +8919,23 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>Neočakávaná chyba počas dimenzionálnych štýlov. Správa:</translation>
+        <translation>Neočakávaná chyba pri spracovaní kótovacích štýlov. Správa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>Neočakávaný formát súboru, neobsahuje štýly dimenzie LibreCAD.</translation>
+        <translation>Neočakávaný formát súboru, neobsahuje kótovacie štýly LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>Import štýlov rozmerov</translation>
+        <translation>Import kótovacích štýlov</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>Žiadne dimenzie štýly importovať.</translation>
+        <translation>Žiadne kótovacie štýly na import.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
@@ -8944,17 +8945,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>Importovať štýly rozmerov</translation>
+        <translation>Importovať kótovacie štýly</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>Exportovať štýly rozmerov</translation>
+        <translation>Exportovať kótovacie štýly</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Súbor dimenzií LibreCAD (*.%1)</translation>
+        <translation>Súbor kótovacích štýlov LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -9071,7 +9072,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>Čiary rozmerov</translation>
+        <translation>Kótovacie čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
@@ -9082,17 +9083,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>Zobrazí a nastaví farbu pre číselnú os (premenná systému DIMCLRD).</translation>
+        <translation>Zobrazí a nastaví farbu kótovacej čiary (systémová premenná DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
         <source>Linetype:</source>
-        <translation>Typ riadku:</translation>
+        <translation>Typ čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Nastaví typ čiary rozmerov. (premenná systému DIMLTYPE)</translation>
+        <translation>Nastaví typ kótovacej čiary. (systémová premenná DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
@@ -9102,7 +9103,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Nastaví priamku dimenzie. (premenná systému DIMLLWD)</translation>
+        <translation>Nastaví hrúbku kótovacej čiary. (systémová premenná DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9112,17 +9113,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Určuje vzdialenosť k rozšíreniu dimenzie čiary za rozšírenie linky, keď používate šikmé, architektonické, kliešť, integrálne, a žiadne značky pre šípky. (meniteľná hodnota systému MIDLE)</translation>
+        <translation>Určuje, o koľko kótovacia čiara presahuje za vynášaciu čiaru, keď sa ako šípky použijú šikmé, architektonické, čiarkové, integrálne alebo žiadne značky. (systémová premenná DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>Východiskový odstup:</translation>
+        <translation>Rozostup kót od základne:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Nárazníky displeja prvej dimenzie riadok (DIMSD1 systémová premenná)</translation>
+        <translation>Potlačí zobrazenie prvej kótovacej čiary (systémová premenná DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
@@ -9132,7 +9133,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Nárazníky displeja druhej dimenzie riadok (DIMSD2 systémová premenná)</translation>
+        <translation>Potlačí zobrazenie druhej kótovacej čiary (systémová premenná DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
@@ -9142,12 +9143,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>Rozširovacie čiary</translation>
+        <translation>Vynášacie čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>Nastaví farbu prípony (premenná systému DIMCLRE.)</translation>
+        <translation>Nastaví farbu vynášacej čiary (systémová premenná DIMCLRE.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
@@ -9157,7 +9158,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Nastaví typ riadku prvej prípony. (menná hodnota systému DIMLTEX1)</translation>
+        <translation>Nastaví typ čiary prvej vynášacej čiary. (systémová premenná DIMLTEX1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9167,37 +9168,37 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>Nastaví typ riadku druhej predĺženej čiary. (premenná systému DIMLTEX2)</translation>
+        <translation>Nastaví typ čiary druhej vynášacej čiary. (systémová premenná DIMLTEX2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Hmotnosť čiary:</translation>
+        <translation>Hrúbka čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Nastaví priamku nadstavby. (premenná podľa systémuDIMLWE)</translation>
+        <translation>Nastaví hrúbku vynášacej čiary. (systémová premenná DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Rozšíriť za dim linky:</translation>
+        <translation>Predĺženie za kótovacie čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Určuje vzdialenosť na rozšírenie predlžovacích čiar nad dimenziou. (premenná systému DIMEXE)</translation>
+        <translation>Určuje, o koľko vynášacie čiary presahujú za kótovaciu čiaru. (systémová premenná DIMEXE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>Kompenzácia z pôvodu:</translation>
+        <translation>Odsadenie od počiatku:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Nastaví vzdialenosť na vyrovnanie predlžovacích čiar od bodov na výkrese, ktoré definujú rozmer. (premenná systému DIMEXO)</translation>
+        <translation>Nastaví vzdialenosť odsadenia vynášacích čiar od bodov na výkrese, ktoré definujú kótu. (systémová premenná DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9207,7 +9208,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Nastaví celkovú dĺžku predlžovacích čiar začínajúc od dimenzionálnej čiary smerom k zdroju rozmerov. (meniče systému DIMFXL)</translation>
+        <translation>Nastaví celkovú dĺžku vynášacích čiar od kótovacej čiary smerom k počiatku kóty. (systémová premenná DIMFXL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
@@ -9222,7 +9223,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Pretláča zobrazenie prvej prípony (premenná systému DIMSE1).</translation>
+        <translation>Potlačí zobrazenie prvej vynášacej čiary (systémová premenná DIMSE1).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
@@ -9232,7 +9233,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Pretláča zobrazenie druhej prípony (premenná systému DIMSE2).</translation>
+        <translation>Potlačí zobrazenie druhej vynášacej čiary (systémová premenná DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9258,7 +9259,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>Lineárny rozmer jog</translation>
+        <translation>Lineárna kóta so zalomením</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
@@ -9273,7 +9274,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>Radius jog rozmer</translation>
+        <translation>Kóta polomeru so zalomením</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
@@ -9283,7 +9284,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Určuje uhol priečnej úsečky dimenzie v polomere zohnutia. (premenná systému DIMJOGANG)</translation>
+        <translation>Určuje uhol priečnej úsečky kótovacej čiary pri kóte polomeru so zalomením. (systémová premenná DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9298,7 +9299,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Nastaví šípku na vedenie. (premenná systému DIMLBLK)</translation>
+        <translation>Nastaví šípku odkazovej čiary. (systémová premenná DIMLDRBLK)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
@@ -9308,17 +9309,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Nastaví šípku na prvú dimenziu. Keď zmeníte prvý typ šípky, druhá šípka sa automaticky zmení tak, aby zodpovedala. (premenná systému DIMVLK1)</translation>
+        <translation>Nastaví šípku pre prvú kótovaciu čiaru. Keď zmeníte typ prvej šípky, druhá šípka sa automaticky zmení tak, aby jej zodpovedala. (systémová premenná DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>Nastaví šípku na druhú dimenziu. (premenná systému DIMVLK2)</translation>
+        <translation>Nastaví šípku pre druhú kótovaciu čiaru. (systémová premenná DIMBLK2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Použite rovnakú šípku pre čiaru rozmerov</translation>
+        <translation>Použiť rovnakú šípku pre kótovaciu čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9338,12 +9339,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>Označiť veľkosť:</translation>
+        <translation>Veľkosť značky:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>Prestávka rozmerov</translation>
+        <translation>Prerušenie kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9370,22 +9371,22 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Umiestňuje symboly dĺžky oblúka pred textom s rozmermi. (premenná systému MIMARCSYM)</translation>
+        <translation>Umiestni symbol dĺžky oblúka pred text kóty. (systémová premenná DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>Predchádzajúci text s rozmermi</translation>
+        <translation>Pred textom kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Umiestňuje symboly dĺžky oblúka nad textom s rozmermi. (premenná systému MIMARCSYM)</translation>
+        <translation>Umiestni symbol dĺžky oblúka nad text kóty. (systémová premenná DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>Nadrozmerný text</translation>
+        <translation>Nad textom kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
@@ -9456,7 +9457,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>Nastaví farbu pre textové pozadie vo rozmeroch (premenná systému DIMTILLCLR)</translation>
+        <translation>Nastaví farbu pozadia textu v kótach (systémová premenná DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9471,22 +9472,22 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>Nastaví stupnicu frakcií vzhľadom na rozmer textu. (meniteľná hodnota systému DIMTFAC)</translation>
+        <translation>Nastaví mierku zlomkov vzhľadom na text kóty. (systémová premenná DIMTFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>Stupnica výšky štiepenia:</translation>
+        <translation>Mierka výšky zlomku:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>Nastaví výšku aktuálnej dimenzie štýlu textu. (premenná systému DIMTXT)</translation>
+        <translation>Nastaví výšku textu aktuálneho kótovacieho štýlu. (systémová premenná DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>Nastaví farbu pre text s rozmermi (premenná systému DIMCLRT)</translation>
+        <translation>Nastaví farbu textu kóty (systémová premenná DIMCLRT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9501,7 +9502,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>Zobrazí obdĺžnikový rám okolo textu s rozmermi. Táto možnosť mení hodnotu uloženú v premennej systéme DIMGAP na zápornú hodnotu.</translation>
+        <translation>Zobrazí obdĺžnikový rámček okolo textu kóty. Táto možnosť zmení hodnotu uloženú v systémovej premennej DIMGAP na zápornú.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9527,17 +9528,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>Zarovnanie textu s líniou rozmerov (systémové premenné DIMTIH a DIMTOH).</translation>
+        <translation>Zarovná text s kótovacou čiarou (systémové premenné DIMTIH a DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Zarovná text s líniou s rozmermi, keď je text vo vnútri predlžovacích línií, ale horizontálne ho zarovná, keď je text mimo predlžovacích čiar (premenné DIMTIH a DIMTOH systému).</translation>
+        <translation>Zarovná text s kótovacou čiarou, ak je text medzi vynášacími čiarami, a vodorovne, ak je text mimo vynášacích čiar (systémové premenné DIMTIH a DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>Zarovnané s čiarou rozmerov</translation>
+        <translation>Zarovnané s kótovacou čiarou</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9550,8 +9551,8 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>Určuje veľkosť šikmých ťahov vytiahnutých namiesto šípok pre lineárne, polomer a rozmery priemeru. Ak = 0 
-&gt;0 .</translation>
+        <translation>Určuje veľkosť šikmých čiarok kreslených namiesto šípok pri lineárnych kótach a kótach polomeru a priemeru. Ak = 0 – kreslia sa šípky.
+&gt;0 – namiesto šípok sa kreslia šikmé čiarky (premenná DIMTSZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9592,7 +9593,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Kontroluje horizontálne umiestnenie textu s rozmermi pozdĺž dimenzie vo vzťahu k líniám rozšírenia. (premenná systému DIMJUST)</translation>
+        <translation>Určuje vodorovné umiestnenie textu kóty pozdĺž kótovacej čiary vzhľadom na vynášacie čiary. (systémová premenná DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9633,7 +9634,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>Ovláda vertikálne umiestnenie textu s rozmermi vo vzťahu k čiare s rozmermi. (meniteľná hodnota systému DIMTAD)</translation>
+        <translation>Určuje zvislé umiestnenie textu kóty vzhľadom na kótovaciu čiaru. (systémová premenná DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9658,7 +9659,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>Vertikálna poloha textu nad alebo pod čiarou rozmerov, ak vertikálne umiestnenie (DIMTAD) nie je &quot;Centered&quot; (DIMTVP premenná).</translation>
+        <translation>Zvislá poloha textu nad alebo pod kótovacou čiarou, ak zvislé umiestnenie (DIMTAD) nie je „V strede“ (premenná DIMTVP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
@@ -9668,7 +9669,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Nastaví aktuálnu textovú medzeru, ktorá je vzdialenosťou okolo textu s rozmermi, keď je čiara s rozmermi rozbitá tak, aby vyhovovala textu s rozmermi (premenná systému DIGMAP).</translation>
+        <translation>Nastaví aktuálnu medzeru okolo textu kóty, keď je kótovacia čiara prerušená kvôli umiestneniu textu kóty (systémová premenná DIMGAP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9683,7 +9684,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>Ignoruje akékoľvek horizontálne ospravedlnenie nastavenia a umiestni text na pozíciu, ktorú zadáte na Dimension Line Lokalita prompt. (meniteľná hodnota systému DIMUPT)</translation>
+        <translation>Ignoruje nastavenia vodorovného zarovnania a umiestni text na pozíciu zadanú pri výzve Umiestnenie kótovacej čiary. (systémová premenná DIMUPT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9693,7 +9694,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>Kreslí čiary rozmerov medzi meranými bodmi aj vtedy, keď sú šípky umiestnené mimo meraných bodov. (premenná systému DIMTOFL)</translation>
+        <translation>Kreslí kótovacie čiary medzi meranými bodmi aj vtedy, keď sú šípky umiestnené mimo meraných bodov. (systémová premenná DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
@@ -9709,27 +9710,27 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>Nastaví mierku pre všetky nastavenia dimenzie, ktoré určujú veľkosť, vzdialenosť alebo odstup, vrátane veľkosti textu a šípok. Táto stupnica nemení hodnoty merania rozmerov. (menná hodnota systému DIMSCALE)</translation>
+        <translation>Nastaví mierku pre všetky nastavenia kótovacieho štýlu, ktoré určujú veľkosť, vzdialenosť alebo odstup, vrátane veľkosti textu a šípok. Táto mierka nemení namerané hodnoty kót. (systémová premenná DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
         <source>Use overall scale of:</source>
-        <translation>Použite celkovú stupnicu:</translation>
+        <translation>Použite celkovú mierku:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation>Určuje faktor stupnice založený na stupnici medzi aktuálnym modelom vesmírneho zobrazenia a papierovým priestorom. (menná hodnota systému DIMSCALE)</translation>
+        <translation>Určuje mierku na základe pomeru medzi aktuálnym výrezom modelového priestoru a papierovým priestorom. (systémová premenná DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
         <source>Scale to layout</source>
-        <translation>Rozmer</translation>
+        <translation>Mierka podľa rozloženia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>Ak je vybraný, posunie čiaru s rozmermi vždy, keď sa posunie text s rozmermi. (meniteľná hodnota systému MITTMOVE)</translation>
+        <translation>Ak je vybrané, kótovacia čiara sa posunie vždy, keď sa posunie text kóty. (systémová premenná DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -9739,12 +9740,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Ak je zvolený, pri posune textu nie sú dimenzie posunuté. Ak je text presunutý z dimenzie, vytvorí sa leader linka spájajúca text s dimenziou. Línia lídra je vynechaná, keď je text príliš blízko k čiare rozmerov. (meniteľná hodnota systému MITTMOVE)</translation>
+        <translation>Ak je vybrané, kótovacie čiary sa pri posune textu neposúvajú. Ak sa text posunie od kótovacej čiary, vytvorí sa odkazová čiara spájajúca text s kótovacou čiarou. Odkazová čiara sa vynechá, ak je text príliš blízko kótovacej čiary. (systémová premenná DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Nad dimenziou, s lídrom</translation>
+        <translation>Nad kótovacou čiarou, s odkazovou čiarou</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9754,12 +9755,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Ak je zvolený, pri posune textu nie sú dimenzie posunuté. Text, ktorý je presunutý z dimenzionálnej čiary, nie je spojený s dimenziou čiary s líderom. (meniteľná hodnota systému MITTMOVE)</translation>
+        <translation>Ak je vybrané, kótovacie čiary sa pri posune textu neposúvajú. Text posunutý od kótovacej čiary sa s kótovacou čiarou nespojí odkazovou čiarou. (systémová premenná DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Nad dimenziou, bez vodcu</translation>
+        <translation>Nad kótovacou čiarou, bez odkazovej čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9794,7 +9795,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>Presunie text alebo šípky mimo nadstavcové čiary založené na najlepšie fit (premenná systému DIMATFIT).</translation>
+        <translation>Presunie text alebo šípky mimo vynášacích čiar podľa toho, čo sa lepšie zmestí (systémová premenná DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9814,7 +9815,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Presunie text mimo prípony najprv, potom šípky (premenná systému DIMATFIT).</translation>
+        <translation>Najprv presunie mimo vynášacích čiar text, potom šípky (systémová premenná DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
@@ -9824,7 +9825,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Vždy fit text medzi ext riadky</translation>
+        <translation>Vždy umiestniť text medzi vynášacie čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9834,7 +9835,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>Uhlové rozmery</translation>
+        <translation>Uhlové kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -9892,7 +9893,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>Nastaví počet desatinných miest pre uhlové rozmery. Premenná systému DIMADEC)</translation>
+        <translation>Nastaví počet desatinných miest pre uhlové kóty. (systémová premenná DIMADEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
@@ -9903,12 +9904,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>Lineárne rozmery</translation>
+        <translation>Lineárne kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
         <source>Measurement scale</source>
-        <translation>Stupnica merania</translation>
+        <translation>Mierka merania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1437"/>
@@ -9918,17 +9919,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>Nastaví koeficient mierky na meranie lineárnych rozmerov. Odporúča sa, aby ste túto hodnotu nezmenili zo štandardnej hodnoty 1.00. (premenná podľa systému MIMLFAC)</translation>
+        <translation>Nastaví mierku nameraných hodnôt lineárnych kót. Odporúča sa nemeniť predvolenú hodnotu 1,00. (systémová premenná DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>Vzťahuje sa faktor stupnice merania len na rozmery vytvorené v prehľadoch rozloženia.</translation>
+        <translation>Použije mierku merania len na kóty vytvorené vo výrezoch rozloženia. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>Aplikujte len na rozmery rozloženia</translation>
+        <translation>Použiť len na kóty v rozložení</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
@@ -9948,12 +9949,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Obsahuje príponu, ktorú zadáte v texte s rozmermi. (premenná podľa systému MIMPOST)</translation>
+        <translation>Pridá zadanú príponu do textu kóty. (systémová premenná DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>Nastaví aktuálny formát jednotiek pre všetky typy rozmerov okrem uhlov. (premenná systému DIMULIT)</translation>
+        <translation>Nastaví aktuálny formát jednotiek pre všetky typy kót okrem uhlových. (systémová premenná DIMLUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9979,17 +9980,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>Nastavuje najbližšiu hodnotu zaokrúhľovania pre meranie rozmerov pre všetky typy rozmerov okrem uhlov. (premenná systému DIMRND)</translation>
+        <translation>Nastaví zaokrúhlenie nameraných hodnôt pre všetky typy kót okrem uhlových. (systémová premenná DIMRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>Zobrazí a nastaví počet desatinných miest v texte s rozmermi. (premenná systému DIMDEC)</translation>
+        <translation>Zobrazí a nastaví počet desatinných miest v texte kóty. (systémová premenná DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Obsahuje predponu, ktorú zadáte v texte s rozmermi. (premenná podľa systému MIMPOST)</translation>
+        <translation>Pridá zadanú predponu do textu kóty. (systémová premenná DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -10021,12 +10022,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Nárazy nulovej hodnoty vo všetkých desatinných rozmeroch. (premenná systému DIMZIN)</translation>
+        <translation>Potlačí koncové nuly vo všetkých desatinných kótach. (systémová premenná DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>Pretláča palcovú časť rozmeru chodidiel a palcov, keď je vzdialenosť integrálnym počtom chodidiel (premenná systému DIMZIN)</translation>
+        <translation> Potlačí palcovú časť kóty v stopách a palcoch, ak je vzdialenosť celým počtom stôp (systémová premenná DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10039,7 +10040,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>Pretláča chodidlá časti nohy-a-inches rozmer, keď vzdialenosť je menej ako jedna noha. (premenná systému DIMZIN)</translation>
+        <translation>Potlačí časť v stopách pri kóte v stopách a palcoch, ak je vzdialenosť menšia ako jedna stopa. (systémová premenná DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10052,7 +10053,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>Pretlaky vedúce nuly vo všetkých desatinných rozmeroch (premenná systému DIMZIN)</translation>
+        <translation>Potlačí úvodné nuly vo všetkých desatinných kótach (systémová premenná DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
@@ -10063,12 +10064,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>Nastaví počet čiastkových jednotiek na jednotku. Používa sa na výpočet dimenzionálnej vzdialenosti v podjednotke, ak je vzdialenosť menšia ako jedna jednotka.</translation>
+        <translation>Nastaví počet podjednotiek v jednotke. Používa sa na výpočet vzdialenosti kóty v podjednotkách, ak je vzdialenosť menšia ako jedna jednotka. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>Zahŕňa príponu podjednotky hodnoty rozmeru. Môžete zadať text alebo použiť ovládacie kódy na zobrazenie špeciálnych symbolov.</translation>
+        <translation>Pridá príponu k podjednotke hodnoty kóty. Môžete zadať text alebo použiť riadiace kódy na zobrazenie špeciálnych symbolov.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10078,7 +10079,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>Pridá alternatívne meracie jednotky do textu s rozmermi. Nastaví premennú systému DIMALT na 1.</translation>
+        <translation>Pridá do textu kóty alternatívne jednotky merania. Nastaví systémovú premennú DIMALT na 1.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10093,7 +10094,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>Určuje násobiteľ použitý ako konverzný faktor medzi primárnymi a alternatívnymi jednotkami. Napríklad pre prevod palcov na milimetre, zadajte 25.4. Hodnota nemá žiadny vplyv na uhlové rozmery a nevzťahuje sa na hodnotu zaokrúhľovania alebo plus alebo mínus hodnoty tolerancie. (premenná systému DIMALTF)</translation>
+        <translation>Určuje násobiteľ použitý ako prevodný koeficient medzi primárnymi a alternatívnymi jednotkami. Napríklad na prevod palcov na milimetre zadajte 25,4. Hodnota nemá vplyv na uhlové kóty a neuplatňuje sa na hodnotu zaokrúhlenia ani na hodnoty tolerancie plus a mínus. (systémová premenná DIMALTF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10103,7 +10104,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>Nastavuje pravidlá zaokrúhľovania pre alternatívne jednotky pre všetky typy rozmerov okrem uhlov. Ak zadáte hodnotu 0,25, všetky alternatívne merania sú zaokrúhlené na najbližšie 0,25 jednotky. Ak zadáte hodnotu 1.0, všetky rozmery sú zaokrúhlené na najbližšie celé číslo. Počet číslic zobrazených za desatinnou čiarkou závisí od nastavenia presnosti. (premenná systému DIMALTRND)</translation>
+        <translation>Nastaví pravidlá zaokrúhľovania alternatívnych jednotiek pre všetky typy kót okrem uhlových. Ak zadáte hodnotu 0,25, všetky alternatívne hodnoty sa zaokrúhlia na najbližších 0,25 jednotky. Ak zadáte hodnotu 1,0, všetky namerané hodnoty kót sa zaokrúhlia na najbližšie celé číslo. Počet číslic za desatinnou čiarkou závisí od nastavenia presnosti. (systémová premenná DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -10118,7 +10119,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>Umiestňuje alternatívne jednotky za primárnymi jednotkami vo formáte textu.</translation>
+        <translation>Umiestni alternatívne jednotky za primárne jednotky v texte kóty.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
@@ -10128,7 +10129,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>Umiestňuje alternatívne jednotky pod primárne jednotky v texte s rozmermi.</translation>
+        <translation>Umiestni alternatívne jednotky pod primárne jednotky v texte kóty.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
@@ -10138,32 +10139,32 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Obsahuje predponu v texte alternatívnej dimenzie. Môžete zadať text alebo použiť ovládacie kódy na zobrazenie špeciálnych symbolov. Napríklad zadanie kontrolného kódu%%c zobrazuje symbol priemeru. (menná hodnota systému DIMAPOST)</translation>
+        <translation>Pridá predponu do alternatívneho textu kóty. Môžete zadať text alebo použiť riadiace kódy na zobrazenie špeciálnych symbolov. Napríklad zadaním riadiaceho kódu %%c sa zobrazí symbol priemeru. (systémová premenná DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>Okrúhle vzdialenosti od:</translation>
+        <translation>Zaokrúhliť vzdialenosti na:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>Pretlaky vedúce nuly vo všetkých desatinných rozmeroch. Napríklad 0,5000 sa stane .5000.</translation>
+        <translation>Potlačí úvodné nuly vo všetkých desatinných kótach. Napríklad 0,5000 sa zobrazí ako ,5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Nárazy nulovej hodnoty vo všetkých desatinných rozmeroch. Napríklad 12.5000 sa stáva 12,5, a 30.0000 sa stáva 30 (systém DIMALTZ premenná).</translation>
+        <translation>Potlačí koncové nuly vo všetkých desatinných kótach. Napríklad 12,5000 sa zobrazí ako 12,5 a 30,0000 ako 30 (systémová premenná DIMALTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>Pretláča chodidlá časť nohy-a-inches rozmer, keď vzdialenosť je menej ako 1 stopa. Napríklad 0&apos;-6 1/2&quot; sa stáva 6 1/2&quot; (premenná systému DIMALTZ)</translation>
+        <translation>Potlačí časť v stopách pri kóte v stopách a palcoch, ak je vzdialenosť menšia ako 1 stopa. Napríklad 0&apos;-6 1/2&quot; sa zobrazí ako 6 1/2&quot; (systémová premenná DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>Pretláča palec časť nohy-a-inches rozmer, keď vzdialenosť je integrálny počet chodidiel. Napríklad 1&apos;-0&quot; sa stáva 1&apos;</translation>
+        <translation>Potlačí palcovú časť kóty v stopách a palcoch, ak je vzdialenosť celým počtom stôp. Napríklad 1&apos;-0&quot; sa zobrazí ako 1&apos;. (systémová premenná DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -10173,7 +10174,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>Obsahuje príponu v texte alternatívnej dimenzie. Môžete zadať text alebo použiť ovládacie kódy na zobrazenie špeciálnych symbolov. Napríklad zadanie textu cm má za následok podobný rozmer textu, ako je znázornený na obrázku. Keď zadáte príponu, prepíše všetky predvolené prípony. (menná hodnota systému DIMAPOST)</translation>
+        <translation>Pridá príponu do alternatívneho textu kóty. Môžete zadať text alebo použiť riadiace kódy na zobrazenie špeciálnych symbolov. Napríklad zadaním textu cm vznikne text kóty podobný tomu na obrázku. Zadaná prípona prepíše všetky predvolené prípony. (systémová premenná DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10188,22 +10189,22 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Pretlaky vedúce nuly vo všetkých desatinných rozmeroch (premenná systému DIMTZIN).</translation>
+        <translation>Potlačí úvodné nuly vo všetkých desatinných kótach (systémová premenná DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Pretlaky nulovej hodnoty vo všetkých desatinných rozmeroch (premenná systému DIMTZIN).</translation>
+        <translation>Potlačí koncové nuly vo všetkých desatinných kótach (systémová premenná DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>Pretláča chodidlá časti nohy-a-inches rozmer, keď vzdialenosť je menej ako 1 stopa (DIMTZIN systém variabilný).</translation>
+        <translation>Potlačí časť v stopách pri kóte v stopách a palcoch, ak je vzdialenosť menšia ako 1 stopa (systémová premenná DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>Pretláča palcovú časť dimenzie chodidiel a palcov, keď je vzdialenosť integrálnym počtom chodidiel (premenná systému DIMTZIN).</translation>
+        <translation>Potlačí palcovú časť kóty v stopách a palcoch, ak je vzdialenosť celým počtom stôp (systémová premenná DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
@@ -10233,7 +10234,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>Kontroluje textové zdôvodnenie symetrických a odchýlkových odchýlok (premenná systému DIMTOLJ).</translation>
+        <translation>Určuje zarovnanie textu symetrických a odchýlkových tolerancií (systémová premenná DIMTOLJ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10283,7 +10284,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>Nastaví aktuálnu výšku textu tolerancie. Pomer výšky tolerancie k výške textu hlavného rozmeru sa vypočíta a uloží do premennej systému DIMTFAC.</translation>
+        <translation>Nastaví aktuálnu výšku textu tolerancie. Pomer výšky tolerancie k výške hlavného textu kóty sa vypočíta a uloží do systémovej premennej DIMTFAC.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -10328,22 +10329,22 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>Pretlaky vedúce nuly vo všetkých desatinných rozmeroch (premenná systému DIMALTTZ).</translation>
+        <translation>Potlačí úvodné nuly vo všetkých desatinných kótach (systémová premenná DIMALTTZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>Pretlaky nulovej hodnoty vo všetkých desatinných rozmeroch (premenná systému DIMALTTZ).</translation>
+        <translation>Potlačí koncové nuly vo všetkých desatinných kótach (systémová premenná DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>Podopiera chodidlá časti dimenzie chodidiel a palcov, ak je vzdialenosť menšia ako 1 stopa (premenná systému DIMALTTZ).</translation>
+        <translation>Potlačí časť v stopách pri kóte v stopách a palcoch, ak je vzdialenosť menšia ako 1 stopa (systémová premenná DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>Pretláča palcovú časť rozmeru chodidiel a palcov, keď je vzdialenosť integrálnym počtom chodidiel (premenná systému DIMALTTZ).</translation>
+        <translation>Potlačí palcovú časť kóty v stopách a palcoch, ak je vzdialenosť celým počtom stôp (systémová premenná DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10363,7 +10364,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="14"/>
         <source>Dimension</source>
-        <translation>Rozmery</translation>
+        <translation>Kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
@@ -10393,17 +10394,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="260"/>
         <source>Apply style to dimension</source>
-        <translation>Použiť štýl na rozmer</translation>
+        <translation>Použiť štýl na kótu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>Vybrať štýl rozmerov</translation>
+        <translation>Vybrať kótovací štýl</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
         <source>Override entity&apos;s style</source>
-        <translation>Prepísať štýl jednotky</translation>
+        <translation>Prepísať štýl objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="318"/>
@@ -10423,7 +10424,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>Nastaviť štýl ako aktívny. Aktívny štýl sa aplikuje na novovytvorené rozmery.</translation>
+        <translation>Nastaviť štýl ako aktívny. Aktívny štýl sa použije na novovytvorené kóty.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10455,7 +10456,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>Aktívny štýl, ktorý sa používa pri vytváraní novej dimenzie.</translation>
+        <translation>Aktívny štýl, ktorý sa používa pri vytváraní novej kóty.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10465,7 +10466,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="457"/>
         <source>Indicates whether style is overriden for specific entity (and so is unique for it).</source>
-        <translation>Označuje, či je štýl prepísaný pre konkrétnu jednotku (a tak je pre ňu jedinečný).</translation>
+        <translation>Označuje, či je štýl prepísaný pre konkrétny objekt (a je teda preň jedinečný).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="499"/>
@@ -10495,7 +10496,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>Názov štýlu pre túto dimenziu</translation>
+        <translation>Názov štýlu pre túto kótu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10521,7 +10522,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="145"/>
         <source>Rotation angle of dimension</source>
-        <translation>Uhol otáčania rozmeru</translation>
+        <translation>Uhol natočenia kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
@@ -10541,37 +10542,37 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>Obnoviť rozmer</translation>
+        <translation>Súradnicová kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
         <source>Linear Dimension</source>
-        <translation>Lineárna dimenzia</translation>
+        <translation>Lineárna kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>Zosúladená dimenzia</translation>
+        <translation>Zarovnaná kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
         <source>Angular Dimension</source>
-        <translation>Uhlová dimenzia</translation>
+        <translation>Uhlová kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>Oblúková dimenzia</translation>
+        <translation>Kóta oblúka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
         <source>Diametric Dimension</source>
-        <translation>Diametrický rozmer</translation>
+        <translation>Kóta priemeru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
         <source>Radial Dimension</source>
-        <translation>Radiálna dimenzia</translation>
+        <translation>Kóta polomeru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
@@ -10597,12 +10598,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>Nový štýl rozmerov -</translation>
+        <translation>Nové prepísanie kótovacieho štýlu - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>Upraviť prepísanie štýlu rozmerov -</translation>
+        <translation>Upraviť prepísanie kótovacieho štýlu - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
@@ -10712,7 +10713,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>Vlastnosti riadku</translation>
+        <translation>Vlastnosti čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
@@ -10994,12 +10995,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>Táto skratka je už priradená k menu &quot;Rozmery Moje&quot;!</translation>
+        <translation>Táto skratka je už priradená k menu &quot;Moje kóty&quot;!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>Kontext subjektu</translation>
+        <translation>Kontext objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
@@ -11104,17 +11105,17 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>Neprítomný alebo akýkoľvek subjekt</translation>
+        <translation>Neprítomný alebo akýkoľvek objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>Neprítomný subjekt</translation>
+        <translation>Neprítomný objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
         <source>Any Entity</source>
-        <translation>Akýkoľvek subjekt</translation>
+        <translation>Akýkoľvek objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
@@ -11169,7 +11170,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Poklop</translation>
+        <translation>Šrafovanie</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11179,22 +11180,22 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>Rozmery lineárne</translation>
+        <translation>Lineárna kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Zarovnaná dimenzia</translation>
+        <translation>Zarovnaná kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Diametrický rozmer</translation>
+        <translation>Kóta priemeru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>Radiál rozmerov</translation>
+        <translation>Kóta polomeru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
@@ -11204,7 +11205,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>Rozmerový oblúk</translation>
+        <translation>Kóta oblúka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
@@ -11224,7 +11225,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>POZNÁMKA: Menu úloha bude ignorovaná. Je vyhradený pre Pana.</translation>
+        <translation>POZNÁMKA: Priradenie menu bude ignorované. Je vyhradené pre posúvanie pohľadu (Pan).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11441,7 +11442,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>Nový štýl rozmerov</translation>
+        <translation>Nový kótovací štýl</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11451,42 +11452,42 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>Definuje, ktorý typ rozmerov je riadený týmto štýlom.</translation>
+        <translation>Určuje, ktoré typy kót riadi tento štýl.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>Všetky rozmery</translation>
+        <translation>Všetky kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>Lineárne rozmery</translation>
+        <translation>Lineárne kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>Uhlové rozmery</translation>
+        <translation>Uhlové kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
         <source>Radius Dimensions</source>
-        <translation>Rozmery polomeru</translation>
+        <translation>Kóty polomeru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>Rozmery priemeru</translation>
+        <translation>Kóty priemeru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>Rozmery</translation>
+        <translation>Súradnicové kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Vodca a tolerancie</translation>
+        <translation>Odkazová čiara a tolerancie</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11496,7 +11497,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>Štýl existujúcich rozmerov, na ktorom je založený nový štýl</translation>
+        <translation>Existujúci kótovací štýl, na ktorom je založený nový štýl</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11506,7 +11507,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>Názov štýlu novej dimenzie</translation>
+        <translation>Názov nového kótovacieho štýlu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11516,7 +11517,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Zadané meno dimenzie (%1) nie je jedinečné! Prosím, zadajte ďalšiu.</translation>
+        <translation>Zadaný názov kótovacieho štýlu (%1) nie je jedinečný! Zadajte iný.</translation>
     </message>
 </context>
 <context>
@@ -12226,7 +12227,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>Ak je začiarknuté, zobrazí sa stĺpec s podrobnými informáciami o pôvode a uhle súradnicového systému (UCS) v tabuľke.</translation>
+        <translation>Ak je začiarknuté, v tabuľke sa zobrazí stĺpec s podrobnosťami o počiatku a uhle súradnicového systému (UCS).</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
@@ -12266,12 +12267,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Pan, UCS Pôvod v centre</translation>
+        <translation>Posunúť pohľad, počiatok UCS v strede</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, UCS Pôvod vľavo-Bottom</translation>
+        <translation>Posunúť pohľad, počiatok UCS vľavo dole</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12409,7 +12410,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="69"/>
         <source>Origin:</source>
-        <translation>Pôvod:</translation>
+        <translation>Počiatok:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
@@ -12866,7 +12867,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorí sa políčko pre celý výber. Inak sa vytvorí pre jednotlivé subjekty.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorí sa ohraničujúci obdĺžnik pre celý výber. Inak sa vytvorí pre jednotlivé objekty. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="79"/>
@@ -12899,7 +12900,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Horizontálna kompenzácia duplikátu od pôvodnej účtovnej jednotky</translation>
+        <translation type="unfinished">Vodorovné odsadenie duplikátu od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12909,7 +12910,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Vertikálna kompenzácia duplikátu od pôvodnej účtovnej jednotky</translation>
+        <translation type="unfinished">Zvislé odsadenie duplikátu od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -13014,12 +13015,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Horizontálna kompenzácia duplikátu od pôvodnej účtovnej jednotky</translation>
+        <translation type="unfinished">Vodorovné odsadenie duplikátu od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Vertikálna kompenzácia duplikátu od pôvodnej účtovnej jednotky</translation>
+        <translation type="unfinished">Zvislé odsadenie duplikátu od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
@@ -13160,7 +13161,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="129"/>
@@ -13434,12 +13435,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Zarovnaná dimenzia</translation>
+        <translation type="unfinished">Zarovnaná kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Rozmery lineárne</translation>
+        <translation type="unfinished">Lineárna kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
@@ -13454,22 +13455,22 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Radiál rozmerov</translation>
+        <translation type="unfinished">Kóta polomeru</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Diametrický rozmer</translation>
+        <translation type="unfinished">Kóta priemeru</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Rozmerový oblúk</translation>
+        <translation type="unfinished">Kóta oblúka</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Poklop</translation>
+        <translation type="unfinished">Šrafovanie</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
@@ -14209,7 +14210,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="98"/>
         <source>Insert Point(x):</source>
-        <translation>Vložiť bod (x):</translation>
+        <translation>Bod vloženia (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="121"/>
@@ -14255,7 +14256,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="273"/>
         <source>Scale Y:</source>
-        <translation type="unfinished">Stupnica Y:</translation>
+        <translation type="unfinished">Mierka Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="298"/>
@@ -14265,7 +14266,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="91"/>
         <source>Insert Point (y):</source>
-        <translation>Vložiť písmeno y):</translation>
+        <translation>Bod vloženia (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="253"/>
@@ -14352,12 +14353,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap na subjekt</translation>
+        <translation type="unfinished">Prichytiť na objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Ak je zaškrtnuté, bod bude vždy vnútri vybranej jednotky</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, bod bude vždy vnútri vybraného objektu</translation>
     </message>
 </context>
 <context>
@@ -14370,12 +14371,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Ak je zaškrtnuté, bod bude vždy vnútri vybranej jednotky</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, bod bude vždy vnútri vybraného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap na subjekt</translation>
+        <translation type="unfinished">Prichytiť na objekt</translation>
     </message>
 </context>
 <context>
@@ -14406,7 +14407,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="41"/>
         <source>Insertion point (x):</source>
-        <translation>Vložiť bod x):</translation>
+        <translation>Bod vloženia (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="60"/>
@@ -14421,7 +14422,7 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="92"/>
         <source>Insertion point (y):</source>
-        <translation>Vložiť písmeno y):</translation>
+        <translation>Bod vloženia (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="111"/>
@@ -14441,12 +14442,12 @@ Ste si istý, že sa chystáte zbaviť zmien?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
         <source>Pick scale by X value from drawing</source>
-        <translation>Vyberte stupnicu podľa X hodnoty z výkresu</translation>
+        <translation>Vyberte mierku podľa X hodnoty z výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
         <source>Scale Y:</source>
-        <translation>Stupnica Y:</translation>
+        <translation>Mierka Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="177"/>
@@ -15339,7 +15340,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="47"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
@@ -15359,7 +15360,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="68"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="77"/>
@@ -15384,7 +15385,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snap point pre pozíciu priesečníka medzi vytvorenou linkou a zdrojovou jednotkou (v rámci pôvodnej línie)</translation>
+        <translation type="unfinished">Bod prichytenia pre polohu priesečníka medzi vytvorenou čiarou a zdrojovým objektom (v rámci pôvodnej čiary)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15412,7 +15413,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">Bod zarovnania:</translation>
+        <translation type="unfinished">Bod prichytenia:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15442,7 +15443,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="169"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="176"/>
@@ -15492,7 +15493,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="70"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
 </context>
 <context>
@@ -15515,7 +15516,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
@@ -15535,12 +15536,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Ak je zaškrtnuté, uhol je vo vzťahu k uhlu vybraného subjektu</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, uhol je vo vzťahu k uhlu vybraného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
@@ -15568,7 +15569,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snap point pre pozíciu priesečníka medzi vytvorenou linkou a zdrojovou jednotkou (v rámci pôvodnej línie)</translation>
+        <translation type="unfinished">Bod prichytenia pre polohu priesečníka medzi vytvorenou čiarou a zdrojovým objektom (v rámci pôvodnej čiary)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
@@ -15583,7 +15584,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Definuje, ktorá časť vytvorenej čiary bude odtrhnutá na priesečník</translation>
+        <translation type="unfinished">Definuje, ktorá časť vytvorenej čiary bude prichytená k priesečníku</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15593,7 +15594,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Offset of tick snap point from comession point</translation>
+        <translation type="unfinished">Odsadenie bodu prichytenia značky od priesečníka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15603,7 +15604,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, pôvodná jednotka bude rozdelená medzníkom.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodný objekt bude rozdelený priesečníkom.</translation>
     </message>
 </context>
 <context>
@@ -15621,13 +15622,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snap point pre pozíciu priesečníka medzi vytvorenou linkou a zdrojovou jednotkou (v rámci pôvodnej línie)</translation>
+        <translation type="unfinished">Bod prichytenia pre polohu priesečníka medzi vytvorenou čiarou a zdrojovým objektom (v rámci pôvodnej čiary)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
         <source>Free</source>
         <comment>linesnap</comment>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="66"/>
@@ -15655,7 +15656,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, pôvodná jednotka bude rozdelená medzníkom.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodný objekt bude rozdelený priesečníkom.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
@@ -15675,7 +15676,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Ak je zaškrtnuté, uhol je vo vzťahu k uhlu vybraného subjektu</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, uhol je vo vzťahu k uhlu vybraného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15685,7 +15686,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Označenie čiary:</translation>
+        <translation type="unfinished">Prichytenie čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
@@ -15695,7 +15696,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
@@ -15705,7 +15706,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
@@ -15715,7 +15716,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Označenie uhla:</translation>
+        <translation type="unfinished">Prichytenie značky:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15725,12 +15726,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Offset of tick snap point from comession point</translation>
+        <translation type="unfinished">Odsadenie bodu prichytenia značky od priesečníka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Definuje, ktorá časť vytvorenej čiary bude odtrhnutá na priesečník</translation>
+        <translation type="unfinished">Definuje, ktorá časť vytvorenej čiary bude prichytená k priesečníku</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15814,7 +15815,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorený riadok bude ortogonálny na vybranú líniu</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorená čiara bude kolmá na vybranú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15889,7 +15890,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snap point pre vytvorený riadok</translation>
+        <translation type="unfinished">Bod prichytenia pre vytvorenú čiaru</translation>
     </message>
 </context>
 <context>
@@ -15912,7 +15913,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Ak je zaškrtnuté, vytvorený riadok bude ortogonálny na vybranú líniu</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vytvorená čiara bude kolmá na vybranú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15922,7 +15923,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snap point pre vytvorený riadok</translation>
+        <translation type="unfinished">Bod prichytenia pre vytvorenú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -16025,7 +16026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
@@ -16063,7 +16064,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Vzdialenosť od bodu zlomu</translation>
+        <translation type="unfinished">Vzdialenosť od bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16073,7 +16074,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Bod zlomu medzery k bodu zlomu čiary</translation>
+        <translation type="unfinished">Bod prichytenia medzery k bodu prichytenia čiary</translation>
     </message>
 </context>
 <context>
@@ -16086,7 +16087,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Bod zlomu medzery k bodu zlomu čiary</translation>
+        <translation type="unfinished">Bod prichytenia medzery k bodu prichytenia čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16114,7 +16115,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Označenie medzery:</translation>
+        <translation type="unfinished">Prichytenie medzery:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
@@ -16125,7 +16126,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
         <source>Free</source>
         <comment>snap</comment>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="77"/>
@@ -16148,7 +16149,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Označenie čiary:</translation>
+        <translation type="unfinished">Prichytenie čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16168,12 +16169,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Vzdialenosť od bodu zlomu</translation>
+        <translation type="unfinished">Vzdialenosť od bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
@@ -16191,7 +16192,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Predĺženie/trojnásobok</translation>
+        <translation type="unfinished">Predĺženie/orezanie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16207,7 +16208,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">Riadok 1</translation>
+        <translation type="unfinished">Čiara 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
@@ -16218,12 +16219,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">Riadok 2</translation>
+        <translation type="unfinished">Čiara 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">Zásady pre riadok bol vybraný druhý</translation>
+        <translation type="unfinished">Pravidlo pre čiaru vybranú ako druhú</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
@@ -16243,7 +16244,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Definuje, ako sa pero má aplikovať na vytvorené subjekty</translation>
+        <translation type="unfinished">Definuje, ako sa pero má aplikovať na vytvorené objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16263,7 +16264,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Ak je zaškrtnuté, pôvodné riadky budú odstránené</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné čiary budú odstránené</translation>
     </message>
 </context>
 <context>
@@ -16286,13 +16287,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">Zásady pre riadok bol vybraný druhý</translation>
+        <translation type="unfinished">Pravidlo pre čiaru vybranú ako druhú</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Predĺženie/trojnásobok</translation>
+        <translation type="unfinished">Predĺženie/orezanie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16309,12 +16310,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="88"/>
         <source>Line 1:</source>
-        <translation type="unfinished">Riadok 1:</translation>
+        <translation type="unfinished">Čiara 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="95"/>
         <source>Line 2:</source>
-        <translation type="unfinished">Riadok 2:</translation>
+        <translation type="unfinished">Čiara 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
@@ -16324,7 +16325,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Definuje, ako sa pero má aplikovať na vytvorené subjekty</translation>
+        <translation type="unfinished">Definuje, ako sa pero má aplikovať na vytvorené objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
@@ -16334,17 +16335,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">Riadok 1</translation>
+        <translation type="unfinished">Čiara 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">Riadok 2</translation>
+        <translation type="unfinished">Čiara 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
         <source>Both lines</source>
-        <translation type="unfinished">Oba riadky</translation>
+        <translation type="unfinished">Obe čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="187"/>
@@ -16354,7 +16355,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Ak je zaškrtnuté, pôvodné riadky budú odstránené</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné čiary budú odstránené</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="210"/>
@@ -16387,7 +16388,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Vrátiť späť posledný obrázok riadku</translation>
+        <translation type="unfinished">Vrátiť späť poslednú nakreslenú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
@@ -16397,7 +16398,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Znovu posledný riadok výkres</translation>
+        <translation type="unfinished">Znovu nakresliť poslednú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="46"/>
@@ -16410,7 +16411,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Možnosti riadku</translation>
+        <translation type="unfinished">Možnosti čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
@@ -16425,7 +16426,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Vrátiť späť posledný obrázok riadku</translation>
+        <translation type="unfinished">Vrátiť späť poslednú nakreslenú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="75"/>
@@ -16435,7 +16436,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Znovu posledný riadok výkres</translation>
+        <translation type="unfinished">Znovu nakresliť poslednú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="85"/>
@@ -16453,7 +16454,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="31"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Vzdialenosť od pôvodnej jednotky</translation>
+        <translation type="unfinished">Vzdialenosť od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
@@ -16481,7 +16482,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Vzdialenosť od pôvodnej jednotky</translation>
+        <translation type="unfinished">Vzdialenosť od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
@@ -16529,7 +16530,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Ak je zaškrtnuté, paralely budú vytvorené na oboch stranách subjektu</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, rovnobežky sa vytvoria na oboch stranách objektu</translation>
     </message>
 </context>
 <context>
@@ -16552,7 +16553,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="101"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Ak je zaškrtnuté, paralely budú vytvorené na oboch stranách subjektu</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, rovnobežky sa vytvoria na oboch stranách objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="104"/>
@@ -16620,7 +16621,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="118"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Vhodný riadok</translation>
+        <translation type="unfinished">Prispôsobiť čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="143"/>
@@ -16776,7 +16777,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="51"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
@@ -16900,7 +16901,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="163"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
@@ -16933,7 +16934,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_filler.cpp" line="42"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
 </context>
 <context>
@@ -16966,7 +16967,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="115"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="122"/>
@@ -17056,7 +17057,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Vrátiť späť posledný obrázok riadku</translation>
+        <translation type="unfinished">Vrátiť späť poslednú nakreslenú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
@@ -17066,7 +17067,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Znovu posledný riadok výkres</translation>
+        <translation type="unfinished">Znovu nakresliť poslednú čiaru</translation>
     </message>
 </context>
 <context>
@@ -17074,7 +17075,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Možnosti riadku</translation>
+        <translation type="unfinished">Možnosti čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
@@ -17129,7 +17130,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="247"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Znovu posledný riadok výkres</translation>
+        <translation type="unfinished">Znovu nakresliť poslednú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="250"/>
@@ -17139,7 +17140,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="257"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Vrátiť späť posledný obrázok riadku</translation>
+        <translation type="unfinished">Vrátiť späť poslednú nakreslenú čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="260"/>
@@ -17498,7 +17499,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
         <source>Bulge</source>
-        <translation type="unfinished">Sud</translation>
+        <translation type="unfinished">Vydutie</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -17653,7 +17654,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Zarovnaná dimenzia</translation>
+        <translation type="unfinished">Zarovnaná kóta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17749,7 +17750,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Rozmerový oblúk</translation>
+        <translation type="unfinished">Kóta oblúka</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18223,7 +18224,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Nadrozmerný text</translation>
+        <translation type="unfinished">Nad textom kóty</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18369,7 +18370,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Predchádzajúci text s rozmermi</translation>
+        <translation type="unfinished">Pred textom kóty</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
@@ -19029,7 +19030,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Diametrický rozmer</translation>
+        <translation type="unfinished">Kóta priemeru</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19057,7 +19058,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Rozmery lineárne</translation>
+        <translation type="unfinished">Lineárna kóta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19283,7 +19284,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Radiál rozmerov</translation>
+        <translation type="unfinished">Kóta polomeru</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19476,7 +19477,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Poklop</translation>
+        <translation type="unfinished">Šrafovanie</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -20025,7 +20026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="57"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="61"/>
@@ -20775,7 +20776,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="78"/>
         <source>Baseline</source>
-        <translation type="unfinished">Východisková hodnota</translation>
+        <translation type="unfinished">Základná čiara</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
@@ -20880,7 +20881,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polylín/splín</translation>
+        <translation type="unfinished">Polylínia/spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -20899,7 +20900,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="750"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="800"/>
         <source>Add Dimensions</source>
-        <translation type="unfinished">Pridať rozmery</translation>
+        <translation type="unfinished">Pridať kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="213"/>
@@ -20910,7 +20911,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation type="unfinished">Zobraziť poradie</translation>
+        <translation type="unfinished">Poradie vykresľovania</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -20997,7 +20998,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
         <source>Modify Line</source>
-        <translation type="unfinished">Zmeniť riadok</translation>
+        <translation type="unfinished">Zmeniť čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="603"/>
@@ -21175,7 +21176,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">&amp; Obeh</translation>
+        <translation type="unfinished">&amp;Kružnica</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
@@ -21343,7 +21344,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
         <source>&amp;Drawings</source>
-        <translation type="unfinished">&amp; Kresby</translation>
+        <translation type="unfinished">&amp;Výkresy</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="589"/>
@@ -21529,12 +21530,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>Definuje spôsob zosúladenia vybraných subjektov.</translation>
+        <translation>Definuje spôsob zarovnania vybraných objektov.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
         <source>Entity</source>
-        <translation>Subjekt</translation>
+        <translation>Objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
@@ -21549,7 +21550,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="172"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation>Ak sa zvolí, relatívne pozície subjektov v rámci výberu budú nezmenené. V opačnom prípade bude každý subjekt umiestnený samostatne.</translation>
+        <translation>Ak sa zvolí, relatívne pozície objektov v rámci výberu budú nezmenené. V opačnom prípade bude každý objekt umiestnený samostatne.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="175"/>
@@ -21569,7 +21570,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="230"/>
         <source>Center entities vertically</source>
-        <translation>Vertikálne jednotky</translation>
+        <translation>Vycentrovať objekty zvislo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="250"/>
@@ -21597,12 +21598,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
         <source>Mirror to selected line</source>
-        <translation type="unfinished">Zrkadlo na vybranom riadku</translation>
+        <translation type="unfinished">Zrkadliť podľa vybranej čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">Ak sa nekontroluje, pôvodné subjekty budú odstránené, inak prežijú.</translation>
+        <translation type="unfinished">Ak nie je zaškrtnuté, pôvodné objekty sa odstránia, inak sa zachovajú.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="45"/>
@@ -21612,7 +21613,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre zrkadlové subjekty, inak - pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre zrkadlené objekty, inak - pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
@@ -21718,7 +21719,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="81"/>
@@ -21829,7 +21830,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené subjekty, inak sa použijú pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené objekty, inak sa použijú pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="53"/>
@@ -21844,7 +21845,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="83"/>
@@ -21874,7 +21875,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
@@ -21917,7 +21918,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation>Vytvoriť zobrazenie pre aktuálny zoom a vychýlenie výkresu</translation>
+        <translation>Vytvoriť zobrazenie pre aktuálny zoom a posun výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="164"/>
@@ -22166,7 +22167,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin Y: </source>
-        <translation>UCS Pôvod Y:</translation>
+        <translation>Počiatok UCS Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="401"/>
@@ -22209,7 +22210,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Vzdialenosť pre vyrovnanie od pôvodnej účtovnej jednotky</translation>
+        <translation type="unfinished">Vzdialenosť odsadenia od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22307,7 +22308,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené subjekty, inak sa použijú pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené objekty, inak sa použijú pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="122"/>
@@ -22317,7 +22318,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="139"/>
@@ -22327,7 +22328,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Vzdialenosť pre vyrovnanie od pôvodnej účtovnej jednotky</translation>
+        <translation type="unfinished">Vzdialenosť odsadenia od pôvodného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22389,7 +22390,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="31"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Uhol rotácie pre lepené subjekty</translation>
+        <translation type="unfinished">Uhol otočenia vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
@@ -22399,7 +22400,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Koeficient mierky pre papierované subjekty</translation>
+        <translation type="unfinished">Koeficient mierky vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22409,7 +22410,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Ak je zvolený, bod subjekt použitý ako bod vloženia sa po operácii pasty odstráni. Inak to prežije.</translation>
+        <translation type="unfinished">Ak je vybrané, bodový objekt použitý ako bod vloženia sa po vložení odstráni. Inak sa zachová.</translation>
     </message>
 </context>
 <context>
@@ -22422,7 +22423,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="73"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Uhol rotácie pre lepené subjekty</translation>
+        <translation type="unfinished">Uhol otočenia vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
@@ -22432,7 +22433,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Ak je zvolený, bod subjekt použitý ako bod vloženia sa po operácii pasty odstráni. Inak to prežije.</translation>
+        <translation type="unfinished">Ak je vybrané, bodový objekt použitý ako bod vloženia sa po vložení odstráni. Inak sa zachová.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22447,7 +22448,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Koeficient mierky pre papierované subjekty</translation>
+        <translation type="unfinished">Koeficient mierky vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
@@ -22465,7 +22466,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Uhol rotácie pre lepené subjekty</translation>
+        <translation type="unfinished">Uhol otočenia vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
@@ -22475,7 +22476,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Koeficient mierky pre papierované subjekty</translation>
+        <translation type="unfinished">Koeficient mierky vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22558,7 +22559,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Uhol rotácie pre lepené subjekty</translation>
+        <translation type="unfinished">Uhol otočenia vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
@@ -22573,7 +22574,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="85"/>
         <source>Spacing between entities insertion points in rows. </source>
-        <translation type="unfinished">Presahovanie medzi subjektmi vložením bodov do riadkov.</translation>
+        <translation type="unfinished">Rozstup medzi bodmi vloženia objektov v riadkoch. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="92"/>
@@ -22603,7 +22604,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Koeficient mierky pre papierované subjekty</translation>
+        <translation type="unfinished">Koeficient mierky vložených objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
@@ -22628,7 +22629,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="260"/>
         <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="unfinished">Prekročenie medzi bodmi vloženia subjektov do stĺpcov.</translation>
+        <translation type="unfinished">Rozstup medzi bodmi vloženia objektov v stĺpcoch.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
@@ -23057,7 +23058,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="229"/>
         <source>Line Type:</source>
-        <translation>Typ riadku:</translation>
+        <translation>Typ čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
@@ -23086,7 +23087,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="193"/>
         <source>Line Type Name</source>
-        <translation>Názov typu riadku</translation>
+        <translation>Názov typu čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="200"/>
@@ -23096,7 +23097,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="207"/>
         <source>Line Type Icon</source>
-        <translation>Ikona typu riadku</translation>
+        <translation>Ikona typu čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="214"/>
@@ -23232,7 +23233,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Zobraziť informačnú správu, ak perom nemožno vybrať žiadne subjekty</translation>
+        <translation>Zobraziť informačnú správu, ak perom nemožno vybrať žiadne objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -23247,7 +23248,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>Vybrať subjekty podľa atribútov pera</translation>
+        <translation>Vybrať objekty podľa atribútov pera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
@@ -23275,12 +23276,12 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Vybrať subjekty kreslením pera</translation>
+        <translation>Vybrať objekty podľa kresliaceho pera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Vybrať subjekty podľa atribútov Pen</translation>
+        <translation>Vybrať objekty podľa atribútov pera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23351,7 +23352,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="346"/>
         <source>Line type</source>
-        <translation>Typ trate</translation>
+        <translation>Typ čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="365"/>
@@ -23421,12 +23422,12 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp; Vybrať subjekty s atribútmi</translation>
+        <translation>&amp;Vybrať objekty s perom atribútov</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp; Vybrať subjekty s kresliacim perom</translation>
+        <translation>&amp;Vybrať objekty s kresliacim perom</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
@@ -23638,7 +23639,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Vhodný riadok</translation>
+        <translation type="unfinished">Prispôsobiť čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
@@ -23759,12 +23760,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Okrúhly polomer pre vertex bevel.</translation>
+        <translation type="unfinished">Polomer zaoblenia pre skosenie vrcholu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">Ak je označené, polygón sa nakreslí ako polylín. Inak budú vytvorené jednotlivé subjekty.</translation>
+        <translation type="unfinished">Ak je označené, polygón sa nakreslí ako polylínia. Inak sa vytvoria jednotlivé objekty. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -24313,7 +24314,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="243"/>
         <source>Drawing units</source>
-        <translation type="unfinished">Výkresy</translation>
+        <translation type="unfinished">Jednotky výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="250"/>
@@ -24388,7 +24389,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished">Neplatná stupnica</translation>
+        <translation type="unfinished">Neplatná mierka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
@@ -24660,7 +24661,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
-        <translation type="unfinished">Sud</translation>
+        <translation type="unfinished">Vydutie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
@@ -24922,7 +24923,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Prestávka/rozdelenie</translation>
+        <translation type="unfinished">Prerušiť/rozdeliť</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25030,7 +25031,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="44"/>
         <source>Name of the block</source>
-        <translation type="unfinished">Názov poľa</translation>
+        <translation type="unfinished">Názov bloku</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="54"/>
@@ -25286,7 +25287,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Prestávka/rozdelenie</translation>
+        <translation type="unfinished">Prerušiť/rozdeliť</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -25439,7 +25440,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Východisková hodnota</translation>
+        <translation type="unfinished">Základná čiara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -26027,7 +26028,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Nadrozmerný text</translation>
+        <translation type="unfinished">Nad textom kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -26168,7 +26169,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Predchádzajúci text s rozmermi</translation>
+        <translation type="unfinished">Pred textom kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
@@ -26824,7 +26825,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">Vymedzenie pojmu</translation>
+        <translation type="unfinished">Definičný bod</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
@@ -26923,7 +26924,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Východisková hodnota</translation>
+        <translation type="unfinished">Základná čiara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
@@ -27034,7 +27035,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">Vymedzenie pojmu</translation>
+        <translation type="unfinished">Definičný bod</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
@@ -27355,12 +27356,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="71"/>
         <source>Isometric Right</source>
-        <translation type="unfinished">Isometrická doprava</translation>
+        <translation type="unfinished">Izometrická pravá</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="72"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">Isometrická špička</translation>
+        <translation type="unfinished">Izometrická horná</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="112"/>
@@ -27772,12 +27773,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="112"/>
         <source>Isometric Right</source>
-        <translation type="unfinished">Isometrická doprava</translation>
+        <translation type="unfinished">Izometrická pravá</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="116"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">Isometrická špička</translation>
+        <translation type="unfinished">Izometrická horná</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="125"/>
@@ -27984,7 +27985,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">Vytvoriť zobrazenie pre aktuálny zoom a vychýlenie výkresu</translation>
+        <translation type="unfinished">Vytvoriť zobrazenie pre aktuálny zoom a posun výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
@@ -28343,7 +28344,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Vložiť bod</translation>
+        <translation type="unfinished">Bod vloženia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
@@ -28468,7 +28469,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Vložiť bod</translation>
+        <translation type="unfinished">Bod vloženia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
@@ -28644,7 +28645,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length of line</source>
-        <translation type="unfinished">Dĺžka trate</translation>
+        <translation type="unfinished">Dĺžka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
@@ -28705,7 +28706,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">Pripojiť riadok</translation>
+        <translation type="unfinished">Spojenie čiar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28956,7 +28957,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation type="unfinished">Okrúhle</translation>
+        <translation type="unfinished">Zaoblenie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
@@ -28981,7 +28982,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Prestávka/rozdelenie</translation>
+        <translation type="unfinished">Prerušiť/rozdeliť</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29079,7 +29080,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Vložiť bod</translation>
+        <translation type="unfinished">Bod vloženia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
@@ -29771,7 +29772,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="103"/>
         <source>Weight</source>
-        <translation type="unfinished">Hmotnosť</translation>
+        <translation type="unfinished">Váha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="103"/>
@@ -30097,7 +30098,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Vložiť bod</translation>
+        <translation type="unfinished">Bod vloženia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
@@ -30158,7 +30159,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
         <source>Baseline</source>
-        <translation type="unfinished">Východisková hodnota</translation>
+        <translation type="unfinished">Základná čiara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
@@ -30900,7 +30901,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="698"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="896"/>
         <source>Bulge</source>
-        <translation>Sud</translation>
+        <translation>Vydutie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="717"/>
@@ -30946,7 +30947,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="859"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="884"/>
         <source>Segments</source>
-        <translation>Sekcie</translation>
+        <translation>Úseky</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="885"/>
@@ -30980,7 +30981,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1220"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1244"/>
         <source>Insertion Point</source>
-        <translation>Vložiť bod</translation>
+        <translation>Bod vloženia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="941"/>
@@ -31194,7 +31195,7 @@ Hladina: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
         <source>Baseline</source>
-        <translation>Východisková hodnota</translation>
+        <translation>Základná čiara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
@@ -31423,7 +31424,7 @@ Hladina: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1378"/>
         <source>Solid</source>
-        <translation>Tuhá látka</translation>
+        <translation>Plná výplň</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1361"/>
@@ -31496,7 +31497,7 @@ Hladina: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1577"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1593"/>
         <source>Definition Point</source>
-        <translation>Vymedzenie pojmu</translation>
+        <translation>Definičný bod</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1483"/>
@@ -31553,7 +31554,7 @@ Hladina: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1565"/>
         <source>Origin Point</source>
-        <translation>Miesto pôvodu</translation>
+        <translation>Počiatočný bod</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1554"/>
@@ -31633,7 +31634,7 @@ Hladina: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="61"/>
         <source>Select entity for properties</source>
-        <translation>Vyberte jednotku pre vlastnosti</translation>
+        <translation>Vyberte objekt pre vlastnosti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="64"/>
@@ -31649,7 +31650,7 @@ Hladina: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="75"/>
         <source>Select current entity in drawing</source>
-        <translation>Vyberte aktuálnu jednotku vo výkrese</translation>
+        <translation>Vyberte aktuálny objekt vo výkrese</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="89"/>
@@ -31755,7 +31756,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>&amp; Vybrať subjekt</translation>
+        <translation>&amp;Vybrať objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31780,7 +31781,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>Žiadne údaje - najprv si vyberte jednotku súradníc...</translation>
+        <translation>Žiadne údaje - najprv si vyberte objekt súradníc...</translation>
     </message>
 </context>
 <context>
@@ -31818,7 +31819,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>Informácie o subjekte</translation>
+        <translation>Informácie o objekte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31828,32 +31829,32 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Zahrnúť polylínne detské subjekty informácie prevertexes</translation>
+        <translation>Zahrnúť informácie o podradených objektoch polylínie do vrcholov</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>V prípade výberu budú zobrazené aj súradnice oblasti ohraničenia pre daný subjekt</translation>
+        <translation>V prípade výberu budú zobrazené aj súradnice oblasti ohraničenia pre daný objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>Hranice zobrazovacej jednotky (Min, Max) súradnice</translation>
+        <translation>Zobraziť súradnice hraníc objektu (Min, Max)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>Výber subjektu</translation>
+        <translation>Výber objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>Subjekt pod kurzorom sa preskúma len vtedy, ak je CTRL stlačený a žiadna aktívna akcia</translation>
+        <translation>Objekt pod kurzorom sa preskúma, len ak je stlačený kláves CTRL a nie je aktívna žiadna akcia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation>Vyberte jednotku pod kurzorom, ak nie je aktívna akcia a CTRL je stlačená</translation>
+        <translation>Vybrať objekt pod kurzorom, ak nie je aktívna žiadna akcia a je stlačený kláves CTRL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
@@ -32129,7 +32130,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="245"/>
         <source>Round</source>
-        <translation type="unfinished">Okrúhle</translation>
+        <translation type="unfinished">Zaoblené</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
@@ -32169,7 +32170,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="339"/>
@@ -32199,12 +32200,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, udáva sa, že bod zlomu by sa mal posunúť polomerom rohov.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, udáva sa, že bod prichytenia sa má posunúť o polomer rohov.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Posun západu</translation>
+        <translation type="unfinished">Posun bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32369,7 +32370,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="78"/>
         <source>Round</source>
-        <translation type="unfinished">Okrúhle</translation>
+        <translation type="unfinished">Zaoblené</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
@@ -32379,7 +32380,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Štart Snap:</translation>
+        <translation type="unfinished">Prichytenie začiatku:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32469,12 +32470,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, upresnite, že body zalomenia by sa mali posunúť polomerom rohov.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, udáva sa, že body prichytenia sa majú posunúť o polomer rohov.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Posun západu</translation>
+        <translation type="unfinished">Posun bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
@@ -32484,7 +32485,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Koncový západ:</translation>
+        <translation type="unfinished">Koncové prichytenie:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32630,12 +32631,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, upresnite, že body zalomenia by sa mali posunúť polomerom rohov.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, udáva sa, že body prichytenia sa majú posunúť o polomer rohov.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Posun západu</translation>
+        <translation type="unfinished">Posun bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32675,7 +32676,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="368"/>
         <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="unfinished">Definuje, ako rohy by mali byť ťahané pre obdĺžnik.</translation>
+        <translation type="unfinished">Určuje, ako sa majú vykresliť rohy obdĺžnika. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="372"/>
@@ -32685,7 +32686,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="377"/>
         <source>Round</source>
-        <translation type="unfinished">Okrúhle</translation>
+        <translation type="unfinished">Zaoblené</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
@@ -32768,7 +32769,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
         <source>Round</source>
-        <translation type="unfinished">Okrúhle</translation>
+        <translation type="unfinished">Zaoblené</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
@@ -32803,7 +32804,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, udáva sa, že bod zlomu by sa mal posunúť polomerom rohov.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, udáva sa, že bod prichytenia sa má posunúť o polomer rohov.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -33238,7 +33239,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished">Nastavte sekundárny uhol, takže súčet uhlov (relatívny uhol otáčania) je 0. S takýmto nastavením jednotka bude presunutá, ale nie rotačný.</translation>
+        <translation type="unfinished">Nastavte sekundárny uhol tak, aby súčet uhlov (relatívny uhol otáčania) bol 0. S takýmto nastavením sa objekt presunie, ale neotočí.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
@@ -33283,7 +33284,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="180"/>
@@ -33361,7 +33362,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="49"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">Uhol na otáčanie jednotky okolo stredu otáčania</translation>
+        <translation type="unfinished">Uhol na otočenie objektu okolo stredu otáčania</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="60"/>
@@ -33411,7 +33412,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Ak absolútny, referenčný bod bude otočený, ale jednotka bude otočená iba druhým uhlom, inak uhly budú sčítať</translation>
+        <translation type="unfinished">Ak je absolútny, referenčný bod sa otočí, ale objekt sa otočí iba o druhý uhol; inak sa uhly sčítajú.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
@@ -33479,7 +33480,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty budú aplikované na vytvorené subjekty, budú použité pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené objekty, inak sa použijú pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
@@ -33489,7 +33490,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="118"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">Uhol na otáčanie jednotky okolo stredu otáčania</translation>
+        <translation type="unfinished">Uhol na otočenie objektu okolo stredu otáčania</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
@@ -33509,7 +33510,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Ak absolútny, referenčný bod bude otočený, ale jednotka bude otočená iba druhým uhlom, inak uhly budú sčítať</translation>
+        <translation type="unfinished">Ak je absolútny, referenčný bod sa otočí, ale objekt sa otočí iba o druhý uhol; inak sa uhly sčítajú.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="168"/>
@@ -33524,7 +33525,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="192"/>
@@ -33560,7 +33561,7 @@ p, li { biely priestor: pre- wrap; }
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="249"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="236"/>
@@ -33623,7 +33624,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
         <source>Rounding radius</source>
-        <translation type="unfinished">Okrúhly polomer</translation>
+        <translation type="unfinished">Polomer zaoblenia</translation>
     </message>
 </context>
 <context>
@@ -33631,7 +33632,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="32"/>
         <source>Round Options</source>
-        <translation type="unfinished">Možnosti kola</translation>
+        <translation type="unfinished">Možnosti zaoblenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
@@ -33651,7 +33652,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="95"/>
         <source>Rounding radius</source>
-        <translation type="unfinished">Okrúhly polomer</translation>
+        <translation type="unfinished">Polomer zaoblenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="102"/>
@@ -33669,12 +33670,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="31"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, použije sa rovnaký faktor stupnice pre os X a Y.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, použije sa rovnaký faktor mierky pre os X a Y.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
@@ -33777,7 +33778,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="76"/>
@@ -33812,7 +33813,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="147"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, použije sa rovnaký faktor stupnice pre os X a Y.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, použije sa rovnaký faktor mierky pre os X a Y.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="150"/>
@@ -33832,7 +33833,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené subjekty, inak sa použijú pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú na vytvorené objekty, inak sa použijú pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="202"/>
@@ -33847,7 +33848,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
 </context>
 <context>
@@ -33865,7 +33866,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
         <source>Dimension</source>
-        <translation>Rozmery</translation>
+        <translation>Kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"/>
@@ -33905,7 +33906,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation>Typ subjektu</translation>
+        <translation>Typ objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -33915,7 +33916,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Poklop</translation>
+        <translation>Šrafovanie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -34152,7 +34153,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, použije sa stanovená pevná vzdialenosť medzi kliešťami. V opačnom prípade sa vzdialenosť vypočíta na základe dĺžky subjektu a počtu kliešťov.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, použije sa stanovená pevná vzdialenosť medzi značkami. V opačnom prípade sa vzdialenosť vypočíta na základe dĺžky objektu a počtu značiek. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34192,12 +34193,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, uhol kliešťa súvisí s vybraným subjektom, inak je to absolútny uhol.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, uhol značky sa vzťahuje k vybranému objektu, inak je to absolútny uhol.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
@@ -34297,7 +34298,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished">Vzdialenosť medzi kliešťami.</translation>
+        <translation type="unfinished">Vzdialenosť medzi značkami.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34329,12 +34330,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="169"/>
         <source>Edge Tick:</source>
-        <translation type="unfinished">Označiť okraj:</translation>
+        <translation type="unfinished">Okrajová značka:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, vybraný subjekt bude vydelený kliešťovými priesečníkmi.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, vybraný objekt bude rozdelený priesečníkmi značiek. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34354,22 +34355,22 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation type="unfinished">Vybrať posun kliešťa z výkresu</translation>
+        <translation type="unfinished">Vybrať posun značky z výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished">Dĺžka tiku.</translation>
+        <translation type="unfinished">Dĺžka značky.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation type="unfinished">Uhol kliešťa z výkresu</translation>
+        <translation type="unfinished">Vybrať uhol značky z výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">Určuje, ktorý bod kliešťa by sa mal umiestniť do priesečníka s vybraným subjektom.</translation>
+        <translation type="unfinished">Určuje, ktorý bod značky sa má umiestniť do priesečníka s vybraným objektom.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34379,22 +34380,22 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Offset prelomového bodu k priesečníkovému bodu.</translation>
+        <translation type="unfinished">Posun bodu prichytenia značky k priesečníku. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Tik snap:</translation>
+        <translation type="unfinished">Prichytenie značky:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
         <source>Tick Length:</source>
-        <translation type="unfinished">Tik dĺžka:</translation>
+        <translation type="unfinished">Dĺžka značky:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, uhol kliešťa súvisí s vybraným subjektom, inak je to absolútny uhol.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, uhol značky sa vzťahuje k vybranému objektu, inak je to absolútny uhol.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="315"/>
@@ -34404,12 +34405,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished">Dĺžka tiku z výkresu</translation>
+        <translation type="unfinished">Vybrať dĺžku značky z výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">Štart uhol pre kruh, z ktorého kliešte začnú.</translation>
+        <translation type="unfinished">Počiatočný uhol na kružnici, od ktorého začínajú značky. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34424,7 +34425,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, použije sa stanovená pevná vzdialenosť medzi kliešťami. V opačnom prípade sa vzdialenosť vypočíta na základe dĺžky subjektu a počtu kliešťov.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, použije sa stanovená pevná vzdialenosť medzi značkami. V opačnom prípade sa vzdialenosť vypočíta na základe dĺžky objektu a počtu značiek. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34434,7 +34435,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">Počet kliešťov medzi hranami vybraného subjektu.</translation>
+        <translation type="unfinished">Počet značiek medzi hranami vybraného objektu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34444,7 +34445,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">Uhol medzi zaškrtnutím a vybranou jednotkou.</translation>
+        <translation type="unfinished">Uhol medzi značkou a vybraným objektom.</translation>
     </message>
 </context>
 <context>
@@ -34485,7 +34486,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Ak je zaškrtnuté, úsečky budú súčasťou polylínie. V opačnom prípade to budú jednotlivé riadky</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, úsečky budú súčasťou polylínie. V opačnom prípade to budú jednotlivé čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34543,7 +34544,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre vytvorené subjekty, inak - pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre vytvorené objekty, inak - pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
@@ -34573,7 +34574,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Ak je zaškrtnuté, úsečky budú súčasťou polylínie. V opačnom prípade to budú jednotlivé riadky</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, úsečky budú súčasťou polylínie. V opačnom prípade to budú jednotlivé čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
@@ -34689,7 +34690,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre vytvorené subjekty, inak - pôvodné.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, aktuálne atribúty sa použijú pre vytvorené objekty, inak - pôvodné. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
@@ -34843,7 +34844,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>Upraviť vlastnosti spline jednotky, vrátane stupňa, uzavretého stavu, kontrolných bodov, a uzol vektora</translation>
+        <translation>Upraviť vlastnosti objektu spline vrátane stupňa, uzavretia, riadiacich bodov a uzlového vektora</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34893,7 +34894,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="177"/>
         <source>Control points with coordinates and weights</source>
-        <translation>Riadiace body so súradnicami a závažiami</translation>
+        <translation>Riadiace body so súradnicami a váhami</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
@@ -34903,7 +34904,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>Upraviť súradnice a závažia riadiacich bodov pre spline</translation>
+        <translation>Upraviť súradnice a váhy riadiacich bodov pre spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34924,7 +34925,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="220"/>
         <source>Weight</source>
-        <translation>Hmotnosť</translation>
+        <translation>Váha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
@@ -34976,7 +34977,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
         <source>Remove Control Point Button</source>
-        <translation>Odstrániť riadiace tlačidlo</translation>
+        <translation>Tlačidlo Odstrániť riadiaci bod</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
@@ -35122,7 +35123,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="150"/>
         <source>Radius for outer rays (edges).</source>
-        <translation type="unfinished">Polomer pre vonkajšie raje (brucho).</translation>
+        <translation type="unfinished">Polomer vonkajších lúčov (hrán).</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="157"/>
@@ -35158,7 +35159,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ak sa skontroluje, pôvodné subjekty prežijú, inak budú odstránené.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, pôvodné objekty sa zachovajú, inak sa odstránia.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="35"/>
@@ -35357,17 +35358,17 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="52"/>
         <source>Baseline Left</source>
-        <translation type="unfinished">Východisková ľavica</translation>
+        <translation type="unfinished">Účiarie vľavo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="53"/>
         <source>Baseline Center</source>
-        <translation type="unfinished">Východiskové centrum</translation>
+        <translation type="unfinished">Účiarie na stred</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="54"/>
         <source>Baseline Right</source>
-        <translation type="unfinished">Základné právo</translation>
+        <translation type="unfinished">Účiarie vpravo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="55"/>
@@ -35415,7 +35416,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Výber</translation>
+        <translation>Výber prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35523,7 +35524,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336"/>
         <source>Dimension</source>
-        <translation>Rozmery</translation>
+        <translation>Kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="337"/>
@@ -35590,12 +35591,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
         <source>Dimensions</source>
-        <translation>Rozmery</translation>
+        <translation>Kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="372"/>
         <source>Measure</source>
-        <translation>Opatrenie</translation>
+        <translation>Meranie</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="380"/>
@@ -35643,7 +35644,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, trim/roztiahnutie sa vykonáva pre obidve strany čiary.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, orezanie/predĺženie sa vykoná na oboch koncoch čiary.</translation>
     </message>
 </context>
 <context>
@@ -35651,7 +35652,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Voľby strednej hodnoty</translation>
+        <translation type="unfinished">Možnosti orezania o dĺžku</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
@@ -35686,7 +35687,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Ak je zaškrtnuté, trim/roztiahnutie sa vykonáva pre obidve strany čiary.</translation>
+        <translation type="unfinished">Ak je zaškrtnuté, orezanie/predĺženie sa vykoná na oboch koncoch čiary.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -35732,7 +35733,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="35"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="42"/>
@@ -35786,12 +35787,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="329"/>
         <source>Origin X: </source>
-        <translation>Pôvod X:</translation>
+        <translation>Počiatok X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="330"/>
         <source>Origin Y: </source>
-        <translation>Pôvod Y:</translation>
+        <translation>Počiatok Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="331"/>
@@ -35839,7 +35840,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="107"/>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>Náhľad vzniku a uhla súradnicového systému.</translation>
+        <translation>Náhľad počiatku a uhla súradnicového systému.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
@@ -35849,7 +35850,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>Nastaviť UCS pomocou súradníc</translation>
+        <translation>Nastaviť UCS podľa súradnicovej kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -36000,7 +36001,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>Poloha pôvodu a uhol súčasného UCS na svetových súradniciach.</translation>
+        <translation>Poloha počiatku a uhol aktuálneho UCS vo svetových súradniciach.</translation>
     </message>
 </context>
 <context>
@@ -36070,7 +36071,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
         <source>Dimension</source>
-        <translation>Rozmery</translation>
+        <translation>Kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
@@ -36112,7 +36113,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
         <source>User Coordinate Systems</source>
-        <translation>Systémy súradníc užívateľov</translation>
+        <translation>Používateľské súradnicové systémy</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
@@ -36152,7 +36153,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
         <source>Pen Wizard</source>
-        <translation>Čarodejník</translation>
+        <translation>Sprievodca perami</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
@@ -36167,7 +36168,7 @@ Upozornenie: túto akciu NIE JE možné zrušiť!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>Informácie o subjekte</translation>
+        <translation>Informácie o objekte</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36885,7 +36886,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
-        <translation>Názov poľa</translation>
+        <translation>Názov bloku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -37218,7 +37219,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>Formát textu rozmeru &lt;&gt; možno použiť ako miestodržiteľa pre hodnotu merania rozmeru</translation>
+        <translation>Formát textu kóty, &lt;&gt; možno použiť ako zástupný symbol pre nameranú hodnotu kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37228,7 +37229,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="209"/>
         <source>R (Radial)</source>
-        <translation>R (rádiá)</translation>
+        <translation>R (polomer)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="214"/>
@@ -37300,8 +37301,8 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Aplikujte atribúty aj na všetky subsubjekty vybraného INSERT.
-To opakovane upravuje všetky subjekty samotného bloku.</translation>
+        <translation>Použiť atribúty aj na všetky podradené objekty vybraného INSERT.
+Rekurzívne sa tým upravia všetky objekty samotného bloku.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
@@ -37329,7 +37330,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Koeficient mierky pre vzor otvoru</translation>
+        <translation>Koeficient mierky pre vzor šrafovania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37344,12 +37345,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Uhol otáčania poklopu</translation>
+        <translation>Uhol natočenia šrafovania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>Ak je zaškrtnuté, namiesto poklopu vzorky sa použije tuhá látka</translation>
+        <translation>Ak je zaškrtnuté, namiesto šrafovania vzorom sa použije plná výplň</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37359,7 +37360,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Vzor poklopu</translation>
+        <translation>Vzor šrafovania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37369,7 +37370,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Ak je to povolené, náhľad poklopu bude zobrazený nižšie</translation>
+        <translation>Ak je to povolené, náhľad vzoru šrafovania sa zobrazí nižšie</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37384,7 +37385,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Potiahnutá oblasť</translation>
+        <translation>Šrafovaná oblasť</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37515,7 +37516,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="260"/>
         <source>Specific line spacing factor is used</source>
-        <translation>Používa sa špecifický faktor vzdialenosti trate</translation>
+        <translation>Používa sa špecifický faktor riadkovania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="289"/>
@@ -38240,7 +38241,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
         <source>&amp;Line spacing:</source>
-        <translation>&amp; Rozstup lanoviek:</translation>
+        <translation>&amp;Riadkovanie:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="113"/>
@@ -38449,17 +38450,17 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>Editácia štýlu rozmerov -</translation>
+        <translation>Úprava kótovacieho štýlu - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
         <source>Rename Dimension Style</source>
-        <translation>Premenovať štýl rozmerov</translation>
+        <translation>Premenovať kótovací štýl</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Zadajte nový jedinečný názov dimenzie (bol &quot;%1&quot;):</translation>
+        <translation>Zadajte nový jedinečný názov kótovacieho štýlu (bol &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38467,27 +38468,27 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>Odstránenie štýlu rozmerov</translation>
+        <translation>Odstránenie kótovacieho štýlu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>Nemôžem odstrániť štýl poslednej dimenzie. Aspoň jeden by mal byť prítomný!</translation>
+        <translation>Nemožno odstrániť posledný kótovací štýl. Aspoň jeden musí zostať! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>Nemôžete odstrániť dimenzionálny štýl, ako to deti sa používa pri kreslení. Vymažte len nepoužitý štýl.</translation>
+        <translation>Kótovací štýl nemožno odstrániť, pretože jeho podradené štýly sa používajú vo výkrese. Odstrániť možno len nepoužitý štýl.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Naozaj chcete odstrániť štýl dimenzie &quot;%1&quot; spolu s detským štýlom?</translation>
+        <translation>Naozaj chcete odstrániť kótovací štýl &quot;%1&quot; spolu s podradenými štýlmi?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Naozaj chcete odstrániť štýl dimenzie &quot;%1&quot;?</translation>
+        <translation>Naozaj chcete odstrániť kótovací štýl &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38541,7 +38542,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Medzera medzi vynášacou čiarou:</translation>
+        <translation>Medzera v kótovacej čiare:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -38679,12 +38680,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
         <source>Tick size:</source>
-        <translation>Veľkosť Tik:</translation>
+        <translation>Veľkosť značky:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Veľkosť rozmerov. Nastaviť na 0 vypne kliešť rozmerov. Šípka rozmerov nebude vykreslená, keď je zapnutý kliešť rozmerov. &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Veľkosť značky kóty. Ak nastavíte na 0, značka kóty sa vypne. Šípka kóty sa nebude kresliť, keď je zapnutá značka kóty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38694,7 +38695,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
         <source>General Scale:</source>
-        <translation>Všeobecná stupnica:</translation>
+        <translation>Všeobecná mierka:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
@@ -38704,7 +38705,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt; hlava/&gt; &lt; telo &gt; &lt; p &gt; mierka na násobenie všetkých rozmerov geometrií. &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mierka, ktorou sa vynásobí geometria všetkých kót.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -38799,7 +38800,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
         <source>Isometric Right</source>
-        <translation>Isometrická doprava</translation>
+        <translation>Izometrická pravá</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
@@ -38824,7 +38825,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
         <source>Isometric Top</source>
-        <translation>Isometrická špička</translation>
+        <translation>Izometrická horná</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="852"/>
@@ -38878,7 +38879,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Vyberte alebo zadajte hodnoty pre rozostup siete (budú mať vplyv na výkres siete a Snap to Grid):</translation>
+        <translation>Vyberte alebo zadajte hodnoty rozostupu mriežky (ovplyvnia kreslenie mriežky a prichytenie k mriežke):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -38930,7 +38931,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Rozdiel medzi vzdialenosťou a textom &lt;/p &gt; &lt;/body &gt; &lt;/html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Medzera okolo textu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1399"/>
@@ -38940,12 +38941,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Dĺžka pre zväčšenie cez čiaru rozmerov</translation>
+        <translation>Dĺžka presahu za kótovaciu čiaru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Veľkosť šípky. &lt;a name=&quot;result box&quot;/&gt; without effect when tick size &lt;a name=&quot;result box&quot;/&gt; is s výnimkou 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Veľkosť šípky kóty. &lt;a name=&quot;result_box&quot;/&gt;Nemá vplyv, ak je veľkosť značky &lt;a name=&quot;result_box&quot;/&gt;iná ako 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -38956,7 +38957,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Rozmery, šípky a kliešte</translation>
+        <translation>Kótovacie čiary, šípky a značky</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -38986,7 +38987,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Zarovnanie textu &lt;a name=&quot;result box&quot;/&gt; v pomere k číselnej osi &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zarovnanie textu &lt;a name=&quot;result_box&quot;/&gt;vzhľadom na kótovaciu čiaru.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -38996,7 +38997,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Kompenzácia z východiskového bodu &lt;/p&gt;&lt;/body &gt; &lt;/html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Odsadenie od počiatočného bodu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39006,7 +39007,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Rozšírenia</translation>
+        <translation>Vynášacie čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39016,7 +39017,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"/>
         <source>Dimensions</source>
-        <translation>Rozmery</translation>
+        <translation>Kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"/>
@@ -39046,7 +39047,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>Označí štýl ako aktívny. Aktívny štýl bude použitý pri vytváraní rozmerov.</translation>
+        <translation>Označí štýl ako aktívny. Aktívny štýl sa použije pri vytváraní kót.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39113,7 +39114,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Pripojiť riadok:</translation>
+        <translation>Spojenie čiar:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
@@ -39163,7 +39164,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3300"/>
         <source>Specifies the author of the drawing.</source>
-        <translation>Určuje autora kresby.</translation>
+        <translation>Určuje autora výkresu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3307"/>
@@ -39562,17 +39563,17 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="761"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Farba St &amp;art rukoväte:</translation>
+        <translation>Farba &amp;začiatočného úchytu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>Farba &amp; mandle:</translation>
+        <translation>Farba &amp;úchytu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
         <source>&amp;End Handle Color:</source>
-        <translation>Farba &amp; koncovej rukoväte:</translation>
+        <translation>Farba &amp;koncového úchytu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -39677,17 +39678,17 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Farba vysvetľujúcej jednotky aktívneho náhľadu:</translation>
+        <translation>Farba vysvetľujúceho objektu aktívneho náhľadu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Farba vysvetľujúcej jednotky náhľadu:</translation>
+        <translation>Farba vysvetľujúceho objektu náhľadu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>Farba &amp; zvýraznenej jednotky:</translation>
+        <translation>Farba &amp;zvýrazneného objektu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
@@ -39727,22 +39728,22 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation>Ak je povolené, interné ID subjektu bude zobrazený v dialógu vlastností a grafického prvku Entity Info.</translation>
+        <translation>Ak je povolené, interné ID objektu sa zobrazí v dialógu vlastností a na paneli Informácie o objekte.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
         <source>Show internal IDs of entities</source>
-        <translation>Zobraziť interné ID subjektov</translation>
+        <translation>Zobraziť interné ID objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation>Ak je vybraný, subjekty zostanú vybrané po dokončení Upraviť operácie. Inak nebudú vybrané.</translation>
+        <translation>Ak je vybrané, objekty zostanú vybrané aj po dokončení operácií úprav. Inak vybrané nebudú. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
         <source>Keep modified entities selected</source>
-        <translation>Ponechať vybrané upravené subjekty</translation>
+        <translation>Ponechať vybrané upravené objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
@@ -39837,7 +39838,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Skryť kurzor pri prasknutí</translation>
+        <translation>Skryť kurzor pri prichytávaní</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39986,12 +39987,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Ak je zaškrtnuté, zobrazí sa indikátor snap</translation>
+        <translation>Ak je zaškrtnuté, zobrazí sa indikátor prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Typ indikátora snímacích čiar</translation>
+        <translation>Typ indikátora čiar prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40012,12 +40013,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Snap indikátor riadky</translation>
+        <translation>Čiary indikátora prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Farba indikátora snímacích čiar</translation>
+        <translation>Farba indikátora čiar prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -40061,12 +40062,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1536"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1791"/>
         <source>Line Type:</source>
-        <translation>Typ riadku:</translation>
+        <translation>Typ čiary:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Typ riadku na ťahanie indikátora snap</translation>
+        <translation>Typ čiary na kreslenie indikátora prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
@@ -40076,22 +40077,22 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Šírka čiary pre indikátor snap</translation>
+        <translation>Šírka čiary indikátora prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>Ak je označené, nakreslí sa šap pre snap</translation>
+        <translation>Ak je zaškrtnuté, nakreslí sa tvar prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Tvar indikátora Snap</translation>
+        <translation>Tvar indikátora prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Typ tvaru indikátora snap</translation>
+        <translation>Typ tvaru indikátora prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40116,22 +40117,22 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Farba indikátora snap:</translation>
+        <translation>Farba indikátora prichytenia:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Farba pre tvar indikátora snap</translation>
+        <translation>Farba tvaru indikátora prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Uhol snap jeden krok</translation>
+        <translation>Krok prichytenia k uhlu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>Uhol medzi krokmi pre uhol Snap (čo je zvyčajne zodpovedajúce akcie, ak je SHIFT stlačený)</translation>
+        <translation>Uhol medzi krokmi prichytenia k uhlu (zvyčajne v príslušných akciách pri stlačenom klávese SHIFT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40176,57 +40177,57 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>Ak je zaškrtnuté, kurzor bude skrytý počas snímania</translation>
+        <translation>Ak je zaškrtnuté, kurzor bude počas prichytávania skrytý</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Ak je zaškrtnuté, možnosti snap (stredná, vzdialenosť) budú zobrazené v snap paneli nástrojov namiesto panela vlastností nástrojov</translation>
+        <translation>Ak je zaškrtnuté, možnosti prichytenia (stred, vzdialenosť) sa zobrazia v paneli nástrojov prichytenia namiesto panela vlastností nástroja</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Zobraziť možnosti snap v paneli nástrojov výberu Snap</translation>
+        <translation>Zobraziť možnosti prichytenia v paneli nástrojov Výber prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>Rukoväť subjektu</translation>
+        <translation>Úchyt objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation>Veľkosť štvorca, ktorá je zvýraznená referenčnými bodmi subjektov (koncové body atď.)</translation>
+        <translation>Veľkosť štvorca, ktorý zvýrazňuje referenčné body objektov (koncové body atď.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Farba koncovej rukoväte pre entitu</translation>
+        <translation>Farba koncového úchytu pre objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Farba pre štartovú rukoväť subjektu</translation>
+        <translation>Farba pre začiatočný úchyt objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Farba non-endpoint rukoväť subjektu</translation>
+        <translation>Farba nekoncového úchytu objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
         <source>Handle Size:</source>
-        <translation>Veľkosť rukoväte:</translation>
+        <translation>Veľkosť úchytu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Ak je to povolené, rukoväte jednotky sú zvýraznené na vznášadle (vyžaduje, aby boli povolené &quot;upozorňujúce subjekty na vznášadle&quot;)</translation>
+        <translation>Ak je to povolené, úchyty objektu sa zvýraznia pri prejdení myšou (vyžaduje, aby bolo povolené &quot;zvýrazniť objekty pri prejdení myšou&quot;)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Zobraziť entitu na vznášadle myši</translation>
+        <translation>Zobraziť úchyty objektu pri prejdení myšou</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40242,7 +40243,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="294"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="654"/>
         <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation>Farba riadku pre prekrývanie selection boxu ak je box obrátený (zprava doľava)</translation>
+        <translation>Farba čiary pre prekrývací výberový box, ak je box obrátený (sprava doľava)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="319"/>
@@ -40272,7 +40273,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="390"/>
         <source>Color for line for overlay box</source>
-        <translation>Farba pre riadok pre prekrývací box</translation>
+        <translation>Farba čiary pre prekrývací box</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="326"/>
@@ -40342,7 +40343,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="592"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation>Farba &amp; vybraného subjektu:</translation>
+        <translation>Farba &amp;vybraného objektu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
@@ -40352,7 +40353,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="574"/>
         <source>Color for selected entities</source>
-        <translation>Farba pre vybrané subjekty</translation>
+        <translation>Farba pre vybrané objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="258"/>
@@ -40410,7 +40411,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1388"/>
         <source>Line Type: </source>
-        <translation>Typ riadku:</translation>
+        <translation>Typ čiary: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1291"/>
@@ -40443,7 +40444,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1478"/>
         <source>Line type for grid lines</source>
-        <translation>Typ trate pre mriežky</translation>
+        <translation>Typ čiary pre čiary mriežky</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1485"/>
@@ -40498,7 +40499,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
         <source>Extend axis lines</source>
-        <translation>Rozšíriť osi čiary</translation>
+        <translation>Predĺžiť čiary osí</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3475"/>
@@ -40542,7 +40543,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation>Veľkosť riadkov osi v absolútnom nulovom bode</translation>
+        <translation>Veľkosť čiar osí v absolútnom nulovom bode</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3428"/>
@@ -40686,7 +40687,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation>Ak je viac subjektov v prehliadači, ako je špecifikované, bude kreslený namiesto subjektov.</translation>
+        <translation>Ak je v náhľade viac objektov, ako je zadané, namiesto objektov sa vykreslí obdĺžnik.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
@@ -40696,7 +40697,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4859"/>
         <source>Color for preview reference entities</source>
-        <translation>Farba pre náhľad referenčných subjektov</translation>
+        <translation>Farba pre náhľad referenčných objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
@@ -40706,22 +40707,22 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3786"/>
         <source>Visualize the entity under the mouse cursor</source>
-        <translation>Vizualizovať subjekt pod kurzorom myši</translation>
+        <translation>Vizualizovať objekt pod kurzorom myši</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
         <source>Highlight entities on mouse hover</source>
-        <translation>Zvýraznenie subjektov na vznášadle myši</translation>
+        <translation>Zvýrazniť objekty pri prejdení myšou</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3758"/>
         <source>Color for highlighted entities</source>
-        <translation>Farba pre zvýraznené subjekty</translation>
+        <translation>Farba pre zvýraznené objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Ak sa zvolí, jednotka bude zvýraznená v režime &quot;Draft&quot; s použitím šírky čiary jednotky namiesto 1px</translation>
+        <translation>Ak je zvolené, objekt sa v režime návrhu zvýrazní hrúbkou čiary objektu namiesto 1 px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40736,7 +40737,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>Zobraziť vysvetľujúce jednotky operácie</translation>
+        <translation>Zobraziť vysvetľujúce objekty náhľadu operácie </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3827"/>
@@ -40816,7 +40817,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>Ak je vybraný, textové východzie hodnoty budú vykreslené namiesto textových písmen (podobných draft módu) počas banningu.</translation>
+        <translation>Ak je vybrané, počas posúvania pohľadu sa namiesto písmen textu vykreslia účiaria textu (podobne ako v režime návrhu). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
@@ -40826,7 +40827,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>Ak je vybraný, textové východiská budú vykreslené namiesto textových písmen (podobných navrhovanému režimu) v náhľade.</translation>
+        <translation>Ak je vybrané, v náhľade sa namiesto písmen textu vykreslia účiaria textu (podobne ako v režime návrhu). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
@@ -40856,7 +40857,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Ak je zaškrtnuté, komponenty súradníc sa nakreslia v jednom riadku. Inak bude každý komponent na vlastnej linke.</translation>
+        <translation>Ak je zaškrtnuté, zložky súradníc sa nakreslia v jednom riadku. Inak bude každá zložka na vlastnom riadku. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40907,12 +40908,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Ak je zaškrtnuté, &quot;Snap To Grid&quot; je ignorovaný, ak nie je zobrazená mriežka.</translation>
+        <translation>Ak je zaškrtnuté, &quot;Prichytiť k mriežke&quot; sa ignoruje, ak mriežka nie je nakreslená.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Ignorovať &quot;Snap to Grid,&quot; ak nie je zobrazená mriežka</translation>
+        <translation>Ignorovať &quot;Prichytiť k mriežke&quot;, ak mriežka nie je nakreslená</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
@@ -40942,12 +40943,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2748"/>
         <source>Show properties for entity that will be created</source>
-        <translation>Zobraziť vlastnosti pre subjekt, ktorý bude vytvorený</translation>
+        <translation>Zobraziť vlastnosti pre objekt, ktorý bude vytvorený</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>Zobraziť vlastnosti pre subjekt, ktorý je upravený rukoväťami</translation>
+        <translation>Zobraziť vlastnosti pre objekt, ktorý je upravovaný úchytmi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -40957,12 +40958,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Farba pre absolútne snap súradnice.</translation>
+        <translation>Farba absolútnych súradníc prichytenia.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Ak je zaškrtnuté, znázorní sa relatívna vzdialenosť a uhol z relatívne nulového bodu do bodu zlomu.</translation>
+        <translation>Ak je zaškrtnuté, znázorní sa relatívna vzdialenosť a uhol z relatívneho nulového bodu do bodu prichytenia.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40972,7 +40973,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Farba pre typ snap/obmedzenie</translation>
+        <translation>Farba typu prichytenia/obmedzenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
@@ -40997,12 +40998,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Ak je zaškrtnuté, informácie o type snap a obmedzenia budú zobrazené pre bod snap (ak sú)</translation>
+        <translation>Ak je zaškrtnuté, pri bode prichytenia sa zobrazia informácie o type prichytenia a obmedzeniach (ak existujú)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>Zobraziť informácie o snap / restriction</translation>
+        <translation>Zobraziť informácie o prichytení /obmedzení</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
@@ -41017,7 +41018,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Ak je zaškrtnuté, zobrazí sa absolútna poloha bodu zlomu.</translation>
+        <translation>Ak je zaškrtnuté, zobrazí sa absolútna poloha bodu prichytenia.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41037,12 +41038,12 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>Ak sa kontroluje, zobrazí sa krátky prehľad vlastností účtovnej jednotky, ktorá je chytená na účely výberu.</translation>
+        <translation>Ak je zaškrtnuté, zobrazí sa krátky prehľad vlastností objektu zachyteného na výber. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
         <source>Show properties of catched entity</source>
-        <translation>Zobraziť vlastnosti chyteného subjektu</translation>
+        <translation>Zobraziť vlastnosti zachyteného objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
@@ -41123,7 +41124,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
         <source>Drawing units</source>
-        <translation>Výkresy</translation>
+        <translation>Jednotky výkresu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
@@ -41153,7 +41154,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>Uhol Snap</translation>
+        <translation>Prichytenie k uhlu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41289,7 +41290,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
-        <translation>Typ siete, ktorá sa má vytiahnuť</translation>
+        <translation>Typ mriežky, ktorá sa má kresliť</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
@@ -41299,32 +41300,32 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>Kontroluje frekvenciu hlavných sieťových vedení v porovnaní s menšími sieťovými vedeniami.</translation>
+        <translation>Určuje frekvenciu hlavných čiar mriežky v porovnaní s vedľajšími čiarami mriežky.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Polomer oblúka v uhle odrazovej značky.</translation>
+        <translation>Polomer oblúka v značke prichytenia k uhlu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Použiť automatické zarovnanie značky</translation>
+        <translation>Značka prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Pokročilé nastavenie doladenia Snap</translation>
+        <translation>Pokročilé nastavenia jemného doladenia prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Snap on Entity &quot;Free snap&quot; prepínač vzdialenosti:</translation>
+        <translation>Prepínacia vzdialenosť &quot;Prichytiť na objekt&quot; / &quot;Voľné prichytenie&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>Snap on entity will be revolved if it is enabled and the distance between myš and snap point is more than specified value.</translation>
+        <translation>&quot;Prichytiť na objekt&quot; sa použije, ak je zapnuté a vzdialenosť medzi myšou a prichyteným bodom je väčšia ako zadaná hodnota.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41334,27 +41335,27 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>Vzdialenosť medzi súradnicami obrazovky, ktorá sa používa pre loviace subjekty</translation>
+        <translation>Vzdialenosť v súradniciach obrazovky, ktorá sa používa na zachytávanie objektov </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Min. faktor roztrhnutia bunky:</translation>
+        <translation>Min. faktor prichytenia k bunke mriežky:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Snap vzdialenosť (v pixeloch) pre loviace subjekty.</translation>
+        <translation>Vzdialenosť prichytenia (v pixeloch) na zachytávanie objektov.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Lovné jednotky Vzdialenosť:</translation>
+        <translation>Vzdialenosť prichytenia objektov:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Grid bunkový faktor použitý na odtrhnutie do mriežky.</translation>
+        <translation>Faktor bunky mriežky použitý na prichytenie k mriežke.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -41400,7 +41401,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>Ak je vybraný, pre každú skupinu príkazov týkajúcich sa jednotky bude vytvorené samostatné menu. Inak bude tento príkaz pod rovnakým menu.</translation>
+        <translation>Ak je vybrané, pre každú skupinu príkazov týkajúcich sa objektov sa vytvorí samostatné menu. Inak budú tieto príkazy v rovnakom menu. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
@@ -41425,7 +41426,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
         <source>Separate menu per entity</source>
-        <translation>Samostatné menu na jednotku</translation>
+        <translation>Samostatné menu na objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
@@ -42032,7 +42033,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation>Metóda kreslenia Qt (nekonajte blízko koncových ukazovateľov)</translation>
+        <translation>Natívna metóda kreslenia Qt (nepresná pri koncových bodoch)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6454"/>
@@ -42057,7 +42058,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Ak je to povolené, počas pan prevádzku TEXT a MTEXT objekty budú vypracované schematické</translation>
+        <translation>Ak je povolené, počas posúvania pohľadu sa objekty TEXT a MTEXT vykresľujú schematicky</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
@@ -42191,7 +42192,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>Obnoví geometriu/dĺžku programu do pôvodného stavu</translation>
+        <translation>Obnoví geometriu/rozloženie programu do pôvodného stavu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42207,7 +42208,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Cesta ku priečinku so vzormi poklopov</translation>
+        <translation>Cesta k priečinku so vzormi šrafovania</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42227,7 +42228,7 @@ To opakovane upravuje všetky subjekty samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Prepnúť režim voľného snap pri stlačení medzerníka</translation>
+        <translation>Prepnúť režim voľného prichytenia pri stlačení medzerníka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -42370,8 +42371,8 @@ ale ignorovaný inými</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="44"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Dĺžka vzoru trate v súvislosti so zoomom,
-Takže predvolená hodnota kroku potrebná na pečenie</translation>
+        <translation>Dĺžka vzoru čiary závisí od zoomu, 
+preto je na zapekanie potrebná predvolená hodnota kroku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
@@ -42914,7 +42915,7 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1325"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] Obdĺžniková kresba</translation>
+        <translation>[2500-257F] Kreslenie rámčekov</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1330"/>
@@ -43209,7 +43210,7 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="830"/>
         <source>Baseline Left</source>
-        <translation>Východisková ľavica</translation>
+        <translation>Účiarie vľavo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="575"/>
@@ -43221,12 +43222,12 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="690"/>
         <source>Baseline Right</source>
-        <translation>Základné právo</translation>
+        <translation>Účiarie vpravo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="572"/>
         <source>Baseline Center</source>
-        <translation>Východiskové centrum</translation>
+        <translation>Účiarie na stred</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="547"/>
@@ -43242,7 +43243,7 @@ Takže predvolená hodnota kroku potrebná na pečenie</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="502"/>
         <source>A&amp;ligned</source>
-        <translation>&amp; Povinný</translation>
+        <translation>&amp;Zarovnané</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="633"/>
@@ -43865,7 +43866,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
         <source>Line type</source>
-        <translation>Typ trate</translation>
+        <translation>Typ čiary</translation>
     </message>
 </context>
 <context>
@@ -43896,12 +43897,12 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="180"/>
         <source>Number of selected entities</source>
-        <translation>Počet vybraných subjektov</translation>
+        <translation>Počet vybraných objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="115"/>
         <source>Total length of selected entities</source>
-        <translation>Celková dĺžka vybraných subjektov</translation>
+        <translation>Celková dĺžka vybraných objektov</translation>
     </message>
 </context>
 <context>
@@ -43953,7 +43954,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="123"/>
         <source>Color of line</source>
-        <translation>Farba riadku</translation>
+        <translation>Farba čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
@@ -43963,7 +43964,7 @@ p, li { biely priestor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
         <source>Type of line</source>
-        <translation>Typ trate</translation>
+        <translation>Typ čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
@@ -44093,7 +44094,7 @@ Túto akciu NIE JE možné vrátiť späť.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Zaradené bloky a všetky ich subjekty budú odstránené.</translation>
+        <translation>Uvedené bloky a všetky ich objekty budú odstránené.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
@@ -44222,7 +44223,7 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pero bude odstránené z palety, výkresové subjekty nebudú ovplyvnené.</translation>
+        <translation>Pero bude odstránené z palety, výkresové objekty nebudú ovplyvnené.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44243,7 +44244,7 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Perá budú odstránené z palety, výkresové subjekty nebudú ovplyvnené.</translation>
+        <translation>Perá budú odstránené z palety, výkresové objekty nebudú ovplyvnené.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44253,7 +44254,7 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
         <source>Select Entities </source>
-        <translation>Vybrať subjekty</translation>
+        <translation>Vybrať objekty </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
@@ -44282,7 +44283,7 @@ Uveďte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>Nastavenie pera subjektom</translation>
+        <translation>Nastaviť pero podľa objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
@@ -44398,7 +44399,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="475"/>
         <source>Font %1</source>
-        <translation>Písmo (%1)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="517"/>
@@ -44589,7 +44590,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>no</translation>
+        <translation>po</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
@@ -44613,7 +44614,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polylín</translation>
+        <translation>polylínia</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -44625,7 +44626,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>bez cla</translation>
+        <translation>voľný</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
@@ -44649,7 +44650,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="464"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>spline2color</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="466"/>
@@ -44667,7 +44668,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="282"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>bisekt</translation>
+        <translation>bisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="281"/>
@@ -44745,7 +44746,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>elipseinscribed</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
@@ -44763,7 +44764,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>otvor</translation>
+        <translation>šrafovanie</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -44805,7 +44806,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1044"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>znovu natiahnuté</translation>
+        <translation>prekresliť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1045"/>
@@ -44817,7 +44818,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1046"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>unit description in lists</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
@@ -44841,7 +44842,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>r</translation>
+        <translation>za</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
@@ -44883,7 +44884,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>vrátiť späť</translation>
+        <translation>vrátiť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
@@ -44908,13 +44909,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimalignovaný</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>dimhorizontál</translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
@@ -44926,7 +44927,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="677"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>dimvertikál</translation>
+        <translation>dimvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="678"/>
@@ -44944,13 +44945,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>če</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangulárny</translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
@@ -44968,7 +44969,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="692"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametrické</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="690"/>
@@ -44998,13 +44999,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="710"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimregén</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>nič</translation>
+        <translation>neobmedzovať</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
@@ -45016,7 +45017,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>limitortogonálne</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
@@ -45028,7 +45029,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>limithorizontál</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
@@ -45040,7 +45041,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>limitvertikálne</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
@@ -45082,7 +45083,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>divízia</translation>
+        <translation>div</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="737"/>
@@ -45100,7 +45101,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>če</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="731"/>
@@ -45130,13 +45131,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>rs</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>ou</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
@@ -45174,7 +45175,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="918"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>bez lapfre</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="920"/>
@@ -45222,7 +45223,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>sapgrid</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="944"/>
@@ -45240,7 +45241,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>r</translation>
+        <translation>si</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="955"/>
@@ -45294,19 +45295,19 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>r</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>deselektal</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="623"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation>no</translation>
+        <translation>tn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="826"/>
@@ -45348,7 +45349,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="855"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>dint</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="856"/>
@@ -45388,7 +45389,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>medzerník</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45399,12 +45400,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>dĺžka</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>počet</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45415,12 +45416,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>riadky</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>linespacing</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -45443,7 +45444,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1198"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation>a</translation>
+        <translation>an</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1200"/>
@@ -45472,25 +45473,25 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1212"/>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>kols</translation>
+        <translation>cols</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>s</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>medzerník</translation>
+        <translation>rozstupstĺpcov</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>kolspacing</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
@@ -45502,7 +45503,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>fakt</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -45597,7 +45598,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1247"/>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>ur</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1249"/>
@@ -45622,7 +45623,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1255"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>linespacing</translation>
+        <translation>rozstupriadkov</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1256"/>
@@ -45639,18 +45640,18 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1259"/>
         <source>t</source>
         <comment>text</comment>
-        <translation>up</translation>
+        <translation>t</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1262"/>
         <source>t</source>
         <comment>through</comment>
-        <translation>up</translation>
+        <translation>t</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
         <source>undo</source>
-        <translation>vrátiť späť</translation>
+        <translation>vrátiť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
@@ -45671,12 +45672,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>papierová podoba</translation>
+        <translation>posunpapiera</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
-        <translation>grafoffset</translation>
+        <translation>posungrafu</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -45906,7 +45907,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>priamka</translation>
+        <translation>linever</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
@@ -45918,7 +45919,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>línia</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
@@ -45966,7 +45967,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>krájanie</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
@@ -45978,7 +45979,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="173"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>plátkyc</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="174"/>
@@ -46038,13 +46039,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>linebody</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>lbody</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
@@ -46074,25 +46075,25 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="224"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation>unit description in lists</translation>
+        <translation>dup</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="229"/>
         <source>align</source>
         <comment>align entities</comment>
-        <translation>zosúladenie</translation>
+        <translation>zarovnať</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>al</source>
         <comment>align entities</comment>
-        <translation>no</translation>
+        <translation>al</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>align1</source>
         <comment>align entities</comment>
-        <translation>zosúladenie1</translation>
+        <translation>zarovnať1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
@@ -46104,19 +46105,19 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation>firemref</translation>
+        <translation>alignref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
         <source>alr</source>
         <comment>align references</comment>
-        <translation>ur</translation>
+        <translation>alr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>priamka</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
@@ -46140,7 +46141,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>medzerník</translation>
+        <translation>medzera</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
@@ -46176,7 +46177,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>priamka</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="267"/>
@@ -46200,13 +46201,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>on</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>linebisekt</translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
@@ -46236,13 +46237,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>linetankper</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>alebo</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
@@ -46254,7 +46255,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>no</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
@@ -46272,7 +46273,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>polygón</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
@@ -46296,7 +46297,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>polygón</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="328"/>
@@ -46308,13 +46309,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polykt</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>polygónv</translation>
+        <translation>polygonvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="335"/>
@@ -46380,7 +46381,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation>ou</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="378"/>
@@ -46428,7 +46429,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>circletan3color</translation>
+        <translation>circletan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="404"/>
@@ -46470,13 +46471,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="426"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>arktán</translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>pri</translation>
+        <translation>at</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
@@ -46536,7 +46537,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="465"/>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation>s</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="471"/>
@@ -46614,7 +46615,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="509"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
-        <translation>ea1color</translation>
+        <translation>ea1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="514"/>
@@ -46656,7 +46657,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>uhlová čiara</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
@@ -46668,19 +46669,19 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="553"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>rortolín</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="554"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation>rt</translation>
+        <translation>rort</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>bod 2line</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -46728,19 +46729,19 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>pinedeltwn</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>no</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="590"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>pinetrm</translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
@@ -46752,7 +46753,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="596"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>pinepar</translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="597"/>
@@ -46782,7 +46783,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
-        <translation>no</translation>
+        <translation>du</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
@@ -46800,7 +46801,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>ci</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -46896,7 +46897,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>modrotát</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -46980,7 +46981,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="774"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>modlengén</translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="780"/>
@@ -46992,7 +46993,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="781"/>
         <source>offset</source>
         <comment>modify - offset</comment>
-        <translation>ofsetová</translation>
+        <translation>odsadiť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="783"/>
@@ -47016,13 +47017,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="796"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>mofillet</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation>filet</translation>
+        <translation>zaobliť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -47046,19 +47047,19 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>moddidid</translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="812"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>modstrect</translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>moderácie</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
@@ -47118,7 +47119,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation>ii)</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="863"/>
@@ -47166,7 +47167,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>takže</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
@@ -47208,7 +47209,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>trypref</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
@@ -47220,7 +47221,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>zoomin</source>
         <comment>zoom - in</comment>
-        <translation>zoomín</translation>
+        <translation>priblížiť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
@@ -47232,7 +47233,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>priblížiť</translation>
+        <translation>oddialiť</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
@@ -47256,7 +47257,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation>akordlen</translation>
+        <translation>tetiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47268,13 +47269,13 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>dĺžka1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>dĺžka2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47294,22 +47295,22 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>uholrel</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>začiatok</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>ofsetová</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>linenap</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
@@ -47319,28 +47320,28 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>šírka</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>výška</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
         <source>pos</source>
-        <translation>po</translation>
+        <translation>pos</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>veľkosť</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
-        <translation>skosenie</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
@@ -47350,12 +47351,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>unepoly</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>rohy</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -47365,12 +47366,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>kruhový</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>snap1</source>
-        <translation>snap1color</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
@@ -47380,7 +47381,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>top</source>
-        <translation>hore</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
@@ -47390,32 +47391,32 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>vľavo</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>stredné</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>vpravo</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>dno</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>dole</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>dna</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
@@ -47430,12 +47431,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>veľkosť</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>veľkosť</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
@@ -47445,27 +47446,27 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
         <source>vert</source>
-        <translation>unit description in lists</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
-        <translation>snap2color</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>roh</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>stredná hodnota</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
         <source>mid-hor</source>
-        <translation>stredná hodnota</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1156"/>
@@ -47480,47 +47481,47 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>uhol inner</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>okraje</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>edge-nón</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>okraj</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>unit description in lists</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>koniec okraja</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>koniec</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>obe</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>bez</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
@@ -47535,17 +47536,17 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>dit fixed</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>dit  flex</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>vzdialenosť</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -47565,7 +47566,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">pevné</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
@@ -48037,7 +48038,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Výstupná stupnica. Napr.: 0,01 (pre stupnicu 1:100).</translation>
+        <translation>Výstupná mierka. Napr.: 0,01 (pre mierku 1:100).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="133"/>
@@ -48137,12 +48138,12 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>Uhol Snap</translation>
+        <translation>Prichytenie k uhlu</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>Voľné zarovnanie</translation>
+        <translation>Voľné prichytenie</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -48152,7 +48153,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Zarovnanie na relatívnu nulu</translation>
+        <translation>Prichytiť k relatívnej nule</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48179,7 +48180,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Poklop: nenájdený žiadny vzor. Prosím, nastavte cestu vzoru v nastaveniach aplikácie</translation>
+        <translation>Šrafovanie: nenájdený žiadny vzor. Prosím, nastavte cestu k vzorom v nastaveniach aplikácie</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
@@ -48255,7 +48256,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1032"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>čítanie chýb DXF/DWG subjekty</translation>
+        <translation>chyba pri čítaní objektov DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1034"/>
@@ -48613,7 +48614,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Neplatná stupnica tlače%1. Nemôžem prispôsobiť náhľad tlače na stránku</translation>
+        <translation>Neplatná mierka tlače %1. Nemôžem prispôsobiť náhľad tlače na stránku</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="164"/>
@@ -48746,7 +48747,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Poklop</translation>
+        <translation>Šrafovanie</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48880,7 +48881,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
-        <translation>subjekty</translation>
+        <translation> objektov </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48977,17 +48978,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>Dĺžka čiary</translation>
+        <translation>Predĺžiť čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen/Scale</source>
-        <translation>Dĺžka/dĺžka</translation>
+        <translation>Predĺžiť/zmeniť mierku</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Dĺžka Chord</translation>
+        <translation>Predĺžiť tetivu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49017,7 +49018,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Pan / Scroll vertikálne / Vyberte detské subjekty</translation>
+        <translation>Posúvanie pohľadu / Zvislé posúvanie / Výber podradených objektov</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49092,7 +49093,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Zarovnanie na susedný rozmer</translation>
+        <translation>Prichytiť k susednej kóte</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49229,22 +49230,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="308"/>
         <source>Specify the first line</source>
-        <translation>Uveďte prvý riadok</translation>
+        <translation>Zvoľte prvú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="311"/>
         <source>Specify the second line</source>
-        <translation>Uveďte druhý riadok</translation>
+        <translation>Zvoľte druhú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="314"/>
         <source>Specify the third line</source>
-        <translation>Uveďte tretí riadok</translation>
+        <translation>Zvoľte tretiu čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="317"/>
         <source>Specify the fourth line</source>
-        <translation>Uveďte štvrtý riadok</translation>
+        <translation>Zvoľte štvrtú čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="227"/>
@@ -49257,7 +49258,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Neplatná plocha prielezu. Skontrolujte, či vybrané subjekty tvoria jeden alebo viac uzavretých obrysov.</translation>
+        <translation>Neplatná plocha šrafovania. Skontrolujte, či vybrané objekty tvoria jeden alebo viac uzavretých obrysov.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
@@ -49276,12 +49277,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Chyba poklopu: Neplatný obrys nájdený!</translation>
+        <translation>Chyba šrafovania: Nájdený neplatný obrys!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Chyba pri poklope: Vzor nenájdený!</translation>
+        <translation>Chyba šrafovania: Vzor nenájdený!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
@@ -49296,12 +49297,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Chyba poklopu: Nedefinovaná chyba!</translation>
+        <translation>Chyba šrafovania: Nedefinovaná chyba!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>Celková plocha poklopu =%1</translation>
+        <translation>Celková plocha šrafovania = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49311,7 +49312,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Poklop ihneď po výbere</translation>
+        <translation>Šrafovať ihneď po výbere</translation>
     </message>
 </context>
 <context>
@@ -49333,7 +49334,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="256"/>
         <source>Select a line</source>
-        <translation>Vyberte riadok</translation>
+        <translation>Vyberte čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
@@ -49504,7 +49505,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Single Line Mode</source>
-        <translation>Režim jedného riadku</translation>
+        <translation>Režim jednej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="96"/>
@@ -49528,12 +49529,12 @@ Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>Uhol:%1
+        <translation>Uhol: %1
 Pravý uhol − uhol: %2
 Priamy uhol − uhol: %3
 Plný uhol − uhol: %4
-Prierez: (%5, %6)
-Prierez @ (%7, %8)</translation>
+Priesečník: (%5, %6)
+Priesečník: @(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
@@ -49576,12 +49577,12 @@ Prierez @ (%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line From:</source>
-        <translation>Riadok od:</translation>
+        <translation>Čiara od:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>Riadok pre:</translation>
+        <translation>Čiara do:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
@@ -49596,7 +49597,7 @@ Prierez @ (%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>Prierez:</translation>
+        <translation>Priesečník:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49809,7 +49810,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="240"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Vymazanie v grafických súradniciach</translation>
+        <translation>Posun výtlačku v grafických súradniciach</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
@@ -49824,7 +49825,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>zadajte ofset z príkazového riadku na ofsetový výtlačok</translation>
+        <translation>zadajte posun v príkazovom riadku na posunutie výtlačku</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49955,17 +49956,17 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Entity</source>
-        <translation>Subjekt</translation>
+        <translation>Objekt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>
         <source>Endpoint</source>
-        <translation>Koncový ukazovateľ</translation>
+        <translation>Koncový bod</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>Prierez</translation>
+        <translation>Priesečník</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -49995,7 +49996,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1359"/>
         <source>Angle (on Entity)</source>
-        <translation>Uhol (na subjekte)</translation>
+        <translation>Uhol (na objekte)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1361"/>
@@ -50005,7 +50006,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
         <source>Free</source>
-        <translation type="unfinished">Bez cla</translation>
+        <translation type="unfinished">Voľné</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1374"/>
@@ -50101,7 +50102,7 @@ Koniec: (%8, %9)</translation>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
         <source>Entity</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">Subjekt</translation>
+        <translation type="unfinished">Objekt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
@@ -50179,7 +50180,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Možnosti rozmerov</translation>
+        <translation>Možnosti kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"/>
@@ -50189,7 +50190,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>Dimenzia</translation>
+        <translation>Kótovací štýl</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50204,7 +50205,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation>Užívateľom špecifikované rozmery. Zadajte hodnotu alebo buď &quot;&lt;&gt;&quot; alebo nechajte prázdne pre automatické meranie.</translation>
+        <translation>Text kóty zadaný používateľom. Zadajte hodnotu alebo &quot;&lt;&gt;&quot;, alebo nechajte prázdne pre automatické meranie.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
@@ -50266,17 +50267,17 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation>Uhol rozmerov</translation>
+        <translation>Uhol kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation>Horizontálny rozmer</translation>
+        <translation>Vodorovná kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation>Vertikálny rozmer</translation>
+        <translation>Zvislá kóta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -50286,7 +50287,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>Vzdialenosť medzi rozmermi v základnej línii</translation>
+        <translation>Vzdialenosť medzi kótami od základnej čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
@@ -50297,17 +50298,17 @@ Koniec: (%8, %9)</translation>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation>Bez cla</translation>
+        <translation>Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>Uhol pre rozmer</translation>
+        <translation>Uhol kóty</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>Ak je zaškrtnuté, uhol pre rozmer je definovaný myšou</translation>
+        <translation>Ak je zaškrtnuté, uhol kóty sa určuje myšou</translation>
     </message>
 </context>
 <context>
@@ -50315,7 +50316,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Možnosti snímkovania vzdialenosti</translation>
+        <translation>Možnosti vzdialenosti prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
@@ -50325,7 +50326,7 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Vzdialenosť od pôvodne vyriešeného bodu zlomu</translation>
+        <translation>Vzdialenosť bodu prichytenia od pôvodne určeného bodu prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
@@ -50338,12 +50339,12 @@ Koniec: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Možnosti snímkovania vzdialenosti</translation>
+        <translation>Možnosti vzdialenosti prichytenia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Snap stredné body:</translation>
+        <translation>Prichytiť k stredným bodom:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

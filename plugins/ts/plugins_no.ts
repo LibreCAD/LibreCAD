@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Tom enhet</translation>
+        <translation>Tomt objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>Vis enheter</translation>
+        <translation>Vis objekter</translation>
     </message>
 </context>
 <context>

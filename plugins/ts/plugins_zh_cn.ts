@@ -294,7 +294,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>区域阴影</translation>
+        <translation>二维填充</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -314,7 +314,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>插图</translation>
+        <translation>块参照</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -389,7 +389,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>阴影</translation>
+        <translation>图案填充</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>多边形</translation>
+        <translation>多段线</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -1010,7 +1010,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>绘制附加圆？</translation>
+        <translation>绘制齿顶圆？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

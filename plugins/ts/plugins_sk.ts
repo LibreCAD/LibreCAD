@@ -672,7 +672,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Vyberte riadok, kruh alebo oblúk a stlačte kláves Enter</translation>
+        <translation>Vyberte čiaru, kružnicu alebo oblúk a stlačte kláves Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
@@ -753,12 +753,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="489"/>
         <source>Inc.</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
@@ -879,7 +879,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation>Lomky - Vypnuté</translation>
+        <translation>Prerušenia - Vypnuté</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>

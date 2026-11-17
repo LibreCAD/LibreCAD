@@ -69,7 +69,7 @@
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished">Blokā nevar būt pats ieliktnis.</translation>
+        <translation type="unfinished">Bloks nevar saturēt sava paša ievietojumu.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
@@ -168,7 +168,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">Izvēlēties un eksplodēt</translation>
+        <translation type="unfinished">Izvēlēties un sadalīt</translation>
     </message>
 </context>
 <context>
@@ -201,7 +201,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation>Ievadiet dimensijas tekstu:</translation>
+        <translation>Ievadiet izmēra tekstu:</translation>
     </message>
 </context>
 <context>
@@ -209,7 +209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>Izvēlēties loka vienību</translation>
+        <translation>Izvēlēties loka objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
@@ -222,7 +222,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Norādīt pirmās paplašinājuma rindas sākumu</translation>
+        <translation>Norādīt pirmās izmēra palīglīnijas sākumpunktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
@@ -237,17 +237,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Snap uz Adjacent Dim</translation>
+        <translation>Piesaiste blakus esošajam izmēram</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
         <source>Enter dimension text:</source>
-        <translation>Ievadiet dimensijas tekstu:</translation>
+        <translation>Ievadiet izmēra tekstu:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Ievadiet dimensijas līnijas leņķi:</translation>
+        <translation>Ievadiet izmēra līnijas leņķi:</translation>
     </message>
 </context>
 <context>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Norādīt līdera beigu punktu</translation>
+        <translation>Norādīt norādes līnijas galapunktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -412,7 +412,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="293"/>
         <source>Length of chord should be non-zero</source>
-        <translation type="unfinished">Akorda garums nedrīkst būt nulle</translation>
+        <translation type="unfinished">Hordas garums nedrīkst būt nulle</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="435"/>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished">Norādīt beigu leņķi vai [leņķis/hordlen]</translation>
+        <translation type="unfinished">Norādīt beigu leņķi vai [leņķis/horda]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -467,7 +467,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">Norādīt akorda garumu (negatīvs altpunktam):</translation>
+        <translation type="unfinished">Norādīt hordas garumu (negatīvs altpunktam):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -546,7 +546,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Alternate endpoints</source>
-        <translation type="unfinished">Alternatīvie mērķa kritēriji</translation>
+        <translation type="unfinished">Alternatīvie galapunkti</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
@@ -784,7 +784,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="435"/>
         <source>No common tangential circle for selected entities</source>
-        <translation type="unfinished">Nav kopīga tangenciāla apļa izvēlētajām vienībām</translation>
+        <translation type="unfinished">Nav kopīga tangenciāla apļa izvēlētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
@@ -812,7 +812,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Izvēlieties pamata lineāro/ izlīdzināto dimensiju</translation>
+        <translation>Izvēlieties bāzes lineāro/izlīdzināto izmēru</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -837,12 +837,12 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Snap uz Adjacent Dim</translation>
+        <translation>Piesaiste blakus esošajam izmēram</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>Ievadiet dimensijas tekstu:</translation>
+        <translation>Ievadiet izmēra tekstu:</translation>
     </message>
 </context>
 <context>
@@ -855,17 +855,17 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation>Nav izvēlētas vienības. Divkāršā izveide atcelta.</translation>
+        <translation>Nav izvēlēts neviens objekts. Duālās ģeometrijas izveide atcelta.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
         <source>No supported entities could be dualized.</source>
-        <translation>Nevarēja dualizēt nevienu atbalstīto vienību.</translation>
+        <translation>Nevarēja dualizēt nevienu atbalstītu objektu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual izveidots ap centru (%1 vienības)</translation>
+        <translation>Duālā ģeometrija izveidota ap centru (%1 objekti)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
@@ -1051,7 +1051,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>line</source>
-        <translation type="unfinished">rinda</translation>
+        <translation type="unfinished">līnija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="406"/>
@@ -1070,7 +1070,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="502"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>free</source>
-        <translation type="unfinished">nav</translation>
+        <translation type="unfinished">brīvs</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="488"/>
@@ -1113,7 +1113,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="494"/>
         <source>Select base line</source>
-        <translation>Izvēlēties pamatrindu</translation>
+        <translation>Izvēlēties pamatlīniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="497"/>
@@ -1126,7 +1126,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="149"/>
         <source> entities will be created</source>
-        <translation type="unfinished">tiks izveidotas struktūras</translation>
+        <translation type="unfinished"> objekti tiks izveidoti</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="232"/>
@@ -1251,7 +1251,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="446"/>
         <source>Select Line</source>
-        <translation>Izvēlieties rindu</translation>
+        <translation>Izvēlieties līniju</translation>
     </message>
 </context>
 <context>
@@ -1259,7 +1259,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="130"/>
         <source> entities will be created</source>
-        <translation type="unfinished">tiks izveidotas struktūras</translation>
+        <translation type="unfinished"> objekti tiks izveidoti</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
@@ -1288,7 +1288,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="128"/>
         <source> entities will be created</source>
-        <translation type="unfinished">tiks izveidotas struktūras</translation>
+        <translation type="unfinished"> objekti tiks izveidoti</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
@@ -1379,7 +1379,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="180"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>line</source>
-        <translation type="unfinished">rinda</translation>
+        <translation type="unfinished">līnija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="184"/>
@@ -1403,7 +1403,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="196"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>free</source>
-        <translation type="unfinished">nav</translation>
+        <translation type="unfinished">brīvs</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="214"/>
@@ -1681,7 +1681,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation type="unfinished">Norādīt otro punktu
-vai [number ˈx</translation>
+vai [number|x|y|leņķis|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1695,27 +1695,28 @@ vai [skaitlis]</translation>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation type="unfinished">Norādīt līnijas virzienu
-[x”; y; y]</translation>
+[x|y|leņķis|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
         <translation type="unfinished">Norādīt līnijas virziena leņķi
-vai [x y ˈp ˈnumber</translation>
+vai [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
         <translation type="unfinished">Norādīt malu punktu režīmu
-[neviens]start]</translation>
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Norādīt fiksētu attālumu starp punktiem
+vai [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -1912,7 +1913,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation>Precizējiet atsauces punktu [augšējais apakšējais apakšējais apakšējais apakšējais]</translation>
+        <translation>Norādīt atskaites punktu [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -1935,17 +1936,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="307"/>
         <source>Draw Square</source>
-        <translation>Zīmēt laukumu</translation>
+        <translation>Zīmēt kvadrātu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Precizējiet 1. punktu:</translation>
+        <translation>Norādīt 1. punkta piesaisti [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Precizēt 2. punktu</translation>
+        <translation>Norādīt 2. punkta piesaisti [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2064,7 +2065,7 @@ or [%2]</source>
         <source>Specify corners type
 [str|round|bevels]</source>
         <translation type="unfinished">Norādīt stūru tipu
-[strəround ˈbevels]</translation>
+[str|round|bevels]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
@@ -2081,7 +2082,7 @@ or [%2]</source>
         <source>Specify edges mode
 [both|hor|vert]</source>
         <translation type="unfinished">Norādīt malu režīmu
-[abi]hor]</translation>
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -2089,12 +2090,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="238"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2104,7 +2105,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
         <source>Select line</source>
-        <translation>Izvēlēties rindu</translation>
+        <translation>Izvēlēties līniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
@@ -2447,17 +2448,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Orthogonal From Line</source>
-        <translation>Ortogonāls no rindas</translation>
+        <translation>Ortogonāls no līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>No rindiņas uz rindu</translation>
+        <translation>No punkta līdz līnijai</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Šķēle/divīzijas līnija</translation>
+        <translation>Šķelt/sadalīt līniju</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
@@ -2467,7 +2468,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>Punktu rinda</translation>
+        <translation>Punktu līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
@@ -2698,7 +2699,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Līnijas līdz kordiem</translation>
+        <translation>Polilīnijas loki uz hordām</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
@@ -2723,7 +2724,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>Īsinā&amp;t</translation>
+        <translation>&amp;Apgriezt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -2748,12 +2749,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Lente</translation>
+        <translation>&amp;Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Eksplodēt tekstu burtos</translation>
+        <translation>Sadalīt &amp;tekstu burtos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
@@ -2858,12 +2859,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp; Ekspluatācija:</translation>
+        <translation>&amp;Sadalīt splainu līnijās</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>Izmest no polilīnijas</translation>
+        <translation>&amp;Splains no polilīnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -2913,7 +2914,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
         <source>Line Gap</source>
-        <translation>Līniju starpība</translation>
+        <translation>Līnijas sprauga</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
@@ -2948,27 +2949,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp; Pick Pen no vienības</translation>
+        <translation>&amp;Paņemt pildspalvu no objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen no vienības (atrisināts)</translation>
+        <translation>&amp;Paņemt pildspalvu no objekta (atrisināta)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Uzlieciet pildspalvveida pilnšļirci struktūrai</translation>
+        <translation>Piemērot pildspalvu objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
         <source>Copy Pen</source>
-        <translation>Kopēt pildspalvveida pilnšļirci</translation>
+        <translation>Kopēt pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
-        <translation>Rādīt vienības aprakstu</translation>
+        <translation>Rādīt objekta aprakstu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
@@ -3009,7 +3010,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
@@ -3064,7 +3065,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
-        <translation>Dimensiju izveidošanas komandas</translation>
+        <translation>Izmēru izveidošanas komandas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
@@ -3089,12 +3090,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line drawing commands</source>
-        <translation>Rindu zīmēšanas komandas</translation>
+        <translation>Līniju zīmēšanas komandas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
@@ -3160,7 +3161,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Daudzrindu zīmēšanas komandas</translation>
+        <translation>Polilīniju zīmēšanas komandas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3180,7 +3181,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Piekares ierobežojumi</translation>
+        <translation>Piesaistes ierobežojumi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3190,7 +3191,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>Struktūru atlases darbības</translation>
+        <translation>Objektu atlases darbības</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
@@ -3200,12 +3201,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Pielipšanas opcijas</translation>
+        <translation>Piesaistes papildiespējas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>Papildu momenti</translation>
+        <translation>Papildu piesaistes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3361,17 +3362,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>Tangential 2 vienības, Radius</translation>
+        <translation>Tangenciāls 2 objektiem, rādiuss</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>Tangential 2 vienības, 1 punkts</translation>
+        <translation>Tangenciāls 2 objektiem, 1 punkts</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Tangential &amp; 3 vienības</translation>
+        <translation>Tangenciāls &amp;3 objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3386,7 +3387,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
-        <translation>&amp; Ordinēt</translation>
+        <translation>&amp;Ordināta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
@@ -3426,22 +3427,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Pielipšanas vidējā rokasgrāmata</translation>
+        <translation>Manuāla piesaiste viduspunktam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>Pielipt pie mērķa punktiem</translation>
+        <translation>Piesaiste galapunktiem</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Snap uz vienību</translation>
+        <translation>Piesaiste objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Pielipšanas centrs</translation>
+        <translation>Piesaiste centram</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3451,12 +3452,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Pielipšanas attālums</translation>
+        <translation>Piesaistes attālums</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Sadalījums</translation>
+        <translation>Piesaiste krustpunktam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="466"/>
@@ -3566,12 +3567,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Ekskluzīva snauda režīms</translation>
+        <translation>Ekskluzīvs piesaistes režīms</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>Brīvs moments</translation>
+        <translation>Brīvā piesaiste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -3586,17 +3587,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>Attāluma &amp; punkts uz vienību</translation>
+        <translation>Attālums no &amp;punkta līdz objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>Total &amp;length of selected entities</source>
-        <translation>Izvēlēto vienību kopējais &amp; garums</translation>
+        <translation>Izvēlēto objektu kopējais &amp;garums</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Entity Pro&amp;perties</source>
-        <translation>BPD 27. pants</translation>
+        <translation>Objekta &amp;īpašības</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
@@ -3616,7 +3617,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>&amp; Rakstīšanas līnijas</translation>
+        <translation>&amp;Melnraksta līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
@@ -3721,7 +3722,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
-        <translation>Eks&amp;plodēt</translation>
+        <translation>Sada&amp;līt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
@@ -3896,7 +3897,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>Pievienot spline punktu</translation>
+        <translation>&amp;Pievienot splaina punktu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
@@ -3916,7 +3917,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Caught Entity</source>
-        <translation>Nokauta vienība</translation>
+        <translation>Satvertais objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
@@ -3976,12 +3977,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>Zemāka pēc iestādes</translation>
+        <translation>Nolaist zem objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>Uzticība Dievam</translation>
+        <translation>Pacelt virs objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
@@ -4086,7 +4087,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>&amp; Dimensijas stili</translation>
+        <translation>&amp;Izmēru stili</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -4146,7 +4147,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>&amp; Arks</translation>
+        <translation>&amp;Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -4239,7 +4240,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Izvēlieties otro (starpsekciju) leņķa punktu</translation>
+        <translation>Izvēlieties otro (krustpunkta) leņķa punktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4279,13 +4280,13 @@ Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>Leņķis:%1
+        <translation>Leņķis: %1
 Taisns leņķis − leņķis: %2
 Izstiepts leņķis − leņķis: %3
 Pilns apgrieziens − leņķis: %4
-Sākuma malu punkts: (%5 ,%6)
-Sadaļas punkts:(%7,%8)
-Beigu malas punkts: (%9 ,%10)</translation>
+Sākuma malas punkts: (%5 , %6)
+Krustpunkts: (%7, %8)
+Beigu malas punkts: (%9 , %10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4319,7 +4320,7 @@ Beigu malas punkts: (%9 ,%10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>Sadaļa:</translation>
+        <translation>Krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4354,7 +4355,7 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Attālums:%1
 Kartēziskais: (%2,%3)
 Polārais: (%4 &lt; %5)
-Punkts par vienību: (%6 , %7)
+Punkts uz objekta: (%6 , %7)
 Punkts: (%8 , %9)</translation>
     </message>
     <message>
@@ -4365,7 +4366,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">Nenolauzt bērnu vienības konteinerā</translation>
+        <translation type="unfinished">Nepiesaistīt pakārtotajiem objektiem konteinerā</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4376,7 +4377,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
         <source>Relative point is on entity</source>
-        <translation type="unfinished">Relatīvais punkts attiecas uz uzņēmumu</translation>
+        <translation type="unfinished">Relatīvais punkts atrodas uz objekta</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="333"/>
@@ -4480,12 +4481,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>Izvēlieties vienību</translation>
+        <translation>Izvēlieties objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>Izvēlieties bērnu vienības</translation>
+        <translation>Izvēlieties pakārtotos objektus</translation>
     </message>
 </context>
 <context>
@@ -4532,7 +4533,7 @@ Punkts: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>Sadaļa:</translation>
+        <translation>Krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -4552,17 +4553,17 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first line/Pick Supplementary</source>
-        <translation>Izvēlieties pirmās rindas/Pick papildinājumu</translation>
+        <translation>Izvēlieties pirmo līniju/izvēlēties blakusleņķi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Pick from line</source>
-        <translation>Izvēlieties no rindas</translation>
+        <translation>Izvēlieties no līnijas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Izvēlieties otro (starpsekciju) leņķa punktu</translation>
+        <translation>Izvēlieties otro (krustpunkta) leņķa punktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4583,7 +4584,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Specify second line</source>
-        <translation>Norādīt otro rindu</translation>
+        <translation>Norādīt otro līniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
@@ -4695,7 +4696,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>Vienības ģeometrijas garums</translation>
+        <translation>Objekta ģeometrijas garums</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4804,7 +4805,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
-        <translation>Vienība</translation>
+        <translation>Objekts</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
@@ -4834,12 +4835,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select base alignment entity</source>
-        <translation>Izvēlieties bāzes pielīdzināšanas vienību</translation>
+        <translation>Izvēlieties bāzes līdzināšanas objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>Izvēlieties konteineru bērnu vienības</translation>
+        <translation>Izvēlieties konteineru pakārtotos objektus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
@@ -4945,7 +4946,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>Vienība</translation>
+        <translation>Objekts</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -4965,7 +4966,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="273"/>
         <source>Select base alignment entity</source>
-        <translation>Izvēlieties bāzes pielīdzināšanas vienību</translation>
+        <translation>Izvēlieties bāzes līdzināšanas objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
@@ -5016,7 +5017,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Sadaļa:</translation>
+        <translation type="unfinished">Krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5031,18 +5032,18 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">Izvēlēta nederīga (negrozāma) vienība.</translation>
+        <translation type="unfinished">Izvēlēts nederīgs objekts (nav apgriežams).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="272"/>
         <source>Invalid entity selected (non-atomic).</source>
-        <translation type="unfinished">Izvēlēta nederīga vienība (neatomu).</translation>
+        <translation type="unfinished">Izvēlēts nederīgs objekts (ne atomārs).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
         <source>Selected lines are parallel</source>
-        <translation type="unfinished">Izvēlētās rindas ir paralēlas</translation>
+        <translation type="unfinished">Izvēlētās līnijas ir paralēlas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
@@ -5137,7 +5138,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>Pārtraukt/Sadaliet ark</translation>
+        <translation>Pārtraukt/sadalīt loku</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5170,12 +5171,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">Objektam ir jābūt līnijai, arkai, aplim, elipsei vai interpolācijas splainam.</translation>
+        <translation type="unfinished">Objektam ir jābūt līnijai, lokam, aplim, elipsei vai interpolācijas splainam.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="unfinished">Saīsinājuma punkts var nebūt subjekta galapunkts.</translation>
+        <translation type="unfinished">Griešanas punkts nedrīkst būt objekta galapunkts.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
@@ -5221,12 +5222,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished">Otrā uzņēmuma mātesuzņēmums ir nulptr</translation>
+        <translation type="unfinished">Otrā objekta vecākobjekts ir nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="91"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished">Viena no izvēlētajām struktūrām ir nulptr</translation>
+        <translation type="unfinished">Viens no izvēlētajiem objektiem ir nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
@@ -5236,17 +5237,17 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished">Pirmā uzņēmuma mātesuzņēmums ir nulptr</translation>
+        <translation type="unfinished">Pirmā objekta vecākobjekts ir nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="117"/>
         <source>First entity is nullptr</source>
-        <translation type="unfinished">Pirmais uzņēmums ir nulptr</translation>
+        <translation type="unfinished">Pirmais objekts ir nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="129"/>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished">Otrais uzņēmums ir nulptr</translation>
+        <translation type="unfinished">Otrais objekts ir nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
@@ -5270,7 +5271,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Select entity to duplicate</source>
-        <translation>Izvēlieties vienību, ko dublēt</translation>
+        <translation>Izvēlieties objektu, ko dublēt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
@@ -5288,7 +5289,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_entity.cpp" line="223"/>
         <source>Click on entity to modify</source>
-        <translation type="unfinished">Nospiediet uz vienības, lai mainītu</translation>
+        <translation type="unfinished">Noklikšķiniet uz objekta, lai to mainītu</translation>
     </message>
 </context>
 <context>
@@ -5301,7 +5302,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Izpētīt uzreiz pēc iezīmēšanas</translation>
+        <translation type="unfinished">Sadalīt uzreiz pēc iezīmēšanas</translation>
     </message>
 </context>
 <context>
@@ -5310,7 +5311,7 @@ Punkts: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="116"/>
         <source>Line Gap</source>
-        <translation>Līniju starpība</translation>
+        <translation>Līnijas sprauga</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="92"/>
@@ -5327,12 +5328,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Select line</source>
-        <translation>Izvēlēties rindu</translation>
+        <translation>Izvēlēties līniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>Lietot alternatīvo rindas mērķa punktu</translation>
+        <translation>Lietot alternatīvo līnijas galapunktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
@@ -5355,13 +5356,13 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>Sadaļa:</translation>
+        <translation>Krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="240"/>
         <source>No line selected</source>
-        <translation>Nav izvēlēta rinda</translation>
+        <translation>Nav izvēlēta līnija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="210"/>
@@ -5376,17 +5377,17 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
         <source>Select first line</source>
-        <translation>Izvēlieties pirmo rindu</translation>
+        <translation>Izvēlieties pirmo līniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>Izvēlēties otro rindu</translation>
+        <translation>Izvēlēties otro līniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Izvēlieties daļu no pirmās rindas, kurai jāpaliek pēc apgriešanas</translation>
+        <translation>Izvēlieties daļu no pirmās līnijas, kurai jāpaliek pēc apgriešanas</translation>
     </message>
 </context>
 <context>
@@ -5409,12 +5410,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="151"/>
         <source>Line From:</source>
-        <translation type="unfinished">Rinda no:</translation>
+        <translation type="unfinished">Līnija no:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="152"/>
         <source>Line To:</source>
-        <translation type="unfinished">Rinda uz:</translation>
+        <translation type="unfinished">Līnija uz:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="251"/>
@@ -5836,7 +5837,7 @@ Punkts: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Pielipt izvēles centram</translation>
+        <translation type="unfinished">Piesaistīt atlases centram</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5912,7 +5913,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="225"/>
         <source>Round</source>
-        <translation type="unfinished">Kārta</translation>
+        <translation type="unfinished">Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
@@ -5991,7 +5992,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Pielipt izvēles centram</translation>
+        <translation type="unfinished">Piesaistīt atlases centram</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6006,7 +6007,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Brīva snap</translation>
+        <translation type="unfinished">Brīvā piesaiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6085,7 +6086,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Otrais spriedums</translation>
+        <translation type="unfinished">Apgriezt divus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
@@ -6095,12 +6096,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Sadaļa:</translation>
+        <translation type="unfinished">Krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">2. apakšiedaļa:</translation>
+        <translation type="unfinished">2. krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
@@ -6128,7 +6129,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="200"/>
         <source>No entity found.</source>
-        <translation type="unfinished">Nav atrasta neviena vienība.</translation>
+        <translation type="unfinished">Nav atrasts neviens objekts.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
@@ -6143,7 +6144,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">Izvēlieties rindiņu/arku, lai apgrieztu OR ieraksta garuma vērtību:</translation>
+        <translation type="unfinished">Izvēlieties līniju/loku, ko apgriezt, VAI ievadiet garuma vērtību:</translation>
     </message>
 </context>
 <context>
@@ -6151,12 +6152,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Pielipšanas attālums</translation>
+        <translation type="unfinished">Piesaistes attālums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">Snap punkts attālums no sākotnēji atrisināta snap punkts</translation>
+        <translation type="unfinished">Piesaistes punkta attālums no sākotnēji noteiktā piesaistes punkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6220,17 +6221,17 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Norādiet pildspalvveida pilnšļirces izvēles orgānu</translation>
+        <translation>Norādiet objektu, no kura paņemt pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Specify entity to apply pen</source>
-        <translation>Norādīt tiesību subjektam, kas piemēros pildspalvu</translation>
+        <translation>Norādiet objektu, kam piemērot pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Apply Resolved Pen</source>
-        <translation>Pielietot atgaisotu pildspalvveida pilnšļirci</translation>
+        <translation>Pielietot atrisināto pildspalvu</translation>
     </message>
 </context>
 <context>
@@ -6238,7 +6239,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Norādiet pildspalvveida pilnšļirces izvēles orgānu</translation>
+        <translation>Norādiet objektu, no kura paņemt pildspalvu</translation>
     </message>
 </context>
 <context>
@@ -6524,7 +6525,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
         <source> entities </source>
-        <translation>iestādes</translation>
+        <translation> objekti </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6544,7 +6545,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select/Deselect entities</source>
-        <translation>Izvēlēties/noraidīt vienības</translation>
+        <translation>Izvēlēties/atcelt izvēli objektiem</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
@@ -6554,7 +6555,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
         <source>No valid entities selected, select them first</source>
-        <translation>Nav izvēlētas derīgas vienības, vispirms izvēlieties tās</translation>
+        <translation>Nav izvēlēti derīgi objekti, vispirms izvēlieties tos</translation>
     </message>
 </context>
 <context>
@@ -6580,7 +6581,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="90"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Norādīt izvēlēto subjektu</translation>
+        <translation type="unfinished">Norādiet atlasāmo objektu</translation>
     </message>
 </context>
 <context>
@@ -6588,7 +6589,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>Izvēlieties references koordinātu dimensiju</translation>
+        <translation>Izvēlieties atsauces ordinātu izmēru</translation>
     </message>
 </context>
 <context>
@@ -6596,7 +6597,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="30"/>
         <source>Select entities</source>
-        <translation type="unfinished">Izvēlēties vienības</translation>
+        <translation type="unfinished">Izvēlēties objektus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="31"/>
@@ -6619,12 +6620,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Izvēlas krustojošo vienību</translation>
+        <translation type="unfinished">Izvēlieties krustojošo objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">Izvēlieties bērnu vienības</translation>
+        <translation type="unfinished">Izvēlieties pakārtotos objektus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6663,7 +6664,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Norādīt izvēlēto subjektu</translation>
+        <translation type="unfinished">Norādiet atlasāmo objektu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
@@ -6686,7 +6687,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="136"/>
         <source> entities </source>
-        <translation type="unfinished">iestādes</translation>
+        <translation type="unfinished"> objekti </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6711,12 +6712,12 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>De-select entities</source>
-        <translation type="unfinished">Atlasītās vienības</translation>
+        <translation type="unfinished">Atcelt objektu atlasi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>Select entities</source>
-        <translation type="unfinished">Izvēlēties vienības</translation>
+        <translation type="unfinished">Izvēlēties objektus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
@@ -6829,7 +6830,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Delete from endpoints TO selected points</source>
-        <translation>Dzēst no mērķa kritērijiem līdz izvēlētajiem punktiem</translation>
+        <translation>Dzēst no galapunktiem līdz izvēlētajiem punktiem</translation>
     </message>
 </context>
 <context>
@@ -6837,7 +6838,7 @@ Punkts: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>Izvēlēties koordinātu dimensiju UCS iestatīšanai</translation>
+        <translation>Izvēlēties ordinātu izmēru UCS iestatīšanai</translation>
     </message>
 </context>
 <context>
@@ -7066,7 +7067,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">Vienība</translation>
+        <translation type="unfinished">Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
@@ -7148,7 +7149,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="84"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation type="unfinished">Ja ieslēgts, relatīvo vienību pozīcijas izvēlētajā tiks mainītas. Pretējā gadījumā katrs uzņēmums tiks izvietots atsevišķi.</translation>
+        <translation type="unfinished">Ja ieslēgts, objektu relatīvās pozīcijas atlasē netiks mainītas. Pretējā gadījumā katrs objekts tiks novietots atsevišķi.</translation>
     </message>
 </context>
 <context>
@@ -7161,7 +7162,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">Ja tas tiks pārbaudīts, iestādes vajadzības gadījumā tiks samazinātas. Pretējā gadījumā tie tiks vienkārši novietoti un pagriezti.</translation>
+        <translation type="unfinished">Ja atzīmēts, objekti vajadzības gadījumā tiks mērogoti. Pretējā gadījumā tie tiks tikai novietoti un pagriezti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7204,7 +7205,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ja ieslēgts, pašreizējie atribūti tiks izmantoti spoguļorganizācijām, citādi - oriģinālajiem.</translation>
+        <translation type="unfinished">Ja ieslēgts, spoguļotajiem objektiem tiks izmantoti pašreizējie atribūti, citādi - oriģinālie. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
@@ -7234,7 +7235,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">Ja tas tiks pārbaudīts, iestādes vajadzības gadījumā tiks samazinātas. Pretējā gadījumā tie tiks vienkārši novietoti un pagriezti.</translation>
+        <translation type="unfinished">Ja atzīmēts, objekti vajadzības gadījumā tiks mērogoti. Pretējā gadījumā tie tiks tikai novietoti un pagriezti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
@@ -7247,7 +7248,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">Vienība</translation>
+        <translation type="unfinished">Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
@@ -7342,7 +7343,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="80"/>
         <source>Center entities vertically</source>
-        <translation type="unfinished">Centrētas vienības vertikāli</translation>
+        <translation type="unfinished">Centrēt objektus vertikāli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="100"/>
@@ -7367,12 +7368,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">Definē veidu, kā atlasītās vienības izlīdzināt.</translation>
+        <translation type="unfinished">Definē atlasīto objektu izlīdzināšanas veidu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
         <source>Entity</source>
-        <translation type="unfinished">Vienība</translation>
+        <translation type="unfinished">Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="166"/>
@@ -7397,7 +7398,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="240"/>
         <source>Center entities horizontally</source>
-        <translation type="unfinished">Centrējamās struktūras horizontāli</translation>
+        <translation type="unfinished">Centrēt objektus horizontāli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="260"/>
@@ -7479,7 +7480,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="143"/>
         <source>Draft Mode</source>
-        <translation>Projekts</translation>
+        <translation>Melnraksta režīms</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="149"/>
@@ -7913,7 +7914,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Pārbaudīt, lai apgrieztu abas vienības uz bevel</translation>
+        <translation type="unfinished">Atzīmējiet, lai apgrieztu abus objektus līdz nošķēlumam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7946,7 +7947,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Pārbaudīt, lai apgrieztu abas vienības uz bevel</translation>
+        <translation type="unfinished">Atzīmējiet, lai apgrieztu abus objektus līdz nošķēlumam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -7961,7 +7962,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Saliekuma garums X virzienā.</translation>
+        <translation type="unfinished">Nošķēluma garums X virzienā.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
@@ -8469,7 +8470,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="32"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pildspalvveida pilnšļirce:</translation>
+        <translation type="unfinished">Pildspalva:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
@@ -8501,7 +8502,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">Pildspalvveida pilnšļirce piespraust izveidotam aplim</translation>
+        <translation type="unfinished">Pildspalva, ko piemērot izveidotajam aplim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8539,7 +8540,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">Izvēlieties zīmējuma ofseta vērtību</translation>
+        <translation type="unfinished">Izvēlieties nobīdes vērtību no zīmējuma</translation>
     </message>
 </context>
 <context>
@@ -8744,12 +8745,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="204"/>
         <source>Origin Indicator</source>
-        <translation>Izcelsmes rādītājs</translation>
+        <translation>Sākumpunkta rādītājs</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="205"/>
         <source>Origin Indicator 2</source>
-        <translation>Izcelsmes rādītājs 2</translation>
+        <translation>Sākumpunkta rādītājs 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="206"/>
@@ -8819,7 +8820,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>Arhitektūras taka</translation>
+        <translation>Arhitektūras svītra</translation>
     </message>
 </context>
 <context>
@@ -8832,7 +8833,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="95"/>
         <source>Angular</source>
-        <translation>Maks</translation>
+        <translation>Leņķa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
@@ -8852,7 +8853,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Vadonis un iecietība</translation>
+        <translation>Norādes līnija un pielaide</translation>
     </message>
 </context>
 <context>
@@ -8880,7 +8881,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Palielināt paneli</translation>
+        <translation>Tālummaiņa un panoramēšana</translation>
     </message>
 </context>
 <context>
@@ -8893,17 +8894,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>Nevar atvērt norādīto failu rakstīšanai - pārbaudiet, vai norādītā vieta ir rakstāma. Dimensijas stili netika eksportēti.</translation>
+        <translation>Nevar atvērt norādīto failu rakstīšanai - pārbaudiet, vai norādītā vieta ir rakstāma. Izmēru stili netika eksportēti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>Eksportēt dimensijas stilus</translation>
+        <translation>Eksportēt izmēru stilus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>Dimensijas Stili tika eksportēti.</translation>
+        <translation>Izmēru stili tika eksportēti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
@@ -8913,17 +8914,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>Nevaru atvērt failu lasīšanai. Dimensijas stili netika importēti.</translation>
+        <translation>Nevaru atvērt failu lasīšanai. Izmēru stili netika importēti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>Negaidīta kļūda dimensiju stilu analizēšanas laikā. Ziņojums:</translation>
+        <translation>Negaidīta kļūda izmēru stilu analizēšanas laikā. Ziņojums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>Negaidīts faila formāts, tas nesatur LibreCAD dimensiju stilus.</translation>
+        <translation>Negaidīts faila formāts, tas nesatur LibreCAD izmēru stilus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
@@ -8939,22 +8940,22 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>Tika importēti dimensijas stili.</translation>
+        <translation>Tika importēti izmēru stili.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>Importēt dimensijas stilus</translation>
+        <translation>Importēt izmēru stilus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>Eksportēt dimensijas stilus</translation>
+        <translation>Eksportēt izmēru stilus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD dimensiju stilu fails (*.%1)</translation>
+        <translation>LibreCAD izmēru stilu fails (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -9082,7 +9083,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>Parāda un uzstāda krāsu dimensijas līnijai (DIMCLLD sistēmas mainīgais).</translation>
+        <translation>Parāda un uzstāda izmēra līnijas krāsu (DIMCLRD sistēmas mainīgais).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
@@ -9092,37 +9093,37 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Uzstāda dimensijas līnijas rindu. (DIMLTYPE sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda izmēra līnijas tipu. (DIMLTYPE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Rindas platums:</translation>
+        <translation>Līnijas platums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Uzstāda izmēru rindas rindu. (DIMLWD sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda izmēra līnijas biezumu. (DIMLWD sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
         <source>Extend beyond</source>
-        <translation>Paplašināt</translation>
+        <translation>Pagarināt aiz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Norāda attālumu, lai paplašinātu dimensijas līniju garām paplašinājuma līniju, kad jūs izmantojat slīps, arhitektūras, ērce, integrāls, un nav zīmes bultu uzgaļiem. (DIMDLE sistēmas mainīgais lielums)</translation>
+        <translation>Norāda attālumu, par kādu izmēra līnija tiek pagarināta aiz izmēra palīglīnijas, ja bultu vietā izmanto slīpas, arhitektūras, svītras, integrālās vai nekādas atzīmes. (DIMDLE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>Attālums starp sākotnējiem punktiem:</translation>
+        <translation>Attālums starp bāzes līnijām:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Apspiež pirmās dimensijas līnijas displeju (DIMSD1 sistēmas mainīgais)</translation>
+        <translation>Apspiež pirmās izmēra līnijas attēlošanu (DIMSD1 sistēmas mainīgais)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
@@ -9132,7 +9133,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Apspiež otrās dimensijas līnijas displeju (DIMSD2 sistēmas mainīgais)</translation>
+        <translation>Apspiež otrās izmēra līnijas attēlošanu (DIMSD2 sistēmas mainīgais)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
@@ -9142,7 +9143,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>Paplašināšanas līnijas</translation>
+        <translation>Izmēra palīglīnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
@@ -9157,7 +9158,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Uzstāda rindas tipu pirmajai paplašinājuma līnijai. (DIMLTEX1 sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda līnijas tipu pirmajai izmēra palīglīnijai. (DIMLTEX1 sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9172,32 +9173,32 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Rindas svars:</translation>
+        <translation>Līnijas biezums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Uzstāda paplašinājuma līnijas atsvaru. (DIMLWE sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda izmēra palīglīnijas biezumu. (DIMLWE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Paplašināt ārpus dim līnijām:</translation>
+        <translation>Pagarināt aiz izmēra līnijām:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Norāda attālumu, kas ļauj pagarināt paplašinājuma līnijas virs dimensijas līnijas. (DIMEXE sistēmas mainīgais lielums)</translation>
+        <translation>Norāda attālumu, par kādu izmēra palīglīnijas tiek pagarinātas virs izmēra līnijas. (DIMEXE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>Nobīde no izcelsmes:</translation>
+        <translation>Nobīde no sākumpunkta:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Iestata attālumu, lai izlīdzinātu paplašinājuma līnijas no punktiem zīmējumā, kas nosaka izmēru. (DIMEXO sistēmas mainīgais lielums)</translation>
+        <translation>Iestata attālumu, par kādu izmēra palīglīnijas tiek nobīdītas no rasējuma punktiem, kas nosaka izmēru. (DIMEXO sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9207,7 +9208,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Uzstāda paplašinājuma līniju kopējo garumu sākot no dimensijas līnijas uz dimensijas izcelsmi. (DIMFXL sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda izmēra palīglīniju kopējo garumu, sākot no izmēra līnijas virzienā uz izmēra sākumpunktu. (DIMFXL sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
@@ -9258,12 +9259,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>Lineārā stīpa dimensija</translation>
+        <translation>Lineārais lauztais izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>Slodzes augstuma koeficients:</translation>
+        <translation>Lauzuma augstuma koeficients:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9273,17 +9274,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>Rādiusa joga dimensija</translation>
+        <translation>Rādiusa lauztais izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>Joga leņķis:</translation>
+        <translation>Lauzuma leņķis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Izmēru līnijas šķērseniskā segmenta leņķi nosaka skriešanas rādiusa dimensijā. (DIMJOGANG sistēmas mainīgais lielums)</translation>
+        <translation>Nosaka izmēra līnijas šķērseniskā segmenta leņķi lauztā rādiusa izmērā. (DIMJOGANG sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9308,17 +9309,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Uzstāda bultiņas galviņu pirmās dimensijas līnijai. Kad jūs mainīt pirmo bultgalviņas tips, otrais bultgalviņa automātiski mainās, lai atbilstu tam. (DIMBLK1 sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda bultas uzgali pirmajai izmēra līnijai. Kad maināt pirmā bultas uzgaļa tipu, otrais bultas uzgalis automātiski mainās, lai tam atbilstu. (DIMBLK1 sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>Uzstāda bultgalviņu otrās dimensijas līnijai. (DIMBLK2 sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda bultas uzgali otrajai izmēra līnijai. (DIMBLK2 sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Dimensijas līnijai izmantot to pašu bultgalviņu</translation>
+        <translation>Izmēra līnijai izmantot to pašu bultas uzgali</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9338,7 +9339,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>Ērces izmērs:</translation>
+        <translation>Atzīmes izmērs:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
@@ -9370,22 +9371,22 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Vietas loka garuma simboli pirms dimensijas teksta. (DIMARCSYM sistēmas mainīgais lielums)</translation>
+        <translation>Novieto loka garuma simbolus pirms izmēra teksta. (DIMARCSYM sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>Paredz dimensijas tekstu</translation>
+        <translation>Pirms izmēra teksta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Vietas loka garuma simboli virs dimensijas teksta. (DIMARCSYM sistēmas mainīgais lielums)</translation>
+        <translation>Novieto loka garuma simbolus virs izmēra teksta. (DIMARCSYM sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>Virs dimensijas teksta</translation>
+        <translation>Virs izmēra teksta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
@@ -9415,7 +9416,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="699"/>
@@ -9456,7 +9457,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>Uzstāda krāsu teksta fonam dimensijās (DIMTFILLCLR sistēmas mainīgais)</translation>
+        <translation>Uzstāda teksta fona krāsu izmēros (DIMTFILLCLR sistēmas mainīgais)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9471,17 +9472,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>Iestata daļskaitļu skalu attiecībā pret dimensijas tekstu. (DIMTFAC sistēmas mainīgais lielums)</translation>
+        <translation>Iestata daļskaitļu skalu attiecībā pret izmēra tekstu. (DIMTFAC sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>Frakcijas augstuma skala:</translation>
+        <translation>Daļskaitļa augstuma skala:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>Norāda pašreizējā dimensijas teksta stila augstumu. (DIMTXT sistēmas mainīgais lielums)</translation>
+        <translation>Norāda pašreizējā izmēra teksta stila augstumu. (DIMTXT sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
@@ -9501,7 +9502,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>Rāda taisnstūra rāmi ap dimensijas tekstu. Šis variants maina DIMGAP sistēmā saglabāto vērtību mainīgo uz negatīvu vērtību.</translation>
+        <translation>Rāda taisnstūra rāmi ap izmēra tekstu. Šī opcija maina DIMGAP sistēmas mainīgajā saglabāto vērtību uz negatīvu vērtību.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9532,7 +9533,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Izlīdzina tekstu ar dimensijas līniju, kad teksts ir paplašinājuma rindiņās, bet pielīdzina to horizontāli, kad teksts ir ārpus paplašinājuma rindiņām (DIMTIH un DIMTOH sistēmas mainīgie).</translation>
+        <translation>Līdzina tekstu ar izmēra līniju, kad teksts ir starp izmēra palīglīnijām, bet līdzina to horizontāli, kad teksts ir ārpus izmēra palīglīnijām (DIMTIH un DIMTOH sistēmas mainīgie).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
@@ -9567,7 +9568,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"/>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>Kontrolē teksta skatīšanās virzienu dimensijā. (DMTXTDIRECION sistēmas mainīgais lielums)</translation>
+        <translation>Kontrolē izmēra teksta skatīšanās virzienu. (DIMTXTDIRECTION sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
@@ -9603,12 +9604,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Pie pirmās rindas</translation>
+        <translation>Pie 1. palīglīnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Ext 2. rinda</translation>
+        <translation>Pie 2. palīglīnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
@@ -9618,7 +9619,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>Virs 2. rindas</translation>
+        <translation>Virs 2. palīglīnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -9658,17 +9659,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>Teksta vertikālā pozīcija virs vai zem dimensijas līnijas, ja vertikālais novietojums (DIMTAD) nav &quot;Ieslēgts&quot; (DIMTVP mainīgais).</translation>
+        <translation>Teksta vertikālā pozīcija virs vai zem izmēra līnijas, ja vertikālais novietojums (DIMTAD) nav &quot;Centrēts&quot; (DIMTVP mainīgais).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Bojāta dim rindas teksta atstarpe:</translation>
+        <translation>Pārtrauktas izmēra līnijas teksta atstarpe:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Uzstāda pašreizējo teksta atstarpi, kas ir attālums ap dimensijas tekstu, kad dimensijas līnija ir bojāta, lai pielāgotos dimensijas tekstam (DIMGAP sistēmas mainīgais).</translation>
+        <translation>Uzstāda pašreizējo teksta atstarpi, kas ir attālums ap izmēra tekstu, kad izmēra līnija ir pārtraukta, lai ietilpinātu izmēra tekstu (DIMGAP sistēmas mainīgais).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9683,7 +9684,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>Ignorē jebkurus horizontālos pamatojuma iestatījumus un novieto tekstu pozīcijā, kuru jūs norādījāt pie dimensijas līnijas Atrašanās vietas. (DIMUPT sistēmas mainīgais lielums)</translation>
+        <translation>Ignorē jebkurus horizontālās līdzināšanas iestatījumus un novieto tekstu pozīcijā, kuru jūs norādījāt pie izmēra līnijas atrašanās vietas uzvednes. (DIMUPT sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9729,7 +9730,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>Ja ieslēgts, pārvieto dimensijas rindu ikreiz, kad dimensijas teksts tiek pārvietots. (DIMTMOVE sistēmas mainīgais lielums)</translation>
+        <translation>Ja ieslēgts, pārvieto izmēra līniju ikreiz, kad izmēra teksts tiek pārvietots. (DIMTMOVE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -9739,12 +9740,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Ja ieslēgts, izmēru rindas netiek pārvietotas. Ja teksts tiek pārvietots prom no dimensijas līnijas, tiek izveidota vadlīnija, kas savieno tekstu ar dimensijas līniju. Līnijas līnija tiek izlaista, ja teksts ir pārāk tuvu dimensijas līnijai. (DIMTMOVE sistēmas mainīgais lielums)</translation>
+        <translation>Ja ieslēgts, izmēra līnijas netiek pārvietotas, kad tiek pārvietots teksts. Ja teksts tiek pārvietots prom no izmēra līnijas, tiek izveidota norādes līnija, kas savieno tekstu ar izmēra līniju. Norādes līnija tiek izlaista, ja teksts ir pārāk tuvu izmēra līnijai. (DIMTMOVE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Virs dimensijas, ar līderi</translation>
+        <translation>Virs izmēra līnijas, ar norādes līniju</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9754,12 +9755,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Ja ieslēgts, izmēru rindas netiek pārvietotas. Teksts, kas tiek pārvietots prom no dimensijas līnijas, nav savienots ar dimensijas līniju ar līderi. (DIMTMOVE sistēmas mainīgais lielums)</translation>
+        <translation>Ja ieslēgts, izmēra līnijas netiek pārvietotas, kad tiek pārvietots teksts. Teksts, kas tiek pārvietots prom no izmēra līnijas, netiek savienots ar izmēra līniju ar norādes līniju. (DIMTMOVE sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Virs dimensijas līnijas, bez līdera</translation>
+        <translation>Virs izmēra līnijas, bez norādes līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9824,7 +9825,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Vienmēr pievienot tekstu starp ext rindām</translation>
+        <translation>Vienmēr ietilpināt tekstu starp palīglīnijām</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9918,7 +9919,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>Iestata skalas koeficientu lineārās dimensijas mērījumiem. Ieteicams nemainīt šo vērtību no noklusējuma vērtības 1.00. (DIMLFAC sistēmas mainīgais lielums)</translation>
+        <translation>Iestata mēroga koeficientu lineāro izmēru mērījumiem. Ieteicams nemainīt šo vērtību no noklusējuma vērtības 1.00. (DIMLFAC sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
@@ -9933,12 +9934,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
         <source>Fraction format:</source>
-        <translation>Frakcijas formāts:</translation>
+        <translation>Daļskaitļa formāts:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
         <source>Round off:</source>
-        <translation>Izslēgšana:</translation>
+        <translation>Noapaļot līdz:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1487"/>
@@ -9948,12 +9949,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Iekļauts sufikss, ko norādiet dimensijas tekstā. (DIMPOST sistēmas mainīgais lielums)</translation>
+        <translation>Iekļauj norādīto sufiksu izmēra tekstā. (DIMPOST sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>Norāda pašreizējo vienību formātu visiem dimensiju tipiem, izņemot Angular. (DIMLUNIT sistēmas mainīgais lielums)</translation>
+        <translation>Norāda pašreizējo vienību formātu visiem izmēru tipiem, izņemot leņķa izmērus. (DIMLUNIT sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9979,17 +9980,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>Uzstāda tuvāko noapaļošanas vērtību izmēru mērījumiem visiem dimensiju tipiem, izņemot Angular. (DIMRND sistēmas mainīgais lielums)</translation>
+        <translation>Uzstāda tuvāko noapaļošanas vērtību izmēru mērījumiem visiem izmēru tipiem, izņemot leņķa izmērus. (DIMRND sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>Parāda un uzstāda decimālzīmju skaitu dimensijas tekstā. (DIMDEC sistēmas mainīgais lielums)</translation>
+        <translation>Parāda un uzstāda decimālzīmju skaitu izmēra tekstā. (DIMDEC sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Iekļauts prefikss, ko norādiet dimensijas tekstā. (DIMPOST sistēmas mainīgais lielums)</translation>
+        <translation>Iekļauj norādīto prefiksu izmēra tekstā. (DIMPOST sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -10021,7 +10022,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Apspiests trajektorijas nulles visās decimālajās dimensijās. (DIMZIN sistēmas mainīgais lielums)</translation>
+        <translation>Apspiež beigu nulles visos decimālajos izmēros. (DIMZIN sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
@@ -10078,7 +10079,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>Pievieno dimensijas tekstam pārmaiņus mērvienības. Uzstāda DIMALT sistēmu mainīgo uz 1.</translation>
+        <translation>Pievieno izmēra tekstam alternatīvās mērvienības. Uzstāda DIMALT sistēmas mainīgo uz 1.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10138,7 +10139,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Iekļauj prefiksu alternatīvās dimensijas tekstā. Jūs varat ievadīt tekstu vai izmantot kontroles kodus, lai attēlotu īpašus simbolus. Piemēram, ievadot kontroles kodu %c rāda diametra simbolu. (DIMAPOST sistēmas mainīgais lielums)</translation>
+        <translation>Iekļauj prefiksu alternatīvajā izmēra tekstā. Jūs varat ievadīt tekstu vai izmantot kontroles kodus, lai attēlotu īpašus simbolus. Piemēram, ievadot kontroles kodu %%c, tiek parādīts diametra simbols. (DIMAPOST sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -10153,7 +10154,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Apspiests trajektorijas nulles visās decimālajās dimensijās. Piemēram, 12,5000 kļūst par 12,5, bet 30.0000 kļūst par 30 (DIMALTZ sistēmas mainīgais).</translation>
+        <translation>Apspiež beigu nulles visos decimālajos izmēros. Piemēram, 12,5000 kļūst par 12,5, bet 30,0000 kļūst par 30 (DIMALTZ sistēmas mainīgais).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
@@ -10173,7 +10174,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>Iekļauj sufiksu pretējās dimensijas tekstā. Jūs varat ievadīt tekstu vai izmantot kontroles kodus, lai attēlotu īpašus simbolus. Piemēram, ievadot tekstu cm, iegūst izmēru tekstu, kas līdzīgs attēlā redzamajam. Ievadot sufiksu, tas aizstāj visus noklusētos sufiksus. (DIMAPOST sistēmas mainīgais lielums)</translation>
+        <translation>Iekļauj sufiksu alternatīvajā izmēra tekstā. Jūs varat ievadīt tekstu vai izmantot kontroles kodus, lai attēlotu īpašus simbolus. Piemēram, ievadot tekstu cm, iegūst izmēra tekstu, kas līdzīgs attēlā redzamajam. Ievadot sufiksu, tas aizstāj visus noklusētos sufiksus. (DIMAPOST sistēmas mainīgais lielums)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10283,7 +10284,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>Iestata pielaides teksta pašreizējo augstumu. Pielaides augstuma attiecību pret galvenās dimensijas teksta augstumu aprēķina un uzglabā DIMTFAC sistēmas mainīgajā.</translation>
+        <translation>Iestata pielaides teksta pašreizējo augstumu. Pielaides augstuma attiecību pret galvenā izmēra teksta augstumu aprēķina un uzglabā DIMTFAC sistēmas mainīgajā.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -10393,7 +10394,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="260"/>
         <source>Apply style to dimension</source>
-        <translation>Pielietot stilu dimensijai</translation>
+        <translation>Pielietot stilu izmēram</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
@@ -10423,7 +10424,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>Iestatīt stilu kā aktīvu. Aktīvs stils tiek piemērots jaunizveidotajām dimensijām.</translation>
+        <translation>Iestatīt stilu kā aktīvu. Aktīvais stils tiek piemērots jaunizveidotajiem izmēriem.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10455,7 +10456,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>Aktīvais stils, kas tiek pielietots, kad tiek radīta jauna dimensija.</translation>
+        <translation>Aktīvais stils, kas tiek pielietots, kad tiek izveidots jauns izmērs.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10495,7 +10496,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>Šīs dimensijas entītes stila nosaukums</translation>
+        <translation>Šī izmēra objekta stila nosaukums</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10541,12 +10542,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>Ordinātu dimensija</translation>
+        <translation>Ordinātu izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
         <source>Linear Dimension</source>
-        <translation>Lineārā dimensija</translation>
+        <translation>Lineārais izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
@@ -10576,7 +10577,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10597,17 +10598,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>Jauna dimensijas stila nospiedums -</translation>
+        <translation>Jauns izmēru stila aizstājums - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>Rediģēt dimensijas stila apstiprinājumu -</translation>
+        <translation>Rediģēt izmēru stila aizstājumu - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
         <source>View Dimension Style - </source>
-        <translation>Skata dimensijas stils -</translation>
+        <translation>Skatīt izmēru stilu - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
@@ -10702,7 +10703,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -10712,12 +10713,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>Rindas īpašības</translation>
+        <translation>Līnijas īpašības</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>Arka īpašības</translation>
+        <translation>Loka īpašības</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
@@ -10999,7 +11000,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>Vienības konteksts</translation>
+        <translation>Objekta konteksts</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
@@ -11009,7 +11010,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>Nosaka izvēlnes kontekstu un vai klikšķis uz konkrētās vienības iedarbinās izvēlnes atsauksmi.</translation>
+        <translation>Nosaka izvēlnes kontekstu un to, vai klikšķis uz konkrēta objekta izsauks izvēlni. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
@@ -11104,22 +11105,22 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>Vai nu nav, vai jebkura vienība</translation>
+        <translation>Vai nu nav objekta, vai jebkurš objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>Nezināma vienība</translation>
+        <translation>Nav objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
         <source>Any Entity</source>
-        <translation>Jebkura vienība</translation>
+        <translation>Jebkurš objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
@@ -11129,7 +11130,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
@@ -11189,7 +11190,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Dimensija</translation>
+        <translation>Diametra izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
@@ -11486,7 +11487,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Vadonis un iecietība</translation>
+        <translation>Norādes līnija un pielaides</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11496,7 +11497,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>Esošais dimensijas stils, uz kuru balstās jaunais stils</translation>
+        <translation>Esošais izmēru stils, uz kuru balstās jaunais stils</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11506,7 +11507,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>Jaunā dimensijas stila nosaukums</translation>
+        <translation>Jaunā izmēru stila nosaukums</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11516,7 +11517,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Piedāvātais dimensijas stila nosaukums (%1) nav unikāls! Lūdzu, ievadiet citu.</translation>
+        <translation>Norādītais izmēru stila nosaukums (%1) nav unikāls! Lūdzu, ievadiet citu.</translation>
     </message>
 </context>
 <context>
@@ -11825,7 +11826,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Aktīvā pildspalvveida pilnšļirce</translation>
+        <translation type="unfinished">Aktīvā pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
@@ -12122,7 +12123,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Dimensijas slānis</translation>
+        <translation>Izmēra slānis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12173,7 +12174,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
 </context>
 <context>
@@ -12226,7 +12227,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>Ja iezīmēts, tabulā tiks parādīta kolonna ar informāciju par UCS izcelsmi un leņķi.</translation>
+        <translation>Ja iezīmēts, tabulā tiks parādīta kolonna ar informāciju par UCS sākumpunktu un leņķi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
@@ -12266,12 +12267,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Pana, UCS izcelsme centrā</translation>
+        <translation>Panoramēt, UCS sākumpunkts centrā</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, UCS izcelsme kreisajā robotā</translation>
+        <translation>Panoramēt, UCS sākumpunkts kreisajā apakšējā stūrī</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12409,7 +12410,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="69"/>
         <source>Origin:</source>
-        <translation>Izcelsme</translation>
+        <translation>Sākumpunkts:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
@@ -12866,7 +12867,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="unfinished">Ja ieslēgts, tiks izveidota kaste visai atlasei. Pretējā gadījumā tas tiks izveidots atsevišķām vienībām.</translation>
+        <translation type="unfinished">Ja ieslēgts, tiks izveidots aptverošais taisnstūris visai atlasei. Pretējā gadījumā tas tiks izveidots atsevišķiem objektiem. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="79"/>
@@ -12899,7 +12900,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Horizontāla dublējuma nobīde no sākotnējā subjekta</translation>
+        <translation type="unfinished">Dublikāta horizontālā nobīde no sākotnējā objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12909,7 +12910,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Vertikāla sākotnējā uzņēmuma dublikāta nobīde</translation>
+        <translation type="unfinished">Dublikāta vertikālā nobīde no sākotnējā objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -12934,7 +12935,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Injektors piesakās uz izveidoto dublikātu</translation>
+        <translation type="unfinished">Pildspalva, ko piemērot izveidotajam dublikātam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12991,7 +12992,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Injektors piesakās uz izveidoto dublikātu</translation>
+        <translation type="unfinished">Pildspalva, ko piemērot izveidotajam dublikātam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13014,17 +13015,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Horizontāla dublējuma nobīde no sākotnējā subjekta</translation>
+        <translation type="unfinished">Dublikāta horizontālā nobīde no sākotnējā objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Vertikāla sākotnējā uzņēmuma dublikāta nobīde</translation>
+        <translation type="unfinished">Dublikāta vertikālā nobīde no sākotnējā objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
         <source>Pick offset by X from drawing</source>
-        <translation type="unfinished">Izvēlieties X ofsetu no zīmējuma</translation>
+        <translation type="unfinished">Izvēlieties X nobīdi no zīmējuma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
@@ -13034,7 +13035,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pildspalvveida pilnšļirce:</translation>
+        <translation type="unfinished">Pildspalva:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
@@ -13054,7 +13055,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="181"/>
         <source>Pick offset by Y from drawing</source>
-        <translation type="unfinished">Izvēlieties Y ofseta no zīmējuma</translation>
+        <translation type="unfinished">Izvēlieties Y nobīdi no zīmējuma</translation>
     </message>
 </context>
 <context>
@@ -13160,7 +13161,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="129"/>
@@ -13374,7 +13375,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="79"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="80"/>
@@ -13384,7 +13385,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
         <source>Arc</source>
-        <translation type="unfinished">Arks</translation>
+        <translation type="unfinished">Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
@@ -13459,7 +13460,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Dimensija</translation>
+        <translation type="unfinished">Diametra izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
@@ -13723,7 +13724,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Line Type</source>
-        <translation type="unfinished">Rindas tips</translation>
+        <translation type="unfinished">Līnijas tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
@@ -13733,7 +13734,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Rindas platums</translation>
+        <translation type="unfinished">Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14209,7 +14210,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="98"/>
         <source>Insert Point(x):</source>
-        <translation>Pievienot punktu (x):</translation>
+        <translation>Ievietošanas punkts (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="121"/>
@@ -14265,7 +14266,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="91"/>
         <source>Insert Point (y):</source>
-        <translation>Pievienot y) apakšpunktu:</translation>
+        <translation>Ievietošanas punkts (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="253"/>
@@ -14352,7 +14353,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap uz vienību</translation>
+        <translation type="unfinished">Piesaiste objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14375,7 +14376,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap uz vienību</translation>
+        <translation type="unfinished">Piesaiste objektam</translation>
     </message>
 </context>
 <context>
@@ -15323,7 +15324,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="44"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="45"/>
@@ -15339,7 +15340,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="47"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="60"/>
@@ -15359,7 +15360,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="68"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="77"/>
@@ -15384,7 +15385,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snap punkts krustpunkta atrašanās vieta starp izveidoto līniju un avota entītiju (sākotnējā līnijā)</translation>
+        <translation type="unfinished">Piesaistes punkts krustpunkta novietojumam starp izveidoto līniju un avota objektu (sākotnējās līnijas robežās)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15422,7 +15423,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="135"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished">Punkts izveidotajā rindā, kas tiks ievietots ievietošanas punktā</translation>
+        <translation type="unfinished">Punkts izveidotajā līnijā, kas tiks ievietots ievietošanas punktā</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="139"/>
@@ -15442,7 +15443,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="169"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="176"/>
@@ -15477,7 +15478,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="65"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="67"/>
@@ -15492,7 +15493,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="70"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
 </context>
 <context>
@@ -15505,7 +15506,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Ja ieslēgts, rindas garumu nosaka pēc peles novietojuma, nevis iestatījuma</translation>
+        <translation type="unfinished">Ja ieslēgts, līnijas garumu nosaka pēc peles novietojuma, nevis iestatījuma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
@@ -15515,7 +15516,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
@@ -15535,12 +15536,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Ja atzīmēts, leņķis ir attiecībā pret izvēlētā subjekta leņķi</translation>
+        <translation type="unfinished">Ja atzīmēts, leņķis ir attiecībā pret izvēlētā objekta leņķi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
@@ -15568,12 +15569,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snap punkts krustpunkta atrašanās vieta starp izveidoto līniju un avota entītiju (sākotnējā līnijā)</translation>
+        <translation type="unfinished">Piesaistes punkts krustpunkta novietojumam starp izveidoto līniju un avota objektu (sākotnējās līnijas robežās)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Pielipšanas attālums</translation>
+        <translation type="unfinished">Piesaistes attālums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15583,7 +15584,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Norāda, kura daļa no izveidotās līnijas tiks atslēgta uz krustošanās punktu</translation>
+        <translation type="unfinished">Norāda, kura izveidotās līnijas daļa tiks piesaistīta krustpunktam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15593,7 +15594,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Nobīde ērču savienojuma punktā no krustošanās punkta</translation>
+        <translation type="unfinished">Atzīmes piesaistes punkta nobīde no krustpunkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15616,18 +15617,18 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Šķērspunkta attālums no līnijas savienojuma punkta</translation>
+        <translation type="unfinished">Krustpunkta attālums no norādītā līnijas piesaistes punkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snap punkts krustpunkta atrašanās vieta starp izveidoto līniju un avota entītiju (sākotnējā līnijā)</translation>
+        <translation type="unfinished">Piesaistes punkts krustpunkta novietojumam starp izveidoto līniju un avota objektu (sākotnējās līnijas robežās)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
         <source>Free</source>
         <comment>linesnap</comment>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="66"/>
@@ -15675,7 +15676,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Ja atzīmēts, leņķis ir attiecībā pret izvēlētā subjekta leņķi</translation>
+        <translation type="unfinished">Ja atzīmēts, leņķis ir attiecībā pret izvēlētā objekta leņķi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15685,37 +15686,37 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Rindas moments:</translation>
+        <translation type="unfinished">Līnijas piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Ja ieslēgts, rindas garumu nosaka pēc peles novietojuma, nevis iestatījuma</translation>
+        <translation type="unfinished">Ja ieslēgts, līnijas garumu nosaka pēc peles novietojuma, nevis iestatījuma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Pielipšanas attālums:</translation>
+        <translation type="unfinished">Piesaistes attālums:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Izvēlieties atstarpes attālumu no zīmēšanas</translation>
+        <translation type="unfinished">Paņemt piesaistes attālumu no rasējuma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Atzīmju moments:</translation>
+        <translation type="unfinished">Atzīmes piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15725,12 +15726,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Nobīde ērču savienojuma punktā no krustošanās punkta</translation>
+        <translation type="unfinished">Atzīmes piesaistes punkta nobīde no krustpunkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Norāda, kura daļa no izveidotās līnijas tiks atslēgta uz krustošanās punktu</translation>
+        <translation type="unfinished">Norāda, kura izveidotās līnijas daļa tiks piesaistīta krustpunktam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15814,7 +15815,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotā rinda būs ortogonāla izvēlētajai rindai</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotā līnija būs ortogonāla izvēlētajai līnijai</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15829,7 +15830,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Uz sadaļu</translation>
+        <translation type="unfinished">Līdz krustpunktam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -15844,7 +15845,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="56"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">Definē, vai izveidotā rinda būtu jāveido līdz krustpunktam, vai arī tai vajadzētu būt fiksētam garumam</translation>
+        <translation type="unfinished">Definē, vai izveidotā līnija būtu jāveido līdz krustpunktam, vai arī tai vajadzētu būt fiksētam garumam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
@@ -15889,7 +15890,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snap punkts izveidotai rindai</translation>
+        <translation type="unfinished">Piesaistes punkts izveidotajai līnijai</translation>
     </message>
 </context>
 <context>
@@ -15912,7 +15913,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Ja ieslēgts, izveidotā rinda būs ortogonāla izvēlētajai rindai</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotā līnija būs ortogonāla izvēlētajai līnijai</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15922,7 +15923,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snap punkts izveidotai rindai</translation>
+        <translation type="unfinished">Piesaistes punkts izveidotajai līnijai</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15977,12 +15978,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">Definē, vai izveidotā rinda būtu jāveido līdz krustpunktam, vai arī tai vajadzētu būt fiksētam garumam</translation>
+        <translation type="unfinished">Definē, vai izveidotā līnija būtu jāveido līdz krustpunktam, vai arī tai vajadzētu būt fiksētam garumam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Uz sadaļu</translation>
+        <translation type="unfinished">Līdz krustpunktam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -16025,7 +16026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="50"/>
@@ -16053,7 +16054,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Snap punkts atstarpēm uz līnijas</translation>
+        <translation type="unfinished">Spraugas piesaistes punkts uz līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16063,7 +16064,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Attālums no pielipšanas vietas</translation>
+        <translation type="unfinished">Attālums no piesaistes punkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16073,7 +16074,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Snap punkts sprauga uz līniju snap punkts</translation>
+        <translation type="unfinished">Spraugas piesaistes punkts attiecībā pret līnijas piesaistes punktu</translation>
     </message>
 </context>
 <context>
@@ -16086,7 +16087,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Snap punkts sprauga uz līniju snap punkts</translation>
+        <translation type="unfinished">Spraugas piesaistes punkts attiecībā pret līnijas piesaistes punktu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16114,18 +16115,18 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Atstarpes rādītājs:</translation>
+        <translation type="unfinished">Spraugas piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Snap punkts atstarpēm uz līnijas</translation>
+        <translation type="unfinished">Spraugas piesaistes punkts uz līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
         <source>Free</source>
         <comment>snap</comment>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="77"/>
@@ -16148,7 +16149,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Rindas moments:</translation>
+        <translation type="unfinished">Līnijas piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16168,22 +16169,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Attālums no pielipšanas vietas</translation>
+        <translation type="unfinished">Attālums no piesaistes punkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Pielipšanas attālums:</translation>
+        <translation type="unfinished">Piesaistes attālums:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Izvēlieties atstarpes attālumu no zīmēšanas</translation>
+        <translation type="unfinished">Paņemt piesaistes attālumu no rasējuma</translation>
     </message>
 </context>
 <context>
@@ -16191,7 +16192,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Paplašināt/trim</translation>
+        <translation type="unfinished">Pagarināt/apgriezt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16228,7 +16229,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Aktīvā pildspalvveida pilnšļirce</translation>
+        <translation type="unfinished">Aktīvā pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="61"/>
@@ -16243,7 +16244,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Definē, kā pildspalvveida injektoru piemērot izveidotajām vienībām</translation>
+        <translation type="unfinished">Definē, kā pildspalvu piemērot izveidotajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16253,7 +16254,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Ja ieslēgts, atsevišķu rindu vietā tiks izveidota polilīnija</translation>
+        <translation type="unfinished">Ja ieslēgts, atsevišķu līniju vietā tiks izveidota polilīnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16263,7 +16264,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās rindas tiks izņemtas</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālās līnijas tiks izņemtas</translation>
     </message>
 </context>
 <context>
@@ -16276,7 +16277,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Ja ieslēgts, atsevišķu rindu vietā tiks izveidota polilīnija</translation>
+        <translation type="unfinished">Ja ieslēgts, atsevišķu līniju vietā tiks izveidota polilīnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
@@ -16292,7 +16293,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Paplašināt/trim</translation>
+        <translation type="unfinished">Pagarināt/apgriezt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16324,12 +16325,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Definē, kā pildspalvveida injektoru piemērot izveidotajām vienībām</translation>
+        <translation type="unfinished">Definē, kā pildspalvu piemērot izveidotajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Aktīvā pildspalvveida pilnšļirce</translation>
+        <translation type="unfinished">Aktīvā pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
@@ -16354,7 +16355,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās rindas tiks izņemtas</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālās līnijas tiks izņemtas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="210"/>
@@ -16387,7 +16388,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Atsaukt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atsaukt pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
@@ -16397,7 +16398,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Pārdarīt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atkārtot pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="46"/>
@@ -16410,7 +16411,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Rindas opcijas</translation>
+        <translation type="unfinished">Līnijas opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
@@ -16425,7 +16426,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Atsaukt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atsaukt pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="75"/>
@@ -16435,7 +16436,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Pārdarīt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atkārtot pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="85"/>
@@ -16453,7 +16454,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="31"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Attālums līdz sākotnējai vienībai</translation>
+        <translation type="unfinished">Attālums līdz sākotnējam objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
@@ -16481,7 +16482,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Attālums līdz sākotnējai vienībai</translation>
+        <translation type="unfinished">Attālums līdz sākotnējam objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
@@ -16537,7 +16538,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="32"/>
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished">Rindas paralēli ar opcijām</translation>
+        <translation type="unfinished">Paralēlās līnijas caur punktu opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="50"/>
@@ -16620,7 +16621,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="118"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Ietilpināt rindā</translation>
+        <translation type="unfinished">Ietilpināt līnijā</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="143"/>
@@ -16756,7 +16757,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="47"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="48"/>
@@ -16776,7 +16777,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="51"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="55"/>
@@ -16880,7 +16881,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="143"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="148"/>
@@ -16900,7 +16901,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="163"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
@@ -16933,7 +16934,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_filler.cpp" line="42"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
 </context>
 <context>
@@ -16966,7 +16967,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="115"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="122"/>
@@ -17040,7 +17041,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Veido polilīniju no rindu segmentiem</translation>
+        <translation type="unfinished">Veido polilīniju no līniju segmentiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17056,7 +17057,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Atsaukt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atsaukt pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
@@ -17066,7 +17067,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Pārdarīt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atkārtot pēdējās līnijas zīmēšanu</translation>
     </message>
 </context>
 <context>
@@ -17074,7 +17075,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Rindas opcijas</translation>
+        <translation type="unfinished">Līnijas opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
@@ -17119,7 +17120,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="237"/>
         <source>Line by specified angle</source>
-        <translation type="unfinished">Rinda pēc noteiktā leņķa</translation>
+        <translation type="unfinished">Līnija pēc noteiktā leņķa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="240"/>
@@ -17129,7 +17130,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="247"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Pārdarīt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atkārtot pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="250"/>
@@ -17139,7 +17140,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="257"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">Atsaukt pēdējo rindu zīmējumu</translation>
+        <translation type="unfinished">Atsaukt pēdējās līnijas zīmēšanu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="260"/>
@@ -17170,7 +17171,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Veido polilīniju no rindu segmentiem</translation>
+        <translation type="unfinished">Veido polilīniju no līniju segmentiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17342,7 +17343,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="29"/>
         <source>Arc</source>
-        <translation type="unfinished">Arks</translation>
+        <translation type="unfinished">Loks</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="34"/>
@@ -17541,7 +17542,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Rindas platums</translation>
+        <translation type="unfinished">Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17561,7 +17562,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
         <source>Line Type</source>
-        <translation type="unfinished">Rindas tips</translation>
+        <translation type="unfinished">Līnijas tips</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
@@ -17867,7 +17868,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="212"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="213"/>
@@ -18223,7 +18224,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Virs dimensijas teksta</translation>
+        <translation type="unfinished">Virs izmēra teksta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18369,7 +18370,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Paredz dimensijas tekstu</translation>
+        <translation type="unfinished">Pirms izmēra teksta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
@@ -19029,7 +19030,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Dimensija</translation>
+        <translation type="unfinished">Diametra izmērs</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19955,7 +19956,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="29"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="33"/>
@@ -20025,7 +20026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="57"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="61"/>
@@ -20775,7 +20776,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="78"/>
         <source>Baseline</source>
-        <translation type="unfinished">Sākotnējais</translation>
+        <translation type="unfinished">Bāzes līnija</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
@@ -20850,7 +20851,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="139"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
@@ -20870,7 +20871,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
         <source>Arc</source>
-        <translation type="unfinished">Arks</translation>
+        <translation type="unfinished">Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
@@ -20880,7 +20881,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polilīnija/slīde</translation>
+        <translation type="unfinished">Polilīnija/splains</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -20910,7 +20911,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation type="unfinished">Zīmēt kārtību</translation>
+        <translation type="unfinished">Zīmēšanas kārtība</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -20997,7 +20998,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
         <source>Modify Line</source>
-        <translation type="unfinished">Rediģēt rindu</translation>
+        <translation type="unfinished">Rediģēt līniju</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="603"/>
@@ -21006,7 +21007,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="782"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="886"/>
         <source>Draw Line</source>
-        <translation type="unfinished">Zīmēt rindu</translation>
+        <translation type="unfinished">Zīmēt līniju</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="620"/>
@@ -21043,7 +21044,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
         <source>Modify Spline</source>
-        <translation type="unfinished">Mainīt izteiksmi</translation>
+        <translation type="unfinished">Mainīt splainu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="831"/>
@@ -21182,7 +21183,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">&amp; Arks</translation>
+        <translation type="unfinished">&amp;Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
@@ -21509,7 +21510,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>Centrējamās struktūras horizontāli</translation>
+        <translation>Centrēt objektus horizontāli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="113"/>
@@ -21529,12 +21530,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>Definē veidu, kā atlasītās vienības izlīdzināt.</translation>
+        <translation>Definē atlasīto objektu izlīdzināšanas veidu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
         <source>Entity</source>
-        <translation>Vienība</translation>
+        <translation>Objekts</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
@@ -21549,7 +21550,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="172"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation>Ja ieslēgts, relatīvo vienību pozīcijas izvēlētajā tiks mainītas. Pretējā gadījumā katrs uzņēmums tiks izvietots atsevišķi.</translation>
+        <translation>Ja ieslēgts, objektu relatīvās pozīcijas atlasē netiks mainītas. Pretējā gadījumā katrs objekts tiks novietots atsevišķi.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="175"/>
@@ -21569,7 +21570,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="230"/>
         <source>Center entities vertically</source>
-        <translation>Centrētas vienības vertikāli</translation>
+        <translation>Centrēt objektus vertikāli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="250"/>
@@ -21597,7 +21598,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
         <source>Mirror to selected line</source>
-        <translation type="unfinished">Spogulis izvēlētajai rindai</translation>
+        <translation type="unfinished">Spoguļot pret izvēlēto līniju</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
@@ -21612,7 +21613,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ja ieslēgts, pašreizējie atribūti tiks izmantoti spoguļorganizācijām, citādi - oriģinālajiem.</translation>
+        <translation type="unfinished">Ja ieslēgts, spoguļotajiem objektiem tiks izmantoti pašreizējie atribūti, citādi - oriģinālie. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
@@ -21708,7 +21709,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="unfinished">Ja ieslēgts, pašreizējie atribūti tiks pielietoti izveidotajām vienībām, tiks izmantoti arī oriģinālie.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotajiem objektiem tiks pielietoti pašreizējie atribūti, pretējā gadījumā tiks izmantoti oriģinālie. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
@@ -21718,7 +21719,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="81"/>
@@ -21844,7 +21845,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="83"/>
@@ -21874,7 +21875,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
@@ -22161,12 +22162,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin X: </source>
-        <translation>UCS izcelsme X:</translation>
+        <translation>UCS sākumpunkts X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin Y: </source>
-        <translation>UCS izcelsme Y:</translation>
+        <translation>UCS sākumpunkts Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="401"/>
@@ -22209,7 +22210,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Attālums nobīdei no sākotnējās vienības</translation>
+        <translation type="unfinished">Attālums nobīdei no sākotnējā objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22317,7 +22318,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="139"/>
@@ -22327,7 +22328,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Attālums nobīdei no sākotnējās vienības</translation>
+        <translation type="unfinished">Attālums nobīdei no sākotnējā objekta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22371,7 +22372,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="59"/>
         <source>Points on Spline</source>
-        <translation>Punkti par švīku</translation>
+        <translation>Punkti uz splaina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
@@ -22389,7 +22390,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="31"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Rotācijas leņķis ielīmētām vienībām</translation>
+        <translation type="unfinished">Rotācijas leņķis ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
@@ -22399,7 +22400,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Mērogošanas koeficients ielīmētām vienībām</translation>
+        <translation type="unfinished">Mērogošanas koeficients ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22422,7 +22423,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="73"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Rotācijas leņķis ielīmētām vienībām</translation>
+        <translation type="unfinished">Rotācijas leņķis ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
@@ -22447,7 +22448,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Mērogošanas koeficients ielīmētām vienībām</translation>
+        <translation type="unfinished">Mērogošanas koeficients ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
@@ -22465,7 +22466,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Rotācijas leņķis ielīmētām vienībām</translation>
+        <translation type="unfinished">Rotācijas leņķis ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
@@ -22475,7 +22476,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Mērogošanas koeficients ielīmētām vienībām</translation>
+        <translation type="unfinished">Mērogošanas koeficients ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22558,7 +22559,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Rotācijas leņķis ielīmētām vienībām</translation>
+        <translation type="unfinished">Rotācijas leņķis ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
@@ -22603,7 +22604,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Mērogošanas koeficients ielīmētām vienībām</translation>
+        <translation type="unfinished">Mērogošanas koeficients ielīmētajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
@@ -22799,7 +22800,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="300"/>
         <source>No Pen</source>
-        <translation>Nav pildspalvveida pilnšļirces</translation>
+        <translation>Nav pildspalvas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="301"/>
@@ -22839,12 +22840,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="308"/>
         <source>Dash (small)</source>
-        <translation>Lasis (mazs)</translation>
+        <translation>Svītra (maza)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="309"/>
         <source>Dash (large)</source>
-        <translation>Masa (liela)</translation>
+        <translation>Svītra (liela)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
@@ -23057,12 +23058,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="229"/>
         <source>Line Type:</source>
-        <translation>Rindas tips:</translation>
+        <translation>Līnijas tips:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Rindas platums:</translation>
+        <translation>Līnijas platums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23086,7 +23087,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="193"/>
         <source>Line Type Name</source>
-        <translation>Rindas tipa nosaukums</translation>
+        <translation>Līnijas tipa nosaukums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="200"/>
@@ -23096,7 +23097,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="207"/>
         <source>Line Type Icon</source>
-        <translation>Rindas tipa ikona</translation>
+        <translation>Līnijas tipa ikona</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="214"/>
@@ -23111,7 +23112,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Rindas platuma nosaukums</translation>
+        <translation>Līnijas platuma nosaukums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23127,7 +23128,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="46"/>
         <source>Active Pen Background:</source>
-        <translation>Aktīvās pildspalvveida pilnšļirces fons:</translation>
+        <translation>Aktīvās pildspalvas fons:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
@@ -23137,7 +23138,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Visa tabulas rinda ir treknrakstā aktīvajai pildspalvveida pilnšļircei</translation>
+        <translation>Visa tabulas rinda ir treknrakstā aktīvajai pildspalvai</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -23147,7 +23148,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="86"/>
         <source>Color of pen item that is matched by filter</source>
-        <translation>Pildspalvveida pilnšļirces ieraksta krāsa, kas atbilst filtram</translation>
+        <translation>Pildspalvas ieraksta krāsa, kas atbilst filtram</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="155"/>
@@ -23162,7 +23163,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="297"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation>Ja ieslēgts, filtrs nostiprinās pildspalvveida pilnšļirces nosaukumu</translation>
+        <translation>Ja ieslēgts, filtrs ignorēs pildspalvas nosaukuma reģistru</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
@@ -23232,7 +23233,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Rādīt informācijas vēstuli, ja injektors nevar izvēlēties nevienu entīti</translation>
+        <translation>Rādīt informatīvu ziņojumu, ja ar pildspalvu nevar atlasīt nevienu objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -23275,7 +23276,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Izvēlieties vienības pēc zīmēšanas Pen</translation>
+        <translation>Izvēlieties objektus pēc zīmēšanas pildspalvas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
@@ -23291,7 +23292,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>Pielietot pildspalvveida pilnšļirci izvēlei</translation>
+        <translation>Pielietot pildspalvu izvēlei</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
@@ -23336,12 +23337,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
         <source>Remove Selected Pen</source>
-        <translation>Izņemt izvēlēto pildspalvveida pilnšļirci</translation>
+        <translation>Izņemt izvēlēto pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="242"/>
         <source>Delete Pen</source>
-        <translation>Dzēst pildspalvveida pilnšļirci</translation>
+        <translation>Dzēst pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="339"/>
@@ -23361,17 +23362,17 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
         <source>Width of line</source>
-        <translation>Rindas platums</translation>
+        <translation>Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
         <source>Pen Name:</source>
-        <translation>Pildspalvveida pilnšļirces nosaukums:</translation>
+        <translation>Pildspalvas nosaukums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="436"/>
         <source>Name of pen</source>
-        <translation>Pildspalvveida pilnšļirces nosaukums</translation>
+        <translation>Pildspalvas nosaukums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="455"/>
@@ -23406,7 +23407,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp; Pielietot pildspalvveida pilnšļirci izvēlei</translation>
+        <translation>&amp;Pielietot pildspalvu izvēlei</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
@@ -23421,12 +23422,12 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp; Izvēlieties vienības ar atribūtu pildspalvu</translation>
+        <translation>&amp;Izvēlieties objektus ar atribūtu pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Izvēlieties vienības ar zīmēšanas pildspalvu</translation>
+        <translation>&amp;Izvēlieties objektus ar zīmēšanas pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
@@ -23638,7 +23639,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Ietilpināt rindā</translation>
+        <translation type="unfinished">Ietilpināt līnijā</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
@@ -23764,7 +23765,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">Ja ieslēgts, daudzstūris tiks uzzīmēts kā daudzstūris. Pretējā gadījumā tiks izveidotas atsevišķas vienības.</translation>
+        <translation type="unfinished">Ja ieslēgts, daudzstūris tiks uzzīmēts kā polilīnija. Pretējā gadījumā tiks izveidoti atsevišķi objekti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -23851,7 +23852,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="35"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="36"/>
@@ -23871,7 +23872,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
-        <translation type="unfinished">Arks</translation>
+        <translation type="unfinished">Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
@@ -23944,7 +23945,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">Daudzrindu opcijas</translation>
+        <translation type="unfinished">Polilīnijas opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
@@ -23974,7 +23975,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="80"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
@@ -24140,7 +24141,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Pielietot drukāšanas mērogošanu rindas platumā</translation>
+        <translation type="unfinished">Pielietot drukāšanas mērogu līnijas platumam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24283,7 +24284,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Pielietot drukāšanas mērogošanu rindas platumā</translation>
+        <translation type="unfinished">Pielietot drukāšanas mērogu līnijas platumam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24313,7 +24314,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="243"/>
         <source>Drawing units</source>
-        <translation type="unfinished">Rasējumi</translation>
+        <translation type="unfinished">Rasējuma mērvienības</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="250"/>
@@ -24447,7 +24448,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Aktīvā pildspalvveida pilnšļirce</translation>
+        <translation type="unfinished">Aktīvā pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
@@ -24467,7 +24468,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Rindas platums</translation>
+        <translation type="unfinished">Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24477,7 +24478,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
         <source>Line Type</source>
-        <translation type="unfinished">Rindas tips</translation>
+        <translation type="unfinished">Līnijas tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
@@ -25439,7 +25440,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Sākotnējais</translation>
+        <translation type="unfinished">Bāzes līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -25668,7 +25669,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="330"/>
         <source>Line</source>
-        <translation type="unfinished">Rinda</translation>
+        <translation type="unfinished">Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="331"/>
@@ -26027,7 +26028,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Virs dimensijas teksta</translation>
+        <translation type="unfinished">Virs izmēra teksta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -26168,7 +26169,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Paredz dimensijas tekstu</translation>
+        <translation type="unfinished">Pirms izmēra teksta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
@@ -26923,7 +26924,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Sākotnējais</translation>
+        <translation type="unfinished">Bāzes līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
@@ -28644,7 +28645,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length of line</source>
-        <translation type="unfinished">Rindas garums</translation>
+        <translation type="unfinished">Līnijas garums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
@@ -28735,7 +28736,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Otrais spriedums</translation>
+        <translation type="unfinished">Apgriezt divus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28760,7 +28761,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
-        <translation type="unfinished">Līniju starpība</translation>
+        <translation type="unfinished">Līnijas sprauga</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
@@ -28956,7 +28957,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation type="unfinished">Kārta</translation>
+        <translation type="unfinished">Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
@@ -30158,7 +30159,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
         <source>Baseline</source>
-        <translation type="unfinished">Sākotnējais</translation>
+        <translation type="unfinished">Bāzes līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
@@ -30550,7 +30551,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="413"/>
         <source>CONSTRUCTION</source>
-        <translation>BŪVNIECĪBA</translation>
+        <translation>PALĪGLĪNIJA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="267"/>
@@ -30580,7 +30581,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE ARC</source>
-        <translation>ELIPSE ARKS</translation>
+        <translation>ELIPSES LOKS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="741"/>
@@ -30717,12 +30718,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="543"/>
         <source>Line Type</source>
-        <translation>Rindas tips</translation>
+        <translation>Līnijas tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Rindas platums</translation>
+        <translation>Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -31194,7 +31195,7 @@ Slānis: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
         <source>Baseline</source>
-        <translation>Sākotnējais</translation>
+        <translation>Bāzes līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
@@ -31423,7 +31424,7 @@ Slānis: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1378"/>
         <source>Solid</source>
-        <translation>Ciets</translation>
+        <translation>Vienlaidus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1361"/>
@@ -31466,7 +31467,7 @@ Slānis: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1409"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
         <source>DIMARC</source>
-        <translation>DIMARKA</translation>
+        <translation>DIMLOKS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
@@ -31553,7 +31554,7 @@ Slānis: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1565"/>
         <source>Origin Point</source>
-        <translation>Izcelsmes punkts</translation>
+        <translation>Sākumpunkts</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1554"/>
@@ -31755,7 +31756,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>&amp; Izvēlieties vienību</translation>
+        <translation>&amp;Izvēlieties objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31818,7 +31819,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>Vienības informācija</translation>
+        <translation>Objekta informācija</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31828,42 +31829,42 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Iekļaut daudzrindu bērnu vienību informāciju vertexes</translation>
+        <translation>Iekļaut polilīnijas pakārtoto objektu informāciju virsotnēs</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>Ja izvēlēts, tiks parādītas arī robežas lauka koordinātas šai vienībai</translation>
+        <translation>Ja izvēlēts, tiks parādītas arī objekta aptverošā taisnstūra koordinātas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>Rādīt vienības robežas (min, maks.) koordinātas</translation>
+        <translation>Rādīt objekta robežu (min, maks.) koordinātas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>Vienības izvēle</translation>
+        <translation>Objekta izvēle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>Vienība zem kursora tiks pārbaudīta tikai tad, ja CTRL tiks nospiesta un netiks veikta aktīva darbība</translation>
+        <translation>Objekts zem kursora tiks pārbaudīts tikai tad, ja būs nospiests CTRL un nebūs aktīvas darbības</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation>Izvēlieties vienību zem kursora, ja nav aktīva darbība un CTRL ir nospiests</translation>
+        <translation>Izvēlēties objektu zem kursora, ja nav aktīvas darbības un ir nospiests CTRL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation>Ja ieslēgts, vienības zem peles kursora tiks pārbaudītas no &apos;if&apos; iestatījumiem, ja nav aktīvas darbības</translation>
+        <translation>Ja ieslēgts, objekti zem peles kursora tiks pārbaudīti, lai noteiktu to iestatījumus, ja nav aktīvas darbības</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
         <source>Always select entity under cursor if no active action</source>
-        <translation>Vienmēr izvēlieties vienību zem kursora, ja nav aktīvas darbības</translation>
+        <translation>Vienmēr izvēlēties objektu zem kursora, ja nav aktīvas darbības</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
@@ -32129,7 +32130,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="245"/>
         <source>Round</source>
-        <translation type="unfinished">Kārta</translation>
+        <translation type="unfinished">Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
@@ -32169,7 +32170,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="339"/>
@@ -32199,12 +32200,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ja ieslēgts, norāda, ka slēdža punkts jānobīda ar stūriem.</translation>
+        <translation type="unfinished">Ja ieslēgts, norāda, ka piesaistes punkts jānobīda par stūru rādiusu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Momentu maiņa</translation>
+        <translation type="unfinished">Piesaistes nobīde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32369,7 +32370,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="78"/>
         <source>Round</source>
-        <translation type="unfinished">Kārta</translation>
+        <translation type="unfinished">Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
@@ -32379,7 +32380,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Sākuma moments:</translation>
+        <translation type="unfinished">Sākuma piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32469,22 +32470,22 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ja ieslēgts, norāda, ka snap punkti jānobīda ar stūriem.</translation>
+        <translation type="unfinished">Ja ieslēgts, norāda, ka piesaistes punkti jānobīda par stūru rādiusu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Momentu maiņa</translation>
+        <translation type="unfinished">Piesaistes nobīde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Saliekuma garums X virzienā.</translation>
+        <translation type="unfinished">Nošķēluma garums X virzienā.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Beigu moments:</translation>
+        <translation type="unfinished">Beigu piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32630,12 +32631,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ja ieslēgts, norāda, ka snap punkti jānobīda ar stūriem.</translation>
+        <translation type="unfinished">Ja ieslēgts, norāda, ka piesaistes punkti jānobīda par stūru rādiusu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Momentu maiņa</translation>
+        <translation type="unfinished">Piesaistes nobīde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32650,7 +32651,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Saliekuma garums X virzienā.</translation>
+        <translation type="unfinished">Nošķēluma garums X virzienā.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
@@ -32685,7 +32686,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="377"/>
         <source>Round</source>
-        <translation type="unfinished">Kārta</translation>
+        <translation type="unfinished">Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
@@ -32768,7 +32769,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
         <source>Round</source>
-        <translation type="unfinished">Kārta</translation>
+        <translation type="unfinished">Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
@@ -32803,7 +32804,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Ja ieslēgts, norāda, ka slēdža punkts jānobīda ar stūriem.</translation>
+        <translation type="unfinished">Ja ieslēgts, norāda, ka piesaistes punkts jānobīda par stūru rādiusu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -33150,7 +33151,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="34"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished">Leņķi, kas aprīkoti ar spoguli</translation>
+        <translation type="unfinished">Spoguļoti leņķi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="35"/>
@@ -33238,12 +33239,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished">Noregulēt sekundāro leņķi tā, lai leņķu summa (relatīvā rotācijas leņķis) ir 0. Ar šādu iestatījumu uzņēmums tiks pārvietots, bet netiks pagriezts.</translation>
+        <translation type="unfinished">Noregulēt sekundāro leņķi tā, lai leņķu summa (relatīvais rotācijas leņķis) būtu 0. Ar šādu iestatījumu objekts tiks pārvietots, bet netiks pagriezts.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished">Leņķi, kas aprīkoti ar spoguli</translation>
+        <translation type="unfinished">Spoguļoti leņķi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="60"/>
@@ -33283,7 +33284,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="180"/>
@@ -33411,7 +33412,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Ja absolūtais, atskaites punkts tiks pagriezts, bet uzņēmums tiks pagriezts tikai pēc otrā leņķa, pretējā gadījumā leņķi summēsies</translation>
+        <translation type="unfinished">Ja absolūtais, atskaites punkts tiks pagriezts, bet objekts tiks pagriezts tikai pēc otrā leņķa, pretējā gadījumā leņķi summēsies</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
@@ -33509,7 +33510,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Ja absolūtais, atskaites punkts tiks pagriezts, bet uzņēmums tiks pagriezts tikai pēc otrā leņķa, pretējā gadījumā leņķi summēsies</translation>
+        <translation type="unfinished">Ja absolūtais, atskaites punkts tiks pagriezts, bet objekts tiks pagriezts tikai pēc otrā leņķa, pretējā gadījumā leņķi summēsies</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="168"/>
@@ -33524,7 +33525,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="192"/>
@@ -33554,13 +33555,13 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
         <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="unfinished">Pārbaudot, ar peli nav jāizvēlas koeficients.</translation>
+        <translation type="unfinished">Ja ieslēgts, koeficientu var brīvi izvēlēties ar peli.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="249"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="236"/>
@@ -33631,7 +33632,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="32"/>
         <source>Round Options</source>
-        <translation type="unfinished">Apaļas opcijas</translation>
+        <translation type="unfinished">Noapaļošanas opcijas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
@@ -33674,7 +33675,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
@@ -33777,7 +33778,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="76"/>
@@ -33847,7 +33848,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
 </context>
 <context>
@@ -33905,7 +33906,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation>Vienības veids</translation>
+        <translation>Objekta veids</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -33925,12 +33926,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
@@ -34152,7 +34153,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Ja atzīmēts, tiks izmantots noteiktais attālums starp ērcēm. Pretējā gadījumā attālums tiks aprēķināts, pamatojoties uz vienības garumu un ērču skaitu.</translation>
+        <translation type="unfinished">Ja atzīmēts, tiks izmantots noteiktais attālums starp atzīmēm. Pretējā gadījumā attālums tiks aprēķināts, pamatojoties uz objekta garumu un atzīmju skaitu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34197,7 +34198,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="94"/>
@@ -34297,7 +34298,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished">Attālums starp ērcēm.</translation>
+        <translation type="unfinished">Attālums starp atzīmēm.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34334,7 +34335,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">Ja ieslēgts, izvēlētā entītija tiks dalīta ar ērču krustošanās punktiem.</translation>
+        <translation type="unfinished">Ja ieslēgts, izvēlētais objekts tiks dalīts atzīmju krustpunktos. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34359,7 +34360,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished">Ērces garums.</translation>
+        <translation type="unfinished">Atzīmes garums.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
@@ -34369,7 +34370,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">Norāda, kuru ērces punktu novietot krustpunktā ar izvēlēto vienību.</translation>
+        <translation type="unfinished">Norāda, kuru atzīmes punktu novietot krustpunktā ar izvēlēto objektu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34379,17 +34380,17 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Nobīde ērču snap punkts uz krustošanās punktu.</translation>
+        <translation type="unfinished">Atzīmes piesaistes punkta nobīde līdz krustpunktam. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Ērču snaps:</translation>
+        <translation type="unfinished">Atzīmes piesaiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
         <source>Tick Length:</source>
-        <translation type="unfinished">Ērces garums:</translation>
+        <translation type="unfinished">Atzīmes garums:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
@@ -34409,7 +34410,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">Sākt leņķi aplim, no kura sāksies ērces.</translation>
+        <translation type="unfinished">Sākuma leņķis aplim, no kura sāksies atzīmes. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34424,7 +34425,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">Ja atzīmēts, tiks izmantots noteiktais attālums starp ērcēm. Pretējā gadījumā attālums tiks aprēķināts, pamatojoties uz vienības garumu un ērču skaitu.</translation>
+        <translation type="unfinished">Ja atzīmēts, tiks izmantots noteiktais attālums starp atzīmēm. Pretējā gadījumā attālums tiks aprēķināts, pamatojoties uz objekta garumu un atzīmju skaitu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34434,7 +34435,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">Ērču skaits starp izvēlētās vienības malām.</translation>
+        <translation type="unfinished">Atzīmju skaits starp izvēlētā objekta malām.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34465,7 +34466,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Ja ieslēgts, iespējams norādīt pielāgotu rindu segmentu skaitu. Pretējā gadījumā tiks izmantota pašreizējā zīmējuma iestatījumu vērtība.</translation>
+        <translation type="unfinished">Ja ieslēgts, iespējams norādīt pielāgotu līniju segmentu skaitu. Pretējā gadījumā tiks izmantota pašreizējā zīmējuma iestatījumu vērtība.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34543,7 +34544,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ja ieslēgts, pašreizējie atribūti tiks izmantoti izveidotajām vienībām, pretējā gadījumā - oriģinālajiem.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotajiem objektiem tiks izmantoti pašreizējie atribūti, pretējā gadījumā - oriģinālie. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
@@ -34563,7 +34564,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Ja ieslēgts, iespējams norādīt pielāgotu rindu segmentu skaitu. Pretējā gadījumā tiks izmantota pašreizējā zīmējuma iestatījumu vērtība.</translation>
+        <translation type="unfinished">Ja ieslēgts, iespējams norādīt pielāgotu līniju segmentu skaitu. Pretējā gadījumā tiks izmantota pašreizējā zīmējuma iestatījumu vērtība.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34578,7 +34579,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">Uz daudzrindu</translation>
+        <translation type="unfinished">Uz polilīniju</translation>
     </message>
 </context>
 <context>
@@ -34689,7 +34690,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">Ja ieslēgts, pašreizējie atribūti tiks izmantoti izveidotajām vienībām, pretējā gadījumā - oriģinālajiem.</translation>
+        <translation type="unfinished">Ja ieslēgts, izveidotajiem objektiem tiks izmantoti pašreizējie atribūti, pretējā gadījumā - oriģinālie. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
@@ -34699,7 +34700,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="95"/>
         <source>Degree:</source>
-        <translation type="unfinished">Grādi:</translation>
+        <translation type="unfinished">Pakāpe:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="102"/>
@@ -34760,7 +34761,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="56"/>
         <source>Degree:</source>
-        <translation type="unfinished">Grādi:</translation>
+        <translation type="unfinished">Pakāpe:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
@@ -34829,7 +34830,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="96"/>
         <source>Points on Spline</source>
-        <translation>Punkti par švīku</translation>
+        <translation>Punkti uz splaina</translation>
     </message>
 </context>
 <context>
@@ -34853,7 +34854,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="61"/>
         <source>Degree:</source>
-        <translation>Grādi:</translation>
+        <translation>Pakāpe:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="86"/>
@@ -34893,7 +34894,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="177"/>
         <source>Control points with coordinates and weights</source>
-        <translation>Kontrolpunkti ar koordinātām un atsvariem</translation>
+        <translation>Kontrolpunkti ar koordinātām un svariem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
@@ -34903,7 +34904,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>Rediģēšanas punktu koordinātas un atsvari spline</translation>
+        <translation>Rediģēt splaina kontrolpunktu koordinātas un svarus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34955,7 +34956,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>Šļircei pievienot jaunu kontroles punktu</translation>
+        <translation>Splainam pievienot jaunu kontroles punktu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
@@ -35158,7 +35159,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Ja ieslēgts, oriģinālās vienības izdzīvos, pretējā gadījumā tās tiks noņemtas.</translation>
+        <translation type="unfinished">Ja ieslēgts, oriģinālie objekti saglabāsies, pretējā gadījumā tie tiks noņemti.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="35"/>
@@ -35405,7 +35406,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35415,7 +35416,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Pielipšanas izvēle</translation>
+        <translation>Piesaistes izvēle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35477,7 +35478,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="328"/>
@@ -35497,7 +35498,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
@@ -35570,7 +35571,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="363"/>
         <source>Arcs</source>
-        <translation>Arki</translation>
+        <translation>Loki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
@@ -35595,7 +35596,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="372"/>
         <source>Measure</source>
-        <translation>Pasākums</translation>
+        <translation>Mērīšana</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="380"/>
@@ -35732,7 +35733,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="35"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="42"/>
@@ -35786,12 +35787,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="329"/>
         <source>Origin X: </source>
-        <translation>Izcelsme X</translation>
+        <translation>Sākumpunkts X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="330"/>
         <source>Origin Y: </source>
-        <translation>Izcelsme:</translation>
+        <translation>Sākumpunkts Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="331"/>
@@ -35839,7 +35840,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="107"/>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>Koordinātu sistēmas izcelsmes un leņķa priekšskatījums.</translation>
+        <translation>Koordinātu sistēmas sākumpunkta un leņķa priekšskatījums.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
@@ -35849,7 +35850,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>Iestatīt UCS pēc koordinātu dimensijas</translation>
+        <translation>Iestatīt UCS pēc ordinātu izmēra</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -36029,7 +36030,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="130"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
@@ -36075,7 +36076,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>Vienības informācija</translation>
+        <translation>Objekta informācija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36095,7 +36096,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
@@ -36177,7 +36178,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
         <source>Pen Wizard</source>
-        <translation>Pildspalvveida pilnšļirces vednis</translation>
+        <translation>Pildspalvas vednis</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
@@ -37178,12 +37179,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Dimensiju etiķešu redaktors</translation>
+        <translation>Izmēru etiķešu redaktors</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Dimensijas etiķete:</translation>
+        <translation>Izmēra etiķete:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37218,7 +37219,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>Dimensijas teksta formāts, &lt;&gt; var tikt izmantots kā vietturis dimensijas mērījumu vērtībai</translation>
+        <translation>Izmēra teksta formāts, &lt;&gt; var tikt izmantots kā vietturis izmēra mērījuma vērtībai</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37300,8 +37301,8 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Pielietot atribūtus arī visām izvēlētā INSERT apakšvienībām.
-Tas rekursīvi maina visas bloka vienības.</translation>
+        <translation>Pielietot atribūtus arī visiem izvēlētā INSERT apakšobjektiem.
+Tas rekursīvi maina visus paša bloka objektus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
@@ -37311,7 +37312,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
 </context>
 <context>
@@ -37329,7 +37330,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Izliekuma mērogošanas koeficients</translation>
+        <translation>Svītrojuma raksta mērogošanas koeficients</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37344,12 +37345,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Lūkas rotācijas leņķis</translation>
+        <translation>Svītrojuma rotācijas leņķis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>Ja atzīmēts, šablonu lūkas vietā tiks izmantota cieta viela</translation>
+        <translation>Ja atzīmēts, šablona svītrojuma vietā tiks izmantots vienlaidus aizpildījums</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37359,7 +37360,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Lūkas paraugs</translation>
+        <translation>Svītrojuma raksts</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37369,7 +37370,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Ja ieslēgts, lūkas parauga priekšskatījums tiks parādīts zemāk</translation>
+        <translation>Ja ieslēgts, svītrojuma raksta priekšskatījums tiks parādīts zemāk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37384,7 +37385,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Izšķilšanās zona</translation>
+        <translation>Svītrotā zona</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -38270,7 +38271,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
 </context>
 <context>
@@ -38449,7 +38450,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>Dimensijas stila rediģēšana -</translation>
+        <translation>Izmēru stila rediģēšana - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
@@ -38459,7 +38460,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Ievadiet jauno dimensijas stila unikālo nosaukumu (bija &quot;%1&quot;):</translation>
+        <translation>Ievadiet jauno izmēru stila unikālo nosaukumu (bija &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38467,27 +38468,27 @@ Tas rekursīvi maina visas bloka vienības.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>Dzēš dimensijas stilu</translation>
+        <translation>Dzēš izmēru stilu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>Nevar izdzēst pēdējās dimensijas stilu. Vismaz vienam vajadzētu būt klāt!</translation>
+        <translation>Nevar izdzēst pēdējo izmēru stilu. Vismaz vienam jābūt! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>Nevar izdzēst dimensijas stilu, jo tas ir bērni tiek izmantots zīmēšanā. Dzēš tikai neizmantotu stilu.</translation>
+        <translation>Nevar izdzēst izmēru stilu, jo tā pakārtotie stili tiek izmantoti rasējumā. Dzēst var tikai neizmantotu stilu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Vai tiešām vēlaties noņemt dimensijas stilu &quot;%1&quot; kopā ar bērnu stiliem?</translation>
+        <translation>Vai tiešām vēlaties noņemt izmēru stilu &quot;%1&quot; kopā ar pakārtotajiem stiliem?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Vai tiešām vēlaties izņemt dimensijas stilu &quot;%1&quot;?</translation>
+        <translation>Vai tiešām vēlaties izņemt izmēru stilu &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38541,7 +38542,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Dimensiju līnijas sprauga:</translation>
+        <translation>Izmēra līnijas sprauga:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -38596,7 +38597,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensijas</translation>
+        <translation>&amp;Izmēri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
@@ -38684,7 +38685,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensijas atzīmju izmērs. Iestatot uz 0, dimensiju atzīmes tiks deaktivētas. Dimensiju bultas netiek zīmētas, kad atzīme ir aktivēta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmēra atzīmju lielums. Iestatot uz 0, izmēra atzīmes tiks deaktivētas. Izmēra bultas netiek zīmētas, kad atzīme ir aktivēta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38694,17 +38695,17 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
         <source>General Scale:</source>
-        <translation>Pamata skala:</translation>
+        <translation>Vispārējais mērogs:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mērogot, lai reizinātu visas dimensijas vērtības.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mērogs, ar kuru tiek reizinātas visu izmēru vērtības.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mērogot, lai reizinātu visas dimensijas ģeometrijas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mērogs, ar kuru tiek reizināta visu izmēru ģeometrija.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -38764,7 +38765,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nulles pamata leņķis attiecībā pret pašreizējo lietotāja koordinātu sistēmu. Ietekmē polāro koordinātu ieeju, snap uz leņķi. 0, 0 ir 3 pm.</translation>
+        <translation>Nulles bāzes leņķis attiecībā pret pašreizējo lietotāja koordinātu sistēmu. Ietekmē polāro koordinātu ievadi un piesaisti leņķim. 0.0 ir virzienā uz pulksten 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38774,7 +38775,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="593"/>
         <source>degrees.</source>
-        <translation>līmenis.</translation>
+        <translation>grādi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="600"/>
@@ -38878,7 +38879,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Izvēlieties vai ievadiet vērtības attālumam starp režģiem (tās ietekmēs Grid zīmējumu un Snap to Grid):</translation>
+        <translation>Izvēlieties vai ievadiet režģa soļa vērtības (tās ietekmēs režģa zīmēšanu un piesaisti režģim):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -38940,12 +38941,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Garums, ko palielināt virs dimensijas līnijas</translation>
+        <translation>Garums, par kādu pagarināt aiz izmēra līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensiju biltas izmērs. &lt;a name=&quot;result_box&quot;/&gt;Nav efekta, ja biezuma izmērs &lt;a name=&quot;result_box&quot;/&gt;ir mazāks par 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmēra bultas lielums. &lt;a name=&quot;result_box&quot;/&gt;Nedarbojas, ja atzīmju lielums &lt;a name=&quot;result_box&quot;/&gt;nav 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -38956,7 +38957,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimensiju līnijas, bultas un ķekši</translation>
+        <translation>Izmēru līnijas, bultas un atzīmes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -38986,7 +38987,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Teksta līdzinājums &lt;a name=&quot;result_box&quot;/&gt;attiecībā pret dimensiju līniju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Teksta līdzinājums &lt;a name=&quot;result_box&quot;/&gt;attiecībā pret izmēra līniju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -39046,7 +39047,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>Marks stils kā aktīvs. Veidojot dimensijas, tiks izmantots aktīvs stils.</translation>
+        <translation>Atzīmē stilu kā aktīvo. Veidojot izmērus, tiks izmantots aktīvais stils.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39086,12 +39087,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2075"/>
         <source>Line Cap:</source>
-        <translation>Līnijas vāciņš:</translation>
+        <translation>Līnijas gals:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2082"/>
         <source>End cap for lines</source>
-        <translation>Beigu vāciņš līnijām</translation>
+        <translation>Līniju galu forma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2086"/>
@@ -39103,7 +39104,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2125"/>
         <source>Round</source>
-        <translation>Kārta</translation>
+        <translation>Noapaļot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2101"/>
@@ -39113,7 +39114,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Rinda Pievienošanās:</translation>
+        <translation>Līniju savienojums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
@@ -39609,12 +39610,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6307"/>
         <source>Line length:</source>
-        <translation>Rindas garums:</translation>
+        <translation>Līnijas garums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Īslaicīgi pārslēdz brīvs lūzums, kad tiek nospiesta atstarpe un aktivizēts komandas logs</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uz laiku pārslēgt brīvo piesaisti, kad tiek nospiests atstarpes taustiņš un aktivizēts komandu logs&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
@@ -39677,12 +39678,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Aktīvā priekšskatījuma paskaidrojošās vienības krāsa:</translation>
+        <translation>Aktīvā priekšskatījuma paskaidrojošā objekta krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Priekšskatījuma paskaidrojošās vienības krāsa:</translation>
+        <translation>Priekšskatījuma paskaidrojošā objekta krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
@@ -39692,7 +39693,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Izcelt ar ekrāna rindu platumu Draft režīmā</translation>
+        <translation>Izcelt ar ekrāna līniju platumu režīmā &quot;Melnraksts&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39727,17 +39728,17 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation>Ja ieslēgts, vienības iekšējais ID tiks parādīts īpašību dialogā un Entītijas Info logdaļā.</translation>
+        <translation>Ja ieslēgts, objekta iekšējais ID tiks parādīts īpašību dialogā un logdaļā Objekta informācija.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
         <source>Show internal IDs of entities</source>
-        <translation>Rādīt vienību iekšējos ID</translation>
+        <translation>Rādīt objektu iekšējos ID</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation>Ja ieslēgts, vienības paliks izvēlētas pēc Modify darbību pabeigšanas. Pretējā gadījumā tie netiks atlasīti.</translation>
+        <translation>Ja ieslēgts, objekti paliks atlasīti pēc modificēšanas darbību pabeigšanas. Pretējā gadījumā tie netiks atlasīti. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
@@ -39837,7 +39838,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Slēpt kursoru, kad pievelk</translation>
+        <translation>Slēpt kursoru piesaistes laikā</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39916,7 +39917,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Izvēlieties izsekošanas paraugu mapi</translation>
+        <translation>Izvēlieties svītrojuma rakstu mapi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -39941,7 +39942,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>Priekšskatījuma vienību skaits:</translation>
+        <translation>Priekšskatījuma objektu &amp;skaits:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5473"/>
@@ -39986,12 +39987,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Ja ieslēgts, tiks rādīts snap indikators</translation>
+        <translation>Ja ieslēgts, tiks rādīts piesaistes indikators</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Spraudņa līnijas indikatora tips</translation>
+        <translation>Piesaistes līniju indikatora tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40012,12 +40013,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Snap Indikatora līnijas</translation>
+        <translation>Piesaistes indikatora līnijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Snap līnijas indikatora krāsa</translation>
+        <translation>Piesaistes līniju indikatora krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -40061,27 +40062,27 @@ Tas rekursīvi maina visas bloka vienības.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1536"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1791"/>
         <source>Line Type:</source>
-        <translation>Rindas tips:</translation>
+        <translation>Līnijas tips:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Rindas veids, lai zīmētu snap indikators</translation>
+        <translation>Līnijas veids piesaistes indikatora zīmēšanai</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Rindas platums</translation>
+        <translation>Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Līnijas platums snap indikators</translation>
+        <translation>Piesaistes indikatora līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>Ja ieslēgts, tiks uzzīmēta snap snap shap</translation>
+        <translation>Ja ieslēgts, tiks zīmēta piesaistes forma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
@@ -40091,7 +40092,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Spraudņa indikatora formas tips</translation>
+        <translation>Piesaistes indikatora formas tips</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40116,22 +40117,22 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Snap Indikatora Krāsa:</translation>
+        <translation>Piesaistes indikatora krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Snap indikatora formas krāsa</translation>
+        <translation>Piesaistes indikatora formas krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Leņķis snap vienu soli</translation>
+        <translation>Leņķa piesaistes solis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>Leņķis starp Leņķa moments (kas parasti ir ar atbilstošām darbībām, ja SHIFT ir nospiests)</translation>
+        <translation>Leņķis starp soļiem leņķa piesaistei (parasti attiecīgajās darbībās, ja ir nospiests SHIFT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40181,22 +40182,22 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Ja ieslēgts, snap opcijas (vidū, attālumā) tiks rādītas snap rīkjoslā, nevis rīku īpašību rīkjoslā</translation>
+        <translation>Ja ieslēgts, piesaistes opcijas (viduspunkts, attālums) tiks rādītas piesaistes rīkjoslā, nevis rīka īpašību rīkjoslā</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Rādīt snap opcijas Snap izvēles rīkjoslā</translation>
+        <translation>Rādīt piesaistes opcijas piesaistes izvēles rīkjoslā</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>Organizāciju darbība</translation>
+        <translation>Objekta rokturis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation>Lauka lielums, kas izceļ vienības atsauces punktus (endpoints utt.)</translation>
+        <translation>Kvadrāta lielums, kas izceļ objekta atskaites punktus (galapunktus utt.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
@@ -40211,7 +40212,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Vienības roktura krāsa, kas nav gals</translation>
+        <translation>Objekta roktura krāsa (ne galapunktā)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
@@ -40221,12 +40222,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Ja ieslēgts, entītijas rokturi tiek izcelti uz gaisa spilvena (jāiespējo &quot;vieglās vienības uz gaisa spilvena&quot;)</translation>
+        <translation>Ja ieslēgts, objektu rokturi tiek izcelti, kad virs tiem ir peles kursors (jābūt ieslēgtam &quot;Izcelt objektus, kad virs tiem ir peles kursors&quot;)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Rādīt vienības rokturus uz peles kursora</translation>
+        <translation>Rādīt objekta rokturus, kad virs tā ir peles kursors</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40236,13 +40237,13 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="312"/>
         <source>Inverted Line Color:</source>
-        <translation>Apgrieztas rindas krāsa:</translation>
+        <translation>Apgrieztas līnijas krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="294"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="654"/>
         <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation>Rindas krāsa izvēles rūtiņai, ja kaste ir apgriezta (no labās uz kreiso)</translation>
+        <translation>Pārklājuma atlases rāmja līnijas krāsa, ja rāmis ir apgriezts (no labās uz kreiso)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="319"/>
@@ -40267,12 +40268,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="441"/>
         <source>Line Color:</source>
-        <translation>Rindas krāsa:</translation>
+        <translation>Līnijas krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="390"/>
         <source>Color for line for overlay box</source>
-        <translation>Krāsa rindai pārklātajai kastei</translation>
+        <translation>Pārklājuma rāmja līnijas krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="326"/>
@@ -40302,7 +40303,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="214"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation>Ja ieslēgts, zīmēšana tiks automātiski miksēta, ja pele būs tuvu zīmēšanas skata robežām</translation>
+        <translation>Ja ieslēgts, rasējums tiks automātiski panoramēts, ja pele būs tuvu rasējuma skata robežām</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="166"/>
@@ -40342,7 +40343,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="592"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation>S&amp;ievēlēto vienību krāsa:</translation>
+        <translation>Iz&amp;vēlētā objekta krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
@@ -40377,7 +40378,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>Pirmo reizi tikai panna</translation>
+        <translation>Panoramēt tikai pirmo reizi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
@@ -40410,14 +40411,14 @@ Tas rekursīvi maina visas bloka vienības.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1388"/>
         <source>Line Type: </source>
-        <translation>Rindas tips:</translation>
+        <translation>Līnijas tips: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1291"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Rindas platums:</translation>
+        <translation>Līnijas platums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40592,7 +40593,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>Ja ieslēgts, režģis netiks zīmēts skata pannā ar peles darbību</translation>
+        <translation>Ja ieslēgts, režģis netiek zīmēts, kamēr skats tiek panoramēts ar peli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
@@ -40642,7 +40643,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Zīmēt vertikālās līnijas &quot;Top&quot; izometriskām koordinātu sistēmām</translation>
+        <translation>Zīmēt vertikālās līnijas augšējam izometriskajam režģim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40686,7 +40687,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation>Ja priekšskatījumā būs vairāk vienību nekā norādīts, labojums tiks uzzīmēts vienību vietā.</translation>
+        <translation>Ja priekšskatījumā būs vairāk objektu nekā norādīts, objektu vietā tiks uzzīmēts taisnstūris.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
@@ -40706,17 +40707,17 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3786"/>
         <source>Visualize the entity under the mouse cursor</source>
-        <translation>Iztēloties vienību zem peles kursora</translation>
+        <translation>Vizualizēt objektu zem peles kursora</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
         <source>Highlight entities on mouse hover</source>
-        <translation>Izcelt vienības uz peles kursora</translation>
+        <translation>Izcelt objektus, kad virs tiem ir peles kursors</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3758"/>
         <source>Color for highlighted entities</source>
-        <translation>Izcelto vienību krāsa</translation>
+        <translation>Izcelto objektu krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
@@ -40736,7 +40737,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>Rādīt darbības priekšapskates skaidrojošās vienības</translation>
+        <translation>Rādīt darbības priekšskatījuma paskaidrojošos objektus </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3827"/>
@@ -40776,7 +40777,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation>Ja elipses mazākās ass ekrāna izmērs ir mazāks par vērtību, elipsi novelk kā rindu</translation>
+        <translation>Ja elipses mazākās ass ekrāna izmērs ir mazāks par vērtību, elipsi novelk kā līniju</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
@@ -40796,7 +40797,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>Arka rādiuss:</translation>
+        <translation>Loka rādiuss:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
@@ -40907,12 +40908,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Ja ieslēgts, &quot;Snap To Grid&quot; tiek ignorēts, ja režģis nav uzzīmēts.</translation>
+        <translation>Ja ieslēgts, &quot;Piesaiste režģim&quot; tiek ignorēta, ja režģis nav uzzīmēts.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Ignorēt &quot;Snap to Grid&quot;, ja režģis nav uzzīmēts</translation>
+        <translation>Ignorēt &quot;Piesaisti režģim&quot;, ja režģis nav uzzīmēts</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
@@ -40942,7 +40943,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2748"/>
         <source>Show properties for entity that will be created</source>
-        <translation>Rādīt veidojamās vienības īpašības</translation>
+        <translation>Rādīt veidojamā objekta īpašības</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
@@ -40957,12 +40958,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Absolūto snap koordinātu krāsa.</translation>
+        <translation>Absolūto piesaistes koordinātu krāsa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Ja atzīmēts, tiks parādīts relatīvais attālums un leņķis no relatīvā nulles punkta līdz snap punktam.</translation>
+        <translation>Ja atzīmēts, tiks parādīts relatīvais attālums un leņķis no relatīvā nulles punkta līdz piesaistes punktam.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40972,7 +40973,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Snap tipa/ierobežošanas krāsa</translation>
+        <translation>Piesaistes tipa/ierobežojuma krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
@@ -40997,12 +40998,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Ja ieslēgts, informācija par snap veidu un ierobežojumiem tiks parādīta uz snap punktu (ja ir)</translation>
+        <translation>Ja ieslēgts, piesaistes punktam tiks parādīta informācija par piesaistes veidu un ierobežojumiem (ja tādi ir)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>Rādīt snap info / ierobežojumus</translation>
+        <translation>Rādīt piesaistes informāciju / ierobežojumus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
@@ -41017,7 +41018,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Ja ieslēgts, tiks parādīts absolūtais snap punkta stāvoklis.</translation>
+        <translation>Ja ieslēgts, tiks parādīts piesaistes punkta absolūtais novietojums.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41037,12 +41038,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>Ja atzīmēts, tiks parādītas uzņēmuma atlasei pieķertās īsā pārskata īpašības.</translation>
+        <translation>Ja atzīmēts, tiks parādītas atlasei uztvertā objekta īsā pārskata īpašības. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
         <source>Show properties of catched entity</source>
-        <translation>Rādīt nozvejotās vienības īpašības</translation>
+        <translation>Rādīt uztvertā objekta īpašības</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
@@ -41123,7 +41124,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
         <source>Drawing units</source>
-        <translation>Rasējumi</translation>
+        <translation>Rasējuma mērvienības</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
@@ -41209,7 +41210,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="682"/>
         <source>Font that should be used for draft mode marker</source>
-        <translation>Fonts, kas jāizmanto ierāmētā režīma marķierim</translation>
+        <translation>Fonts, kas jāizmanto melnraksta režīma marķierim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
@@ -41304,27 +41305,27 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Rādiuss loka leņķa snap zīme.</translation>
+        <translation>Loka rādiuss leņķa piesaistes zīmē.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Snap marķieris</translation>
+        <translation>Piesaistes marķieris</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Advanced Snap precizitātes iestatījumi</translation>
+        <translation>Paplašināti piesaistes precizēšanas iestatījumi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Snap par vienību &quot;Free snap&quot; distance slēdzis:</translation>
+        <translation>Pārslēgšanās attālums starp piesaisti objektam un &quot;brīvo piesaisti&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>Snap par entītiju tiks piesakās, ja tas ir ieslēgts un attālums starp peli un snapped punkts ir lielāks nekā norādīto vērtību.</translation>
+        <translation>Piesaiste objektam tiks izmantota, ja tā ir ieslēgta un attālums starp peli un piesaistīto punktu ir lielāks par norādīto vērtību.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41339,22 +41340,22 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Min koordinātu tīkla šūnu noplicināšanās koeficients:</translation>
+        <translation>Min. režģa šūnas piesaistes koeficients:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Snap attālums (pikseļos) nozvejotājām vienībām.</translation>
+        <translation>Piesaistes attālums (pikseļos) objektu uztveršanai.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Nozveja</translation>
+        <translation>Objektu satveršanas attālums:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Režģa šūnas koeficients, ko izmanto, lai nospiestu uz režģa.</translation>
+        <translation>Režģa šūnas koeficients, ko izmanto piesaistei režģim.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -41375,7 +41376,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3256"/>
         <source>Color of the ray that displays zero angle position</source>
-        <translation>Zvaigznāju vārdi</translation>
+        <translation>Nulles leņķa stara krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5101"/>
@@ -41400,12 +41401,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>Ja ieslēgts, katrai ar vienību saistīto komandu grupai tiks izveidota atsevišķa izvēlne. Pretējā gadījumā šī komanda būs zem vienas izvēlnes.</translation>
+        <translation>Ja ieslēgts, katrai ar objektiem saistīto komandu grupai tiks izveidota atsevišķa izvēlne. Pretējā gadījumā šīs komandas būs vienā izvēlnē. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation>Ja ieslēgts, tas ir iespējams darīt ar taustiņiem - pietuvinot ar + /-, ritinot caur bulttaustiņus, kustinot izvēlētās vienības pozīciju, izmantojot bulttaustiņus un SHIFT / CTRL modifikatori.</translation>
+        <translation>Ja ieslēgts, ar taustiņiem var tālummainīt ar +/-, ritināt ar bulttaustiņiem un pārvietot atlasītos objektus ar bulttaustiņiem un SHIFT/CTRL modifikatoriem.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
@@ -41425,7 +41426,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
         <source>Separate menu per entity</source>
-        <translation>Atsevišķa izvēlne katram subjektam</translation>
+        <translation>Atsevišķa izvēlne katram objektam</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
@@ -42022,7 +42023,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Ja atzīmēts, arkas novelk, izmantojot līniju segmentu interpolāciju. Tas slaidina zīmēšanas artefakti tuvu galapunktiem, tomēr var radīt zīmējumu mazāk gludu lokiem. Nav zīmēšanas kļūdas tuvu galapunktiem uz lieliem mērogiem.</translation>
+        <translation>Ja atzīmēts, loki tiek zīmēti ar līniju segmentu interpolāciju. Tas novērš zīmēšanas artefaktus galapunktu tuvumā, taču loki var būt mazāk gludi. Lielā tālummaiņā nav zīmēšanas kļūdu galapunktu tuvumā.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
@@ -42077,7 +42078,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
-        <translation>Interpolēt pēc rindu segmentiem</translation>
+        <translation>Interpolēt ar līniju segmentiem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
@@ -42132,7 +42133,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>Ja ieslēgts, jebkurās zīmēšanas mērogošanas vai pannas izmaiņās tiks atzīmēts zīmējums kā mainīts. Pretējā gadījumā tikai mainītais skats neietekmēs izmainīto zīmējuma statusu.</translation>
+        <translation>Ja ieslēgts, jebkura tālummaiņas vai panoramēšanas izmaiņa atzīmēs rasējumu kā mainītu. Pretējā gadījumā tikai skata maiņa neietekmēs rasējuma izmainīto statusu. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
@@ -42157,12 +42158,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nulles pamata leņķis attiecībā pret pašreizējo lietotāja koordinātu sistēmu. Ietekmē polāro koordinātu ieeju, snap uz leņķi. 0, 0 ir 3 pm.</translation>
+        <translation>Nulles bāzes leņķis attiecībā pret pašreizējo lietotāja koordinātu sistēmu. Ietekmē polāro koordinātu ievadi un piesaisti leņķim. 0.0 ir virzienā uz pulksten 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
         <source>degrees.</source>
-        <translation>līmenis.</translation>
+        <translation>grādi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5327"/>
@@ -42207,7 +42208,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Ceļš uz mapi ar lūku modeļiem</translation>
+        <translation>Ceļš uz mapi ar svītrojuma rakstiem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42227,7 +42228,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Pārslēgt brīvpieslēgšanas režīmu, kad tiek nospiests atstarpe BAR</translation>
+        <translation>Pārslēgt brīvās piesaistes režīmu, nospiežot ATSTARPES taustiņu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -42320,7 +42321,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Ielādē domuzīmes/punktlīnijas uz SVG ceļu</translation>
+        <translation>Pārvērst svītru/punktu līnijas SVG ceļā</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
@@ -42356,8 +42357,8 @@ bet izvairījos no dažiem CAM.</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Daudzi CAM s (MakerCAM, EleskCAM, LaserWeb) ignorēt brašs / doted līniju stilu,
-kas var noderēt saplākšņa lāzergriezumā vai papīra ražošanā.</translation>
+        <translation>Daudzas CAM programmas (MakerCAM, EleskCAM, LaserWeb) ignorē svītrotu/punktotu līniju stilu,
+kas var noderēt saplākšņa lāzergriešanā vai papīra modelēšanā. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
@@ -43252,7 +43253,7 @@ cepšanai nepieciešamā standartpakāpe</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>Pildspalvveida pilnšļirce</translation>
+        <translation>Pildspalva</translation>
     </message>
 </context>
 <context>
@@ -43731,7 +43732,7 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="106"/>
         <source>Center</source>
-        <translation>Vidū</translation>
+        <translation>Centrs</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
@@ -43860,7 +43861,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Rindas platums</translation>
+        <translation>Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43896,12 +43897,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="180"/>
         <source>Number of selected entities</source>
-        <translation>Izraudzīto vienību skaits</translation>
+        <translation>Izvēlēto objektu skaits</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="115"/>
         <source>Total length of selected entities</source>
-        <translation>Izraudzīto struktūru kopējais garums</translation>
+        <translation>Izvēlēto objektu kopējais garums</translation>
     </message>
 </context>
 <context>
@@ -43953,17 +43954,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="123"/>
         <source>Color of line</source>
-        <translation>Rindas krāsa</translation>
+        <translation>Līnijas krāsa</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>Rindas platums</translation>
+        <translation>Līnijas platums</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
         <source>Type of line</source>
-        <translation>Rindas veids</translation>
+        <translation>Līnijas veids</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
@@ -44093,7 +44094,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Uzskaitītie bloki un visas to vienības tiks izdzēstas.</translation>
+        <translation>Uzskaitītie bloki un visi to objekti tiks izdzēsti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
@@ -44217,12 +44218,12 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1402"/>
         <source>Remove pen</source>
-        <translation>Izņemt pildspalvveida pilnšļirci</translation>
+        <translation>Izņemt pildspalvu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pildspalvveida pilnšļirce tiks noņemta no paletes, zīmēšanas vienības netiks ietekmētas.</translation>
+        <translation>Pildspalva tiks noņemta no paletes, rasējuma objekti netiks ietekmēti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44233,27 +44234,27 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
-        <translation>Izņemšanai paredzēta pildspalvveida pilnšļirce:</translation>
+        <translation>Izņemšanai paredzēta pildspalva:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
         <source>Remove pens</source>
-        <translation>Noņemiet pildspalvveida pilnšļirces</translation>
+        <translation>Noņemiet pildspalvas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pildspalvveida pilnšļirces tiks noņemtas no paletes, zīmēšanas vienības netiks ietekmētas.</translation>
+        <translation>Pildspalvas tiks noņemtas no paletes, rasējuma objekti netiks ietekmēti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
         <source>Pens for removal:</source>
-        <translation>Noņemamās pildspalvveida pilnšļirces:</translation>
+        <translation>Noņemamās pildspalvas:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
         <source>Select Entities </source>
-        <translation>Izvēlieties vienības</translation>
+        <translation>Izvēlieties objektus </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
@@ -44277,7 +44278,7 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
         <source>Please use different pen attributes.</source>
-        <translation>Lūdzu, izmantojiet dažādus injektora atribūtus.</translation>
+        <translation>Lūdzu, izmantojiet citus pildspalvas atribūtus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
@@ -44297,7 +44298,7 @@ Lūdzu, norādiet citu vērtību.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Neizdevās saglabāt pildspalvveida pilnšļirču datus norādīto pildspalvveida pilnšļirču failā. Vai vēlaties norādīt pareizo ceļu uz failu?</translation>
+        <translation>Neizdevās saglabāt pildspalvu datus norādītajā pildspalvu failā. Vai vēlaties norādīt pareizo ceļu uz failu?</translation>
     </message>
 </context>
 <context>
@@ -44911,7 +44912,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1032"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>kļūda lasot DXF/DWG struktūras</translation>
+        <translation>kļūda, lasot DXF/DWG objektus</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1034"/>
@@ -45122,7 +45123,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="119"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Jebkurā gadījumā, ir dažas vienības identificētas.</translation>
+        <translation>Jebkurā gadījumā daži objekti ir identificēti.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="120"/>
@@ -45177,13 +45178,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="904"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>p</translation>
+        <translation>po</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="97"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>rinda</translation>
+        <translation>līnija</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="96"/>
@@ -45201,7 +45202,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polilīns</translation>
+        <translation>polilīnija</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -45213,7 +45214,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="494"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>nav</translation>
+        <translation>brīvs</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="496"/>
@@ -45231,7 +45232,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="459"/>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>sl</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="464"/>
@@ -45255,7 +45256,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="282"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>bisekss</translation>
+        <translation>bisektrise</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="281"/>
@@ -45279,19 +45280,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="144"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>teksts</translation>
+        <translation>taisnstūris</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="340"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poligon2v</translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>poli2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="349"/>
@@ -45321,7 +45322,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>iedegums3color</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="405"/>
@@ -45333,7 +45334,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="532"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>elipseinhrons</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
@@ -45351,7 +45352,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>lūka</translation>
+        <translation>svītrojums</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -45411,7 +45412,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>tālumlogs</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
@@ -45423,7 +45424,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1063"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zoromauto</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1064"/>
@@ -45435,7 +45436,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>tuvinājums</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
@@ -45447,7 +45448,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>pietuvināt</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
@@ -45459,7 +45460,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1012"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>nokaut</translation>
+        <translation>kill</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1014"/>
@@ -45471,14 +45472,14 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1019"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>atcelt</translation>
+        <translation>atsaukt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1021"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1265"/>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>s ta</translation>
+        <translation>u</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1026"/>
@@ -45496,13 +45497,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimalignizēts</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>dimhorizontāls</translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="672"/>
@@ -45514,7 +45515,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="677"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>dimvertikāls</translation>
+        <translation>dimvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="678"/>
@@ -45526,7 +45527,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="654"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>dimlineārs</translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="655"/>
@@ -45538,7 +45539,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="697"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangulārs</translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
@@ -45550,19 +45551,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="684"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>dimradiāls</translation>
+        <translation>dimradial</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="692"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametrs</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="690"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametrs</translation>
+        <translation>dimdiameter</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
@@ -45586,13 +45587,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="710"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimregens</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="985"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>ierobežotneko</translation>
+        <translation>neierobežot</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="986"/>
@@ -45604,7 +45605,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="991"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>liotergonāls</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="992"/>
@@ -45616,7 +45617,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="997"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>horizontāls ierobežojums</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="998"/>
@@ -45628,7 +45629,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1003"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>limitvertic</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1004"/>
@@ -45646,13 +45647,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="790"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>av</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>h</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="797"/>
@@ -45664,7 +45665,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>samazināt</translation>
+        <translation>griezt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
@@ -45688,7 +45689,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="725"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>reğ</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="731"/>
@@ -45712,7 +45713,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="775"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>reğ</translation>
+        <translation>le</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -45724,7 +45725,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="845"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>rē</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="846"/>
@@ -45786,7 +45787,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="931"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>snazdist</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="932"/>
@@ -45798,7 +45799,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="937"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>salauzt</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="938"/>
@@ -45810,7 +45811,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="943"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>snaggrid</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="944"/>
@@ -45822,19 +45823,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>saķepināšana</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>reğ</translation>
+        <translation>si</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="955"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>snaible</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="956"/>
@@ -45846,7 +45847,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>nelabums</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
@@ -45864,7 +45865,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="979"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>setrelicalzero</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="980"/>
@@ -45876,19 +45877,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="615"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>izvēlēties</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="616"/>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation>reğ</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="621"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>deselektāls</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="623"/>
@@ -45906,7 +45907,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="827"/>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>v</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="819"/>
@@ -45976,7 +45977,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>kolonnas</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45987,12 +45988,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>garums</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>skaits</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -46003,12 +46004,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>rindas</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>rindaspacing</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -46066,19 +46067,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1213"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation>na</translation>
+        <translation>co</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1215"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>kolonnas</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1216"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>kolspacing</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1217"/>
@@ -46090,7 +46091,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1220"/>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>faktiski</translation>
+        <translation>fact</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -46185,13 +46186,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1247"/>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>reğ</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1249"/>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation>reverss</translation>
+        <translation>apgriezts</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1250"/>
@@ -46238,7 +46239,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1264"/>
         <source>undo</source>
-        <translation>atcelt</translation>
+        <translation>atsaukt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1267"/>
@@ -46259,12 +46260,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1276"/>
         <source>paperoffset</source>
-        <translation>papīraoffset</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1277"/>
         <source>graphoffset</source>
-        <translation>grafiskā nobīde</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -46320,7 +46321,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1274"/>
         <source>blackwhite</source>
-        <translation>melnibalts</translation>
+        <translation>melnbalts</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1275"/>
@@ -46331,7 +46332,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="807"/>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>reğ</translation>
+        <translation>di</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="768"/>
@@ -46404,7 +46405,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>rinda</translation>
+        <translation>līnija2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
@@ -46428,13 +46429,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="110"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>slinekss</translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="111"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation>slikss</translation>
+        <translation>slix</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="112"/>
@@ -46446,7 +46447,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="117"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>slineārs</translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="118"/>
@@ -46476,7 +46477,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>lineārs</translation>
+        <translation>horizontāle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
@@ -46488,7 +46489,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>aukla</translation>
+        <translation>vertikāle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
@@ -46500,7 +46501,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>marinecs</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
@@ -46512,7 +46513,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="149"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>teksts1</translation>
+        <translation>rect1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="150"/>
@@ -46524,7 +46525,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="155"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>rekt2</translation>
+        <translation>rect2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="156"/>
@@ -46536,7 +46537,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="161"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>teksts3</translation>
+        <translation>rect3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="162"/>
@@ -46548,7 +46549,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="167"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>šķēle</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="168"/>
@@ -46608,7 +46609,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation>vidēja</translation>
+        <translation>viduslīnija</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="196"/>
@@ -46620,13 +46621,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="206"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>līnijaspunkti</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="207"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>l punkti</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="211"/>
@@ -46662,19 +46663,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="229"/>
         <source>align</source>
         <comment>align entities</comment>
-        <translation>saskaņot</translation>
+        <translation>izlīdzināt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="230"/>
         <source>al</source>
         <comment>align entities</comment>
-        <translation>reğ</translation>
+        <translation>al</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="235"/>
         <source>align1</source>
         <comment>align entities</comment>
-        <translation>saskaņot1</translation>
+        <translation>izlīdzināt1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="236"/>
@@ -46686,7 +46687,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="240"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation>collowref</translation>
+        <translation>alignref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="241"/>
@@ -46698,7 +46699,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="246"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>linedžoin</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="247"/>
@@ -46722,7 +46723,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>spaceline</translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
@@ -46776,13 +46777,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="273"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>linepartro</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="274"/>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation>l zā</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="280"/>
@@ -46794,7 +46795,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="287"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>linetankps</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="288"/>
@@ -46806,7 +46807,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="294"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>linetāns2c</translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="295"/>
@@ -46818,13 +46819,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="300"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>linetankers</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="301"/>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>vai</translation>
+        <translation>or</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="306"/>
@@ -46836,7 +46837,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="307"/>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>re</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
@@ -46854,7 +46855,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>poligoncenkors</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
@@ -46866,7 +46867,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="321"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>polikp</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="322"/>
@@ -46878,7 +46879,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>poligoncentāns</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="328"/>
@@ -46890,13 +46891,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="329"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polict</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation>poligonvs</translation>
+        <translation>polygonvv</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="335"/>
@@ -46932,7 +46933,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="363"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>riņķis2pr</translation>
+        <translation>aplis2pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="364"/>
@@ -46974,7 +46975,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>ribertan2cp</translation>
+        <translation>circletan2cp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="385"/>
@@ -46986,7 +46987,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>riņķvads2p</translation>
+        <translation>circletan2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
@@ -46998,7 +46999,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="396"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>ribertan2cr</translation>
+        <translation>circletan2cr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="397"/>
@@ -47010,7 +47011,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="403"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ribertan3color</translation>
+        <translation>circletan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="404"/>
@@ -47052,13 +47053,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="426"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>arktāns</translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="427"/>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation>datums</translation>
+        <translation>at</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="432"/>
@@ -47160,7 +47161,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="488"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>parabolafs</translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="489"/>
@@ -47190,7 +47191,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="508"/>
         <source>ellipsec1p</source>
         <comment>ellipse 1 point</comment>
-        <translation>elipsek1p</translation>
+        <translation>elipsec1p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="509"/>
@@ -47226,7 +47227,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="526"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>elipsek3p</translation>
+        <translation>elipsec3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="527"/>
@@ -47238,19 +47239,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>leņķis</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
         <source>aline</source>
         <comment>draw angle from line</comment>
-        <translation>alīns</translation>
+        <translation>aline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="553"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>rorolīns</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="554"/>
@@ -47262,7 +47263,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="559"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>rinda</translation>
+        <translation>punkts2līnija</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="560"/>
@@ -47274,7 +47275,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>klineads</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
@@ -47286,7 +47287,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="572"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>plineapps</translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="573"/>
@@ -47298,7 +47299,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>linedels</translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
@@ -47310,19 +47311,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>linedeltwn</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation>reğ</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="590"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>klinetrms</translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
@@ -47334,19 +47335,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="596"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>linepars</translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="597"/>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation>ke</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="602"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>klīndžoins</translation>
+        <translation>plinejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="603"/>
@@ -47358,13 +47359,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="608"/>
         <source>dual</source>
         <comment>create dual geometries</comment>
-        <translation>divvietīgs</translation>
+        <translation>duāls</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="609"/>
         <source>du</source>
         <comment>create dual geometries</comment>
-        <translation>rē</translation>
+        <translation>du</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="622"/>
@@ -47382,7 +47383,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="629"/>
         <source>is</source>
         <comment>invert select</comment>
-        <translation>ir</translation>
+        <translation>is</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="633"/>
@@ -47418,19 +47419,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>dimord</source>
         <comment>dimension - ordinate</comment>
-        <translation>ammords</translation>
+        <translation>dimord</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="661"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation>vai</translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="665"/>
         <source>dimordrebase</source>
         <comment>dimension - ordinate</comment>
-        <translation>dimordrebāze</translation>
+        <translation>dimordrebase</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="666"/>
@@ -47442,7 +47443,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="683"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>dimradiuss</translation>
+        <translation>dimradius</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="685"/>
@@ -47478,7 +47479,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>modrotāts</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -47490,7 +47491,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>mod mērogā</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="765"/>
@@ -47502,13 +47503,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="736"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>modmirors</translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="742"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>modmovrots</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="743"/>
@@ -47520,7 +47521,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="748"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>mod2rots</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="749"/>
@@ -47532,7 +47533,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="754"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>modreverts</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="755"/>
@@ -47550,19 +47551,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>modtrims</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>modtrims2</translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="774"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>modleven</translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="780"/>
@@ -47580,31 +47581,31 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="783"/>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation>reğ</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="784"/>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation>off</translation>
+        <translation>moff</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="789"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>modbevels</translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="796"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>modfilets</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="798"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation>fileja</translation>
+        <translation>noapaļot</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
@@ -47628,7 +47629,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>moddivīds</translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="812"/>
@@ -47640,19 +47641,19 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="818"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>moderitātes</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="825"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>modattrs</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>modeksplteksts</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
@@ -47670,7 +47671,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>modeksplode</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="844"/>
@@ -47748,13 +47749,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="919"/>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation>tātad</translation>
+        <translation>so</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="970"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>snapmidmedimemanual</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="971"/>
@@ -47784,13 +47785,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1027"/>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation>rēt</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>neizšķirtspref</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
@@ -47802,7 +47803,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1051"/>
         <source>zoomin</source>
         <comment>zoom - in</comment>
-        <translation>zoamīns</translation>
+        <translation>zoomin</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1052"/>
@@ -47814,7 +47815,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1057"/>
         <source>zoomout</source>
         <comment>zoom - out</comment>
-        <translation>tuvinājums</translation>
+        <translation>zoomout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
@@ -47838,7 +47839,7 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation>hordlen</translation>
+        <translation>horda</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47850,13 +47851,13 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>garums1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>garums2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47876,37 +47877,37 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1113"/>
         <source>anglerel</source>
-        <translation>leņķis</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1114"/>
         <source>start</source>
-        <translation>palaist</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>offset</source>
-        <translation>nobīde</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>linesnap</source>
-        <translation>linenap</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"/>
         <source>ticksnap</source>
-        <translation>ērcesnap</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>width</source>
-        <translation>platums</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1123"/>
         <source>height</source>
-        <translation>augstums</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1124"/>
@@ -47916,13 +47917,13 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>size</source>
-        <translation>lielumi</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>bevels</source>
-        <translation>bumbas</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
@@ -47932,12 +47933,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>usepoly</source>
-        <translation>name</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>corners</source>
-        <translation>stūri</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -47947,12 +47948,12 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>round</source>
-        <translation>apaļš</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>snap1</source>
-        <translation>snap1color</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
@@ -47972,32 +47973,32 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>left</source>
-        <translation>kreisā</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1138"/>
         <source>middle</source>
-        <translation>vidēja</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1139"/>
         <source>right</source>
-        <translation>pa labi</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1140"/>
         <source>bottoml</source>
-        <translation>gruntl</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>bottom</source>
-        <translation>apakša</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>bottomr</source>
-        <translation>grunts</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"/>
@@ -48007,22 +48008,22 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"/>
         <source>snapshift</source>
-        <translation>atslēdziet</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"/>
         <source>sizein</source>
-        <translation>sizeīns</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"/>
         <source>sizeout</source>
-        <translation>lielumsout</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"/>
         <source>hor</source>
-        <translation>sn</translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1148"/>
@@ -48032,17 +48033,17 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1151"/>
         <source>snap2</source>
-        <translation>snap2color</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1152"/>
         <source>corner</source>
-        <translation>stūris</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1153"/>
         <source>mid-vert</source>
-        <translation>vidusverts</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"/>
@@ -48062,52 +48063,52 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>angle_inner</source>
-        <translation>leņķa iekšējais</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1161"/>
         <source>edges</source>
-        <translation>malas</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1162"/>
         <source>edge-none</source>
-        <translation>nav</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>edge-both</source>
-        <translation>malas</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1164"/>
         <source>edge-start</source>
-        <translation>apmales sākums</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>edge-end</source>
-        <translation>malas</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1166"/>
         <source>end</source>
-        <translation>beigas</translation>
+        <translation>end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1167"/>
         <source>both</source>
-        <translation>abi</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"/>
         <source>none</source>
-        <translation>nav</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>fit</source>
-        <translation>piemērots</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
@@ -48117,17 +48118,17 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
         <source>dist_fixed</source>
-        <translation>dist fixed</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1172"/>
         <source>dist_flex</source>
-        <translation>dist flex</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1173"/>
         <source>distance</source>
-        <translation>attālums</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1176"/>
@@ -48147,17 +48148,17 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">fiksēts</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
         <source>sym</source>
-        <translation>sims</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1183"/>
         <source>nosym</source>
-        <translation>nosims</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1184"/>
@@ -48406,7 +48407,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>Brīvs moments</translation>
+        <translation>Brīvā piesaiste</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -48416,7 +48417,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Snap uz relatīvo nulli</translation>
+        <translation>Piesaiste relatīvajai nullei</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48696,7 +48697,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
@@ -48706,7 +48707,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
@@ -48776,7 +48777,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>Dim. Arks</translation>
+        <translation>Dim. Loks</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
@@ -48880,7 +48881,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
-        <translation>iestādes</translation>
+        <translation> objekti </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48895,7 +48896,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Line</source>
-        <translation>Rinda</translation>
+        <translation>Līnija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
@@ -48910,7 +48911,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>Arks</translation>
+        <translation>Loks</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
@@ -48977,17 +48978,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>Garena līnija</translation>
+        <translation>Pagarināt līniju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen/Scale</source>
-        <translation>Garums/platums</translation>
+        <translation>Pagarināt/mērogot</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Ilgāk</translation>
+        <translation>Pagarināt hordu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49007,7 +49008,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>Mērogošana, panna vai izvēlētā vienība</translation>
+        <translation>Tālummaiņa, panoramēšana vai objekta atlase</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49017,12 +49018,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Pan / Ritināt vertikāli / Izvēlēties bērnu vienības</translation>
+        <translation>Panoramēt / ritināt vertikāli / izvēlēties pakārtotos objektus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
-        <translation>Izvēlēties/noraidīt vienības</translation>
+        <translation>Izvēlēties/atcelt izvēli objektiem</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49050,12 +49051,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>Norādiet dimensiju koka līnijas atrašanās vietu</translation>
+        <translation>Norādiet izmēra loka līnijas atrašanās vietu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
         <source>Enter dimension text:</source>
-        <translation>Ievadiet dimensijas tekstu:</translation>
+        <translation>Ievadiet izmēra tekstu:</translation>
     </message>
 </context>
 <context>
@@ -49092,7 +49093,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Snap uz Adjacent Dim</translation>
+        <translation>Piesaiste blakus esošajam izmēram</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49102,7 +49103,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>Norādiet dimensiju līnijas atrašanās vietu</translation>
+        <translation>Norādiet izmēra līnijas atrašanās vietu</translation>
     </message>
 </context>
 <context>
@@ -49311,7 +49312,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Tūlīt pēc izvēles noslaukiet</translation>
+        <translation>Svītrot uzreiz pēc atlases</translation>
     </message>
 </context>
 <context>
@@ -49528,17 +49529,17 @@ Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
         <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
-        <translation>Leņķis:%1
+        <translation>Leņķis: %1
 Taisns leņķis − leņķis: %2
 Izstiepts leņķis − leņķis: %3
 Pilns apgrieziens − leņķis: %4
-Sadaļa: (%5 , %6)
-Sadaļa :@(%7,%8)</translation>
+Krustpunkts: (%5 , %6)
+Krustpunkts: @(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Restart with first line selection</source>
-        <translation>Pārstartēt ar pirmās rindas izvēli</translation>
+        <translation>Pārstartēt ar pirmās līnijas izvēli</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
@@ -49576,12 +49577,12 @@ Sadaļa :@(%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line From:</source>
-        <translation>Rinda no:</translation>
+        <translation>Līnija no:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>Rinda uz:</translation>
+        <translation>Līnija uz:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
@@ -49596,7 +49597,7 @@ Sadaļa :@(%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>Sadaļa:</translation>
+        <translation>Krustpunkts:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49896,12 +49897,12 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Pārģenerēti %1 dimensijas objekti</translation>
+        <translation>Pārģenerēti %1 izmēru objekti</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>Nav atrastu dimensijas objektu</translation>
+        <translation>Nav atrastu izmēru objektu</translation>
     </message>
 </context>
 <context>
@@ -49955,17 +49956,17 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Entity</source>
-        <translation>Vienība</translation>
+        <translation>Objekts</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>
         <source>Endpoint</source>
-        <translation>Mērķa kritērijs</translation>
+        <translation>Galapunkts</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>Sadaļa</translation>
+        <translation>Krustpunkts</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -49995,7 +49996,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1359"/>
         <source>Angle (on Entity)</source>
-        <translation>Leņķis (uz vienības)</translation>
+        <translation>Leņķis (uz objekta)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1361"/>
@@ -50005,7 +50006,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
         <source>Free</source>
-        <translation type="unfinished">Bez nodokļa</translation>
+        <translation type="unfinished">Brīvs</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1374"/>
@@ -50101,7 +50102,7 @@ Beigas: (%8 ,%9)</translation>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
         <source>Entity</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">Vienība</translation>
+        <translation type="unfinished">Objekts</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
@@ -50189,7 +50190,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>Dimensijas stils</translation>
+        <translation>Izmēru stils</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50204,7 +50205,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation>Lietotāja norādītās dimensijas etiķete. Ievadiet vērtību vai &quot;&lt;&gt;&quot; vai vienkārši atstājiet tukšu automātiskai mērīšanai.</translation>
+        <translation>Lietotāja norādītā izmēra etiķete. Ievadiet vērtību vai &quot;&lt;&gt;&quot;, vai vienkārši atstājiet tukšu automātiskai mērīšanai.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
@@ -50266,7 +50267,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation>Dimensijas leņķis</translation>
+        <translation>Izmēra leņķis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
@@ -50276,7 +50277,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation>Vertikālais Dimensija</translation>
+        <translation>Vertikālais izmērs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -50286,7 +50287,7 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>Attālums starp izmēriem bāzes scenārijā</translation>
+        <translation>Attālums starp bāzes līnijas izmēriem</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
@@ -50297,12 +50298,12 @@ Beigas: (%8 ,%9)</translation>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation>Bez nodokļa</translation>
+        <translation>Brīvs</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>Dimensijas leņķis</translation>
+        <translation>Izmēra leņķis</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
@@ -50320,12 +50321,12 @@ Beigas: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>Pielipšanas attālums:</translation>
+        <translation>Piesaistes attālums:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Snap punkts attālums no sākotnēji atrisināta snap punkts</translation>
+        <translation>Piesaistes punkta attālums no sākotnēji noteiktā piesaistes punkta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
