@@ -9123,7 +9123,7 @@ TEST_CASE(
                      std::sin(angle) * point.x + std::cos(angle) * point.y};
   };
   const RS_Vector highOrigin{1e9, -2e9};
-  const std::array<LC_ParabolaData, 5> invalidSources{{
+  const std::array<LC_ParabolaData, 6> invalidSources{{
       LC_ParabolaData::FromEndPointsTangents(endpoints,
                                              {{{1.0, 0.0}, {1.0, 0.0}}}),
       LC_ParabolaData::FromEndPointsTangents(endpoints,
@@ -9137,6 +9137,10 @@ TEST_CASE(
           {{rotate({0.0, 0.0}) + highOrigin,
             rotate({10.0, 0.0}) + highOrigin}},
           {{rotate({1.0, 1e-9}), rotate({1.0, -1e-9})}}),
+      LC_ParabolaData::FromEndPointsTangents(
+          {{rotate({0.0, 0.0}) + RS_Vector{1e12, -2e12},
+            rotate({10.0, 0.0}) + RS_Vector{1e12, -2e12}}},
+          {{rotate({1.0, 1e-8}), rotate({1.0, -1e-8})}}),
   }};
 
   RS_SplineData cache{1, false};
