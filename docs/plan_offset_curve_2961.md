@@ -57226,3 +57226,17 @@ was independently rerun to a fresh output directory; it again produced 208
 DXFs and no `.err` files. `git diff --check` passes. Other reflected scale
 ratios, profiles, orientations, origins, visible GUI interaction, and AutoCAD
 semantic acceptance remain open.
+
+## 1762. Combine Reflected Frame and Reduced Scale (2026-11-17)
+
+The reflected two-notch profile also passes at rotation `0.9`, vertical ratio
+`0.7`, and radius scale `0.6`, at origin `(1e12,-2e12)` with fixed offset
+`2500`. This combines the alternate reflected frame with a previously tested
+scale; it is one bounded cross-profile sample, not general frame/scale
+invariance.
+
+The focused CMake Release matrix passes 45,130 assertions / 1 case; its ODA
+staged run passes 44,747 assertions and contains exactly 216 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 216 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other reflected profiles, scales, origins,
+visible GUI interaction, and AutoCAD semantic acceptance remain open.
