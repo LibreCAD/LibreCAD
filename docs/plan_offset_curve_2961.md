@@ -57865,3 +57865,26 @@ focused CMake Release case passes 9,262 assertions / 1 case, and
 `git diff --check` passes. This is one closed fit-point layout only; other
 closed fit layouts, ODA, visible GUI, and AutoCAD semantic acceptance remain
 open.
+
+## 1801. Retry the Staged DWG Audit with ODAFileConverter Open (2026-11-17)
+
+After the user confirmed ODAFileConverter was running in the desktop session,
+retried conversion of `/private/tmp/offset-2961-trim-two-bulged-dwgs` to
+ACAD2018 DXF using the app-bundle executable. The SSH-launched converter again
+aborted with exit status 134 before conversion, reporting Cocoa pasteboard
+creation failures and an invalid `com.apple.hiservices-xpcservice` connection
+(`/private/tmp/offset-2961-oda-retry.log`). No output directory was created.
+This is not an ODA validation result; independent ODA conversion, visible GUI
+acceptance, and AutoCAD semantic acceptance remain open.
+
+## 1802. Exercise Both Offset Directions in the High-origin Typed Trim Matrix (2026-11-17)
+
+Extended the worker-created high-origin typed-source Trim Two matrix to run
+both `towardCentre` values for every source family and origin. Each direction
+covers both pick orders, preview/commit, undo/redo, and the five R14/R2000/
+R2018 DXF/DWG save/reopen lanes; optional LibreDWG checks remain enabled for
+the DWG lanes. The focused CMake Release test passes 33,534 assertions / 1
+case, and `git diff --check` passes. This qualifies the existing sampled
+families and high-origin frames in both offset directions; additional source
+profiles, ODA conversion, visible GUI, and AutoCAD semantic acceptance remain
+open.

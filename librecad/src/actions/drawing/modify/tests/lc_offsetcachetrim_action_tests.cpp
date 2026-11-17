@@ -8597,8 +8597,9 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
     REQUIRE(lc::test::ensureSettings());
     for (const double frame : {1e12, 1e13})
     for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u})
+    for (const bool towardCentre : {false, true})
     for (const bool splineFirst : {false, true}) {
-        CAPTURE(frame, sourceFamily, splineFirst);
+        CAPTURE(frame, sourceFamily, towardCentre, splineFirst);
         const bool largestFrame = frame == 1e13;
         const RS_Vector center{frame, -2 * frame};
         const double scale = largestFrame ? 1e6 : 1e5;
@@ -8612,7 +8613,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
 
         RS_Ellipse seed(nullptr,
             RS_EllipseData{{0, 0}, {2 * scale, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, distance, false);
+        auto initial = LC_OffsetCurve::create(seed, distance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
@@ -8714,7 +8715,8 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         REQUIRE(native);
         REQUIRE(native->sourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == sourceKind);
-        CHECK(native->sourceDefinition()->signedDistance == distance);
+        const double signedDistance = towardCentre ? -distance : distance;
+        CHECK(native->sourceDefinition()->signedDistance == signedDistance);
 
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
@@ -8770,8 +8772,9 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
             const bool dwg = format == RS2::FormatDWG ||
                              format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("high-origin-typed-trim-%1-%2-%3")
-                    .arg(sourceFamily).arg(splineFirst ? 1 : 0).arg(lane) +
+                QStringLiteral("high-origin-typed-trim-%1-%2-%3-%4")
+                    .arg(sourceFamily).arg(towardCentre ? 1 : 0)
+                    .arg(splineFirst ? 1 : 0).arg(lane) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
