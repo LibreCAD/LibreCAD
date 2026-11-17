@@ -57425,3 +57425,17 @@ The focused CMake Release matrix passes 60,421 assertions / 1 case. R14 DXF,
 R2000 DXF/DWG, and R2018 DXF/DWG reopen checks pass within LibreCAD.
 `git diff --check` passes. Visible GUI and independent CAD validation remain
 open, as do other bulge values, topologies, and scale/origin combinations.
+
+## 1777. Trim the Baseline Closed Profile at `1e13` (2026-11-17)
+
+The baseline closed-polyline profile (topology 0) passes Trim Two at rotation
+`0.37`, vertical ratio `1.0`, radius scale `1.0`, and center
+`(1e13,-2e13)`, with fixed offset `2500`. Both offset sides, pick orders,
+undo/redo, and all five native-capable save/reopen lanes are covered. This
+adds one high-origin square-like profile and does not imply all closed
+polylines are covered.
+
+The focused CMake Release matrix passes 61,945 assertions / 1 case. The R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen assertions pass within LibreCAD.
+`git diff --check` passes. ODA/AutoCAD and visible GUI acceptance remain open,
+as do other profile dimensions and scale/origin combinations.
