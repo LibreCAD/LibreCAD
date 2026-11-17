@@ -57455,3 +57455,16 @@ The focused CMake Release case passes 2,705 assertions / 1 case across the
 three recorded line scales and both pick orders. Geometry and persistence
 assertions pass within LibreCAD; ODA/AutoCAD and visible GUI acceptance remain
 open, as do other line orientations and scale/origin combinations.
+
+## 1779. Trim Forward and Reversed Arcs at `1e13` (2026-11-17)
+
+Extended the worker-created typed-arc Trim Two matrix with forward and reversed
+arcs of radius `1e6` centered at `(1e13,-2e13)`, using a proportional offset
+distance of `25000`. Both arc/native pick orders exercise replacement,
+preview/commit, undo/redo, and the five native-capable DXF/DWG round-trip
+lanes. The viewport uses a scale-aware zoom for the large origin.
+
+The complete focused typed-arc CMake Release case passes 12,192 assertions /
+1 case, including its prior bounded and high-origin profiles. ODA/AutoCAD and
+visible GUI acceptance remain open; other radii, sweeps, orientations, and
+scale/origin combinations are not implied.
