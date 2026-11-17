@@ -57888,3 +57888,15 @@ case, and `git diff --check` passes. This qualifies the existing sampled
 families and high-origin frames in both offset directions; additional source
 profiles, ODA conversion, visible GUI, and AutoCAD semantic acceptance remain
 open.
+
+## 1803. Preserve Both Origins in Staged Typed Trim DWGs (2026-11-17)
+
+Added the `1e12`/`1e13` origin label to the generated high-origin typed Trim
+Two filenames. This prevents the optional `LC_OFFSET_ODA_OUTPUT_DIR` staging
+copy from overwriting one origin with the other. With staging enabled, the
+focused CMake Release test passes 33,396 assertions / 1 case, and
+`git diff --check` passes. The staging directory contains 176 unique DWGs:
+both origins, 11 source-family profiles, both offset directions and pick
+orders, and both R2000/R2018 DWG lanes. ODA conversion, visible GUI, and
+AutoCAD semantic acceptance remain open; this creates complete distinct
+inputs for those external checks but does not count as their validation.

@@ -8772,9 +8772,9 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
             const bool dwg = format == RS2::FormatDWG ||
                              format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("high-origin-typed-trim-%1-%2-%3-%4")
-                    .arg(sourceFamily).arg(towardCentre ? 1 : 0)
-                    .arg(splineFirst ? 1 : 0).arg(lane) +
+                QStringLiteral("high-origin-typed-trim-%1-%2-%3-%4-%5")
+                    .arg(sourceFamily).arg(largestFrame ? "1e13" : "1e12")
+                    .arg(towardCentre ? 1 : 0).arg(splineFirst ? 1 : 0).arg(lane) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
