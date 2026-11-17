@@ -8957,7 +8957,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {.37, .7, false, 1, 1.7, 1.0}, {.37, .7, false, 3, .6, 1.0},
         {.37, .7, false, 5, 1.7, 1.0},
         {.37, .7, false, 1, 1.0, .001},
-        {0.0, 1.0, false, 5, 1.7, 10.0}}));
+        {0.0, 1.0, false, 5, 1.7, 10.0},
+        {0.0, 1.0, false, 6, 1.0, 1.0}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
@@ -9019,6 +9020,19 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 source->addVertex(world(-radius / 3, -radius / 3 * verticalRatio));
                 source->addVertex(world(-radius / 3, radius * verticalRatio));
                 source->addVertex(world(-radius, radius * verticalRatio));
+            } else if (topology == 6) {
+                source->addVertex(world(-radius, -radius * verticalRatio));
+                source->addVertex(world(radius, -radius * verticalRatio));
+                source->addVertex(world(radius, radius * verticalRatio));
+                source->addVertex(world(.6 * radius, radius * verticalRatio));
+                source->addVertex(world(.6 * radius, -.25 * radius * verticalRatio));
+                source->addVertex(world(.3 * radius, -.25 * radius * verticalRatio));
+                source->addVertex(world(.3 * radius, radius * verticalRatio));
+                source->addVertex(world(-.3 * radius, radius * verticalRatio));
+                source->addVertex(world(-.3 * radius, -.25 * radius * verticalRatio));
+                source->addVertex(world(-.6 * radius, -.25 * radius * verticalRatio));
+                source->addVertex(world(-.6 * radius, radius * verticalRatio));
+                source->addVertex(world(-radius, radius * verticalRatio));
             } else {
                 source->addVertex(world(-radius, -radius * verticalRatio), bulge);
                 source->addVertex(world(radius, -radius * verticalRatio), bulge);
@@ -9049,7 +9063,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             REQUIRE(breaks.size() >= 2);
             const RS_Vector nativePick = native->getPointAt(
                 breaks.front() + (breaks.back() - breaks.front()) * .1);
-            const bool horizontalCutter = topology == 4 || topology == 5;
+            const bool horizontalCutter = topology == 4 || topology == 5 || topology == 6;
             const double cutterX = topology == 1 ? -.5 * radius : topology == 2 ? .5 * radius :
                                    topology == 3 ? .65 * radius : 0;
             const double cutterY = topology == 4 ? .5 * radius * verticalRatio : 0;
@@ -9058,7 +9072,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 : RS_LineData{world(cutterX, -2 * radius), world(cutterX, 2 * radius)});
             f.graphic.addEntity(cutter);
             const RS_Vector cutterPick = horizontalCutter
-                ? world(topology == 5 ? -.65 * radius : -.5 * radius, cutterY)
+                ? world(topology == 5 ? -.65 * radius : topology == 6 ? -.8 * radius : -.5 * radius, cutterY)
                 : world(cutterX, radius);
             RS_SplineData cutterCache;
             cutterCache.degree = 1;
@@ -9075,9 +9089,11 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             REQUIRE(nativeFirstPrepared.refusal == LC_OffsetCacheTrim::Refusal::None);
             CHECK(nativeFirstPrepared.rootCount >= 2);
             if (topology == 5) { CHECK(nativeFirstPrepared.rootCount == 4); }
+            if (topology == 6) { CHECK(nativeFirstPrepared.rootCount == (towardCentre ? 2 : 6)); }
             REQUIRE(lineFirstPrepared.refusal == LC_OffsetCacheTrim::Refusal::None);
             CHECK(lineFirstPrepared.rootCount >= 2);
             if (topology == 5) { CHECK(lineFirstPrepared.rootCount == 4); }
+            if (topology == 6) { CHECK(lineFirstPrepared.rootCount == 6); }
 
             const auto firstPick = nativeFirst ? nativePick : cutterPick;
             const auto secondPick = nativeFirst ? cutterPick : nativePick;
