@@ -5975,19 +5975,30 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             {"unit", 1.0, frameTranslation},
             {"large", 1e3, highOrigin}}};
         for (const CurvatureFrame& frame : curvatureFrames) {
-            const LC_ParabolaData source = LC_ParabolaData::FromEndPointsTangents(
-                {{rotate({0.0, 0.0}) + frame.origin,
-                  rotate({10.0 * frame.scale, 0.0}) + frame.origin}},
-                {{rotate(firstTangent), rotate(secondTangent)}});
-            REQUIRE(source.isValid());
-            const double vertexRadius =
-                2.0 * source.m_focus.distanceTo(source.m_vertex);
-            REQUIRE(std::isfinite(vertexRadius));
-            REQUIRE(vertexRadius > 0.0);
-            for (const double curvatureRatio : {0.1, 0.5, 0.9}) {
-                const std::string name = std::string{"curvature-"} + layoutName +
-                    "-" + frame.name + "-ratio-" + std::to_string(curvatureRatio);
-                profiles.push_back({name, source, frame.scale, curvatureRatio});
+            const std::array<LC_ParabolaData, 2> sources{{
+                LC_ParabolaData::FromEndPointsTangents(
+                    {{rotate({0.0, 0.0}) + frame.origin,
+                      rotate({10.0 * frame.scale, 0.0}) + frame.origin}},
+                    {{rotate(firstTangent), rotate(secondTangent)}}),
+                LC_ParabolaData::FromEndPointsTangents(
+                    {{rotate({10.0 * frame.scale, 0.0}) + frame.origin,
+                      rotate({0.0, 0.0}) + frame.origin}},
+                    {{rotate(secondTangent) * -1.0,
+                      rotate(firstTangent) * -1.0}})}};
+            for (const auto& [traversal, source] : std::array{
+                     std::pair{"forward", sources[0]},
+                     std::pair{"reversed", sources[1]}}) {
+                REQUIRE(source.isValid());
+                const double vertexRadius =
+                    2.0 * source.m_focus.distanceTo(source.m_vertex);
+                REQUIRE(std::isfinite(vertexRadius));
+                REQUIRE(vertexRadius > 0.0);
+                for (const double curvatureRatio : {0.1, 0.5, 0.9}) {
+                    const std::string name = std::string{"curvature-"} +
+                        traversal + "-" + layoutName + "-" + frame.name +
+                        "-ratio-" + std::to_string(curvatureRatio);
+                    profiles.push_back({name, source, frame.scale, curvatureRatio});
+                }
             }
         }
     };
