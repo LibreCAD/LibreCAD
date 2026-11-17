@@ -5396,8 +5396,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
+    for (const bool towardCentre : {false, true})
     for (const bool ellipseFirst : {false, true}) {
-        CAPTURE(ellipseFirst);
+        CAPTURE(towardCentre, ellipseFirst);
         Drawing<true> f;
         constexpr double rotation = .67;
         constexpr double offsetDistance = 2500;
@@ -5409,7 +5410,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
             qRound(240.0 - center.y * zoom), zoom);
 
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {20000, 0}, .25, 0, 0, false});
-        auto initial = LC_OffsetCurve::create(seed, offsetDistance, true);
+        auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
@@ -5436,12 +5437,12 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         }
         REQUIRE(native);
         CHECK(native->definition().distance == offsetDistance);
-        CHECK(native->definition().towardCentre);
+        CHECK(native->definition().towardCentre == towardCentre);
 
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
         const RS_Vector major{std::cos(rotation), std::sin(rotation)};
-        const RS_Vector target = center + major * 90000;
+        const RS_Vector target = center + major * (towardCentre ? 90000 : 120000);
         double nativePickParameter = first;
         double nearestDistance = std::numeric_limits<double>::infinity();
         for (unsigned i = 0; i <= 8192; ++i) {
@@ -5550,7 +5551,9 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
                              formats[i] == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
                 QStringLiteral("high-origin-ellipse-trim-%1-%2")
-                    .arg(ellipseFirst ? 1 : 0).arg(i) + (dwg ? ".dwg" : ".dxf")
+                    .arg(towardCentre ? 1 : 0)
+                    .arg(ellipseFirst ? 1 : 0).arg(i) +
+                (dwg ? ".dwg" : ".dxf")
             ).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
             RS_Graphic reopened;
