@@ -57320,3 +57320,13 @@ linking also warns that QtSvg and FreeType dependencies target macOS 27.0 while
 the build deployment target is 14.4. These warnings did not fail the build and
 remain packaging/deployment compatibility observations. This validates the
 application build, not a qmake test executable or visible GUI workflow.
+
+## 1769. Independently Read a High-origin Trim DWG with LibreDWG (2026-11-17)
+
+LibreDWG 0.14 `dwgread -O JSON` successfully parses the AC1032 output
+`closed-high-origin-trim-two-1-0-37-100-0-6-100-10000-4.dwg` from the
+topology-6 `(1e13,-2e13)` profile. A structural JSON check confirms five
+degree-3 SPLINE entities (four with 4 control points / 8 knots, one with 58 /
+62), one LWPOLYLINE, and two LINE entities. This is independent entity-structure
+evidence for one file; it does not verify LibreDWG's rendering, editable
+extension metadata semantics, or general high-origin interoperability.
