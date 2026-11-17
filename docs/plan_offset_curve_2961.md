@@ -874,6 +874,17 @@ worker branches; a single native editable cache is not claimed. Other
 unsupported cells remain open, so this does not close the self-crossing-
 polyline topology feature generally.
 
+**High-origin polyline addendum (sections 1735-1739):** the recorded high-origin
+matrix now includes worker-backed Trim Two for cubic and fit-point splines and
+an open collinear polyline (1735); a composed open L-polyline cache through
+Trim Two on both signed offset sides, both pick orders, and all five native
+file lanes, with ODA conversion of all eight DWGs (1736, 1739); and one-sided
+Trim plus five-lane persistence for a closed square on both signed sides
+(1737-1738). These are exact fixture results, not general high-origin
+polyline support. Other corner layouts, closed-loop Trim Two, broader
+topologies/origins, visible packaged-app acceptance, and AutoCAD acceptance
+remain open.
+
 **Combined-frame diagnostic update (section 1394; superseded by section 1405):**
 the pre-fix strict arrangement reported `CycleAssembly/OpenBoundary` with a
 nearest kept endpoint gap of approximately `0.9959593` for the tested
