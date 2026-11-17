@@ -56209,3 +56209,22 @@ recorded sides/radii, and the tested five file lanes. It does not establish
 Trim or persistence for a unit-scale source at this origin, the
 near-parallel input rejected in section 1708, or arbitrary endpoint-tangent
 geometries.
+
+## 1710. Persist a Backtracking-start Pair at a `1e12` Origin (2026-11-17)
+
+Test commit `e0b3e78c3` adds a second large-scale `1e12` translated profile to
+the endpoint-tangent worker/cache and five-format persistence matrix. Its
+directed tangent pair `{(-0.6, 0.8), (0.9, -0.4358898943540673)}` creates a
+backtracking-start lobe and complements the steep monotone pair in sections
+1708-1709. The worker test independently checks offset endpoints for this
+profile, both signed offsets, source definition/cache consistency, and the
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes.
+
+Validation on the exact worktree with macOS arm64 CMake Release:
+
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`, including the new profile: 446,460 assertions / 1 case passed with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1800000`.
+- `librecad_offset_worker_client_tests` rebuilt successfully; `git diff --check` passed.
+
+This qualifies only the recorded backtracking-start pair at this origin,
+scale, and distance grid. Trim at this origin for the backtracking pair,
+other frames/scales, and other tangent layouts remain open.
