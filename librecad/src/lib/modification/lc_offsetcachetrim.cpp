@@ -288,6 +288,21 @@ LC_CertifiedRootSnapshot contract(Context& c, LC_CertifiedIntersectionSession& s
     return *result.snapshot;
 }
 
+bool normalizeSourceCutterOrder(LC_CertifiedRootSnapshot& snapshot) {
+    auto& event = snapshot.event;
+    if (event.branchA == 0 && event.branchB == 1) { return true; }
+    if (event.branchA != 1 || event.branchB != 0) { return false; }
+    std::swap(event.branchA, event.branchB);
+    std::swap(event.parameterA, event.parameterB);
+    const auto swapDomain = [](LC_IntersectionDomain& domain) {
+        std::swap(domain.segmentA, domain.segmentB);
+        std::swap(domain.parameterA, domain.parameterB);
+    };
+    swapDomain(event.isolation);
+    swapDomain(event.proofDomain);
+    return true;
+}
+
 I hullNet(const Net& net, std::size_t degree, bool x) {
     I value = x ? net[0].x : net[0].y;
     for (std::size_t i = 1; i <= degree; ++i) { value = I::hull(value, x ? net[i].x : net[i].y); }
@@ -1468,7 +1483,9 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
     std::vector<Root> out; out.reserve(session.rootCount());
     for (std::size_t k = 0; k < session.rootCount(); ++k) {
         c.check(); const auto handle = session.rootHandle(k); auto snapshot = session.snapshot(handle);
-        if (!snapshot || snapshot->event.branchA != 0 || snapshot->event.branchB != 1) { fail(Refusal::AmbiguousRoots); }
+        if (!snapshot) { fail(Refusal::AmbiguousRoots); }
+        if (snapshot->event.branchA == snapshot->event.branchB) { continue; }
+        if (!normalizeSourceCutterOrder(*snapshot)) { fail(Refusal::AmbiguousRoots); }
         if (snapshot->event.kind == LC_ParametricIntersection::Kind::Tangent ||
             (snapshot->event.proof != LC_IntersectionProof::IntervalUniqueTransverse &&
              snapshot->event.proof != LC_IntersectionProof::AnalyticMonotoneTransverse &&
@@ -1610,6 +1627,7 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
                 }
                 else { throw; }
             }
+            if (!usedScalarFallback && !normalizeSourceCutterOrder(*snapshot)) { fail(Refusal::AmbiguousRoots); }
             if (!usedScalarFallback) {
                 t = intersect(snapshot->event.isolation.parameterA, t);
                 if (!finite(t)) { fail(Refusal::AmbiguousRoots); }
