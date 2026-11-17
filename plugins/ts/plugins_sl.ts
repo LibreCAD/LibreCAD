@@ -370,7 +370,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>LOPUTA</translation>
+        <translation>ŠRAFURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -653,7 +653,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Prazen subjekt</translation>
+        <translation>Prazna entiteta</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -787,7 +787,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertike</translation>
+        <translation>Oglišča</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -840,7 +840,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Tiki - izklopljeni</translation>
+        <translation>Oznake - izklopljeno</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -870,12 +870,12 @@ v nasprotni smeri urinega kazalca.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt; &lt;br&gt;Vnesite ime &lt;br&gt; za novo plast &lt;br&gt; (če je potrebno?) za &lt;br&gt;potegnite klopi naprej.</translation>
+        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt; &lt;br&gt;Vnesite ime &lt;br&gt; za novo plast &lt;br&gt; (če je potrebno?), na katero &lt;br&gt;se narišejo oznake.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Klopi</translation>
+        <translation>Oznake</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -996,7 +996,7 @@ v nasprotni smeri urinega kazalca.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Povlecite podtlak?</translation>
+        <translation>Nariši tlačno črto?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
@@ -1125,7 +1125,7 @@ v nasprotni smeri urinega kazalca.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Faktor lestvice je prazen ali neveljaven</translation>
+        <translation>Faktor merila je prazen ali neveljaven</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1165,7 +1165,7 @@ v nasprotni smeri urinega kazalca.</translation>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Name</translation>
+        <translation>Vtičnik za graf</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ v nasprotni smeri urinega kazalca.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Optična enačba</translation>
+        <translation>Enačba grafa</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>

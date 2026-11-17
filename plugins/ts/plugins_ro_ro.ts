@@ -350,7 +350,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertice</translation>
+        <translation>Vârfuri</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -564,12 +564,12 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Stratul 2D este gol</translation>
+        <translation>Stratul 2D al punctelor este gol</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Stratul 3D este gol</translation>
+        <translation>Stratul 3D al punctelor este gol</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -787,7 +787,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertice</translation>
+        <translation>Vârfuri</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -840,12 +840,12 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticuri - oprite</translation>
+        <translation>Marcaje - Dezactivat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Despărţiri</translation>
+        <translation>Întreruperi - Dezactivat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ merge
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt; &quot;Nou&quot; &lt;/i&gt; &lt;br&gt;Enter name&lt;br&gt; for a new layer&lt;br&gt; (dacă este necesar?) to&lt;br&gt;draw ticles on.</translation>
+        <translation>&lt;i&gt;&quot;Nou&quot;&lt;/i&gt;&lt;br&gt;Introduceți numele&lt;br&gt;unui strat nou&lt;br&gt;(dacă este necesar?) pe care&lt;br&gt;să se deseneze marcajele.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticuri</translation>
+        <translation>Marcaje</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>

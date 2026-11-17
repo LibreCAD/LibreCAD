@@ -652,7 +652,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Pusta jednostka</translation>
+        <translation>Pusty obiekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -975,7 +975,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Narysować krąg rzutów?</translation>
+        <translation>Narysować okrąg podziałowy?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
@@ -1023,7 +1023,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Wykaz podmiotów</translation>
+        <translation>Wykaz obiektów</translation>
     </message>
 </context>
 <context>
@@ -1159,7 +1159,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Wtyczka</translation>
+        <translation>Wtyczka wykresów</translation>
     </message>
 </context>
 <context>

@@ -43,7 +43,7 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Храните оригинальные предметы</translation>
+        <translation>Сохранить исходные объекты</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
@@ -703,7 +703,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>указывать</translation>
+        <translation>до точки</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -767,7 +767,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>ПОЛИЛАЙН</translation>
+        <translation>ПОЛИЛИНИЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Вертикали</translation>
+        <translation>Вершины</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -845,7 +845,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Обсуждение Breaks - Off</translation>
+        <translation>Разрывы — Выкл.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt; «Новый»&lt;/i&gt;&lt;br&gt;Введите имя &lt;br&gt; для нового слоя &lt;br&gt; (если требуется?) для &lt;br&gt; нарисовать клещи.</translation>
+        <translation>&lt;i&gt;«Новый»&lt;/i&gt;&lt;br&gt;Введите имя&lt;br&gt;нового слоя&lt;br&gt;(если требуется?) для&lt;br&gt;рисования засечек.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Клещи</translation>
+        <translation>Засечки</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>

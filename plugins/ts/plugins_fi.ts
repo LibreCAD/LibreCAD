@@ -128,7 +128,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Tyhjä yksikkö</translation>
+        <translation>Tyhjä kohde</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -153,7 +153,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Rivityyppi</translation>
+        <translation>Viivatyyppi</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -168,7 +168,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>KOHTA</translation>
+        <translation>PISTE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -190,7 +190,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>osoittaa</translation>
+        <translation>loppupiste</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -305,7 +305,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Lisäys</translation>
+        <translation>Lisäyspiste</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -350,7 +350,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertikset</translation>
+        <translation>Kärkipisteet</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -365,7 +365,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>PALKKAILIJAT</translation>
+        <translation>SPLINIPISTEET</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -419,12 +419,12 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>valitse alkuperäinen yhteisö:</translation>
+        <translation>valitse alkuperäinen kohde:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>valitse muutettavat yksiköt</translation>
+        <translation>valitse muutettavat kohteet</translation>
     </message>
 </context>
 <context>
@@ -638,7 +638,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Valitse rivi, ympyrä tai kaari ja paina paluuta</translation>
+        <translation>Valitse viiva, ympyrä tai kaari ja paina Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +653,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tyhjä yksikkö</translation>
+        <translation>Tyhjä kohde</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -678,7 +678,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Rivityyppi</translation>
+        <translation>Viivatyyppi</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -703,7 +703,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>osoittaa</translation>
+        <translation>loppupiste</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -787,7 +787,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertikset</translation>
+        <translation>Kärkipisteet</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -840,12 +840,12 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticks - pois päältä</translation>
+        <translation>Merkit - pois päältä</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Tauot - pois päältä</translation>
+        <translation>Katkot - pois päältä</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ Vastapäivään.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Uusi&quot;&lt;/i&gt;&lt;br&gt;Anna nimi &lt;br&gt;uudelle kerrokselle &lt;br&gt;(tarvittaessa), jotta &lt;br&gt;viivat voidaan piirtää.</translation>
+        <translation>&lt;i&gt;&quot;Uusi&quot;&lt;/i&gt;&lt;br&gt;Anna nimi &lt;br&gt;uudelle kerrokselle &lt;br&gt;(tarvittaessa), jotta &lt;br&gt;merkit voidaan piirtää.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tikut</translation>
+        <translation>Merkit</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -996,7 +996,7 @@ Vastapäivään.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Vedätkö painetta?</translation>
+        <translation>Piirretäänkö paineviiva?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
@@ -1125,7 +1125,7 @@ Vastapäivään.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor on tyhjä tai virheellinen</translation>
+        <translation>Mittakaavakerroin on tyhjä tai virheellinen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1173,7 +1173,7 @@ Vastapäivään.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Tontin yhtälö</translation>
+        <translation>Yhtälön kuvaaja</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1227,7 +1227,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Rivisegmentit</translation>
+        <translation>Viivasegmentit</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>

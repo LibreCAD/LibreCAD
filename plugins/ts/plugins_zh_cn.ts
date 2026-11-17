@@ -275,7 +275,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>区域阴影</translation>
+        <translation>二维填充</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
@@ -295,7 +295,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>插图</translation>
+        <translation>块参照</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -365,12 +365,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>发言</translation>
+        <translation>样条曲线点</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>阴影</translation>
+        <translation>图案填充</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -633,12 +633,12 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation>除号</translation>
+        <translation>分隔线</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>选择行、圆或弧并按返回</translation>
+        <translation>选择直线、圆或圆弧并按回车键</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -678,7 +678,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>行类型</translation>
+        <translation>线型</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -752,7 +752,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>克鲁斯</translation>
+        <translation>圆</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,7 +767,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>邮政线路</translation>
+        <translation>多段线</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,17 +787,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>温度</translation>
+        <translation>顶点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation>单位</translation>
+        <translation>点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>必须是一行、圆形或弧形</translation>
+        <translation>必须是直线、圆或圆弧</translation>
     </message>
 </context>
 <context>
@@ -805,7 +805,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>除号 -</translation>
+        <translation>分割 - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
@@ -825,7 +825,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>除以</translation>
+        <translation>分割于</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -840,7 +840,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>选项 - 关闭</translation>
+        <translation>刻度 - 关闭</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -875,7 +875,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>选项</translation>
+        <translation>刻度</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -908,7 +908,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (*.csv) (中文(简体) )</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -981,7 +981,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>画出投球圈 ?</translation>
+        <translation>绘制节圆？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>

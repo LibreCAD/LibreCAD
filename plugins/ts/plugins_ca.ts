@@ -332,7 +332,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLITCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -754,7 +754,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>COMPLECONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>CERCLE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -769,7 +769,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLITCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -847,7 +847,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Divideix - Inactiu</translation>
+        <translation>Interrupcions - Desactivat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -872,7 +872,7 @@ En sentit antihorari.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot; &lt;/i&gt; &lt;br&gt; Introduïu el nom &lt;br&gt; per a una nova capa &lt;br&gt;(if requerit?) per a &lt;br&gt;draws.</translation>
+        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Introduïu el nom&lt;br&gt;d&apos;una nova capa&lt;br&gt;(si cal?) per&lt;br&gt;dibuixar-hi les marques.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -910,7 +910,7 @@ En sentit antihorari.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (*. csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -1167,7 +1167,7 @@ En sentit antihorari.</translation>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Connector d&apos;impressió</translation>
+        <translation>Connector de traçat d&apos;equacions</translation>
     </message>
 </context>
 <context>

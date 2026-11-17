@@ -43,7 +43,7 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Originaalesemete säilitamine</translation>
+        <translation>Algsete objektide säilitamine</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
@@ -638,7 +638,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Vali rida, ring või kaar ja vajuta tagasi</translation>
+        <translation>Vali joon, ring või kaar ja vajuta Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -840,7 +840,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Puugid - väljas</translation>
+        <translation>Märgid - väljas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -870,7 +870,7 @@ vastupäeva.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Uus&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt; for new layer&lt;br&gt;(kui see on nõutav?) to&lt;br&gt;draw ticks on.</translation>
+        <translation>&lt;i&gt;&quot;Uus&quot;&lt;/i&gt;&lt;br&gt;Sisesta uue&lt;br&gt;kihi nimi&lt;br&gt;(vajadusel), millele&lt;br&gt;märgid joonistada.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -1165,7 +1165,7 @@ vastupäeva.</translation>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plugin</translation>
+        <translation>Graafiku plugin</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ vastupäeva.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Joonise võrrand</translation>
+        <translation>Graafiku võrrand</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1232,7 +1232,7 @@ Kasuta oma võrrandis t või x muutuja/parameetrina.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Liitjoon</translation>
+        <translation>Polüjoon</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
@@ -1246,7 +1246,7 @@ Kasuta oma võrrandis t või x muutuja/parameetrina.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>Kile:</translation>
+        <translation>Kiht:</translation>
     </message>
 </context>
 <context>

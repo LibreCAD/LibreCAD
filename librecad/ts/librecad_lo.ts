@@ -1243,12 +1243,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
-        <translation>ຂະຫຍາຍ&amp;ເຂົ້າ</translation>
+        <translation>ຊູມ&amp;ເຂົ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
-        <translation>ຂະຫຍາຍ&amp;ອອກ</translation>
+        <translation>ຊູມ&amp;ອອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
@@ -1786,8 +1786,8 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>ເລເຢີການກໍ່ສ້າງມີເສັ້ນຊື່ທີ່ຍາວບໍ່ມີທີ່ສິ້ນສຸດ ເພື່ອໃຊ້ໃນການວາງແນວທາງເລຂາຄະນິດ. 
-ສິ່ງທີ່ຢູ່ໃນເລເຢີນີ້ຈະບໍ່ປະກົດອອກໃນເວລາສັ່ງພິມ.</translation>
+        <translation>ເລເຢີຊ່ວຍສ້າງປະກອບດ້ວຍເສັ້ນຊື່ທີ່ບໍ່ມີສິ້ນສຸດ ເພື່ອໃຊ້ສຳລັບການສ້າງຮູບຊົງເລຂາຄະນິດ.
+ເນື້ອໃນຂອງເລເຢີຊ່ວຍສ້າງຈະບໍ່ປາກົດໃນເວລາພິມອອກ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
@@ -3516,7 +3516,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>ໄລຍະຫ່າງຈາກໂພລີລາຍເດີມ</translation>
+        <translation>ໄລຍະຫ່າງຈາກເສັ້ນຕໍ່ເນື່ອງເດີມ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -4147,7 +4147,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">ຂະ&amp;ໜາດ</translation>
+        <translation type="unfinished">&amp;ມິຕິ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
@@ -4911,7 +4911,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
         <source>Scale:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ມາດຕາສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
@@ -4984,7 +4984,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
         <source>Scale:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ມາດຕາສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="246"/>
@@ -5064,7 +5064,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>ຂະໜາດ Y:</translation>
+        <translation>ມາດຕາສ່ວນ Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="209"/>
@@ -5089,7 +5089,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>ຂະໜາດ X:</translation>
+        <translation>ມາດຕາສ່ວນ X:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="279"/>
@@ -5160,7 +5160,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;ໄລຍະຫ່າງບັນທຶກເລີ່ມຕົ້ນ</translation>
+        <translation>&amp;ໄລຍະຫ່າງບັນທັດເລີ່ມຕົ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -6465,7 +6465,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>ເສັ້ນຊ່ວຍບອກຂະໜາດ (Extension lines)</translation>
+        <translation>ເສັ້ນຊ່ວຍມິຕິ (Extension lines)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -10372,7 +10372,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>ຄວາມຍາວ</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
@@ -10404,7 +10404,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
         <source>trim</source>
-        <translation>ຕັດຂອບ</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
@@ -11328,7 +11328,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="456"/>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>ແມ່ນ</translation>
+        <translation>a</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="461"/>
@@ -11921,7 +11921,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1116"/>
         <source>y</source>
-        <translation>ຄ່າ</translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
@@ -11941,7 +11941,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>ອອບເຊັດ</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
@@ -12032,7 +12032,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>ຈຸດກາງ</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
@@ -12097,12 +12097,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>ຂະໜາດປານກາງ</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>ກາງ</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12127,22 +12127,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>ບໍ່ມີຂອບ</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>ຂອບທັງ:</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>ເລີ່ມຂອບ</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>ຂອບ</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -12182,7 +12182,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>ໄລຍະຫ່າງ</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13435,7 +13435,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
+        <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນຂອງເສັ້ນຊ່ວຍມິຕິທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13536,7 +13536,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ກຳນົດມຸມສິ້ນສຸດ ຫຼື [ມຸມ/chord length]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="355"/>
@@ -16954,7 +16954,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດການພິມຖືກລັອກໄວ້ທີ່ຄ່າປັດຈຸບັນ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ມາດຕາສ່ວນການພິມຖືກລັອກໄວ້ທີ່ຄ່າປັດຈຸບັນ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
@@ -16979,7 +16979,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>ນຳໃຊ້ຂະໜາດການພິມໃຫ້ກັບຄວາມກວ້າງເສັ້ນ</translation>
+        <translation>ນຳໃຊ້ມາດຕາສ່ວນການພິມໃຫ້ກັບຄວາມກວ້າງເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>

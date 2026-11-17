@@ -16,7 +16,7 @@
         <location filename="../circletools/circletools.cpp" line="50"/>
         <location filename="../circletools/circletools.cpp" line="56"/>
         <source>CircleTools</source>
-        <translation>Mga Kagamitan sa Bilog</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -85,12 +85,7 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>Kung minarkahan ang &apos;Panatilihin ang orihinal na mga bagay&apos;,
-kokopyahin ng Align sa halip na ilipat ang mga napiling bagay.
-
-Kung minarkahan ang &apos;Tukuyin muna ang mga base point&apos;,
-hinihiling ng Align ang mga alignment point sa pagkakasunud-sunod na
-unang base, pangalawang base, unang target, pangalawang target.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
@@ -844,7 +839,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>ਵਿਰਾਮ - ਬੰਦ</translation>
+        <translation>ਬ੍ਰੇਕ - ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -859,7 +854,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>ਸ਼ੁਰੂ ਵਾਲਾ ਕੋਣ ਦਰਜ ਕਰੋ, ਦਸ਼ਮਲਵ ਦਰਜੇ ਵਿੱਚ। 3 ਵਜੇ 0° ਤੋਂ ਸ਼ੁਰੂ ਹੋ ਕੇ ਘੜੀ ਦੀ ਉਲਟ ਦਿਸ਼ਾ ਵਿੱਚ ਜਾਂਦਾ ਹੈ।</translation>
+        <translation>ਸ਼ੁਰੂ ਵਾਲਾ ਕੋਣ
+ਦਰਜ ਕਰੋ,
+ਦਸ਼ਮਲਵ ਡਿਗਰੀਆਂ ਵਿੱਚ।
+3 ਵਜੇ 0° ਤੋਂ ਸ਼ੁਰੂ ਹੋ ਕੇ
+ਘੜੀ ਦੀ ਉਲਟ
+ਦਿਸ਼ਾ ਵਿੱਚ ਜਾਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>

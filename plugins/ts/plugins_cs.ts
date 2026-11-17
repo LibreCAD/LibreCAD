@@ -71,11 +71,11 @@ If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
         <translation>Je-li zaškrtnuto &apos;Ponechat původní objekty&apos;,
-Zarovnat bude kopírovat spíše než pohybovat vybrané objekty.
+Zarovnat vybrané objekty zkopíruje, místo aby je přesunulo.
 
 Pokud je zaškrtnuto &apos;Upřesnit základní body jako první&apos;,
-Zarovnat bude urychlit pro sladění bodů v pořadí
-První meta, druhá meta, první terč, druhý terč.</translation>
+Zarovnat se zeptá na body zarovnání v pořadí
+první základní bod, druhý základní bod, první cílový bod, druhý cílový bod.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -310,7 +310,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Stupnice</translation>
+        <translation>Měřítko</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -638,7 +638,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Vyberte řádek, kruh nebo oblouk a stiskněte zpět</translation>
+        <translation>Vyberte čáru, kruh nebo oblouk a stiskněte Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +653,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Prázdný subjekt</translation>
+        <translation>Prázdný prvek</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -678,7 +678,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Typ úsečky</translation>
+        <translation>Typ čáry</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -840,7 +840,7 @@ První meta, druhá meta, první terč, druhý terč.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Zaškrtnutí - Vypnuto</translation>
+        <translation>Značky - Vypnuto</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -875,7 +875,7 @@ proti směru hodinových ručiček.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tiky</translation>
+        <translation>Značky</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -908,7 +908,7 @@ proti směru hodinových ručiček.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (* .csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>

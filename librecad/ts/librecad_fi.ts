@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="62"/>
         <source>Layer:</source>
-        <translation>Geruza:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
@@ -59,7 +59,7 @@
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="113"/>
         <source>Points on Spline</source>
-        <translation>Pisteet splainilla</translation>
+        <translation>Pisteet splinillä</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -424,7 +424,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> ei jaeta, koska se on osa liitviivaa. Laajenna liitviiva ensin.</translation>
+        <translation> ei jaeta, koska se on osa murtoviivaa. Pura murtoviiva ensin.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -527,7 +527,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
-        <translation>(Poista) Valinta Geruzasta</translation>
+        <translation>(Poista) Valinta Tasosta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
@@ -820,17 +820,17 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Splain</translation>
+        <translation>&amp;Splini</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Splain pisteiden kautta</translation>
+        <translation>&amp;Splini pisteiden kautta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Liitviiva</translation>
+        <translation>&amp;Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
@@ -860,12 +860,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Luo &amp;etäisyydeltään samat liitviivat</translation>
+        <translation>Luo &amp;etäisyydeltään samat murtoviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Luo liitviiva olemassa olevista &amp;segmenteistä</translation>
+        <translation>Luo murtoviiva olemassa olevista &amp;segmenteistä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
@@ -885,7 +885,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>Insert &amp;Image</source>
-        <translation>Liitä &amp;Kuva</translation>
+        <translation>Lisää &amp;kuva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="643"/>
@@ -925,7 +925,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Johtaja</translation>
+        <translation>&amp;Viiteviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -1005,7 +1005,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Näytä kaikki geruzat</translation>
+        <translation>&amp;Näytä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
@@ -1025,22 +1025,22 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Vie valitut geruzat</translation>
+        <translation>&amp;Vie valitut tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Vie &amp;näkyvät geruzat</translation>
+        <translation>Vie &amp;näkyvät tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
         <source>&amp;Show all blocks</source>
-        <translation>&amp;Näytä kaikki blokit</translation>
+        <translation>&amp;Näytä kaikki lohkot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1105"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp;Piilota kaikki blokit</translation>
+        <translation>&amp;Piilota kaikki lohkot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
@@ -1076,7 +1076,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Päivitä nykyinen kynä aktiivisen geruzan kynällä</translation>
+        <translation>Päivitä nykyinen kynä aktiivisen tason kynällä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
@@ -1261,62 +1261,62 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Vaihda geruzan lukitus</translation>
+        <translation>Vaihda tason &amp;lukitus</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Vaihda geruzan näkyvyys</translation>
+        <translation>&amp;Vaihda tason näkyvyys</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Vaihda geruzan &amp;tulostus</translation>
+        <translation>Vaihda tason &amp;tulostus</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Vaihda &amp;rakennusgeruza</translation>
+        <translation>Vaihda tason &amp;apuviivatila</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
         <source>&amp;Add Block</source>
-        <translation>&amp;Lisää blokki</translation>
+        <translation>&amp;Lisää lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1119"/>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Poista blokki</translation>
+        <translation>&amp;Poista lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1126"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Nimeä blokki uudelleen</translation>
+        <translation>&amp;Nimeä lohko uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1133"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Muokkaa blokkia</translation>
+        <translation>&amp;Muokkaa lohkoa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1140"/>
         <source>&amp;Save Block</source>
-        <translation>&amp;Tallenna blokki</translation>
+        <translation>&amp;Tallenna lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1147"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Lisää blokki</translation>
+        <translation>&amp;Lisää lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1154"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Vaihda blokin &amp;näkyvyys</translation>
+        <translation>Vaihda lohkon &amp;näkyvyys</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
         <source>&amp;Create Block</source>
-        <translation>&amp;Luo blokki</translation>
+        <translation>&amp;Luo lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
@@ -1336,7 +1336,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>N&amp;ihe</translation>
+        <translation>&amp;Siirtymä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
@@ -1386,7 +1386,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Automaattinen Tarkennus</translation>
+        <translation>&amp;Automaattinen zoomaus</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
@@ -1461,7 +1461,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1280"/>
         <source>&amp;Block</source>
-        <translation>&amp;Blokki</translation>
+        <translation>&amp;Lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1288"/>
@@ -1519,7 +1519,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Tallennetaan geruza &quot;%1&quot; nimellä &quot;%2&quot; </translation>
+        <translation>Tallennetaan taso &quot;%1&quot; nimellä &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -1615,7 +1615,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
         <source>Layer:</source>
-        <translation>Geruza:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
@@ -1707,7 +1707,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
         <source>Layer:</source>
-        <translation>Geruza:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
@@ -1752,17 +1752,17 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Geruzan asetukset</translation>
+        <translation>Tason asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
         <source>Parent Layers Path:</source>
-        <translation>Ylemmän geruzan polku:</translation>
+        <translation>Ylemmän tason polku:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
         <source>Layer Type</source>
-        <translation>Geruzan tyyppi</translation>
+        <translation>Tason tyyppi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
@@ -1788,39 +1788,39 @@ tai [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Rakennusgeruza sisältää äärettömiä suoria viivoja geometrista rakentamista varten.
-       Rakennusgeruzan sisältö ei saa näkyä tulosteessa.</translation>
+        <translation>Apuviivataso sisältää äärettömiä suoria viivoja geometrista konstruointia varten.
+       Apuviivatason sisältö ei saa näkyä tulosteessa.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>Rakennusgeruza</translation>
+        <translation>Apuviivataso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
         <source>Layer Name:</source>
-        <translation>Geruzan nimi:</translation>
+        <translation>Tason nimi:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>Nimeä virtuaaligeruza uudelleen</translation>
+        <translation>Nimeä virtuaalitaso uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>Lisää toissijainen geruza</translation>
+        <translation>Lisää toissijainen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>Lisää geruza</translation>
+        <translation>Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>Muokkaa geruzaa</translation>
+        <translation>Muokkaa tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
@@ -1831,7 +1831,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>Nimeä geruza uudelleen</translation>
+        <translation>Nimeä taso uudelleen</translation>
     </message>
 </context>
 <context>
@@ -1839,7 +1839,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Geruzapuu-asetukset</translation>
+        <translation>Tasopuun asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
@@ -1854,7 +1854,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>Toissijaisten geruzojen loppuliitteet</translation>
+        <translation>Toissijaisten tasojen loppuliitteet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
@@ -1899,12 +1899,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
         <source>Show layer type icons</source>
-        <translation>Näytä geruzatyypin kuvakkeet</translation>
+        <translation>Näytä tasotyypin kuvakkeet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Näytä sisennys geruzanimissä. Sisennyskoko:</translation>
+        <translation>Näytä sisennys tasonimissä. Sisennyskoko:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -1914,7 +1914,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Nimeä toissijaiset geruzat uudelleen kun ensisijainen nimetään uudelleen</translation>
+        <translation>Nimeä toissijaiset tasot uudelleen kun ensisijainen nimetään uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -1934,7 +1934,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="441"/>
         <source>Virtual layer background color</source>
-        <translation>Virtuaaligeruzan taustaväri</translation>
+        <translation>Virtuaalitason taustaväri</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
@@ -1949,7 +1949,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
-        <translation>Aktiivisen geruzan taustaväri</translation>
+        <translation>Aktiivisen tason taustaväri</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -1959,22 +1959,22 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Normal Layer</source>
-        <translation>Normaali geruza</translation>
+        <translation>Normaali taso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Mitta-geruza</translation>
+        <translation>Mittataso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
         <source>Informational Layer</source>
-        <translation>Informatiivinen geruza</translation>
+        <translation>Tietotaso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
-        <translation>Vaihtoehtoinen sijainti-geruza</translation>
+        <translation>Vaihtoehtoisen sijainnin taso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
@@ -1992,7 +1992,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>Etsitään vastaavia geruzanimia</translation>
+        <translation>Etsitään vastaavia tasonimiä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="151"/>
@@ -2007,7 +2007,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="185"/>
         <source>Show all layers</source>
-        <translation>Näytä kaikki geruzat</translation>
+        <translation>Näytä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
@@ -2017,12 +2017,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>Näytä toissijaiset geruzat</translation>
+        <translation>Näytä toissijaiset tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>Näytä vain aktiivinen geruza</translation>
+        <translation>Näytä vain aktiivinen taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="222"/>
@@ -2042,32 +2042,32 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="251"/>
         <source>Unlock all layers</source>
-        <translation>Avaa lukitus kaikista geruzista</translation>
+        <translation>Avaa lukitus kaikista tasoista</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="259"/>
         <source>Lock all layers</source>
-        <translation>Lukitse kaikki geruzat</translation>
+        <translation>Lukitse kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="267"/>
         <source>Add a layer</source>
-        <translation>Lisää geruza</translation>
+        <translation>Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Lisää mitta-geruza</translation>
+        <translation>Lisää mittataso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
         <source>Remove layer</source>
-        <translation>Poista geruza</translation>
+        <translation>Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Muokkaa geruzan attribuutteja / nimeä uudelleen</translation>
+        <translation>Muokkaa tason attribuutteja / nimeä uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2077,12 +2077,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
         <source>Layer Menu</source>
-        <translation>Geruza-valikko</translation>
+        <translation>Tasovalikko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Lisää lapsigeruza</translation>
+        <translation>&amp;Lisää lapsitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
@@ -2092,7 +2092,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Poista geruzat (alipuu)</translation>
+        <translation>&amp;Poista tasot (alipuu)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
@@ -2112,95 +2112,95 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Muokkaa geruzan &amp;attribuutteja</translation>
+        <translation>&amp;Muokkaa tason &amp;attribuutteja</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Poista geruza</translation>
+        <translation>&amp;Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Lisää mitta-aligeruza</translation>
+        <translation>&amp;Lisää mitta-alitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Lisää tieto-aligeruza</translation>
+        <translation>&amp;Lisää tietoalitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Lisää vaihtoehtoinen näkymä-aligeruza</translation>
+        <translation>&amp;Lisää vaihtoehtoisen sijainnin alitaso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Poista aligeruzat</translation>
+        <translation>&amp;Poista alitasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Muuta mitta-geruzaksi</translation>
+        <translation>Muuta mittatasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Info Layer</source>
-        <translation>Muuta tieto-geruzaksi</translation>
+        <translation>Muuta tietotasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="722"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="737"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Muuta vaihtoehtoinen sijainti-geruzaksi</translation>
+        <translation>Muuta vaihtoehtoisen sijainnin tasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="729"/>
         <source>Convert to Normal Layer</source>
-        <translation>Muuta normaali geruzaksi</translation>
+        <translation>Muuta normaaliksi tasoksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Valitse geruzan entiteetit</translation>
+        <translation>&amp;Valitse tason entiteetit</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Luo geruzan kopio</translation>
+        <translation>&amp;Luo tason kopio</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Monista geruza sisällön kanssa</translation>
+        <translation>&amp;Monista taso sisällön kanssa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
-        <translation>Siirrä valinta geruzaan</translation>
+        <translation>Siirrä valinta tasoon</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Monista valinta geruzaan</translation>
+        <translation>Monista valinta tasoon</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Lisää geruza</translation>
+        <translation>&amp;Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Jäädytä muut geruzat</translation>
+        <translation>&amp;Jäädytä muut tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Sulatka kaikki geruzat</translation>
+        <translation>&amp;Sulata kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
@@ -2210,27 +2210,27 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Avaa lukitus kaikista geruzista</translation>
+        <translation>&amp;Avaa lukitus kaikista tasoista</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Lukitse kaikki geruzat</translation>
+        <translation>&amp;Lukitse kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Ota &amp;tulostus käyttöön kaikille geruzille</translation>
+        <translation>Ota &amp;tulostus käyttöön kaikille tasoille</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Poista tulostus käytöstä kaikilta geruzilta</translation>
+        <translation>&amp;Poista tulostus käytöstä kaikilta tasoilta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Etsi ja poista tyhjät geruzat</translation>
+        <translation>&amp;Etsi ja poista tyhjät tasot</translation>
     </message>
 </context>
 <context>
@@ -2330,7 +2330,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>Risteykseen</translation>
+        <translation>Leikkauspisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2379,7 +2379,7 @@ tai [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Laajenna/Leikkaa</translation>
+        <translation>Jatka/Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2396,7 +2396,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>Luo liitviiva</translation>
+        <translation>Luo murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2781,27 +2781,27 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Päivitä nykyinen kynä aktiivisen geruzan kynällä</translation>
+        <translation>Päivitä nykyinen kynä aktiivisen tason kynällä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Täytä kynäeditori aktiivisen geruzan kynästä</translation>
+        <translation>Täytä kynäeditori aktiivisen tason kynästä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>Valitse aktiivisesta geruzasta</translation>
+        <translation>Valitse aktiivisesta tasosta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Käytä editorin kynää aktiivisen geruzan kynään</translation>
+        <translation>Käytä editorin kynää aktiivisen tason kynään</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
         <source>Apply To Layer</source>
-        <translation>Käytä geruzaan</translation>
+        <translation>Käytä tasoon</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
@@ -2831,7 +2831,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Käytä kynää aktiiviseen geruzaan</translation>
+        <translation>&amp;Käytä kynää aktiiviseen tasoon</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
@@ -2869,7 +2869,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Liitviiva</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -3027,7 +3027,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>Liitviiva</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -3124,7 +3124,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>Liitviiva</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -3320,7 +3320,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>Liitviiva</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3383,7 +3383,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
-        <translation>Liitviivat</translation>
+        <translation>Murtoviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
@@ -3518,7 +3518,7 @@ tai [%2]</translation>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>Etäisyys alkuperäisestä liitviivasta</translation>
+        <translation>Etäisyys alkuperäisestä murtoviivasta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3596,7 +3596,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation>Ulottuvuus</translation>
+        <translation>&amp;Mitoitus</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="833"/>
@@ -3658,7 +3658,7 @@ tai [%2]</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
-        <translation>Liitviiva</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
@@ -3686,7 +3686,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
         <source>Layer Tree</source>
-        <translation>Geruzapuu</translation>
+        <translation>Tasopuu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
@@ -3786,7 +3786,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Liitviiva</translation>
+        <translation>&amp;Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
@@ -3851,7 +3851,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
         <source>Block List</source>
-        <translation>Kappaleluettelo</translation>
+        <translation>Lohkoluettelo</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
@@ -3978,7 +3978,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>Blokki &apos;%1&apos;</translation>
+        <translation>Lohko &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
@@ -4319,34 +4319,34 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="180"/>
         <source>Create Block</source>
-        <translation>Luo Kappale</translation>
+        <translation>Luo lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="187"/>
         <source>Add an empty block</source>
-        <translation>Lisää tyhjä kappale</translation>
+        <translation>Lisää tyhjä lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Rename the active block</source>
-        <translation>Nimeä uudelleen aktiivinen kappale</translation>
+        <translation>Nimeä aktiivinen lohko uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="208"/>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Muokkaa aktiivista kappaletta
+        <translation>Muokkaa aktiivista lohkoa
 erillisessä ikkunassa</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="216"/>
         <source>save the active block to a file</source>
-        <translation>tallenna aktiivinen kappale tiedostoon</translation>
+        <translation>tallenna aktiivinen lohko tiedostoon</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>Lisää aktiivinen kappale</translation>
+        <translation>Lisää aktiivinen lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="230"/>
@@ -4361,7 +4361,7 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
         <source>Block Menu</source>
-        <translation>Kappalevalikko</translation>
+        <translation>Lohkovalikko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
@@ -4371,17 +4371,17 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
-        <translation>&amp;Jäädytä kaikki kappaleet</translation>
+        <translation>&amp;Jäädytä kaikki lohkot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="407"/>
         <source>&amp;Add Block</source>
-        <translation>&amp;Lisää kappale</translation>
+        <translation>&amp;Lisää lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="403"/>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Poista kappale</translation>
+        <translation>&amp;Poista lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="194"/>
@@ -4391,17 +4391,17 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="409"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Nimeä uudelleen kappale</translation>
+        <translation>&amp;Nimeä lohko uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="411"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Muokkaa kappaletta</translation>
+        <translation>&amp;Muokkaa lohkoa</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="413"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Lisää kappale</translation>
+        <translation>&amp;Lisää lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="401"/>
@@ -4411,7 +4411,7 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="415"/>
         <source>&amp;Create New Block</source>
-        <translation>&amp;Luo Uusi Kappale</translation>
+        <translation>&amp;Luo uusi lohko</translation>
     </message>
 </context>
 <context>
@@ -4430,7 +4430,7 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="107"/>
         <source>By Block</source>
-        <translation>Kappaleen Mukaan</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="111"/>
@@ -4632,12 +4632,12 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Dimensioetiketin muokkaaja</translation>
+        <translation>Mittatekstin muokkain</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>Dimensioetiketti:</translation>
+        <translation>Mittateksti:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4808,7 +4808,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>Lineaarinen koko</translation>
+        <translation>Lineaarinen mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -4831,7 +4831,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>Koko</translation>
+        <translation>Mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
@@ -4995,7 +4995,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="110"/>
         <source>insert (y):</source>
-        <translation>Liitä (y):</translation>
+        <translation>Lisäyspiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
@@ -5045,7 +5045,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="26"/>
         <source>Insert</source>
-        <translation>Liitä</translation>
+        <translation>Lisäys</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
@@ -5060,12 +5060,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
         <source>Insertion point (x):</source>
-        <translation>Upotuskohde (x):</translation>
+        <translation>Lisäyspiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
         <source>Insertion point (y):</source>
-        <translation>Upotuskohde (y):</translation>
+        <translation>Lisäyspiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
@@ -5706,7 +5706,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1282"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] 2900-297F Supplemental Arrows-B</translation>
+        <translation>[2900-297F] Lisänuolet-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1287"/>
@@ -6175,7 +6175,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Mittakaavan nuolen koko. Ei vaikutusta, jos merkki (tick size) ei ole nolla</translation>
+        <translation>Mittanuolen koko. Ei vaikutusta, jos merkin koko ei ole nolla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
@@ -6272,12 +6272,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>Käytä isometristä ruutua</translation>
+        <translation>Käytä isometristä ruudukkoa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>Isometrinen ruutu</translation>
+        <translation>Isometrinen ruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
@@ -6374,12 +6374,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>Kiinteä laajennusviivan pituus</translation>
+        <translation>Kiinteä mitta-apuviivan pituus</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Splaiinit</translation>
+        <translation>&amp;Splinit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -6551,7 +6551,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Pidentysviivat</translation>
+        <translation>Mitta-apuviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6561,7 +6561,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Viivan segmenttien määrä per splain-pätkä:</translation>
+        <translation>Viivan segmenttien määrä per splini-pätkä:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="117"/>
@@ -6596,7 +6596,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="128"/>
         <source>Decimal Degrees</source>
-        <translation>Desimaalikulmat</translation>
+        <translation>Desimaaliasteet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="129"/>
@@ -6980,7 +6980,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Kun tämä on käytössä, kerroksen aktivointi muuttaa kaikki valitut kohteet tälle uudelle kerrokselle. Useiden kohteiden kerroksen muuttamiseksi: valitse ensin tarvittavat kohteet; aktivoi kerros kerrosvalitsimessa. Tämä muuttaa kaikki valitut kohteet kuulumaan uuteen kerroksseen.</translation>
+        <translation>Kun tämä on käytössä, tason aktivointi siirtää kaikki valitut kohteet tälle uudelle tasolle. Usean kohteen tason vaihtaminen: valitse ensin tarvittavat kohteet ja aktivoi sitten taso tasoluettelossa. Tällöin kaikki valitut kohteet siirtyvät uudelle tasolle.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
@@ -7128,7 +7128,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Arvioida elipsit ja elipsikaaret kubisten Bézierien avulla.</translation>
+        <translation>Approksimoi ellipsit ja ellipsikaaret kuutiollisilla Bézier-käyrillä</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
@@ -7159,7 +7159,8 @@ but avoided in some CAM&apos;s.</source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Monet CAM-ohjelmistot (MakerCAM, EleskCAM, LaserWeb) jättävät huomiotta katkoviiva-/pistetyylin, mikä voi olla hyödyllistä koivuluvun laserleikkauksessa tai paperikäsityössä.</translation>
+        <translation>Monet CAM-ohjelmistot (MakerCAM, EleskCAM, LaserWeb) jättävät huomiotta katkoviiva-/pistetyylin, 
+mikä voi olla hyödyllistä vanerin laserleikkauksessa tai paperikäsityössä. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -7404,7 +7405,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Splai</translation>
+        <translation>Splini</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -7419,7 +7420,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="122"/>
         <source>Degree:</source>
-        <translation>Kulma:</translation>
+        <translation>Aste:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="132"/>
@@ -8460,7 +8461,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Oletusviiva</translation>
+        <translation>Oletuskynä</translation>
     </message>
 </context>
 <context>
@@ -8468,7 +8469,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="227"/>
         <source>Show all layers</source>
-        <translation>Näytä kaikki kerrokset</translation>
+        <translation>Näytä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
@@ -8478,12 +8479,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>Avaa kaikki kerrokset</translation>
+        <translation>Avaa kaikkien tasojen lukitus</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>Lukitse kaikki kerrokset</translation>
+        <translation>Lukitse kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8523,17 +8524,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Avaa kaikki kerrokset</translation>
+        <translation>&amp;Avaa kaikkien tasojen lukitus</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Lukitse kaikki kerrokset</translation>
+        <translation>&amp;Lukitse kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Vaihda kerroksen sijainnin</translation>
+        <translation>Vaihda tason &amp;lukitus</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
@@ -8620,7 +8621,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
         <source>By Block</source>
-        <translation>Kappaleen Mukaan</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
@@ -8725,12 +8726,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Keskellä (pieni)</translation>
+        <translation>Keskiviiva (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>Keskellä (suuri)</translation>
+        <translation>Keskiviiva (suuri)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
@@ -8799,7 +8800,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
         <source>Line type</source>
-        <translation>Viivan tyyppi</translation>
+        <translation>Viivatyyppi</translation>
     </message>
 </context>
 <context>
@@ -8887,7 +8888,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Kiinnitä risteyskohtiin automaattisesti</translation>
+        <translation>Kiinnitä leikkauspisteisiin automaattisesti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
@@ -8902,7 +8903,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Kiinnitä risteyskohtiin manuaalisesti</translation>
+        <translation>Kiinnitä leikkauspisteisiin manuaalisesti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
@@ -8922,7 +8923,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>Suhteellinen nolla liike</translation>
+        <translation>Siirrä suhteellista nollaa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
@@ -8967,7 +8968,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Keskuskiinnitys</translation>
+        <translation>Keskikohtaan kiinnitys</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
@@ -9104,8 +9105,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Kerros &quot;%1&quot; ja kaikki sen entiteetit poistetaan.
-Tämä toimenpide ei voi mitään tavalla peruuttaa.</translation>
+        <translation>Taso &quot;%1&quot; ja kaikki sen kohteet poistetaan.
+Tätä toimintoa EI voi kumota.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="323"/>
@@ -9178,11 +9179,11 @@ Please specify a different name.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Korvataanko &quot;Kerroksen mukaan&quot; -arvo lähdekerrosten arvoilla?
+        <translation>Korvataanko &quot;Tason Mukaan&quot; -arvo lähdetasojen arvoilla?
 
-Jos Kyllä, &quot;Kerroksen mukaan&quot; -asetuksella olevat objektit näkyvät uudella kerroksella samalla tavalla kuin aiemmilla kerroksilla, ja &quot;Kerroksen mukaan&quot; -arvo korvataan määritetyillä piirustusasetuksilla.
+Jos Kyllä, kohteet, joiden kynä on &quot;Tason Mukaan&quot;, näkyvät uudella tasolla täsmälleen samanlaisina kuin aiemmilla tasoilla, ja &quot;Tason Mukaan&quot; -arvo korvataan ratkaistuilla kynillä.
 
-Jos Ei, &quot;Kerroksen mukaan&quot; -arvo säilyy, ja kohdekerroksen piirustusasetus määrittää kyseisten objektien piirustusasetuksen.</translation>
+Jos Ei, &quot;Tason Mukaan&quot; -arvot säilyvät, joten kohdetason kynä määrittää tällaisten kohteiden kynän.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9203,7 +9204,7 @@ Jos Ei, &quot;Kerroksen mukaan&quot; -arvo säilyy, ja kohdekerroksen piirustusa
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Luetellut kerrokset ja kaikki niillä olevat kohteet poistetaan.</translation>
+        <translation>Luetellut tasot ja kaikki niillä olevat kohteet poistetaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -10070,7 +10071,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Viivain epäonnistui aukon=%1 vuoksi pisteiden (%2, %3) ja (%4, %5) välillä</translation>
+        <translation>Kuviointi epäonnistui aukon=%1 vuoksi pisteiden (%2, %3) ja (%4, %5) välillä</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
@@ -10171,7 +10172,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>monikulmio</translation>
+        <translation>murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="548"/>
@@ -10195,7 +10196,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>splaiini</translation>
+        <translation>splini</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="475"/>
@@ -10207,7 +10208,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>splaiini 2</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -10303,7 +10304,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>sisäpiirroksellinen ellipsi</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -10321,7 +10322,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>viivakuvio</translation>
+        <translation>kuviointi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -10375,7 +10376,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1010"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>Piirrä esitäytöllä</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
@@ -10387,13 +10388,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>Uudelleenpiirrä</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>Piirrä uudelleen</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10411,7 +10412,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>Zoomaa ikkunan</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10423,7 +10424,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>Automaattinen zoomaus</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10435,7 +10436,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>Zoomaus ja siirto</translation>
+        <translation>panoroi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10447,7 +10448,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>Edellinen zoomaus</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10495,13 +10496,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>Mittojen mukainen asettelu</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>Vaaka-mitta</translation>
+        <translation>vaakamitta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
@@ -10513,7 +10514,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>Pysty-mitta</translation>
+        <translation>pystymitta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="657"/>
@@ -10525,7 +10526,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>Lineaarinen</translation>
+        <translation>lineaarimitta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="645"/>
@@ -10537,7 +10538,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>Kulmainen</translation>
+        <translation>kulmamitta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="678"/>
@@ -10549,31 +10550,31 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>Radiaalinen</translation>
+        <translation>sädemitta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>Diametrinen</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>Halkaisija</translation>
+        <translation>halkaisijamitta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>Viiva kahden pisteen välillä</translation>
+        <translation>linja2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>Segmenttiviiva</translation>
+        <translation>sline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
@@ -10591,7 +10592,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>signaalin viiva X</translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="196"/>
@@ -10609,7 +10610,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>signaalin viiva Y</translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="203"/>
@@ -10651,7 +10652,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>Viivakoordinaatti</translation>
+        <translation>pystyviiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="222"/>
@@ -10663,7 +10664,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>Viivarekisteri</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="228"/>
@@ -10675,31 +10676,31 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="234"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>Suorakulmio 1</translation>
+        <translation>suorakulmio1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="235"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>Suorakulmio 1</translation>
+        <translation>re1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>Suorakulmio 2</translation>
+        <translation>suorakulmio2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="241"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>Suorakulmio 2</translation>
+        <translation>re2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="246"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>Suorakulmio 3</translation>
+        <translation>suorakulmio3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="247"/>
@@ -10783,7 +10784,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>kopioita</translation>
+        <translation>kaksoiskappale</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="289"/>
@@ -10807,7 +10808,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>katkoja/jakaminen</translation>
+        <translation>jaa</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -10831,13 +10832,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>Viivaparametri</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>Viivaväli</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -10855,7 +10856,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>Viivaparametrin raja</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -10867,13 +10868,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>Viivabisektori</translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>Viivakosketuspiste</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="335"/>
@@ -10957,7 +10958,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>polygonisentri</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="375"/>
@@ -10987,7 +10988,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="397"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>ympyräkohtaan</translation>
+        <translation>ympyrä2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="399"/>
@@ -10999,7 +11000,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>ympyräkohtaan/säde</translation>
+        <translation>circle2pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
@@ -11240,7 +11241,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>rotatiolinja</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -11252,7 +11253,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>piste-viiva</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
@@ -11264,7 +11265,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>polylinja lisää</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="573"/>
@@ -11276,7 +11277,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="578"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>polylinja liitä</translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="579"/>
@@ -11288,7 +11289,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="584"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>polylinja poista</translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="585"/>
@@ -11300,7 +11301,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>polylinja poisto/muokkaus</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="591"/>
@@ -11354,7 +11355,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>valinnan kääntäminen</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11372,7 +11373,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="662"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>dimensiosäde</translation>
+        <translation>dimradius</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="664"/>
@@ -11396,7 +11397,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>dimensiojohtaja</translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -11408,7 +11409,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimensioregeneraatio</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="690"/>
@@ -11420,31 +11421,31 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>tilanliike</translation>
+        <translation>modmove</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>Rotaatio</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>Skaalaus</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>Peilaus</translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>Liike/Rotaatio</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11456,19 +11457,19 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>2-rotaatio</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>R2</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>Palautus</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -11480,7 +11481,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>Rajaus</translation>
+        <translation>rajaa</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
@@ -11546,13 +11547,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>Moduulin attribuutti</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>Moduulin selitysteksti</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -11564,19 +11565,19 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>Moduulin purkaminen</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>Poista moduuli</translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>Tietojen etäisyys</translation>
+        <translation>infoetäisyys</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -11588,7 +11589,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>Tietojen etäisyysaskel</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -11606,7 +11607,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>Kulma-info</translation>
+        <translation>infokulma</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="844"/>
@@ -11618,7 +11619,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>Tietoa-alue</translation>
+        <translation>infoalue</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
@@ -11648,13 +11649,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>Manuaalinen keskitys keskelle</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>Manuaalinen keskitys</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -11666,7 +11667,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>Ei rajoitusta</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -11678,7 +11679,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>Ortogonaalinen rajoitus</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -11690,7 +11691,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>Vaakasuuntainen rajoitus</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -11702,7 +11703,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>Pystysuuntainen rajoitus</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -11828,7 +11829,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>Vapaa kiinnitys</translation>
+        <translation>vapaatartunta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -11840,7 +11841,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>Keskipisteeseen kiinnitys</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -11852,7 +11853,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>Napautus etäisyys</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -11864,7 +11865,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>Napautus pääte</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -11876,7 +11877,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>Napautus ruudukko</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -11888,7 +11889,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>Napautus leikkauskohta</translation>
+        <translation>leikkauspistetartunta</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -11900,7 +11901,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>Napautus keskikohta</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -11912,7 +11913,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>Kiinnitä entiteetti</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -11930,7 +11931,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>Aseta suhteellinen nolla</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -11942,7 +11943,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>Valitse kaikki</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -11954,7 +11955,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>Poista valinta kaikista</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -12008,7 +12009,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1189"/>
         <source>angle</source>
-        <translation>Kulma</translation>
+        <translation>kulma</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
@@ -12019,13 +12020,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1201"/>
         <source>close</source>
-        <translation>Sulje</translation>
+        <translation>sulje</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
-        <translation>kordipituus</translation>
+        <translation>jänteenpituus</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
@@ -12036,7 +12037,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>sarakkeiden väli</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
@@ -12053,12 +12054,12 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>pituus</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>numero</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -12074,7 +12075,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>rivien väli</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -12105,37 +12106,37 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>suhteellinen kulma</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>alku</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>siirtymä</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>viivakytkentä</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>tikkukytkentä</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>leveys</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>korkeus</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12151,7 +12152,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>viistot</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
@@ -12166,7 +12167,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>kulmat</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12176,7 +12177,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>pyöreä</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
@@ -12206,47 +12207,47 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>keskellä</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>oikealla</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>alhaalla vasemmalla</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>alhaalla</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>alhaalla oikealla</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>Kulman kiinnitys</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>Siirtymäkiinnitys</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>Sisäkoko</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>Ulkokoko</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12261,22 +12262,22 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>Kiinnitys 2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>Kulma</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>Pystysuora keskusta</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>Vaakasuora keskusta</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12286,37 +12287,37 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>ei neliötä</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>sisäkulma</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>reunat</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>ei reunaa</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>molemmat reunat</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>aloitusreuna</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>loppureuna</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -12346,17 +12347,17 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>kiinteä_etäisyys</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>joustava_etäisyys</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>etäisyys</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -12383,7 +12384,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1193"/>
         <source>center</source>
-        <translation>Keskellä</translation>
+        <translation>keskipiste</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
@@ -12425,13 +12426,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Sarakeväli</translation>
+        <translation>sarakeväli</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Sarakeväli</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -12575,7 +12576,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>Riviväli</translation>
+        <translation>riviväli</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -12641,22 +12642,22 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
-        <translation>Mustavalkoinen</translation>
+        <translation>mustavalkoinen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
         <source>color</source>
-        <translation>Väri</translation>
+        <translation>väri</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>Paperi-offsetti</translation>
+        <translation>paperioffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>Graafi-offsetti</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
@@ -12682,13 +12683,13 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>Pituus1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>pituus2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1503"/>
@@ -12718,7 +12719,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="64"/>
         <source>Block</source>
-        <translation>Suorakulmio</translation>
+        <translation>Lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="65"/>
@@ -12749,7 +12750,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimensio</translation>
+        <translation>Mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -12785,7 +12786,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Monolinja</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -12991,7 +12992,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Yhdistä kaikki kerrokset</translation>
+        <translation>Yhdistä kaikki tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
@@ -13037,7 +13038,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>Lohkkoittain</translation>
+        <translation>Lohkon Mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="210"/>
@@ -13209,7 +13210,8 @@ Haluatko korvata sen?</translation>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>Sisältää sisäkkäisen upotuksen nykyiseen lohkoon:</translation>
+        <translation> sisältää nykyisen lohkon sisäkkäisen lisäyksen ketjussa:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
@@ -13294,7 +13296,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Määritä ensimmäisen jatkerivin alkuperä</translation>
+        <translation>Määritä ensimmäisen mitta-apuviivan alkupiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13304,7 +13306,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Määritä toisen jatkerivin alkuperä</translation>
+        <translation>Määritä toisen mitta-apuviivan alkupiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13420,7 +13422,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Määritä ensimmäisen laajennusviivan alkuperä</translation>
+        <translation>Määritä ensimmäisen mitta-apuviivan alkupiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13430,7 +13432,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Määritä toisen jatkeviivan alkuperä</translation>
+        <translation>Määritä toisen mitta-apuviivan alkupiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13480,7 +13482,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Määritä viivaviivan sijainti tai syötä kulma:</translation>
+        <translation>Määritä mittaviivan sijainti tai syötä kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
@@ -13536,7 +13538,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Määritä loppakulma tai [kulma/jännelenkän pituus]</translation>
+        <translation>Määritä loppukulma tai [kulma/jänteenpituus]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="351"/>
@@ -13580,7 +13582,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Specify endpoint</source>
-        <translation>Määritä loispiste</translation>
+        <translation>Määritä päätepiste</translation>
     </message>
 </context>
 <context>
@@ -13799,7 +13801,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Määritä ensimmäinen piste tangenttikehäellä</translation>
+        <translation>Määritä ensimmäinen piste tangenttiympyrällä</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
@@ -13811,12 +13813,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Määritä toinen piste tangenttikehäellä</translation>
+        <translation>Määritä toinen piste tangenttiympyrällä</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Valitse tangenttikehäen keskipiste</translation>
+        <translation>Valitse tangenttiympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -13900,12 +13902,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Määritä piste tangenttisyklillä</translation>
+        <translation>Määritä piste tangenttiympyrällä</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Valitse tangenttisyklin keskipiste</translation>
+        <translation>Valitse tangenttiympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -13940,7 +13942,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Valitse tangenttisyklin keskipiste</translation>
+        <translation>Valitse tangenttiympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -14160,7 +14162,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Viivapiirrosvirhe: Ei kelvollista ääriviivaa löydetty!</translation>
+        <translation>Kuviointivirhe: Löytyi virheellinen ääriviiva!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
@@ -14170,12 +14172,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Viivapiirrosvirhe: Ääriviiva tai kuvio liian pieni!</translation>
+        <translation>Kuviointivirhe: Ääriviiva tai kuvio liian pieni!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Viivapiirrosvirhe: Ääriviiva liian suuri!</translation>
+        <translation>Kuviointivirhe: Ääriviiva liian suuri!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
@@ -14190,7 +14192,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Virheellinen viivapiirrosalue. Tarkista, että valitut kohteet muodostavat yhden tai useamman suljetun ääriviivan.</translation>
+        <translation>Virheellinen kuviointialue. Tarkista, että valitut kohteet muodostavat yhden tai useamman suljetun ääriviivan.</translation>
     </message>
 </context>
 <context>
@@ -14319,7 +14321,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Sektoriavaajien lukumäärä ei ole alueella:</translation>
+        <translation>Sektoriviivojen lukumäärä ei ole sallitulla välillä: </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
@@ -14694,13 +14696,13 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>Syötä loispisteen x-koordinaatti</translation>
+        <translation>Syötä päätepisteen x-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Syötä polyliinien lukumäärä</translation>
+        <translation>Syötä murtoviivojen lukumäärä</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -15014,12 +15016,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="56"/>
         <source>Point is inside selected contour.</source>
-        <translation>Kohde on valitun kontuurin sisällä.</translation>
+        <translation>Piste on valitun kontuurin sisällä.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="58"/>
         <source>Point is outside selected contour.</source>
-        <translation>Kohde on valitun kontuurin ulkopuolella.</translation>
+        <translation>Piste on valitun kontuurin ulkopuolella.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="84"/>
@@ -15144,7 +15146,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entiteetin on oltava viiva, kaari, ympyrä, ellipsi tai interpolointispleeni.</translation>
+        <translation>Entiteetin on oltava viiva, kaari, ympyrä, ellipsi tai interpolointisplini.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15182,17 +15184,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Entiteetit eivät ole samassa polyviivassa.</translation>
+        <translation>Entiteetit eivät ole samassa murtoviivassa.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Toisen entiteetin vanhempi ei ole polyviiva</translation>
+        <translation>Toisen entiteetin vanhempi ei ole murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Ensimmäisen entiteetin vanhempi ei ole polyviiva</translation>
+        <translation>Ensimmäisen entiteetin vanhempi ei ole murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
@@ -15222,7 +15224,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Määritä ensimmäinen katkoskohta polylineella</translation>
+        <translation>Määritä ensimmäinen katkoskohta murtoviivalla</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15232,7 +15234,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Määritä toinen katkoskohta samalla polylineella</translation>
+        <translation>Määritä toinen katkoskohta samalla murtoviivalla</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15580,7 +15582,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>Ei luonnosta löytynyt.</translation>
+        <translation>Kohdetta ei löytynyt.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
@@ -15599,7 +15601,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>Ei luonnosta löytynyt.</translation>
+        <translation>Kohdetta ei löytynyt.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
@@ -15662,7 +15664,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Määritä polyline lähellä alkua tai loppua.</translation>
+        <translation>Määritä murtoviiva läheltä sen alku- tai päätepistettä</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="192"/>
@@ -15869,7 +15871,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Määritä leikattava polylinja</translation>
+        <translation>Määritä leikattava murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -16052,12 +16054,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Valitse räjäyttää teksti</translation>
+        <translation>Valitse purettava teksti</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Valitse räjäyttää lohko</translation>
+        <translation>Valitse purettava lohko</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16148,7 +16150,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>Manuaalinen leikkaus</translation>
+        <translation>Manuaalinen &amp;leikkauspiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
@@ -16172,12 +16174,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Uudelleenluotu %1 ulottuvuuden entiteetit</translation>
+        <translation>Luotiin uudelleen %1 mittakohdetta</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>Ulottuvuuden entiteettejä ei löytynyt</translation>
+        <translation>Mittakohteita ei löytynyt</translation>
     </message>
 </context>
 <context>
@@ -16296,7 +16298,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Tarkista, leikataanko molemmat kohteet viistokulmaan</translation>
+        <translation>Valitse, jos molemmat kohteet rajataan viisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -16319,7 +16321,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="32"/>
         <source>Circle Options</source>
-        <translation>Piirron vaihtoehdot</translation>
+        <translation>Ympyrän asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -16332,12 +16334,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Piirron koskettainen 2 -vaihtoehdot</translation>
+        <translation>Tangentiaalisen ympyrän 2 asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Piirrettävän koskettainen piirin säde</translation>
+        <translation>Piirrettävän tangentiaalisen ympyrän säde</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16347,7 +16349,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>Koskettainen piirin säde</translation>
+        <translation>Tangentiaalisen ympyrän säde</translation>
     </message>
 </context>
 <context>
@@ -16589,7 +16591,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation>Jaottajan asetukset</translation>
+        <translation>Kulmanpuolittajan asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -16665,7 +16667,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>Monoviiva</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -16774,7 +16776,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Monagonasetukset</translation>
+        <translation>Monikulmion asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -16792,7 +16794,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Monagonasetukset</translation>
+        <translation>Monikulmion asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -16887,7 +16889,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>Monolinja-asetukset</translation>
+        <translation>Murtoviivan asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -16998,7 +17000,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Tarkista, leikata molemmat reunat pyöristyksen mukaisesti</translation>
+        <translation>Valitse, jos molemmat reunat rajataan pyöristykseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -17016,7 +17018,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Napausetäisyysasetukset</translation>
+        <translation>Etäisyyskiinnityksen asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17029,7 +17031,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Napausetäisyysasetukset</translation>
+        <translation>Etäisyyskiinnityksen asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17052,7 +17054,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>
         <source>Degree:</source>
-        <translation>Kulma:</translation>
+        <translation>Aste:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>

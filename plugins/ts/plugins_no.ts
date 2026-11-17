@@ -369,7 +369,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>MØNSTER</translation>
+        <translation>SKRAVERING</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -652,7 +652,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tom enhet</translation>
+        <translation>Tomt objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -844,7 +844,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Linjer – Av</translation>
+        <translation>Brudd – Av</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -1023,7 +1023,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Vis enheter</translation>
+        <translation>Vis objekter</translation>
     </message>
 </context>
 <context>

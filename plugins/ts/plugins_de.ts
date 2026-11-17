@@ -295,7 +295,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>BLOCK</translation>
+        <translation>EINFÜGUNG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -638,7 +638,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Wählen Sie eine Zeile, Kreis oder Bogen und drücken Sie die Rückgabe</translation>
+        <translation>Wählen Sie eine Linie, einen Kreis oder einen Bogen und drücken Sie die Eingabetaste</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +653,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Leere Eintragung</translation>
+        <translation>Leeres Objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -678,7 +678,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Warenbezeichnung</translation>
+        <translation>Linientyp</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -787,7 +787,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertikale</translation>
+        <translation>Eckpunkte</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -825,7 +825,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Tauchen bei</translation>
+        <translation>Teilen an</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -840,12 +840,12 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Krawatten - Off</translation>
+        <translation>Markierungen - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Pausen - Off</translation>
+        <translation>Unterbrechungen - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -875,7 +875,7 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tiegel</translation>
+        <translation>Markierungen</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -971,7 +971,7 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Benutze Schichten?</translation>
+        <translation>Ebenen verwenden?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -996,7 +996,7 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Druckleitung zeichnen?</translation>
+        <translation>Eingriffslinie zeichnen?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>

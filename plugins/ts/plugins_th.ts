@@ -840,7 +840,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>ตัวบ่ง - ปิด</translation>
+        <translation>ขีด - ปิด</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -874,7 +874,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>ตัวบ่ง</translation>
+        <translation>ขีด</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>

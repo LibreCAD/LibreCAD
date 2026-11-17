@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Läs ascii poäng</translation>
+        <translation>Läs ASCII-punkter</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Exportera poäng till csv</translation>
+        <translation>Exportera punkter till csv</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>Ange baspoäng först</translation>
+        <translation>Ange baspunkter först</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -128,7 +128,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Tomt Entity</translation>
+        <translation>Tom entitet</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -158,7 +158,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Line tjocklek</translation>
+        <translation>Linjetjocklek</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -168,7 +168,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>POÄNG</translation>
+        <translation>PUNKT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -190,7 +190,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>att peka</translation>
+        <translation>till punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -454,7 +454,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>Läs ascii poäng</translation>
+        <translation>Läs ASCII-punkter</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -494,7 +494,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>Ansluta poäng</translation>
+        <translation>Anslut punkter</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
@@ -504,7 +504,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Rita 2D Point</translation>
+        <translation>Rita 2D-punkt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,12 +514,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Rita 3D Point</translation>
+        <translation>Rita 3D-punkt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
-        <translation>Antal poäng</translation>
+        <translation>Punktnummer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -534,7 +534,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>Draw Point höjd</translation>
+        <translation>Rita punkthöjd</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
@@ -544,7 +544,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Draw Point Code</translation>
+        <translation>Rita punktkod</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -564,12 +564,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Point 2D-skiktet är tomt</translation>
+        <translation>Punktlagret 2D är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Point 3D-skiktet är tomt</translation>
+        <translation>Punktlagret 3D är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -584,7 +584,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Point höjd separation är tom</translation>
+        <translation>Punkthöjdsavståndet är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -604,17 +604,17 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Point code lager är tomt</translation>
+        <translation>Punktkodlagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Point code höjd är tom</translation>
+        <translation>Punktkodens höjd är tom</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Point code separation är tom</translation>
+        <translation>Punktkodsavståndet är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -653,7 +653,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tomt Entity</translation>
+        <translation>Tom entitet</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -683,7 +683,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Line tjocklek</translation>
+        <translation>Linjetjocklek</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -703,7 +703,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>att peka</translation>
+        <translation>till punkt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -1125,7 +1125,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor är tom eller ogiltig</translation>
+        <translation>Skalfaktorn är tom eller ogiltig</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>

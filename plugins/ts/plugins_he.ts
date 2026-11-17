@@ -310,7 +310,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>סולם</translation>
+        <translation>קנה מידה</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -370,7 +370,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>תבנית מילוי</translation>
+        <translation>קווקוו</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -840,12 +840,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>שניות - כבוי</translation>
+        <translation>סימונים - כבוי</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>הפסקות - כבוי</translation>
+        <translation>שבירה - כבוי</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;חדש&quot;&lt;/i&gt;&lt;br&gt;הכנס שם&lt;br&gt;לשכבה חדשה&lt;br&gt;(אם נדרש?) כדי&lt;br&gt;לצייר שניות עליה.</translation>
+        <translation>&lt;i&gt;&quot;חדש&quot;&lt;/i&gt;&lt;br&gt;הכנס שם&lt;br&gt;לשכבה חדשה&lt;br&gt;(אם נדרש?) כדי&lt;br&gt;לצייר עליה סימונים.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>שניות</translation>
+        <translation>סימונים</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>

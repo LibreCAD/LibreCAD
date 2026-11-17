@@ -504,7 +504,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Dibujo 2D Point</translation>
+        <translation>Dibujar punto 2D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,7 +514,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Dibujo 3D Point</translation>
+        <translation>Dibujar punto 3D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>

@@ -653,7 +653,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tukša vienība</translation>
+        <translation>Tukšs objekts</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -840,7 +840,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ērces - izslēgts</translation>
+        <translation>Atzīmes - izslēgtas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -875,7 +875,7 @@ pretēji pulksteņrādītāja virzienam.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ērces</translation>
+        <translation>Atzīmes</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -991,7 +991,7 @@ pretēji pulksteņrādītāja virzienam.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Zīmēt?</translation>
+        <translation>Zīmēt dalījuma apli?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
@@ -1227,7 +1227,7 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Rindu segmenti</translation>
+        <translation>Līniju segmenti</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>

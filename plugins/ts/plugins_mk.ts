@@ -652,7 +652,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Празна единица</translation>
+        <translation>Празен објект</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -1159,7 +1159,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>вклучи печатење</translation>
+        <translation>Додаток за цртање графици</translation>
     </message>
 </context>
 <context>
@@ -1167,7 +1167,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>печати равенка</translation>
+        <translation>Нацртај график на равенка</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>

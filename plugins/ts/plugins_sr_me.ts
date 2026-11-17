@@ -359,12 +359,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>[&apos;SPLINE tačka&apos;, &apos;SPLINE tačke&apos;, &apos;SPLINE tačaka&apos;]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>ŠABLON</translation>
+        <translation>ŠRAFURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -413,12 +413,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>избор оригиналне јединице:</translation>
+        <translation>избор оригиналног ентитета:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>избор јединица за промену</translation>
+        <translation>избор ентитета за промену</translation>
     </message>
 </context>
 <context>
@@ -930,22 +930,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Dodatak (u vezi sa modulom)</translation>
+        <translation>Visina glave zuba (u odnosu na modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Oduzimak (u vezi sa modulom)</translation>
+        <translation>Visina podnožja zuba (u odnosu na modul)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Broj segmenata za crtanje (oduzimak)</translation>
+        <translation>Broj segmenata za crtanje (podnožje zuba)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Broj segmenata za crtanje (dodatak)</translation>
+        <translation>Broj segmenata za crtanje (glava zuba)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -965,12 +965,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Da li da se nacrta krug dodatka?</translation>
+        <translation>Da li da se nacrta temeni krug?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Da li da se nacrta osnovni krug?</translation>
+        <translation>Da li da se nacrta podeoni krug?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>

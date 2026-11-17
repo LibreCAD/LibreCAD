@@ -678,7 +678,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Regeltype</translation>
+        <translation>Lijntype</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -703,7 +703,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>om te wijzen</translation>
+        <translation>naar punt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -840,12 +840,12 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticks - uit</translation>
+        <translation>Markeringen - uit</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Breaks - off</translation>
+        <translation>Onderbrekingen - uit</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,7 +870,7 @@ tegen de klok in.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Nieuw&quot;&lt;/i&gt;&lt;br&gt;Enternaam&lt;br&gt;voor een nieuwe laag&lt;br&gt;(indien nodig?) naar &lt;br&gt;draw ticks on.</translation>
+        <translation>&lt;i&gt;&quot;Nieuw&quot;&lt;/i&gt;&lt;br&gt;Voer een naam in&lt;br&gt;voor een nieuwe laag&lt;br&gt;(indien nodig?) om&lt;br&gt;markeringen op te tekenen.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -1226,7 +1226,7 @@ Gebruik t of x in je vergelijking als variabele/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Regelsegmenten</translation>
+        <translation>Lijnsegmenten</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>

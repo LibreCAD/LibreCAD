@@ -164,7 +164,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>UDPEG</translation>
+        <translation>PUNKT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -415,12 +415,12 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>vælg oprindelige helhed:</translation>
+        <translation>vælg oprindeligt objekt:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>Vægl helheder at ændre</translation>
+        <translation>vælg objekter, der skal ændres</translation>
     </message>
 </context>
 <context>
@@ -580,7 +580,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Point elevation separation er tom</translation>
+        <translation>Punkthøjdeadskillelse er tom</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -649,7 +649,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Enheden er tom</translation>
+        <translation>Tomt objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -836,12 +836,12 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Tegn - Slået fra</translation>
+        <translation>Markeringer - Slået fra</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Pauser - Slået fra</translation>
+        <translation>Afbrydelser - Slået fra</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -904,7 +904,7 @@ mod uret.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (* .csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -1025,7 +1025,7 @@ mod uret.</translation>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Liste over enheder</translation>
+        <translation>Vis objekter</translation>
     </message>
 </context>
 <context>

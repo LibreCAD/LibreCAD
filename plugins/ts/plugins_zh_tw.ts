@@ -294,7 +294,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>鑲嵌</translation>
+        <translation>圖塊插入</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -369,12 +369,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>陰影</translation>
+        <translation>剖面線</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>導出標註</translation>
+        <translation>引線標註</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -528,12 +528,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>點抬高</translation>
+        <translation>點高程</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>繪製點抬高</translation>
+        <translation>繪製點高程</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
@@ -573,17 +573,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>點抬高層為空</translation>
+        <translation>點高程圖層為空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>點抬高為空</translation>
+        <translation>點高程高度為空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>點抬高分隔為空</translation>
+        <translation>點高程間距為空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -766,7 +766,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>多邊形</translation>
+        <translation>聚合線</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -970,7 +970,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>繪製附加圓？</translation>
+        <translation>繪製齒頂圓？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>

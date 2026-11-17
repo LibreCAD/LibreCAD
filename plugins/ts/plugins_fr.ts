@@ -360,7 +360,7 @@ premier point de base, deuxième point de base, premier point cible, deuxième p
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>CERCE</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
@@ -668,7 +668,7 @@ premier point de base, deuxième point de base, premier point cible, deuxième p
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Couche</translation>
+        <translation>Calque</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -703,7 +703,7 @@ premier point de base, deuxième point de base, premier point cible, deuxième p
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>vers le haut</translation>
+        <translation>jusqu&apos;au point</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -792,7 +792,7 @@ premier point de base, deuxième point de base, premier point cible, deuxième p
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation>en haut</translation>
+        <translation>point</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
@@ -810,7 +810,7 @@ premier point de base, deuxième point de base, premier point cible, deuxième p
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Couches</translation>
+        <translation>Calques</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -840,12 +840,12 @@ premier point de base, deuxième point de base, premier point cible, deuxième p
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Découvertes</translation>
+        <translation>Graduations - Désactivées</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Arrêts</translation>
+        <translation>Coupures - Désactivées</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ dans le sens antihoraire.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Entrez le nom&lt;br&gt;pour une nouvelle couche&lt;br&gt;(si nécessaire?) à&lt;br&gt;tirez les tiques.</translation>
+        <translation>&lt;i&gt;&quot;Nouveau&quot;&lt;/i&gt;&lt;br&gt;Entrez le nom&lt;br&gt;d&apos;un nouveau calque&lt;br&gt;(si nécessaire) sur&lt;br&gt;lequel dessiner les graduations.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ciques</translation>
+        <translation>Graduations</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -971,7 +971,7 @@ dans le sens antihoraire.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Utiliser des couches ?</translation>
+        <translation>Utiliser des calques ?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

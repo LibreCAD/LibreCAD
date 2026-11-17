@@ -474,12 +474,12 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਅਜੇ ਲੋੜੀਂਦੀਆਂ ਐਂਟੀਟੀਆਂ ਤੋਂ ਘੱਟ ਹਨ।</translation>
+        <translation>ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਅਜੇ ਲੋੜੀਂਦੀਆਂ ਐਂਟੀਟੀਆਂ ਤੋਂ ਘੱਟ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਕੁਝ ਵੀ ਮੁੜ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
+        <translation>ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਕੁਝ ਵੀ ਮੁੜ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
     </message>
 </context>
 <context>
@@ -840,7 +840,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp;ਭੇਜੋ / ਕਾਪੀ</translation>
+        <translation>&amp;ਹਿਲਾਓ / ਕਾਪੀ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="738"/>
@@ -950,7 +950,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
         <source>&amp;Undo</source>
-        <translation>&amp;ਅਣਡੰਨਾ</translation>
+        <translation>&amp;ਵਾਪਸ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1439"/>
@@ -3726,7 +3726,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>ਬਹੁਭੁਜ(&amp;P)</translation>
+        <translation>ਪੌਲੀਲਾਈਨ(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4331,12 +4331,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>ਸਭ ਬਲਾਕ ਵੱਖ ਕਰੋ(&amp;D)</translation>
+        <translation>ਸਭ ਬਲਾਕ ਡੀਫ੍ਰੀਜ਼ ਕਰੋ(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
-        <translation>ਸਭ ਬਲਾਕ ਜਮਾਉ(&amp;F)</translation>
+        <translation>ਸਭ ਬਲਾਕ ਫ੍ਰੀਜ਼ ਕਰੋ(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="407"/>
@@ -4615,7 +4615,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="131"/>
         <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="141"/>
         <source>Coordinates</source>
-        <translation>ਧੁਰੇ</translation>
+        <translation>ਕੋਆਰਡੀਨੇਟ</translation>
     </message>
 </context>
 <context>
@@ -4903,12 +4903,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>ਮੋਘਾ ਗੁਣ ਚੁਣੋ</translation>
+        <translation>ਹੈਚ ਗੁਣ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
         <source>Pattern</source>
-        <translation>ਤਰਤੀਬ</translation>
+        <translation>ਪੈਟਰਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
@@ -4923,7 +4923,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
         <source>Solid Fill</source>
-        <translation>ਗੂੜਾ ਭਰੋ</translation>
+        <translation>ਠੋਸ ਭਰਾਈ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
@@ -5065,12 +5065,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
         <source>Insertion point (x):</source>
-        <translation>ਦਾਖਲ ਬਿੰਦ (x):</translation>
+        <translation>ਇੰਸਰਸ਼ਨ ਬਿੰਦੂ (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
         <source>Insertion point (y):</source>
-        <translation>ਦਾਖਲ ਬਿੰਦ (y):</translation>
+        <translation>ਇੰਸਰਸ਼ਨ ਬਿੰਦੂ (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
@@ -6660,7 +6660,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>ਮੋਘਾ ਤਰਤੀਬ:</translation>
+        <translation>ਹੈਚ ਪੈਟਰਨ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -7118,7 +7118,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
         <source>Length of the pattern, mm</source>
-        <translation>ਤਰਤੀਬ ਦੀ ਲੰਬਾਈ, mm</translation>
+        <translation>ਪੈਟਰਨ ਦੀ ਲੰਬਾਈ, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
@@ -7173,7 +7173,7 @@ but ignored by other</source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>ਲਾਈਨ ਤਰਤੀਬ ਦੀ ਲੰਬਾਈ ਜ਼ੂਮ ਨਾਲ ਸਬੰਧਤ ਹੈ, 
+        <translation>ਲਾਈਨ ਪੈਟਰਨ ਦੀ ਲੰਬਾਈ ਜ਼ੂਮ ਨਾਲ ਸਬੰਧਤ ਹੈ, 
 ਇਸ ਲਈ ਬਦਲਣ ਲਈ ਡਿਫੌਲਟ ਸਟੈੱਪ ਮੁੱਲ ਲੋੜੀਂਦਾ ਹੈ</translation>
     </message>
     <message>
@@ -8507,7 +8507,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>ਸਭ ਪਰਤਾਂ ਵੱਖ ਕਰੋ(&amp;D)</translation>
+        <translation>ਸਭ ਪਰਤਾਂ ਡੀਫ੍ਰੀਜ਼ ਕਰੋ(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
@@ -8522,7 +8522,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
         <source>&amp;Remove Layer</source>
-        <translation>ਬਲਾਕ ਹਟਾਓ(&amp;R)</translation>
+        <translation>ਪਰਤ ਹਟਾਓ(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
@@ -8901,7 +8901,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>ਕਟਾਵਾਂ ਤੱਕ ਸਵੈ-ਚਾਲਤ ਸਨੈਪ ਕਰੋ</translation>
+        <translation>ਕਾਟ ਬਿੰਦੂਆਂ ਤੱਕ ਸਵੈ-ਚਾਲਤ ਸਨੈਪ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
@@ -8916,7 +8916,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>ਕਟਾਵਾਂ ਤੱਕ ਦਸਤੀ ਸਨੈਪ ਕਰੋ</translation>
+        <translation>ਕਾਟ ਬਿੰਦੂਆਂ ਤੱਕ ਦਸਤੀ ਸਨੈਪ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
@@ -8981,7 +8981,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>ਸਨੈਪ ਕਟਾਅ</translation>
+        <translation>ਸਨੈਪ ਕਾਟ ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9126,7 +9126,7 @@ p, li { white-space: pre-wrap; }
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>ਲੇਅਰ &quot;%1&quot; ਅਤੇ ਇਸ ਉੱਤੇ ਮੌਜੂਦ ਸਭ ਐਂਟੀਟੀਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।
-ਇਹ ਐਕਸ਼ਨ ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
+ਇਹ ਐਕਸ਼ਨ ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9153,7 +9153,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="401"/>
         <source>Warning: this action can NOT be undone!</source>
-        <translation>ਚੇਤਾਵਨੀ: ਇਹ ਐਕਸ਼ਨ ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ!</translation>
+        <translation>ਚੇਤਾਵਨੀ: ਇਹ ਐਕਸ਼ਨ ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ!</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
@@ -9870,7 +9870,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>ਸਪਲਾਈਨ-ਬਿੰਦੂਆਂ-ਰਾਹੀਂ</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -9900,7 +9900,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation>ਟੈਨਜੈਂਟ-ਬਿੰਦੂ-ਸਰਕਲ</translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="355"/>
@@ -9918,13 +9918,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>ਬਹੁਭੁਜ-2-ਕੋਨੇ</translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>ਬਹੁਭੁਜ2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
@@ -9942,31 +9942,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation>ਸਰਕਲ2</translation>
+        <translation>c2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation>ਸਰਕਲ3</translation>
+        <translation>c3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ਟੈਨਜੈਂਟੀਅਲ-3-ਸਰਕਲ</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ਸਟ3</translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ਐਲਿਪਸ-ਇਨਸਕ੍ਰਾਈਬਡ</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -10020,13 +10020,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>ਮੁੜ-ਬਣਾਓ</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>ਮੁੜ-ਡ੍ਰਾਅ</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10044,7 +10044,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>ਵਿੰਡੋ-ਜ਼ੂਮ</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10056,7 +10056,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>ਆਟੋ-ਜ਼ੂਮ</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10068,7 +10068,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>ਜ਼ੂਮ-ਪੈਨਿੰਗ</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10080,7 +10080,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>ਪਿਛਲਾ-ਜ਼ੂਮ</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10224,7 +10224,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>ਬਿਨਾਂ-ਪਾਬੰਦੀ</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10236,7 +10236,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>ਆਰਥੋਗੋਨਲ-ਪਾਬੰਦੀ</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10248,7 +10248,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>ਹਰੀਜ਼ੋਂਟਲ-ਪਾਬੰਦੀ</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10260,7 +10260,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>ਵਰਟੀਕਲ-ਪਾਬੰਦੀ</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10374,7 +10374,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>ਮੁਕਤ-ਸਨੈਪ</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10386,7 +10386,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>ਕੇਂਦਰ-ਸਨੈਪ</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10398,7 +10398,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>ਸਨੈਪ-ਦੂਰੀ</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10410,7 +10410,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>ਅੰਤ-ਸਨੈਪ</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10422,7 +10422,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>ਗਰਿੱਡ-ਸਨੈਪ</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10434,7 +10434,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>ਅੰਤਰ-ਖੰਡ-ਸਨੈਪ</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10446,7 +10446,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>ਮੱਧ-ਸਨੈਪ</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10458,7 +10458,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>ਇਕਾਈ-ਸਨੈਪ</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10476,7 +10476,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>ਅਨੁਸਾਰੀ-ਜ਼ੀਰੋ-ਦਿਓ</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10488,7 +10488,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>ਸਭ-ਚੁਣੋ</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10565,7 +10565,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
-        <translation>ਵਤਰ ਲੰਬਾਈ</translation>
+        <translation>ਜੀਵਾ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
@@ -10576,7 +10576,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>ਕਾਲਮਸਪੇਸਿੰਗ</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10587,12 +10587,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>ਲੰਬਾਈ</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>ਨੰਬਰ</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10608,7 +10608,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>ਕਤਾਰ-ਦੂਰੀ</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -10743,13 +10743,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>ਲੰਬਾ1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>ਲੰ1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -10761,13 +10761,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>ਲੰਬਾ2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>ਲੰ2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
@@ -10785,7 +10785,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
         <source>n</source>
         <comment>number</comment>
-        <translation>ਗਿਣਤੀ</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1240"/>
@@ -10816,7 +10816,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ਕਤਾਰ-ਦੂਰੀ</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -10877,12 +10877,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>ਪੇਪਰ-ਆਫਸੈੱਟ</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>ਗ੍ਰਾਫ-ਆਫਸੈੱਟ</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
@@ -11127,13 +11127,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>ਲਾਈਨ-2-ਬਿੰਦੂ</translation>
+        <translation>line2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="209"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>ਲਾਈਨ-ਕੋਣ</translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="210"/>
@@ -11145,7 +11145,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>ਲਾਈਨ-ਹਰੀਜ਼ੋਂਟਲ</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="216"/>
@@ -11157,7 +11157,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>ਲਾਈਨ-ਵਰਟੀਕਲ</translation>
+        <translation>linever</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="222"/>
@@ -11181,13 +11181,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>ਲਾਈਨ-ਪੈਰਲਲ</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>ਲਾਈਨ-ਆਫਸੈੱਟ</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11205,7 +11205,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>ਲਾਈਨ-ਪੈਰਲਲ-ਬਿੰਦੂ</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11217,7 +11217,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>ਲਾਈਨ-ਬਾਈਸੈਕਟਰ</translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
@@ -11433,7 +11433,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="445"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ਟੈਨ3</translation>
+        <translation>t3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="454"/>
@@ -11535,31 +11535,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>ਐਲਿਪਸ-4-ਬਿੰਦੂ</translation>
+        <translation>ellipse4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>ਐ4</translation>
+        <translation>e4</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>ਐਲਿਪਸ-ਸੈਂਟਰ-3-ਬਿੰਦੂ</translation>
+        <translation>ellipsec3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation>ਐ3</translation>
+        <translation>e3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>ਪੌਲੀਲਾਈਨ-ਨੋਡ-ਸ਼ਾਮਲ</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="573"/>
@@ -11631,7 +11631,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="608"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>ਪੌਲੀਲਾਈਨ-ਜੋੜੋ</translation>
+        <translation>plinejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="609"/>
@@ -11649,7 +11649,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>ਚੋਣ-ਉਲਟਾਓ</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11691,31 +11691,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>ਸੋਧ-ਭੇਜੋ</translation>
+        <translation>modmove</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>ਸੋਧ-ਘੁਮਾਓ</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>ਸੋਧ-ਸਕੇਲ</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>ਸੋਧ-ਮਿਰਰ</translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>ਸੋਧ-ਭੇਜੋ-ਘੁਮਾਓ</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11727,19 +11727,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>ਸੋਧ-ਦੋ-ਘੁਮਾਓ</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>ਘੁਮਾਓ2</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>ਸੋਧ-ਦਿਸ਼ਾ-ਉਲਟਾਓ</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -11751,25 +11751,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>ਸੋਧ-ਟ੍ਰਿਮ</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>ਸੋਧ-ਬਹੁ-ਟ੍ਰਿਮ</translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>ਸੋਧ-ਲੰਮਾ-ਕਰੋ</translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="759"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>ਸੋਧ-ਆਫਸੈੱਟ</translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="760"/>
@@ -11787,43 +11787,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>ਸੋਧ-ਬੈਵਲ</translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>ਸੋਧ-ਫਿਲੈਟ</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>ਸੋਧ-ਵੰਡੋ</translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>ਸੋਧ-ਸਟ੍ਰੈਚ</translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>ਸੋਧ-ਗੁਣ</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>ਸੋਧ-ਐਟ੍ਰੀਬਿਊਟ</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>ਸੋਧ-ਟੈਕਸਟ-ਫਟਾਓ</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -11835,19 +11835,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>ਸੋਧ-ਫਟਾਓ</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>ਸੋਧ-ਮਿਟਾਓ</translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>ਇਨਫੋ-ਦੂਰੀ-ਬਿੰਦੂ</translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -11859,7 +11859,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>ਇਨਫੋ-ਦੂਰੀ-ਐਂਟੀਟੀ</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -11877,7 +11877,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>ਇਨਫੋ-ਕੋਣ</translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="844"/>
@@ -11889,7 +11889,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>ਇਨਫੋ-ਖੇਤਰ</translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
@@ -11955,13 +11955,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>ਲੰਬਾਈ1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>ਲੰਬਾਈ2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12472,7 +12472,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>ਸੱਪ-ਲਾਈਨ</translation>
+        <translation>sline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
@@ -12490,7 +12490,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>ਸੱਪ-ਲਾਈਨ-ਐਕਸ</translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="196"/>
@@ -12508,7 +12508,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>ਸੱਪ-ਲਾਈਨ-ਵਾਈ</translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="203"/>
@@ -12526,43 +12526,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="234"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>ਆਇਤ-1-ਬਿੰਦੂ</translation>
+        <translation>rect1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="235"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>ਆਇਤ1</translation>
+        <translation>re1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>ਆਇਤ-2-ਬਿੰਦੂ</translation>
+        <translation>rect2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="241"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>ਆਇਤ2</translation>
+        <translation>re2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="246"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>ਆਇਤ-3-ਬਿੰਦੂ</translation>
+        <translation>rect3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="247"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>ਆਇਤ3</translation>
+        <translation>re3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="252"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>ਸਲਾਈਸ-ਲਾਈਨ</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="253"/>
@@ -12574,7 +12574,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="258"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>ਸਲਾਈਸ-ਸਰਕਲ</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="259"/>
@@ -12610,13 +12610,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>ਬਿੰਦੂਆਂ-ਦੀ-ਲਾਈਨ</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>ਬਿੰਦੂਆਂ-ਲਾਈਨ</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
@@ -12646,7 +12646,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>ਲਾਈਨ-ਜੁਆਇਨ</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12670,7 +12670,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>ਲਾਈਨ-ਗੈਪ</translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -12713,7 +12713,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>ਆਰਥੋਗੋਨਲ-ਤੋਂ-ਲਾਈਨ</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12725,25 +12725,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>ਬਿੰਦੂ-ਤੋਂ-ਲਾਈਨ</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>ਬਿੰਦੂਲਾਈਨ</translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>ਮੱਧ-ਦਸਤੀ-ਸਨੈਪ</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>ਦਸਤੀ-ਸਨੈਪ</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12769,37 +12769,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>ਕੋਣਰਿਲੇਟਿਵ</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>ਸ਼ੁਰੂ</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>ਆਫਸੈੱਟ</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>ਲਾਈਨ-ਸਨੈਪ</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>ਟਿਕ-ਸਨੈਪ</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>ਚੌੜਾਈ</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>ਉਚਾਈ</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12815,22 +12815,22 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>ਬੈਵਲ</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
-        <translation>ਨਾ-ਪੌਲੀ</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
-        <translation>ਪੌਲੀਲਾਈਨ-ਵਰਤੋ</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>ਕੋਨੇ</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12840,7 +12840,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>ਗੋਲ</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
@@ -12870,47 +12870,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>ਮੱਧ</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>ਸੱਜਾ</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>ਹੇਠਾਂਖੱਬਾ</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>ਹੇਠਾਂ</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>ਹੇਠਾਂਸੱਜਾ</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>ਕੋਨਾ-ਸਨੈਪ</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>ਸਨੈਪ-ਸ਼ਿਫਟ</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>ਅੰਦਰੂਨੀ-ਆਕਾਰ</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>ਬਾਹਰੀ-ਆਕਾਰ</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12925,22 +12925,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>ਸਨੈਪ2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>ਕੋਨਾ</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>ਮੱਧ-ਵਰਟੀਕਲ</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>ਮੱਧ-ਹਰੀਜ਼ੋਂਟਲ</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12950,37 +12950,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>ਨਾ-ਕੁਆਡ</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>ਕੋਣ_ਅੰਦਰੂਨੀ</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>ਕਿਨਾਰੇ</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>ਕਿਨਾਰਾ-ਕੋਈ-ਨਹੀਂ</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>ਕਿਨਾਰਾ-ਦੋਵੇਂ</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>ਕਿਨਾਰਾ-ਸ਼ੁਰੂ</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>ਕਿਨਾਰਾ-ਅੰਤ</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -13005,22 +13005,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>ਨਾ-ਫਿੱਟ</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>ਦੂਰੀ_ਫਿਕਸਡ</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>ਦੂਰੀ_ਲਚਕੀਲੀ</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>ਦੂਰੀ</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13030,7 +13030,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>ਅਸਮਮਿਤ</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
@@ -13319,7 +13319,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>ਪਹਿਲਾਂ ਐਕਸ਼ਟੇਸ਼ਨ ਰੇਖਾ ਖੇਤਰ ਦਿਓ</translation>
+        <translation>ਪਹਿਲੀ ਐਕਸਟੈਂਸ਼ਨ ਰੇਖਾ ਦਾ ਮੂਲ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13329,7 +13329,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>ਦੂਜਾ ਐਕਸ਼ਟੇਸ਼ਨ ਰੇਖਾ ਖੇਤਰ ਦਿਓ</translation>
+        <translation>ਦੂਜੀ ਐਕਸਟੈਂਸ਼ਨ ਰੇਖਾ ਦਾ ਮੂਲ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13383,7 +13383,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇੰਦਰਾਜ਼ ਨਹੀਂ</translation>
+        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇਕਾਈ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="258"/>
@@ -13393,7 +13393,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇੰਦਰਾਜ਼ ਚੁਣੋ</translation>
+        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇਕਾਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13445,7 +13445,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>ਪਹਿਲਾਂ ਐਕਸ਼ਟੇਸ਼ਨ ਰੇਖਾ ਖੇਤਰ ਦਿਓ</translation>
+        <translation>ਪਹਿਲੀ ਐਕਸਟੈਂਸ਼ਨ ਰੇਖਾ ਦਾ ਮੂਲ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13455,7 +13455,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>ਦੂਜਾ ਐਕਸ਼ਟੇਸ਼ਨ ਰੇਖਾ ਖੇਤਰ ਦਿਓ</translation>
+        <translation>ਦੂਜੀ ਐਕਸਟੈਂਸ਼ਨ ਰੇਖਾ ਦਾ ਮੂਲ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13484,7 +13484,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>ਇੱਕ ਚੱਕਰ ਜਾਂ ਚਾਪ ਇੰਦਰਾਜ਼ ਨਹੀਂ</translation>
+        <translation>ਇੱਕ ਚੱਕਰ ਜਾਂ ਚਾਪ ਇਕਾਈ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="251"/>
@@ -13494,7 +13494,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇੰਦਰਾਜ਼ ਚੁਣੋ</translation>
+        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇਕਾਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -13527,7 +13527,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>ਠੀਕ ਵਤਰ ਲੰਬਾਈ ਨਹੀਂ</translation>
+        <translation>ਜੀਵਾ ਦੀ ਲੰਬਾਈ ਠੀਕ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -13566,12 +13566,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>ਵਤਰ ਲੰਬਾਈ ਦਿਓ:</translation>
+        <translation>ਜੀਵਾ ਦੀ ਲੰਬਾਈ ਦਿਓ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>ਅੰਤ ਕੋਣ ਨਿਰਧਾਰਤ ਕਰੋ ਜਾਂ [ਕੋਣ/ਵਤਰ ਲੰਬਾਈ]</translation>
+        <translation>ਅੰਤ ਕੋਣ ਨਿਰਧਾਰਤ ਕਰੋ ਜਾਂ [ਕੋਣ/ਜੀਵਾ]</translation>
     </message>
 </context>
 <context>
@@ -14180,12 +14180,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>ਗਲਤ ਮੋਘਾ ਖੇਤਰ। ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਜਾਂ ਦੋ ਬੰਦ ਖਾਕੇ ਤੋਂ ਚੁਣੀਆਂ ਇਕਾਈ ਵੇਖੋ।</translation>
+        <translation>ਗਲਤ ਹੈਚ ਖੇਤਰ। ਕਿਰਪਾ ਕਰਕੇ ਜਾਂਚ ਕਰੋ ਕਿ ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਇੱਕ ਜਾਂ ਵੱਧ ਬੰਦ ਰੂਪਰੇਖਾਵਾਂ ਬਣਾਉਂਦੀਆਂ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>ਮੋਘਾ ਸਫਲਤਾਪੂਰਕ ਬਣਾਇਆ ਗਿਆ ਹੈ।</translation>
+        <translation>ਹੈਚ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
@@ -14289,7 +14289,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>ਅਣਡੰਨਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਹਿਸਟਰੀ ਦੀ ਸ਼ੁਰੂਆਤ ਤੱਕ ਪਹੁੰਚ ਚੁੱਕੇ ਹੋ</translation>
+        <translation>ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ: ਹਿਸਟਰੀ ਦੀ ਸ਼ੁਰੂਆਤ ਤੱਕ ਪਹੁੰਚ ਚੁੱਕੇ ਹੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="478"/>
@@ -14898,7 +14898,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="65"/>
         <source>Nothing to undo!</source>
-        <translation>ਅਣਡੰਨਾ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ!</translation>
+        <translation>ਵਾਪਸ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="68"/>
@@ -15164,7 +15164,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15207,7 +15207,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>ਇੱਕ ਬਹੁ-ਰੇਖਾ ਉੱਤੇ ਪਹਿਲਾਂ ਰੋਕ ਬਿੰਦੂ ਦਿਓ</translation>
+        <translation>ਪੌਲੀਲਾਈਨ ਉੱਤੇ ਪਹਿਲਾ ਤੋੜ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15217,7 +15217,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>ਇੱਕ ਬਹੁ-ਰੇਖਾ ਉੱਤੇ ਦੂਜਾ ਰੋਕ ਬਿੰਦੂ ਦਿਓ</translation>
+        <translation>ਉਸੇ ਪੌਲੀਲਾਈਨ ਉੱਤੇ ਦੂਜਾ ਤੋੜ ਬਿੰਦੂ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15564,7 +15564,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>ਛਾਂਟਣ ਲਈ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਇਕਾਈ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -15582,7 +15582,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>ਚੁਣੀ ਇਕਾਈ ਇੱਕ ਵੱਖਰੀ ਨਹੀਂ ਹੈ ਜਾਂ ਇਸ ਨੂੰ ਛਾਂਟਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</translation>
+        <translation>ਚੁਣੀ ਇਕਾਈ ਐਟੌਮਿਕ ਇਕਾਈ ਨਹੀਂ ਹੈ ਜਾਂ ਇਸ ਨੂੰ ਟ੍ਰਿਮ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15592,7 +15592,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>ਛਾਂਟਣ ਲਈ ਇਕਾਈ ਚੁਣੋ ਜਾਂ ਦੂਰੀ ਦਿਓ:</translation>
+        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਇਕਾਈ ਚੁਣੋ ਜਾਂ ਦੂਰੀ ਦਿਓ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15605,7 +15605,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
@@ -15624,7 +15624,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
@@ -15667,7 +15667,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
@@ -15722,7 +15722,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
@@ -15767,7 +15767,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
@@ -15818,7 +15818,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
@@ -15841,7 +15841,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
@@ -15872,7 +15872,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇੰਦਰਾਜ਼ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</translation>
+        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
@@ -16047,7 +16047,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>ਟੈਕਸਟ ਫਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
+        <translation>ਟੈਕਸਟ ਐਕਸਪਲੋਡ ਕਰਨ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16088,7 +16088,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>ਬਲਾਕ ਫਟਾਉਣ ਲਈ ਚੁਣੋ</translation>
+        <translation>ਬਲਾਕ ਐਕਸਪਲੋਡ ਕਰਨ ਲਈ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16173,7 +16173,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>ਅੰਤਰ-ਖੰਡ ਦਸਤੀ(&amp;n)</translation>
+        <translation>ਕਾਟ ਬਿੰਦੂ ਦਸਤੀ(&amp;n)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
@@ -16657,7 +16657,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਅਣਡੰਨਾ ਕਰੋ</translation>
+        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਵਾਪਸ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
@@ -16715,7 +16715,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
         <source>Undo the last line drawing</source>
-        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਅਣਡੰਨਾ ਕਰੋ</translation>
+        <translation>ਆਖਰੀ ਲਾਈਨ ਖਿੱਚਣ ਨੂੰ ਵਾਪਸ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>

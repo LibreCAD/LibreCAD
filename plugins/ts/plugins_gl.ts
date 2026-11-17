@@ -703,7 +703,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>para apuntar</translation>
+        <translation>ata o punto</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -840,12 +840,12 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Intervalos - Desactivado</translation>
+        <translation>Marcas - Desactivado</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Categoría: Off</translation>
+        <translation>Interrupcións - Desactivado</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,7 +870,7 @@ anti-horario.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter nome&lt;br&gt; para unha nova capa&lt;br&gt;(se é necesario?) para&lt;br&gt;draw.</translation>
+        <translation>&lt;i&gt;&quot;Novo&quot;&lt;/i&gt;&lt;br&gt;Introduza o nome&lt;br&gt;dunha nova capa&lt;br&gt;(se é necesario?) na que&lt;br&gt;debuxar as marcas.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>

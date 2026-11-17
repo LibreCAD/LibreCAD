@@ -981,12 +981,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>背面へ移動</translation>
+        <translation>図形の背面へ移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>前面へ移動</translation>
+        <translation>図形の前面へ移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -1451,7 +1451,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
         <source>Slice/Divide Line</source>
-        <translation>切り取り線/分割線</translation>
+        <translation>線をスライス/分割</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
@@ -1461,7 +1461,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Line of Points</source>
-        <translation>点線</translation>
+        <translation>点列</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
@@ -2977,7 +2977,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
@@ -3099,7 +3099,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
@@ -3182,7 +3182,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
         <source>Round</source>
-        <translation>丸</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
@@ -9908,7 +9908,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="505"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>フリーハンド</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="507"/>
@@ -10334,13 +10334,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="698"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>移動/コピー</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="767"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>面取り</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="768"/>
@@ -10352,7 +10352,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>フィレット</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="780"/>
@@ -10370,55 +10370,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="716"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>ミラー</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="735"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>方向反転</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="704"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>回転</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="710"/>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>拡大/縮小</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="741"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>トリム</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="748"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>複数トリム</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>延長</translation>
+        <translation>le</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="788"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>ストレッチ</translation>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="820"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>削除</translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="821"/>
@@ -10430,7 +10430,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="814"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>分解</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
@@ -10574,7 +10574,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="801"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>属性</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="802"/>
@@ -10586,13 +10586,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="794"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>プロパティ</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="830"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>距離計測</translation>
+        <translation>dist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="831"/>
@@ -10604,7 +10604,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="845"/>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>角度計測</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1096"/>
@@ -10638,7 +10638,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>列間隔</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10649,12 +10649,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>長さ</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>数</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10665,12 +10665,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
         <source>rows</source>
-        <translation>行</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>行間隔</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -10681,13 +10681,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
         <source>trim</source>
-        <translation>トリム</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>角度計測</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
@@ -10866,13 +10866,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1244"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>方向反転</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1246"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>行</translation>
+        <translation>row</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
@@ -11288,7 +11288,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>接線 (点と円)</translation>
+        <translation>点円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="335"/>
@@ -11300,7 +11300,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>接線 (2円)</translation>
+        <translation>2円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="342"/>
@@ -11312,7 +11312,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>接線 (線と円)</translation>
+        <translation>直交接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="348"/>
@@ -11348,7 +11348,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>多角形 (中心・頂点)</translation>
+        <translation>多角形中心頂点</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="367"/>
@@ -11360,7 +11360,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>ポリゴン中心点</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="369"/>
@@ -11372,7 +11372,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>多角形 (中心・接線)</translation>
+        <translation>多角形中心接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="375"/>
@@ -11384,7 +11384,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>ポリゴン中心接線</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="382"/>
@@ -11414,7 +11414,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>2点・半径円</translation>
+        <translation>2点半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
@@ -11438,7 +11438,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="417"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>中心・半径円</translation>
+        <translation>中心半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
@@ -11456,7 +11456,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="425"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>接線円 (2接線1点)</translation>
+        <translation>接円2図形1点</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="426"/>
@@ -11468,7 +11468,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="431"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>接線円 (1接線2点)</translation>
+        <translation>接円1図形2点</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="432"/>
@@ -11480,7 +11480,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="437"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>接線円 (2円・半径)</translation>
+        <translation>接円2図形半径</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="438"/>
@@ -11504,7 +11504,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="454"/>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>円弧 (中心・半径)</translation>
+        <translation>円弧</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="455"/>
@@ -11576,7 +11576,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>楕円 (軸)</translation>
+        <translation>楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="515"/>
@@ -11588,7 +11588,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>楕円 (焦点)</translation>
+        <translation>焦点楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="521"/>
@@ -11612,7 +11612,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>楕円 (中心・3点)</translation>
+        <translation>中心3点楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
@@ -11636,7 +11636,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="578"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>ノード追加 (末尾)</translation>
+        <translation>ノード末尾追加</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="579"/>
@@ -11768,7 +11768,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>拡大/縮小</translation>
+        <translation>拡大縮小</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
@@ -11780,7 +11780,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>移動・回転</translation>
+        <translation>移動回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11792,7 +11792,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>2要素間回転</translation>
+        <translation>2参照回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
@@ -11924,7 +11924,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>エンティティ-点間距離</translation>
+        <translation>図形点間距離</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -12020,13 +12020,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>長さ1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>長さ2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12723,7 +12723,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>分割/切断</translation>
+        <translation>分割切断</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12839,12 +12839,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>開始</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>オフセット</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
@@ -12859,12 +12859,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>幅</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>高さ</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12874,7 +12874,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1130"/>
         <source>size</source>
-        <translation>サイズ</translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
@@ -12920,7 +12920,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>top</source>
-        <translation>上</translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
@@ -12930,17 +12930,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
         <source>left</source>
-        <translation>左</translation>
+        <translation>left</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>中央</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>右</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
@@ -12950,7 +12950,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>下</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
@@ -13055,17 +13055,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1172"/>
         <source>both</source>
-        <translation>両方</translation>
+        <translation>both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1173"/>
         <source>none</source>
-        <translation>なし</translation>
+        <translation>none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1174"/>
         <source>fit</source>
-        <translation>フィット</translation>
+        <translation>fit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
@@ -13085,7 +13085,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>距離</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -17110,7 +17110,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>中点スナップオプション</translation>
+        <translation>距離スナップオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17123,7 +17123,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>中点スナップオプション</translation>
+        <translation>距離スナップオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
