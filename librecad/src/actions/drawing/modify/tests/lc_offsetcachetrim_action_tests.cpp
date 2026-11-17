@@ -8596,7 +8596,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][polyline][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     for (const double frame : {1e12, 1e13})
-    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u})
+    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u})
     for (const bool splineFirst : {false, true}) {
         CAPTURE(frame, sourceFamily, splineFirst);
         const bool largestFrame = frame == 1e13;
@@ -8621,15 +8621,22 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         const auto sourceKind = sourceFamily == 0 || sourceFamily == 3 || sourceFamily == 8
             ? LC_OffsetSourceGeometry::Kind::Spline
             : sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 ||
-                      sourceFamily == 6 || sourceFamily == 7 || sourceFamily == 9
+                      sourceFamily == 6 || sourceFamily == 7 || sourceFamily == 9 ||
+                      sourceFamily == 10
                 ? LC_OffsetSourceGeometry::Kind::SplinePoints
                 : LC_OffsetSourceGeometry::Kind::Polyline;
-        if (sourceFamily == 9) {
+        if (sourceFamily == 9 || sourceFamily == 10) {
             LC_SplinePointsData sourceData;
             sourceData.useControlPoints = true;
-            sourceData.controlPoints = {
-                center + RS_Vector{-4 * scale, 0}, center + RS_Vector{-2 * scale, 3 * scale},
-                center + RS_Vector{2 * scale, 3 * scale}, center + RS_Vector{4 * scale, 0}};
+            sourceData.closed = sourceFamily == 10;
+            sourceData.controlPoints = sourceFamily == 10
+                ? std::vector<RS_Vector>{
+                    center + RS_Vector{-4 * scale, 0}, center + RS_Vector{-2 * scale, 3 * scale},
+                    center + RS_Vector{2 * scale, 3 * scale}, center + RS_Vector{4 * scale, 0},
+                    center + RS_Vector{2 * scale, -3 * scale}, center + RS_Vector{-2 * scale, -3 * scale}}
+                : std::vector<RS_Vector>{
+                    center + RS_Vector{-4 * scale, 0}, center + RS_Vector{-2 * scale, 3 * scale},
+                    center + RS_Vector{2 * scale, 3 * scale}, center + RS_Vector{4 * scale, 0}};
             source = new LC_SplinePoints(&f.graphic, sourceData);
         } else if (sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 ||
             sourceFamily == 6 || sourceFamily == 7) {
@@ -8720,7 +8727,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         tangent /= tangent.magnitude();
         RS_Vector cutterDirection{-tangent.y, tangent.x};
         cutterDirection = cutterDirection / cutterDirection.magnitude() *
-            (sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6 || sourceFamily == 7
+            (sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6 || sourceFamily == 7 || sourceFamily == 10
                  ? 8.0 * scale : scale);
         const RS_Vector cutterStart = intersection - cutterDirection;
         const RS_Vector cutterEnd = intersection + cutterDirection;
@@ -8801,12 +8808,12 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         CHECK_FALSE(cutter->isDeleted());
         REQUIRE(native->sourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == sourceKind);
-        if (sourceFamily == 9) {
+        if (sourceFamily == 9 || sourceFamily == 10) {
             const auto& restored = std::get<LC_SplinePointsData>(
                 native->sourceDefinition()->source.value);
             CHECK(restored.useControlPoints);
-            CHECK(restored.controlPoints.size() == 4);
-            CHECK_FALSE(restored.closed);
+            CHECK(restored.controlPoints.size() == (sourceFamily == 10 ? 6 : 4));
+            CHECK(restored.closed == (sourceFamily == 10));
         } else if (sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 ||
             sourceFamily == 6 || sourceFamily == 7) {
             const auto& restored = std::get<LC_SplinePointsData>(

@@ -5049,6 +5049,19 @@ worker-created high-origin typed source families`); `git diff --check` passes.
 This qualifies this one control-point profile only; other control counts,
 topologies/origins, ODA, visible GUI, and AutoCAD acceptance remain open.
 
+## 1808. Trim a Closed Control-point Spline-points Loop at High Origins (2026-11-17)
+
+Added a closed six-control-point `LC_SplinePointsData` profile with
+`useControlPoints=true` to the high-origin typed-source Trim Two matrix. At
+origins `(1e12,-2e12)` and `(1e13,-2e13)`, both pick orders pass worker source
+replacement, preview/commit, undo/redo, and all five R14/R2000/R2018 DXF/DWG
+save/reopen lanes; undo verifies the restored source remains control-point
+defined, closed, and six controls long. The focused CMake Release test passes
+15,882 assertions / 1 case (`T Trim Two trims worker-created high-origin
+typed source families`); `git diff --check` passes. This qualifies this one
+closed control profile only; other control counts/layouts, ODA, visible GUI,
+and AutoCAD acceptance remain open.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
@@ -31209,9 +31222,10 @@ quadratic SPLINE profile passes Trim Two and five-lane persistence at `1e12`
 and `1e13`; R2018's equivalent `LC_Parabola` representation is checked by
 endpoints and sampled curve membership, not by RTTI or cross-type length.
 
-**High-origin control-point spline-points addendum (section 1807):** One open
-four-control `LC_SplinePointsData` profile passes Trim Two and five-lane
-persistence at `1e12` and `1e13`, retaining `useControlPoints` on undo.
+**High-origin control-point spline-points addendum (sections 1807-1808):** One
+open four-control and one closed six-control `LC_SplinePointsData` profile
+pass Trim Two and five-lane persistence at `1e12` and `1e13`, retaining
+`useControlPoints` and topology on undo.
 
 **High-segment polyline clarification (sections 1337-1341):** Closed, strictly
 convex regular linear profiles pass worker generation at 256/512/1024/2048
