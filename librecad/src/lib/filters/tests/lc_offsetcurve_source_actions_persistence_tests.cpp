@@ -118,8 +118,9 @@ public:
     RS_Entity* limit() const noexcept { return m_limitEntity; }
     RS_Entity* target() const noexcept { return m_trimEntity; }
 };
-LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25, bool towardCentre = false) {
-    const double radius = towardCentre ? distance * 2.0 : 1.0;
+LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25, bool towardCentre = false,
+                       bool scaleOutwardSeed = false) {
+    const double radius = (towardCentre || scaleOutwardSeed) ? distance * 2.0 : 1.0;
     RS_Ellipse source(nullptr, {{0, 0}, {radius, 0}, 1., 0., .1, false});
     auto prepared = LC_OffsetCurve::create(source, distance, towardCentre);
     CAPTURE(prepared.refusal);
@@ -1584,14 +1585,17 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     const bool leftBranch = GENERATE(false, true);
     const bool reversedParameters = GENERATE(false, true);
     const double ratio = GENERATE(0.25, 0.75);
-    const bool highOrigin = qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_HIGH_ORIGIN");
-    double sourceScale = 1e5;
+    const bool veryHighOrigin = qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN");
+    const bool highOrigin = veryHighOrigin ||
+        qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_HIGH_ORIGIN");
+    double sourceScale = veryHighOrigin ? 1e6 : 1e5;
     if (!highOrigin) sourceScale = GENERATE(0.25, 1.0, 4.0);
     const double signedDistance = GENERATE(-0.25, 0.25) * sourceScale;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    const RS_Vector origin = highOrigin ? RS_Vector{1e12, -2e12} : RS_Vector{0, 0};
+    const RS_Vector origin = veryHighOrigin ? RS_Vector{1e13, -2e13}
+        : highOrigin ? RS_Vector{1e12, -2e12} : RS_Vector{0, 0};
     CAPTURE(highOrigin, leftBranch, reversedParameters, ratio, sourceScale, signedDistance,
             static_cast<int>(format));
     REQUIRE(lc::test::application());
@@ -1609,7 +1613,8 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
-    auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
+    auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0,
+                          veryHighOrigin);
     const RS_Vector majorAxis{std::cos(0.37), std::sin(0.37)};
     const LC_OffsetSourceGeometry expectedSource{LC_HyperbolaData{
         origin, majorAxis * (8.0 * sourceScale), ratio,
