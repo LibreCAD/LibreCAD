@@ -56634,9 +56634,10 @@ R14/R2000/R2018 lanes.
 
 The focused case passes 245 assertions / 1 case on macOS arm64 CMake Release.
 A preceding non-collinear corner fixture generated two ordinary branches and
-was not suitable for this single-native-cache test; no cornering support is
-claimed here. Application-level high-origin polyline replacement/Trim and
-high-origin corner, mixed-bulge, and closed-region variants remain open.
+was not suitable for this single-native-cache client test; no cornering support
+is claimed here. Section 1735 closes application-level high-origin
+replacement/Trim only for this collinear profile. High-origin corner,
+mixed-bulge, and closed-region variants remain open.
 
 ## 1734. Preserve High-origin Corner Polyline Ordinary Branches (2026-11-17)
 
@@ -56651,26 +56652,29 @@ The focused case passes 207 assertions / 1 case on macOS arm64 CMake Release.
 This proves ordinary branch preservation, not native editable-cache or
 application-level Trim support for high-origin corners; those remain open.
 
-## 1735. Trim Worker-created High-origin Spline Source Families (2026-11-17)
+## 1735. Trim Worker-created High-origin Spline and Polyline Sources (2026-11-17)
 
 Added application-level Trim Two regressions for an asymmetric non-rational
 cubic polynomial spline and an open four-fit-point `LC_SplinePoints` source,
-each translated to `(1e12,-2e12)` and scaled to `3e5`. Both entity-pick orders
-exercise worker-backed source replacement, certified trim preparation,
-preview/commit, undo/redo, and source/fragment geometry after R14 DXF, R2000
-DXF/DWG, and R2018 DXF/DWG save/reopen. The test can optionally retain its
-eight DWG outputs with `LC_OFFSET_ODA_OUTPUT_DIR`; default temporary-file
-cleanup is unchanged.
+plus an open collinear two-segment polyline. The spline sources are translated
+to `(1e12,-2e12)` and scaled to `3e5`; the polyline spans `2e5` at that same
+origin. Both entity-pick orders exercise worker-backed source replacement,
+certified trim preparation, preview/commit, undo/redo, and source/fragment
+geometry after R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The test
+can optionally retain its twelve DWG outputs with
+`LC_OFFSET_ODA_OUTPUT_DIR`; default temporary-file cleanup is unchanged.
 
-The focused case passes 1,425 assertions / 1 case on macOS arm64 CMake
-Release. ODA File Converter 27.1.0.0 converted all eight retained DWGs to
-R2018 DXF with exit status 0. The structured group-pair check found `AC1032`,
-two `SPLINE` entities and one `LINE` in every converted file, with no native
-offset marker expected after Trim Two.
+The focused case passes 2,149 assertions / 1 case on macOS arm64 CMake
+Release. ODA File Converter 27.1.0.0 converted all twelve retained DWGs to
+R2018 DXF with exit status 0. The structured group-pair check found `AC1032`
+and no native offset marker in every converted file. The eight spline-family
+files contain two `SPLINE` entities and one `LINE`; the four polyline files
+contain one `LWPOLYLINE`, one `SPLINE`, and one `LINE`.
 
-This qualifies these two spline source layouts and one high-origin/scale frame;
-quadratic spline imports may be reified as Parabola and are intentionally
-covered by separate conic tests. Other spline degrees/knot layouts, broader
+This qualifies these two spline source layouts and one collinear polyline at
+the recorded high-origin/scale frame; quadratic spline imports may be reified
+as Parabola and are intentionally covered by separate conic tests. High-origin
+cornering polyline branches, other spline degrees/knot layouts, broader
 conditioning, and visible CAD acceptance remain open.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
