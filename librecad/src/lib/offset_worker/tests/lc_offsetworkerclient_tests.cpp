@@ -5964,7 +5964,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
         highOrigin));
     const auto addCurvatureProfiles = [&](
         const char* layoutName, const RS_Vector& firstTangent,
-        const RS_Vector& secondTangent) {
+        const RS_Vector& secondTangent,
+        const std::initializer_list<double>& ratios = {0.1, 0.5, 0.9}) {
         struct CurvatureFrame {
             const char* name;
             double scale;
@@ -5993,7 +5994,7 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                     2.0 * source.m_focus.distanceTo(source.m_vertex);
                 REQUIRE(std::isfinite(vertexRadius));
                 REQUIRE(vertexRadius > 0.0);
-                for (const double curvatureRatio : {0.1, 0.5, 0.9}) {
+                for (const double curvatureRatio : ratios) {
                     const std::string name = std::string{"curvature-"} +
                         traversal + "-" + layoutName + "-" + frame.name +
                         "-ratio-" + std::to_string(curvatureRatio);
@@ -6015,7 +6016,8 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
     addCurvatureProfiles("opposite-bend", {1.0, -0.4}, {0.8, 0.25});
     addCurvatureProfiles("backtracking-start",
                          {-0.2, 0.9797958971132712},
-                         {0.9, -0.4358898943540673});
+                         {0.9, -0.4358898943540673},
+                         {0.1, 0.5, 0.9, 1.0, 1.02});
     addCurvatureProfiles("magnitude-ratio", {8e-151, 6e-151},
                          {6e149, -8e149});
     profiles.push_back({"mirrored-tangents",

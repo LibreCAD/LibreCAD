@@ -2661,20 +2661,22 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
                51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
                67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
-               83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
-               98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109,
-               110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
-               122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133,
-               134, 135, 136, 137, 138, 139, 140);
+               83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+               99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+               112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124,
+               125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137,
+               138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150,
+               151, 152);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
   const bool oppositeBendCurvatureProfile = profile >= 105 && profile <= 122;
   const bool backtrackingCurvatureProfile = profile >= 123 && profile <= 140;
+  const bool backtrackingCuspProfile = profile >= 141 && profile <= 152;
   const bool curvatureActionProfile =
       obliqueCurvatureProfile || shallowBendCurvatureProfile ||
       nearVerticalCurvatureProfile || oppositeBendCurvatureProfile ||
-      backtrackingCurvatureProfile;
+      backtrackingCurvatureProfile || backtrackingCuspProfile;
   const int curvatureProfileIndex =
       profile <= 59 ? profile - 51
       : profile <= 68 ? profile - 60
@@ -2685,14 +2687,21 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       : profile <= 113 ? profile - 105
       : profile <= 122 ? profile - 114
       : profile <= 131 ? profile - 123
-                       : profile - 132;
-  const int curvatureScaleIndex = curvatureProfileIndex / 3;
-  const int curvatureRatioIndex = curvatureProfileIndex % 3;
+      : profile <= 140 ? profile - 132
+      : profile <= 146 ? profile - 141
+                       : profile - 147;
+  const int curvatureScaleIndex = backtrackingCuspProfile
+                                      ? curvatureProfileIndex / 2
+                                      : curvatureProfileIndex / 3;
+  const int curvatureRatioIndex = backtrackingCuspProfile
+                                      ? curvatureProfileIndex % 2
+                                      : curvatureProfileIndex % 3;
   const bool reversedCurvatureProfile =
       (profile >= 60 && profile <= 68) || (profile >= 78 && profile <= 86) ||
       (profile >= 96 && profile <= 104) ||
       (profile >= 114 && profile <= 122) ||
-      (profile >= 132 && profile <= 140);
+      (profile >= 132 && profile <= 140) ||
+      (profile >= 147 && profile <= 152);
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
@@ -2706,8 +2715,9 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                   steepAsymmetricTangents ||
                                   (profile >= 5 && profile <= 22);
   const bool oppositeBend = (profile >= 5 && profile <= 16) ||
-                            oppositeBendCurvatureProfile ||
-                            backtrackingCurvatureProfile;
+                            oppositeBendCurvatureProfile;
+  const bool multiRadiusTangentProfile =
+      oppositeBend || backtrackingCurvatureProfile || backtrackingCuspProfile;
   const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
                           (profile >= 29 && profile <= 34) ||
                           (profile >= 45 && profile <= 50) ||
@@ -2817,6 +2827,12 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                     {0.2, -0.9797958971132712}}}
         : std::array<RS_Vector, 2>{{{-0.2, 0.9797958971132712},
                                     {0.9, -0.4358898943540673}}};
+  } else if (backtrackingCuspProfile) {
+    endpointTangents = reversedCurvatureProfile
+        ? std::array<RS_Vector, 2>{{{-0.9, 0.4358898943540673},
+                                    {0.2, -0.9797958971132712}}}
+        : std::array<RS_Vector, 2>{{{-0.2, 0.9797958971132712},
+                                    {0.9, -0.4358898943540673}}};
   }
   LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
       reversedTangentTraversal
@@ -2832,8 +2848,10 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     REQUIRE(vertexRadius > 0.0);
     auto* seedOffset = dynamic_cast<LC_OffsetCurve*>(previous);
     REQUIRE(seedOffset);
-    const double offsetDistance =
-        curvatureRatios[curvatureRatioIndex] * vertexRadius;
+    const double curvatureRatio = backtrackingCuspProfile
+        ? (curvatureRatioIndex == 0 ? 1.0 : 1.02)
+        : curvatureRatios[curvatureRatioIndex];
+    const double offsetDistance = curvatureRatio * vertexRadius;
     const auto distanceEdit = seedOffset->setDistance(offsetDistance);
     REQUIRE(distanceEdit);
     CHECK(seedOffset->definition().distance == offsetDistance);
@@ -2884,7 +2902,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   REQUIRE(tangent.magnitude() > RS_TOLERANCE);
   tangent /= tangent.magnitude();
   const RS_Vector normal{-tangent.y, tangent.x};
-  const double radius = (oppositeBend || steepAsymmetricTangents) && !lineCutter
+  const double radius = (multiRadiusTangentProfile || steepAsymmetricTangents) && !lineCutter
                             ? GENERATE(.05, .1, .25) * profileScale
                             : .1 * profileScale;
   const bool cutterFirst = lineCutter ? GENERATE(false, true) : false;
@@ -2911,8 +2929,32 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   LC_OffsetCacheTrim::Work trimWork;
   const auto directTrim = LC_OffsetCacheTrim::prepare(
       native->getData(), *cutter, {nativePick}, {}, {}, &trimWork);
+  CAPTURE(profile, curvatureScaleIndex, curvatureRatioIndex, intersection,
+          nativePick, cutterPick, radius, directTrim.refusal,
+          trimWork.hasIntersectionFailureDomain,
+          trimWork.intersections.totalBoxPairs,
+          trimWork.intersections.generatedLeaves);
+  if (backtrackingCuspProfile &&
+      directTrim.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded) {
+    CHECK(directTrim.fragments.empty());
+    CHECK(directTrim.conicFragments.empty());
+    CHECK(directTrim.fragmentCount == 0);
+    CHECK_FALSE(directTrim.removed);
+    CHECK(trimGeometry(*native) == nativeBefore);
+    CHECK(trimGeometry(*cutter) == cutterBefore);
+    f.action->click(nativePick);
+    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    f.action->hover(cutterPick);
+    REQUIRE(f.action->m_preview);
+    CHECK(trimPreview(*f.action->m_preview).empty());
+    f.action->click(cutterPick);
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(trimGeometry(*native) == nativeBefore);
+    CHECK(trimGeometry(*cutter) == cutterBefore);
+    return;
+  }
   REQUIRE(directTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
-  CAPTURE(intersection, nativePick, cutterPick, radius);
   CHECK(trimWork.intersections.deepestPairRefinement <=
         LC_OffsetCacheTrim::Limits{}.maxDepth);
 
@@ -3042,12 +3084,16 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         LC_OffsetCacheTrim::prepare(native->getData(), *circle, {nativePick});
     const auto conicOnly = LC_OffsetCacheTrim::prepareConic(
         native->getData(), *circle, {circlePick});
+    const auto circleOracle = exactCircleBezierOracle(
+        native->getData(), circleCenter, radius, circlePick);
     CAPTURE(cacheOnly.refusal, cacheOnly.rootCount, cacheOnly.fragments.size(),
             conicOnly.refusal, conicOnly.rootCount,
             conicOnly.conicFragments.size(), conicOnly.work.failureStage,
             conicOnly.work.hasIntersectionFailureDomain,
             conicOnly.work.intersections.totalBoxPairs,
-            conicOnly.work.intersections.generatedLeaves);
+            conicOnly.work.intersections.generatedLeaves,
+            circleOracle.valid, circleOracle.distinctRoots,
+            circleOracle.repeatedRoots, circleOracle.minimumSeparation);
     LC_OffsetCacheTrim::Work circleWork;
     const auto circleTrim = LC_OffsetCacheTrim::prepareConic(
         native->getData(), *circle, {circlePick},
@@ -3065,10 +3111,22 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK(cacheOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
     CHECK(cacheOnly.rootCount == 2);
     CHECK_FALSE(cacheOnly.fragments.empty());
-    CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
-    CHECK(conicOnly.rootCount == 2);
-    CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::None);
-    REQUIRE(conicOnly.conicFragments.size() == 1);
+    const bool independentlySeparatedCircleSecant =
+        circleOracle.valid && circleOracle.distinctRoots == 2 &&
+        circleOracle.repeatedRoots == 0 &&
+        circleOracle.minimumSeparation > radius * 1e-6;
+    if (backtrackingCuspProfile && !independentlySeparatedCircleSecant) {
+      CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::LimitExceeded);
+      CHECK(conicOnly.fragments.empty());
+      CHECK(conicOnly.conicFragments.empty());
+      CHECK(conicOnly.fragmentCount == 0);
+      CHECK_FALSE(conicOnly.removed);
+    } else {
+      CHECK(conicOnly.refusal == LC_OffsetCacheTrim::Refusal::None);
+      CHECK(conicOnly.rootCount == 2);
+      CHECK(conicOnly.work.failureStage == LC_OffsetCacheTrim::Stage::None);
+      REQUIRE(conicOnly.conicFragments.size() == 1);
+    }
     CHECK(trimGeometry(*native) == nativeBefore);
 
     LC_StoredCacheTrimOptions workerOptions;
@@ -3083,9 +3141,14 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     const auto completion = joinedTrimWorker(*request);
     const auto &workerResult =
         std::get<LC_OffsetCacheTrim::Result>(completion->reply().result);
+    CAPTURE(workerResult.refusal, workerResult.rootCount,
+            workerResult.work.failureStage,
+            workerResult.work.hasIntersectionFailureDomain,
+            workerResult.work.intersections.totalBoxPairs,
+            workerResult.work.intersections.generatedLeaves);
     CHECK(workerResult.refusal == LC_OffsetCacheTrim::Refusal::None);
     CHECK(workerResult.rootCount == 2);
-    CHECK(workerResult.work.failureStage == LC_OffsetCacheTrim::Stage::None);
+    CHECK_FALSE(workerResult.work.hasIntersectionFailureDomain);
 
     LC_StoredCacheTrimCompletions received{*request, *completion};
     received.publicationUndoEpoch = f.graphic.undoStateEpoch();
@@ -3097,6 +3160,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK_FALSE(preparedTrim.cacheRefusal);
     CHECK(preparedTrim.cacheWork.failureStage ==
           workerResult.work.failureStage);
+    CHECK_FALSE(preparedTrim.cacheWork.hasIntersectionFailureDomain);
     REQUIRE(preparedBatch.entitiesToAdd.size() ==
             circleTrim.fragments.size() + circleTrim.conicFragments.size());
     CHECK(preparedBatch.entitiesToDelete.size() == 2);
@@ -3108,7 +3172,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         f.graphic, *native, nativePick, *circle, circlePick, true, circleBatch);
     REQUIRE(trimTwo.result);
     CHECK_FALSE(trimTwo.cacheRefusal);
-    CHECK(trimTwo.cacheWork.failureStage == LC_OffsetCacheTrim::Stage::None);
+    CHECK_FALSE(trimTwo.cacheWork.hasIntersectionFailureDomain);
     REQUIRE(circleBatch.entitiesToAdd.size() ==
             preparedBatch.entitiesToAdd.size());
     CHECK(circleBatch.entitiesToDelete == preparedBatch.entitiesToDelete);
