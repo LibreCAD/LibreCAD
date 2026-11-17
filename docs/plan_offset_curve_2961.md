@@ -55987,3 +55987,40 @@ backtracking or cusp topology. Visible packaged-app acceptance remains open. A
 desktop launch attempt in this session captured the macOS lock screen, so it is
 not counted as GUI evidence.
 
+## 1701. Exercise Backtracking Cusp and Beyond-cusp Trim (2026-11-16)
+
+Test commit `043396931` extends the backtracking endpoint-tangent profile from
+the prior `0.1/0.5/0.9` curvature-radius ratios to the exact cusp ratio `1.0`
+and a sampled beyond-cusp ratio `1.02`. Worker-kernel normal-oracle checks and
+worker-client cache/persistence coverage include both new ratios at both
+traversals, source scales, and offset signs. Trim Two adds the same ratios to
+its scale/traversal matrix.
+
+The Trim tests distinguish successful selection from bounded refusal. When a
+query reaches `LimitExceeded`, it must publish no fragments and must leave the
+source and cutter unchanged; the action preview is empty and clicking does not
+delete either input. For circle/conic cases, an independent exact-root oracle
+controls whether a two-root secant is expected. A solver diagnostic may retain
+the stage of a rejected search branch after the selected result is certified;
+the acceptance check is that no unresolved intersection-failure domain
+remains. No work/depth limits were raised for these cusp profiles.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 12,764 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 327,968 assertions / 1 case; `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1500000`.
+- `T Trim Two trims an endpoint-tangent parabola` over the full profile range 0-152: 489,619 assertions / 1 case.
+- Worker kernel/client and `librecad_tests` targets built successfully.
+- `git diff --check`: passed.
+
+The ODA GUI audit remains the independent 84/84 DWG-to-R2018-DXF conversion
+recorded in section 1692. A fresh CLI retry while ODAFileConverter was open
+still aborted from the SSH process at macOS pasteboard services (exit 134)
+before processing inputs, so it adds no ODA coverage.
+
+This qualifies sampled exact/beyond-cusp worker persistence and Trim behavior
+for this backtracking tangent pair. Bounded refusal remains valid behavior for
+uncertifiable branch selection, and this is not a guarantee for arbitrary cusp
+topologies, other tangent pairs, AutoCAD acceptance, or visible packaged-app
+GUI behavior.
+
