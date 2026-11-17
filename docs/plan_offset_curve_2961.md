@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-16. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-17. Project: **LibreCAD**, not LibreCAD_3.
 
 **Current source-picker disposition (2026-11-16):** While choosing a
 replacement in the Properties widget, the user can change the source-family
@@ -56767,15 +56767,15 @@ packaged-Properties acceptance remains open.
 
 Closed-loop Trim Two was further localized without retaining an unverified
 kernel change. The cache-side operation (`closed native spline` trimmed by
-`vertical line`) certifies two roots on both signed sides. The reverse
-line-cache operation against the same native spline refuses as
-`TangencyOrOverlap` during `RootExtraction`; the synchronous two-entity
-`trimStoredCache` consequently publishes no output and leaves both inputs
-untouched, and the GUI Trim Two preview remains empty. The next implementation
-slice must preserve and transfer the certified paired parameter for the line
-operand while validating transverse topology and the line-space geometric
-error bound. Do not bypass the tangent/overlap refusal or publish a partial
-one-sided result as Trim Two.
+`vertical line`) certifies two roots on both signed sides. The original reverse
+line-cache probe was reported as `TangencyOrOverlap`; a deeper trace on the
+current code instead produced `AmbiguousRoots` during `RootExtraction`, with
+three valid root records. Section 1740 supersedes that earlier classification:
+the closed cutter seam was represented twice at exact paired parameters zero
+and the cutter end, and both records enclosed the same source crossing. The
+fix coalesces only that exact closed-cutter seam pair after each event passes
+the usual transverse proof checks. It does not suppress unrelated overlaps,
+uncertain endpoints, or tangent refusals.
 
 ## 1739. Trim the Opposite Side of the High-origin L-polyline (2026-11-17)
 
@@ -56796,6 +56796,35 @@ This closes the opposite signed side for the same L-corner profile and tested
 cutter/pick layouts. It does not generalize to other corner locations,
 rotations, segment lengths, concave corners, curved/bulged corners, or closed
 regions. Visible packaged-app and AutoCAD acceptance remain separate gates.
+
+## 1740. Trim Two Across an Exact Closed-cutter Seam (2026-11-17)
+
+The high-origin closed square from sections 1737-1738 now completes Trim Two
+against its vertical line cutter. In reverse operand order, the intersection
+kernel can report the same source crossing twice when the closed cache seam is
+represented at cutter parameters `0` and `end`. Root extraction now coalesces
+only those opposite exact endpoint parameters when their certified source
+parameter intervals overlap. Each event has already passed the regular
+transversality, topology, and line-space error checks; uncertain or merely
+overlapping non-seam roots still refuse atomically.
+
+The regression covers both signed offset sides and both entity-pick orders,
+checks non-mutating preview, preview/committed spline-fragment agreement,
+atomic replacement, undo/redo, and save/reopen geometry through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. The focused CMake Release case passes 1,334
+assertions / 1 case. The four produced DWGs were converted by ODA File
+Converter 27.1.0.0 to ACAD2018 DXF with exit status 0; four outputs were
+produced and no `.err` files appeared. A separate batch conversion of all 49
+independent offset-curve DWG fixtures also completed successfully. ODA
+conversion establishes structural interoperability only, not visual or
+semantic AutoCAD acceptance. The ezdxf module is unavailable in this Python
+environment.
+
+This closes the recorded square, origin, scale, signed offset, cutter, and
+pick-order profile for Trim Two and five-lane persistence. Other closed-loop
+topologies, non-exact cutter-seam representations, broader intersection
+multiplicity/conditioning, visible packaged-app acceptance, and AutoCAD
+acceptance remain open.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
