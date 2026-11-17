@@ -57208,3 +57208,19 @@ ODA File Converter 27.1.0.0 converted all 200 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other reflected scales, notch layouts,
 orientations, origins, visible GUI interaction, and AutoCAD semantic acceptance
 remain open.
+
+## 1761. Extend Reflected Multi-notch Scale to `1.7r` (2026-11-17)
+
+The reflected `0.37`-radian profile also passes at radius scale `1.7`, alongside
+`0.6` and `1.0`, at origin `(1e12,-2e12)` with fixed offset `2500`. The
+orientation-aware target root assertion is named for its six-root branch, and
+the full reversed-winding action and persistence matrix remains unchanged.
+These are three discrete mirrored scale samples, not a continuous scale
+guarantee.
+
+The focused CMake Release matrix passes 38,121 assertions / 1 case; the ODA
+staged run passes 39,367 assertions and contains exactly 208 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 208 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other reflected scale ratios, profiles,
+orientations, origins, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
