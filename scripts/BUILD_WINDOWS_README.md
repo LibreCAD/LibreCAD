@@ -137,7 +137,7 @@ build-windows.bat
   - Note: LibreCAD must use CMake, not QMake or direct MSBuild
   
 - **Qt 6.x** with MSVC or MinGW support
-  - Modules: qt5compat, qtimageformats, qtshadertools (recommended)
+  - Modules: qt5compat, qtimageformats, qtpdf, qtshadertools (recommended; qtpdf lets Insert Image read PDF files)
   - Tools: qmake, windeployqt6, lrelease
   - Auto-installed as: `choco install qt6`
   

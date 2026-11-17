@@ -1,0 +1,5 @@
+# Keep the fixture byte for byte on every platform: a CRLF checkout would
+# break the PDF's cross-reference offsets, whose entries must also end in
+# a space, so the PDF is binary to git.
+* -text
+*.pdf binary
