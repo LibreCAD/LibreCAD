@@ -2662,25 +2662,31 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
                67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
                83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
-               98, 99, 100, 101, 102, 103, 104);
+               98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109,
+               110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
+               122);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
+  const bool oppositeBendCurvatureProfile = profile >= 105 && profile <= 122;
   const bool curvatureActionProfile =
       obliqueCurvatureProfile || shallowBendCurvatureProfile ||
-      nearVerticalCurvatureProfile;
+      nearVerticalCurvatureProfile || oppositeBendCurvatureProfile;
   const int curvatureProfileIndex =
       profile <= 59 ? profile - 51
       : profile <= 68 ? profile - 60
       : profile <= 77 ? profile - 69
       : profile <= 86 ? profile - 78
       : profile <= 95 ? profile - 87
-                      : profile - 96;
+      : profile <= 104 ? profile - 96
+      : profile <= 113 ? profile - 105
+                       : profile - 114;
   const int curvatureScaleIndex = curvatureProfileIndex / 3;
   const int curvatureRatioIndex = curvatureProfileIndex % 3;
   const bool reversedCurvatureProfile =
       (profile >= 60 && profile <= 68) || (profile >= 78 && profile <= 86) ||
-      (profile >= 96 && profile <= 104);
+      (profile >= 96 && profile <= 104) ||
+      (profile >= 114 && profile <= 122);
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
@@ -2693,7 +2699,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const bool asymmetricTangents = profile == 3 || reversedTangentTraversal ||
                                   steepAsymmetricTangents ||
                                   (profile >= 5 && profile <= 22);
-  const bool oppositeBend = profile >= 5 && profile <= 16;
+  const bool oppositeBend = (profile >= 5 && profile <= 16) ||
+                            oppositeBendCurvatureProfile;
   const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
                           (profile >= 29 && profile <= 34) ||
                           (profile >= 45 && profile <= 50) ||
@@ -2793,6 +2800,10 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                                     {-0.2, -0.9797958971132712}}}
         : std::array<RS_Vector, 2>{{{0.2, 0.9797958971132712},
                                     {0.2, -0.9797958971132712}}};
+  } else if (oppositeBendCurvatureProfile) {
+    endpointTangents = reversedCurvatureProfile
+        ? std::array<RS_Vector, 2>{{{-0.8, -0.25}, {-1.0, 0.4}}}
+        : std::array<RS_Vector, 2>{{{1.0, -0.4}, {0.8, 0.25}}};
   }
   LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
       reversedTangentTraversal
