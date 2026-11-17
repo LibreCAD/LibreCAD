@@ -54,3 +54,13 @@ TEST_CASE("formatAngle DMS carries a rounded up value", "[rs_units]") {
     CHECK(dms(10.4999999, 4) == "10° 30' 0.00\"");
     CHECK(dms(10.99999, 5) == "10° 59' 59.964\"");
 }
+
+// A drawing can carry a negative precision: AutoCAD writes $DIMADEC = -1, and Drawing
+// Preferences saves $AUPREC = -1 after a switch from decimal degrees with 7 or 8 places.
+// Such a string has the fields of precision 2, so the angle is rounded to whole seconds.
+TEST_CASE("formatAngle DMS with a negative precision rounds to whole seconds", "[rs_units]") {
+    CHECK(dms(10.5, -1) == "10° 30' 0\"");
+    CHECK(dms(10.4999, -1) == "10° 30' 0\"");
+    CHECK(dms(280.25, -1) == "280° 15' 0\"");
+    CHECK(dms(30.52555, -1) == "30° 31' 32\"");
+}
