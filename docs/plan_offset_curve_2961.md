@@ -57396,3 +57396,18 @@ launch aborts on macOS pasteboard services, while Launch Services reports
 pass or failure for the files. `git diff --check` passes. Other notch
 profiles, visible GUI interaction, and independent CAD semantic acceptance
 remain open.
+
+## 1775. Trim a Concave Notch Profile at `1e13` (2026-11-17)
+
+The distinct topology-3 concave polyline profile passes Trim Two at rotation
+`0.37`, vertical ratio `0.7`, radius scale `1.0`, and center
+`(1e13,-2e13)`, with fixed offset `2500`. The test covers both offset signs,
+both pick orders, undo/redo, and all five native-capable persistence lanes.
+This is one additional bounded topology at the large-origin frame, not a
+general guarantee for concave polylines.
+
+The focused CMake Release matrix passes 60,445 assertions / 1 case. Its
+round-trip assertions validate R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+within LibreCAD. `git diff --check` passes. The external ODA conversion and
+visible GUI gates remain open, along with other profiles and topology/scale
+combinations.
