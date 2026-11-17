@@ -56187,3 +56187,25 @@ large-scale tangent profile only. The unit-scale near-parallel construction is
 an explicit unsupported/invalid boundary, not evidence of successful
 high-origin persistence; Trim at `1e12`, other tangent layouts, and arbitrary
 origin/scale combinations remain open.
+
+## 1709. Trim the Large-scale Tangent Profile at a `1e12` Origin (2026-11-17)
+
+Test commit `1386e85af` adds Trim Two profile 213, matching section 1708's
+rotated steep-asymmetric parabola at source scale `1e3` and origin
+`(1e12,-2e12)`. The action matrix exercises both initial offset-side choices
+and three circle-cutter radii, including independent trim preparation,
+preview/commit parity, undo/redo, and five-format save/reopen of the trimmed
+geometry. Reopen comparisons use `128 * epsilon * 2e12`, reflecting the
+world-coordinate precision floor instead of demanding sub-ULP equality.
+
+Validation with the exact worktree's macOS arm64 CMake Release build:
+
+- Isolated profile 213: 3,651 assertions / 1 case passed across six generated variants.
+- Full Trim Two matrix, profiles 0-213: 697,401 assertions / 1 case passed.
+- `librecad_tests` rebuilt successfully; `git diff --check` passed.
+
+This closes Trim coverage only for this large-scale tangent profile, its
+recorded sides/radii, and the tested five file lanes. It does not establish
+Trim or persistence for a unit-scale source at this origin, the
+near-parallel input rejected in section 1708, or arbitrary endpoint-tangent
+geometries.
