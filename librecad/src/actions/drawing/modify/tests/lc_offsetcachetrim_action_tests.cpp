@@ -8761,6 +8761,10 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         const std::array<RS2::FormatType, 5> formats{{
             RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
             RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+        QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
         for (std::size_t lane = 0; lane < formats.size(); ++lane) {
             const auto format = formats[lane];
             const bool dwg = format == RS2::FormatDWG ||
@@ -8770,6 +8774,35 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
                     .arg(sourceFamily).arg(splineFirst ? 1 : 0).arg(lane) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+#ifdef DWGSUPPORT
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader,
+                    {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QByteArray output = reader.readAllStandardOutput();
+                REQUIRE_FALSE(output.isEmpty());
+                QJsonParseError parseError;
+                const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
+                REQUIRE(parseError.error == QJsonParseError::NoError);
+                REQUIRE(document.isObject());
+                const QJsonArray entities = document.object().value("OBJECTS").toArray();
+                REQUIRE_FALSE(entities.isEmpty());
+                bool hasExpectedSourceEntity = false;
+                for (const QJsonValue& value : entities) {
+                    const QString entity = value.toObject().value("entity").toString();
+                    hasExpectedSourceEntity |= sourceFamily == 2
+                        ? entity == QLatin1String("LWPOLYLINE") ||
+                              entity == QLatin1String("POLYLINE")
+                        : entity == QLatin1String("SPLINE");
+                }
+                CHECK(hasExpectedSourceEntity);
+            }
+#endif
             const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
             if (dwg && !odaOutput.isEmpty()) {
                 const std::filesystem::path odaDirectory(odaOutput.constData());

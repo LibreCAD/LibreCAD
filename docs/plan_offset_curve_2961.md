@@ -5057,8 +5057,10 @@ origins `(1e12,-2e12)` and `(1e13,-2e13)`, both pick orders pass worker source
 replacement, preview/commit, undo/redo, and all five R14/R2000/R2018 DXF/DWG
 save/reopen lanes; undo verifies the restored source remains control-point
 defined, closed, and six controls long. The focused CMake Release test passes
-15,882 assertions / 1 case (`T Trim Two trims worker-created high-origin
-typed source families`); `git diff --check` passes. This qualifies this one
+16,651 assertions / 1 case (`T Trim Two trims worker-created high-origin
+typed source families`); `git diff --check` passes. With LibreDWG available,
+both binary lanes also pass `dwgread -O minJSON` and expose the expected
+SPLINE/polyline source class for every matrix profile. This qualifies this one
 closed control profile only; other control counts/layouts, ODA, visible GUI,
 and AutoCAD acceptance remain open.
 
@@ -31225,7 +31227,9 @@ endpoints and sampled curve membership, not by RTTI or cross-type length.
 **High-origin control-point spline-points addendum (sections 1807-1808):** One
 open four-control and one closed six-control `LC_SplinePointsData` profile
 pass Trim Two and five-lane persistence at `1e12` and `1e13`, retaining
-`useControlPoints` and topology on undo.
+`useControlPoints` and topology on undo. The expanded high-origin family matrix
+also verifies both DWG lanes with LibreDWG `minJSON`, checking SPLINE versus
+polyline entity presence for every source family.
 
 **High-segment polyline clarification (sections 1337-1341):** Closed, strictly
 convex regular linear profiles pass worker generation at 256/512/1024/2048
