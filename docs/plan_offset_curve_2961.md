@@ -57032,3 +57032,22 @@ with ODA File Converter 27.1.0.0; no `.err` files appeared. `git diff --check`
 passes. Other multi-notch layouts, arm widths/depths, cutter placements,
 origin/scale ranges, visible GUI interaction, and AutoCAD semantic acceptance
 remain open.
+
+## 1750. Vary Two-notch Arm Widths and Depth (2026-11-17)
+
+A second two-notch profile changes the outer arm widths to `0.3r`, the center
+arm width to `0.4r`, and the notch depth to `0.5r`. Its horizontal cutter runs
+at `y=-0.25r`, closer to the notch floors than the first double-notch case,
+while retaining six certified crossings. Both inward/outward offsets and both
+operand orders run through direct preparation, preview/commit/undo/redo, and
+the five native-capable DXF/DWG save/reopen lanes. For inward component-aware
+trimming, the selected target component has two roots and the native cutter
+union has six; outward target and cutter preparations each report six.
+
+The focused CMake Release matrix passes 23,133 assertions / 1 case in the
+ODA-staged run. A fresh directory held exactly 136 R2000/R2018 DWGs; ODA File
+Converter 27.1.0.0 converted all 136 to ACAD2018 DXF with no `.err` files.
+`git diff --check` passes. This adds one notch-depth/arm-width sample, not a
+general polygon-family guarantee. More concave arrangements, scales,
+orientations, visible GUI interaction, and AutoCAD semantic acceptance remain
+open.
