@@ -57363,3 +57363,17 @@ confirms two degree-3 SPLINE entities (4 control points / 8 knots and 40 / 44),
 one LWPOLYLINE, and two LINE entities. This independently checks one saved
 result's bounded geometry structure; rendering and editable-extension
 semantics remain unverified.
+
+## 1773. Trim an Open-notch Profile at `1e13` (2026-11-17)
+
+The open-notch polyline profile (topology 1) passes Trim Two at rotation `0.37`,
+vertical ratio `0.7`, radius scale `1.0`, and center `(1e13,-2e13)`, with fixed
+offset `2500`. The action covers both signed offsets, pick orders, undo/redo,
+and all five native-capable save/reopen lanes. This is one U/open-notch profile
+at the large-origin frame, not a guarantee for arbitrary open concavities.
+
+The focused CMake Release matrix passes 55,476 assertions / 1 case; its ODA
+staged run passes 57,311 assertions and contains exactly 264 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 264 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other open-notch proportions, topology
+variants, visible GUI interaction, and AutoCAD semantic acceptance remain open.
