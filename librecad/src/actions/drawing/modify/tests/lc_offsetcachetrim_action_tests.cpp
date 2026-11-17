@@ -4442,7 +4442,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u})
+    const std::array<std::pair<double, double>, 3> veryHighOriginDomains{{
+        {1.2, 3.55}, {2.4, 4.75}, {0.15, 5.95}}};
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u,
+                                   9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u})
     for (const bool arcFirst : {false, true}) {
         CAPTURE(profile, arcFirst);
         Drawing<true> f;
@@ -4465,7 +4468,13 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        const RS_ArcData sourceData = profile >= 9
+        const unsigned highOriginVariant = profile >= 13 ? profile - 13 : 0;
+        const auto [veryHighStart, veryHighEnd] =
+            veryHighOriginDomains[highOriginVariant / 2];
+        const RS_ArcData sourceData = profile >= 13
+            ? RS_ArcData{center, 1e6, veryHighStart, veryHighEnd,
+                         highOriginVariant % 2 == 1}
+            : profile >= 9
             ? RS_ArcData{center, veryHighOrigin ? 1e6 : 1e5, .35, 2.7,
                          profile == 10 || profile == 12}
             : profile == 0
