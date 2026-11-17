@@ -6600,6 +6600,22 @@ Still open are multiple concavities, other notch proportions and cutter
 orientations, wider transform/scale coverage, visible GUI interaction, and
 AutoCAD semantic acceptance.
 
+## 1745. Add Horizontal Cutter Through Concave Trim Two Arm (2026-11-17)
+
+The original L profile now also runs with a horizontal finite-line cutter
+through its upper arm, in addition to its vertical cutter across the lower and
+inner legs. The same profile matrix retains both offset signs and operand pick
+orders, direct preparation, preview/commit/undo/redo, and five-format
+save/reopen. This adds a second cutter orientation for the same concave source
+without generalizing beyond the tested intersection arrangement.
+
+The focused CMake Release case passes 12,147 assertions / 1 case. All 72
+retained R2000/R2018 DWGs converted to ACAD2018 DXF through ODA File Converter
+27.1.0.0, producing 72 DXFs with no `.err` files. `git diff --check` passes.
+Multiple concavities, other cutter angles and placements, broader transforms
+and scales, visible GUI interaction, and AutoCAD semantic acceptance remain
+open.
+
 ## 1007. Qualify Thin Hyperbola Offsets at the Vertex-curvature Boundary (2026-11-12)
 
 Test commit `e88461107` adds an independent direct-geometry matrix for bounded
