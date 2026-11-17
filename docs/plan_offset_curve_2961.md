@@ -57695,3 +57695,14 @@ replacement, Trim Two, undo/redo, and LibreDWG structural reads. The focused
 CMake Release case passes 7,368 assertions / 1 case; `git diff --check`
 passes. This is a sampled ratio only; other domains, curvature neighborhoods,
 ODA, visible GUI, and AutoCAD semantic acceptance remain open.
+
+## 1797. Trim a Rotated Bulged Polyline at `1e13` (2026-11-17)
+
+Added a closed four-edge bulged-polyline profile at rotation `0.37`, vertical
+ratio `0.7`, radius scale `1e5`, and origin `(1e13,-2e13)` to the high-origin
+Trim Two matrix. Both signed offsets and pick orders run through preview,
+commit, undo/redo, and all five native-capable DXF/DWG save/reopen lanes. The
+focused CMake Release case passes 67,971 assertions / 1 case, and
+`git diff --check` passes. This qualifies one rotated high-origin bulge
+profile only; other bulge magnitudes/topologies, ODA, visible GUI, and AutoCAD
+semantic acceptance remain open.
