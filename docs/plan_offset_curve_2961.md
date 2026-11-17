@@ -275,8 +275,10 @@ its curvature-relative Trim Two action/contact matrix. Section 1698 adds a
 near-vertical opposing tangent pair and raises the bounded Trim query depth to
 resolve its independently proven near-tangent secant without changing other
 work ceilings. Continue with other materially distinct tangent directions and
-contact conditioning; do not inflate this finite profile set into general
-coverage.
+contact conditioning; section 1699 adds the opposite-bend pair to exact-normal,
+operation-8, worker/persistence, and curvature-relative Trim coverage, and
+records a clean rerun of the 84-file ODA audit. Do not inflate this finite
+profile set into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55921,4 +55923,38 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This resolves the recorded near-vertical secant only. Other tangent angles,
 closer/shallower roots, cusp-boundary contacts, and visible GUI acceptance
 remain open.
+
+## 1699. Qualify an Opposite-bend Endpoint-tangent Pair (2026-11-16)
+
+Test commit `4725474c4` adds the materially different tangent pair `{(1.0, -0.4),
+(0.8, 0.25)}` to the analytic interior-normal and operation-8 oracle, worker
+cache plus five-format persistence matrix, and curvature-relative Trim Two
+matrix. Forward and reversed traversal are covered across source scales
+`1e-3/1/1e3`, offset ratios `0.1/0.5/0.9` of vertex curvature radius, and both
+offset sides. As in the preceding profiles, independent tangent-circle
+classification is retained; outer ratios use circle cutters and the middle
+ratio adds line cutters in both operand-pick orders. Trim also exercises
+worker-backed replacement, preview/commit parity, undo/redo, and all five
+native-capable save/reopen lanes.
+
+The preserved DWG fixture matrix was reconverted independently by ODAFileConverter
+27.1.0.0 to R2018 DXF after the desktop converter was available. All 84 output
+files passed the structured group-pair audit: 48 SPLINE caches with the
+`LC_OFFSET_CURVE` marker, 12 LINE controls, and 24 metadata-only plot fixtures;
+no version, inventory, marker, or stem mismatches. The independent conversion
+output is `/private/tmp/offset-3193-oda-retry-again-20261116`.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 10,514 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 271,426 assertions / 1 case; `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=600000` (the 300-second attempt reached 267,178 passing assertions before watchdog expiry).
+- `T Trim Two trims an endpoint-tangent parabola`: 389,077 assertions / 1 case.
+- Worker kernel, worker client, and `librecad_tests` targets built successfully.
+- ODA conversion: 84/84 DXF outputs; structured audit: 0 mismatches.
+- `git diff --check`: passed.
+
+This qualifies this tangent pair and sampled contact layouts only. Other
+direction pairs, cusp-boundary and beyond-cusp offsets, broader near-tangent
+conditioning, visible packaged-app acceptance, and AutoCAD acceptance remain
+open.
 
