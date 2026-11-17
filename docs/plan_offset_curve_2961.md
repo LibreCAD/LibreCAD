@@ -56735,14 +56735,24 @@ level one-sided Trim test for both signed offset sides. With a vertical center
 cutter, each iteration certifies at least two roots and a retained fragment,
 shows a nonempty preview without mutating the drawing, commits the Trim while
 preserving the cutter and source, then verifies undo and redo. The focused
-case passes 356 assertions / 1 case on macOS arm64 CMake Release.
+action case passes 356 assertions / 1 case on macOS arm64 CMake Release.
 
-This closes one-sided Trim for this square, origin, scale, offset, cutter, and
-pick arrangement only. It does not establish closed-loop Trim Two, other closed
-polyline topologies, persistence after editing, visible packaged-app behavior,
-or independent ODA/AutoCAD acceptance. The all-family selector code path needs
-no further implementation; visible packaged-Properties acceptance remains
-open.
+The committed post-Trim source, cutter, and output geometry also pass
+save/reopen comparison through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The
+extended case passes 396 assertions / 1 case. ODA File Converter 27.1.0.0
+converted all four staged DWGs to R2018 DXF; every output is AC1032 with one
+`LWPOLYLINE`, one `SPLINE`, and one `LINE`, and no `.err` file was produced.
+The optional ezdxf audit was unavailable because the Python `ezdxf` module is
+not installed. The ODA process required host execution because its sandboxed
+launch aborted on macOS pasteboard/XPC access before reading the inputs.
+
+This closes one-sided Trim and its five-lane persistence for this square,
+origin, scale, offset, cutter, and pick arrangement only. It does not establish
+closed-loop Trim Two, other closed-polyline topologies, visible packaged-app
+behavior, or AutoCAD acceptance. ODA structural conversion is verified for the
+four DWGs, but it is not equivalent to visual or semantic AutoCAD validation.
+The all-family selector code path needs no further implementation; visible
+packaged-Properties acceptance remains open.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
