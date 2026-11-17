@@ -56427,6 +56427,30 @@ This establishes independent ODA structural conversion for the expanded
 endpoint-tangent persistence matrix. It is not visual-fidelity evidence,
 AutoCAD acceptance, nor coverage of other source geometry families.
 
+## 1721. Record High-origin Ellipse Gap Found during Family Expansion (2026-11-17)
+
+An exploratory worker/cache fixture using a full ellipse centered at
+`(1e12,-2e12)`, major radius `1e5`, minor/major ratio `0.25`, and a rotated
+major axis exposed two unresolved behaviors in the typed-source suite:
+
+- The generated editable source definition did not encode identically to the
+  requested ellipse, indicating basis/angle normalization loss at this frame.
+- The source operation completed at the worker level but returned
+  `LC_OffsetSourceStatus::OffsetFailed`, with no generated branches.
+
+The provisional fixture was removed because it made the broad suite fail and
+requires a focused numerical fix, not weaker assertions. A first full client
+suite attempt also used the wrong timeout variable and hit the default
+150-second watchdog; the corrected run exposed the ellipse failures but was
+stopped before the entire multi-format suite completed. Do not count this as
+passing ellipse persistence or Trim Two evidence.
+
+Next ellipse work should isolate (1) typed ellipse source round-trip at large
+coordinates from (2) offset construction, then add only passing bounded cases
+to the five-format persistence and Trim matrices. High-origin ellipse offset
+robustness and exact source preservation remain open; the successful ODA audit
+in section 1720 does not cover this family.
+
 ## 1719. Run the Complete Endpoint-tangent Trim Matrix through Profile 222 (2026-11-17)
 
 The current `librecad_tests` binary ran the full endpoint-tangent Trim Two
