@@ -57536,3 +57536,15 @@ The opt-in CMake Release case passes 4,632 assertions / 1 case over 80
 generated combinations. This is bounded hyperbola persistence/action evidence
 for the recorded scale and frame only; additional eccentricities, intervals,
 Trim Two geometry, ODA/AutoCAD, and visible GUI acceptance remain open.
+
+## 1785. Revalidate Cross-family Source Replacement on Current Head (2026-11-17)
+
+Reran `Native source picker replaces every modeled source family without
+filter side effects` on the current PR source. The test exercises worker-backed
+candidate selection/replacement for all nine canonical source kinds; it does
+not substitute for changing types repeatedly in the visible Properties
+workflow.
+
+The CMake Release test passes 8,318 assertions / 1 case. Visible desktop
+source-picker interaction, family-by-variant geometry qualification, and
+independent CAD acceptance remain separate open gates.
