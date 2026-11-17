@@ -57105,3 +57105,18 @@ ODA File Converter 27.1.0.0 converted all 160 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other angles, ratios, multi-notch shapes,
 origin/scale combinations, visible GUI interaction, and AutoCAD semantic
 acceptance remain open.
+
+## 1754. Extend Rotated Two-notch Trim to `1e13` (2026-11-17)
+
+The `0.37`-radian, unit-aspect two-notch profile also passes at world origin
+`(1e13,-2e13)`, alongside its `1e9` and `1e12` cases. Both signed offsets,
+operand orders, preview/commit/undo/redo, and all five native-capable
+save/reopen lanes succeed. This is bounded evidence for one shape and frame at
+these three origin tiers, not a general floating-point precision guarantee.
+
+The focused CMake Release matrix passes 28,612 assertions / 1 case in both the
+regular and ODA-staged runs. The fresh stage contains exactly 168 R2000/R2018
+DWGs; ODA File Converter 27.1.0.0 converted all 168 to ACAD2018 DXF with no
+`.err` files. `git diff --check` passes. Other multi-notch layouts, angles,
+scales, origins, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
