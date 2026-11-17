@@ -42696,27 +42696,6 @@ spacings, fit-point distributions, and wider transform/scale combinations
 remain open in Slice 4, as do visible GUI, cross-platform runtime, and
 independent ODA/AutoCAD acceptance.
 
-## 1714. Trim the Mirrored Tangent Profile at a `1e12` Origin (2026-11-17)
-
-Test commit `6ca50553d` adds Trim profile 215 for the mirrored-steep
-endpoint-tangent parabola at scale `1e3` and origin `(1e12,-2e12)`. It follows
-the common high-origin profile path for both offset-side choices, circle-cutter
-radii, preview/commit parity, undo/redo, and five-format save/reopen. The Trim
-test accepts `LC_OFFSET_TRIM_PROFILE` to run one numbered profile in isolation;
-without it, Catch2 still registers and runs the complete profile list.
-
-Validation on the exact macOS arm64 CMake Release tree:
-
-- Isolated profile 215: 3,626 assertions / 1 case passed.
-- Full endpoint-tangent Trim matrix, profiles 0-215: 703,494 assertions / 1
-  case passed.
-- `librecad_tests` rebuilt successfully; `git diff --check` passed.
-
-This adds Trim coverage only for the recorded mirrored profile, selected
-offset sides, cutter radii, and file lanes. It does not establish high-origin
-Trim for all tangent layouts or arbitrary source scales/cutters, nor close
-visible-app or independent ODA/AutoCAD acceptance.
-
 ## 1202. Carry Closed Fit-point Variants Through Native Trim and File Lanes (2026-11-13)
 
 Test commits `cad670eec` and `08fef0a31` extend the typed-source-family
@@ -56318,3 +56297,24 @@ This qualifies one additional mirrored layout at this high-origin scale and
 the oracle layouts at the tested frame. It does not add Trim coverage for the
 mirrored profile at this origin, nor prove arbitrary tangent layouts, source
 scales, cutters, visible-app use, or independent ODA/AutoCAD acceptance.
+
+## 1714. Trim the Mirrored Tangent Profile at a `1e12` Origin (2026-11-17)
+
+Test commit `6ca50553d` adds Trim profile 215 for the mirrored-steep
+endpoint-tangent parabola at scale `1e3` and origin `(1e12,-2e12)`. It follows
+the common high-origin profile path for both offset-side choices, circle-cutter
+radii, preview/commit parity, undo/redo, and five-format save/reopen. The Trim
+test accepts `LC_OFFSET_TRIM_PROFILE` to run one numbered profile in isolation;
+without it, Catch2 still registers and runs the complete profile list.
+
+Validation on the exact macOS arm64 CMake Release tree:
+
+- Isolated profile 215: 3,626 assertions / 1 case passed.
+- Full endpoint-tangent Trim matrix, profiles 0-215: 703,494 assertions / 1
+  case passed.
+- `librecad_tests` rebuilt successfully; `git diff --check` passed.
+
+This adds Trim coverage only for the recorded mirrored profile, selected
+offset sides, cutter radii, and file lanes. It does not establish high-origin
+Trim for all tangent layouts or arbitrary source scales/cutters, nor close
+visible-app or independent ODA/AutoCAD acceptance.
