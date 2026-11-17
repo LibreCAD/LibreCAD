@@ -8485,3 +8485,150 @@ TEST_CASE("R03 Trim Two seals both natives after final peer mutation or late can
         }
     }
 }
+
+TEST_CASE("T Trim Two trims a worker-created high-origin polynomial spline",
+          "[gui][lc-offsetcurve][trim-action][typed-source][spline][high-origin][trim-two]") {
+    REQUIRE(lc::test::ensureSettings());
+    const RS_Vector center{1e12, -2e12};
+    constexpr double scale = 1e5;
+    constexpr double distance = 2500.0;
+    for (const bool splineFirst : {false, true}) {
+        CAPTURE(splineFirst);
+        Drawing<true> f;
+        constexpr double zoom = .001;
+        f.view.getViewPort()->setSize(640, 480);
+        f.view.getViewPort()->setOffsetAndFactor(
+            qRound(320.0 - center.x * zoom),
+            qRound(240.0 - center.y * zoom), zoom);
+
+        RS_Ellipse seed(nullptr,
+            RS_EllipseData{{0, 0}, {2 * scale, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, distance, false);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+
+        RS_SplineData sourceData{3, false};
+        sourceData.controlPoints = {
+            center, center + RS_Vector{.8 * scale, 1.2 * scale},
+            center + RS_Vector{2.2 * scale, .6 * scale},
+            center + RS_Vector{3 * scale, 0}};
+        sourceData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+        sourceData.weights = {1, 1, 1, 1};
+        auto* source = new RS_Spline(&f.graphic, sourceData);
+        f.graphic.addEntity(source);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Spline);
+        update.use(source);
+        lc::test::awaitUpdate(update);
+        INFO(f.context.messages.join('\n').toStdString());
+        REQUIRE(update.lastReport().updated == 1);
+        REQUIRE(previous->isDeleted());
+
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() ==
+              LC_OffsetSourceGeometry::Kind::Spline);
+        CHECK(native->sourceDefinition()->signedDistance == distance);
+
+        double first = 0, last = 0;
+        REQUIRE(native->getParameterDomain(first, last));
+        const double parameter = first + (last - first) * .31;
+        const double step = (last - first) * 1e-3;
+        const RS_Vector intersection = native->getPointAt(parameter);
+        RS_Vector tangent = native->getPointAt(parameter + step) -
+                            native->getPointAt(parameter - step);
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        RS_Vector cutterDirection{-tangent.y, tangent.x};
+        cutterDirection = cutterDirection / cutterDirection.magnitude() * scale;
+        auto* cutter = new RS_Line(&f.graphic,
+            RS_LineData{intersection - cutterDirection,
+                        intersection + cutterDirection});
+        f.graphic.addEntity(cutter);
+        const RS_Vector nativePick = native->getPointAt(first + (last - first) * .1);
+        const RS_Vector cutterPick = intersection + cutterDirection * .65;
+        const auto prepared = LC_OffsetCacheTrim::prepare(
+            native->getData(), *cutter, {nativePick});
+        CAPTURE(prepared.refusal, prepared.rootCount, prepared.fragments.size());
+        REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
+        REQUIRE(prepared.rootCount >= 1);
+
+        const auto geometryBefore = RS_Spline::geometryFingerprint(native->getData());
+        f.action->click(splineFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto undoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(splineFirst ? cutterPick : nativePick);
+        f.action->waitForTrim();
+        REQUIRE_FALSE(f.action->m_preview->isEmpty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+        f.action->click(splineFirst ? cutterPick : nativePick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(cutter->isDeleted());
+
+        QTemporaryDir directory;
+        REQUIRE(directory.isValid());
+        const std::array<RS2::FormatType, 5> formats{{
+            RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+            RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+        for (std::size_t lane = 0; lane < formats.size(); ++lane) {
+            const auto format = formats[lane];
+            const bool dwg = format == RS2::FormatDWG ||
+                             format == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("high-origin-spline-trim-%1-%2")
+                    .arg(splineFirst ? 1 : 0).arg(lane) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+            const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
+            if (dwg && !odaOutput.isEmpty()) {
+                const std::filesystem::path odaDirectory(odaOutput.constData());
+                std::filesystem::create_directories(odaDirectory);
+                std::filesystem::copy_file(
+                    file, odaDirectory / file.filename(),
+                    std::filesystem::copy_options::overwrite_existing);
+            }
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, format));
+            const auto expected = live(f.graphic);
+            const auto actual = live(reopened);
+            REQUIRE(actual.size() == expected.size());
+            INFO("expected rtti list: " << expected.front()->rtti() << ","
+                 << expected.back()->rtti() << "; reopened rtti list: "
+                 << actual.front()->rtti() << "," << actual.back()->rtti());
+            CHECK(std::none_of(actual.begin(), actual.end(), [](const RS_Entity* entity) {
+                return entity->rtti() == RS2::EntityOffsetCurve;
+            }));
+            std::vector<bool> matched(actual.size(), false);
+            for (const auto* expectedEntity : expected) {
+                bool found = false;
+                for (std::size_t i = 0; i < actual.size(); ++i) {
+                    if (matched[i] || !sameTrimGeometry(*expectedEntity, *actual[i]))
+                        continue;
+                    matched[i] = true;
+                    found = true;
+                    break;
+                }
+                CAPTURE(format, expectedEntity->rtti());
+                CHECK(found);
+            }
+        }
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(cutter->isDeleted());
+    }
+}
