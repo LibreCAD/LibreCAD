@@ -4961,6 +4961,17 @@ deployed-helper proof. Keep W16-W19 implemented; do not restart them as missing.
 Windows runtime validation and the separate W0-W2/import/final acceptance gates
 remain open.
 
+## 1801. Check the Desktop Terminal Automation Route (2026-11-17)
+
+Attempted to launch the ODA conversion command through macOS Terminal's
+AppleScript interface so the converter would inherit the interactive desktop
+session. From this SSH context, Apple Events cannot resolve/control Terminal
+(`Can’t get application "Terminal"`; the hiservices XPC connection is
+invalid), so no command was launched and no output was produced. ODA
+conversion remains unverified; it must be run from an accessible desktop
+Terminal or through the ODA GUI. This does not close visible LibreCAD GUI or
+AutoCAD semantic acceptance either.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
