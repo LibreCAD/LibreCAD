@@ -57192,3 +57192,19 @@ ODA File Converter 27.1.0.0 converted all 192 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other reflected profiles, orientations,
 scales, origins, visible GUI interaction, and AutoCAD semantic acceptance
 remain open.
+
+## 1760. Vary Reflected Multi-notch Offset Scale (2026-11-17)
+
+The `0.37`-radian reflected two-notch profile adds radius scale `0.6` at
+`(1e12,-2e12)` with fixed offset distance `2500`. The reversed-winding
+component-root mapping, six-root cutter union, both signed offsets and operand
+orders, full action lifecycle, and five native-capable save/reopen lanes pass.
+Together with unit scale, this is a two-sample mirrored scale check, not a
+continuous scale or geometry guarantee.
+
+The focused CMake Release matrix passes 41,557 assertions / 1 case; the ODA
+staged run passes 41,824 assertions and contains exactly 200 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 200 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other reflected scales, notch layouts,
+orientations, origins, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
