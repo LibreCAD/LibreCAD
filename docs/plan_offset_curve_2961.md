@@ -4984,6 +4984,18 @@ visible session does not give an SSH-launched CLI process access to that
 session's services. Independent ODA conversion, visible LibreCAD interaction,
 and AutoCAD semantic acceptance remain open.
 
+## 1803. Trim an Asymmetric Closed Fit-point Spline at High Origins (2026-11-17)
+
+Extended the worker-created high-origin typed-source Trim Two matrix with an
+asymmetric closed eight-fit-point `LC_SplinePoints` profile. At origins
+`(1e12,-2e12)` and `(1e13,-2e13)`, it exercises both operand-pick orders,
+worker source replacement, preview/commit, undo/redo, and all five
+R14/R2000/R2018 DXF/DWG save/reopen lanes. The focused CMake Release test
+passes 9,041 assertions / 1 case (`T Trim Two trims worker-created high-origin
+typed source families`); `git diff --check` passes. This qualifies one
+additional closed fit-point layout only; other closed layouts and ODA, visible
+GUI, and AutoCAD semantic acceptance remain open.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
