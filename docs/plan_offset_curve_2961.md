@@ -56362,3 +56362,22 @@ A group-pair audit of every output found `$ACADVER=AC1032`, exactly one
 This is independent ODA structural conversion evidence for the four exact
 near-vertical fixtures. It does not establish visual fidelity, AutoCAD
 acceptance, or interoperability for the remaining geometry matrix.
+
+## 1717. ODA-audit the Full Endpoint-tangent Persistence Matrix (2026-11-17)
+
+Using the opt-in retention from section 1716, the complete endpoint-tangent
+worker/cache and five-format persistence case passed 449,931 assertions and
+retained 1,148 DWGs across all recorded profiles and signed offsets. ODA File
+Converter 27.1.0.0 converted the full set to R2018 DXF with exit status 0.
+
+A structured group-pair audit matched every input DWG to one output DXF and
+checked `$ACADVER`, entity count, and editable-offset XDATA. All 1,148 outputs
+have `$ACADVER=AC1032`, exactly one `SPLINE`, and exactly one
+`LC_OFFSET_CURVE` marker; there were zero mismatches. The retained inputs and
+converted outputs are under `/private/tmp/PR3193-endpoint-tangent-oda/` and
+`/private/tmp/PR3193-endpoint-tangent-oda-dxf/` respectively. The test log is
+`/private/tmp/offset-2961-endpoint-tangent-oda-persistence.log`.
+
+This is broad independent ODA structural conversion coverage for the exact
+endpoint-tangent matrix, not visual fidelity, AutoCAD acceptance, or proof of
+all editable-source families and variants.
