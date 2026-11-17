@@ -56884,3 +56884,32 @@ absent in this turn, process enumeration was unavailable from SSH, and
 `screencapture` returned `could not create image from display`; no visible-app
 PASS is claimed. Recreate/use an approved desktop test copy when the GUI session
 is controllable, without substituting offscreen tests for that gate.
+
+## 1742. Cover Concave Closed Trim Two Root Topology (2026-11-17)
+
+The high-origin Trim Two action matrix now includes a closed concave L profile
+alongside its convex and bulged profiles. On this topology the certified
+intersection query also reports same-branch source self-events at the closed
+seam; those are not cutter boundaries and are now ignored. Actual source/cutter
+roots remain restricted to branch pair `(0,1)`, with certified snapshots
+normalized when the provider returns `(1,0)`. Normalization swaps the event
+parameters and both isolation/proof domains, and is repeated after contraction
+before source/cutter fields are consumed. Same-branch events are still covered
+by the session's proof validation and count against the root/work budget.
+
+The focused action matrix passes 8,078 assertions / 1 case on macOS arm64 CMake
+Release, including both offset signs and pick orders, direct preparation in both
+operand roles, preview, commit, undo/redo, and five-format save/reopen. The 48
+retained R2000/R2018 DWGs converted to ACAD2018 DXF with ODA File Converter
+27.1.0.0; all 48 outputs were produced and no `.err` files appeared. Targeted
+guards pass: closed seam complement 2,300 assertions / 1 case, high-segment
+connected-vs-overlap Trim Two 2,878 assertions / 1 case, and closed polyline
+producer kernel 151 assertions / 1 case. The complete 126-case worker-kernel
+CTest did not finish within the available validation window and was stopped;
+this is not reported as a pass. `git diff --check` passes.
+
+This qualifies one high-origin concave L profile and the observed closed-seam
+self-event topology only. Other concave corner layouts, notch depth/orientation,
+multiple concavities, broader transforms/scales, visible packaged-app
+interaction, and AutoCAD semantic acceptance remain open. ODA conversion is
+structural interoperability evidence, not viewport or semantic acceptance.
