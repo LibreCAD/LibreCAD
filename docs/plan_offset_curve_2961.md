@@ -57411,3 +57411,17 @@ round-trip assertions validate R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
 within LibreCAD. `git diff --check` passes. The external ODA conversion and
 visible GUI gates remain open, along with other profiles and topology/scale
 combinations.
+
+## 1776. Trim a Rounded Notch Profile at `1e13` (2026-11-17)
+
+The topology-7 rounded polyline profile passes Trim Two at rotation `0.37`,
+vertical ratio `1.0`, radius scale `1.0`, and center `(1e13,-2e13)`, with
+fixed offset `2500`. Both offset signs and operand orders exercise the Trim Two
+preview/commit lifecycle, undo/redo, and all five native-capable file
+round-trips. This adds one rounded profile at the high-origin frame; it is not
+a guarantee for arbitrary arc-bulge arrangements.
+
+The focused CMake Release matrix passes 60,421 assertions / 1 case. R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG reopen checks pass within LibreCAD.
+`git diff --check` passes. Visible GUI and independent CAD validation remain
+open, as do other bulge values, topologies, and scale/origin combinations.
