@@ -56750,7 +56750,8 @@ action case passes 356 assertions / 1 case on macOS arm64 CMake Release.
 
 The committed post-Trim source, cutter, and output geometry also pass
 save/reopen comparison through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The
-extended case passes 396 assertions / 1 case. ODA File Converter 27.1.0.0
+extended case passes 398 assertions / 1 case, including a direct reverse-order
+Trim preparation regression. ODA File Converter 27.1.0.0
 converted all four staged DWGs to R2018 DXF; every output is AC1032 with one
 `LWPOLYLINE`, one `SPLINE`, and one `LINE`, and no `.err` file was produced.
 The optional ezdxf audit was unavailable because the Python `ezdxf` module is
