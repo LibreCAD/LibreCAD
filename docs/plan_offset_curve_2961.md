@@ -56848,3 +56848,28 @@ regular strictly-convex profile.
 This was a plan reconciliation only; it changes no implementation or test
 claims beyond the already-recorded validation in sections 1337-1341. `git diff
 --check` passes.
+
+## 1741. Expand Closed High-origin Trim Two Profiles (2026-11-17)
+
+The closed-loop Trim Two action matrix now adds rotated and non-square convex
+polyline profiles to the axis-aligned square from section 1740. The four
+profiles use rotation `0`/`0.37` radians and vertical-to-horizontal side ratio
+`1`/`0.7`, all at center `(1e12,-2e12)`, horizontal radius `1e5`, and signed
+offset magnitude `2500`. Each profile runs both offset signs and both operand
+pick orders, including reverse-order certified preparation, non-mutating
+preview, commit, undo/redo, and five-format DXF/DWG save/reopen comparison.
+
+The focused test passes 5,355 assertions / 1 test case on macOS arm64 CMake
+Release. The 16 retained R2000/R2018 DWGs converted through ODA File Converter
+27.1.0.0 to ACAD2018 DXF with exit status 0; 16 outputs were produced and no
+`.err` files appeared. This is structural conversion evidence, not viewport
+rendering or AutoCAD semantic acceptance.
+
+This qualifies the bounded rotated/non-square convex profiles only. Concave,
+bulged, corner-intersection, other seam placements, broader origin/scale,
+physical GUI parity/DPR/stale-peer interaction, and AutoCAD acceptance remain
+open. The approved test app at `/private/tmp/LibreCAD-PR3193-visible.app` was
+absent in this turn, process enumeration was unavailable from SSH, and
+`screencapture` returned `could not create image from display`; no visible-app
+PASS is claimed. Recreate/use an approved desktop test copy when the GUI session
+is controllable, without substituting offscreen tests for that gate.
