@@ -6583,6 +6583,23 @@ Windows/Linux runtime qualification. Remaining GUI/import caller audit,
 broader source/budget audit, installed-helper portability, and final W0-W2
 acceptance remain open.
 
+## 1744. Exercise an Asymmetric Concave Notch in Trim Two (2026-11-17)
+
+The matrix adds an L-shaped profile with a narrower/deeper notch: its inner
+corner is at `(0.3r, 0.25r)` in the local frame, with a vertical cutter at
+`x=0.65r` crossing the lower and inner horizontal legs. The existing center,
+scale, signed offsets, both pick orders, preview/commit/undo/redo, and five
+save/reopen lanes remain unchanged. This adds a different notch proportion to
+the square-corner and mirrored L profiles; it does not claim arbitrary concave
+polygons.
+
+The focused CMake Release matrix passes 10,805 assertions / 1 case. All 64
+retained R2000/R2018 DWGs converted to ACAD2018 DXF using ODA File Converter
+27.1.0.0, producing 64 DXFs with no `.err` files. `git diff --check` passes.
+Still open are multiple concavities, other notch proportions and cutter
+orientations, wider transform/scale coverage, visible GUI interaction, and
+AutoCAD semantic acceptance.
+
 ## 1007. Qualify Thin Hyperbola Offsets at the Vertex-curvature Boundary (2026-11-12)
 
 Test commit `e88461107` adds an independent direct-geometry matrix for bounded
