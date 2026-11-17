@@ -8556,7 +8556,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][polyline][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     for (const double frame : {1e12, 1e13})
-    for (const unsigned sourceFamily : {0u, 1u, 2u})
+    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u})
     for (const bool splineFirst : {false, true}) {
         CAPTURE(frame, sourceFamily, splineFirst);
         const bool largestFrame = frame == 1e13;
@@ -8578,7 +8578,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         f.graphic.addEntity(previous);
 
         RS_Entity* source = nullptr;
-        const auto sourceKind = sourceFamily == 0
+        const auto sourceKind = sourceFamily == 0 || sourceFamily == 3
             ? LC_OffsetSourceGeometry::Kind::Spline
             : sourceFamily == 1 ? LC_OffsetSourceGeometry::Kind::SplinePoints
                                 : LC_OffsetSourceGeometry::Kind::Polyline;
@@ -8590,14 +8590,16 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
                 center + RS_Vector{3 * scale, 0}};
             sourceData.fitTolerance = 1e-3;
             source = new LC_SplinePoints(&f.graphic, sourceData);
-        } else if (sourceFamily == 0) {
+        } else if (sourceFamily == 0 || sourceFamily == 3) {
             RS_SplineData sourceData{3, false};
             sourceData.controlPoints = {
                 center, center + RS_Vector{.8 * scale, 1.2 * scale},
                 center + RS_Vector{2.2 * scale, .6 * scale},
                 center + RS_Vector{3 * scale, 0}};
             sourceData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
-            sourceData.weights = {1, 1, 1, 1};
+            sourceData.weights = sourceFamily == 3
+                ? std::vector<double>{1, .7, 1.5, 1}
+                : std::vector<double>{1, 1, 1, 1};
             source = new RS_Spline(&f.graphic, sourceData);
         } else {
             auto* polyline = new RS_Polyline(&f.graphic);
@@ -8725,10 +8727,15 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
             CHECK(restored.fitTolerance == 1e-3);
         } else if (sourceFamily == 0) {
             CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
-        } else {
+        } else if (sourceFamily == 2) {
             const auto& restored = std::get<LC_OffsetPolylineData>(
                 native->sourceDefinition()->source.value);
             CHECK(restored.segments.size() == 2);
+        } else {
+            const auto& restored = std::get<RS_SplineData>(
+                native->sourceDefinition()->source.value);
+            const std::vector<double> expectedWeights{1, .7, 1.5, 1};
+            CHECK(restored.weights == expectedWeights);
         }
         REQUIRE(f.graphic.redo());
         CHECK(native->isDeleted());
