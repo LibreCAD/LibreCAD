@@ -56341,3 +56341,24 @@ This qualifies only this near-vertical pair at the stated origin, scale,
 offset and cutter grid. It does not close the wider high-origin tangent
 matrix, arbitrary source-conditioning limits, visible-app use, or independent
 ODA/AutoCAD acceptance.
+
+## 1716. Independently Convert the Near-vertical High-origin DWGs with ODA (2026-11-17)
+
+Test harness commit `b6ced17ca` adds opt-in profile selection
+(`LC_OFFSET_CLIENT_PROFILE`) and explicit DWG retention
+(`LC_OFFSET_ODA_OUTPUT_DIR`) to the existing worker-client persistence case.
+With the near-vertical high-origin profile selected, the case passes 1,706
+assertions and writes the four signed R2000/R2018 DWG variants to
+`/private/tmp/PR3193-near-vertical-oda/`. The default invocation still runs all
+profiles and removes its ordinary temporary output directory.
+
+ODA File Converter 27.1.0.0 converted all four generated DWGs to R2018 DXF.
+The sandboxed launch failed before processing because macOS pasteboard/XPC
+services were unavailable; the authorized desktop-service launch exited 0.
+A group-pair audit of every output found `$ACADVER=AC1032`, exactly one
+`SPLINE`, and one `LC_OFFSET_CURVE` marker. The converted files are under
+`/private/tmp/PR3193-near-vertical-oda-dxf/`.
+
+This is independent ODA structural conversion evidence for the four exact
+near-vertical fixtures. It does not establish visual fidelity, AutoCAD
+acceptance, or interoperability for the remaining geometry matrix.
