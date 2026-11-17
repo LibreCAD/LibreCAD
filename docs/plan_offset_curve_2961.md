@@ -57013,3 +57013,22 @@ Converter 27.1.0.0 converted all 120 to ACAD2018 DXF with no `.err` files.
 `git diff --check` passes. These are bounded samples at `1e9`, `1e12`, and
 `1e13`, not proof for all coordinates/scales. Additional notch arrangements,
 visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1749. Cover Two-notch Concave Trim Two (2026-11-17)
+
+The matrix adds a closed comb/U profile with two separate top-open notches,
+four concave vertices, and three connected arms. A horizontal finite cutter
+crosses six source boundaries. Direct preparation confirms six roots when the
+native is the cutter, and six for the outward native as target. For the inward
+native, target preparation finds the two roots on the picked trim component;
+the other components remain preserved. This role-specific count reflects the
+existing component-aware Trim Two contract, not a root dropped by the filter.
+Both signed sides and both mouse-pick orders still run preview, commit,
+undo/redo, and all five DXF/DWG save/reopen lanes.
+
+The focused CMake Release matrix passes 21,735 assertions / 1 case in the
+ODA-staged run. Exactly 128 fresh R2000/R2018 DWGs converted to ACAD2018 DXF
+with ODA File Converter 27.1.0.0; no `.err` files appeared. `git diff --check`
+passes. Other multi-notch layouts, arm widths/depths, cutter placements,
+origin/scale ranges, visible GUI interaction, and AutoCAD semantic acceptance
+remain open.
