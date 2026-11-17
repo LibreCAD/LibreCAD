@@ -56701,10 +56701,10 @@ ODA File Converter 27.1.0.0 converted all six retained DWGs to R2018 DXF with
 exit status 0. Each output reports `AC1032`, one `LWPOLYLINE`, one `SPLINE`,
 one `LINE`, and no stale native offset marker.
 
-This closes application-level source replacement and Trim Two for this single
-open L-corner, high-origin frame, signed side, and cutter. It does not establish
-all corner configurations, the opposite signed side, curved or closed corners,
-general intersection multiplicity, or visible CAD acceptance.
+Section 1739 extends this exact open L-corner to the opposite signed side; the
+original section closes one side only. Other corner configurations, curved or
+closed corners, general intersection multiplicity, and visible CAD acceptance
+remain open.
 
 ## 1737. Certify High-origin Closed-polyline Trim Roots (2026-11-17)
 
@@ -56753,6 +56753,26 @@ behavior, or AutoCAD acceptance. ODA structural conversion is verified for the
 four DWGs, but it is not equivalent to visual or semantic AutoCAD validation.
 The all-family selector code path needs no further implementation; visible
 packaged-Properties acceptance remains open.
+
+## 1739. Trim the Opposite Side of the High-origin L-polyline (2026-11-17)
+
+Extended the high-origin open L-polyline action case from section 1736 across
+both signed offset sides, retaining both entity-pick orders. Each of the four
+rows verifies the composed generalized native cache, certified trim roots,
+non-mutating preview, Trim Two commit, source preservation, undo/redo, and
+geometry after R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The
+focused case passes 1,429 assertions / 1 case on macOS arm64 CMake Release.
+
+ODA File Converter 27.1.0.0 converted all eight staged DWGs to R2018 DXF.
+Every result is AC1032, has one `LWPOLYLINE` source and one `LINE` cutter, and
+contains no stale editable offset marker. The inward-side rows contain one
+`SPLINE` result; the outward-side rows contain two `SPLINE` results, reflecting
+the tested branch topology. No ODA `.err` files were produced.
+
+This closes the opposite signed side for the same L-corner profile and tested
+cutter/pick layouts. It does not generalize to other corner locations,
+rotations, segment lengths, concave corners, curved/bulged corners, or closed
+regions. Visible packaged-app and AutoCAD acceptance remain separate gates.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
