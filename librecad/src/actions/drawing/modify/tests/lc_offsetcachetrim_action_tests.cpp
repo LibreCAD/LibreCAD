@@ -8942,19 +8942,20 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     const RS_Vector center{1e12, -2e12};
     constexpr double radius = 1e5;
     constexpr double distance = 2500.0;
-    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, bool>({
-        {0.0, 1.0, false, false}, {.37, 1.0, false, false},
-        {0.0, .7, false, false}, {.37, .7, false, false},
-        {0.0, 1.0, true, false}, {0.0, 1.0, false, true}}));
+    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int>({
+        {0.0, 1.0, false, 0}, {.37, 1.0, false, 0},
+        {0.0, .7, false, 0}, {.37, .7, false, 0},
+        {0.0, 1.0, true, 0}, {0.0, 1.0, false, 1},
+        {0.0, 1.0, false, 2}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
-    const bool concave = std::get<3>(profiles);
+    const int topology = std::get<3>(profiles);
     const double cosine = std::cos(rotation), sine = std::sin(rotation);
     const auto world = [&](double x, double y) {
         return center + RS_Vector{cosine * x - sine * y, sine * x + cosine * y};
     };
-    CAPTURE(rotation, verticalRatio, bulged, concave);
+    CAPTURE(rotation, verticalRatio, bulged, topology);
     for (const bool towardCentre : {false, true}) {
         for (const bool nativeFirst : {false, true}) {
             CAPTURE(towardCentre, nativeFirst);
@@ -8973,13 +8974,20 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
 
             auto* source = new RS_Polyline(&f.graphic);
             const double bulge = bulged ? std::tan(3.14159265358979323846 / 8.0) : 0.0;
-            if (concave) {
+            if (topology == 1) {
                 source->addVertex(world(-radius, -radius * verticalRatio));
                 source->addVertex(world(radius, -radius * verticalRatio));
                 source->addVertex(world(radius, 0));
                 source->addVertex(world(0, 0));
                 source->addVertex(world(0, radius * verticalRatio));
                 source->addVertex(world(-radius, radius * verticalRatio));
+            } else if (topology == 2) {
+                source->addVertex(world(radius, -radius * verticalRatio));
+                source->addVertex(world(-radius, -radius * verticalRatio));
+                source->addVertex(world(-radius, 0));
+                source->addVertex(world(0, 0));
+                source->addVertex(world(0, radius * verticalRatio));
+                source->addVertex(world(radius, radius * verticalRatio));
             } else {
                 source->addVertex(world(-radius, -radius * verticalRatio), bulge);
                 source->addVertex(world(radius, -radius * verticalRatio), bulge);
@@ -9010,7 +9018,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             REQUIRE(breaks.size() >= 2);
             const RS_Vector nativePick = native->getPointAt(
                 breaks.front() + (breaks.back() - breaks.front()) * .1);
-            const double cutterX = concave ? -.5 * radius : 0;
+            const double cutterX = topology == 1 ? -.5 * radius : topology == 2 ? .5 * radius : 0;
             auto* cutter = new RS_Line(&f.graphic,
                 RS_LineData{world(cutterX, -2 * radius), world(cutterX, 2 * radius)});
             f.graphic.addEntity(cutter);
@@ -9082,7 +9090,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                     QStringLiteral("closed-high-origin-trim-two-%1-%2-%3-%4-%5-%6-%7")
                         .arg(towardCentre ? 1 : 0).arg(nativeFirst ? 1 : 0)
                         .arg(qRound(rotation * 100)).arg(qRound(verticalRatio * 100))
-                        .arg(bulged ? 1 : 0).arg(concave ? 1 : 0).arg(lane) +
+                        .arg(bulged ? 1 : 0).arg(topology).arg(lane) +
                     (dwg ? ".dwg" : ".dxf")).toStdString());
                 REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
                 const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
