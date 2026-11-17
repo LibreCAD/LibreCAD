@@ -57345,3 +57345,12 @@ staged run passes 57,898 assertions and contains exactly 256 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 256 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other concave layouts, topology variants,
 visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1771. Recheck Polyline Source and Region Regressions (2026-11-17)
+
+After the high-origin separation and crossing cases, the full focused polyline
+source selection passes 67 assertions / 4 cases, and the polyline region
+offset selection passes 1,802 assertions / 15 cases on the same CMake Release
+build. Source topology validation and region offset construction are separate
+contracts; these runs show no regression in either selected suite, not complete
+polyline variant or persistence coverage.
