@@ -57496,3 +57496,16 @@ The focused CMake Release case passes 3,587 assertions / 1 case across both
 origins. Reopened spline, ellipse, and line geometry checks pass within
 LibreCAD. ODA/AutoCAD and visible GUI acceptance remain open, as do other
 eccentricities, sweeps, scales, and origins.
+
+## 1782. Trim Typed Parabolas at `1e13` (2026-11-17)
+
+Extended the worker-created typed-parabola Trim Two matrix with scale-`1e6`
+profiles translated to `(1e13,-2e13)`. The added non-cusp rows span symmetric
+and asymmetric control triples, identity and rotated frames, both offset
+sides, circular and elliptic cutters, and both pick orders. Initial geometry,
+cutter dimensions, and viewport zoom scale with the source.
+
+The complete focused CMake Release case passes 42,907 assertions / 1 case,
+including its prior scale, transformation, and cusp-boundary profiles. This
+qualifies the new sampled high-origin rows only; other parabolic shapes and
+conditioning boundaries, ODA/AutoCAD, and visible GUI acceptance remain open.
