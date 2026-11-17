@@ -8667,3 +8667,90 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         CHECK(cutter->isDeleted());
     }
 }
+
+TEST_CASE("T Update from Source preserves ordinary branches for a high-origin polyline corner",
+          "[gui][lc-offsetcurve][source-update][typed-source][polyline][high-origin][branches]") {
+    REQUIRE(lc::test::ensureSettings());
+    const RS_Vector center{1e12, -2e12};
+    constexpr double scale = 1e5;
+    constexpr double distance = 2500.0;
+    Drawing<true> f;
+    RS_Ellipse seed(nullptr,
+        RS_EllipseData{{0, 0}, {2 * scale, 0}, 1, 0, .1, false});
+    auto initial = LC_OffsetCurve::create(seed, distance, true);
+    REQUIRE(initial);
+    auto* previous = initial.entity.release();
+    f.graphic.addEntity(previous);
+
+    auto* source = new RS_Polyline(&f.graphic);
+    source->addVertex(center);
+    source->addVertex(center + RS_Vector{scale, 0});
+    source->addVertex(center + RS_Vector{scale, scale});
+    source->endPolyline();
+    f.graphic.addEntity(source);
+    f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+    UpdateSourceProbe update(&f.context);
+    update.init(0);
+    update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline);
+    update.use(source);
+    lc::test::awaitUpdate(update);
+    INFO(f.context.messages.join('\n').toStdString());
+    REQUIRE(update.lastReport().updated == 1);
+    REQUIRE(previous->isDeleted());
+    CHECK_FALSE(source->isDeleted());
+
+    LC_OffsetCurve* native = nullptr;
+    for (auto* entity : live(f.graphic)) {
+        if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+        REQUIRE(native == nullptr);
+        native = dynamic_cast<LC_OffsetCurve*>(entity);
+    }
+    REQUIRE(native);
+    REQUIRE(native->hasGeneralizedSourceDefinition());
+    REQUIRE(native->sourceDefinition());
+    CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto breaks = native->getBreakParameters();
+    REQUIRE(breaks.size() >= 3);
+    const double start = breaks[0];
+    const double end = breaks[1];
+    REQUIRE(end > start);
+    const double parameter = start + (end - start) * .5;
+    const double step = (end - start) * 1e-3;
+    const RS_Vector intersection = native->getPointAt(parameter);
+    RS_Vector tangent = native->getPointAt(parameter + step) -
+                        native->getPointAt(parameter - step);
+    REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+    tangent /= tangent.magnitude();
+    RS_Vector cutterDirection{-tangent.y, tangent.x};
+    cutterDirection = cutterDirection / cutterDirection.magnitude() * (distance * 4);
+    auto* cutter = new RS_Line(&f.graphic,
+        RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
+    f.graphic.addEntity(cutter);
+    const RS_Vector nativePick = native->getPointAt(start + (end - start) * .1);
+    const RS_Vector cutterPick = intersection + cutterDirection * .5;
+    const auto prepared = LC_OffsetCacheTrim::prepare(native->getData(), *cutter, {nativePick});
+    CAPTURE(prepared.refusal, prepared.rootCount, prepared.fragments.size());
+    REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(prepared.rootCount >= 1);
+
+    f.action->click(nativePick);
+    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    const auto undoEpoch = f.graphic.undoStateEpoch();
+    f.action->hover(cutterPick);
+    f.action->waitForTrim();
+    REQUIRE_FALSE(f.action->m_preview->isEmpty());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+    f.action->click(cutterPick);
+    REQUIRE(native->isDeleted());
+    REQUIRE(cutter->isDeleted());
+    CHECK_FALSE(source->isDeleted());
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    REQUIRE(f.graphic.redo());
+    CHECK(native->isDeleted());
+    CHECK(cutter->isDeleted());
+}
