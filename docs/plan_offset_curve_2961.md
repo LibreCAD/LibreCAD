@@ -57674,3 +57674,13 @@ undo/redo, and five DXF/DWG save/reopen lanes. The focused CMake Release case
 passes 48,278 assertions / 1 case; `git diff --check` passes. This qualifies
 one additional high-origin shape only; other parabolic profiles, ODA, visible
 GUI, and AutoCAD semantic acceptance remain open.
+
+## 1795. Check ODA's Offscreen Qt Launch Path (2026-11-17)
+
+Retried the staged DWG batch with `QT_QPA_PLATFORM=offscreen` to avoid the
+SSH session's Cocoa pasteboard dependency. ODAFileConverter does not bundle an
+offscreen Qt platform plugin (only `cocoa` is available), so the process still
+aborted before conversion and produced no output. This is not an ODA result;
+the remaining usable route requires launching conversion from a desktop
+session that can access Cocoa services. Visible GUI and AutoCAD semantic
+acceptance remain open as well.
