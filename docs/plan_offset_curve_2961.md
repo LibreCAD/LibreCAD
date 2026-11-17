@@ -285,7 +285,8 @@ stronger backtracking start tangent to the same independent-normal,
 worker/persistence, and three-scale Trim matrices. Continue with materially
 distinct tangent layouts, scales, and cutter conditioning; section 1703 adds
 its exact-cusp and just-beyond-cusp rows, and section 1704 adds a
-backward-pointing end tangent. Do not treat these bounded cases as exhaustive;
+backward-pointing end tangent. Section 1705 extends the end-tangent pair to
+the cusp boundary and beyond. Do not treat these bounded cases as exhaustive;
 (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
 checks, selected-candidate semantics, and atomic refusals; (4)
@@ -56077,6 +56078,30 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 This qualifies only the recorded end-backtracking pair and sampled grids.
 Other directed tangent configurations, cusp behavior for this pair, visible
 packaged-app interaction, and independent AutoCAD acceptance remain open.
+
+## 1705. Exercise Cusp and Beyond-cusp Trim for Backward End Tangent (2026-11-17)
+
+Test commit `c6c6d0cc4` extends section 1704's backward-end tangent pair to
+offset ratios `1.0` (the vertex-curvature cusp boundary) and `1.02` (a sampled
+beyond-cusp distance). The independent-normal/kernel and worker/cache plus
+five-format persistence matrices include both ratios for forward/reversed
+traversal, three source scales, and both signed offset sides. Trim Two adds
+corresponding scale/traversal profiles and asserts atomic, no-publication
+behavior wherever bounded branch certification refuses; solver limits remain
+unchanged.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 17,264 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 443,820 assertions / 1 case; `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1500000`.
+- `T Trim Two trims an endpoint-tangent parabola` over the full profile range 0-212: 694,051 assertions / 1 case.
+- Worker kernel/client and `librecad_tests` targets built successfully.
+- `git diff --check`: passed.
+
+This qualifies only these cusp-boundary rows for the section 1704 tangent
+pair. Other end-tangent configurations, arbitrary beyond-cusp topology,
+visible packaged-app acceptance, and independent AutoCAD validation remain
+open.
 
 ## 1703. Exercise Cusp and Beyond-cusp Trim for Strong Backtracking (2026-11-16)
 
