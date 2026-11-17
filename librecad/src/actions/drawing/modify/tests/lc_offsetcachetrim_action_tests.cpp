@@ -2666,17 +2666,21 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124,
                125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137,
                138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150,
-               151, 152);
+               151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162,
+               163, 164, 165, 166, 167, 168, 169, 170);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
   const bool oppositeBendCurvatureProfile = profile >= 105 && profile <= 122;
   const bool backtrackingCurvatureProfile = profile >= 123 && profile <= 140;
   const bool backtrackingCuspProfile = profile >= 141 && profile <= 152;
+  const bool strongBacktrackingCurvatureProfile =
+      profile >= 153 && profile <= 170;
   const bool curvatureActionProfile =
       obliqueCurvatureProfile || shallowBendCurvatureProfile ||
       nearVerticalCurvatureProfile || oppositeBendCurvatureProfile ||
-      backtrackingCurvatureProfile || backtrackingCuspProfile;
+      backtrackingCurvatureProfile || backtrackingCuspProfile ||
+      strongBacktrackingCurvatureProfile;
   const int curvatureProfileIndex =
       profile <= 59 ? profile - 51
       : profile <= 68 ? profile - 60
@@ -2689,19 +2693,26 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       : profile <= 131 ? profile - 123
       : profile <= 140 ? profile - 132
       : profile <= 146 ? profile - 141
-                       : profile - 147;
+      : profile <= 152 ? profile - 147
+                       : profile - 153;
   const int curvatureScaleIndex = backtrackingCuspProfile
                                       ? curvatureProfileIndex / 2
+                                  : strongBacktrackingCurvatureProfile
+                                      ? curvatureProfileIndex / 6
                                       : curvatureProfileIndex / 3;
   const int curvatureRatioIndex = backtrackingCuspProfile
                                       ? curvatureProfileIndex % 2
+                                  : strongBacktrackingCurvatureProfile
+                                      ? (curvatureProfileIndex % 6) / 2
                                       : curvatureProfileIndex % 3;
   const bool reversedCurvatureProfile =
       (profile >= 60 && profile <= 68) || (profile >= 78 && profile <= 86) ||
       (profile >= 96 && profile <= 104) ||
       (profile >= 114 && profile <= 122) ||
       (profile >= 132 && profile <= 140) ||
-      (profile >= 147 && profile <= 152);
+      (profile >= 147 && profile <= 152) ||
+      (strongBacktrackingCurvatureProfile &&
+       (curvatureProfileIndex % 2) == 1);
   const bool highOrigin = profile == 2;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
@@ -2717,7 +2728,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const bool oppositeBend = (profile >= 5 && profile <= 16) ||
                             oppositeBendCurvatureProfile;
   const bool multiRadiusTangentProfile =
-      oppositeBend || backtrackingCurvatureProfile || backtrackingCuspProfile;
+      oppositeBend || backtrackingCurvatureProfile || backtrackingCuspProfile ||
+      strongBacktrackingCurvatureProfile;
   const bool lineCutter = (profile >= 11 && profile <= 22) || profile == 26 ||
                           (profile >= 29 && profile <= 34) ||
                           (profile >= 45 && profile <= 50) ||
@@ -2832,6 +2844,12 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         ? std::array<RS_Vector, 2>{{{-0.9, 0.4358898943540673},
                                     {0.2, -0.9797958971132712}}}
         : std::array<RS_Vector, 2>{{{-0.2, 0.9797958971132712},
+                                    {0.9, -0.4358898943540673}}};
+  } else if (strongBacktrackingCurvatureProfile) {
+    endpointTangents = reversedCurvatureProfile
+        ? std::array<RS_Vector, 2>{{{-0.9, 0.4358898943540673},
+                                    {0.6, -0.8}}}
+        : std::array<RS_Vector, 2>{{{-0.6, 0.8},
                                     {0.9, -0.4358898943540673}}};
   }
   LC_ParabolaData sourceData = LC_ParabolaData::FromEndPointsTangents(
