@@ -56803,11 +56803,13 @@ regions. Visible packaged-app and AutoCAD acceptance remain separate gates.
 The high-origin closed square from sections 1737-1738 now completes Trim Two
 against its vertical line cutter. In reverse operand order, the intersection
 kernel can report the same source crossing twice when the closed cache seam is
-represented at cutter parameters `0` and `end`. Root extraction now coalesces
-only those opposite exact endpoint parameters when their certified source
-parameter intervals overlap. Each event has already passed the regular
-transversality, topology, and line-space error checks; uncertain or merely
-overlapping non-seam roots still refuse atomically.
+represented at cutter parameters `0` and `end`, or when both adjacent spans
+report the same exact internal-knot parameter. Root extraction now coalesces
+only events with the same singleton cutter parameter, or opposite exact closed
+seam endpoints, and overlapping certified source-parameter intervals. Each
+event has already passed the regular transversality, topology, and line-space
+error checks; uncertain or merely overlapping non-seam roots still refuse
+atomically.
 
 The regression covers both signed offset sides and both entity-pick orders,
 checks non-mutating preview, preview/committed spline-fragment agreement,
@@ -56851,22 +56853,31 @@ claims beyond the already-recorded validation in sections 1337-1341. `git diff
 
 ## 1741. Expand Closed High-origin Trim Two Profiles (2026-11-17)
 
-The closed-loop Trim Two action matrix now adds rotated and non-square convex
-polyline profiles to the axis-aligned square from section 1740. The four
-profiles use rotation `0`/`0.37` radians and vertical-to-horizontal side ratio
-`1`/`0.7`, all at center `(1e12,-2e12)`, horizontal radius `1e5`, and signed
-offset magnitude `2500`. Each profile runs both offset signs and both operand
-pick orders, including reverse-order certified preparation, non-mutating
-preview, commit, undo/redo, and five-format DXF/DWG save/reopen comparison.
+The closed-loop Trim Two action matrix now covers four rotated/non-square
+convex profiles plus a closed profile with quarter-arc bulges on every edge.
+The straight profiles use rotation `0`/`0.37` radians and
+vertical-to-horizontal side ratio `1`/`0.7`; the bulged profile uses rotation
+`0` and equal sides. All use center `(1e12,-2e12)`, horizontal radius `1e5`,
+and signed offset magnitude `2500`. Each of the five profiles runs both offset
+signs and both operand-pick orders, including forward/reverse certified
+preparation, non-mutating preview, commit, undo/redo, and five-format DXF/DWG
+save/reopen comparison. The bulged profile found the paired reverse-order
+failure where both adjacent spline spans reported exact internal knot
+parameters; exact shared-parameter deduplication fixed it.
 
-The focused test passes 5,355 assertions / 1 test case on macOS arm64 CMake
-Release. The 16 retained R2000/R2018 DWGs converted through ODA File Converter
-27.1.0.0 to ACAD2018 DXF with exit status 0; 16 outputs were produced and no
-`.err` files appeared. This is structural conversion evidence, not viewport
-rendering or AutoCAD semantic acceptance.
+The focused test passes 6,753 assertions / 1 test case on macOS arm64 CMake
+Release. The 40 retained DWGs (both R2000 and R2018 lanes for all 20
+profile/side/pick-order rows) converted through ODA File Converter 27.1.0.0 to
+ACAD2018 DXF with exit status 0; 40 outputs were produced and no `.err` files
+appeared. This is structural conversion evidence, not viewport rendering or
+AutoCAD semantic acceptance. Post-commit guards pass: closed-producer and
+dense-cache kernel cases 229,795 assertions / 2 cases, connected-vs-overlap
+Trim Two 2,897 assertions / 1 case, and the one-sided high-origin closed-loop
+regression 389 assertions / 1 case.
 
-This qualifies the bounded rotated/non-square convex profiles only. Concave,
-bulged, corner-intersection, other seam placements, broader origin/scale,
+This qualifies the bounded rotated/non-square convex and quarter-arc-bulged
+profiles only. Concave corner-intersection topologies, other knot/seam
+placements, broader origin/scale,
 physical GUI parity/DPR/stale-peer interaction, and AutoCAD acceptance remain
 open. The approved test app at `/private/tmp/LibreCAD-PR3193-visible.app` was
 absent in this turn, process enumeration was unavailable from SSH, and
