@@ -56403,9 +56403,25 @@ Validation on the exact macOS arm64 CMake Release tree:
 - CMake rebuilt `librecad_tests` and `librecad_offset_worker_client_tests`;
   `git diff --check` passed.
 
-The complete Trim matrix was previously run through profile 215 (section
-1714); profiles 216-222 have focused isolated results, not a new complete
-0-222 matrix run. These rows qualify the listed tangent directions at this
-one origin/scale and their tested offset/cutter grids. Arbitrary high-origin
-conditioning, the complete 0-222 Trim matrix, visible-app use, and AutoCAD
-acceptance remain open.
+At the time of this entry the complete matrix had only been rerun through
+profile 215; section 1719 below records the subsequent full 0-222 run. These
+rows qualify the listed tangent directions at this one origin/scale and their
+tested offset/cutter grids. Arbitrary high-origin conditioning, visible-app
+use, and AutoCAD acceptance remain open.
+
+## 1719. Run the Complete Endpoint-tangent Trim Matrix through Profile 222 (2026-11-17)
+
+The current `librecad_tests` binary ran the full endpoint-tangent Trim Two
+matrix with every profile from 0 through 222 registered, including the six
+high-origin layouts from section 1718 and the preceding profiles 213-216.
+
+Validation on macOS arm64 CMake Release:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 729,132 assertions / 1
+  case passed with complete 0-222 profile generation.
+- `git diff --check`: passed.
+
+This closes the complete generated Trim matrix for these 223 recorded
+profiles. It does not establish arbitrary tangent constructions, all
+origin/scale/cutter combinations, visible-app interaction, or AutoCAD
+acceptance.
