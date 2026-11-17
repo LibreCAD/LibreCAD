@@ -8989,7 +8989,8 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
   for (const TangentLayout &layout : tangentLayouts) {
     CAPTURE(layout.name);
     std::vector<double> curvatureRatios{0.1, 0.5, 0.9};
-    if (std::string{layout.name} == "backtracking-start") {
+    if (std::string{layout.name} == "backtracking-start" ||
+        std::string{layout.name} == "strong-backtracking-start") {
       curvatureRatios.push_back(1.0);
       curvatureRatios.push_back(1.02);
     }
@@ -9100,7 +9101,7 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
   }
   CAPTURE(admittedCaches, refusedCaches, uncombinedOutputs);
   CHECK(admittedCaches + refusedCaches + uncombinedOutputs ==
-        (tangentLayouts.size() * 3 + 2) * frames.size() * 2 * 2);
+        (tangentLayouts.size() * 3 + 4) * frames.size() * 2 * 2);
   CHECK(uncombinedOutputs == 0);
 }
 
