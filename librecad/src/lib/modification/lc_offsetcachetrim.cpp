@@ -1641,6 +1641,13 @@ std::vector<Root> roots(Context& c, const Input& input, const Curves& curves,
         for (const auto& previous : out) {
             c.compare();
             if (singleton(t) && singleton(previous.parameter) && t.lo() == previous.parameter.lo()) { duplicate = true; break; }
+            const double cutterEnd = input.cutter ? double(input.cutter->size()) : 0;
+            const auto& previousCutterParameter = previous.snapshot.event.isolation.parameterB;
+            const auto& cutterParameter = snapshot->event.isolation.parameterB;
+            const bool oppositeCutterSeamEnds = input.cutterClosed && cutterEnd > 0 &&
+                ((exactParameter(previousCutterParameter, 0) && exactParameter(cutterParameter, cutterEnd)) ||
+                 (exactParameter(previousCutterParameter, cutterEnd) && exactParameter(cutterParameter, 0)));
+            if (oppositeCutterSeamEnds && overlaps(t, previous.parameter)) { duplicate = true; break; }
         }
         if (!duplicate) {
             out.push_back({handle, *snapshot, t, cut, 0, lineContracted,

@@ -8870,6 +8870,18 @@ TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides
         CHECK_FALSE(source->isDeleted());
         CHECK_FALSE(prepared.fragments.empty());
 
+        RS_SplineData lineCache;
+        lineCache.degree = 1;
+        lineCache.controlPoints = {cutter->getStartpoint(), cutter->getEndpoint()};
+        lineCache.knotslist = {0, 0, 1, 1};
+        lineCache.weights = {1, 1};
+        const auto reversePrepared = LC_OffsetCacheTrim::prepare(lineCache, *native, {cutterPick});
+        CAPTURE(reversePrepared.refusal, reversePrepared.work.failureStage,
+                reversePrepared.work.rootRecords, reversePrepared.work.intersectionFailureDepth);
+        REQUIRE(reversePrepared.refusal == LC_OffsetCacheTrim::Refusal::None);
+        CHECK(reversePrepared.rootCount >= 2);
+        CHECK_FALSE(reversePrepared.fragments.empty());
+
         f.action->click(cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<false>::ChooseTrimEntity);
         const auto undoEpoch = f.graphic.undoStateEpoch();
@@ -8920,6 +8932,129 @@ TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides
             }));
             CAPTURE(towardCentre, format);
             CHECK(sameTrimGeometrySet(expectedGeometry, reopenedGeometry));
+        }
+    }
+}
+
+TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutter seam",
+          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][closed][high-origin][trim-two]") {
+    REQUIRE(lc::test::ensureSettings());
+    const RS_Vector center{1e12, -2e12};
+    constexpr double radius = 1e5;
+    constexpr double distance = 2500.0;
+    for (const bool towardCentre : {false, true}) {
+        for (const bool nativeFirst : {false, true}) {
+            CAPTURE(towardCentre, nativeFirst);
+            Drawing<true> f;
+            constexpr double zoom = .003;
+            f.view.getViewPort()->setSize(640, 480);
+            f.view.getViewPort()->setOffsetAndFactor(
+                qRound(320.0 - center.x * zoom),
+                qRound(240.0 - center.y * zoom), zoom);
+            RS_Ellipse seed(nullptr,
+                RS_EllipseData{{0, 0}, {2 * radius, 0}, 1, 0, .1, false});
+            auto initial = LC_OffsetCurve::create(seed, distance, towardCentre);
+            REQUIRE(initial);
+            auto* previous = initial.entity.release();
+            f.graphic.addEntity(previous);
+
+            auto* source = new RS_Polyline(&f.graphic);
+            source->addVertex(center + RS_Vector{-radius, -radius});
+            source->addVertex(center + RS_Vector{radius, -radius});
+            source->addVertex(center + RS_Vector{radius, radius});
+            source->addVertex(center + RS_Vector{-radius, radius});
+            source->setClosed(true);
+            source->endPolyline();
+            f.graphic.addEntity(source);
+            f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+            UpdateSourceProbe update(&f.context);
+            update.init(0);
+            update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline);
+            update.use(source);
+            lc::test::awaitUpdate(update);
+            REQUIRE(update.lastReport().updated == 1);
+            REQUIRE(previous->isDeleted());
+
+            LC_OffsetCurve* native = nullptr;
+            for (auto* entity : live(f.graphic)) {
+                if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+                REQUIRE(native == nullptr);
+                native = dynamic_cast<LC_OffsetCurve*>(entity);
+            }
+            REQUIRE(native);
+            const auto breaks = native->getBreakParameters();
+            REQUIRE(breaks.size() >= 2);
+            const RS_Vector nativePick = native->getPointAt(
+                breaks.front() + (breaks.back() - breaks.front()) * .1);
+            auto* cutter = new RS_Line(&f.graphic,
+                RS_LineData{center + RS_Vector{0, -2 * radius},
+                            center + RS_Vector{0, 2 * radius}});
+            f.graphic.addEntity(cutter);
+            const RS_Vector cutterPick = center + RS_Vector{0, radius};
+
+            const auto firstPick = nativeFirst ? nativePick : cutterPick;
+            const auto secondPick = nativeFirst ? cutterPick : nativePick;
+            f.action->click(firstPick);
+            REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+            const auto undoEpoch = f.graphic.undoStateEpoch();
+            f.action->hover(secondPick);
+            const auto preview = trimPreview(*f.action->m_preview);
+            REQUIRE_FALSE(preview.empty());
+            CHECK_FALSE(native->isDeleted());
+            CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+
+            f.action->click(secondPick);
+            REQUIRE(native->isDeleted());
+            REQUIRE(cutter->isDeleted());
+            CHECK_FALSE(source->isDeleted());
+            const auto output = live(f.graphic);
+            CHECK(std::none_of(output.begin(), output.end(), [](const RS_Entity* entity) {
+                return entity->rtti() == RS2::EntityOffsetCurve;
+            }));
+            std::vector<std::string> committedPreviewEntities;
+            for (const auto* entity : output) {
+                if (entity != source && (entity->rtti() == RS2::EntitySpline ||
+                    entity->rtti() == RS2::EntityArc || entity->rtti() == RS2::EntityEllipse)) {
+                    committedPreviewEntities.push_back(trimGeometry(*entity));
+                }
+            }
+            CHECK(committedPreviewEntities == preview);
+            REQUIRE(f.graphic.undo());
+            CHECK_FALSE(native->isDeleted());
+            CHECK_FALSE(cutter->isDeleted());
+            CHECK_FALSE(source->isDeleted());
+            REQUIRE(f.graphic.redo());
+            CHECK(native->isDeleted());
+            CHECK(cutter->isDeleted());
+            CHECK_FALSE(source->isDeleted());
+
+            QTemporaryDir directory;
+            REQUIRE(directory.isValid());
+            const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14,
+                RS2::FormatDXFRW2000, RS2::FormatDWG, RS2::FormatDXFRW2018,
+                RS2::FormatDWG2018}};
+            const auto expectedGeometry = live(f.graphic);
+            for (std::size_t lane = 0; lane < formats.size(); ++lane) {
+                const auto format = formats[lane];
+                const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+                const std::filesystem::path file(directory.filePath(
+                    QStringLiteral("closed-high-origin-trim-two-%1-%2")
+                        .arg(towardCentre ? 1 : 0).arg(nativeFirst ? 1 : 0) +
+                    (dwg ? ".dwg" : ".dxf")).toStdString());
+                REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+                const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
+                if (dwg && !odaOutput.isEmpty()) {
+                    const std::filesystem::path odaDirectory(odaOutput.constData());
+                    std::filesystem::create_directories(odaDirectory);
+                    std::filesystem::copy_file(file, odaDirectory / file.filename(),
+                        std::filesystem::copy_options::overwrite_existing);
+                }
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, file, format));
+                CHECK(sameTrimGeometrySet(expectedGeometry, live(reopened)));
+            }
         }
     }
 }
