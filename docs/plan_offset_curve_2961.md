@@ -57481,3 +57481,18 @@ range.
 The focused typed-circle CMake Release case passes 4,756 assertions / 1 case.
 ODA/AutoCAD and visible GUI acceptance remain open, as do other circle radii,
 scales, and coordinate frames.
+
+## 1781. Trim High-origin Ellipses through `1e13` (2026-11-17)
+
+Extended the worker-created ellipse Trim Two scenario from the `(1e12,-2e12)`
+frame to `(1e13,-2e13)`, scaling the source major radius from `1e5` to `1e6`
+and the offset proportionally from `2500` to `25000`. Both offset sides and
+pick orders exercise replacement, certified trim preview/commit, undo/redo,
+and all five native-capable file lanes. The high-origin geometry comparison
+uses a `0.02` world-unit tolerance, and the cutter pick is deliberately clear
+of the source ellipse to assert the intended retained limit entity.
+
+The focused CMake Release case passes 3,587 assertions / 1 case across both
+origins. Reopened spline, ellipse, and line geometry checks pass within
+LibreCAD. ODA/AutoCAD and visible GUI acceptance remain open, as do other
+eccentricities, sweeps, scales, and origins.
