@@ -57899,4 +57899,6 @@ focused CMake Release test passes 33,396 assertions / 1 case, and
 both origins, 11 source-family profiles, both offset directions and pick
 orders, and both R2000/R2018 DWG lanes. ODA conversion, visible GUI, and
 AutoCAD semantic acceptance remain open; this creates complete distinct
-inputs for those external checks but does not count as their validation.
+inputs for those external checks but does not count as their validation. A
+separate post-staging `dwgread -O minJSON` pass parsed all 176 retained DWGs
+successfully.
