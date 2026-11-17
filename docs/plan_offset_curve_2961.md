@@ -5008,6 +5008,18 @@ typed source families`); `git diff --check` passes. This qualifies the recorded
 rotation of one closed six-point profile only; other rotations/topologies and
 ODA, visible GUI, and AutoCAD semantic acceptance remain open.
 
+## 1805. Trim a Rotated Asymmetric Closed Fit-point Spline at High Origins (2026-11-17)
+
+Added a `0.37`-radian rotated version of the asymmetric closed eight-fit-point
+profile to the high-origin typed-source Trim Two matrix. At origins
+`(1e12,-2e12)` and `(1e13,-2e13)`, both pick orders pass worker source
+replacement, certified two-root preparation, preview/commit, undo/redo, and
+all five R14/R2000/R2018 DXF/DWG save/reopen lanes. The focused CMake Release
+test passes 11,569 assertions / 1 case (`T Trim Two trims worker-created
+high-origin typed source families`); `git diff --check` passes. This qualifies
+the recorded transformed profile only; other rotations/topologies and ODA,
+visible GUI, and AutoCAD semantic acceptance remain open.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
@@ -31155,12 +31167,13 @@ these rows do not imply every parameter/domain is supported):
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing; sections 1101 and 1103 cover two distinct bounded profiles on both branches through worker-backed Trim Two, undo/redo, five-file round trips, and LibreDWG structural reads; sections 1335-1336 cover source-replacement Trim, undo/redo, and five-lane file round trips over both branches, ratios 0.25/0.75, scales 0.25/1/4, both signed sides, and both parameter traversal orders; section 1730 repeats that 80-combination action/file matrix at scale `1e5` and origin `(1e12,-2e12)`; section 1796 adds ratio `0.5` to the high-origin `1e13` Trim Two matrix across both branches and parameter directions | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; all 11 recorded open/closed linear, mixed-bulge, major/minor and unequal-major profiles pass both worker sides over scales `1e-3`, `1`, `1e3`, `1e4`, translation ratios `1e4` and `1e6`, normalized distances `+/-0.1` and `+/-0.25`, cache admission/refusal, and five staged DXF/DWG lanes; the 256-segment collinear, piecewise-kinked, sinusoidal, and monotone-quadratic open chains pass direct exact-normal checks on both sides; collinear and piecewise-kinked chains pass worker Trim Two in both pick orders and five file lanes (section 1233); the monotone-quadratic cache-line contact is certified in both operand roles and Trim Two succeeds in both pick orders (section 1234); a bounded 32-segment sinusoid with two crossings passes worker Trim Two in both pick orders (section 1238); the dense 256-segment sinusoid certifies both cache roots and refuses atomically at the fixed 16-output limit (section 1239); closed strictly convex regular linear polylines pass worker generation, Trim Two, undo/redo, and five-lane persistence through 2048 edges in both offset directions (sections 1337-1341); section 1733 adds a collinear open two-segment polyline at `(1e12,-2e12)` through worker generation/cache validation and five-lane source/cache persistence; section 1734 verifies a high-origin open corner returns two ordinary branches with explicit `NotCacheRepresentable` and round-trips their geometry in all five lanes; section 1735 adds application replacement, Trim Two, undo/redo, and five file lanes for the same high-origin collinear profile; section 1736 adds a high-origin L-corner whose worker branches are composed into a generalized native cache, trimmed in both pick orders, and reopened in all five lanes | Curved-corner and concave/self-intersecting closed-region semantics, dense curved/multi-crossing layouts beyond the recorded output-cap refusal, segment counts/topologies beyond 2048, high-origin corner profiles beyond the tested L-shaped frame/side/cutter, materialization near the 16-entity cap, broader transformed corners and scales/origins, and boundary-pick/collapse oracles |
 
-**High-origin fit-point matrix addendum (sections 1800, 1803, and 1804):**
+**High-origin fit-point matrix addendum (sections 1800, 1803-1805):**
 Closed six-point sources now cover both an unrotated profile and its `0.37`
 rotation at origins `1e12` and `1e13`; a separate asymmetric closed
-eight-fit-point profile is covered unrotated at the same origins. Each listed
-profile passes Trim Two, undo/redo, and five-lane sampled-geometry round trips.
-These are finite fixtures, not general support for all fit-point layouts.
+eight-fit-point profile is covered both unrotated and at `0.37` radians at the
+same origins. Each listed profile passes Trim Two, undo/redo, and five-lane
+sampled-geometry round trips. These are finite fixtures, not general support
+for all fit-point layouts.
 
 **High-segment polyline clarification (sections 1337-1341):** Closed, strictly
 convex regular linear profiles pass worker generation at 256/512/1024/2048
