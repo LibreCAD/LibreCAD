@@ -56821,6 +56821,12 @@ conversion establishes structural interoperability only, not visual or
 semantic AutoCAD acceptance. The ezdxf module is unavailable in this Python
 environment.
 
+Post-commit regression checks also pass: the exact-closed-producer and dense
+closed-cache kernel cases pass 229,795 assertions / 2 cases, and the existing
+closed-polyline connected-versus-overlapping Trim Two matrix passes 2,895
+assertions / 1 case. These checks guard the seam alias fix against relaxing
+unrelated overlap refusals.
+
 This closes the recorded square, origin, scale, signed offset, cutter, and
 pick-order profile for Trim Two and five-lane persistence. Other closed-loop
 topologies, non-exact cutter-seam representations, broader intersection
