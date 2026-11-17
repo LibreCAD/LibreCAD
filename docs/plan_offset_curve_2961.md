@@ -270,9 +270,10 @@ operation-8, and forward/reversed five-lane worker matrix. Continue with Trim
 contact conditioning: section 1695 runs that oblique profile through curvature-
 relative Trim Two, tangent-circle classification, scale/traversal, action, and
 file lanes. Section 1696 adds a shallower tangent turn to the exact-normal,
-operation-8, and forward/reversed five-lane worker matrix. Continue with its
-Trim contact conditioning and other materially distinct tangent directions;
-do not inflate this finite profile set into general coverage.
+operation-8, and forward/reversed five-lane worker matrix; section 1697 adds
+its curvature-relative Trim Two action/contact matrix. Continue with other
+materially distinct tangent directions; do not inflate this finite profile
+set into general coverage.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55870,4 +55871,24 @@ Validation on macOS arm64 CMake Release with LibreDWG:
 
 Shallow-bend Trim at curvature-relative distances, other direction pairs,
 cusp-boundary behavior, and visible GUI acceptance remain open.
+
+## 1697. Exercise Shallow-bend Trim at Curvature-relative Distances (2026-11-16)
+
+Action-test commit `4cfdec7fa` adds the shallow-bend tangent pair to the
+curvature-relative Trim Two matrix at three scales, three offset ratios, and
+both traversal directions. Both signed offset sides run. Exact tangent-circle
+contact is independently classified for each profile; outer ratios use circle
+cutters and the middle ratio also uses line cutters in both operand-pick
+orders. Worker-backed source replacement, preview/commit parity, undo/redo,
+and all five native-capable save/reopen lanes remain in the path.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 271,737 assertions / 1 case.
+- `librecad_tests` target build: passed.
+- `git diff --check`: passed.
+
+This closes curvature-relative Trim for this shallow-bend pair and sampled
+profiles only. Other tangent directions, cusp-boundary contact, wider
+near-tangent ranges, and visible GUI acceptance remain open.
 
