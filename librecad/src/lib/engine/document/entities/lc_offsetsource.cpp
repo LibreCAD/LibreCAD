@@ -336,6 +336,39 @@ bool collinearLinesOverlap(const RS_LineData& lhs, const RS_LineData& rhs) noexc
     return high - low > tolerance;
 }
 
+bool lineSegmentsStrictlySeparated(const RS_LineData& lhs,
+                                   const RS_LineData& rhs) noexcept {
+    const long double coordinateScale = std::max({1.0L,
+        std::abs(static_cast<long double>(lhs.startpoint.x)),
+        std::abs(static_cast<long double>(lhs.startpoint.y)),
+        std::abs(static_cast<long double>(lhs.endpoint.x)),
+        std::abs(static_cast<long double>(lhs.endpoint.y)),
+        std::abs(static_cast<long double>(rhs.startpoint.x)),
+        std::abs(static_cast<long double>(rhs.startpoint.y)),
+        std::abs(static_cast<long double>(rhs.endpoint.x)),
+        std::abs(static_cast<long double>(rhs.endpoint.y))});
+    const long double coordinateTolerance =
+        128.0L * std::numeric_limits<double>::epsilon() * coordinateScale;
+    const auto endpointsStrictlyOnOneSide = [coordinateTolerance](
+        const RS_LineData& line, const RS_Vector& first, const RS_Vector& second) noexcept {
+        const long double dx = static_cast<long double>(line.endpoint.x) - line.startpoint.x;
+        const long double dy = static_cast<long double>(line.endpoint.y) - line.startpoint.y;
+        const long double firstX = static_cast<long double>(first.x) - line.startpoint.x;
+        const long double firstY = static_cast<long double>(first.y) - line.startpoint.y;
+        const long double secondX = static_cast<long double>(second.x) - line.startpoint.x;
+        const long double secondY = static_cast<long double>(second.y) - line.startpoint.y;
+        const long double firstSide = dx * firstY - dy * firstX;
+        const long double secondSide = dx * secondY - dy * secondX;
+        const long double sideTolerance = coordinateTolerance * std::hypot(dx, dy);
+        return std::isfinite(firstSide) && std::isfinite(secondSide) &&
+               std::isfinite(sideTolerance) &&
+               ((firstSide > sideTolerance && secondSide > sideTolerance) ||
+                (firstSide < -sideTolerance && secondSide < -sideTolerance));
+    };
+    return endpointsStrictlyOnOneSide(lhs, rhs.startpoint, rhs.endpoint) ||
+           endpointsStrictlyOnOneSide(rhs, lhs.startpoint, lhs.endpoint);
+}
+
 bool coincidentArcSpansOverlap(const RS_ArcData& lhs, const RS_ArcData& rhs) noexcept {
     constexpr double TwoPi = 2.0 * M_PI;
     const double scale = std::max({1.0, std::abs(lhs.center.x), std::abs(lhs.center.y),
@@ -400,7 +433,10 @@ bool segmentsIntersectOnlyAtJoin(const LC_OffsetPolylineData& data,
     const bool closedSeam = data.closed && first == 0 && second + 1 == data.segments.size();
     if (const auto* lineA = std::get_if<RS_LineData>(&data.segments[first])) {
         if (const auto* lineB = std::get_if<RS_LineData>(&data.segments[second]);
-            lineB && collinearLinesOverlap(*lineA, *lineB)) return false;
+            lineB) {
+            if (collinearLinesOverlap(*lineA, *lineB)) return false;
+            if (lineSegmentsStrictlySeparated(*lineA, *lineB)) return true;
+        }
     }
     if (const auto* arcA = std::get_if<RS_ArcData>(&data.segments[first])) {
         if (const auto* arcB = std::get_if<RS_ArcData>(&data.segments[second]);

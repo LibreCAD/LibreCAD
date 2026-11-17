@@ -8949,6 +8949,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     const double baseRadius = 1e5;
     constexpr double distance = 2500.0;
     const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double, double>({
+        {.37, 1.0, false, 7, 1.0, .001},
         {0.0, 1.0, false, 0, 1.0, 1.0}, {.37, 1.0, false, 0, 1.0, 1.0},
         {0.0, .7, false, 0, 1.0, 1.0}, {.37, .7, false, 0, 1.0, 1.0},
         {0.0, 1.0, true, 0, 1.0, 1.0}, {0.0, 1.0, false, 1, 1.0, 1.0},
