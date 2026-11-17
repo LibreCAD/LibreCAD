@@ -8940,23 +8940,27 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][closed][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     const RS_Vector center{1e12, -2e12};
-    constexpr double radius = 1e5;
+    const double baseRadius = 1e5;
     constexpr double distance = 2500.0;
-    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int>({
-        {0.0, 1.0, false, 0}, {.37, 1.0, false, 0},
-        {0.0, .7, false, 0}, {.37, .7, false, 0},
-        {0.0, 1.0, true, 0}, {0.0, 1.0, false, 1},
-        {0.0, 1.0, false, 2}, {0.0, 1.0, false, 3},
-        {0.0, 1.0, false, 4}, {0.0, 1.0, false, 5}}));
+    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double>({
+        {0.0, 1.0, false, 0, 1.0}, {.37, 1.0, false, 0, 1.0},
+        {0.0, .7, false, 0, 1.0}, {.37, .7, false, 0, 1.0},
+        {0.0, 1.0, true, 0, 1.0}, {0.0, 1.0, false, 1, 1.0},
+        {0.0, 1.0, false, 2, 1.0}, {0.0, 1.0, false, 3, 1.0},
+        {0.0, 1.0, false, 4, 1.0}, {0.0, 1.0, false, 5, 1.0},
+        {.37, .7, false, 1, 1.7}, {.37, .7, false, 3, .6},
+        {.37, .7, false, 5, 1.7}}));
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
     const int topology = std::get<3>(profiles);
+    const double scale = std::get<4>(profiles);
+    const double radius = baseRadius * scale;
     const double cosine = std::cos(rotation), sine = std::sin(rotation);
     const auto world = [&](double x, double y) {
         return center + RS_Vector{cosine * x - sine * y, sine * x + cosine * y};
     };
-    CAPTURE(rotation, verticalRatio, bulged, topology);
+    CAPTURE(rotation, verticalRatio, bulged, topology, scale);
     for (const bool towardCentre : {false, true}) {
         for (const bool nativeFirst : {false, true}) {
             CAPTURE(towardCentre, nativeFirst);
@@ -9112,10 +9116,10 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 const auto format = formats[lane];
                 const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
                 const std::filesystem::path file(directory.filePath(
-                    QStringLiteral("closed-high-origin-trim-two-%1-%2-%3-%4-%5-%6-%7")
+                    QStringLiteral("closed-high-origin-trim-two-%1-%2-%3-%4-%5-%6-%7-%8")
                         .arg(towardCentre ? 1 : 0).arg(nativeFirst ? 1 : 0)
                         .arg(qRound(rotation * 100)).arg(qRound(verticalRatio * 100))
-                        .arg(bulged ? 1 : 0).arg(topology).arg(lane) +
+                        .arg(bulged ? 1 : 0).arg(topology).arg(qRound(scale * 100)).arg(lane) +
                     (dwg ? ".dwg" : ".dxf")).toStdString());
                 REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
                 const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
