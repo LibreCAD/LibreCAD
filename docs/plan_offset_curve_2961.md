@@ -57330,3 +57330,18 @@ degree-3 SPLINE entities (four with 4 control points / 8 knots, one with 58 /
 62), one LWPOLYLINE, and two LINE entities. This is independent entity-structure
 evidence for one file; it does not verify LibreDWG's rendering, editable
 extension metadata semantics, or general high-origin interoperability.
+
+## 1770. Trim a Rotated Concave L-profile at `1e13` (2026-11-17)
+
+The distinct L-shaped polyline profile (topology 4) also passes Trim Two at
+rotation `0.37`, radius scale `1.0`, and center `(1e13,-2e13)`, with fixed
+offset `2500`. Both signed offsets, operand orders, lifecycle, and all five
+native-capable save/reopen lanes are exercised. Together with topology 6 and
+the mirrored multi-notch cases, this adds a simpler concave layout at the
+same large-origin scale; it does not generalize to all concave profiles.
+
+The focused CMake Release matrix passes 54,956 assertions / 1 case; its ODA
+staged run passes 57,898 assertions and contains exactly 256 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 256 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other concave layouts, topology variants,
+visible GUI interaction, and AutoCAD semantic acceptance remain open.
