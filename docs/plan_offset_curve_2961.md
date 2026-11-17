@@ -57902,3 +57902,17 @@ AutoCAD semantic acceptance remain open; this creates complete distinct
 inputs for those external checks but does not count as their validation. A
 separate post-staging `dwgread -O minJSON` pass parsed all 176 retained DWGs
 successfully.
+
+## 1804. Revalidate Worker-client Persistence on the Current PR Head (2026-11-17)
+
+Rebuilt `librecad_offset_worker_client_tests` from the current worktree and ran
+the focused high-origin spline-points persistence case with LibreDWG enabled.
+It passes 293 assertions / 1 case, covering typed source identity, cache
+consistency, five DXF/DWG save-reopen lanes, and optional independent DWG
+parsing. The broad unfiltered executable selection exceeds the 900-second
+suite watchdog on this machine: 1,739,851 assertions passed, while 50 cases
+reported only the suite-timeout assertion. That run is not counted as a pass;
+the bounded focused case is the valid result. `git diff --check` passes.
+
+This revalidates one recorded fit-point layout and origin only. ODA conversion,
+visible packaged-app interaction, and AutoCAD semantic acceptance remain open.
