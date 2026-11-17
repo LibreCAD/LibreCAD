@@ -56698,6 +56698,21 @@ open L-corner, high-origin frame, signed side, and cutter. It does not establish
 all corner configurations, the opposite signed side, curved or closed corners,
 general intersection multiplicity, or visible CAD acceptance.
 
+## 1737. Certify High-origin Closed-polyline Trim Roots (2026-11-17)
+
+Added a worker-backed square-loop source at `(1e12,-2e12)`, radius `1e5`, and
+offset magnitude `2500`. For both signed offset sides, Update from Source
+creates a generalized native cache and the vertical center cutter produces
+two certified trim roots and at least one valid retained fragment without
+mutating the document during preparation.
+
+The focused case passes 43 assertions / 1 case on macOS arm64 CMake Release.
+The GUI Trim Two preview did not produce a preview for this closed-loop
+fixture, although entity hit-testing and direct two-root preparation succeed.
+Therefore this receipt closes only cache generation and trim-root preparation;
+closed high-origin application Trim, commit/undo, persistence, and ODA/visible
+CAD acceptance remain open and need a separate investigation.
+
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
 The summary matrix had not incorporated the later section 1341 result and still
