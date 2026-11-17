@@ -8888,5 +8888,37 @@ TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides
         REQUIRE(f.graphic.redo());
         CHECK(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
+
+        QTemporaryDir directory;
+        REQUIRE(directory.isValid());
+        const std::array<RS2::FormatType, 5> formats{{
+            RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+            RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+        const auto expectedGeometry = live(f.graphic);
+        for (std::size_t lane = 0; lane < formats.size(); ++lane) {
+            const auto format = formats[lane];
+            const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("closed-high-origin-trim-%1-%2")
+                    .arg(towardCentre ? 1 : 0).arg(lane) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+            const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
+            if (dwg && !odaOutput.isEmpty()) {
+                const std::filesystem::path odaDirectory(odaOutput.constData());
+                std::filesystem::create_directories(odaDirectory);
+                std::filesystem::copy_file(
+                    file, odaDirectory / file.filename(),
+                    std::filesystem::copy_options::overwrite_existing);
+            }
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, format));
+            const auto reopenedGeometry = live(reopened);
+            CHECK(std::none_of(reopenedGeometry.begin(), reopenedGeometry.end(), [](const RS_Entity* entity) {
+                return entity->rtti() == RS2::EntityOffsetCurve;
+            }));
+            CAPTURE(towardCentre, format);
+            CHECK(sameTrimGeometrySet(expectedGeometry, reopenedGeometry));
+        }
     }
 }
