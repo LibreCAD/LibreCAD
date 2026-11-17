@@ -5036,6 +5036,19 @@ passes. This qualifies one non-rational quadratic profile and this recorded
 type-normalization path only; other quadratic layouts/scales, ODA, visible GUI,
 and AutoCAD acceptance remain open.
 
+## 1807. Trim a Control-point Spline-points Source at High Origins (2026-11-17)
+
+Added an open four-control-point `LC_SplinePointsData` profile with
+`useControlPoints=true` to the high-origin typed-source Trim Two matrix. At
+origins `(1e12,-2e12)` and `(1e13,-2e13)`, both pick orders pass worker source
+replacement, preview/commit, undo/redo, and all five R14/R2000/R2018 DXF/DWG
+save/reopen lanes; undo also verifies the restored source remains
+control-point-defined with four controls and open topology. The focused CMake
+Release test passes 14,497 assertions / 1 case (`T Trim Two trims
+worker-created high-origin typed source families`); `git diff --check` passes.
+This qualifies this one control-point profile only; other control counts,
+topologies/origins, ODA, visible GUI, and AutoCAD acceptance remain open.
+
 ## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
 
 Added a reversed-parameter version of the four-fit-point, two-ended
@@ -31195,6 +31208,10 @@ for all fit-point layouts.
 quadratic SPLINE profile passes Trim Two and five-lane persistence at `1e12`
 and `1e13`; R2018's equivalent `LC_Parabola` representation is checked by
 endpoints and sampled curve membership, not by RTTI or cross-type length.
+
+**High-origin control-point spline-points addendum (section 1807):** One open
+four-control `LC_SplinePointsData` profile passes Trim Two and five-lane
+persistence at `1e12` and `1e13`, retaining `useControlPoints` on undo.
 
 **High-segment polyline clarification (sections 1337-1341):** Closed, strictly
 convex regular linear profiles pass worker generation at 256/512/1024/2048
