@@ -8674,6 +8674,8 @@ TEST_CASE("T Update from Source preserves ordinary branches for a high-origin po
     const RS_Vector center{1e12, -2e12};
     constexpr double scale = 1e5;
     constexpr double distance = 2500.0;
+    for (const bool nativeFirst : {false, true}) {
+    CAPTURE(nativeFirst);
     Drawing<true> f;
     RS_Ellipse seed(nullptr,
         RS_EllipseData{{0, 0}, {2 * scale, 0}, 1, 0, .1, false});
@@ -8734,16 +8736,16 @@ TEST_CASE("T Update from Source preserves ordinary branches for a high-origin po
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(prepared.rootCount >= 1);
 
-    f.action->click(nativePick);
+    f.action->click(nativeFirst ? nativePick : cutterPick);
     REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
     const auto undoEpoch = f.graphic.undoStateEpoch();
-    f.action->hover(cutterPick);
+    f.action->hover(nativeFirst ? cutterPick : nativePick);
     f.action->waitForTrim();
     REQUIRE_FALSE(f.action->m_preview->isEmpty());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
     CHECK(f.graphic.undoStateEpoch() == undoEpoch);
-    f.action->click(cutterPick);
+    f.action->click(nativeFirst ? cutterPick : nativePick);
     REQUIRE(native->isDeleted());
     REQUIRE(cutter->isDeleted());
     CHECK_FALSE(source->isDeleted());
@@ -8757,7 +8759,8 @@ TEST_CASE("T Update from Source preserves ordinary branches for a high-origin po
         const auto format = formats[lane];
         const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
         const auto file = std::filesystem::path(directory.filePath(
-            QStringLiteral("high-origin-polyline-corner-trim-%1").arg(lane) +
+            QStringLiteral("high-origin-polyline-corner-trim-%1-%2")
+                .arg(nativeFirst ? 1 : 0).arg(lane) +
             (dwg ? ".dwg" : ".dxf")).toStdString());
         REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
         const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
@@ -8795,4 +8798,5 @@ TEST_CASE("T Update from Source preserves ordinary branches for a high-origin po
     REQUIRE(f.graphic.redo());
     CHECK(native->isDeleted());
     CHECK(cutter->isDeleted());
+    }
 }
