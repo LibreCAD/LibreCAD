@@ -8747,6 +8747,48 @@ TEST_CASE("T Update from Source preserves ordinary branches for a high-origin po
     REQUIRE(native->isDeleted());
     REQUIRE(cutter->isDeleted());
     CHECK_FALSE(source->isDeleted());
+
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{{
+        RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+        RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+    for (std::size_t lane = 0; lane < formats.size(); ++lane) {
+        const auto format = formats[lane];
+        const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+        const auto file = std::filesystem::path(directory.filePath(
+            QStringLiteral("high-origin-polyline-corner-trim-%1").arg(lane) +
+            (dwg ? ".dwg" : ".dxf")).toStdString());
+        REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
+        const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
+        if (dwg && !odaOutput.isEmpty()) {
+            const std::filesystem::path odaDirectory(odaOutput.constData());
+            std::filesystem::create_directories(odaDirectory);
+            std::filesystem::copy_file(
+                file, odaDirectory / file.filename(),
+                std::filesystem::copy_options::overwrite_existing);
+        }
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, file, format));
+        const auto expected = live(f.graphic);
+        const auto actual = live(reopened);
+        REQUIRE(actual.size() == expected.size());
+        CHECK(std::none_of(actual.begin(), actual.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityOffsetCurve;
+        }));
+        std::vector<bool> matched(actual.size(), false);
+        for (const auto* expectedEntity : expected) {
+            bool found = false;
+            for (std::size_t i = 0; i < actual.size(); ++i) {
+                if (matched[i] || !sameTrimGeometry(*expectedEntity, *actual[i])) continue;
+                matched[i] = true;
+                found = true;
+                break;
+            }
+            CAPTURE(format, expectedEntity->rtti());
+            CHECK(found);
+        }
+    }
     REQUIRE(f.graphic.undo());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
