@@ -57616,3 +57616,16 @@ LibreDWG parsing of emitted DWGs. The test expansion is commit `b7a24f31e`.
 The focused CMake Release case passes 16,087 assertions / 1 case; the exact
 domains and directions are bounded samples, not arbitrary arc sweeps. ODA
 conversion, visible GUI, and AutoCAD semantic acceptance remain open.
+
+## 1790. Trim High-origin Ellipses across Eccentricities and Rotations (2026-11-17)
+
+Extended high-origin ellipse Trim Two with four axis-ratio/rotation profiles:
+`(0.25,0.67)`, `(0.45,0.17)`, `(0.45,1.2)`, and `(0.75,0.67)`. Each runs at
+`1e12` and `1e13` origins, both offset sides, both pick orders, preview/commit,
+undo/redo, and all five DXF/DWG lanes; each emitted DWG is independently read
+by LibreDWG. Cutter length and pick scale with the ellipse minor axis. The
+test expansion is commit `f768d9ffe`.
+
+The focused CMake Release case passes 12,922 assertions / 1 case. These are
+bounded eccentricity/orientation samples, not all ellipse ratios or frames;
+ODA conversion, visible GUI, and AutoCAD semantic acceptance remain open.
