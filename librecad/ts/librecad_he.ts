@@ -3751,7 +3751,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
-        <translation>WCS</translation>
+        <translation>אל WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
@@ -4437,7 +4437,7 @@ Polar: (%4 &lt;%)
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>WCS: (%1)</translation>
+        <translation>WCS מוחלט: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -41235,7 +41235,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>WCS Zero Noteer</translation>
+        <translation>הצג סמן אפס של WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>

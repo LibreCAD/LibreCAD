@@ -4437,7 +4437,7 @@ Point: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>النظام العالمي الموحد: (%1)</translation>
+        <translation>WCS المطلق: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -41261,7 +41261,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>اظهروا علامة الصفر</translation>
+        <translation>إظهار علامة صفر WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>

@@ -3528,7 +3528,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
-        <translation>WCS</translation>
+        <translation>WCS&apos;ye</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
@@ -41243,7 +41243,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>Show WCS sıfır işaretleyici</translation>
+        <translation>WCS sıfır işaretçisini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
