@@ -4671,14 +4671,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
 
 TEST_CASE("T Trim Two action trims a worker-created typed circle offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][circle][trim-two]") {
-    for (const double scale : {0.1, 1.0, 10.0, 1e5})
+    for (const double scale : {0.1, 1.0, 10.0, 1e5, 1e6})
     for (const bool circleFirst : {false, true}) {
         CAPTURE(scale, circleFirst);
         Drawing<true> f;
         const RS_Vector center = scale == 1e5 ? RS_Vector{1e12, -2e12}
-                                             : RS_Vector{0, 0};
+            : scale == 1e6 ? RS_Vector{1e13, -2e13} : RS_Vector{0, 0};
         if (center.x != 0.0) {
-            constexpr double zoom = .001;
+            const double zoom = scale == 1e6 ? 1e-5 : .001;
             f.view.getViewPort()->setSize(640, 480);
             f.view.getViewPort()->setOffsetAndFactor(
                 qRound(320.0 - center.x * zoom),
