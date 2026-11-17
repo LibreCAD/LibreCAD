@@ -1461,6 +1461,24 @@ TEST_CASE("Polyline source topology validation rejects segment self-intersection
          RS_LineData{crossNear, crossFar}}};
     CHECK_FALSE(LC_OffsetSourceGeometry{highOriginNearParallelCrossing}.isWellFormed());
 
+    constexpr double extremeOrigin = 1.0e13;
+    constexpr double extremeRotation = 0.9;
+    const double extremeCosine = std::cos(extremeRotation);
+    const double extremeSine = std::sin(extremeRotation);
+    const auto extremeWorld = [=](const double x, const double y) {
+        return RS_Vector{extremeOrigin + extremeCosine * x - extremeSine * y,
+                         -2.0 * extremeOrigin + extremeSine * x + extremeCosine * y};
+    };
+    const RS_Vector extremeStart = extremeWorld(0, 0);
+    const RS_Vector extremeTop = extremeWorld(3.0e5, 0);
+    const RS_Vector extremeNear = extremeWorld(2.0e5, shallowHeight);
+    const RS_Vector extremeFar = extremeWorld(1.0e5, -shallowHeight);
+    const LC_OffsetPolylineData extremeHighOriginNearParallelCrossing{
+        extremeStart, extremeFar, false,
+        {RS_LineData{extremeStart, extremeTop}, RS_LineData{extremeTop, extremeNear},
+         RS_LineData{extremeNear, extremeFar}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{extremeHighOriginNearParallelCrossing}.isWellFormed());
+
     const double nearConcentricShift = 1.0e-8;
     const double nearConcentricRadius = std::hypot(nearConcentricShift, 1.0);
     double nearConcentricJoinAngle = std::atan2(-1.0, -nearConcentricShift);
