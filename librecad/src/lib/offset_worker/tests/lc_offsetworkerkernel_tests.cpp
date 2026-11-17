@@ -8701,6 +8701,30 @@ TEST_CASE("high-origin ellipse source generation matches its local-frame result"
             CHECK(localized.distanceTo(centeredSpline->controlPoints[control]) <= 1e-3);
         }
     }
+
+    const RS_Vector minorDirection{-major.y / 1e5, major.x / 1e5};
+    const auto* cache = std::get_if<RS_SplineData>(&translated.ordinary.front());
+    REQUIRE(cache);
+    const req::Request trimInput{
+        token, req::TrimCache{*cache,
+            req::Segment{translatedData.center - minorDirection * 50000.0,
+                         translatedData.center + minorDirection * 50000.0},
+            trim::Pick{translatedData.center + major.normalized() * 102500.0}, {}}};
+    const auto trimReply = LC_OffsetWorkerKernel::run(trimInput);
+    const auto& trimmedCache = trimmed(trimReply, 2);
+    CAPTURE(static_cast<int>(trimmedCache.refusal), trimmedCache.roots.size(),
+            trimmedCache.fragments.size());
+    REQUIRE(trimmedCache.refusal == trim::Refusal::None);
+    REQUIRE(trimmedCache.roots.size() == 2);
+    REQUIRE_FALSE(trimmedCache.fragments.empty());
+    const auto encodedTrim = result::encode(trimReply, trimInput);
+    REQUIRE(encodedTrim);
+    const auto decodedTrim = result::decode(*encodedTrim, trimInput);
+    REQUIRE(decodedTrim);
+    const auto& decoded = std::get<trim::Result>(decodedTrim->result);
+    CHECK(decoded.refusal == trim::Refusal::None);
+    CHECK(decoded.roots.size() == trimmedCache.roots.size());
+    CHECK(decoded.fragments.size() == trimmedCache.fragments.size());
 }
 
 TEST_CASE("bounded hyperbola caches match an independent analytic offset locus",

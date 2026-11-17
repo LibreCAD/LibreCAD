@@ -56459,8 +56459,10 @@ A paired direct worker-kernel regression now compares a rotated full ellipse
 at the origin and at `(1e12,-2e12)`, with major radius `1e5`, ratio `0.25`,
 offset `2500`, and tolerance `1e-4`. Both generate one complete spline cache;
 translated control points localized back to the origin agree within `1e-3`,
-with degree, knots, and weights identical. The focused kernel case passed 150
-assertions.
+with degree, knots, and weights identical. The translated cache is also cut
+with a segment through its minor axis: the kernel certifies two roots, returns
+retained fragments, and round-trips the trim result through the worker codec.
+The focused kernel case passed 162 assertions.
 
 This corrects the earlier exploratory interpretation: high-origin ellipse
 offset construction is supported for this bounded geometry. The evidence is
@@ -56477,7 +56479,7 @@ It exports and reimports one `LC_OffsetCurve` through all five persistence
 lanes: R14 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Every reopened
 curve preserves the moved center, ratio, signed distance, and exact cache
 fingerprint. The focused case passed 430 assertions. The kernel regression
-passed 150 assertions; both CMake targets rebuilt successfully.
+passed 162 assertions; both CMake targets rebuilt successfully.
 
 This closes the high-origin ellipse slice for the tested frame and geometry,
 including worker execution, cache editing, batch routing, and five-format
