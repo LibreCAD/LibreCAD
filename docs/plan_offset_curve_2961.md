@@ -56164,3 +56164,26 @@ Validation with a clean macOS arm64 CMake Release build of the exact worktree:
 This adds one high-origin row to the direct geometry and worker/cache oracle
 for the recorded tangent layouts. It does not add file-persistence or Trim
 coverage at `1e12`, nor establish arbitrary endpoint-tangent support.
+
+## 1708. Persist a Resolvable Parabola at a `1e12` Origin (2026-11-17)
+
+Test commit `797657a99` extends the worker-client/five-format persistence
+matrix with a rotated endpoint-tangent parabola at origin `(1e12,-2e12)`,
+source scale `1e3`, and a steep asymmetric tangent pair. The unit-scale,
+near-parallel input at the same origin cannot be reconstructed reliably from
+double-precision endpoints: rotation/translation rounding exceeds the
+tangent-separation signal. The kernel protocol regression now requires that
+case to remain invalid and unadmitted instead of manufacturing a source.
+
+Validation on the exact worktree with macOS arm64 CMake Release:
+
+- Kernel/oracle matrix including the `1e12` frame: 23,018 assertions / 1 case passed.
+- Protocol rejection of degenerate/ill-conditioned tangent sources: 36 assertions / 1 case passed.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`, including the new large-scale `1e12` row: 444,859 assertions / 1 case passed with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=1800000`.
+- `librecad_tests`, worker-kernel, and worker-client targets built successfully; `git diff --check` passed.
+
+This qualifies five-format typed-source/cache persistence for the recorded
+large-scale tangent profile only. The unit-scale near-parallel construction is
+an explicit unsupported/invalid boundary, not evidence of successful
+high-origin persistence; Trim at `1e12`, other tangent layouts, and arbitrary
+origin/scale combinations remain open.
