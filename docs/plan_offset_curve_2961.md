@@ -57468,3 +57468,16 @@ The complete focused typed-arc CMake Release case passes 12,192 assertions /
 1 case, including its prior bounded and high-origin profiles. ODA/AutoCAD and
 visible GUI acceptance remain open; other radii, sweeps, orientations, and
 scale/origin combinations are not implied.
+
+## 1780. Trim a High-origin Typed Circle at `1e13` (2026-11-17)
+
+Extended worker-created typed-circle Trim Two with radius `2e6` centered at
+`(1e13,-2e13)`, alongside its existing radii and `1e12` profile. Both
+circle/native pick orders exercise source replacement, preview/commit,
+undo/redo, and all five native-capable DXF/DWG round-trip lanes. A proportional
+view scale keeps the high-origin screen offset within the viewport's integer
+range.
+
+The focused typed-circle CMake Release case passes 4,756 assertions / 1 case.
+ODA/AutoCAD and visible GUI acceptance remain open, as do other circle radii,
+scales, and coordinate frames.
