@@ -57377,3 +57377,22 @@ staged run passes 57,311 assertions and contains exactly 264 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 264 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other open-notch proportions, topology
 variants, visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1774. Trim a Rotated Mirrored-notch Profile at `1e13` (2026-11-17)
+
+The mirrored notch polyline profile (topology 2) passes Trim Two at rotation
+`0.9`, vertical ratio `0.7`, radius scale `0.6`, and center
+`(1e13,-2e13)`, with fixed offset `2500`. Both offset signs, pick orders,
+undo/redo, and all five native-capable persistence lanes are exercised. This
+is a single combined profile/frame/scale sample and does not establish support
+for arbitrary mirrored notch geometry or scales.
+
+The focused CMake Release matrix passes 58,455 assertions / 1 case; the ODA-
+staged run passes 58,207 assertions and produces exactly 272 R2000/R2018 DWGs.
+LibreDWG 0.14 `dwgread -O JSON` successfully reads the high-origin AC1032
+R2018 sample. The ODA conversion gate remains open: the direct converter
+launch aborts on macOS pasteboard services, while Launch Services reports
+`kLSNoExecutableErr`; no converted output was produced, so this is not an ODA
+pass or failure for the files. `git diff --check` passes. Other notch
+profiles, visible GUI interaction, and independent CAD semantic acceptance
+remain open.
