@@ -57354,3 +57354,12 @@ offset selection passes 1,802 assertions / 15 cases on the same CMake Release
 build. Source topology validation and region offset construction are separate
 contracts; these runs show no regression in either selected suite, not complete
 polyline variant or persistence coverage.
+
+## 1772. Read the High-origin L-profile DWG with LibreDWG (2026-11-17)
+
+LibreDWG 0.14 `dwgread -O JSON` successfully parses the AC1032 R2018 lane for
+the topology-4 `(1e13,-2e13)` L-profile Trim Two case. A structural JSON check
+confirms two degree-3 SPLINE entities (4 control points / 8 knots and 40 / 44),
+one LWPOLYLINE, and two LINE entities. This independently checks one saved
+result's bounded geometry structure; rendering and editable-extension
+semantics remain unverified.
