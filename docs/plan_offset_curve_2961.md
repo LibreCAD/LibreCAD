@@ -57159,3 +57159,21 @@ self-crossing LWPOLYLINE guard also passes independently (54 assertions / 1
 case), confirming these drawings remain ordinary entities and are not admitted
 as editable offset sources. These are bounded rejection checks, not an
 exhaustive proof of the geometric predicate. `git diff --check` passes.
+
+## 1758. Trim a Reflected Two-notch Profile with Reversed Winding (2026-11-17)
+
+A reflected two-notch profile is added at rotation `0.37` radians and origin
+`(1e12,-2e12)`, retaining the same six crossings and mirroring the selected
+outer-arm pick. Both operand orders and signed offsets pass preview,
+commit/undo/redo, and all five native-capable save/reopen lanes. With reversed
+winding, the two-root target-component case swaps between the `towardCentre`
+values; the test records that orientation-specific root count rather than
+assuming the unreflected mapping. This is one mirrored profile, not general
+reflection or winding independence.
+
+The focused CMake Release matrix passes 39,973 assertions / 1 case; the ODA
+staged run passes 40,778 assertions and contains exactly 184 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 184 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other mirrored notch layouts, scales,
+orientations, visible GUI interaction, and AutoCAD semantic acceptance remain
+open.
