@@ -56273,3 +56273,27 @@ running when recorded; their final status is not inferred from local tests.
 This integration adds no new offset geometry profile and does not close the
 remaining visible-app, wider family/variant, or independent CAD acceptance
 gates.
+
+## 1713. Extend High-origin Tangent Coverage to Large-scale Mirrored Layout (2026-11-17)
+
+Test commit `9ff33f118` adds a scale-`1e3` frame at origin
+`(1e12,-2e12)` to the independent exact-interior-normal oracle for all 11
+endpoint-tangent layouts, and adds the mirrored-steep tangent pair to the
+worker/cache and five-format persistence matrix. This complements sections
+1708-1711, which qualify the steep-asymmetric and backtracking-start pairs at
+the same origin and scale.
+
+Validation with the exact macOS arm64 CMake Release worktree:
+
+- High-origin analytic-normal/kernel oracle: 28,772 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across
+  file lanes`: 448,071 assertions / 1 case, including DXF R14, DXF/DWG R2000,
+  and DXF/DWG R2018. `dwgread` was installed and selected by the test for its
+  independent DWG parse checks.
+- Worker-kernel and worker-client test targets rebuilt successfully;
+  `git diff --check` passed.
+
+This qualifies one additional mirrored layout at this high-origin scale and
+the oracle layouts at the tested frame. It does not add Trim coverage for the
+mirrored profile at this origin, nor prove arbitrary tangent layouts, source
+scales, cutters, visible-app use, or independent ODA/AutoCAD acceptance.
