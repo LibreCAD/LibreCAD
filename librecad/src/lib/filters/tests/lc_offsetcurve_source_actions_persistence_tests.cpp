@@ -1584,12 +1584,15 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     const bool leftBranch = GENERATE(false, true);
     const bool reversedParameters = GENERATE(false, true);
     const double ratio = GENERATE(0.25, 0.75);
-    const double sourceScale = GENERATE(0.25, 1.0, 4.0);
+    const bool highOrigin = qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_HIGH_ORIGIN");
+    double sourceScale = 1e5;
+    if (!highOrigin) sourceScale = GENERATE(0.25, 1.0, 4.0);
     const double signedDistance = GENERATE(-0.25, 0.25) * sourceScale;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
-    CAPTURE(leftBranch, reversedParameters, ratio, sourceScale, signedDistance,
+    const RS_Vector origin = highOrigin ? RS_Vector{1e12, -2e12} : RS_Vector{0, 0};
+    CAPTURE(highOrigin, leftBranch, reversedParameters, ratio, sourceScale, signedDistance,
             static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
@@ -1600,14 +1603,16 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     graphic.initForNewDocument();
     lc::test::TestGraphicView view;
     view.setDocument(&graphic);
-    view.getViewPort()->setOffsetAndFactor(200, 200, 20.0 / sourceScale);
+    const double zoom = 20.0 / sourceScale;
+    view.getViewPort()->setOffsetAndFactor(
+        qRound(200.0 - origin.x * zoom), qRound(200.0 - origin.y * zoom), zoom);
     Context context;
     context.setDocumentAndView(&graphic, &view);
 
     auto* target = native(graphic, std::abs(signedDistance), signedDistance < 0.0);
     const RS_Vector majorAxis{std::cos(0.37), std::sin(0.37)};
     const LC_OffsetSourceGeometry expectedSource{LC_HyperbolaData{
-        {0, 0}, majorAxis * (8.0 * sourceScale), ratio,
+        origin, majorAxis * (8.0 * sourceScale), ratio,
         reversedParameters ? 1.1 : -0.9, reversedParameters ? -0.9 : 1.1,
         leftBranch}};
     REQUIRE(expectedSource.isWellFormed());
@@ -1648,7 +1653,8 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     const auto cacheBeforeTrim = RS_Spline::geometryFingerprint(replacement->getData());
 
     const RS_Vector minorAxis{-majorAxis.y, majorAxis.x};
-    const RS_Vector cutterCenter = majorAxis * (leftBranch ? -9.5 : 9.5) * sourceScale;
+    const RS_Vector cutterCenter = origin +
+        majorAxis * (leftBranch ? -9.5 : 9.5) * sourceScale;
     const RS_Vector cutterHalfLength = minorAxis * (20.0 * sourceScale);
     auto* cutter = new RS_Line(&graphic, cutterCenter - cutterHalfLength,
                                cutterCenter + cutterHalfLength);
