@@ -8919,7 +8919,7 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
     const char *name;
     std::array<RS_Vector, 2> tangents;
   };
-  const std::array<TangentLayout, 10> tangentLayouts{
+  const std::array<TangentLayout, 11> tangentLayouts{
       {{"steep-asymmetric", {{{0.8, 0.6}, {0.6, -0.8}}}},
        {"mirrored-steep", {{{0.8, -0.6}, {0.6, 0.8}}}},
        {"unequal-steep",
@@ -8934,6 +8934,8 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
                                  {0.9, -0.4358898943540673}}}},
        {"strong-backtracking-start", {{{-0.6, 0.8},
                                        {0.9, -0.4358898943540673}}}},
+       {"backtracking-end", {{{0.9, 0.4358898943540673},
+                              {-0.2, -0.9797958971132712}}}},
        {"extreme-tangent-magnitude-ratio",
         {{{8e-151, 6e-151}, {6e149, -8e149}}}}}};
   std::size_t admittedCaches = 0;
