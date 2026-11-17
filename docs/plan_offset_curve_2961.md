@@ -56995,3 +56995,21 @@ ODA-staged run. A fresh directory held exactly 104 R2000/R2018 DWGs; ODA File
 Converter 27.1.0.0 converted all 104 to ACAD2018 DXF with no `.err` files.
 `git diff --check` passes. Other concave geometry, scale/origin ranges, GUI
 interaction, and AutoCAD semantic acceptance remain open.
+
+## 1748. Extend Concave Trim Two Across World Origins (2026-11-17)
+
+Two more concave rows retain the same source/cutter geometry and add centers
+near `(1e9,-2e9)` and `(1e13,-2e13)`, with the latter also using radius scale
+`1.7`. All five DXF/DWG lanes initially showed a length-comparison mismatch in
+DXF at the larger origin even though primitive endpoints differed by no more
+than one coordinate ULP and spline samples were identical. The shared test
+geometry comparator now bounds length roundoff by the sum of endpoint
+coordinate-ULP tolerances as well as its existing relative geometry tolerance;
+this does not relax entity type/count, closure, or sampled-curve checks.
+
+The focused CMake Release matrix passes 20,333 assertions / 1 case in the
+ODA-staged run. Its fresh directory held exactly 120 R2000/R2018 DWGs; ODA File
+Converter 27.1.0.0 converted all 120 to ACAD2018 DXF with no `.err` files.
+`git diff --check` passes. These are bounded samples at `1e9`, `1e12`, and
+`1e13`, not proof for all coordinates/scales. Additional notch arrangements,
+visible GUI interaction, and AutoCAD semantic acceptance remain open.
