@@ -57509,3 +57509,16 @@ The complete focused CMake Release case passes 42,907 assertions / 1 case,
 including its prior scale, transformation, and cusp-boundary profiles. This
 qualifies the new sampled high-origin rows only; other parabolic shapes and
 conditioning boundaries, ODA/AutoCAD, and visible GUI acceptance remain open.
+
+## 1783. Trim Spline and Open-polyline Sources at `1e13` (2026-11-17)
+
+Extended the high-origin worker-created source-family Trim Two matrix from
+`(1e12,-2e12)` to `(1e13,-2e13)`, scaling source geometry from `1e5` to
+`1e6` and offset distance from `2500` to `25000`. The added rows cover cubic
+splines, fit-point splines, and an open collinear polyline, each in both
+operand orders through preview/commit, undo/redo, and five DXF/DWG lanes.
+
+The focused CMake Release case passes 5,202 assertions / 1 case across both
+origins and all three source families. These sampled profiles pass LibreCAD
+round-trips; other spline layouts and polyline topology, ODA/AutoCAD, and
+visible GUI acceptance remain open.
