@@ -56636,8 +56636,9 @@ The focused case passes 245 assertions / 1 case on macOS arm64 CMake Release.
 A preceding non-collinear corner fixture generated two ordinary branches and
 was not suitable for this single-native-cache client test; no cornering support
 is claimed here. Section 1735 closes application-level high-origin
-replacement/Trim only for this collinear profile. High-origin corner,
-mixed-bulge, and closed-region variants remain open.
+replacement/Trim only for this collinear profile. Section 1736 covers one
+high-origin corner profile; other corner, mixed-bulge, and closed-region
+variants remain open.
 
 ## 1734. Preserve High-origin Corner Polyline Ordinary Branches (2026-11-17)
 
@@ -56649,8 +56650,9 @@ exports and reopens both branches through R14 DXF, R2000 DXF/DWG, and R2018
 DXF/DWG while matching their geometry within `1e-3` world units.
 
 The focused case passes 207 assertions / 1 case on macOS arm64 CMake Release.
-This proves ordinary branch preservation, not native editable-cache or
-application-level Trim support for high-origin corners; those remain open.
+This proves ordinary branch preservation at the worker-client boundary.
+Section 1736 records how the application composes these branches into a
+validated native cache for this profile and exercises Trim Two on it.
 
 ## 1735. Trim Worker-created High-origin Spline and Polyline Sources (2026-11-17)
 
@@ -56673,9 +56675,28 @@ contain one `LWPOLYLINE`, one `SPLINE`, and one `LINE`.
 
 This qualifies these two spline source layouts and one collinear polyline at
 the recorded high-origin/scale frame; quadratic spline imports may be reified
-as Parabola and are intentionally covered by separate conic tests. High-origin
-cornering polyline branches, other spline degrees/knot layouts, broader
+as Parabola and are intentionally covered by separate conic tests. Other
+high-origin corner topologies, spline degrees/knot layouts, broader
 conditioning, and visible CAD acceptance remain open.
+
+## 1736. Trim a High-origin Composite L-polyline Cache (2026-11-17)
+
+Added an action-level test for the open L-shaped polyline at `(1e12,-2e12)`,
+with two `1e5` legs and a signed offset of `2500`. Update from Source composes
+the worker's two ordinary branches into a validated generalized native cache;
+Trim Two cuts one component while preserving the source polyline. Both entity
+pick orders check non-mutating preview, commit, undo/redo, and trimmed geometry
+after R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen.
+
+The focused case passes 716 assertions / 1 case on macOS arm64 CMake Release.
+ODA File Converter 27.1.0.0 converted all six retained DWGs to R2018 DXF with
+exit status 0. Each output reports `AC1032`, one `LWPOLYLINE`, one `SPLINE`,
+one `LINE`, and no stale native offset marker.
+
+This closes application-level source replacement and Trim Two for this single
+open L-corner, high-origin frame, signed side, and cutter. It does not establish
+all corner configurations, the opposite signed side, curved or closed corners,
+general intersection multiplicity, or visible CAD acceptance.
 
 ## 1724. Reconcile High-segment Polyline Matrix with Later Evidence (2026-11-17)
 
