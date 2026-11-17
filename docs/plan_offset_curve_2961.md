@@ -56142,3 +56142,25 @@ and R2018. It adds no new family/variant, visible-app, or AutoCAD acceptance.
 Inputs are `librecad/src/lib/filters/tests/testdata/offsetcurve_independent/oda_typed_source/dwg/`;
 the retry outputs and SHA-256 manifest are under `/private/tmp/PR3193-typed-source-oda-retry/` and
 `/private/tmp/PR3193-typed-source-oda-retry.sha256` respectively.
+
+## 1707. Extend Endpoint-tangent Parabola Oracle to a `1e12` Origin (2026-11-17)
+
+Test commit `0f510e0e4` adds a unit-scale, rotated endpoint-tangent frame at
+origin `(1e12,-2e12)` to the independent interior-normal and worker/cache
+matrix in `steep asymmetric endpoint-tangent parabola offsets match analytic
+interior normals`. The existing 11 directed tangent layouts, forward/reversed
+traversals, five interior parameters, and signed curvature-relative offsets
+run unchanged in the added frame. The independent deviation bound accounts for
+the coordinate-magnitude floating-point floor; worker cache validation still
+must either admit a changed cache or explicitly refuse it.
+
+Validation with a clean macOS arm64 CMake Release build of the exact worktree:
+
+- `librecad_tests`: target built successfully.
+- `librecad_offset_worker_kernel_tests`: target built successfully.
+- Focused kernel/oracle case: 23,018 assertions / 1 case passed.
+- `git diff --check`: passed.
+
+This adds one high-origin row to the direct geometry and worker/cache oracle
+for the recorded tangent layouts. It does not add file-persistence or Trim
+coverage at `1e12`, nor establish arbitrary endpoint-tangent support.
