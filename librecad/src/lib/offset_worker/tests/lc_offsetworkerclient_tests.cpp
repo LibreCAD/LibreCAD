@@ -571,6 +571,140 @@ TEST_CASE("Worker client generates the 100-to-1 elliptic arc above its cusp radi
     CHECK(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
 }
 
+TEST_CASE("Worker client preserves a high-origin ellipse source while moving its cache",
+          "[lc-offsetcurve][worker-client][ellipse][origin][cache]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
+    RS_EntityContainer parent;
+    RS_Layer layer{QStringLiteral("high-origin ellipse")};
+    RS_Line attributes{&parent, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    constexpr double angle = 37.0 * M_PI / 180.0;
+    const RS_Vector major{1e5 * std::cos(angle), 1e5 * std::sin(angle)};
+    const LC_OffsetSourceGeometry source{
+        RS_EllipseData{{1e12, -2e12}, major, 0.25, 0.0, 0.0, false}};
+    const LC_OffsetSourceDefinition definition{source, 2500.0, 1e-4, false};
+    REQUIRE(owned.get().submit(
+        {token(107), Req::GenerateSource{definition, {}}}, Client::Mode::Commit,
+        receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 107, 7);
+    const auto& result = std::get<Reply::Native>(completion.reply().result);
+    REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+    REQUIRE(result.ordinary.size() == 1);
+
+    auto editable = completion.nativeSource(attributes);
+    REQUIRE(editable);
+    REQUIRE(editable->sourceDefinition());
+    CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
+          Req::Values::encodeSourceDefinition(definition));
+    const auto* preserved = std::get_if<RS_EllipseData>(
+        &editable->sourceDefinition()->source.value);
+    REQUIRE(preserved);
+    const auto cacheFingerprint = RS_Spline::geometryFingerprint(editable->getData());
+
+    const RS_Vector translation{2.0, 3.0};
+    editable->move(translation);
+    REQUIRE(editable->sourceDefinition());
+    const auto* moved = std::get_if<RS_EllipseData>(
+        &editable->sourceDefinition()->source.value);
+    REQUIRE(moved);
+    CHECK(moved->center.x == 1e12 + translation.x);
+    CHECK(moved->center.y == -2e12 + translation.y);
+    CHECK(moved->majorP == major);
+    CHECK(moved->ratio == 0.25);
+    CHECK(moved->angle1 == 0.0);
+    CHECK(moved->angle2 == 0.0);
+    CHECK_FALSE(editable->sourceDefinition()->cacheReversed);
+    CHECK(RS_Spline::geometryFingerprint(editable->getData()) != cacheFingerprint);
+
+    REQUIRE(lc::test::ensureSettings());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer* outputLayer = graphic.findLayer("0");
+    REQUIRE(outputLayer);
+    std::unique_ptr<RS_Entity> persisted{editable->clone()};
+    REQUIRE(persisted);
+    persisted->setParent(&graphic);
+    persisted->setLayer(outputLayer);
+    graphic.addEntity(persisted.release());
+    const auto persistedFingerprint = RS_Spline::geometryFingerprint(editable->getData());
+    lc::test::OutputDirectory directory("offset-high-origin-ellipse");
+    struct PersistenceLane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<PersistenceLane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+    for (const PersistenceLane& lane : lanes) {
+        const auto path = directory.file(lane.extension);
+        REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+        const LC_OffsetCurve* reopenedCurve = nullptr;
+        for (const RS_Entity* entity : reopened) {
+            if (const auto* candidate = dynamic_cast<const LC_OffsetCurve*>(entity)) {
+                REQUIRE(reopenedCurve == nullptr);
+                reopenedCurve = candidate;
+            }
+        }
+        REQUIRE(reopenedCurve);
+        CHECK(reopenedCurve->isConsistent());
+        REQUIRE(reopenedCurve->sourceDefinition());
+        const auto* reopenedEllipse = std::get_if<RS_EllipseData>(
+            &reopenedCurve->sourceDefinition()->source.value);
+        REQUIRE(reopenedEllipse);
+        CHECK(reopenedEllipse->center.x == moved->center.x);
+        CHECK(reopenedEllipse->center.y == moved->center.y);
+        CHECK(reopenedEllipse->ratio == moved->ratio);
+        CHECK(reopenedCurve->sourceDefinition()->signedDistance == 2500.0);
+        CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
+              persistedFingerprint);
+    }
+
+    auto sourceEntity = source.makeEntity();
+    REQUIRE(sourceEntity);
+    RS_OffsetData offset;
+    offset.distance = 2500.0;
+    const RS_Vector outward = major.normalized();
+    offset.coord = RS_Vector{1e12, -2e12} + major + outward * 5000.0;
+    offset.sideFallback = offset.coord;
+    offset.number = 1;
+    offset.multipleCopies = true;
+    offset.keepOriginals = true;
+    LC_OffsetBatchPreparation prepared{offset, {sourceEntity.get()}, false, {}};
+    LC_DocumentModificationBatch batch;
+    CHECK_FALSE(prepared.advance(batch));
+    const auto produceRequest = prepared.request(token(108));
+    REQUIRE(produceRequest);
+    Receipts producedReceipts;
+    REQUIRE(owned.get().submit(*produceRequest, Client::Mode::Commit,
+                               producedReceipts.into(0)));
+    rt.until([&] { return producedReceipts.calls[0] != 0; });
+    const auto& producedCompletion = completed(producedReceipts.at(0), 108, 5);
+    const auto* produced = std::get_if<Reply::Produced>(
+        &producedCompletion.reply().result);
+    REQUIRE(produced);
+    CAPTURE(produced->source.status, produced->source.engineStatus,
+            produced->source.detail, produced->outputs.size());
+    REQUIRE(produced->source.status == LC_OffsetSourceStatus::Succeeded);
+    REQUIRE(prepared.accept(producedCompletion));
+    REQUIRE(prepared.advance(batch));
+    REQUIRE(prepared.outcome().sources.size() == 1);
+    CHECK(prepared.outcome().sources.front().complete());
+    REQUIRE_FALSE(batch.entitiesToAdd.empty());
+    prepared.release();
+    qDeleteAll(batch.entitiesToAdd);
+}
+
 TEST_CASE("Worker ordinary completions materialize exact plain output with fresh identities", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt};
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("ordinary local")};

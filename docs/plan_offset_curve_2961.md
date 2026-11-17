@@ -56409,6 +56409,23 @@ rows qualify the listed tangent directions at this one origin/scale and their
 tested offset/cutter grids. Arbitrary high-origin conditioning, visible-app
 use, and AutoCAD acceptance remain open.
 
+## 1719. Run the Complete Endpoint-tangent Trim Matrix through Profile 222 (2026-11-17)
+
+The current `librecad_tests` binary ran the full endpoint-tangent Trim Two
+matrix with every profile from 0 through 222 registered, including the six
+high-origin layouts from section 1718 and the preceding profiles 213-216.
+
+Validation on macOS arm64 CMake Release:
+
+- `T Trim Two trims an endpoint-tangent parabola`: 729,132 assertions / 1
+  case passed with complete 0-222 profile generation.
+- `git diff --check`: passed.
+
+This closes the complete generated Trim matrix for these 223 recorded
+profiles. It does not establish arbitrary tangent constructions, all
+origin/scale/cutter combinations, visible-app interaction, or AutoCAD
+acceptance.
+
 ## 1720. Retry the Full Endpoint-tangent ODA Conversion (2026-11-17)
 
 After the user confirmed ODAFileConverter was open in the macOS desktop
@@ -56427,43 +56444,43 @@ This establishes independent ODA structural conversion for the expanded
 endpoint-tangent persistence matrix. It is not visual-fidelity evidence,
 AutoCAD acceptance, nor coverage of other source geometry families.
 
-## 1721. Record High-origin Ellipse Gap Found during Family Expansion (2026-11-17)
+## 1721. Isolate High-origin Ellipse Worker Behavior (2026-11-17)
 
-An exploratory worker/cache fixture using a full ellipse centered at
-`(1e12,-2e12)`, major radius `1e5`, minor/major ratio `0.25`, and a rotated
-major axis exposed two unresolved behaviors in the typed-source suite:
+The first high-origin fixture was injected into the broad typed-source sweep
+without a corresponding pick point for its later `Produce` phase. Its default
+pick coordinates were nowhere near the ellipse, so the resulting
+`OffsetFailed` was a fixture setup error, not evidence of an ellipse offset
+regression. The sweep also compares moved source definitions against a
+reconstructed entity; rotated ellipse bases require the same basis
+canonicalization used by the existing rotated-ellipse cases. The provisional
+injection was removed from that slow aggregate sweep.
 
-- The generated editable source definition did not encode identically to the
-  requested ellipse, indicating basis/angle normalization loss at this frame.
-- The source operation completed at the worker level but returned
-  `LC_OffsetSourceStatus::OffsetFailed`, with no generated branches.
+A paired direct worker-kernel regression now compares a rotated full ellipse
+at the origin and at `(1e12,-2e12)`, with major radius `1e5`, ratio `0.25`,
+offset `2500`, and tolerance `1e-4`. Both generate one complete spline cache;
+translated control points localized back to the origin agree within `1e-3`,
+with degree, knots, and weights identical. The focused kernel case passed 150
+assertions.
 
-The provisional fixture was removed because it made the broad suite fail and
-requires a focused numerical fix, not weaker assertions. A first full client
-suite attempt also used the wrong timeout variable and hit the default
-150-second watchdog; the corrected run exposed the ellipse failures but was
-stopped before the entire multi-format suite completed. Do not count this as
-passing ellipse persistence or Trim Two evidence.
+This corrects the earlier exploratory interpretation: high-origin ellipse
+offset construction is supported for this bounded geometry. The evidence is
+not yet file persistence or application-level source editing; section 1722
+records those checks.
 
-Next ellipse work should isolate (1) typed ellipse source round-trip at large
-coordinates from (2) offset construction, then add only passing bounded cases
-to the five-format persistence and Trim matrices. High-origin ellipse offset
-robustness and exact source preservation remain open; the successful ODA audit
-in section 1720 does not cover this family.
+## 1722. Verify High-origin Ellipse Client, Edit, and Persistence (2026-11-17)
 
-## 1719. Run the Complete Endpoint-tangent Trim Matrix through Profile 222 (2026-11-17)
+A focused real-worker-client regression now covers the same rotated full
+ellipse and verifies successful source generation, exact source-definition
+transport, cache movement by `(2,3)` without changing ellipse basis, explicit
+positive-side batch production, and native offset consistency after reopen.
+It exports and reimports one `LC_OffsetCurve` through all five persistence
+lanes: R14 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Every reopened
+curve preserves the moved center, ratio, signed distance, and exact cache
+fingerprint. The focused case passed 430 assertions. The kernel regression
+passed 150 assertions; both CMake targets rebuilt successfully.
 
-The current `librecad_tests` binary ran the full endpoint-tangent Trim Two
-matrix with every profile from 0 through 222 registered, including the six
-high-origin layouts from section 1718 and the preceding profiles 213-216.
-
-Validation on macOS arm64 CMake Release:
-
-- `T Trim Two trims an endpoint-tangent parabola`: 729,132 assertions / 1
-  case passed with complete 0-222 profile generation.
-- `git diff --check`: passed.
-
-This closes the complete generated Trim matrix for these 223 recorded
-profiles. It does not establish arbitrary tangent constructions, all
-origin/scale/cutter combinations, visible-app interaction, or AutoCAD
-acceptance.
+This closes the high-origin ellipse slice for the tested frame and geometry,
+including worker execution, cache editing, batch routing, and five-format
+round-trip. It does not establish every ellipse eccentricity, sweep, offset
+sign, cutter topology, origin/scale ratio, or the visible-app and
+AutoCAD/ODA-visual acceptance gates.

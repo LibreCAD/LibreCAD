@@ -8659,6 +8659,50 @@ TEST_CASE("partial eccentric ellipse caches match an independent analytic offset
     CHECK(checkedLoci == 4);
 }
 
+TEST_CASE("high-origin ellipse source generation matches its local-frame result",
+          "[lc-offsetcurve][worker-kernel][source-cache][ellipse][precision][origin]") {
+    constexpr double angle = 37.0 * M_PI / 180.0;
+    const RS_Vector major{1e5 * std::cos(angle), 1e5 * std::sin(angle)};
+    const RS_EllipseData centeredData{{0.0, 0.0}, major, 0.25, 0.0, 0.0, false};
+    const RS_EllipseData translatedData{{1e12, -2e12}, major, 0.25, 0.0, 0.0, false};
+    const double signedDistance = 2500.0;
+    const double tolerance = 1e-4;
+    const auto generate = [&](const RS_EllipseData& data) {
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{data}, signedDistance, tolerance, false};
+        const auto reply = LC_OffsetWorkerKernel::run(
+            {token, req::GenerateSource{definition, {}}});
+        return native(reply, 7);
+    };
+
+    const auto centered = generate(centeredData);
+    const auto translated = generate(translatedData);
+    CAPTURE(centered.engineStatus, centered.refusal, centered.ordinaryStatus,
+            centered.ordinary.size(), translated.engineStatus, translated.refusal,
+            translated.ordinaryStatus, translated.ordinary.size());
+    REQUIRE(centered.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(centered.ordinaryStatus == result::OrdinaryStatus::Complete);
+    CHECK(translated.engineStatus == centered.engineStatus);
+    CHECK(translated.ordinaryStatus == centered.ordinaryStatus);
+    CHECK(translated.ordinary.size() == centered.ordinary.size());
+    REQUIRE(translated.ordinary.size() == centered.ordinary.size());
+    for (std::size_t branch = 0; branch < centered.ordinary.size(); ++branch) {
+        const auto* centeredSpline = std::get_if<RS_SplineData>(&centered.ordinary[branch]);
+        const auto* translatedSpline = std::get_if<RS_SplineData>(&translated.ordinary[branch]);
+        REQUIRE(centeredSpline);
+        REQUIRE(translatedSpline);
+        REQUIRE(centeredSpline->controlPoints.size() == translatedSpline->controlPoints.size());
+        CHECK(centeredSpline->degree == translatedSpline->degree);
+        CHECK(centeredSpline->knotslist == translatedSpline->knotslist);
+        CHECK(centeredSpline->weights == translatedSpline->weights);
+        for (std::size_t control = 0; control < centeredSpline->controlPoints.size(); ++control) {
+            const RS_Vector localized{translatedSpline->controlPoints[control].x - 1e12,
+                                      translatedSpline->controlPoints[control].y + 2e12};
+            CHECK(localized.distanceTo(centeredSpline->controlPoints[control]) <= 1e-3);
+        }
+    }
+}
+
 TEST_CASE("bounded hyperbola caches match an independent analytic offset locus",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][oracle]") {
     const auto nearestCacheDistance = [](const RS_Spline& cache, const RS_Vector& point) {
