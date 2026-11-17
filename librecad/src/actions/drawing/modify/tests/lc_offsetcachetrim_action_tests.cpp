@@ -2671,7 +2671,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
                175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186,
                187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198,
                199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
-               211, 212, 213);
+               211, 212, 213, 214);
   const bool obliqueCurvatureProfile = profile >= 51 && profile <= 68;
   const bool shallowBendCurvatureProfile = profile >= 69 && profile <= 86;
   const bool nearVerticalCurvatureProfile = profile >= 87 && profile <= 104;
@@ -2745,7 +2745,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       (backtrackingEndCuspProfile &&
        (curvatureProfileIndex % 2) == 1);
   const bool highOrigin = profile == 2;
-  const bool highOriginLargeScale = profile == 213;
+  const bool highOriginLargeScale = profile == 213 || profile == 214;
+  const bool highOriginBacktracking = profile == 214;
   const bool scaleExtreme = profile == 1;
   const bool reversedTangentTraversal =
       profile == 4 || profile == 6 || profile == 8 || profile == 10 ||
@@ -2830,7 +2831,10 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       scaleExtreme ? (scaleProfile == 0 ? 1e-3 : 1e5) : 10.0 * profileScale;
   std::array<RS_Vector, 2> endpointTangents =
       steepAsymmetricTangents
-          ? profile <= 26 || highOriginLargeScale
+          ? highOriginBacktracking
+                ? std::array<RS_Vector, 2>{{{-0.6, 0.8},
+                                            {0.9, -0.4358898943540673}}}
+          : profile <= 26 || highOriginLargeScale
                 ? std::array<RS_Vector, 2>{{{0.8, 0.6}, {0.6, -0.8}}}
             : (profile >= 39 && profile <= 41) ||
                     (profile >= 45 && profile <= 47)
