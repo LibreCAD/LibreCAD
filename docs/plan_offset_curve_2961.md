@@ -56409,6 +56409,24 @@ rows qualify the listed tangent directions at this one origin/scale and their
 tested offset/cutter grids. Arbitrary high-origin conditioning, visible-app
 use, and AutoCAD acceptance remain open.
 
+## 1720. Retry the Full Endpoint-tangent ODA Conversion (2026-11-17)
+
+After the user confirmed ODAFileConverter was open in the macOS desktop
+session, the converter was run outside the SSH sandbox against the preserved
+1,172-file endpoint-tangent matrix. It completed with exit status 0 and
+produced 1,172 R2018 DXFs in a fresh output directory.
+
+A structured group-pair audit matched each DWG basename to its DXF and checked
+`$ACADVER`, entity count, and editable-offset XDATA: all outputs report
+`AC1032`, exactly one `SPLINE`, and exactly one `LC_OFFSET_CURVE` marker, with
+zero missing files or mismatches. Inputs remain under
+`/private/tmp/PR3193-endpoint-tangent-oda-expanded/`; this retry's outputs are
+under `/private/tmp/PR3193-endpoint-tangent-oda-retry/`.
+
+This establishes independent ODA structural conversion for the expanded
+endpoint-tangent persistence matrix. It is not visual-fidelity evidence,
+AutoCAD acceptance, nor coverage of other source geometry families.
+
 ## 1719. Run the Complete Endpoint-tangent Trim Matrix through Profile 222 (2026-11-17)
 
 The current `librecad_tests` binary ran the full endpoint-tangent Trim Two
