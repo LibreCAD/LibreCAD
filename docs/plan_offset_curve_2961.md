@@ -57282,3 +57282,17 @@ staged run passes 42,783 assertions and contains exactly 240 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 240 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other combined profiles, notch topologies,
 visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1766. Carry Three-arm Notch Topology to `1e13` (2026-11-17)
+
+The distinct three-arm polyline profile (topology 6) passes at rotation `0.37`,
+vertical ratio `1.0`, radius scale `1.0`, and center `(1e13,-2e13)`, with fixed
+offset `2500`. This qualifies a second notch topology at the large-origin
+frame through both signed offsets, operand orders, Trim Two lifecycle, and
+five native-capable save/reopen lanes; other topologies remain open.
+
+The focused CMake Release matrix passes 49,572 assertions / 1 case; its ODA
+staged run passes 45,009 assertions and contains exactly 248 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 248 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other large-origin notch profiles, topology
+variants, visible GUI interaction, and AutoCAD semantic acceptance remain open.
