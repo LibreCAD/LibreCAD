@@ -57629,3 +57629,24 @@ test expansion is commit `f768d9ffe`.
 The focused CMake Release case passes 12,922 assertions / 1 case. These are
 bounded eccentricity/orientation samples, not all ellipse ratios or frames;
 ODA conversion, visible GUI, and AutoCAD semantic acceptance remain open.
+
+## 1791. Retry ODA Conversion with the Desktop App Open (2026-11-17)
+
+Retried ODA File Converter 27.1.0.0 against the staged high-origin
+polyline Trim Two DWG batch after the user confirmed the GUI application was
+open. The process again aborted before conversion (exit 134) with
+PasteBoard/XPC errors, and produced no output. This is not an ODA pass; the
+SSH-launched CLI still cannot access the desktop session services. Independent
+ODA acceptance for this batch remains open, as do visible GUI and AutoCAD
+semantic acceptance.
+
+## 1792. Trim a Larger Circle at the `1e13` Origin (2026-11-17)
+
+Added a scale-`1e7` typed-circle row to the worker-created Trim Two matrix at
+center `(1e13,-2e13)`, complementing the existing scale-`1e6` row. It exercises
+both operand-pick orders, preview/commit, undo/redo, and the five existing
+R14/R2000/R2018 DXF/DWG save/reopen lanes; emitted DWGs are also checked by
+LibreDWG when available. The focused CMake Release test passes 5,825
+assertions / 1 case, and `git diff --check` passes. This qualifies the added
+radius/origin profile only; broader circle conditioning, ODA conversion,
+visible GUI, and AutoCAD semantic acceptance remain open.
