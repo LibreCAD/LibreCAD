@@ -278,7 +278,9 @@ work ceilings. Continue with other materially distinct tangent directions and
 contact conditioning; section 1699 adds the opposite-bend pair to exact-normal,
 operation-8, worker/persistence, and curvature-relative Trim coverage, and
 records a clean rerun of the 84-file ODA audit. Do not inflate this finite
-profile set into general coverage.
+profile set into general coverage. Section 1700 adds a backward-pointing start
+tangent that creates a backtracking lobe to the same independent oracle,
+worker/persistence, and curvature-relative Trim matrix.
 Continue with materially distinct tangent layouts, scales, and cutter
 conditioning rather than treating these bounded cases as exhaustive; (3) completed by sections 1504-1507: qualify
 scale-dependent and transformed dense-end Trim with independent source/cache
@@ -55957,4 +55959,31 @@ This qualifies this tangent pair and sampled contact layouts only. Other
 direction pairs, cusp-boundary and beyond-cusp offsets, broader near-tangent
 conditioning, visible packaged-app acceptance, and AutoCAD acceptance remain
 open.
+
+## 1700. Qualify a Backtracking Endpoint-tangent Parabola (2026-11-16)
+
+Test commit `8bb4d50a7` adds the pair `{(-0.2, 0.9797958971132712),
+(0.9, -0.4358898943540673)}`. Its first tangent points partly away from the
+endpoint chord, producing a backtracking lobe rather than the monotone-in-X
+profiles covered previously. The independent interior-normal and operation-8
+oracle, worker/cache plus five-format persistence matrix, and curvature-relative
+Trim Two action matrix cover forward and reversed traversal, scales `1e-3/1/1e3`,
+ratios `0.1/0.5/0.9` of vertex curvature radius, and both signed offset sides.
+Trim retains independent tangent-circle classification, circle cutters at the
+outer ratios, and line cutters at the middle ratio in both operand-pick orders;
+action replacement, preview/commit parity, undo/redo, and all five native-capable
+save/reopen lanes remain exercised.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `steep asymmetric endpoint-tangent parabola offsets match analytic interior normals`: 11,828 assertions / 1 case.
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 303,104 assertions / 1 case; `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`.
+- `T Trim Two trims an endpoint-tangent parabola`: 486,569 assertions / 1 case.
+- Worker kernel, worker client, and `librecad_tests` targets built successfully.
+- `git diff --check`: passed.
+
+The pair and sampled lobe are now qualified; this is not a proof for arbitrary
+backtracking or cusp topology. Visible packaged-app acceptance remains open. A
+desktop launch attempt in this session captured the macOS lock screen, so it is
+not counted as GUI evidence.
 
