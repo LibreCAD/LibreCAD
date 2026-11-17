@@ -57587,3 +57587,19 @@ validation result. The SSH-launched process is not attached to the desktop
 session's pasteboard despite the GUI app being open. Independent ODA validation
 and visible GUI acceptance remain open; prior successful ODA batches do not
 cover this newly staged set.
+
+## 1788. Trim High-origin Typed Lines in Four Orientations (2026-11-17)
+
+Expanded the worker-created typed-line Trim Two matrix to horizontal, oblique
+(`0.37` rad), vertical, and near-vertical (`pi/2 - 1e-6`) source lines at
+unit scale/origin, scale `1e5` at `(1e12,-2e12)`, and scale `1e6` at
+`(1e13,-2e13)`. Both entity-pick orders retain preview/commit, undo/redo,
+and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG round trips. The test's
+`dwgread` auto-discovery independently parses the emitted DWG files. The
+test expansion is commit `035e5fa7a`.
+
+The focused CMake Release case passes 10,752 assertions / 1 case over 24
+combinations; `git diff --check` passes. This qualifies the recorded straight
+line orientations and scales only. The additional outputs were not converted
+by ODA in this run, and visible GUI, ODA, and AutoCAD semantic acceptance
+remain open.
