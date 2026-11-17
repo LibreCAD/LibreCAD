@@ -5809,6 +5809,19 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
           "[lc-offsetcurve][worker-client][parabola][tangent][persistence]") {
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
+    const QString requestedProfile =
+        qEnvironmentVariable("LC_OFFSET_CLIENT_PROFILE");
+    const QString retainedOutputPath =
+        qEnvironmentVariable("LC_OFFSET_ODA_OUTPUT_DIR");
+    const std::filesystem::path retainedOutputDirectory =
+        retainedOutputPath.isEmpty()
+            ? std::filesystem::path{}
+            : std::filesystem::path{retainedOutputPath.toStdString()};
+    if (!retainedOutputDirectory.empty()) {
+        std::error_code error;
+        std::filesystem::create_directories(retainedOutputDirectory, error);
+        REQUIRE_FALSE(error);
+    }
     lc::test::OutputDirectory directory("offset-parabola-near-parallel-tangents");
     auto& rt = runtime();
     OwnedClient owned{rt};
@@ -6077,7 +6090,12 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
               rotate({-5.0, 0.5}) + frameTranslation}},
             {{rotate({-2e150, 9.25e150}),
               rotate({-10e-150, -6.75e-150})}})});
+    std::size_t executedProfiles = 0;
     for (const Profile& profile : profiles) {
+        if (!requestedProfile.isEmpty() &&
+            QString::fromStdString(profile.name) != requestedProfile)
+            continue;
+        ++executedProfiles;
         CAPTURE(profile.name);
         const LC_ParabolaData& source = profile.source;
         REQUIRE(source.isValid());
@@ -6178,6 +6196,15 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
                 const auto path = directory.file(
                     std::to_string(requestId) + "-" + lane.extension);
                 REQUIRE(lc::test::exportDrawing(drawing, path, lane.format));
+                if (!retainedOutputDirectory.empty() &&
+                    (lane.format == RS2::FormatDWG ||
+                     lane.format == RS2::FormatDWG2018)) {
+                    std::error_code error;
+                    std::filesystem::copy_file(
+                        path, retainedOutputDirectory / path.filename(),
+                        std::filesystem::copy_options::overwrite_existing, error);
+                    REQUIRE_FALSE(error);
+                }
 #ifdef DWGSUPPORT
                 if (!libreDwgReader.isEmpty() &&
                     (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
@@ -6239,6 +6266,7 @@ TEST_CASE("Near-parallel endpoint-tangent parabola retains its worker cache acro
             requestId += 2;
         }
     }
+    if (!requestedProfile.isEmpty()) CHECK(executedProfiles == 1);
 }
 
 TEST_CASE("Every balanced parabola sample permutation survives worker cache validation",
