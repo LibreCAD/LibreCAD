@@ -3801,7 +3801,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
-        <translation>致世界基督教团结会</translation>
+        <translation>转到 WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
@@ -22119,7 +22119,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="370"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="374"/>
         <source>WCS</source>
-        <translation>世界基督教团结会</translation>
+        <translation>WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="378"/>
@@ -48574,7 +48574,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="133"/>
         <source>WCS</source>
-        <translation>世界基督教团结会</translation>
+        <translation>WCS</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="130"/>

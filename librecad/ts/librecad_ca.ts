@@ -4438,7 +4438,7 @@ Punt: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>CSCS absolut: (%1)</translation>
+        <translation>WCS absolut: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -22114,7 +22114,7 @@ Avís: aquesta acció NO es pot desfer!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="370"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="374"/>
         <source>WCS</source>
-        <translation>WSCS</translation>
+        <translation>WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="378"/>
@@ -48572,7 +48572,7 @@ Voleu substituir-ho?</translation>
     <message>
         <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="133"/>
         <source>WCS</source>
-        <translation>WSCS</translation>
+        <translation>WCS</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="130"/>
