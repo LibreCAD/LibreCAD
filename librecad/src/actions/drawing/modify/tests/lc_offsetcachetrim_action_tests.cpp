@@ -8942,6 +8942,15 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     const RS_Vector center{1e12, -2e12};
     constexpr double radius = 1e5;
     constexpr double distance = 2500.0;
+    const auto profiles = GENERATE(Catch::Generators::table<double, double>({
+        {0.0, 1.0}, {.37, 1.0}, {0.0, .7}, {.37, .7}}));
+    const double rotation = std::get<0>(profiles);
+    const double verticalRatio = std::get<1>(profiles);
+    const double cosine = std::cos(rotation), sine = std::sin(rotation);
+    const auto world = [&](double x, double y) {
+        return center + RS_Vector{cosine * x - sine * y, sine * x + cosine * y};
+    };
+    CAPTURE(rotation, verticalRatio);
     for (const bool towardCentre : {false, true}) {
         for (const bool nativeFirst : {false, true}) {
             CAPTURE(towardCentre, nativeFirst);
@@ -8959,10 +8968,10 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             f.graphic.addEntity(previous);
 
             auto* source = new RS_Polyline(&f.graphic);
-            source->addVertex(center + RS_Vector{-radius, -radius});
-            source->addVertex(center + RS_Vector{radius, -radius});
-            source->addVertex(center + RS_Vector{radius, radius});
-            source->addVertex(center + RS_Vector{-radius, radius});
+            source->addVertex(world(-radius, -radius * verticalRatio));
+            source->addVertex(world(radius, -radius * verticalRatio));
+            source->addVertex(world(radius, radius * verticalRatio));
+            source->addVertex(world(-radius, radius * verticalRatio));
             source->setClosed(true);
             source->endPolyline();
             f.graphic.addEntity(source);
@@ -8988,10 +8997,9 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
             const RS_Vector nativePick = native->getPointAt(
                 breaks.front() + (breaks.back() - breaks.front()) * .1);
             auto* cutter = new RS_Line(&f.graphic,
-                RS_LineData{center + RS_Vector{0, -2 * radius},
-                            center + RS_Vector{0, 2 * radius}});
+                RS_LineData{world(0, -2 * radius), world(0, 2 * radius)});
             f.graphic.addEntity(cutter);
-            const RS_Vector cutterPick = center + RS_Vector{0, radius};
+            const RS_Vector cutterPick = world(0, radius);
 
             const auto firstPick = nativeFirst ? nativePick : cutterPick;
             const auto secondPick = nativeFirst ? cutterPick : nativePick;
@@ -9040,8 +9048,9 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
                 const auto format = formats[lane];
                 const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
                 const std::filesystem::path file(directory.filePath(
-                    QStringLiteral("closed-high-origin-trim-two-%1-%2")
-                        .arg(towardCentre ? 1 : 0).arg(nativeFirst ? 1 : 0) +
+                    QStringLiteral("closed-high-origin-trim-two-%1-%2-%3-%4")
+                        .arg(towardCentre ? 1 : 0).arg(nativeFirst ? 1 : 0)
+                        .arg(qRound(rotation * 100)).arg(qRound(verticalRatio * 100)) +
                     (dwg ? ".dwg" : ".dxf")).toStdString());
                 REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
                 const QByteArray odaOutput = qgetenv("LC_OFFSET_ODA_OUTPUT_DIR");
