@@ -263,7 +263,8 @@ magnitude ratio through the interior oracle and forward worker/cache lanes.
 Section 1689 probes exact interior normals at `0.1/0.5/0.9` of vertex
 curvature radius for the recorded tangent layouts; section 1690 classifies
 operation-8 cache admission/refusal for all sampled rows; section 1691 carries
-those curvature-relative rows through worker/cache and five-format persistence.
+forward curvature-relative rows through worker/cache and five-format
+persistence; section 1693 adds the same bounded matrix for reversed traversal.
 Continue with materially distinct tangent
 directions and contact conditioning; do not inflate this finite profile set
 into general coverage.
@@ -55777,4 +55778,26 @@ Validation:
 This does not establish visual fidelity, broader DWG feature support, typed
 source acceptance outside these fixtures, AutoCAD acceptance, or packaged-app
 GUI acceptance.
+
+## 1693. Persist Reversed Curvature-relative Endpoint-tangent Offsets (2026-11-16)
+
+Test commit `cf3801a8f` extends section 1691 with reversed traversal for the
+same four endpoint-tangent layouts, three scale/origin frames, three curvature
+ratios (`0.1`, `0.5`, `0.9`), both offset signs, and all five save/reopen lanes.
+Each reversed source swaps its endpoints and negates/swaps the corresponding
+endpoint tangents. The shared worker-client matrix now checks forward and
+reversed cache payloads and sampled exact-normal geometry across the recorded
+profiles. The default 150-second suite watchdog expired during an initial
+expanded run; rerunning with the harness's bounded 300-second override passed.
+
+Validation on macOS arm64 CMake Release with LibreDWG:
+
+- `Near-parallel endpoint-tangent parabola retains its worker cache across file lanes`: 166,230 assertions / 1 case.
+- `librecad_offset_worker_client_tests` target build: passed.
+- Bounded timeout override: `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000`.
+- `git diff --check`: passed.
+
+This closes forward/reversed persistence for these sampled profiles only.
+Other tangent directions, cusp/beyond-cusp behavior, arbitrary conditioning,
+Trim contact coverage, and visible GUI acceptance remain open.
 
