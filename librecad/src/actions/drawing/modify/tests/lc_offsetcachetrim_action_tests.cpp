@@ -5441,27 +5441,30 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
+    for (const double frame : {1e12, 1e13})
     for (const bool towardCentre : {false, true})
     for (const bool ellipseFirst : {false, true}) {
-        CAPTURE(towardCentre, ellipseFirst);
+        CAPTURE(frame, towardCentre, ellipseFirst);
         Drawing<true> f;
         constexpr double rotation = .67;
-        constexpr double offsetDistance = 2500;
-        const RS_Vector center{1e12, -2e12};
-        constexpr double zoom = .001;
+        const bool largestFrame = frame == 1e13;
+        const double sourceRadius = largestFrame ? 1e6 : 1e5;
+        const double offsetDistance = sourceRadius * .025;
+        const RS_Vector center{frame, -2 * frame};
+        const double zoom = largestFrame ? 5e-5 : .001;
         f.view.getViewPort()->setSize(640, 480);
         f.view.getViewPort()->setOffsetAndFactor(
             qRound(320.0 - center.x * zoom),
             qRound(240.0 - center.y * zoom), zoom);
 
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {20000, 0}, .25, 0, 0, false});
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {sourceRadius * .2, 0}, .25, 0, 0, false});
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
 
         auto* source = new RS_Ellipse(&f.graphic,
-            RS_EllipseData{center, {1e5 * std::cos(rotation), 1e5 * std::sin(rotation)},
+            RS_EllipseData{center, {sourceRadius * std::cos(rotation), sourceRadius * std::sin(rotation)},
                            .25, 0, 0, false});
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
@@ -5487,7 +5490,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
         const RS_Vector major{std::cos(rotation), std::sin(rotation)};
-        const RS_Vector target = center + major * (towardCentre ? 90000 : 120000);
+        const RS_Vector target = center + major * (towardCentre ? .9 : 1.2) * sourceRadius;
         double nativePickParameter = first;
         double nearestDistance = std::numeric_limits<double>::infinity();
         for (unsigned i = 0; i <= 8192; ++i) {
@@ -5499,9 +5502,10 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         }
         const RS_Vector nativePick = native->getPointAt(nativePickParameter);
         const RS_Vector minor{-major.y, major.x};
-        const RS_Vector cutterPick = center + minor * 25000;
+        const RS_Vector cutterPick = center + minor * sourceRadius * .4;
         auto* cutter = new RS_Line(&f.graphic,
-            RS_LineData{center - minor * 50000, center + minor * 50000});
+            RS_LineData{center - minor * sourceRadius * .5,
+                        center + minor * sourceRadius * .5});
         f.graphic.addEntity(cutter);
         const auto trimProbe = LC_OffsetCacheTrim::prepare(
             native->getData(), *cutter, {nativePick});
@@ -5513,6 +5517,8 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         const auto geometryBefore = RS_Spline::geometryFingerprint(native->getData());
         f.action->click(ellipseFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        RS_Entity* expectedLimit = ellipseFirst ? static_cast<RS_Entity*>(native) : cutter;
+        CHECK(f.action->retainedLimit() == expectedLimit);
         const auto undoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(ellipseFirst ? cutterPick : nativePick);
         f.action->waitForTrim();
@@ -5541,8 +5547,9 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         const std::array<RS2::FormatType, 5> formats{{
             RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
             RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
-        const auto sameRoundTripGeometry = [](const RS_Entity& expected,
-                                              const RS_Entity& actual) {
+        const double geometryTolerance = largestFrame ? .02 : 1e-3;
+        const auto sameRoundTripGeometry = [geometryTolerance](const RS_Entity& expected,
+                                                               const RS_Entity& actual) {
             if (expected.rtti() != actual.rtti()) return false;
             if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {
                 const auto* b = dynamic_cast<const RS_Spline*>(&actual);
@@ -5556,7 +5563,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
                     x.weights.size() != y.weights.size())
                     return false;
                 for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
-                    if (x.controlPoints[i].distanceTo(y.controlPoints[i]) > 1e-3)
+                    if (x.controlPoints[i].distanceTo(y.controlPoints[i]) > geometryTolerance)
                         return false;
                 for (std::size_t i = 0; i < x.knotslist.size(); ++i)
                     if (std::abs(x.knotslist[i] - y.knotslist[i]) > 1e-12)
@@ -5571,8 +5578,8 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
                 if (!b) return false;
                 const auto& x = a->getData();
                 const auto& y = b->getData();
-                return x.center.distanceTo(y.center) <= 1e-3 &&
-                       x.majorP.distanceTo(y.majorP) <= 1e-3 &&
+                return x.center.distanceTo(y.center) <= geometryTolerance &&
+                       x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
                        std::abs(x.ratio - y.ratio) <= 1e-12 &&
                        std::abs(x.angle1 - y.angle1) <= 1e-12 &&
                        std::abs(x.angle2 - y.angle2) <= 1e-12 &&
@@ -5583,10 +5590,10 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
                 if (!b) return false;
                 const auto& x = a->getData();
                 const auto& y = b->getData();
-                const bool same = x.startpoint.distanceTo(y.startpoint) <= 1e-3 &&
-                                  x.endpoint.distanceTo(y.endpoint) <= 1e-3;
-                const bool reversed = x.startpoint.distanceTo(y.endpoint) <= 1e-3 &&
-                                      x.endpoint.distanceTo(y.startpoint) <= 1e-3;
+                const bool same = x.startpoint.distanceTo(y.startpoint) <= geometryTolerance &&
+                                  x.endpoint.distanceTo(y.endpoint) <= geometryTolerance;
+                const bool reversed = x.startpoint.distanceTo(y.endpoint) <= geometryTolerance &&
+                                      x.endpoint.distanceTo(y.startpoint) <= geometryTolerance;
                 return same || reversed;
             }
             return trimGeometry(expected) == trimGeometry(actual);
