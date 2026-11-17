@@ -57268,3 +57268,17 @@ staged run passes 41,495 assertions and contains exactly 232 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 232 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other reflected origins, notch layouts,
 scales, visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1765. Combine Alternate Frame, `1.7r`, and `1e13` Origin (2026-11-17)
+
+The reflected profile at rotation `0.9`, vertical ratio `0.7`, and radius
+scale `1.7` passes at center `(1e13,-2e13)` with fixed offset `2500`. This
+combines three previously separate stress dimensions while retaining the full
+Trim Two action and five-format persistence matrix. It is one combined sample,
+not a bound for all scales, transforms, or world coordinates.
+
+The focused CMake Release matrix passes 42,864 assertions / 1 case; its ODA
+staged run passes 42,783 assertions and contains exactly 240 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 240 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other combined profiles, notch topologies,
+visible GUI interaction, and AutoCAD semantic acceptance remain open.
