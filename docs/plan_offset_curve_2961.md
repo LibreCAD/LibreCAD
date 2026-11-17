@@ -888,6 +888,17 @@ results, not general support for every polyline, corner layout, scale, or
 origin. The ODA conversion gate is open for the latest batches, as are visible
 packaged-app acceptance, broader source-family coverage, and AutoCAD acceptance.
 
+**High-origin source-family addendum (sections 1778-1784):** worker/action
+Trim Two and five-lane LibreCAD round trips now include typed line, arc,
+circle, ellipse, parabola, cubic spline, fit-point spline, and polyline
+profiles at `(1e13,-2e13)` for the recorded dimensions and orientations.
+Bounded hyperbola has a separate 80-combination source-action/persistence
+matrix at that origin; it does not claim high-origin Trim Two. The cases
+establish sampled frame/scale evidence for every current picker family, not
+arbitrary geometry coverage. ODA/AutoCAD and visible Properties interaction
+remain open; ODA conversion was blocked for the newest batches by the local
+converter launch failure recorded in section 1774.
+
 **Combined-frame diagnostic update (section 1394; superseded by section 1405):**
 the pre-fix strict arrangement reported `CycleAssembly/OpenBoundary` with a
 nearest kept endpoint gap of approximately `0.9959593` for the tested
