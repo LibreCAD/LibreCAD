@@ -57309,3 +57309,14 @@ boundary, not arbitrary self-intersection detection.
 The focused CMake Release source-topology case passes 17 assertions / 1 case.
 `git diff --check` passes. Other crossing angles, clearances, scales, and
 topologies remain open, as do visible GUI and AutoCAD semantic acceptance.
+
+## 1768. Rebuild the Recursive qmake6 Delivery Tree (2026-11-17)
+
+At PR head `939e14db5`, the recursive macOS arm64 qmake6 Release build in
+`/private/tmp/offset3193-qmake6-fresh` completes with `make -j6` and exit code
+0, including the application, offset worker, bundled libraries, and plugins.
+The shell profile reports a missing optional `/private/tmp/libdxfrw-cargo/env`;
+linking also warns that QtSvg and FreeType dependencies target macOS 27.0 while
+the build deployment target is 14.4. These warnings did not fail the build and
+remain packaging/deployment compatibility observations. This validates the
+application build, not a qmake test executable or visible GUI workflow.
