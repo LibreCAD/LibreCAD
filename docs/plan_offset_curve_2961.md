@@ -56381,3 +56381,31 @@ converted outputs are under `/private/tmp/PR3193-endpoint-tangent-oda/` and
 This is broad independent ODA structural conversion coverage for the exact
 endpoint-tangent matrix, not visual fidelity, AutoCAD acceptance, or proof of
 all editable-source families and variants.
+
+## 1718. Expand High-origin Tangent Layouts and ODA Coverage (2026-11-17)
+
+Test commit `e9c7d219d` adds six scale-`1e3` layouts at origin
+`(1e12,-2e12)` to worker/cache persistence and the Trim profile matrix:
+unequal-steep (217), oblique (218), shallow-bend (219), opposite-bend (220),
+mild backtracking-start (221), and backtracking-end (222). The analytic-normal
+kernel oracle already covered these directions in the corresponding
+high-origin frame added in section 1713.
+
+Validation on the exact macOS arm64 CMake Release tree:
+
+- Isolated Trim profiles 217-222 passed, respectively: 3,702; 3,709; 3,667;
+  3,621; 3,662; and 3,715 assertions (one case each).
+- Full worker/cache and five-format persistence case: 457,097 assertions / 1
+  case; `dwgread` was available for independent DWG parsing.
+- ODA converted all 1,172 retained R2000/R2018 DWGs to R2018 DXF. The
+  structured audit found 1,172 outputs, each with `$ACADVER=AC1032`, exactly
+  one `SPLINE`, and one `LC_OFFSET_CURVE` marker; zero mismatches.
+- CMake rebuilt `librecad_tests` and `librecad_offset_worker_client_tests`;
+  `git diff --check` passed.
+
+The complete Trim matrix was previously run through profile 215 (section
+1714); profiles 216-222 have focused isolated results, not a new complete
+0-222 matrix run. These rows qualify the listed tangent directions at this
+one origin/scale and their tested offset/cutter grids. Arbitrary high-origin
+conditioning, the complete 0-222 Trim matrix, visible-app use, and AutoCAD
+acceptance remain open.
