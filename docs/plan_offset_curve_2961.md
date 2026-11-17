@@ -57253,3 +57253,18 @@ staged run passes 39,961 assertions and contains exactly 224 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 224 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other mirrored frames, scales, origins,
 visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1764. Extend Reflected Trim Two to `1e13` Origin (2026-11-17)
+
+The reflected two-notch profile at rotation `0.37`, vertical ratio `1.0`, and
+radius scale `1.0` also passes at center `(1e13,-2e13)` with fixed offset
+`2500`. The test retains both signed offsets, operand orders, component-aware
+root expectations, undo/redo, and all five native-capable persistence lanes.
+This adds one larger-origin profile; it does not establish support for every
+coordinate magnitude or topology.
+
+The focused CMake Release matrix passes 41,557 assertions / 1 case; its ODA
+staged run passes 41,495 assertions and contains exactly 232 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 232 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other reflected origins, notch layouts,
+scales, visible GUI interaction, and AutoCAD semantic acceptance remain open.
