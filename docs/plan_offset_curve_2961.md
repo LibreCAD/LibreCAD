@@ -56125,3 +56125,20 @@ This qualifies only these cusp-boundary rows for the section 1704 tangent
 pair. Other end-tangent configurations, arbitrary beyond-cusp topology,
 visible packaged-app acceptance, and independent AutoCAD validation remain
 open.
+
+## 1706. Re-run ODA Typed-source DWG Conversion (2026-11-17)
+
+With ODA File Converter 27.1.0.0 running in the macOS desktop session, its
+command-line conversion completed successfully from SSH for the 18 committed
+typed-source DWGs in `oda_typed_source/dwg/`. All 18 produced R2018 DXFs with
+`$ACADVER=AC1032`; all committed fixture checksums pass. After normalizing
+line endings, each regenerated DXF matches its archived ODA DXF except for the
+converter-generated `$TDUPDATE` and `$TDUUPDATE` header values. This confirms
+the prior 18-file ODA round-trip receipt in section W563u and clears the
+pasteboard/XPC launch issue for this command in the current desktop session.
+The audit is limited to the same nine typed-source representatives at R2000
+and R2018. It adds no new family/variant, visible-app, or AutoCAD acceptance.
+
+Inputs are `librecad/src/lib/filters/tests/testdata/offsetcurve_independent/oda_typed_source/dwg/`;
+the retry outputs and SHA-256 manifest are under `/private/tmp/PR3193-typed-source-oda-retry/` and
+`/private/tmp/PR3193-typed-source-oda-retry.sha256` respectively.
