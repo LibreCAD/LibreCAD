@@ -57135,3 +57135,17 @@ staged run passes 30,106 assertions and contains exactly 176 R2000/R2018 DWGs.
 ODA File Converter 27.1.0.0 converted all 176 to ACAD2018 DXF with no `.err`
 files. `git diff --check` passes. Other scale ratios, rotations, notch layouts,
 origins, visible GUI interaction, and AutoCAD semantic acceptance remain open.
+
+## 1756. Extend Rotated Two-notch Scale to `1.7r` (2026-11-17)
+
+The same rotated `0.37`-radian two-notch profile now also uses radius scale
+`1.7` at origin `(1e12,-2e12)`, while retaining offset distance `2500`. Along
+with scales `0.6` and `1.0`, this provides three discrete source-size samples
+for the same six-root topology and full Trim Two lifecycle/file matrix; it does
+not establish behavior between or beyond those samples.
+
+The focused CMake Release matrix passes 31,483 assertions / 1 case; its ODA
+staged run passes 31,653 assertions and contains exactly 184 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 184 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. More scales, notch layouts, orientations,
+origins, visible GUI interaction, and AutoCAD semantic acceptance remain open.
