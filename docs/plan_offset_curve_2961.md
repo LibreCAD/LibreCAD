@@ -56765,6 +56765,18 @@ four DWGs, but it is not equivalent to visual or semantic AutoCAD validation.
 The all-family selector code path needs no further implementation; visible
 packaged-Properties acceptance remains open.
 
+Closed-loop Trim Two was further localized without retaining an unverified
+kernel change. The cache-side operation (`closed native spline` trimmed by
+`vertical line`) certifies two roots on both signed sides. The reverse
+line-cache operation against the same native spline refuses as
+`TangencyOrOverlap` during `RootExtraction`; the synchronous two-entity
+`trimStoredCache` consequently publishes no output and leaves both inputs
+untouched, and the GUI Trim Two preview remains empty. The next implementation
+slice must preserve and transfer the certified paired parameter for the line
+operand while validating transverse topology and the line-space geometric
+error bound. Do not bypass the tangent/overlap refusal or publish a partial
+one-sided result as Trim Two.
+
 ## 1739. Trim the Opposite Side of the High-origin L-polyline (2026-11-17)
 
 Extended the high-origin open L-polyline action case from section 1736 across
