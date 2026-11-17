@@ -8572,7 +8572,7 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][polyline][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
     for (const double frame : {1e12, 1e13})
-    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u})
+    for (const unsigned sourceFamily : {0u, 1u, 2u, 3u, 4u, 5u, 6u})
     for (const bool splineFirst : {false, true}) {
         CAPTURE(frame, sourceFamily, splineFirst);
         const bool largestFrame = frame == 1e13;
@@ -8596,13 +8596,13 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         RS_Entity* source = nullptr;
         const auto sourceKind = sourceFamily == 0 || sourceFamily == 3
             ? LC_OffsetSourceGeometry::Kind::Spline
-            : sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5
+            : sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6
                 ? LC_OffsetSourceGeometry::Kind::SplinePoints
                 : LC_OffsetSourceGeometry::Kind::Polyline;
-        if (sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5) {
-            const bool closed = sourceFamily == 4 || sourceFamily == 5;
+        if (sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6) {
+            const bool closed = sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6;
             LC_SplinePointsData sourceData{closed, false};
-            if (sourceFamily == 4) {
+            if (sourceFamily == 4 || sourceFamily == 6) {
                 sourceData.splinePoints = {
                     center + RS_Vector{-4 * scale, 0}, center + RS_Vector{-2 * scale, 3 * scale},
                     center + RS_Vector{2 * scale, 3 * scale}, center + RS_Vector{4 * scale, 0},
@@ -8617,6 +8617,13 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
                 sourceData.splinePoints = {
                     center, center + RS_Vector{.8 * scale, 1.2 * scale},
                     center + RS_Vector{2.2 * scale, .6 * scale}, center + RS_Vector{3 * scale, 0}};
+            }
+            if (sourceFamily == 6) {
+                for (auto& fitPoint : sourceData.splinePoints) {
+                    fitPoint -= center;
+                    fitPoint.rotate(.37);
+                    fitPoint += center;
+                }
             }
             sourceData.fitTolerance = 1e-3;
             source = new LC_SplinePoints(&f.graphic, sourceData);
@@ -8672,10 +8679,12 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         tangent /= tangent.magnitude();
         RS_Vector cutterDirection{-tangent.y, tangent.x};
         cutterDirection = cutterDirection / cutterDirection.magnitude() *
-            (sourceFamily == 4 || sourceFamily == 5 ? 8.0 * scale : scale);
+            (sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6
+                 ? 8.0 * scale : scale);
+        const RS_Vector cutterStart = intersection - cutterDirection;
+        const RS_Vector cutterEnd = intersection + cutterDirection;
         auto* cutter = new RS_Line(&f.graphic,
-            RS_LineData{intersection - cutterDirection,
-                        intersection + cutterDirection});
+            RS_LineData{cutterStart, cutterEnd});
         f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(first + (last - first) * .1);
         const RS_Vector cutterPick = intersection + cutterDirection * .65;
@@ -8751,13 +8760,13 @@ TEST_CASE("T Trim Two trims worker-created high-origin typed source families",
         CHECK_FALSE(cutter->isDeleted());
         REQUIRE(native->sourceDefinition());
         CHECK(native->sourceDefinition()->source.kind() == sourceKind);
-        if (sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5) {
+        if (sourceFamily == 1 || sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6) {
             const auto& restored = std::get<LC_SplinePointsData>(
                 native->sourceDefinition()->source.value);
-            const std::size_t expectedPointCount = sourceFamily == 5 ? 8
-                : sourceFamily == 4 ? 6 : 4;
+            const std::size_t expectedPointCount = sourceFamily == 4 || sourceFamily == 6 ? 6
+                : sourceFamily == 5 ? 8 : 4;
             CHECK(restored.splinePoints.size() == expectedPointCount);
-            CHECK(restored.closed == (sourceFamily == 4 || sourceFamily == 5));
+            CHECK(restored.closed == (sourceFamily == 4 || sourceFamily == 5 || sourceFamily == 6));
             CHECK(restored.fitTolerance == 1e-3);
         } else if (sourceFamily == 0) {
             CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
