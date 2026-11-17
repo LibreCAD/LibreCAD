@@ -8912,11 +8912,12 @@ TEST_CASE("steep asymmetric endpoint-tangent parabola offsets match analytic "
     double scale;
     RS_Vector origin;
   };
-  const std::array<Frame, 4> frames{{
+  const std::array<Frame, 5> frames{{
       {1e-3, {1e3, -2e3}},
       {1.0, {1e6, -2e6}},
       {1e3, {1e9, -2e9}},
       {1.0, {1e12, -2e12}},
+      {1e3, {1e12, -2e12}},
   }};
   const std::array<double, 5> parameters{{0.1, 0.25, 0.5, 0.75, 0.9}};
   struct TangentLayout {
