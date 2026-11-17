@@ -57090,3 +57090,18 @@ DWGs. ODA File Converter 27.1.0.0 converted all 152 to ACAD2018 DXF with no
 `.err` files. `git diff --check` passes. Other rotated concave layouts,
 orientations, origin/scale combinations, visible GUI interaction, and AutoCAD
 semantic acceptance remain open.
+
+## 1753. Vary Rotated Two-notch Angle and Vertical Ratio (2026-11-17)
+
+A second rotated two-notch row uses angle `0.9` radians and vertical ratio
+`0.7` at origin `(1e12,-2e12)`. It retains the six-root cutter arrangement and
+exercises both signed offsets, operand orders, preview/commit/undo/redo, and all
+five native-capable save/reopen lanes. This is one additional transformed
+profile, not a continuous angular or aspect-ratio sweep.
+
+The focused CMake Release matrix passes 27,301 assertions / 1 case; the ODA
+staged run passes 27,279 assertions and contains exactly 160 R2000/R2018 DWGs.
+ODA File Converter 27.1.0.0 converted all 160 to ACAD2018 DXF with no `.err`
+files. `git diff --check` passes. Other angles, ratios, multi-notch shapes,
+origin/scale combinations, visible GUI interaction, and AutoCAD semantic
+acceptance remain open.
