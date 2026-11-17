@@ -5462,12 +5462,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]") {
     REQUIRE(lc::test::ensureSettings());
+    const std::array<std::pair<double, double>, 4> profiles{{
+        {0.25, 0.67}, {0.45, 0.17}, {0.45, 1.2}, {0.75, 0.67}}};
     for (const double frame : {1e12, 1e13})
+    for (const auto& [axisRatio, rotation] : profiles)
     for (const bool towardCentre : {false, true})
     for (const bool ellipseFirst : {false, true}) {
-        CAPTURE(frame, towardCentre, ellipseFirst);
+        CAPTURE(frame, axisRatio, rotation, towardCentre, ellipseFirst);
         Drawing<true> f;
-        constexpr double rotation = .67;
         const bool largestFrame = frame == 1e13;
         const double sourceRadius = largestFrame ? 1e6 : 1e5;
         const double offsetDistance = sourceRadius * .025;
@@ -5486,7 +5488,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
         auto* source = new RS_Ellipse(&f.graphic,
             RS_EllipseData{center, {sourceRadius * std::cos(rotation), sourceRadius * std::sin(rotation)},
-                           .25, 0, 0, false});
+                           axisRatio, 0, 0, false});
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
         UpdateSourceProbe update(&f.context);
@@ -5523,10 +5525,11 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         }
         const RS_Vector nativePick = native->getPointAt(nativePickParameter);
         const RS_Vector minor{-major.y, major.x};
-        const RS_Vector cutterPick = center + minor * sourceRadius * .4;
+        const double cutterHalfLength = sourceRadius * axisRatio * 1.5;
+        const RS_Vector cutterPick = center + minor * sourceRadius * axisRatio * .8;
         auto* cutter = new RS_Line(&f.graphic,
-            RS_LineData{center - minor * sourceRadius * .5,
-                        center + minor * sourceRadius * .5});
+            RS_LineData{center - minor * cutterHalfLength,
+                        center + minor * cutterHalfLength});
         f.graphic.addEntity(cutter);
         const auto trimProbe = LC_OffsetCacheTrim::prepare(
             native->getData(), *cutter, {nativePick});
