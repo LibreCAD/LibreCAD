@@ -56248,3 +56248,28 @@ assertions (section 1709); the full 0-214 matrix was not rerun after adding
 this isolated profile. This qualifies the backtracking pair only at this
 specific origin/scale/profile and does not imply general high-origin Trim
 support.
+
+## 1712. Integrate Current `origin/master` (2026-11-17)
+
+Merge commit `479a58cf18c23a1b552440cbcc172933b174427c` integrates
+`origin/master` at `3ad089398976feb96ee01b8dee006c141edd8d3e` without rewriting
+the PR branch. The only textual conflict was `.github/workflows/build-all.yml`;
+resolution retains the branch's macOS Intel runner label while carrying the
+upstream PDF packaging steps. All other merge changes were accepted as
+upstream, with no unrelated local edits present before integration.
+
+Validation on the exact merged macOS arm64 CMake Release tree
+`/private/tmp/librecad-offset-2961-build-20261117`:
+
+- `librecad_tests`, worker-kernel, and worker-client targets built successfully.
+- Endpoint-tangent high-origin kernel oracle: 23,018 assertions / 1 case.
+- Ill-conditioned endpoint-tangent protocol rejection: 36 assertions / 1 case.
+- Worker-client persistence case `Near-parallel endpoint-tangent parabola
+  retains its worker cache across file lanes`: 446,802 assertions / 1 case.
+- Merge diff and staged-tree whitespace checks passed.
+
+The merge was pushed to the PR branch. GitHub checks for this head were still
+running when recorded; their final status is not inferred from local tests.
+This integration adds no new offset geometry profile and does not close the
+remaining visible-app, wider family/variant, or independent CAD acceptance
+gates.
