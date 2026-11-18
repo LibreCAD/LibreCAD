@@ -3325,19 +3325,25 @@ public:
     bool locate(const std::size_t branch, const double s, Place& place) const {
         for (size_t k = 0; k < m_segments.size(); ++k) {
             const LC_ParametricSegment& segment = m_segments[k];
-            if (segment.branch != branch || s < segment.t0 || s > segment.t1) {
+            const double width = segment.t1 - segment.t0;
+            const double parameterScale = std::max({std::abs(s), std::abs(segment.t0),
+                std::abs(segment.t1), std::abs(width), std::numeric_limits<double>::min()});
+            const double roundoff = 16.0 * std::numeric_limits<double>::epsilon() * parameterScale;
+            const double slack = std::min(roundoff, width * 0.25);
+            if (segment.branch != branch || s < segment.t0 - slack || s > segment.t1 + slack) {
                 continue;
             }
+            const double bounded = std::clamp(s, segment.t0, segment.t1);
             const Part& part = m_parts[k];
             place.arc = part.arc;
             if (part.arc) {
                 place.centre = part.centre;
-                place.own = angleAt(k, s);
+                place.own = angleAt(k, bounded);
                 place.sourceParameter = part.corner;
             }
             else {
                 place.centre = RS_Vector{false};
-                place.own = sourceAt(k, s);
+                place.own = sourceAt(k, bounded);
                 place.sourceParameter = place.own;
             }
             return true;

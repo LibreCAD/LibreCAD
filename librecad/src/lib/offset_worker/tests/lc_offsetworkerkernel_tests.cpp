@@ -12288,7 +12288,7 @@ TEST_CASE("ordinary-scale mixed-bulge outcomes are invariant to the polyline sea
     }
 }
 
-TEST_CASE("transformed mixed-bulge seam availability discrepancies are fail-closed",
+TEST_CASE("transformed mixed-bulge offsets resolve seam endpoint roundoff",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam][transform]") {
     struct Scenario {
         unsigned frame;
@@ -12313,6 +12313,7 @@ TEST_CASE("transformed mixed-bulge seam availability discrepancies are fail-clos
         const double orientation = reflected ? -1.0 : 1.0;
         const std::array<double, 4> bulges{{0.0, -0.5 * orientation,
                                             0.15 * orientation, 0.0}};
+        std::optional<std::size_t> expectedBranchCount;
         for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
             RS_Polyline source;
             for (std::size_t i = 0; i < vertices.size(); ++i) {
@@ -12333,25 +12334,19 @@ TEST_CASE("transformed mixed-bulge seam availability discrepancies are fail-clos
                     scenario.erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
                     scenario.distance),
                 *options, LC_CurveOffset::makeDirectSourceBudget());
-            const bool knownRefusal =
-                (scenario.frame == 1u && seam == 3u) ||
-                (scenario.frame == 3u && seam == 2u);
             CAPTURE(scenario.frame, scenario.distance, scenario.erosion, seam,
                     static_cast<int>(result.status),
                     static_cast<int>(result.intersectionDiagnostics.stage),
                     static_cast<int>(result.intersectionDiagnostics.failureSite),
                     static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure));
-            if (knownRefusal) {
-                CHECK(result.status == LC_CurveOffsetStatus::FitFailed);
-                CHECK(result.branches.empty());
-                CHECK(result.intersectionDiagnostics.stage ==
-                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
-                CHECK(result.intersectionDiagnostics.failureSite ==
-                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CandidateSplit);
-            } else {
-                CHECK(result.status == LC_CurveOffsetStatus::Ok);
-                CHECK_FALSE(result.branches.empty());
-            }
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            CHECK(result.intersectionDiagnostics.failureSite ==
+                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::None);
+            if (!expectedBranchCount) expectedBranchCount = result.branches.size();
+            CHECK(result.branches.size() == *expectedBranchCount);
+            CHECK(std::all_of(result.branches.begin(), result.branches.end(),
+                              [](const LC_OffsetBranch& branch) { return branch.closed; }));
         }
     }
 }
