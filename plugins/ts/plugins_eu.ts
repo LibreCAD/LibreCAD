@@ -180,7 +180,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LERROA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,14 +211,14 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ARKUA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
         <location filename="../list/list.cpp" line="135"/>
         <location filename="../list/list.cpp" line="145"/>
         <source>center point</source>
-        <translation>erdiguneko puntua</translation>
+        <translation>zentro-puntua</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="125"/>
@@ -250,7 +250,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>azalera</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -285,7 +285,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TESTUA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -295,7 +295,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>SARTU</translation>
+        <translation>TXERTAKETA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -370,7 +370,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>ITZALEZTADURA</translation>
+        <translation>MARRADURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -693,7 +693,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LERROA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,7 +724,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ARKUA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -752,7 +752,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>ZIRKULUA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -762,12 +762,12 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>azalera</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>POLILINEA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Erpinak</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -845,7 +845,7 @@ lehenengo oinarria, bigarren oinarria, lehenengo helburua, bigarren helburua.</t
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Etenak - Alde</translation>
+        <translation>Etenak - Desaktibatuta</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -951,12 +951,12 @@ erloju-orratzen kontra.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Marratzeko segmentu kopurua (dedendum)</translation>
+        <translation>Marrazteko segmentu kopurua (dedendum)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Marratzeko segmentu kopurua (addendum)</translation>
+        <translation>Marrazteko segmentu kopurua (addendum)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>

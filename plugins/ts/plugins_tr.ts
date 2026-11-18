@@ -33,12 +33,12 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>Align</translation>
+        <translation>Hizala</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Align ayarları...</translation>
+        <translation>Hizalama ayarları...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Align Ayarlar</translation>
+        <translation>Hizalama Ayarları</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
@@ -310,7 +310,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Scale</translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -350,7 +350,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Köşeler</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -787,7 +787,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Köşeler</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -830,7 +830,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Boyut</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -880,7 +880,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>Above</translation>
+        <translation>Üstte</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
@@ -890,7 +890,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Dışarıdan dış dışında</translation>
+        <translation>Dışarıda</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
@@ -1072,12 +1072,12 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation>Start X boş</translation>
+        <translation>Başlangıç X boş</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation>Start Y boş</translation>
+        <translation>Başlangıç Y boş</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
@@ -1105,7 +1105,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>Ölçek:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1216,7 +1216,7 @@ Denkleminizde değişken/parametre olarak t veya x kullanın.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Çiz</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1255,7 +1255,7 @@ Denkleminizde değişken/parametre olarak t veya x kullanın.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
-        <translation>Style:</translation>
+        <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>

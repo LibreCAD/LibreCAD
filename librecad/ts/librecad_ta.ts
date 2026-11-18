@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>வளைவு உருப்படியைத் தேர்ந்தெடு</translation>
+        <translation>வளைவு பொருளைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -434,7 +434,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -474,7 +474,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>பின்வாங்க முடியாது: இன்னும் போதுமான உருப்படிகள் வரையறுக்கப்படவில்லை.</translation>
+        <translation>பின்வாங்க முடியாது: இன்னும் போதுமான பொருள்கள் வரையறுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
@@ -492,12 +492,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>பெரிதாக்கம் &amp;பன்னிங்</translation>
+        <translation>பார்வையை &amp;நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>உருப்படியைத் தேர்ந்தெடு</translation>
+        <translation>பொருளைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
@@ -517,12 +517,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>குறுக்கீடு உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>குறுக்கிட்ட பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>குறுக்கீடு உருப்படிகளைத் தேர்வுநீக்கு</translation>
+        <translation>குறுக்கிட்ட பொருள்களைத் தேர்வுநீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
@@ -578,7 +578,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
         <source>Bisector</source>
-        <translation>இருபிரிப்பு</translation>
+        <translation>இருசமவெட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
@@ -593,12 +593,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>தொடு &amp;ஒருங்கிணை</translation>
+        <translation>தொடுகோடு &amp;லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
         <source>Orthogonal</source>
-        <translation>ஒருங்கிணை</translation>
+        <translation>லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="222"/>
@@ -690,27 +690,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;எலிப்ஸ் (அச்சு)</translation>
+        <translation>&amp;நீள்வட்டம் (அச்சு)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>எலிப்ஸ் &amp;வளைவு (அச்சு)</translation>
+        <translation>நீள்வட்ட &amp;வளைவு (அச்சு)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>எலிப்ஸ் &amp;குவிய புள்ளி</translation>
+        <translation>நீள்வட்டம் &amp;குவியப் புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>எலிப்ஸ் &amp;4 புள்ளி</translation>
+        <translation>நீள்வட்டம் &amp;4 புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>எலிப்ஸ் மையம் மற்றும் &amp;3 புள்ளிகள்</translation>
+        <translation>நீள்வட்ட மையம் மற்றும் &amp;3 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
@@ -780,7 +780,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;ஹாட்ச்</translation>
+        <translation>&amp;ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -825,7 +825,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;பண்புகள்</translation>
+        <translation>&amp;பண்புக்கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="716"/>
@@ -910,7 +910,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;உரையை எழுத்துக்களாக வெடி</translation>
+        <translation>&amp;உரையை எழுத்துக்களாகப் பிரி</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -925,7 +925,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;உருப்படி முதல் புள்ளி வரை தூரம்</translation>
+        <translation>&amp;பொருள் முதல் புள்ளி வரை தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
@@ -935,7 +935,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;தேர்ந்தெடுக்கப்பட்ட உருப்படிகளின் மொத்த நீளம்</translation>
+        <translation>&amp;தேர்ந்தெடுக்கப்பட்ட பொருள்களின் மொத்த நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
@@ -980,12 +980,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>உருப்படிக்குப் பின் கீழே</translation>
+        <translation>பொருளுக்குப் பின் கீழே</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>உருப்படிக்கு மேல் உயர்த்து</translation>
+        <translation>பொருளுக்கு மேல் உயர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -1110,12 +1110,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
-        <translation>பெரிதாக்கு &amp;உள்ளே</translation>
+        <translation>&amp;பெரிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
-        <translation>பெரிதாக்கு &amp;வெளியே</translation>
+        <translation>&amp;சிறிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
@@ -1428,7 +1428,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>Orthogonal From Line</source>
-        <translation>கோட்டிலிருந்து ஒருங்கிணை</translation>
+        <translation>கோட்டிலிருந்து லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="330"/>
@@ -1468,22 +1468,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;உருப்படியிலிருந்து பென்னைத் தேர்ந்தெடு</translation>
+        <translation>&amp;பொருளிலிருந்து பேனாவைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;உருப்படியிலிருந்து பென்னைத் தேர்ந்தெடு (தீர்க்கப்பட்டது)</translation>
+        <translation>&amp;பொருளிலிருந்து பேனாவைத் தேர்ந்தெடு (தீர்க்கப்பட்டது)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>உருப்படிக்கு பென்னைப் பயன்படுத்து</translation>
+        <translation>பொருளுக்கு பேனாவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>பென் நகலெடு</translation>
+        <translation>பேனா நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
@@ -1498,7 +1498,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>செயலில் உள்ள அடுக்கின் பென்னால் தற்போதைய பென்னை புதுப்பி</translation>
+        <translation>செயலில் உள்ள அடுக்கின் பேனாவால் தற்போதைய பேனாவை புதுப்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1527,7 +1527,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>பென்னைத் தேர்ந்தெடுக்க உருப்படியை குறிப்பிடு</translation>
+        <translation>பேனாவைத் தேர்ந்தெடுக்க பொருளை குறிப்பிடு</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>பென்னைப் பயன்படுத்த உருப்படியை குறிப்பிடு</translation>
+        <translation>பேனாவைப் பயன்படுத்த பொருளை குறிப்பிடு</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>பென்னைத் தேர்ந்தெடுக்க உருப்படியை குறிப்பிடு</translation>
+        <translation>பேனாவைத் தேர்ந்தெடுக்க பொருளை குறிப்பிடு</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1625,7 +1625,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>பென்:</translation>
+        <translation>பேனா:</translation>
     </message>
 </context>
 <context>
@@ -1744,7 +1744,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>பென்:</translation>
+        <translation>பேனா:</translation>
     </message>
 </context>
 <context>
@@ -1788,7 +1788,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>ஒரு கட்டுமான அடுக்கு எல்லையற்ற நேர்கோடுகளின் உருப்படிகளைக் கொண்டுள்ளது, வடிவியல் கட்டுமானத்திற்கு பயன்படுத்தப்படும்.
+        <translation>ஒரு கட்டுமான அடுக்கு எல்லையற்ற நேர்கோடுகளின் பொருள்களைக் கொண்டுள்ளது, வடிவியல் கட்டுமானத்திற்கு பயன்படுத்தப்படும்.
        கட்டுமான அடுக்கின் உள்ளடக்கங்கள் அச்சில் தோன்றக்கூடாது.</translation>
     </message>
     <message>
@@ -1826,7 +1826,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>இயல்புநிலை பென்</translation>
+        <translation>இயல்புநிலை பேனா</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
@@ -1954,7 +1954,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
         <source>Default Pens</source>
-        <translation>இயல்புநிலை பென்கள்</translation>
+        <translation>இயல்புநிலை பேனாக்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -2067,7 +2067,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>அடுக்கு பண்புகளை மாற்று / மறுபெயரிடு</translation>
+        <translation>அடுக்கு பண்புக்கூறுகளை மாற்று / மறுபெயரிடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2107,12 +2107,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;உருப்படிகளைத் தேர்ந்தெடு (துணை மரம்)</translation>
+        <translation>&amp;பொருள்களைத் தேர்ந்தெடு (துணை மரம்)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;அடுக்கு &amp;பண்புகளைத் திருத்து</translation>
+        <translation>&amp;அடுக்கு &amp;பண்புக்கூறுகளைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
@@ -2165,7 +2165,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;அடுக்கின் உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>&amp;அடுக்கின் பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
@@ -2200,7 +2200,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;அனைத்து அடுக்குகளையும் உருகச் செய்</translation>
+        <translation>&amp;அனைத்து அடுக்குகளையும் உறைவிலக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
@@ -2325,7 +2325,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="62"/>
         <source>Orthogonal</source>
-        <translation>ஒருங்கிணை</translation>
+        <translation>லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
@@ -2401,12 +2401,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
         <source>Attributes:</source>
-        <translation>பண்புகள்:</translation>
+        <translation>பண்புக்கூறுகள்:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>செயலில் பென்</translation>
+        <translation>செயலில் பேனா</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2567,7 +2567,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>பென் பாலெட் அமைப்புகள்</translation>
+        <translation>பேனா பாலெட் அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -2612,12 +2612,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>செயலில் பென் பின்னணி:</translation>
+        <translation>செயலில் பேனா பின்னணி:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>செயலில் பென்னுக்கு முழு அட்டவணை வரி தடிமலாக உள்ளது</translation>
+        <translation>செயலில் பேனாவுக்கு முழு அட்டவணை வரி தடிமலாக உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2632,7 +2632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>வகை உணர்வில்லாத பென் வடிகட்டல்</translation>
+        <translation>வகை உணர்வில்லாத பேனா வடிகட்டல்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -2667,7 +2667,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>பென் மூலம் எந்த உருப்படிகளும் தேர்ந்தெடுக்க முடியாவிட்டால் தகவல் செய்தியை காட்டு</translation>
+        <translation>பேனா மூலம் எந்த பொருள்களும் தேர்ந்தெடுக்க முடியாவிட்டால் தகவல் செய்தியை காட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>பண்பு பென் மூலம் உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>பண்புக்கூறு பேனா மூலம் பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>வரை பென் மூலம் உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>வரைதல் பேனா மூலம் பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>பென் பாலெட்</translation>
+        <translation>பேனா பாலெட்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>பென் பெயர்:</translation>
+        <translation>பேனா பெயர்:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -2735,22 +2735,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>உருப்படி வரை பென் மூலம் பென் எடிட்டரை நிரப்பு</translation>
+        <translation>பொருள் வரைதல் பேனா மூலம் பேனா எடிட்டரை நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>உருப்படி பண்புகள் மூலம் பென் எடிட்டரை நிரப்பு</translation>
+        <translation>பொருள் பண்புக்கூறுகள் மூலம் பேனா எடிட்டரை நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>வரை பென் மூலம் உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>வரைதல் பேனா மூலம் பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>பென் பண்புகள் மூலம் உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>பேனா பண்புக்கூறுகள் மூலம் பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2761,17 +2761,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>தேர்வுக்கு பென்னைப் பயன்படுத்து</translation>
+        <translation>தேர்வுக்கு பேனாவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>தற்போதைய பென் மூலம் எடிட்டர் பென்னை நிரப்பு</translation>
+        <translation>தற்போதைய பேனா மூலம் எடிட்டர் பேனாவை நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>எடிட்டர் பென்னை தற்போதைய பென்னாக பயன்படுத்து</translation>
+        <translation>எடிட்டர் பேனாவை தற்போதைய பேனாவாக பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -2781,12 +2781,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>செயலில் உள்ள அடுக்கின் பென் மூலம் தற்போதைய பென்னை புதுப்பி</translation>
+        <translation>செயலில் உள்ள அடுக்கின் பேனா மூலம் தற்போதைய பேனாவை புதுப்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>செயலில் உள்ள அடுக்கின் பென் மூலம் பென் எடிட்டரை நிரப்பு</translation>
+        <translation>செயலில் உள்ள அடுக்கின் பேனா மூலம் பேனா எடிட்டரை நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
@@ -2796,7 +2796,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>எடிட்டர் பென்னை செயலில் உள்ள அடுக்கு பென்னுக்கு பயன்படுத்து</translation>
+        <translation>எடிட்டர் பேனாவை செயலில் உள்ள அடுக்கு பேனாவுக்கு பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -2806,57 +2806,57 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட பென்னை நீக்கு</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பேனாவை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>பென்னை நீக்கு</translation>
+        <translation>பேனாவை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
-        <translation>பென் பட்டியல்</translation>
+        <translation>பேனா பட்டியல்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;தேர்வுக்கு பென்னைப் பயன்படுத்து</translation>
+        <translation>&amp;தேர்வுக்கு பேனாவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;தற்போதைய பென்னாக அமை</translation>
+        <translation>&amp;தற்போதைய பேனாவாக அமை</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;செயலில் உள்ள அடுக்குக்கு பென்னைப் பயன்படுத்து</translation>
+        <translation>&amp;செயலில் உள்ள அடுக்குக்கு பேனாவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;பண்பு பென் கொண்ட உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>&amp;பண்புக்கூறு பேனா கொண்ட பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;வரை பென் கொண்ட உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>&amp;வரைதல் பேனா கொண்ட பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;பென்னை திருத்து</translation>
+        <translation>&amp;பேனாவை திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;பென்னை நீக்கு</translation>
+        <translation>&amp;பேனாவை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;பென்களை நீக்கு</translation>
+        <translation>&amp;பேனாக்களை நீக்கு</translation>
     </message>
 </context>
 <context>
@@ -3378,7 +3378,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Ellipses</source>
-        <translation>எலிப்ஸ்கள்</translation>
+        <translation>நீள்வட்டங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
@@ -3596,7 +3596,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>&amp;Ellipse</source>
-        <translation>&amp;எலிப்ஸ்</translation>
+        <translation>&amp;நீள்வட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
@@ -3906,7 +3906,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="273"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="541"/>
         <source>Ellipse</source>
-        <translation>எலிப்ஸ்</translation>
+        <translation>நீள்வட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
@@ -4092,7 +4092,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1199"/>
         <source>&amp;Layout</source>
-        <translation>&amp;அமைப்பு</translation>
+        <translation>&amp;தளவமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1202"/>
@@ -4229,7 +4229,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
-        <translation>பென் பாலெட்</translation>
+        <translation>பேனா பாலெட்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
@@ -4301,7 +4301,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="79"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>பிளாக்கிற்குப் பெயர் வைக்க முடியவில்லை. &quot;%1&quot; என்ற பெயரில் ஏற்கனவே ஒரு பிளாக் உள்ளது.</translation>
+        <translation>தொகுதிக்குப் பெயர் வைக்க முடியவில்லை. &quot;%1&quot; என்ற பெயரில் ஏற்கனவே ஒரு தொகுதி உள்ளது.</translation>
     </message>
 </context>
 <context>
@@ -4309,48 +4309,49 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Rename the active block</source>
-        <translation>செயலில் உள்ள பிளாக்கிற்குப் பெயரை மாற்றவும்</translation>
+        <translation>செயலில் உள்ள தொகுதிக்குப் பெயரை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="208"/>
         <source>Edit the active block
 in a separate window</source>
-        <translation>தனி சாளரத்தில் செயலில் உள்ள பிளாக்கை திருத்தவும்</translation>
+        <translation>செயலில் உள்ள தொகுதியைத்
+தனி சாளரத்தில் திருத்தவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>செயலில் உள்ள பிளாக்கைச் செருகவும்</translation>
+        <translation>செயலில் உள்ள தொகுதியைச் செருகவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
         <source>Block Menu</source>
-        <translation>பிளாக் மெனு</translation>
+        <translation>தொகுதி மெனு</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>அனைத்து பிளாக்குகளையும் செயலற்றதாக்கு</translation>
+        <translation>அனைத்து தொகுதிகளையும் &amp;உறைவிலக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
-        <translation>அனைத்து பிளாக்குகளையும் உறையச் செய்</translation>
+        <translation>அனைத்து தொகுதிகளையும் &amp;உறைய வை</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="407"/>
         <source>&amp;Add Block</source>
-        <translation>பிளாக்கைச் சேர்</translation>
+        <translation>&amp;தொகுதியைச் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="403"/>
         <source>&amp;Remove Block</source>
-        <translation>பிளாக்கை நீக்கு</translation>
+        <translation>&amp;தொகுதியை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="411"/>
         <source>&amp;Edit Block</source>
-        <translation>பிளாக்கை திருத்து</translation>
+        <translation>&amp;தொகுதியை திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="401"/>
@@ -4702,7 +4703,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4750,7 +4751,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>பண்புகள்</translation>
+        <translation>பண்புக்கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
@@ -4761,13 +4762,13 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட INSERT-இன் அனைத்து துணை கூறுகளுக்கும் பண்புகளைப் பயன்படுத்துங்கள்.
-இது பிளாக்-இன் அனைத்து கூறுகளையும் மீண்டும் மீண்டும் மாற்றும்.</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட INSERT-இன் அனைத்து துணை பொருள்களுக்கும் பண்புக்கூறுகளைப் பயன்படுத்துங்கள்.
+இது தொகுதியின் அனைத்து பொருள்களையும் மீண்டும் மீண்டும் மாற்றும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
         <source>Apply attributes Block-deep</source>
-        <translation>பிளாக்-ஆழத்தில் பண்புகளைப் பயன்படுத்து</translation>
+        <translation>தொகுதி ஆழம் வரை பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
 </context>
 <context>
@@ -4902,7 +4903,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>ஹேட்ச் பண்புகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>ஹேட்ச் பண்புக்கூறுகளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -5480,47 +5481,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1087"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] ภาษาไทย</translation>
+        <translation>[0E00-0E7F] தாய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1092"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ภาษาລາວ</translation>
+        <translation>[0E80-0EFF] லாவோ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1097"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] ภาษาทิเบต</translation>
+        <translation>[0F00-0FFF] திபெத்தியம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] ภาษาเมียนมาร์</translation>
+        <translation>[1000-109F] மியான்மர்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1107"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] ภาษาஜார்ஜியன்</translation>
+        <translation>[10A0-10FF] ஜார்ஜியன்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1112"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] ฮங்குல் ஜாமோ</translation>
+        <translation>[1100-11FF] ஹங்குல் ஜாமோ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1117"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] ภาษาอีத்தியோப்பிக்</translation>
+        <translation>[1200-137F] எத்தியோப்பிக்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1122"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] ภาษาசெரோகி</translation>
+        <translation>[13A0-13FF] செரோக்கி</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1127"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] ภาษาแคนาดา</translation>
+        <translation>[1400-167F] ஒருங்கிணைந்த கனடிய பழங்குடி எழுத்துமுறை</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1132"/>
@@ -5953,7 +5954,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
         <source>Use current &amp;attributes</source>
-        <translation>தற்போதைய &amp;பண்புகளைப் பயன்படுத்து</translation>
+        <translation>தற்போதைய &amp;பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
@@ -5991,7 +5992,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="121"/>
         <source>Use current &amp;attributes</source>
-        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
+        <translation>&amp;தற்போதைய பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
@@ -6034,7 +6035,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
         <source>Use current &amp;attributes</source>
-        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
+        <translation>&amp;தற்போதைய பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
@@ -6352,7 +6353,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அடையாளத்தின் அளவு. இதை 0 ஆக அமைத்தால், அளவீட்டு அடையாளம் முடக்கப்படும். அளவீட்டு அடையாளம் இயக்கப்பட்டிருந்தால், அளவீட்டு அம்பு வரையப்படாது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;பரிமாண டிக் குறியின் அளவு. இதை 0 ஆக அமைத்தால், பரிமாண டிக் குறி முடக்கப்படும். பரிமாண டிக் குறி இயக்கப்பட்டிருந்தால், பரிமாண அம்பு வரையப்படாது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6439,12 +6440,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>அளவீட்டு கோட்டின் மீது நீளத்தை பெரிதாக்கு</translation>
+        <translation>பரிமாணக் கோட்டின் மீது நீளத்தை பெரிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அம்புக்குறியின் அளவு. &lt;a name=&quot;result_box&quot;/&gt; குறி அளவு &lt;a name=&quot;result_box&quot;/&gt; 0 ஆக இல்லாதபோது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;பரிமாண அம்புக்குறியின் அளவு. &lt;a name=&quot;result_box&quot;/&gt; குறி அளவு &lt;a name=&quot;result_box&quot;/&gt; 0 ஆக இல்லாதபோது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6455,7 +6456,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>அளவீட்டு கோடுகள், அம்புக்குறிகள் மற்றும் குறிகள்</translation>
+        <translation>பரிமாணக் கோடுகள், அம்புக்குறிகள் மற்றும் குறிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6475,7 +6476,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
         <source>Offset:</source>
-        <translation>இடைவெளி:</translation>
+        <translation>விலகல்:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
@@ -6495,7 +6496,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ஆரம்ப புள்ளியிலிருந்து இடைவெளி.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;தொடக்கப் புள்ளியிலிருந்து விலகல்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
@@ -6659,7 +6660,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>ஹாட்ச் வடிவங்கள்:</translation>
+        <translation>ஹேட்ச் வடிவங்கள்:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6829,7 +6830,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட கூறுகளை, அடுக்கு செயல்படுத்தும் போது, அடுக்கை மாற்றவும்</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களை, அடுக்கு செயல்படுத்தும் போது, அடுக்கை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -6839,12 +6840,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
         <source>restores program geometry/layout to original state</source>
-        <translation>நிரலின் வடிவியல்/அமைப்பு அதன் அசல் நிலைக்கு மீட்டமைக்கிறது</translation>
+        <translation>நிரலின் வடிவியல்/தளவமைப்பு அதன் அசல் நிலைக்கு மீட்டமைக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
         <source>Layout</source>
-        <translation>அமைப்பு</translation>
+        <translation>தளவமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
@@ -6924,7 +6925,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;இயக்கப்பட்டால், ஒரு அடுக்கை செயல்படுத்தும்போது, தேர்ந்தெடுக்கப்பட்ட அனைத்து கூறுகளும் அந்த புதிய அடுக்கிற்கு மாற்றப்படும். பல கூறுகளின் அடுக்கை மாற்ற: முதலில் தேவையான கூறுகளைத் தேர்ந்தெடுக்கவும்; அடுக்கு விட்ஜெட்டில் ஒரு அடுக்கை செயல்படுத்தவும். இது தேர்ந்தெடுக்கப்பட்ட அனைத்து கூறுகளும் புதிய அடுக்கிற்கு மாற்றப்படும்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;இயக்கப்பட்டால், ஒரு அடுக்கை செயல்படுத்தும்போது, தேர்ந்தெடுக்கப்பட்ட அனைத்து பொருள்களும் அந்த புதிய அடுக்கிற்கு மாற்றப்படும். பல பொருள்களின் அடுக்கை மாற்ற: முதலில் தேவையான பொருள்களைத் தேர்ந்தெடுக்கவும்; அடுக்கு விட்ஜெட்டில் ஒரு அடுக்கை செயல்படுத்தவும். இது தேர்ந்தெடுக்கப்பட்ட அனைத்து பொருள்களும் புதிய அடுக்கிற்கு மாற்றப்படும்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -7269,7 +7270,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
         <source>Use current &amp;attributes</source>
-        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
+        <translation>&amp;தற்போதைய பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
@@ -7322,7 +7323,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
         <source>Use current &amp;attributes</source>
-        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
+        <translation>&amp;தற்போதைய பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
@@ -7350,7 +7351,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
         <source>Use current &amp;attributes</source>
-        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
+        <translation>&amp;தற்போதைய பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
@@ -7676,7 +7677,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1018"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] சிரியா</translation>
+        <translation>[0700-074F] சிரியாக்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1023"/>
@@ -7731,12 +7732,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1073"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] சிங்கலம்</translation>
+        <translation>[0D80-0DFF] சிங்களம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1078"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] தை</translation>
+        <translation>[0E00-0E7F] தாய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1083"/>
@@ -7876,7 +7877,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1218"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] படங்களைக் கட்டுப்படுத்து</translation>
+        <translation>[2400-243F] கட்டுப்பாட்டு படங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1223"/>
@@ -8488,7 +8489,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>அடுக்கு பண்புகளை மாற்றியமை / மறுபெயரிடு</translation>
+        <translation>அடுக்கு பண்புக்கூறுகளை மாற்றியமை / மறுபெயரிடு</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
@@ -8523,7 +8524,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>அடுக்கு &amp;பண்புகளைத் திருத்து</translation>
+        <translation>அடுக்கு &amp;பண்புக்கூறுகளைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
@@ -8860,47 +8861,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>முனைகளுக்குச் சரியாகப் பொருத்து</translation>
+        <translation>முனைப் புள்ளிகளுக்கு ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>பொருளின் சம தூரப் புள்ளிகளுக்குச் சரியாகப் பொருத்து</translation>
+        <translation>பொருளின் சம தூரப் புள்ளிகளுக்கு ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>மையப் புள்ளிகளுக்குச் சரியாகப் பொருத்து</translation>
+        <translation>மையப் புள்ளிகளுக்கு ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>வெட்டுப் புள்ளிகளுக்கு தானாகவே சரியாகப் பொருத்து</translation>
+        <translation>வெட்டுப் புள்ளிகளுக்கு தானாகவே ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>உருவில் மிக அருகில் உள்ள புள்ளியில் பொருத்து</translation>
+        <translation>பொருளில் மிக அருகில் உள்ள புள்ளிக்கு ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>இறுதிப் புள்ளியிலிருந்து குறிப்பிட்ட தூரத்தில் உள்ள புள்ளியில் பொருத்து</translation>
+        <translation>இறுதிப் புள்ளியிலிருந்து குறிப்பிட்ட தூரத்தில் உள்ள புள்ளிக்கு ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>இடைவெட்டுகளில் கைமுறையாக பொருத்து</translation>
+        <translation>வெட்டுப் புள்ளிகளுக்கு கைமுறையாக ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>கட்டத்திற்கு பொருத்து</translation>
+        <translation>கட்டத்திற்கு ஸ்னாப் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8925,42 +8926,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>தடையற்ற பொருத்தம்</translation>
+        <translation>கட்டற்ற ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>கட்டத்திற்கு பொருத்து</translation>
+        <translation>கட்டத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>முனைகளில் பொருத்து</translation>
+        <translation>முனைப் புள்ளிகளில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>உருவில் பொருத்து</translation>
+        <translation>பொருளில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>மையத்தில் பொருத்து</translation>
+        <translation>மையத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>நடுவில் பொருத்து</translation>
+        <translation>நடுவில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>தூரத்தில் பொருத்து</translation>
+        <translation>தூரத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>வெட்டும் புள்ளியில் பொருத்து</translation>
+        <translation>வெட்டுப்புள்ளியில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9086,7 +9087,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;%1&quot; மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <translation>&quot;%1&quot; மற்றும் அதிலுள்ள அனைத்து பொருள்களும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
@@ -9104,7 +9105,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>அடுக்கு &quot;%1&quot; மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.
+        <translation>அடுக்கு &quot;%1&quot; மற்றும் அதில் உள்ள அனைத்து பொருள்களும் நீக்கப்படும்.
 இந்த செயலைத் திரும்பப் பெற முடியாது.</translation>
     </message>
     <message>
@@ -9126,7 +9127,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>பட்டியலிடப்பட்ட அடுக்குகள் மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <translation>பட்டியலிடப்பட்ட அடுக்குகள் மற்றும் அதில் உள்ள அனைத்து பொருள்களும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9156,7 +9157,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>பட்டியலிடப்பட்ட தொகுதிகள் மற்றும் அதில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <translation>பட்டியலிடப்பட்ட தொகுதிகள் மற்றும் அதில் உள்ள அனைத்து பொருள்களும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9263,7 +9264,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>பேனா, வண்ணத் தட்டிலிருந்து அகற்றப்படும், வரைதல் கூறுகள் பாதிக்கப்படாது.</translation>
+        <translation>பேனா, வண்ணத் தட்டிலிருந்து அகற்றப்படும், வரைதல் பொருள்கள் பாதிக்கப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9284,7 +9285,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>பேனாக்கள் வண்ணத் தட்டிலிருந்து நீக்கப்படும், வரைதல் கூறுகள் பாதிக்கப்படாது.</translation>
+        <translation>பேனாக்கள் வண்ணத் தட்டிலிருந்து நீக்கப்படும், வரைதல் பொருள்கள் பாதிக்கப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9294,29 +9295,31 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>கூறுகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>பொருள்களைத் தேர்ந்தெடுக்கவும் </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>காணக்கூடிய அடுக்குகளில் பொருத்தமான கூறுகள் எதுவும் இல்லை.</translation>
+        <translation>காணக்கூடிய அடுக்குகளில் பொருத்தமான பொருள்கள் எதுவும் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>இத்தகைய கூறுகள் உறைந்த அடுக்குகளில் உள்ளன.</translation>
+        <translation>இத்தகைய பொருள்கள் உறைந்த அடுக்குகளில் உள்ளன.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>இத்தகைய கூறுகள் பூட்டப்பட்ட அடுக்குகளில் உள்ளன.</translation>
+        <translation>இத்தகைய பொருள்கள் பூட்டப்பட்ட அடுக்குகளில் உள்ளன.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
-        <translation>வேறு பேனா பண்புகளைப் பயன்படுத்தவும்.</translation>
+        <translation>வேறு பேனா பண்புக்கூறுகளைப் பயன்படுத்தவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
@@ -9333,7 +9336,7 @@ Please specify a different value.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>எந்த உருப்படிகளும் இல்லாத அடுக்கு(கள்) காணப்பட்டது, ஆனால் அவை வடிகட்டப்பட்டு மறைக்கப்பட்டுள்ளன.
+        <translation>எந்த பொருள்களும் இல்லாத அடுக்கு(கள்) காணப்பட்டது, ஆனால் அவை வடிகட்டப்பட்டு மறைக்கப்பட்டுள்ளன.
 
 வடிகட்டி முகமூடியை நீக்கி மீண்டும் செய்யவும்.</translation>
     </message>
@@ -9346,7 +9349,7 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation>அடுக்கு மூலம்&quot; மதிப்பை மூல அடுக்குகளின் மதிப்புகளுடன் மாற்றவா?
 
-ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட கூறுகள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்மானிக்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
+ஆம் எனில் - &quot;அடுக்கு மூலம்&quot; பேனாக்களைக் கொண்ட பொருள்கள் புதிய அடுக்கில் முன்பு இருந்த அடுக்குகளைப் போலவே தோன்றும், மேலும் &quot;அடுக்கு மூலம்&quot; மதிப்பு தீர்மானிக்கப்பட்ட பேனாக்களால் மாற்றப்படும்.
 
 இல்லை எனில் - &quot;அடுக்கு மூலம்&quot; மதிப்புகள் அப்படியே இருக்கும், இதனால் இலக்கு அடுக்கின் பேனா, அத்தகைய கூறுகளுக்கான பேனாவை வரையறுக்கும்.</translation>
     </message>
@@ -9726,7 +9729,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg கோப்பில் உள்ள கூறுகளை படிப்பதில் பிழை</translation>
+        <translation>dwg கோப்பில் உள்ள பொருள்களை படிப்பதில் பிழை</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
@@ -11011,7 +11014,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12188,7 +12191,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>எப்படியிருந்தாலும், சில கூறுகள் அடையாளம் காணப்பட்டுள்ளன.</translation>
+        <translation>எப்படியிருந்தாலும், சில பொருள்கள் அடையாளம் காணப்பட்டுள்ளன.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12417,7 +12420,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/தனிப்பயன் நிறம்%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13013,7 +13016,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
         <source>PenTB</source>
-        <translation>பென் கருவிப்பட்டை</translation>
+        <translation>பேனா கருவிப்பட்டை</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
@@ -13370,12 +13373,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>அளவீட்டு கோட்டின் இருப்பிடத்தைக் குறிப்பிடவும்</translation>
+        <translation>பரிமாணக் கோட்டின் இருப்பிடத்தைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>அளவீட்டு உரையை உள்ளிடவும்:</translation>
+        <translation>பரிமாண உரையை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -13432,17 +13435,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>அளவீட்டு கோட்டின் இருப்பிடத்தை குறிப்பிடவும்</translation>
+        <translation>பரிமாணக் கோட்டின் இருப்பிடத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>அளவீட்டு உரையை உள்ளிடவும்:</translation>
+        <translation>பரிமாண உரையை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>அளவீட்டு கோட்டின் கோணத்தை உள்ளிடவும்:</translation>
+        <translation>பரிமாணக் கோட்டின் கோணத்தை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -13879,7 +13882,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>மற்ற வில் அல்லது வட்டத்தைக் குறிப்பிடவும்</translation>
+        <translation>மற்ற வளைவு அல்லது வட்டத்தைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
@@ -13921,17 +13924,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>முதல் கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
+        <translation>முதல் கோடு/வளைவு/வட்டத்தைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>இரண்டாவது கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
+        <translation>இரண்டாவது கோடு/வளைவு/வட்டத்தைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>மூன்றாவது கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
+        <translation>மூன்றாவது கோடு/வளைவு/வட்டத்தைக் குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -14146,7 +14149,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>தவறான ஹேட்ச் பகுதி. தேர்ந்தெடுக்கப்பட்ட கூறுகள் ஒன்று அல்லது அதற்கு மேற்பட்ட மூடிய கோடுகளை உருவாக்குகிறதா என்பதைச் சரிபார்க்கவும்.</translation>
+        <translation>தவறான ஹேட்ச் பகுதி. தேர்ந்தெடுக்கப்பட்ட பொருள்கள் ஒன்று அல்லது அதற்கு மேற்பட்ட மூடிய கோடுகளை உருவாக்குகிறதா என்பதைச் சரிபார்க்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
@@ -14250,7 +14253,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை, அல்லது ஏற்கனவே முடிக்கப்பட்டது.</translation>
+        <translation>கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை, அல்லது ஏற்கனவே முடிக்கப்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
@@ -14331,12 +14334,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
         <source>Enter bisector length:</source>
-        <translation>இருசமக் கோட்டின் நீளத்தை உள்ளிடவும்:</translation>
+        <translation>இருசமவெட்டியின் நீளத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="300"/>
         <source>Enter number of bisectors:</source>
-        <translation>இருசமக் கோடுகளின் எண்ணிக்கையை உள்ளிடவும்:</translation>
+        <translation>இருசமவெட்டிகளின் எண்ணிக்கையை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
@@ -14396,7 +14399,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>வட்டம், வில் அல்லது நீள்வட்டம் ஆகியவற்றைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வட்டம், வளைவு அல்லது நீள்வட்டம் ஆகியவற்றைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -14606,7 +14609,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>வட்டம், வில் அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வட்டம், வளைவு அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
@@ -14710,12 +14713,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
+        <translation>கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>செயலைத் திரும்பப் பெற முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
+        <translation>செயலைத் திரும்பப் பெற முடியவில்லை: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
@@ -14796,12 +14799,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
+        <translation>கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>செயல்தவிர் செய்ய முடியாது: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
+        <translation>செயல்தவிர் செய்ய முடியாது: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
     </message>
 </context>
 <context>
@@ -14982,7 +14985,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>உருப்படியைக் குறிப்பிடவும்</translation>
+        <translation>பொருளைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -15679,7 +15682,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>செயலைத் திரும்பப் பெற முடியாது: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
+        <translation>செயலைத் திரும்பப் பெற முடியாது: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
     </message>
 </context>
 <context>
@@ -15688,7 +15691,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>எந்தக் கூறும் கிடைக்கவில்லை.</translation>
+        <translation>எந்தப் பொருளும் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
@@ -16013,7 +16016,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>உரையை வெடிக்கச் செய்யத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>உரையைக் கூறுகளாகப் பிரிக்கத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16054,7 +16057,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>தொகுதியை வெடிக்கச் செய்யத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>தொகுதியைக் கூறுகளாகப் பிரிக்கத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16187,7 +16190,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>ஜூம் பேனிங்</translation>
+        <translation>பார்வையை நகர்த்துதல்</translation>
     </message>
 </context>
 <context>
@@ -16234,7 +16237,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="26"/>
         <source>Arc Options</source>
-        <translation>வில் விருப்பங்கள்</translation>
+        <translation>வளைவு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="77"/>
@@ -16252,17 +16255,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation>தொடுவான வளைவு விருப்பங்கள்</translation>
+        <translation>தொடுகோடு வளைவு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>தொடுவான வளைவின் ஆரம்</translation>
+        <translation>தொடுகோடு வளைவின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>தொடுவான வளைவின் மொத்த கோணம்</translation>
+        <translation>தொடுகோடு வளைவின் மொத்தக் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -16287,7 +16290,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>இரண்டு கூறுகளையும் சாய்வுக்கு ஏற்ப வெட்டுவதற்கு சரிபார்க்கவும்</translation>
+        <translation>இரண்டு பொருள்களையும் சாய்வுக்கு ஏற்ப வெட்டுவதற்கு சரிபார்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -16532,7 +16535,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation>வரி கோண விருப்பங்கள்</translation>
+        <translation>கோட்டுக் கோண விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
@@ -16542,7 +16545,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="90"/>
         <source>Line angle</source>
-        <translation>வரி கோணம்</translation>
+        <translation>கோட்டின் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
@@ -16552,7 +16555,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="134"/>
         <source>Length of line</source>
-        <translation>வரியின் நீளம்</translation>
+        <translation>கோட்டின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
@@ -16580,7 +16583,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation>வரி இருசமக்கூறு விருப்பங்கள்</translation>
+        <translation>கோட்டு இருசமவெட்டி விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -16590,7 +16593,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
         <source>Length of bisector</source>
-        <translation>பிளக்கும் கோட்டின் நீளம்</translation>
+        <translation>இருசமவெட்டியின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
@@ -16600,7 +16603,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
         <source>Number of bisectors to create</source>
-        <translation>உருவாக்க வேண்டிய பிளக்கும் கோடுகளின் எண்ணிக்கை</translation>
+        <translation>உருவாக்க வேண்டிய இருசமவெட்டிகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -16656,7 +16659,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>பல கோடு</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>

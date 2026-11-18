@@ -182,7 +182,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -267,7 +267,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>PORTA DE LA TRUCIÓCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>LÍNIA DE CONSTRUCCIÓ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -292,12 +292,12 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>CONTENTCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>CONTINGUT DE TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>INSEREIX</translation>
+        <translation>INSERCIÓ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -372,12 +372,12 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>RATLLAT</translation>
+        <translation>OMBREJAT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>Cota guia</translation>
+        <translation>Línia de referència</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -695,7 +695,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -877,7 +877,7 @@ En sentit antihorari.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Marques</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>

@@ -424,12 +424,12 @@ eller [%2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> blir ikke delt fordi den er del av en polyline. Utvid polyline først.</translation>
+        <translation> blir ikke delt fordi den er del av en polylinje. Del opp polylinjen først.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
@@ -474,7 +474,7 @@ eller [%2]</translation>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan ikke angre: ikke nok entiteter definert ennå.</translation>
+        <translation>Kan ikke angre: Det er ikke definert nok objekter ennå.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
@@ -492,7 +492,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;panning</translation>
+        <translation>Zoom &amp;panorering</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -730,7 +730,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
@@ -760,17 +760,17 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Opprett &amp;likeavstandede polylines</translation>
+        <translation>Opprett &amp;likeavstandede polylinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Opprett polyline fra eksisterende &amp;segmenter</translation>
+        <translation>Opprett polylinje fra eksisterende &amp;segmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;Flere tekst</translation>
+        <translation>&amp;Flerlinjet tekst</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
@@ -780,7 +780,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Skravering</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -940,7 +940,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Polygonal &amp;areal</translation>
+        <translation>Polygonalt &amp;areal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
@@ -1859,7 +1859,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>Dimensjonal</translation>
+        <translation>Dimensjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1964,7 +1964,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Dimensjonalt lag</translation>
+        <translation>Dimensjonslag</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2143,7 +2143,7 @@ eller [%2]</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Konverter til dimensjonalt lag</translation>
+        <translation>Konverter til dimensjonslag</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2287,7 +2287,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Markeringssnap:</translation>
+        <translation>Merkesnap:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>Snap-avstand:</translation>
+        <translation>Festeavstand:</translation>
     </message>
 </context>
 <context>
@@ -2379,7 +2379,7 @@ eller [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Utvid/trim</translation>
+        <translation>Forleng/trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2396,7 +2396,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>Opprett polyline</translation>
+        <translation>Opprett polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2525,7 +2525,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>Snap-avstand:</translation>
+        <translation>Festeavstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -2869,7 +2869,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -3027,7 +3027,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -3124,7 +3124,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -3277,7 +3277,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Markeringssnap:</translation>
+        <translation>Merkesnap:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3320,7 +3320,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3518,7 +3518,7 @@ eller [%2]</translation>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>Avstand fra original polyline</translation>
+        <translation>Avstand fra opprinnelig polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3701,7 +3701,7 @@ Sjekk tillatelsene.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polylinje</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3883,7 +3883,7 @@ Kontroller at den finnes og tillatelsene.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3912,7 +3912,7 @@ Kontroller at den finnes og tillatelsene.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
@@ -4242,12 +4242,12 @@ Kontroller at den finnes og tillatelsene.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spacebar: tilbakestiller snapping-modus til normal</translation>
+        <translation>Mellomromstasten: snap-modus tilbakestilt til normal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spacebar: setter midlertidig snapping-modus til fritt snapping</translation>
+        <translation>Mellomromstasten: snap-modus midlertidig satt til fritt snap</translation>
     </message>
 </context>
 <context>
@@ -4631,12 +4631,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Redigeringsprogram for dimensjonsmerkelapp</translation>
+        <translation>Redigering av dimensjonsetikett</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>Dimensjonsmerkelapp:</translation>
+        <translation>Dimensjonsetikett:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4761,8 +4761,8 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Bruk attributtene også på alle underliggende enheter i det valgte INSERT-objektet.
-Dette endrer rekursivt alle enheter i selve blokken.</translation>
+        <translation>Bruk attributtene også på alle underordnede objekter i det valgte INSERT-objektet.
+Dette endrer rekursivt alle objekter i selve blokken.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -5108,7 +5108,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5876,22 +5876,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1487"/>
         <source>[E0000-E007F] Tags</source>
-        <translation>[E0000-E007F] 1. [KONTEKST: QG_DlgMText] [E0000-E007F] Tagger</translation>
+        <translation>[E0000-E007F] Tagger</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] 2. [KONTEKST: QG_DlgMText] [F0000-FFFFD] Tilleggsområde for privat bruk A</translation>
+        <translation>[F0000-FFFFD] Tilleggsområde for privat bruk A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1497"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] 3. [KONTEKST: QG_DlgMText] [100000-10FFFD] Tilleggsområde for privat bruk B</translation>
+        <translation>[100000-10FFFD] Tilleggsområde for privat bruk B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
         <source>Diameter (⌀)</source>
-        <translation>4. [KONTEKST: QG_DlgText] Diameter (⌀)</translation>
+        <translation>Diameter (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
@@ -6182,7 +6182,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>Åpning i dimensjonslinjen:</translation>
+        <translation>Åpning i mållinjen:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -6435,7 +6435,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Lengde for å forlenge ut over dimensjonslinjen</translation>
+        <translation>Lengde for å forlenge ut over mållinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
@@ -6451,7 +6451,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimensjonslinjer, piler og merker</translation>
+        <translation>Mållinjer, piler og merker</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6481,7 +6481,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tekstjustering i forhold til dimensjonslinjen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tekstjustering i forhold til mållinjen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
@@ -6501,7 +6501,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Forlengelseslinjer</translation>
+        <translation>Målgrenselinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6557,7 +6557,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>fast lengde på forlengelseslinje</translation>
+        <translation>fast lengde på målgrenselinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6815,7 +6815,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Snappindikator:</translation>
+        <translation>Snap-indikator:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -6870,7 +6870,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Skjul markør når snapping er aktivert</translation>
+        <translation>Skjul markøren under snap</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6950,7 +6950,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Skjul den relative nullmarkøren</translation>
+        <translation>Skjul markøren for relativt &amp;nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -6970,7 +6970,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>Relativ nullpunktmarkørfarge:</translation>
+        <translation>Farge for markøren for &amp;relativt nullpunkt:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
@@ -7547,12 +7547,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="863"/>
         <source>Dollar ($)</source>
-        <translation>5. [KONTEKST: QG_DlgText] Dollar ($)</translation>
+        <translation>Dollar ($)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="868"/>
         <source>Copyright (©)</source>
-        <translation>6. [KONTEKST: QG_DlgText] Opphavsrett (©)</translation>
+        <translation>Opphavsrett (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="873"/>
@@ -7567,7 +7567,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="883"/>
         <source>Pi (π)</source>
-        <translation>7. [KONTEKST: QG_DlgText] Pi (π)</translation>
+        <translation>Pi (π)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="888"/>
@@ -7577,7 +7577,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="893"/>
         <source>Yen (¥)</source>
-        <translation>8. [KONTEKST: QG_DlgText] Yen (¥)</translation>
+        <translation>Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="898"/>
@@ -7707,12 +7707,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1053"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] 9. [KONTEKST: QG_DlgText] [0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1058"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] 10. [KONTEKST: QG_DlgText] [0C00-0C7F] Telugu</translation>
+        <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1063"/>
@@ -8455,7 +8455,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Et konstruksjonslag inneholder enheter av uendelige rette linjer som er ment for geometrisk konstruksjon.
+        <translation>Et konstruksjonslag inneholder objekter som består av uendelige rette linjer, ment for geometrisk konstruksjon.
 Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     </message>
     <message>
@@ -8875,7 +8875,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Fest punkt til midtpunkter</translation>
+        <translation>Fest punkt til senterpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
@@ -8925,42 +8925,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Fritt snapping</translation>
+        <translation>Fritt snap</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Snapp til rutenett</translation>
+        <translation>Fest til rutenett</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Snapp til endepunkter</translation>
+        <translation>Fest til endepunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Snapp til objekt</translation>
+        <translation>Fest til objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Snapp til sentrum</translation>
+        <translation>Fest til senter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Snapp til midtpunkt</translation>
+        <translation>Fest til midtpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Snapp avstand</translation>
+        <translation>Fest til avstand</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Snapp skjæringspunkt</translation>
+        <translation>Fest til skjæringspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -8995,7 +8995,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Eksklusiv snappmodus</translation>
+        <translation>Eksklusiv snap-modus</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9015,7 +9015,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Snapp midtpunkt manuelt</translation>
+        <translation>Fest til midtpunkt manuelt</translation>
     </message>
 </context>
 <context>
@@ -9237,7 +9237,8 @@ Vennligst oppgi et annet navn.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Et dimensjonalt lag kan bare legges til for et normalt, aktivt lag.</translation>
+        <translation>Et dimensjonslag kan bare legges til for et normalt, aktivt lag.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9519,7 +9520,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>Angström</translation>
+        <translation>Ångstrøm</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
@@ -9750,7 +9751,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Mønsterfylling mislyktes på grunn av en åpning på %1 mellom (%2, %3) og (%4, %5)</translation>
+        <translation>Skraveringen mislyktes på grunn av en åpning på %1 mellom (%2, %3) og (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -10984,7 +10985,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -12426,7 +12427,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Egendefinert farge%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13294,7 +13295,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Angi utgangspunkt for den første forlengelseslinjen</translation>
+        <translation>Angi utgangspunkt for den første målgrenselinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13304,7 +13305,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Angi utgangspunkt for den andre forlengelseslinjen</translation>
+        <translation>Angi utgangspunkt for den andre målgrenselinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13315,7 +13316,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Angi plasseringen for dimensjonslinjen</translation>
+        <translation>Angi plasseringen for mållinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
@@ -13379,7 +13380,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Angi plasseringen av dimensjonslinjen</translation>
+        <translation>Angi plasseringen av mållinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
@@ -13420,7 +13421,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Angi utgangspunkt for den første forlengelseslinjen</translation>
+        <translation>Angi utgangspunkt for den første målgrenselinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13430,7 +13431,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Angi utgangspunkt for den andre forlengelseslinjen</translation>
+        <translation>Angi utgangspunkt for den andre målgrenselinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13441,7 +13442,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Angi plasseringen for dimensjonslinjen</translation>
+        <translation>Angi plasseringen for mållinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
@@ -13451,7 +13452,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Skriv inn vinkelen for dimensjonslinjen:</translation>
+        <translation>Skriv inn vinkelen for mållinjen:</translation>
     </message>
 </context>
 <context>
@@ -13480,7 +13481,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Angi posisjonen til dimensjonslinjen eller skriv inn vinkel:</translation>
+        <translation>Angi posisjonen til mållinjen eller skriv inn vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
@@ -14724,7 +14725,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan ikke angre: Ikke nok elementer definert ennå.</translation>
+        <translation>Kan ikke angre: Det er ikke definert nok objekter ennå.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
@@ -14810,7 +14811,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan ikke angre: Ikke nok elementer definert ennå.</translation>
+        <translation>Kan ikke angre: Det er ikke definert nok objekter ennå.</translation>
     </message>
 </context>
 <context>
@@ -14991,7 +14992,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>Angi enhet</translation>
+        <translation>Angi objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -15089,7 +15090,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(De-)lås relativ nullpunkt</translation>
+        <translation>&amp;Lås/lås opp relativt nullpunkt</translation>
     </message>
 </context>
 <context>
@@ -15149,7 +15150,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>Klippepunktet er ikke på enheten.</translation>
+        <translation>Klippepunktet er ikke på objektet.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
@@ -15174,7 +15175,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Enheten må være en linje, bue, sirkel, ellipse eller interpoleringsspline.</translation>
+        <translation>Objektet må være en linje, bue, sirkel, ellipse eller interpoleringsspline.</translation>
     </message>
 </context>
 <context>
@@ -15207,17 +15208,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Overordnet enhet for den andre enheten er ikke en polylinje</translation>
+        <translation>Overordnet objekt for det andre objektet er ikke en polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Overordnet enhet for den første enheten er ikke en polylinje</translation>
+        <translation>Overordnet objekt for det første objektet er ikke en polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>Overordnet enhet for den andre enheten er null</translation>
+        <translation>Overordnet objekt for det andre objektet er null</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
@@ -15227,7 +15228,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>Overordnet enhet for den første enheten er null</translation>
+        <translation>Overordnet objekt for det første objektet er null</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
@@ -15604,7 +15605,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Enheten må være en polylinje.</translation>
+        <translation>Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15614,7 +15615,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>Punktet som legges til, er ikke på enheten.</translation>
+        <translation>Punktet som legges til, er ikke på objektet.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
@@ -15647,7 +15648,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Enheten må være en polylinje.</translation>
+        <translation>Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
@@ -15688,7 +15689,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan ikke angre: Det er ikke definert nok enheter ennå.</translation>
+        <translation>Kan ikke angre: Det er ikke definert nok objekter ennå.</translation>
     </message>
 </context>
 <context>
@@ -15702,7 +15703,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Enheten må være en polylinje.</translation>
+        <translation>Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15798,7 +15799,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Enheten må være en polylinje.</translation>
+        <translation>Objektet må være en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
@@ -15933,7 +15934,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Utskriftsforskyvning ignorerer relativ null. Ignorerer &apos;@&apos;</translation>
+        <translation>Utskriftsforskyvning ignorerer relativt nullpunkt. Ignorerer &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -16048,7 +16049,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>Ingen enhet er valgt!</translation>
+        <translation>Ingen objekter er valgt!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
@@ -16902,7 +16903,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17016,7 +17017,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Alternativer for snap-avstand</translation>
+        <translation>Alternativer for festeavstand</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17029,7 +17030,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Alternativer for avstand ved snapping</translation>
+        <translation>Alternativer for festeavstand</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17088,7 +17089,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Alternativer for trimmebeløp</translation>
+        <translation>Alternativer for trimmelengde</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>

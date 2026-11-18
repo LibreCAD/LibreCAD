@@ -424,7 +424,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> ვერ იყოფა, რადგან პოლილაინის ნაწილია. ჯერ გააფართოვეთ პოლილაინი.</translation>
+        <translation> ვერ იყოფა, რადგან პოლილინიის ნაწილია. ჯერ დაშალეთ პოლილინია.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -474,7 +474,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ვერ გაუქმდება: ჯერ საკმარისი ენტიტეტები არ არის განსაზღვრული.</translation>
+        <translation>ვერ გაუქმდება: ჯერ საკმარისი ობიექტები არ არის განსაზღვრული.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
@@ -492,12 +492,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>გადიდება &amp;პანორამირება</translation>
+        <translation>&amp;პანორამირება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>ენტიტეტის არჩევა</translation>
+        <translation>ობიექტის არჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
@@ -517,12 +517,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>გადაკვეთილი ენტიტეტების არჩევა</translation>
+        <translation>გადაკვეთილი ობიექტების არჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>გადაკვეთილი ენტიტეტების არჩევის გაუქმება</translation>
+        <translation>გადაკვეთილი ობიექტების არჩევის გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
@@ -649,7 +649,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>წრე &amp;ჩასმული</translation>
+        <translation>&amp;ჩახაზული წრე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
@@ -715,7 +715,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>ელიფსი &amp;ჩასმული</translation>
+        <translation>&amp;ჩახაზული ელიფსი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
@@ -760,12 +760,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>შექმნა &amp;თანაბარი მანძილის პოლილაინების</translation>
+        <translation>&amp;თანაბარი მანძილის პოლილინიების შექმნა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>შექმნა პოლილაინი არსებული &amp;სეგმენტებიდან</translation>
+        <translation>პოლილინიის შექმნა არსებული &amp;სეგმენტებიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
@@ -775,12 +775,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Text</source>
-        <translation>&amp;ტექტი</translation>
+        <translation>&amp;ტექსტი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;ჰაჩი</translation>
+        <translation>&amp;დაშტრიხვა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -880,12 +880,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>&amp;დაჭრა</translation>
+        <translation>&amp;მოჭრა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;გაგრძელება</translation>
+        <translation>&amp;დაგრძელება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="824"/>
@@ -905,12 +905,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;მომრგვალებული ნაზოლი</translation>
+        <translation>&amp;მომრგვალება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;ტექსტის აფეთქება ასოებად</translation>
+        <translation>&amp;ტექსტის დაშლა ასოებად</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -925,7 +925,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;მანძილი ენტიტეტიდან წერტილამდე</translation>
+        <translation>&amp;მანძილი ობიექტიდან წერტილამდე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
@@ -935,7 +935,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;არჩეული ენტიტეტების საერთო სიგრძე</translation>
+        <translation>&amp;არჩეული ობიექტების საერთო სიგრძე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
@@ -980,12 +980,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>ენტიტეტის შემდეგ დაწევა</translation>
+        <translation>ობიექტის შემდეგ დაწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>ენტიტეტის ზემოთ აწევა</translation>
+        <translation>ობიექტის ზემოთ აწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -1025,7 +1025,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>მშენებლობის ფენის გადართვა</translation>
+        <translation>დ&amp;ამხმარე ფენის გადართვა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
@@ -1080,7 +1080,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>მიმდინარე &amp;ნახატის პარამეტრები</translation>
+        <translation>მიმდინარე &amp;ნახაზის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1201"/>
@@ -1120,7 +1120,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
-        <translation>ავტომატური &amp;გადიდება</translation>
+        <translation>ავტომატური &amp;მასშტაბირება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
@@ -1468,22 +1468,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;ენტიტეტიდან პენის არჩევა</translation>
+        <translation>&amp;ობიექტიდან კალმის არჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;ენტიტეტიდან პენის არჩევა (გადაწყვეტილი)</translation>
+        <translation>&amp;ობიექტიდან კალმის არჩევა (გადაწყვეტილი)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>ენტიტეტზე პენის გადატანა</translation>
+        <translation>ობიექტზე კალმის გადატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>პენის კოპირება</translation>
+        <translation>კალმის კოპირება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
@@ -1498,7 +1498,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>მიმდინარე პენის განახლება აქტიური ფენის პენით</translation>
+        <translation>მიმდინარე კალმის განახლება აქტიური ფენის კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1527,7 +1527,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>მიუთითეთ ენტიტეტი პენის ასარჩევად</translation>
+        <translation>მიუთითეთ ობიექტი კალმის ასარჩევად</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>მიუთითეთ ენტიტეტი პენის გადასატანად</translation>
+        <translation>მიუთითეთ ობიექტი კალმის გადასატანად</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>მიუთითეთ ენტიტეტი პენის ასარჩევად</translation>
+        <translation>მიუთითეთ ობიექტი კალმის ასარჩევად</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1625,7 +1625,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>პენი:</translation>
+        <translation>კალამი:</translation>
     </message>
 </context>
 <context>
@@ -1717,7 +1717,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
         <source>Offset X:</source>
-        <translation>X ოფსეტი:</translation>
+        <translation>X წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1739,12 +1739,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
         <source>Offset Y:</source>
-        <translation>Y ოფსეტი:</translation>
+        <translation>Y წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>პენი:</translation>
+        <translation>კალამი:</translation>
     </message>
 </context>
 <context>
@@ -1788,13 +1788,13 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>მშენებლობის ფენა შეიცავს უსასრულო სწორი ხაზების ენტიტეტებს გეომეტრიული მშენებლობისთვის.
-       მშენებლობის ფენის შიგთავსი არ უნდა გამოჩნდეს ბეჭდვაში.</translation>
+        <translation>დამხმარე ფენის ობიექტები უსასრულო სწორი ხაზებია, რომლებიც გეომეტრიული აგებისთვისაა განკუთვნილი.
+       დამხმარე ფენის შიგთავსი ამონაბეჭდში არ უნდა გამოჩნდეს.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>მშენებლობის ფენა</translation>
+        <translation>დამხმარე ფენა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -1826,7 +1826,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>ნაგულისხმევი პენი</translation>
+        <translation>ნაგულისხმევი კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
@@ -1954,7 +1954,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
         <source>Default Pens</source>
-        <translation>ნაგულისხმევი პენები</translation>
+        <translation>ნაგულისხმევი კალმები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -2107,7 +2107,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;ენტიტეტების არჩევა (ქვე-ხე)</translation>
+        <translation>&amp;ობიექტების არჩევა (ქვე-ხე)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
@@ -2165,7 +2165,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>ფენის ენტიტეტების &amp;არჩევა</translation>
+        <translation>ფენის ობიექტების &amp;არჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
@@ -2243,7 +2243,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
         <source>Offset:</source>
-        <translation>ოფსეტი:</translation>
+        <translation>წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
@@ -2272,7 +2272,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>ხაზის სნაპი:</translation>
+        <translation>ხაზის მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2287,7 +2287,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>ნიშნის სნაპი:</translation>
+        <translation>ნიშნის მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>სნაპის მანძილი:</translation>
+        <translation>მიბმის მანძილი:</translation>
     </message>
 </context>
 <context>
@@ -2340,7 +2340,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
         <source>End offset:</source>
-        <translation>დასასრულის ოფსეტი:</translation>
+        <translation>ბოლოს წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
@@ -2365,7 +2365,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>სნაპი:</translation>
+        <translation>მიბმა:</translation>
     </message>
 </context>
 <context>
@@ -2396,7 +2396,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>პოლილაინის შექმნა</translation>
+        <translation>პოლილინიის შექმნა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2406,7 +2406,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>აქტიური პენი</translation>
+        <translation>აქტიური კალამი</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2520,12 +2520,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>გაპის სნაპი:</translation>
+        <translation>შუალედის მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>სნაპის მანძილი:</translation>
+        <translation>მიბმის მანძილი:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -2536,7 +2536,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
         <source>Gap Size:</source>
-        <translation>გაპის ზომა:</translation>
+        <translation>შუალედის ზომა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
@@ -2559,7 +2559,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>ხაზის სნაპი:</translation>
+        <translation>ხაზის მიბმა:</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2567,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>პენის პალიტრის პარამეტრები</translation>
+        <translation>კალმის პალიტრის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -2597,12 +2597,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>ხაზის სიგანის ხატულა</translation>
+        <translation>ხაზის სისქის ხატულა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>ხაზის სიგანის სახელი</translation>
+        <translation>ხაზის სისქის სახელი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2612,12 +2612,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>აქტიური პენის ფონი:</translation>
+        <translation>აქტიური კალმის ფონი:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>აქტიური პენის მთლიანი მწკრივი სქელია</translation>
+        <translation>აქტიური კალმის მთლიანი მწკრივი სქელია</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2632,7 +2632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>დიდი/პატარა ასოების გაუთვალისწინებელი პენების გაფილტვრა</translation>
+        <translation>დიდი/პატარა ასოების გაუთვალისწინებელი კალმების გაფილტვრა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -2667,7 +2667,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>ინფორმაციული შეტყობინების ჩვენება თუ პენით ენტიტეტი არ აირჩევა</translation>
+        <translation>ინფორმაციული შეტყობინების ჩვენება თუ კალმით ობიექტი არ აირჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>ენტიტეტების არჩევა ატრიბუტების პენით</translation>
+        <translation>ობიექტების არჩევა ატრიბუტების კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>ენტიტეტების არჩევა ხატვის პენით</translation>
+        <translation>ობიექტების არჩევა ხატვის კალმით</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>პენის პალიტრა</translation>
+        <translation>კალმის პალიტრა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>პენის სახელი:</translation>
+        <translation>კალმის სახელი:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -2735,22 +2735,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>პენის რედაქტორის შევსება ენტიტეტის ხატვის პენით</translation>
+        <translation>კალმის რედაქტორის შევსება ობიექტის ხატვის კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>პენის რედაქტორის შევსება ენტიტეტის ატრიბუტებით</translation>
+        <translation>კალმის რედაქტორის შევსება ობიექტის ატრიბუტებით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>ენტიტეტების არჩევა ხატვის პენით</translation>
+        <translation>ობიექტების არჩევა ხატვის კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>ენტიტეტების არჩევა პენის ატრიბუტებით</translation>
+        <translation>ობიექტების არჩევა კალმის ატრიბუტებით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2761,17 +2761,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>პენის გადატანა არჩევაზე</translation>
+        <translation>კალმის გადატანა არჩევაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>რედაქტორის პენის შევსება მიმდინარე პენით</translation>
+        <translation>რედაქტორის კალმის შევსება მიმდინარე კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>რედაქტორის პენის გადატანა მიმდინარე პენად</translation>
+        <translation>რედაქტორის კალმის გადატანა მიმდინარე კალმად</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -2781,12 +2781,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>მიმდინარე პენის განახლება აქტიური ფენის პენით</translation>
+        <translation>მიმდინარე კალმის განახლება აქტიური ფენის კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>პენის რედაქტორის შევსება აქტიური ფენის პენიდან</translation>
+        <translation>კალმის რედაქტორის შევსება აქტიური ფენის კალმიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
@@ -2796,7 +2796,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>რედაქტორის პენის გადატანა აქტიური ფენის პენზე</translation>
+        <translation>რედაქტორის კალმის გადატანა აქტიური ფენის კალამზე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -2806,57 +2806,57 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>არჩეული პენის წაშლა</translation>
+        <translation>არჩეული კალმის წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>პენის წაშლა</translation>
+        <translation>კალმის წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
-        <translation>პენების მენიუ</translation>
+        <translation>კალმების მენიუ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;პენის გადატანა არჩევაზე</translation>
+        <translation>&amp;კალმის გადატანა არჩევაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;მიმდინარე პენად დაყენება</translation>
+        <translation>&amp;მიმდინარე კალმად დაყენება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;პენის გადატანა აქტიურ ფენაზე</translation>
+        <translation>&amp;კალმის გადატანა აქტიურ ფენაზე</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;ენტიტეტების არჩევა ატრიბუტების პენით</translation>
+        <translation>&amp;ობიექტების არჩევა ატრიბუტების კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;ენტიტეტების არჩევა ხატვის პენით</translation>
+        <translation>&amp;ობიექტების არჩევა ხატვის კალმით</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;პენის რედაქტირება</translation>
+        <translation>&amp;კალმის რედაქტირება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;პენის წაშლა</translation>
+        <translation>&amp;კალმის წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;პენების წაშლა</translation>
+        <translation>&amp;კალმების წაშლა</translation>
     </message>
 </context>
 <context>
@@ -2869,7 +2869,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>პოლილაინი</translation>
+        <translation>პოლილინია</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -2904,7 +2904,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>სნაპი:</translation>
+        <translation>მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -2974,7 +2974,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>სნაპის გადაწევა</translation>
+        <translation>მიბმის გადაწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -3012,7 +3012,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>სნაპის გადაწევა</translation>
+        <translation>მიბმის გადაწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3027,12 +3027,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>პოლილაინი</translation>
+        <translation>პოლილინია</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>დასასრულის სნაპი:</translation>
+        <translation>დასასრულის მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>დაწყების სნაპი:</translation>
+        <translation>დაწყების მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3124,7 +3124,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>პოლილაინი</translation>
+        <translation>პოლილინია</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -3184,7 +3184,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>სნაპის გადაწევა</translation>
+        <translation>მიბმის გადაწევა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3257,7 +3257,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
         <source>Offset:</source>
-        <translation>ოფსეტი:</translation>
+        <translation>წანაცვლება:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
@@ -3277,7 +3277,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>ნიშნის სნაპი:</translation>
+        <translation>ნიშნის მიბმა:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3320,7 +3320,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>პოლილაინი</translation>
+        <translation>პოლილინია</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3378,7 +3378,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Ellipses</source>
-        <translation>ოვალები</translation>
+        <translation>ელიფსები</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
@@ -3518,7 +3518,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>მანძილი ორიგინალ პოლილაინიდან</translation>
+        <translation>მანძილი ორიგინალ პოლილინიიდან</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3596,7 +3596,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>&amp;Ellipse</source>
-        <translation>&amp;ოვალი</translation>
+        <translation>&amp;ელიფსი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
@@ -3662,12 +3662,12 @@ or [%2]</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1744"/>
         <source>New Drawing created.</source>
-        <translation>ახალი ნახატი შექმნილია.</translation>
+        <translation>ახალი ნახაზი შექმნილია.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="529"/>
         <source>Saved drawing: %1</source>
-        <translation>შენახული ნახატი: %1</translation>
+        <translation>შენახული ნახაზი: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2223"/>
@@ -3706,7 +3706,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
         <source>Auto-saved drawing</source>
-        <translation>ავტო-შენახული ნახატი</translation>
+        <translation>ავტო-შენახული ნახაზი</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2111"/>
@@ -3797,7 +3797,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>მონიშნულის მიმაგრება</translation>
+        <translation>მიბმის არჩევა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3831,7 +3831,7 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
-        <translation>ნახაზის რეჟიმი</translation>
+        <translation>მონახაზის რეჟიმი</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
@@ -3906,7 +3906,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="273"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="541"/>
         <source>Ellipse</source>
-        <translation>ოვალი</translation>
+        <translation>ელიფსი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
@@ -3918,7 +3918,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>განზომილება</translation>
+        <translation>ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -4148,7 +4148,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2470"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2482"/>
         <source>Cannot apply the drawing page settings.</source>
-        <translation>ნახატის გვერდის პარამეტრების გამოყენება შეუძლებელია.</translation>
+        <translation>ნახაზის გვერდის პარამეტრების გამოყენება შეუძლებელია.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
@@ -4229,7 +4229,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
-        <translation>პენის პალიტრა</translation>
+        <translation>კალმის პალიტრა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
@@ -4836,7 +4836,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>განზომილება</translation>
+        <translation>ზომა</translation>
     </message>
 </context>
 <context>
@@ -4844,7 +4844,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="26"/>
         <source>Ellipse</source>
-        <translation>ოვალი</translation>
+        <translation>ელიფსი</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="51"/>
@@ -5931,7 +5931,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>ანარეკლის მორგება</translation>
+        <translation>სარკული ასახვის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6289,7 +6289,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>მარცხენა კროსჰეირი იზომეტრიულ გრედზე</translation>
+        <translation>მარცხენა ჯვარედინი კურსორი იზომეტრიული ბადით</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
@@ -6301,7 +6301,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>ზედა კროსჰეირი იზომეტრიულ გრედზე</translation>
+        <translation>ზედა ჯვარედინი კურსორი იზომეტრიული ბადით</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
@@ -6325,22 +6325,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
         <source>Use orthogonal grid</source>
-        <translation>გამოიყენეთ ორთოგონალური გრიდი</translation>
+        <translation>გამოიყენეთ ორთოგონალური ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
         <source>Orthogonal Grid</source>
-        <translation>ორთოგონალური გრიდი</translation>
+        <translation>ორთოგონალური ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>გამოიყენეთ იზომეტრული გრიდი</translation>
+        <translation>გამოიყენეთ იზომეტრული ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>იზომეტრული გრიდი</translation>
+        <translation>იზომეტრული ბადე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -6657,7 +6657,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>შაბლონები:</translation>
+        <translation>დაშტრიხვის ნიმუშები:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6732,12 +6732,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;მეტა გრიდის ფერი:</translation>
+        <translation>&amp;მეტა ბადის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>&amp;ავტომატურად გრიდის მასშტაბი</translation>
+        <translation>ბადის &amp;ავტომატური მასშტაბირება</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6932,7 +6932,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>მინიმალური გრიდის ინტერვალი (პ&amp;x):</translation>
+        <translation>მინიმალური ბადის ინტერვალი (პ&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -7047,7 +7047,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ვადიურად ჩართეთ თავისუფალი დაჭერა, როდესაც ღილაკი Space დაჭერით და ბრძანების ფანჯარა აქტიურია&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;დროებით ჩართეთ/გამორთეთ თავისუფალი მიბმა, როდესაც დაჭერილია Space და ბრძანების ფანჯარა აქტიურია&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7065,7 +7065,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>გაიხსნას ხილადი კონსტრუქციული ფენები</translation>
+        <translation>ხილული დამხმარე ფენების გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -7080,12 +7080,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>ელიფსები / ელიფსის არკები</translation>
+        <translation>ელიფსები / ელიფსის რკალები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>ელიფსები და ელიფსის არკები დაახლოებით კუბური ბეზიეს ხაზებით</translation>
+        <translation>ელიფსებისა და ელიფსის რკალების აპროქსიმაცია კუბური ბეზიეს მრუდებით</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -7115,7 +7115,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
         <source>Length of the pattern, mm</source>
-        <translation>შაბლონის სიგრძე, მმ</translation>
+        <translation>ნიმუშის სიგრძე, მმ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
@@ -7139,7 +7139,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>2015 წლის მარტის მდგომარეობით, MakerCAM არასწორად აჩვენებს ელიფსებსა და ელიფსის არკებს, როდესაც ისინი შექმნილია &lt;ellipse&gt; ტეგის გამოყენებით, რომელსაც აქვს ბრუნვა &lt;transform&gt; ატრიბუტში, ან &lt;path&gt;-ის გამოყენებით ელიფსური არკის სეგმენტების სახით.</translation>
+        <translation>2015 წლის მარტის მდგომარეობით, MakerCAM არასწორად აჩვენებს ელიფსებსა და ელიფსის რკალებს,
+როდესაც ისინი შექმნილია &lt;ellipse&gt; ტეგის გამოყენებით, რომელსაც აქვს ბრუნვა
+&lt;transform&gt; ატრიბუტში, ან &lt;path&gt;-ის გამოყენებით ელიფსური რკალის სეგმენტების სახით.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
@@ -7163,7 +7165,8 @@ but ignored by other</source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>ზუმთან დაკავშირებული ხაზის ნიმუშის სიგრძე, ამიტომ საჭიროა ნაბადის გასაკეთებლად ნაგულისხმევი ნაბიჯის მნიშვნელობა</translation>
+        <translation>ხაზის ნიმუშის სიგრძე დამოკიდებულია მასშტაბზე,
+ამიტომ საჭიროა ნაბიჯის ნაგულისხმევი მნიშვნელობა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -8309,7 +8312,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/qg_filedialog.cpp" line="144"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>ნახატი</translation>
+        <translation>ნახაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="167"/>
@@ -8441,7 +8444,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>შრის პარამეტრები</translation>
+        <translation>ფენის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
@@ -8457,13 +8460,13 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>კონსტრუქციული შრის ობიექტები წარმოადგენს უსასრულო სწორ ხაზებს, რომლებიც განკუთვნილია გეომეტრიული კონსტრუქციისთვის.
-კონსტრუქციული შრის შინაარსი არ უნდა ჩანდეს ნაბეჭდ მასალაში.</translation>
+        <translation>დამხმარე ფენის ობიექტები უსასრულო სწორი ხაზებია, რომლებიც გეომეტრიული აგებისთვისაა განკუთვნილი.
+დამხმარე ფენის შიგთავსი ამონაბეჭდში არ უნდა გამოჩნდეს.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>კონსტრუქციული შრე</translation>
+        <translation>დამხმარე ფენა</translation>
     </message>
 </context>
 <context>
@@ -8486,7 +8489,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>შრის თვისებების შეცვლა / სახელი</translation>
+        <translation>ფენის თვისებების შეცვლა / სახელი</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
@@ -8516,22 +8519,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>შესატყვისი სახელების მქონე შრის ძიება</translation>
+        <translation>შესატყვისი სახელების მქონე ფენის ძიება</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>შრის თვისებების რედაქტირება</translation>
+        <translation>ფენის &amp;თვისებების რედაქტირება</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>შრის ხილვადობის ჩართვა/გამორთვა</translation>
+        <translation>ფენის &amp;ხილვადობის ჩართვა/გამორთვა</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>შრის დაბეჭდვის ჩართვა/გამორთვა</translation>
+        <translation>ფენის &amp;დაბეჭდვის ჩართვა/გამორთვა</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
@@ -8571,7 +8574,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>შრის ჩაკეტვის/გახსნის გადართვა</translation>
+        <translation>ფენის &amp;ჩაკეტვის/გახსნის გადართვა</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
@@ -8793,7 +8796,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>ხაზის სიგანე</translation>
+        <translation>ხაზის სისქე</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8858,22 +8861,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>მიბმა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>მიმაგრება ბოლო წერტილებზე</translation>
+        <translation>მიბმა ბოლო წერტილებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>მიმაგრება ობიექტის თანაბრ distanced წერტილებზე</translation>
+        <translation>მიბმა ობიექტის თანაბრად დაშორებულ წერტილებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>მიმაგრება ცენტრალურ წერტილებზე</translation>
+        <translation>მიბმა ცენტრალურ წერტილებზე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
@@ -9074,7 +9077,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>შრის დიალოგი</translation>
+        <translation>ფენის დიალოგი</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
@@ -9096,7 +9099,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>შრეს სახელწოდებით „%1“ უკვე არსებობს. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
+        <translation>ფენა სახელწოდებით „%1“ უკვე არსებობს. გთხოვთ, მიუთითოთ სხვა სახელი.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
@@ -9124,7 +9127,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>ჩამოთვლილი შრეები და მათზე არსებული ყველა ელემენტი წაიშლება.</translation>
+        <translation>ჩამოთვლილი ფენები და მათზე არსებული ყველა ელემენტი წაიშლება.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9141,7 +9144,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>წასაშლელი შრეები:</translation>
+        <translation>წასაშლელი ფენები:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -9164,7 +9167,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>შრეს არ შეიძლება იყოს ცარიელი სახელი.</translation>
+        <translation>ფენას არ შეიძლება იყოს ცარიელი სახელი.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
@@ -9233,7 +9236,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>განზომილებიანი ფენა შეიძლება დაემატოს მხოლოდ ჩვეულებრივ, აქტიურ ფენას.</translation>
+        <translation>ზომების ფენის დამატება შესაძლებელია მხოლოდ ჩვეულებრივი აქტიური ფენისთვის.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9361,7 +9365,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/qg_filedialog.cpp" line="335"/>
         <location filename="../src/ui/qg_filedialog.cpp" line="388"/>
         <source>Save Drawing As</source>
-        <translation>შენახვა როგორც ნახატი</translation>
+        <translation>ნახაზის შენახვა როგორც</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="389"/>
@@ -9700,47 +9704,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4154"/>
         <source>unsupported dwg version</source>
-        <translation>QObject: არ მხარია dwg-ის ვერსია</translation>
+        <translation>dwg-ის ვერსია არ არის მხარდაჭერილი</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4162"/>
         <source>error reading file header in dwg file</source>
-        <translation>QObject: შეცდომა dwg-ის ფაილის სათაურის წაკითხვისას</translation>
+        <translation>შეცდომა dwg ფაილის სათაურის წაკითხვისას</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4166"/>
         <source>error reading header vars in dwg file</source>
-        <translation>QObject: შეცდომა dwg-ის ფაილის სათაურის ცვლადების წაკითხვისას</translation>
+        <translation>შეცდომა dwg ფაილის სათაურის ცვლადების წაკითხვისას</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4170"/>
         <source>error reading classes in dwg file</source>
-        <translation>QObject: შეცდომა dwg-ის ფაილის კლასების წაკითხვისას</translation>
+        <translation>შეცდომა dwg ფაილის კლასების წაკითხვისას</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>QObject: შეცდომა dwg-ის ფაილის ოფსეტების წაკითხვისას</translation>
+        <translation>შეცდომა dwg ფაილში წანაცვლებების წაკითხვისას</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
         <source>error reading tables in dwg file</source>
-        <translation>QObject: შეცდომა dwg-ის ფაილის ცხრილების წაკითხვისას</translation>
+        <translation>შეცდომა dwg ფაილის ცხრილების წაკითხვისას</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>QObject: შეცდომა dwg-ის ფაილის ობიექტების წაკითხვისას</translation>
+        <translation>შეცდომა dwg ფაილის ობიექტების წაკითხვისას</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
         <source>dwg Drawing %1</source>
-        <translation>QObject: dwg ნახატი %1</translation>
+        <translation>dwg ნახაზი %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>QObject: ფაილი დისკზე შეცვლილია. გთხოვთ, შეინახეთ სხვა ფაილად, რათა თავიდან აიცილოთ მონაცემების დაკარგვა! შეცვლილი ფაილი: %1</translation>
+        <translation>ფაილი დისკზე შეცვლილია. მონაცემების დაკარგვის თავიდან ასაცილებლად შეინახეთ სხვა ფაილში! შეცვლილი ფაილი: %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
@@ -10052,7 +10056,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>წინახედი</translation>
+        <translation>წინამასშტაბი</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10953,7 +10957,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>ოვალი</translation>
+        <translation>ელიფსი</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
@@ -10964,7 +10968,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>განზომილება</translation>
+        <translation>ზომა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -11015,7 +11019,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>მიბმა</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11711,7 +11715,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>გადატრიალება</translation>
+        <translation>მიმართულებისშებრუნება</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -12198,7 +12202,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>თუ ახლა გახსნით ფაილს, ნახატი შეიძლება არ იყოს სრული ან გამოსაყენებელი.</translation>
+        <translation>თუ ახლა გახსნით ფაილს, ნახაზი შეიძლება არ იყოს სრული ან გამოსაყენებელი.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="112"/>
@@ -12304,7 +12308,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] [პარამეტრები] &lt;dxf_ფაილები&gt;</translation>
+        <translation> [პარამეტრები] &lt;dxf_ფაილები&gt;</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
@@ -12329,12 +12333,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>ავტომატურად მოარგეთ და ცენტრირეთ ნახატი გვერდზე.</translation>
+        <translation>ავტომატურად მოარგეთ და ცენტრირეთ ნახაზი გვერდზე.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>ავტომატურად განათავსეთ ნახატი გვერდის ცენტრში.</translation>
+        <translation>ავტომატურად განათავსეთ ნახაზი გვერდის ცენტრში.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
@@ -12411,7 +12415,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>ყველა შრის კომბინირება</translation>
+        <translation>ყველა ფენის კომბინირება</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
@@ -12421,7 +12425,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/მორგებული ფერი%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13260,7 +13264,8 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>ეს ბლოკი ვერ ჩასმულია.</translation>
+        <translation>
+ამ ბლოკის ჩასმა შეუძლებელია.</translation>
     </message>
 </context>
 <context>
@@ -14142,7 +14147,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>ელეფსის უნიკალურად განსაზღვრა შეუძლებელია</translation>
+        <translation>ელიფსის უნიკალურად განსაზღვრა შეუძლებელია</translation>
     </message>
 </context>
 <context>
@@ -14924,7 +14929,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>მიუთითეთ პოლიგონის პირველი წერტილი</translation>
+        <translation>მიუთითეთ მრავალკუთხედის პირველი წერტილი</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="166"/>
@@ -14935,7 +14940,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>მიუთითეთ პოლიგონის შემდეგი წერტილი</translation>
+        <translation>მიუთითეთ მრავალკუთხედის შემდეგი წერტილი</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
@@ -15507,7 +15512,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>აირჩიეთ პირველი გასაჭრილი ელემენტი</translation>
+        <translation>აირჩიეთ პირველი მოსაჭრელი ობიექტი</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15529,12 +15534,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>აირჩიეთ მეორე გასაჭრილი ელემენტი</translation>
+        <translation>აირჩიეთ მეორე მოსაჭრელი ობიექტი</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>აირჩიეთ გასაჭრილი ელემენტი</translation>
+        <translation>აირჩიეთ მოსაჭრელი ობიექტი</translation>
     </message>
 </context>
 <context>
@@ -15864,7 +15869,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>აირჩიეთ გასაჭრელი პოლილინია</translation>
+        <translation>მიუთითეთ მოსაჭრელი პოლილინია</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -15928,7 +15933,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>გამოსაჩივრების გადაადგილების კომპენსაცია არ ითვალისწინებს შედარებით ნულს. იგნორირებულია &apos;@&apos;</translation>
+        <translation>ამონაბეჭდის წანაცვლება არ ითვალისწინებს შედარებით ნულს. &apos;@&apos; იგნორირებულია</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -16180,7 +16185,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>დააწკაპეთ და გადაიტანეთ მასშტაბის შესაცვლელად</translation>
+        <translation>დააწკაპეთ და გადაათრიეთ ხედის პანორამირებისთვის</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16191,7 +16196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>მასშტაბის შეცვლა</translation>
+        <translation>პანორამირება</translation>
     </message>
 </context>
 <context>
@@ -16256,17 +16261,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation>კონტაქტური რკალის პარამეტრები</translation>
+        <translation>მხები რკალის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>კონტაქტური რკალის რადიუსი</translation>
+        <translation>მხები რკალის რადიუსი</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>კონტაქტური რკალის საერთო კუთხე</translation>
+        <translation>მხები რკალის სრული ცენტრალური კუთხე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -16296,7 +16301,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>მოჭრა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16327,12 +16332,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>წრის კონტაქტური 2 პარამეტრები</translation>
+        <translation>მხები წრის (2 ობიექტი) პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;გასასვლელი კონტაქტური წრის რადიუსი&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;დასახატი მხები წრის რადიუსი&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16342,7 +16347,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>კონტაქტური წრის რადიუსი</translation>
+        <translation>მხები წრის რადიუსი</translation>
     </message>
 </context>
 <context>
@@ -16350,7 +16355,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>ხაზოვანი განზომილების პარამეტრები</translation>
+        <translation>ხაზოვანი ზომის პარამეტრები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16561,7 +16566,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>მიმაგრების წერტილი:</translation>
+        <translation>მიბმის წერტილი:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16902,7 +16907,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
         <source>Tangential</source>
-        <translation>კონტაქტური</translation>
+        <translation>მხები</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
@@ -16970,7 +16975,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>ბეჭდვის მასშტაბის გამოყენება ხაზის სიგანეზე</translation>
+        <translation>ბეჭდვის მასშტაბის გამოყენება ხაზის სისქეზე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -16993,12 +16998,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>გაიხსენეთ, რომ ორივე კიდე მოჭრილი იყოს სწრუპის მიხედვით</translation>
+        <translation>მონიშნეთ, რომ ორივე კიდე მოიჭრას მომრგვალებამდე</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>მოჭრა</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17088,7 +17093,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>მანძილი. უარყოფითი მნიშვნელობები გამოიყენება შემცირებისთვის, დადებითი - გაზრდისთვის.</translation>
+        <translation>მანძილი. უარყოფითი მნიშვნელობები — მოსაჭრელად, დადებითი — გასაგრძელებლად.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17098,12 +17103,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>მანძილი. უარყოფითი მნიშვნელობები გამოიყენება შემცირებისთვის, დადებითი - გაზრდისთვის. უარყოფითი ნიშანი იგნორირებულია, როდესაც შემცირება ხდება საბოლოო საერთო სიგრძემდე.</translation>
+        <translation>მანძილი. უარყოფითი მნიშვნელობები — მოსაჭრელად, დადებითი — გასაგრძელებლად. საბოლოო საერთო სიგრძემდე მოჭრისას უარყოფითი ნიშანი იგნორირებულია.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>შემავალი სიგრძე გამოიყენება საერთო სიგრძედ შემცირების შემდეგ, სიგრძის ზრდის ნაცვლად.</translation>
+        <translation>შეყვანილი სიგრძე გამოიყენება როგორც საერთო სიგრძე მოჭრის შემდეგ, სიგრძის ნამატის ნაცვლად</translation>
     </message>
 </context>
 <context>

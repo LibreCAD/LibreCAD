@@ -59,7 +59,7 @@
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="113"/>
         <source>Points on Spline</source>
-        <translation>Eğri Çizgideki Noktalar</translation>
+        <translation>Spline Üzerindeki Noktalar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation>EğriÇizgiNoktaları</translation>
+        <translation>Spline Noktaları</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>Eğri Çizgi Noktaları</translation>
+        <translation>Spline Noktaları</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -103,7 +103,7 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation>Eğri Çizgideki Noktalar</translation>
+        <translation>Spline Üzerindeki Noktalar</translation>
     </message>
 </context>
 <context>
@@ -424,17 +424,17 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> çoklu çizginin parçası olduğu için bölünemez. Önce çoklu çizgiyi genişletin.</translation>
+        <translation> bir çoklu çizginin parçası olduğu için bölünmedi. Önce çoklu çizgiyi parçalayın.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Yay</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -720,12 +720,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Eğri çizgi</translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Noktalardan eğri çizgi</translation>
+        <translation>&amp;Noktalardan geçen spline</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
@@ -865,7 +865,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;Ayna</translation>
+        <translation>&amp;Aynala</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
@@ -895,7 +895,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Sündür</translation>
+        <translation>&amp;Esnet</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
@@ -980,12 +980,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>varlıktan sonra daha düşük</translation>
+        <translation>varlığın altına indir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>varlık üzerine yükselt</translation>
+        <translation>varlığın üstüne çıkar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -1105,7 +1105,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Invert Selection</source>
-        <translation>Diğerlerini Seç</translation>
+        <translation>Seçimi Tersine Çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
@@ -1237,7 +1237,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,7 +1247,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Üst</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
@@ -1277,12 +1277,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
-        <translation>İki &amp;Budama</translation>
+        <translation>İki Varlığı &amp;Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>&amp;Paraleli</translation>
+        <translation>&amp;Ötele</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1353,7 +1353,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>CA&amp;M /plain SVG olarak dışa aktar...</translation>
+        <translation>CA&amp;M/düz SVG olarak dışa aktar...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1266"/>
@@ -1408,7 +1408,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>Yıldız</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -1483,7 +1483,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>Kalem kopyala</translation>
+        <translation>Kalemi Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
@@ -1663,7 +1663,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
@@ -1717,7 +1717,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
         <source>Offset X:</source>
-        <translation>X Ofset:</translation>
+        <translation>X Ötelemesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1739,7 +1739,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
         <source>Offset Y:</source>
-        <translation>Y Ofset:</translation>
+        <translation>Y Ötelemesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
@@ -1777,7 +1777,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>Boyutlar</translation>
+        <translation>Ölçüler</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1788,8 +1788,8 @@ veya [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Yapı katmanı, geometrik inşaat için kullanılan sonsuz düz çizgi varlıkları içerir.
-       Yapı katmanının içeriği baskıda görünmemelidir.</translation>
+        <translation>Bir Yapı Katmanı, geometrik yapı için kullanılması amaçlanan sonsuz düz çizgilerden oluşan varlıklara sahiptir.
+       Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
@@ -1859,7 +1859,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>Boyutsal</translation>
+        <translation>Ölçü</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1964,7 +1964,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Boyutsal Katman</translation>
+        <translation>Ölçü Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2057,7 +2057,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Boyutlar katmanı ekle</translation>
+        <translation>Ölçü katmanı ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2122,7 +2122,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Boyutlar Alt Katmanı Ekle</translation>
+        <translation>Ö&amp;lçü Alt Katmanı Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2143,7 +2143,7 @@ veya [%2]</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Boyutsal Katmana Dönüştür</translation>
+        <translation>Ölçü Katmanına Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2243,13 +2243,13 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
         <source>Offset:</source>
-        <translation>Ofset:</translation>
+        <translation>Öteleme:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Serbest</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2340,7 +2340,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
         <source>End offset:</source>
-        <translation>Bitiş ofseti:</translation>
+        <translation>Bitiş ötelemesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
@@ -2531,7 +2531,7 @@ veya [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Serbest</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2919,7 +2919,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Üst</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -3257,7 +3257,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
         <source>Offset:</source>
-        <translation>Ofset:</translation>
+        <translation>Öteleme:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
@@ -3393,7 +3393,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
-        <translation>Boyutlar</translation>
+        <translation>Ölçüler</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
@@ -3571,7 +3571,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="719"/>
@@ -3581,7 +3581,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
@@ -3591,7 +3591,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="799"/>
@@ -3626,7 +3626,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Kalem</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3888,7 +3888,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3935,7 +3935,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Bilgi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -3955,7 +3955,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
-        <translation>Beleşenleri sabitle</translation>
+        <translation>Panelleri sabitle</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
@@ -4005,7 +4005,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4117,12 +4117,12 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
-        <translation>East</translation>
+        <translation>Doğu</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
-        <translation>West</translation>
+        <translation>Batı</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
@@ -4703,7 +4703,7 @@ pencerede düzenle</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Yay</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -5113,7 +5113,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5256,12 +5256,12 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Kes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -5716,12 +5716,12 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1322"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] 1. [CONTEXT: QG_DlgMText] [30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1327"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] 2. [CONTEXT: QG_DlgMText] [3100-312F] Bopomofo</translation>
+        <translation>[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1332"/>
@@ -5731,7 +5731,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1337"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] 3. [CONTEXT: QG_DlgMText] [3190-319F] Kanbun</translation>
+        <translation>[3190-319F] Kanbun</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1342"/>
@@ -5851,7 +5851,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1457"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] 4. [CONTEXT: QG_DlgMText] [10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] Deseret</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1462"/>
@@ -5934,7 +5934,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>Yansılama Seçenekleri</translation>
+        <translation>Aynalama Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6282,7 +6282,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Eğri çizgi parça başına çizgi bölüntülerinin sayısı:</translation>
+        <translation>Spline parçası başına çizgi segmenti sayısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6299,7 +6299,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6311,7 +6311,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Üst</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6567,7 +6567,7 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Eğri çizgiler</translation>
+        <translation>&amp;Spline&apos;lar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -7417,7 +7417,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Eğriçizgi</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -7445,7 +7445,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -7525,12 +7525,12 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Kes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7585,7 +7585,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="883"/>
         <source>Pi (π)</source>
-        <translation>5. [CONTEXT: QG_DlgText] Pi (π)</translation>
+        <translation>Pi (π)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="888"/>
@@ -7595,7 +7595,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="893"/>
         <source>Yen (¥)</source>
-        <translation>6. [CONTEXT: QG_DlgText] Yen (¥)</translation>
+        <translation>Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="898"/>
@@ -7695,12 +7695,12 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1023"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] 7. [CONTEXT: QG_DlgText] [0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] Thaana</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1028"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] 8. [CONTEXT: QG_DlgText] [0900-097F] Devanagari</translation>
+        <translation>[0900-097F] Devanagari</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1033"/>
@@ -7710,12 +7710,12 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1038"/>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation>[0A00-0A7F] 9. [CONTEXT: QG_DlgText] [0A00-0A7F] Gurmukhi</translation>
+        <translation>[0A00-0A7F] Gurmukhi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1043"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] 10. [CONTEXT: QG_DlgText] [0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1048"/>
@@ -8195,7 +8195,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
         <source>Baseline Left</source>
-        <translation>Baz çizgi Sol</translation>
+        <translation>Taban Çizgisi Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="568"/>
@@ -8207,17 +8207,17 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="623"/>
         <source>Baseline Right</source>
-        <translation>Baz çizgi Sağ</translation>
+        <translation>Taban Çizgisi Sağ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="646"/>
         <source>Baseline Center</source>
-        <translation>Baz çizgi Orta</translation>
+        <translation>Taban Çizgisi Orta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>Sığdırma</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8782,7 +8782,7 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8881,7 +8881,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Yakalama</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8921,7 +8921,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Izgarayı yakala</translation>
+        <translation>Izgaraya yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8951,7 +8951,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Izgarayı yakala</translation>
+        <translation>Izgaraya Yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
@@ -8986,12 +8986,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
         <source>Restrict Horizontal</source>
-        <translation>Yataya Kısıtlı</translation>
+        <translation>Yatay Kısıtla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="108"/>
         <source>Restrict Vertical</source>
-        <translation>Dikeye Kısıtlı</translation>
+        <translation>Dikey Kısıtla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
@@ -9001,7 +9001,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
         <source>Restrict Nothing</source>
-        <translation>Hiçbir şeyle kısıtlı değil</translation>
+        <translation>Kısıtlama Yok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
@@ -9045,7 +9045,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Kalem</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9253,7 +9253,8 @@ Lütfen farklı bir ad belirtin.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Boyutsal katman yalnızca normal, etkin katmana eklenebilir.</translation>
+        <translation>Ölçü katmanı yalnızca normal bir etkin katman için eklenebilir.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -10967,7 +10968,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
@@ -10978,7 +10979,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -10988,7 +10989,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Bilgi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -10998,7 +10999,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11034,7 +11035,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Yakalama</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11044,7 +11045,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -12168,7 +12169,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>1. [CONTEXT: QObject] arch e</translation>
+        <translation>arch e</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
@@ -12338,7 +12339,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
         <source> -o some.pdf *.dxf</source>
-        <translation>2. [CONTEXT: QObject] -o some.pdf *.dxf</translation>
+        <translation> -o some.pdf *.dxf</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
@@ -12440,7 +12441,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13026,12 +13027,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: desen bulunamadı. Lütfen uygulama tercihlerinde desen yolunu ayarlayın.</translation>
+        <translation>Tarama: desen bulunamadı. Lütfen uygulama tercihlerinde desen yolunu ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: desen yüklemesi başarısız oldu: %1</translation>
+        <translation>Tarama: desen yüklenemedi: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -15190,7 +15191,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Varlık bir çizgi, yay, çember, elips veya interpolasyon eğri çizgisi olmalıdır.</translation>
+        <translation>Varlık bir çizgi, yay, çember, elips veya enterpolasyon spline&apos;ı olmalıdır.</translation>
     </message>
 </context>
 <context>
@@ -15297,7 +15298,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Yansılama ekseninin ikinci noktasını belirtin</translation>
+        <translation>Aynalama çizgisinin ikinci noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -16317,7 +16318,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16918,7 +16919,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17019,7 +17020,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17063,7 +17064,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>Eğri Çizgi Seçenekleri</translation>
+        <translation>Spline Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>

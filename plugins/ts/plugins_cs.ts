@@ -153,7 +153,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Druh čáry</translation>
+        <translation>Typ čáry</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -180,7 +180,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ÚSEČKA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +211,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>OBLOUK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -280,7 +280,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>VTEXT</translation>
+        <translation>VÍCEŘÁDKOVÝ TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
@@ -290,12 +290,12 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>TEXTRESTT</translation>
+        <translation>OBSAH TEXTU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>VLOŽENÉ</translation>
+        <translation>REFERENCE BLOKU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -360,17 +360,17 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SPLAJNA</translation>
+        <translation>SPLAJN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>BODY SPLAJNY</translation>
+        <translation>SPLAJN PŘES BODY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>ŠRAFA</translation>
+        <translation>ŠRAFY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -385,7 +385,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>PŘÍMÁ KÓTA</translation>
+        <translation>LINEÁRNÍ KÓTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
@@ -638,7 +638,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Vyberte čáru, kruh nebo oblouk a stiskněte Enter</translation>
+        <translation>Vyberte čáru, kružnici nebo oblouk a stiskněte Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -668,7 +668,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -693,7 +693,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ÚSEČKA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,7 +724,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>OBLOUK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -752,7 +752,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>KRUŽNICE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,7 +767,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>KŘIVKA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -797,7 +797,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>Musí být linie, kružnice nebo oblouk</translation>
+        <translation>Musí to být čára, kružnice nebo oblouk</translation>
     </message>
 </context>
 <context>
@@ -810,7 +810,7 @@ první základní bod, druhý základní bod, první cílový bod, druhý cílov
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -870,7 +870,7 @@ proti směru hodinových ručiček.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Zadejte název&lt;br&gt;pro novou vrstvu&lt;br&gt;(v případě potřeby?) pro&lt;br&gt;kreslení značek.</translation>
+        <translation>&lt;i&gt;&quot;Nový&quot;&lt;/i&gt;&lt;br&gt;Zadejte název&lt;br&gt;nové hladiny&lt;br&gt;(je-li třeba), do které&lt;br&gt;se budou kreslit čárky.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -971,27 +971,27 @@ proti směru hodinových ručiček.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Používat vrstvy?</translation>
+        <translation>Používat hladiny?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Nakreslete přídavný kruh?</translation>
+        <translation>Nakreslit hlavovou kružnici?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Nakreslete kruh?</translation>
+        <translation>Nakreslit roztečnou kružnici?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Nakreslete základní kruh?</translation>
+        <translation>Nakreslit základní kružnici?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Nakreslit kořenový kruh?</translation>
+        <translation>Nakreslit patní kružnici?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>

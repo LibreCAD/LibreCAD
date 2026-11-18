@@ -424,12 +424,12 @@ of [%2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> wordt niet verdeeld omdat het deel uitmaakt van een polyline. Vouw de polyline eerst uit.</translation>
+        <translation> wordt niet verdeeld omdat het deel uitmaakt van een polylijn. Explodeer eerst de polylijn.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Lijn</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
@@ -670,7 +670,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangentieel, 2 punten</translation>
+        <translation>Rakend, 2 &amp;punten</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
@@ -710,7 +710,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipse-centrum en &amp;3 punten</translation>
+        <translation>Ellipscentrum en &amp;3 punten</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
@@ -730,7 +730,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polylines</translation>
+        <translation>&amp;Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
@@ -755,17 +755,17 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Segmenten bijsnijden</translation>
+        <translation>&amp;Segmenten trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Maak &amp;evenwijdige polylines</translation>
+        <translation>&amp;Evenwijdige polylijnen maken</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Maak polyline van bestaande &amp;segmenten</translation>
+        <translation>Polylijn maken van bestaande &amp;segmenten</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
@@ -780,7 +780,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Arcering</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -880,7 +880,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Bijsnijden</translation>
+        <translation>&amp;Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -905,7 +905,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Afronding</translation>
+        <translation>&amp;Afronden</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
@@ -1277,7 +1277,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
-        <translation>&amp;Twee bijsnijden</translation>
+        <translation>Beide &amp;trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
@@ -1413,12 +1413,12 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
-        <translation>Breken/Verdeeld</translation>
+        <translation>Breken/verdelen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
         <source>Line Gap</source>
-        <translation>Lijnopening</translation>
+        <translation>Lijnonderbreking</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
@@ -1473,7 +1473,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pennen uit entiteit kiezen (opgelost)</translation>
+        <translation>&amp;Pen uit entiteit kiezen (afgeleid)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
@@ -2287,7 +2287,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Markeersnap:</translation>
+        <translation>Snap op streepje:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2330,7 +2330,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>Naar kruispunt</translation>
+        <translation>Naar snijpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2379,7 +2379,7 @@ of [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Verlengen/bijsnijden</translation>
+        <translation>Verlengen/trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2396,7 +2396,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>Polyline maken</translation>
+        <translation>Polylijn maken</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2520,7 +2520,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Gapsnap:</translation>
+        <translation>Snap onderbreking:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
@@ -2536,7 +2536,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
         <source>Gap Size:</source>
-        <translation>Grootte van opening:</translation>
+        <translation>Grootte onderbreking:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
@@ -2597,12 +2597,12 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Icoon lijnbreedte</translation>
+        <translation>Icoon lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Naam lijnbreedte</translation>
+        <translation>Naam lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -3032,7 +3032,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Eindsnap:</translation>
+        <translation>Snap einde:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Startsnap:</translation>
+        <translation>Snap begin:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3277,7 +3277,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Markeersnap:</translation>
+        <translation>Snap op streepje:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3383,7 +3383,7 @@ of [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
-        <translation>Polylines</translation>
+        <translation>Polylijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
@@ -3518,7 +3518,7 @@ of [%2]</translation>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>Afstand van originele polyline</translation>
+        <translation>Afstand van originele polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3885,7 +3885,7 @@ Controleer of het bestaat en de machtigingen.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Lijn</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -4002,7 +4002,7 @@ Controleer of het bestaat en de machtigingen.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopiëren</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4239,12 +4239,12 @@ Controleer of het bestaat en de machtigingen.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spatiebalk: normale snapping-modus hersteld</translation>
+        <translation>Spatiebalk: snapmodus hersteld naar normaal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spatiebalk: tijdelijk snapping-modus ingesteld op vrije snapping</translation>
+        <translation>Spatiebalk: snapmodus tijdelijk ingesteld op vrije snap</translation>
     </message>
 </context>
 <context>
@@ -4720,7 +4720,7 @@ in een separate Venster</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="104"/>
         <source>Center (y):</source>
-        <translation>Midden (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
@@ -4899,7 +4899,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Bepaal Arceer Attributen</translation>
+        <translation>Arceringsattributen kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -4919,7 +4919,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
         <source>Solid Fill</source>
-        <translation>Inkleuring</translation>
+        <translation>Effen vulling</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
@@ -4934,7 +4934,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>Oppervlakte</translation>
     </message>
 </context>
 <context>
@@ -5109,7 +5109,7 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Lijn</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5252,12 +5252,12 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Knippen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopiëren</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -6364,12 +6364,12 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schaal waarmee alle afmetingswaarden worden vermenigvuldigd.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schaal waarmee alle maatwaarden worden vermenigvuldigd.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schaal waarmee alle afmetingsgeometrieën worden vermenigvuldigd.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schaal waarmee alle maatgeometrieën worden vermenigvuldigd.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6436,7 +6436,7 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Lengte om te vergroten boven de afmetingslijn</translation>
+        <translation>Verlenging voorbij de maatlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
@@ -6452,7 +6452,7 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Afmetingslijnen, pijlen en maatstrepen</translation>
+        <translation>Maatlijnen, pijlen en maatstreepjes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6656,7 +6656,7 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Arceer Patronen:</translation>
+        <translation>Arceerpatronen:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -7021,7 +7021,7 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Schakel de vrije snapping-modus in/uit wanneer de SPATIEBAL wordt ingedrukt</translation>
+        <translation>Vrije snapmodus in-/uitschakelen met de SPATIEBALK</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7046,7 +7046,7 @@ Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schakel tijdelijk vrije snapping in wanneer de spatiebalk wordt ingedrukt en het opdrachtvenster is geactiveerd&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vrije snap tijdelijk in-/uitschakelen wanneer de spatiebalk wordt ingedrukt en het opdrachtvenster actief is&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7433,7 +7433,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -7458,12 +7458,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Knippen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopiëren</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7493,7 +7493,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="751"/>
         <source>Middle Center</source>
-        <translation>Midden Center</translation>
+        <translation>Midden</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="472"/>
@@ -7513,12 +7513,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="402"/>
         <source>Bottom Center</source>
-        <translation>Onder Center</translation>
+        <translation>Onder midden</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="600"/>
         <source>Top Center</source>
-        <translation>Boven Center</translation>
+        <translation>Boven midden</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
@@ -8632,27 +8632,27 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Punt</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
         <source>Dot (small)</source>
-        <translation>Punt (smal)</translation>
+        <translation>Punt (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="87"/>
         <source>Dot (large)</source>
-        <translation>Punt (breed)</translation>
+        <translation>Punt (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Streep</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
         <source>Dash (small)</source>
-        <translation>Streep (breed)</translation>
+        <translation>Streep (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="91"/>
@@ -8667,7 +8667,7 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
         <source>Dash Dot (small)</source>
-        <translation>Streep Punt (smal)</translation>
+        <translation>Streep Punt (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="95"/>
@@ -8682,7 +8682,7 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Verdeel (smal)</translation>
+        <translation>Verdeel (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
@@ -8692,17 +8692,17 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Hartlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Center (smal)</translation>
+        <translation>Hartlijn (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>Center (groot)</translation>
+        <translation>Hartlijn (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
@@ -8712,7 +8712,7 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
         <source>Border (small)</source>
-        <translation>Rand (smal)</translation>
+        <translation>Rand (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="107"/>
@@ -8727,32 +8727,32 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>Stippellijn (klein)</translation>
+        <translation>Punt (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Streeplijn (klein)</translation>
+        <translation>Streep (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Streeplijn-punt (klein)</translation>
+        <translation>Streep Punt (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Scheidingslijn (klein)</translation>
+        <translation>Verdeel (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Centreren (klein)</translation>
+        <translation>Hartlijn (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Rand (klein)</translation>
+        <translation>Rand (zeer klein)</translation>
     </message>
 </context>
 <context>
@@ -8899,17 +8899,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Lijn vastklikken op een punt met een bepaalde afstand tot het eindpunt</translation>
+        <translation>Snappen naar een punt op een gegeven afstand van het eindpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Handmatig vastklikken op snijpunten</translation>
+        <translation>Handmatig snappen naar snijpunten</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Vastklikken op het raster</translation>
+        <translation>Snappen naar het raster</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8934,17 +8934,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Vrij vastklikken</translation>
+        <translation>Vrije snap</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Vastklikken op het raster</translation>
+        <translation>Snap op raster</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Vastklikken op eindpunten</translation>
+        <translation>Snap op eindpunten</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
@@ -9358,7 +9358,7 @@ Wis filtermasker en probeer opnieuw.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Per laag&quot;-waarde vervangen door de waarden van de bronlagen?
+        <translation>&quot;Per laag&quot;-waarde vervangen door de waarden van de bronlagen?
 
 Zo ja: objecten met &quot;Per laag&quot;-pennen worden op de nieuwe laag weergegeven zoals op de vorige lagen, en de &quot;Per laag&quot;-waarde wordt vervangen door de opgeloste peninstellingen.
 
@@ -10974,7 +10974,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Afmeting</translation>
+        <translation>Maat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -10989,7 +10989,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Lijn</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -12431,7 +12431,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/AangepasteKleur%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13017,12 +13017,12 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: geen patroon gevonden. Stel het pad naar het patroon in de toepassingsvoorkeuren in.</translation>
+        <translation>Arcering: geen patroon gevonden. Stel het pad naar het patroon in de toepassingsvoorkeuren in.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: het laden van het patroon is mislukt: %1</translation>
+        <translation>Arcering: het laden van het patroon is mislukt: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13299,7 +13299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Specificeer de oorsprong van de eerste extensielijn</translation>
+        <translation>Specificeer de oorsprong van de eerste verlenglijn</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13425,7 +13425,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Specificeer de oorsprong van de eerste extensielijn</translation>
+        <translation>Specificeer de oorsprong van de eerste verlenglijn</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13512,7 +13512,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
         <source>Specify center</source>
-        <translation>Specificeer centerpunt</translation>
+        <translation>Specificeer middelpunt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -13627,7 +13627,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Specify center</source>
-        <translation>Specificeer middenpunt</translation>
+        <translation>Specificeer middelpunt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
@@ -13727,7 +13727,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="223"/>
         <source>Specify circle center</source>
-        <translation>Specificeer middenpunt cirkel</translation>
+        <translation>Specificeer middelpunt cirkel</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="224"/>
@@ -15361,7 +15361,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Geef de richting van de verschuiving op</translation>
+        <translation>Geef de richting van de offset op</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -15562,7 +15562,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>Het gekozen Element kan niet getrimd worden.</translation>
+        <translation>De gekozen entiteit is geen enkelvoudige entiteit of kan niet worden getrimd.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -16169,7 +16169,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>Ha&amp;ndmatige Intersectie</translation>
+        <translation>Snijpunt ha&amp;ndmatig</translation>
     </message>
 </context>
 <context>
@@ -16301,12 +16301,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Vink aan om beide objecten tot de afschuining bij te snijden</translation>
+        <translation>Vink aan om beide objecten tot de afschuining te trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16360,7 +16360,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>Opties voor lineaire afmeting</translation>
+        <translation>Opties voor lineaire maat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16373,7 +16373,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Afmetingsopties</translation>
+        <translation>Maatopties</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -16892,7 +16892,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>Polyline-opties</translation>
+        <translation>Polylijnopties</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -16907,7 +16907,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Lijn</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -16998,17 +16998,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>Afgeronde opties</translation>
+        <translation>Opties voor afronden</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Vink aan om beide randen tot de afronding bij te snijden</translation>
+        <translation>Vink aan om beide randen tot de afronding te trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17039,7 +17039,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
-        <translation>Middelpunten:</translation>
+        <translation>Middenpunten:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>

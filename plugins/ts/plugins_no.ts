@@ -179,7 +179,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LINJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -210,7 +210,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>BUE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -284,7 +284,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TEKST</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -374,17 +374,17 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>DIMENSJONSLINJE</translation>
+        <translation>HENVISNINGSLINJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>DIMENSJONLINJE (justert)</translation>
+        <translation>JUSTERT DIMENSJON</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>DIMENSJONLINJE</translation>
+        <translation>LINEÆR DIMENSJON</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
@@ -399,7 +399,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>VINKELDIMENSJON</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
@@ -488,7 +488,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation>1. [KONTEKST: dibPunto] *.odb for Psion 2</translation>
+        <translation>*.odb for Psion 2</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
@@ -692,7 +692,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LINJE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -723,7 +723,7 @@ først basis, andre basis, første mål, andre mål.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>BUE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -902,7 +902,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>2. [KONTEKST: lc_Exptocsvdlg] CSV (*.csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>

@@ -158,7 +158,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
@@ -246,7 +246,7 @@ ou [%2]</translation>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -304,7 +304,7 @@ ou [%2]</translation>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -361,7 +361,7 @@ ou [%2]</translation>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284"/>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
@@ -401,7 +401,7 @@ ou [%2]</translation>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301"/>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
@@ -429,7 +429,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
@@ -463,7 +463,7 @@ ou [%2]</translation>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
@@ -492,7 +492,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom com efeito &amp;Panorama</translation>
+        <translation>&amp;Pan</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -507,12 +507,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
         <source>Deselect Window</source>
-        <translation>Deselecionar Janela</translation>
+        <translation>Desselecionar janela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(De-)Selecionar &amp;Contorno</translation>
+        <translation>(Des)selecionar &amp;contorno</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
@@ -522,12 +522,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Deselecionar Entidades Interseccionadas</translation>
+        <translation>Desselecionar entidades intersectadas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
-        <translation>(De-)Selecionar Camada</translation>
+        <translation>(Des)selecionar camada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
@@ -644,7 +644,7 @@ ou [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
         <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
         <source>&amp;Concentric</source>
-        <translation>Concêntico</translation>
+        <translation>&amp;Concêntrico</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
@@ -755,7 +755,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Cortar segmentos</translation>
+        <translation>&amp;Aparar segmentos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
@@ -855,7 +855,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Girar</translation>
+        <translation>&amp;Rotacionar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
@@ -870,7 +870,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Girar d&amp;ois</translation>
+        <translation>Rotação &amp;dupla</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
@@ -880,7 +880,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Cortar</translation>
+        <translation>&amp;Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -905,7 +905,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Arredondar</translation>
+        <translation>&amp;Concordância</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
@@ -1110,12 +1110,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;+</translation>
+        <translation>&amp;Ampliar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
-        <translation>Afastar Zoom</translation>
+        <translation>&amp;Reduzir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
@@ -1237,7 +1237,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Esquerda</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,22 +1247,22 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Superior</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
         <source>Bottom</source>
-        <translation>Fundo</translation>
+        <translation>Inferior</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Floating</source>
-        <translation>Janela</translation>
+        <translation>Flutuante</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1382"/>
         <source>Reload Style Sheet</source>
-        <translation>Recarregar Estilo de Folha</translation>
+        <translation>Recarregar folha de estilo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1193"/>
@@ -1277,12 +1277,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
-        <translation>Cor&amp;tar dois</translation>
+        <translation>Apa&amp;rar dois</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>&amp;Deslocamento</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1323,12 +1323,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
         <source>&amp;Unlock all</source>
-        <translation>Destravar tudo</translation>
+        <translation>&amp;Desbloquear tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1030"/>
         <source>&amp;Lock all</source>
-        <translation>Travar tudo</translation>
+        <translation>&amp;Bloquear tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
@@ -1338,7 +1338,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportar Camadas Visível(s)</translation>
+        <translation>Exportar camadas &amp;visíveis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
@@ -1348,7 +1348,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1105"/>
         <source>&amp;Hide all blocks</source>
-        <translation>%Ocultar todos blocos</translation>
+        <translation>&amp;Ocultar todos os blocos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
@@ -1363,7 +1363,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1389"/>
         <source>Re-dock Widgets</source>
-        <translation>Redockar widgets</translation>
+        <translation>Reacoplar widgets</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
@@ -1408,7 +1408,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>Estrela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -1488,7 +1488,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
-        <translation>Junção de linha</translation>
+        <translation>Unir linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
@@ -1503,7 +1503,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Hyperbola Foci Point</source>
-        <translation>&amp;Pontos de Foco da Hipérbole</translation>
+        <translation>&amp;Hipérbole por focos e ponto</translation>
     </message>
 </context>
 <context>
@@ -1580,7 +1580,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
 </context>
 <context>
@@ -1663,7 +1663,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
@@ -1686,7 +1686,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>Salvar</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2249,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Livre</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2379,7 +2379,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Estender/Cortar</translation>
+        <translation>Estender/Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2459,12 +2459,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Ambos</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
@@ -2531,7 +2531,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Livre</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2756,7 +2756,7 @@ ou [%2]</translation>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>Salvar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
@@ -2919,7 +2919,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Superior</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Esquerda</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2979,7 +2979,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Ambos</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -3101,7 +3101,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Ambos</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3129,7 +3129,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Ambos</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3225,12 +3225,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Ambos</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -3353,7 +3353,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
@@ -3566,17 +3566,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Arquivo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Exibir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="719"/>
@@ -3596,7 +3596,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="824"/>
         <source>&amp;Info</source>
-        <translation>&amp;Medidas e Dimensões</translation>
+        <translation>&amp;Informações</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="764"/>
@@ -3667,12 +3667,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1237"/>
         <source>&amp;Tile</source>
-        <translation>&amp;Ladrilho</translation>
+        <translation>&amp;Lado a lado</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1239"/>
         <source>Tile &amp;Horizontally</source>
-        <translation>Ladrilho &amp;horizontalmente</translation>
+        <translation>Lado a lado &amp;horizontalmente</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
@@ -3772,7 +3772,7 @@ Salvamento automático desabilitado.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1238"/>
         <source>Tile &amp;Vertically</source>
-        <translation>Ladrilho &amp;verticalmente</translation>
+        <translation>Lado a lado &amp;verticalmente</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
@@ -3782,7 +3782,7 @@ Salvamento automático desabilitado.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1741"/>
         <source>New document from template: </source>
-        <translation>Novo documento à partir do modelo: </translation>
+        <translation>Novo documento a partir do modelo: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
@@ -3797,7 +3797,7 @@ Salvamento automático desabilitado.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Seletor de encaixe</translation>
+        <translation>Seleção de snap</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3883,18 +3883,18 @@ Favor checar se o arquivo existe e suas permissões.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Circle</source>
-        <translation>Circunferência</translation>
+        <translation>Círculo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
         <source>&amp;Curve</source>
-        <translation>Arco</translation>
+        <translation>&amp;Curva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="268"/>
@@ -3930,22 +3930,22 @@ Favor checar se o arquivo existe e suas permissões.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Informação</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
-        <translation>Ancorar áreas</translation>
+        <translation>Áreas de acoplamento</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
-        <translation>Estado da grade</translation>
+        <translation>Status da grade</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3307"/>
@@ -3955,7 +3955,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
-        <translation>Widgets de dock</translation>
+        <translation>Widgets acopláveis</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
@@ -3985,7 +3985,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
         <source>Dock Wid&amp;gets</source>
-        <translation>Ancorar Widgets</translation>
+        <translation>Wid&amp;gets acopláveis</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="364"/>
@@ -4005,7 +4005,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4117,12 +4117,12 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
-        <translation>East</translation>
+        <translation>Leste</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
-        <translation>West</translation>
+        <translation>Oeste</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
@@ -4132,7 +4132,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1232"/>
         <source>&amp;Maximized</source>
-        <translation>&amp; Máximo</translation>
+        <translation>&amp;Maximizado</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2075"/>
@@ -4169,7 +4169,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dock</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
@@ -4179,7 +4179,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="887"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation>Usuário &amp;Manual</translation>
+        <translation>&amp;Manual do usuário</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="888"/>
@@ -4242,12 +4242,12 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Barra de espaço: restaurou o modo de ajuste para o normal</translation>
+        <translation>Barra de espaço: modo de encaixe restaurado para o normal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Barra de espaço: definiu temporariamente o modo de ajuste para ajuste livre</translation>
+        <translation>Barra de espaço: modo de encaixe definido temporariamente como encaixe livre</translation>
     </message>
 </context>
 <context>
@@ -4424,17 +4424,17 @@ em uma janela separada</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>Azul</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>Ciano</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>Cinza</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="122"/>
@@ -4588,7 +4588,7 @@ em uma janela separada</translation>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -4938,7 +4938,7 @@ Isso modifica recursivamente todas as entidades do próprio bloco.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>Área</translation>
     </message>
 </context>
 <context>
@@ -4971,7 +4971,7 @@ Isso modifica recursivamente todas as entidades do próprio bloco.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="203"/>
         <source>insert (x):</source>
-        <translation>inserir (x):</translation>
+        <translation>inserção (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
@@ -4991,7 +4991,7 @@ Isso modifica recursivamente todas as entidades do próprio bloco.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="110"/>
         <source>insert (y):</source>
-        <translation>inserir (y):</translation>
+        <translation>inserção (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
@@ -5113,7 +5113,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
@@ -5261,7 +5261,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -6309,7 +6309,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Esquerda</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6321,7 +6321,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Superior</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6627,7 +6627,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 = ) 5% em relação ao tamanho da tela)</translation>
+        <translation>(0 =&gt; 5% em relação ao tamanho da tela)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
@@ -6865,17 +6865,17 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Linhas de indicador de ajuste</translation>
+        <translation>Linhas do indicador de encaixe</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Forma do indicador de ajuste</translation>
+        <translation>Forma do indicador de encaixe</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Ocultar o cursor ao ajustar</translation>
+        <translation>Ocultar o cursor ao encaixar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6950,7 +6950,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Panorâmica automática</translation>
+        <translation>Pan automático</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -7025,7 +7025,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Alterna o modo de ajuste livre quando a barra de espaço é pressionada.</translation>
+        <translation>Alterna o modo de encaixe livre quando a barra de espaço é pressionada.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7050,7 +7050,7 @@ Por favor, escolha a unidade que você deseja usar para novos desenhos e sua lí
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternar temporariamente o ajuste livre ao pressionar a barra de espaço e quando a janela de comando estiver ativa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternar temporariamente o encaixe livre ao pressionar a barra de espaço com a janela de comando ativa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7293,7 +7293,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
         <source>Rotate Two Options</source>
-        <translation>Rotacionar duas opções</translation>
+        <translation>Opções de rotação dupla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
@@ -7449,12 +7449,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="930"/>
@@ -8449,7 +8449,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Pena padrão</translation>
+        <translation>Caneta padrão</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
@@ -8615,12 +8615,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Traço</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
@@ -8731,32 +8731,32 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>Ponto (pequeno)</translation>
+        <translation>Ponto (muito pequeno)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Tracejado (pequeno)</translation>
+        <translation>Traço (muito pequeno)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Tracejado e pontilhado (pequeno)</translation>
+        <translation>Traço Ponto (muito pequeno)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Segmento (pequeno)</translation>
+        <translation>Dividir (muito pequeno)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Centro (pequeno)</translation>
+        <translation>Centro (muito pequeno)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Borda (pequena)</translation>
+        <translation>Borda (muito pequena)</translation>
     </message>
 </context>
 <context>
@@ -8774,7 +8774,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Esquerdo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8929,7 +8929,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Travar no zero relativo</translation>
+        <translation>Bloquear zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
@@ -9004,7 +9004,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Modo de Ajuste Exclusivo</translation>
+        <translation>Modo de encaixe exclusivo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9024,7 +9024,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Ajuste Manual ao Centro</translation>
+        <translation>Encaixar no ponto médio (manual)</translation>
     </message>
 </context>
 <context>
@@ -9033,7 +9033,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="59"/>
@@ -9459,7 +9459,7 @@ Se não, os valores &quot;Por Camada&quot; permanecerão, e a caneta da camada d
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
@@ -9770,7 +9770,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>Erro lendo linhas paralelas no arquivo dwg</translation>
+        <translation>erro ao ler os deslocamentos (offsets) no arquivo DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
@@ -10925,7 +10925,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
@@ -10983,18 +10983,18 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Arquivo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Informação</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11030,12 +11030,12 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Ajustar Extras</translation>
+        <translation>Extras de encaixe</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Exibir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -12431,7 +12431,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Cor personalizada%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13286,7 +13286,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="500"/>
@@ -13300,7 +13300,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
@@ -13421,7 +13421,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="235"/>
@@ -13502,7 +13502,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -13560,7 +13560,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
@@ -13594,7 +13594,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -13622,7 +13622,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
@@ -13660,7 +13660,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
@@ -13689,7 +13689,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="95"/>
@@ -13722,7 +13722,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="193"/>
@@ -13781,7 +13781,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
@@ -13806,7 +13806,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
@@ -13845,7 +13845,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
@@ -13900,7 +13900,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
@@ -13925,7 +13925,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
@@ -13970,7 +13970,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
@@ -13996,7 +13996,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="313"/>
@@ -14063,7 +14063,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
@@ -14097,7 +14097,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
@@ -14137,7 +14137,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
@@ -14239,7 +14239,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338"/>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="314"/>
@@ -14283,7 +14283,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="219"/>
@@ -14319,7 +14319,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
@@ -14377,7 +14377,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="158"/>
@@ -14405,7 +14405,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
         <source>Cancel</source>
-        <translation>Cencelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
@@ -14415,7 +14415,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
 </context>
 <context>
@@ -14453,7 +14453,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="245"/>
@@ -14535,7 +14535,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
@@ -14558,7 +14558,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="156"/>
@@ -14581,7 +14581,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="225"/>
@@ -14610,7 +14610,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
@@ -14634,7 +14634,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
@@ -14677,7 +14677,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
 </context>
 <context>
@@ -14699,7 +14699,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
@@ -14785,7 +14785,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="291"/>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
@@ -14823,7 +14823,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="290"/>
@@ -14891,7 +14891,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="139"/>
@@ -14963,7 +14963,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="169"/>
@@ -14991,7 +14991,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
@@ -15094,7 +15094,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Des-)&amp;Travar zero relativo</translation>
+        <translation>(Des)&amp;bloquear zero relativo</translation>
     </message>
 </context>
 <context>
@@ -15104,7 +15104,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="281"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="285"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="193"/>
@@ -15174,7 +15174,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
@@ -15187,7 +15187,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15276,7 +15276,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15299,7 +15299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="170"/>
@@ -15328,7 +15328,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="177"/>
@@ -15366,7 +15366,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
 </context>
 <context>
@@ -15376,7 +15376,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
@@ -15399,7 +15399,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="149"/>
@@ -15423,7 +15423,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="424"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="328"/>
@@ -15484,7 +15484,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183"/>
@@ -15518,7 +15518,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
@@ -15552,7 +15552,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15603,7 +15603,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -15678,7 +15678,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208"/>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211"/>
@@ -15701,7 +15701,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="159"/>
@@ -15746,7 +15746,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -15851,7 +15851,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
@@ -15908,37 +15908,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Impressão offset nas coordenadas de papel em (%1, %2)</translation>
+        <translation>Deslocamento da impressão nas coordenadas de papel em (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Impressão offset nas coordenadas gráficas em (%1, %2)</translation>
+        <translation>Deslocamento da impressão nas coordenadas gráficas em (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Impressão offset nas coordenadas gráficas</translation>
+        <translation>Deslocamento da impressão nas coordenadas gráficas</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Impressão offset nas coordenadas de papel</translation>
+        <translation>Deslocamento da impressão nas coordenadas de papel</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
-        <translation>: selecionar impressão offset nas coordenadas</translation>
+        <translation>: selecionar as coordenadas do deslocamento da impressão</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>digite offset à partir da linha de comando para a impressão offset</translation>
+        <translation>digite o deslocamento na linha de comando para deslocar a impressão</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Impressão offset ignora o zero relativo. Ignorando &apos;@&apos;</translation>
+        <translation>Deslocamento da impressão ignora o zero relativo. Ignorando &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -16089,7 +16089,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
@@ -16112,7 +16112,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
@@ -16154,7 +16154,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
@@ -16196,12 +16196,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Clique e arraste para zoom com efeito panorama</translation>
+        <translation>Clique e arraste para fazer pan</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Zoom com efeito panorama</translation>
+        <translation>Pan</translation>
     </message>
 </context>
 <context>
@@ -16209,7 +16209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Voltar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
@@ -16306,7 +16306,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16642,7 +16642,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Desfazer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16652,7 +16652,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>Refazer</translation>
     </message>
 </context>
 <context>
@@ -16700,7 +16700,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Desfazer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
@@ -16720,7 +16720,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>Refazer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -16861,7 +16861,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Opções de deslocamento de modificação</translation>
+        <translation>Opções de deslocamento</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16879,7 +16879,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Opções de mover e girar</translation>
+        <translation>Opções de mover e rotacionar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -16902,12 +16902,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Desfazer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Linha</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -16998,17 +16998,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>Opções de arredondamento</translation>
+        <translation>Opções de concordância</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Marcar para aparar ambas as arestas ao arredondamento</translation>
+        <translation>Marcar para aparar ambas as arestas até a concordância</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17067,7 +17067,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Desfazer</translation>
     </message>
 </context>
 <context>
@@ -17136,7 +17136,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>

@@ -153,7 +153,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Lijn type</translation>
+        <translation>Lijntype</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -218,7 +218,7 @@ eerst basispunt, tweede basispunt, eerste doelpunt, tweede doelpunt.</translatio
         <location filename="../list/list.cpp" line="135"/>
         <location filename="../list/list.cpp" line="145"/>
         <source>center point</source>
-        <translation>center punt</translation>
+        <translation>middelpunt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="125"/>
@@ -875,7 +875,7 @@ tegen de klok in.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Markeringen</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -981,7 +981,7 @@ tegen de klok in.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Pitch Cirkel tekenen?</translation>
+        <translation>Steekcirkel tekenen?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
@@ -1232,7 +1232,7 @@ Gebruik t of x in je vergelijking als variabele/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Specifiko vendndodhjen e harkut të dimensionit</translation>
+        <translation>Specifiko vendndodhjen e harkut të kuotës</translation>
     </message>
 </context>
 <context>
@@ -131,7 +131,7 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>rradha=%1 është shumë e vogël për pikat e zgjedhura
+        <translation>rrezja=%1 është shumë e vogël për pikat e zgjedhura
 largësia midis pikave=%2 është më e madhe se diametri=%3</translation>
     </message>
     <message>
@@ -271,7 +271,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
         <source>Specify a tangent</source>
-        <translation>Specifiko një tangent</translation>
+        <translation>Specifiko një tangjente</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
@@ -429,12 +429,12 @@ ose [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -583,17 +583,17 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
-        <translation>Tangent (P,C)</translation>
+        <translation>Tangjente (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
-        <translation>Tangent (C,C)</translation>
+        <translation>Tangjente (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangent &amp;ortogonale</translation>
+        <translation>Tangjente &amp;ortogonale</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
@@ -713,7 +713,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
-        <translation>Qendër, &amp;rradhë</translation>
+        <translation>Qendër, &amp;rreze</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
@@ -723,7 +723,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>2 Points, Radius</source>
-        <translation>2 pika, rradhë</translation>
+        <translation>2 pika, rreze</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
@@ -745,22 +745,22 @@ ose [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>Tangent 2 rrethe, rradhë</translation>
+        <translation>Tangjent me 2 rrathë, rreze</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>Tangent 2 rrethe, 1 pikë</translation>
+        <translation>Tangjent me 2 rrathë, 1 pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>Tangent &amp;3 rrethe</translation>
+        <translation>Tangjent me &amp;3 rrathë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangent, 2 p&amp;ika</translation>
+        <translation>Tangjent, 2 p&amp;ika</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
@@ -775,7 +775,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Hark &amp;tangent</translation>
+        <translation>Hark &amp;tangjent</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
@@ -830,7 +830,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polilinija</translation>
+        <translation>&amp;Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
@@ -860,12 +860,12 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Krijo &amp;polilinija ekvidistante</translation>
+        <translation>Krijo polilinja &amp;ekuidistante</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>Krijo polilinijë nga &amp;segmentet ekzistuese</translation>
+        <translation>Krijo polilinjë nga &amp;segmentet ekzistuese</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
@@ -1498,7 +1498,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1326"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Fokuso në &amp;linjën e komandës</translation>
+        <translation>Fokuso &amp;rreshtin e komandës</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1610,7 +1610,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
         <source>Radius Shift:</source>
-        <translation>Zhvendosje e rradhës:</translation>
+        <translation>Zhvendosja e rrezes:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
@@ -1777,7 +1777,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>Dimensionet</translation>
+        <translation>Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1788,7 +1788,7 @@ ose [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Një shtresë ndërtimi ka entitete të linjave të drejta të pafundme të destinuara për ndërtim gjeometrik.
+        <translation>Një shtresë ndërtimi ka entitete me vija të drejta të pafundme, të menduara për t&apos;u përdorur për ndërtim gjeometrik.
        Përmbajtja e një shtrese ndërtimi nuk duhet të shfaqet në printim.</translation>
     </message>
     <message>
@@ -1859,7 +1859,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>Dimensionale</translation>
+        <translation>Për kuota</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1964,7 +1964,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Shtresë dimensionale</translation>
+        <translation>Shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2057,7 +2057,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Shto shtresë dimensionesh</translation>
+        <translation>Shto shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2122,7 +2122,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Shto nën-shtresë dimensionesh</translation>
+        <translation>&amp;Shto nënshtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2143,7 +2143,7 @@ ose [%2]</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Konverto në shtresë dimensionale</translation>
+        <translation>Shndërro në shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2396,7 +2396,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>Krijo polilinijë</translation>
+        <translation>Krijo polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2869,7 +2869,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Polilinija</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -2899,7 +2899,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
         <source>Radius:</source>
-        <translation>Rradha:</translation>
+        <translation>Rrezja:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
@@ -3017,7 +3017,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
         <source>Radius:</source>
-        <translation>Rradha:</translation>
+        <translation>Rrezja:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
@@ -3027,7 +3027,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>Polilinija</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -3124,7 +3124,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>Polilinija</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -3194,7 +3194,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
         <source>Radius:</source>
-        <translation>Rradha:</translation>
+        <translation>Rrezja:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
@@ -3315,17 +3315,17 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
         <source>Radius Inner</source>
-        <translation>Rradhë e brendshme</translation>
+        <translation>Rrezja e brendshme</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>Polilinija</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
         <source>Radius Outer</source>
-        <translation>Rradhë e jashtme</translation>
+        <translation>Rrezja e jashtme</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="86"/>
@@ -3348,7 +3348,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="393"/>
         <source>Command line</source>
-        <translation>Linja e komandës</translation>
+        <translation>Rreshti i komandës</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
@@ -3383,7 +3383,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
-        <translation>Polilinija</translation>
+        <translation>Polilinjat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
@@ -3393,7 +3393,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
-        <translation>Dimensionet</translation>
+        <translation>Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
@@ -3518,7 +3518,7 @@ ose [%2]</translation>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>Largësia nga polilinija origjinale</translation>
+        <translation>Largësia nga polilinja origjinale</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3596,7 +3596,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dimen&amp;sion</translation>
+        <translation>&amp;Kuotimi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="833"/>
@@ -3629,7 +3629,7 @@ ose [%2]</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3658,13 +3658,13 @@ ose [%2]</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
-        <translation>Polilinija</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Kuotimi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -3691,7 +3691,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -3751,7 +3751,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="919"/>
         <source>On&amp;line</source>
-        <translation>On&amp;line</translation>
+        <translation>Në &amp;linjë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="941"/>
@@ -3822,7 +3822,7 @@ ose [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Command line</source>
-        <translation>Linja e komandës</translation>
+        <translation>Rreshti i komandës</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1236"/>
@@ -4021,7 +4021,7 @@ Ju lutemi kontrolloni ekzistencën dhe lejet e tij.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1202"/>
         <source>Rounded</source>
-        <translation>Zaobruar</translation>
+        <translation>I rrumbullakosur</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1206"/>
@@ -4340,12 +4340,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="216"/>
         <source>save the active block to a file</source>
-        <translation>Ruani blokun aktiv në një skedar</translation>
+        <translation>Ruani bllokun aktiv në një skedar</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>Futni blokun aktiv</translation>
+        <translation>Futni bllokun aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="230"/>
@@ -4355,17 +4355,17 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation>Duke kërkuar emra blokesh që përputhen</translation>
+        <translation>Duke kërkuar emra blloqesh që përputhen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
         <source>Block Menu</source>
-        <translation>Menuja e Blokut</translation>
+        <translation>Menuja e bllokut</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>Zhblokoni të gjitha blloqet</translation>
+        <translation>&amp;Shkri të gjitha blloqet</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
@@ -4375,17 +4375,17 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="407"/>
         <source>&amp;Add Block</source>
-        <translation>Shto blok</translation>
+        <translation>&amp;Shto bllok</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="403"/>
         <source>&amp;Remove Block</source>
-        <translation>Hiq blok</translation>
+        <translation>&amp;Hiq bllok</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="194"/>
         <source>Remove block</source>
-        <translation>Hiqni blokun</translation>
+        <translation>Hiqni bllokun</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="409"/>
@@ -4631,12 +4631,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Redaktori i etiketës së dimensionit</translation>
+        <translation>Redaktori i etiketës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>Etiketë dimensioni:</translation>
+        <translation>Etiketa e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4646,12 +4646,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Formati i tekstit të dimensionit, &amp;lt;&amp;gt; mund të përdoret si zëvendësues për vlerën e matjes së dimensionit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Formati i tekstit të kuotës; &amp;lt;&amp;gt; mund të përdoret si vendmbajtës për vlerën e matur të kuotës&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
         <source>Insert:</source>
-        <translation>Shto:</translation>
+        <translation>Fut:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
@@ -4702,7 +4702,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4762,7 +4762,7 @@ in a separate window</source>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
         <translation>Zbato atributet edhe te të gjitha nën-entitetet e INSERT-it të zgjedhur.
-Kjo modifikon në mënyrë rekursive të gjitha entitetet e vetë Bllokut.</translation>
+Kjo modifikon në mënyrë rekursive të gjitha entitetet e vetë bllokut.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -4808,7 +4808,7 @@ Kjo modifikon në mënyrë rekursive të gjitha entitetet e vetë Bllokut.</tran
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>Dimenzion Linear</translation>
+        <translation>Kuotë lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -4831,7 +4831,7 @@ Kjo modifikon në mënyrë rekursive të gjitha entitetet e vetë Bllokut.</tran
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>Dimenzion</translation>
+        <translation>Kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
@@ -5111,7 +5111,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
@@ -5209,17 +5209,17 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="380"/>
         <source>Middle Left</source>
-        <translation>Qendër, e majtë</translation>
+        <translation>Mes majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="412"/>
         <source>Middle Center</source>
-        <translation>Qendra e sipërme</translation>
+        <translation>Mes në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="444"/>
         <source>Middle Right</source>
-        <translation>E djathta e sipërme</translation>
+        <translation>Mes djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="476"/>
@@ -5374,7 +5374,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="923"/>
         <source>Insert Unicode</source>
-        <translation>Shto Unicode</translation>
+        <translation>Fut Unicode</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="929"/>
@@ -5599,12 +5599,12 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1172"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin i zgjeruar (shtesa)</translation>
+        <translation>[1E00-1EFF] Latinishtja e zgjeruar shtesë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1177"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greqisht i zgjeruar</translation>
+        <translation>[1F00-1FFF] Greqishtja e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1182"/>
@@ -5674,7 +5674,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1247"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] Elemente blok</translation>
+        <translation>[2580-259F] Elemente blloku</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1252"/>
@@ -5769,7 +5769,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1342"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo i zgjeruar</translation>
+        <translation>[31A0-31BF] Bopomofo e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1347"/>
@@ -5839,7 +5839,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1412"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Selektores variacioni</translation>
+        <translation>[FE00-FE0F] Përzgjedhësit e varianteve</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1417"/>
@@ -6173,12 +6173,12 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Gjatësia për të zgjeruar mbi vijën e dimensionit</translation>
+        <translation>Gjatësia e zgjatjes përtej vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Madhësia e shigjetës së dimensionit. Nuk ka efekt kur madhësia e shenjës është ndryshe nga 0.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Madhësia e shigjetës së kuotës. &lt;a name=&quot;result_box&quot;/&gt;Pa efekt kur madhësia e shenjës &lt;a name=&quot;result_box&quot;/&gt;është e ndryshme nga 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
@@ -6305,7 +6305,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensione</translation>
+        <translation>&amp;Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6377,7 +6377,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>gjatësia fikse e vijës së zgjatimit</translation>
+        <translation>gjatësia fikse e vijës ndihmëse</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6447,7 +6447,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shkallë për të shumëzuar të gjitha vlerat e dimensioneve.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shkalla me të cilën shumëzohen të gjitha vlerat e kuotave.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
@@ -6479,7 +6479,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Vijat dimensionale, shigjetat dhe shenjat</translation>
+        <translation>Vijat e kuotës, shigjetat dhe shenjat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6509,7 +6509,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bashkimi i tekstit në raport me vijën dimensionale.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rreshtimi i tekstit &lt;a name=&quot;result_box&quot;/&gt;në lidhje me vijën e kuotës.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
@@ -6519,7 +6519,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Offset nga pika e origjinës.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zhvendosja nga pika e origjinës.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
@@ -6529,12 +6529,12 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>Hapësira e vijës së dimensionit:</translation>
+        <translation>Hapësira në vijën e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Shkallëzoni për të shumëzuar të gjitha gjeometritë e dimensionit.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shkalla me të cilën shumëzohen të gjitha gjeometritë e kuotave.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -6544,7 +6544,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Madhësia e shënimit të dimensionit. Vendosni në 0 për të çaktivizuar shënimet e dimensionit. Shigjeta e dimensionit nuk do të vizatohet kur shënimi i dimensionit është aktiv.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Madhësia e shenjës së kuotës. Vendosja në 0 çaktivizon shenjën e kuotës. Shigjeta e kuotës nuk vizatohet kur shenja e kuotës është e aktivizuar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6625,7 +6625,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="494"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="504"/>
         <source>Options</source>
-        <translation>Opcione</translation>
+        <translation>Opsione</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="495"/>
@@ -6683,7 +6683,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>Ngjyrë e gridit meta:</translation>
+        <translation>Ngjyra e &amp;meta-rrjetës:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6803,7 +6803,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Lëvizje automatike</translation>
+        <translation>Zhvendosje automatike e pamjes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -6823,7 +6823,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
         <source>Mouse-over effects</source>
-        <translation>Efekte kur lëvizni mausin mbi elemente</translation>
+        <translation>Efekte kur miu kalon mbi elemente</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
@@ -6863,7 +6863,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Inverton drejtimin e rrotullimit kur përdorni rrotullimin e mausi me tastin Shift.</translation>
+        <translation>Përmbys drejtimin e rrëshqitjes kur përdoret rrota e miut me tastin Shift.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
@@ -7096,7 +7096,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Dash/Dot Lines</source>
-        <translation>Linjat me presje/pika</translation>
+        <translation>Vija me viza/pika</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
@@ -7106,7 +7106,7 @@ Ju lutemi, zgjidhni njësinë që dëshironi të përdorni për vizatimet e reja
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Përfshini linjat me presje/pika në rrugën SVG</translation>
+        <translation>Shndërro vijat me viza/pika në shteg SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -7238,7 +7238,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="26"/>
         <source>Rotation Options</source>
-        <translation>Opcionet e rrotullimit</translation>
+        <translation>Opsionet e rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="32"/>
@@ -7339,7 +7339,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="26"/>
         <source>Scaling Options</source>
-        <translation>Opcionet e shkallëzimit</translation>
+        <translation>Opsionet e shkallëzimit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="117"/>
@@ -7354,7 +7354,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="139"/>
         <source>Isotropic Scaling</source>
-        <translation>Përkthim izotrop</translation>
+        <translation>Shkallëzim izotrop</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="153"/>
@@ -7369,7 +7369,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gjeni raportet e përkthimit rreth qendrës duke përdorur një pikë referimi dhe një pikë synimi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gjen raportet e shkallëzimit rreth qendrës me anë të një pike referimi dhe një pike synimi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
@@ -7435,7 +7435,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Teksti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -7465,7 +7465,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="751"/>
         <source>Middle Center</source>
-        <translation>Qendër lart</translation>
+        <translation>Mes në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="472"/>
@@ -7560,7 +7560,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
         <source>Baseline Left</source>
-        <translation>Linja bazë e majtë</translation>
+        <translation>Vija bazë majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="568"/>
@@ -7572,12 +7572,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="623"/>
         <source>Baseline Right</source>
-        <translation>Linja bazë e djathtë</translation>
+        <translation>Vija bazë djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="646"/>
         <source>Baseline Center</source>
-        <translation>Linja bazë në qendër</translation>
+        <translation>Vija bazë në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
@@ -7592,12 +7592,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
-        <translation>E &amp;Qendruar</translation>
+        <translation>Në &amp;mes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
         <source>Insert Symbol</source>
-        <translation>Shto Simbol</translation>
+        <translation>Fut simbol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -7672,7 +7672,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="914"/>
         <source>Insert Unicode</source>
-        <translation>Shto Unicode</translation>
+        <translation>Fut Unicode</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="920"/>
@@ -7897,12 +7897,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1163"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Latinishtja e zgjeruar shtesë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1168"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greqisht e zgjeruar</translation>
+        <translation>[1F00-1FFF] Greqishtja e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1173"/>
@@ -8067,7 +8067,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1333"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Bopomofo e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1338"/>
@@ -8137,7 +8137,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1403"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] Selektorë variacioni</translation>
+        <translation>[FE00-FE0F] Përzgjedhësit e varianteve</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1408"/>
@@ -8448,8 +8448,8 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Një shtresë konstruktive ka entitete me linja të drejta të pafundme, të destinuara për t&apos;u përdorur për konstruksion gjeometrik.
-Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</translation>
+        <translation>Një shtresë ndërtimi ka entitete me vija të drejta të pafundme, të menduara për t&apos;u përdorur për ndërtim gjeometrik.
+Përmbajtja e një shtrese ndërtimi nuk duhet të shfaqet në printim.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
@@ -8464,7 +8464,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Pena parazgjedhëse</translation>
+        <translation>Stilolapsi i paracaktuar</translation>
     </message>
 </context>
 <context>
@@ -8517,7 +8517,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Zhbloko të gjitha shtresat</translation>
+        <translation>&amp;Shkri të gjitha shtresat</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
@@ -8605,7 +8605,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="89"/>
         <source>Insert</source>
-        <translation>Shto</translation>
+        <translation>Fut</translation>
     </message>
 </context>
 <context>
@@ -8699,22 +8699,22 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="96"/>
         <source>Divide</source>
-        <translation>Linjë e ndarë</translation>
+        <translation>Vijë ndarëse</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Linjë e ndarë (shumë e vogël)</translation>
+        <translation>Vijë ndarëse (shumë e vogël)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Linjë e ndarë (e vogël)</translation>
+        <translation>Vijë ndarëse (e vogël)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
         <source>Divide (large)</source>
-        <translation>Linjë e ndarë (e madhe)</translation>
+        <translation>Vijë ndarëse (e madhe)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
@@ -8762,7 +8762,7 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="32"/>
         <source>Mouse</source>
-        <translation>Mausi</translation>
+        <translation>Miu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="71"/>
@@ -8781,7 +8781,11 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Udhëzime rreth veprimeve të butonave të majtë/të djathtë të mausit</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Udhëzim për veprimet e butonit të majtë/të djathtë të miut&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8842,7 +8846,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Numri i objekteve të zgjedhura</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Numri i entiteteve të zgjedhura&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -8859,7 +8867,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Kapje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8919,7 +8927,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Fikso zeron relative</translation>
+        <translation>Kyç zeron relative</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -8999,7 +9007,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>Fikso pozicionin relativ zero</translation>
+        <translation>Kyç pozicionin e zeros relative</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9009,7 +9017,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
-        <translation>i fiksuar</translation>
+        <translation>i kyçur</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9023,7 +9031,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9152,7 +9160,8 @@ Ju lutemi, specifikoni një emër tjetër.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Shtresa dimensionale mund të shtohet vetëm për shtresën normale aktive.</translation>
+        <translation>Shtresa e kuotave mund të shtohet vetëm për një shtresë normale aktive.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9635,7 +9644,7 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="998"/>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation>gazetë e përditshme</translation>
+        <translation>tabloid</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
@@ -9796,7 +9805,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1813"/>
         <source>Scalable Vector Graphics</source>
-        <translation>Grafikë vektoriale e skalueshme</translation>
+        <translation>Grafikë vektoriale e shkallëzueshme</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1815"/>
@@ -10164,7 +10173,7 @@ A doni ta zëvendësoni?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>poliline</translation>
+        <translation>polilinjë</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="548"/>
@@ -12742,7 +12751,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -12757,7 +12766,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -12793,7 +12802,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Kapje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12887,7 +12896,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- printon të gjitha fajlët dxf në fajllë pdf me të njëjtin emër.</translation>
+        <translation>-- printon të gjithë skedarët dxf në skedarë pdf me të njëjtat emra.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
@@ -12897,7 +12906,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>-- printon të gjitha fajlët dxf në fajllin &apos;some.pdf&apos;.</translation>
+        <translation>-- printon të gjithë skedarët dxf në skedarin &apos;some.pdf&apos;.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
@@ -12994,7 +13003,7 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Ngjyra e personalizuar%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13015,12 +13024,12 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: Nuk ka gjetur asnjë model. Ju lutemi, vendosni rrugën e modelit në preferencat e aplikacionit.</translation>
+        <translation>Vijëzimi: nuk u gjet asnjë motiv. Vendos shtegun e motiveve te preferencat e aplikacionit</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Dështoi ngarkimi i modelit: %1</translation>
+        <translation>Vijëzimi: ngarkimi i motivit dështoi: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
@@ -13196,19 +13205,21 @@ A doni ta zëvendësoni?</translation>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Bloku nuk mund të përmbajë një futje të vetes.</translation>
+        <translation>Blloku nuk mund të përmbajë një futje të vetvetes.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>Ka një futje e përsëritur e blokut aktual në:</translation>
+        <translation> ka një futje të përfshirë të bllokut aktual në:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>Ky blok nuk mund të futet.</translation>
+        <translation>
+Ky bllok nuk mund të futet.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="217"/>
@@ -13266,7 +13277,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionblockssave.cpp" line="96"/>
         <source>No block activated to save</source>
-        <translation>Nuk ka asnjë blok të aktivizuar për t&apos;u ruajtur</translation>
+        <translation>Nuk ka asnjë bllok të aktivizuar për t&apos;u ruajtur</translation>
     </message>
 </context>
 <context>
@@ -13287,7 +13298,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Specifikoni origjinën e vijës së parë zgjatuese</translation>
+        <translation>Specifikoni origjinën e vijës së parë ndihmëse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13297,7 +13308,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Specifikoni origjinën e vijës së dytë zgjatuese</translation>
+        <translation>Specifikoni origjinën e vijës së dytë ndihmëse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13308,12 +13319,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Specifikoni vendndodhjen e vijës së dimensionit</translation>
+        <translation>Specifikoni vendndodhjen e vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>Vendosni tekstin e dimensionit:</translation>
+        <translation>Futni tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -13338,12 +13349,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Specifikoni vendndodhjen e vijës së harkut të dimensionit</translation>
+        <translation>Specifikoni vendndodhjen e vijës së harkut të kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>Hyni tekstin e dimensionit:</translation>
+        <translation>Futni tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -13372,12 +13383,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Specifikoni vendndodhjen e vijës së dimensionit</translation>
+        <translation>Specifikoni vendndodhjen e vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>Hyni tekstin e dimensionit:</translation>
+        <translation>Futni tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -13413,7 +13424,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Specifikoni origjinën e vijës së parë zgjatuese</translation>
+        <translation>Specifikoni origjinën e vijës së parë ndihmëse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13423,7 +13434,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Specifikoni origjinën e vijës së dytë zgjatuese</translation>
+        <translation>Specifikoni origjinën e vijës së dytë ndihmëse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13434,17 +13445,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Specifikoni vendndodhjen e vijës së dimensionit</translation>
+        <translation>Specifikoni vendndodhjen e vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>Vendosni tekstin e dimensionit:</translation>
+        <translation>Futni tekstin e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Vendosni këndin e vijës së dimensionit:</translation>
+        <translation>Vendosni këndin e vijës së kuotës:</translation>
     </message>
 </context>
 <context>
@@ -13462,7 +13473,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>Zgjidhni harkun ose rrethin</translation>
+        <translation>Zgjidhni një entitet harku ose rrethi</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -13473,12 +13484,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specifikoni pozicionin e vijës së dimensionit ose futni këndin:</translation>
+        <translation>Specifikoni pozicionin e vijës së kuotës ose futni këndin:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>Futni tekstin e dimensionit:</translation>
+        <translation>Futni tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -13753,7 +13764,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="269"/>
         <source>Specify the first line</source>
-        <translation>Specifikoni linjën e parë</translation>
+        <translation>Specifikoni vijën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="270"/>
@@ -13763,7 +13774,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="274"/>
         <source>Specify the second line</source>
-        <translation>Specifikoni linjën e dytë</translation>
+        <translation>Specifikoni vijën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
@@ -13774,7 +13785,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>Specifikoni linjën e tretë</translation>
+        <translation>Specifikoni vijën e tretë</translation>
     </message>
 </context>
 <context>
@@ -13792,7 +13803,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Specifikoni pikën e parë në rrethin tangent</translation>
+        <translation>Specifikoni pikën e parë në rrethin tangjent</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
@@ -13804,12 +13815,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Specifikoni pikën e dytë në rrethin tangent</translation>
+        <translation>Specifikoni pikën e dytë në rrethin tangjent</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Zgjidhni qendrën e rrethit tangent</translation>
+        <translation>Zgjidhni qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -13832,12 +13843,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="167"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Nuk është e mundur të vizatohet rrethi tangent me rrezen &apos;%1&apos;</translation>
+        <translation>Nuk është e mundur të vizatohet rrethi tangjent me rrezen &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="181"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Nuk është e mundur të vizatohet rrethi tangent i përbashkët me rrezen &apos;%1&apos;</translation>
+        <translation>Nuk është e mundur të vizatohet rrethi tangjent i përbashkët me rrezen &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
@@ -13863,7 +13874,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Zgjidhni qendrën e rrethit tangent</translation>
+        <translation>Zgjidhni qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -13893,12 +13904,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Specifikoni një pikë në rrethin tangent</translation>
+        <translation>Specifikoni një pikë në rrethin tangjent</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Zgjidhni qendrën e rrethit tangent</translation>
+        <translation>Zgjidhni qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -13933,7 +13944,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Zgjidhni qendrën e rrethit tangent</translation>
+        <translation>Zgjidhni qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -14252,7 +14263,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Nuk mund të mbyllni një seri vijash: Nuk janë përcaktuar mjaft pika, ose është mbyllur tashmë.</translation>
+        <translation>Nuk mund të mbyllet seria e vijave: nuk janë përcaktuar ende mjaftueshëm entitete, ose është mbyllur tashmë.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
@@ -14642,7 +14653,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Zgjidhni vijën tangente më të afërt me kursorin</translation>
+        <translation>Zgjidhni vijën tangjente më të afërt me kursorin</translation>
     </message>
 </context>
 <context>
@@ -15043,7 +15054,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>Shto objekt nga biblioteka</translation>
+        <translation>Fut objekt nga biblioteka</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="79"/>
@@ -15175,17 +15186,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Entitetet nuk janë në të njëjtin polilinë.</translation>
+        <translation>Entitetet nuk janë në të njëjtën polilinjë.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Prindi i entitetit të dytë nuk është një polilinë.</translation>
+        <translation>Prindi i entitetit të dytë nuk është polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Prindi i entitetit të parë nuk është një vijë e thyer</translation>
+        <translation>Prindi i entitetit të parë nuk është polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
@@ -15215,7 +15226,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Specifikoni pikën e parë ndarëse në një vijë të thyer</translation>
+        <translation>Specifikoni pikën e parë të ndërprerjes në një polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15225,7 +15236,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specifikoni pikën e dytë ndarëse në të njëjtën vijë të thyer</translation>
+        <translation>Specifikoni pikën e dytë të ndërprerjes në të njëjtën polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15545,12 +15556,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>Entiteti i zgjedhur është në një blok. Ju lutemi, modifikoni bloku.</translation>
+        <translation>Entiteti i zgjedhur është në një bllok. Ju lutemi, modifikoni bllokun.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>Entiteti i zgjedhur nuk është një entitet atomik ose nuk mund të pritet.</translation>
+        <translation>Entiteti i zgjedhur nuk është entitet atomik ose nuk mund të shkurtohet.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15710,7 +15721,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Specifikoni vijën shumëkëndore për të fshirë nyjen.</translation>
+        <translation>Specifikoni polilinjën për të fshirë nyjen.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="159"/>
@@ -15757,7 +15768,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Zgjidh polivijën për të fshirë mes dy nyjeve</translation>
+        <translation>Specifiko polilinjën për të fshirë midis dy nyjeve</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -15862,7 +15873,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Specifikoni vijën shumëkëndore për ta prerë.</translation>
+        <translation>Specifikoni polilinjën për ta shkurtuar.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -16050,12 +16061,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Zgjidh për të shpërbërë bloku</translation>
+        <translation>Zgjidh për të zbërthyer bllokun</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
-        <translation>Zgjidh për të krijuar një blok</translation>
+        <translation>Zgjidh për të krijuar një bllok</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
@@ -16077,7 +16088,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>Zgjidh pikën e parë të prerjes</translation>
+        <translation>Zgjidh pikën e parë të vijës prerëse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
@@ -16165,12 +16176,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>U rigjeneruan %1 entitete dimensione</translation>
+        <translation>U rigjeneruan %1 entitete kuotash</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>Nuk u gjet asnjë entitet dimension</translation>
+        <translation>Nuk u gjet asnjë entitet kuote</translation>
     </message>
 </context>
 <context>
@@ -16236,7 +16247,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="26"/>
         <source>Arc Options</source>
-        <translation>Opcionet e harkut</translation>
+        <translation>Opsionet e harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="77"/>
@@ -16254,7 +16265,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation>Opcionet e harkut tangjencial</translation>
+        <translation>Opsionet e harkut tangjencial</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
@@ -16284,7 +16295,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Opcionet e faskës</translation>
+        <translation>Opsionet e faskës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
@@ -16294,7 +16305,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16312,7 +16323,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="32"/>
         <source>Circle Options</source>
-        <translation>Opcionet e Rrethit</translation>
+        <translation>Opsionet e rrethit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -16325,12 +16336,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Opcionet e Rrethit Tangencial 2</translation>
+        <translation>Opsionet e rrethit tangjent 2</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rrezja e rrethit tangencial për të vizatuar&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rrezja e rrethit tangjent që do të vizatohet&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16340,7 +16351,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>Rrezja e rrethit tangent</translation>
+        <translation>Rrezja e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -16348,7 +16359,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>Opcionet e dimensionit linear</translation>
+        <translation>Opsionet e kuotës lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16361,7 +16372,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Opcionet e dimensionit</translation>
+        <translation>Opsionet e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -16582,7 +16593,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation>Opcionet e bisektorit të vijës</translation>
+        <translation>Opsionet e bisektorit të vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -16610,7 +16621,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>Opcionet e vijës</translation>
+        <translation>Opsionet e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="53"/>
@@ -16721,7 +16732,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation>Opcionet për vijë paralele</translation>
+        <translation>Opsionet e vijës paralele</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
@@ -16749,7 +16760,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
         <source>Line Parallel Through Options</source>
-        <translation>Opcionet për vijë paralele që kalon</translation>
+        <translation>Opsionet e vijës paralele nëpër pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
@@ -16767,7 +16778,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Opcionet për poligon</translation>
+        <translation>Opsionet e poligonit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -16785,7 +16796,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Opcionet e Poligonit</translation>
+        <translation>Opsionet e poligonit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -16803,7 +16814,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>Opcionet e Këndit Relativ të Vijës</translation>
+        <translation>Opsionet e këndit relativ të vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
@@ -16831,7 +16842,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation>Opcionet e Tekstit</translation>
+        <translation>Opsionet e tekstit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mtextoptions.ui" line="53"/>
@@ -16849,7 +16860,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Opcionet për modifikimin e zhvendosjes</translation>
+        <translation>Opsionet e zhvendosjes paralele</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16867,7 +16878,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Opcionet për lëvizje dhe rrotullim</translation>
+        <translation>Opsionet e zhvendosjes me rrotullim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -16880,7 +16891,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>Opcionet e vijës shumëkëndëshe</translation>
+        <translation>Opsionet e polilinjës</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -16895,17 +16906,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
         <source>Tangential</source>
-        <translation>Tangenciale</translation>
+        <translation>Tangjenciale</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>Rrezja Tangenciale</translation>
+        <translation>Rrezja tangjenciale</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -16948,7 +16959,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Shkalla e printimit është fiksuar në vlerën aktuale</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shkalla e printimit është kyçur në vlerën aktuale&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
@@ -16986,7 +16997,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>Opcionet e rrumbullakësimit</translation>
+        <translation>Opsionet e rrumbullakimit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
@@ -16996,7 +17007,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17009,7 +17020,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opcionet e distancës së bashkëngjitjes</translation>
+        <translation>Opsionet e distancës së kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17022,7 +17033,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opcionet e distancës së bashkëngjitjes</translation>
+        <translation>Opsionet e distancës së kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17040,7 +17051,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>Opcionet e Spline</translation>
+        <translation>Opsionet e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>
@@ -17063,7 +17074,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation>Opcionet e Tekstit</translation>
+        <translation>Opsionet e tekstit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_textoptions.ui" line="53"/>
@@ -17081,12 +17092,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Opcionet e sasisë së shkurtimit</translation>
+        <translation>Opsionet e sasisë së shkurtimit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distancë. Vlerat negative për të shkurtuar, vlerat pozitive për të zgjeruar.</translation>
+        <translation>Distancë. Vlerat negative për të shkurtuar, vlerat pozitive për të zgjatur.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17096,7 +17107,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distancë. Vlerat negative për të shkurtuar, vlerat pozitive për të zgjeruar. Shenja negative injorohet kur shkurtohet në gjatësinë totale përfundimtare.</translation>
+        <translation>Distanca. Vlerat negative për shkurtim, vlerat pozitive për zgjatje. Shenja negative shpërfillet kur shkurtohet deri në gjatësinë totale përfundimtare.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>

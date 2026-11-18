@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Ange placering för dimensionsbåge</translation>
+        <translation>Ange placering för måttbågen</translation>
     </message>
 </context>
 <context>
@@ -434,7 +434,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -1625,7 +1625,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>Penn:</translation>
+        <translation>Penna:</translation>
     </message>
 </context>
 <context>
@@ -1744,7 +1744,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>Penn:</translation>
+        <translation>Penna:</translation>
     </message>
 </context>
 <context>
@@ -1859,7 +1859,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>Dimensionell</translation>
+        <translation>Mått</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1964,7 +1964,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Dimensionellt lager</translation>
+        <translation>Måttlager</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2143,7 +2143,7 @@ eller [%2]</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Konvertera till dimensionellt lager</translation>
+        <translation>Konvertera till måttlager</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2287,7 +2287,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Snäppläge för markering:</translation>
+        <translation>Snappläge för markering:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2520,7 +2520,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Gap-snapp:</translation>
+        <translation>Snapp för luckan:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
@@ -3272,7 +3272,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
         <source>Tick Length:</source>
-        <translation>Markeringlängd:</translation>
+        <translation>Markeringslängd:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
@@ -3662,7 +3662,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Penna</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3807,7 +3807,7 @@ Automatiskt sparande inaktiverat.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Snappmarkering</translation>
+        <translation>Snappval</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
@@ -3923,7 +3923,7 @@ Kontrollera att den finns och behörigheter.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Mått</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -4242,12 +4242,12 @@ Kontrollera att den finns och behörigheter.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Mellanslag: återställde snäppläget till normalt</translation>
+        <translation>Mellanslag: snappläget återställdes till normalt</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Mellanslag: ställde tillfälligt in snäppläget till fritt snäpp</translation>
+        <translation>Mellanslag: snappläget sattes tillfälligt till fri snapp</translation>
     </message>
 </context>
 <context>
@@ -4702,7 +4702,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4835,7 +4835,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Mått</translation>
     </message>
 </context>
 <context>
@@ -6181,7 +6181,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>Avstånd för dimensionslinje:</translation>
+        <translation>Måttlinjens lucka:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -6439,7 +6439,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Storlek på dimensionspilen. &lt;a name=&quot;result_box&quot;/&gt;ingen effekt när streckstorleken &lt;a name=&quot;result_box&quot;/&gt;är något annat än 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Storlek på måttpilen. &lt;a name=&quot;result_box&quot;/&gt;Ingen effekt när markeringsstorleken &lt;a name=&quot;result_box&quot;/&gt;är något annat än 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6490,7 +6490,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Förskjutning från ursprungspunkten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Förskjutning från origo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
@@ -6859,17 +6859,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Visa indikatorlinjer för snäppning</translation>
+        <translation>Visa snappindikatorns linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Indikatorform för snäppning</translation>
+        <translation>Snappindikatorns form</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Dölj markören vid snäppning</translation>
+        <translation>Dölj markören vid snappning</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -7019,7 +7019,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Växla fritt snäppläge när mellanslagstangenten trycks ned.</translation>
+        <translation>Växla till fritt snappläge när MELLANSLAG trycks ned</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7044,7 +7044,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivera tillfälligt fritt snäppläge när mellanslagstangenten trycks ned och kommandofönstret är aktivt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivera tillfälligt fri snapp när mellanslagstangenten trycks ned och kommandofönstret är aktivt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8859,47 +8859,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Fäst vid slutpunkter</translation>
+        <translation>Snappa till ändpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Fäst vid likadistanserade punkter på objektet</translation>
+        <translation>Snappa till punkter på lika avstånd längs objektet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Fäst vid mittpunkter</translation>
+        <translation>Snappa till centrumpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Fäst automatiskt vid skärningspunkter</translation>
+        <translation>Snappa automatiskt till skärningspunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Fäst vid närmaste punkt på objektet</translation>
+        <translation>Snappa till närmaste punkt på objektet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Fäst vid punkt med angivet avstånd från slutpunkten</translation>
+        <translation>Snappa till punkt på angivet avstånd från ändpunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Fäst manuellt vid skärningspunkter</translation>
+        <translation>Snappa manuellt till skärningspunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Fäst vid rutnät</translation>
+        <translation>Snappa till rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8914,52 +8914,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>Flytta relativt nollpunkt</translation>
+        <translation>Flytta relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Lås relativt nollpunkt</translation>
+        <translation>Lås relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Fritt fäste</translation>
+        <translation>Fri snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Fäst vid rutnät</translation>
+        <translation>Snappa till rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Fäst vid ändpunkter</translation>
+        <translation>Snappa till ändpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Fäst vid objekt</translation>
+        <translation>Snappa på objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Fäst vid centrum</translation>
+        <translation>Snappa till centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Fäst vid mitten</translation>
+        <translation>Snappa till mittpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Fäst vid avstånd</translation>
+        <translation>Snappa på avstånd</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Fäst vid skärningspunkt</translation>
+        <translation>Snappa till skärningspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -8994,7 +8994,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Exklusivt snäppläge</translation>
+        <translation>Exklusivt snappläge</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9014,7 +9014,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Snäpp till mitten (manuellt)</translation>
+        <translation>Snappa till mittpunkt manuellt</translation>
     </message>
 </context>
 <context>
@@ -9023,7 +9023,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Penna</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9075,7 +9075,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Lagret dialog</translation>
+        <translation>Lagerdialog</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
@@ -9236,7 +9236,8 @@ Vänligen ange ett annat namn.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Ett dimensionellt lager kan endast läggas till för ett normalt aktivt lager.</translation>
+        <translation>Ett måttlager kan endast läggas till för ett normalt aktivt lager.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -10349,7 +10350,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>snäppfri</translation>
+        <translation>snappfri</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10361,7 +10362,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>snäppcentrera</translation>
+        <translation>snappcentrum</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10373,7 +10374,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>snäppavstånd</translation>
+        <translation>snappavstånd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10385,7 +10386,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>snäppslut</translation>
+        <translation>snappände</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10967,7 +10968,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Mått</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -11018,12 +11019,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Fästalternativ</translation>
+        <translation>Extra snappfunktioner</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -12424,7 +12425,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Anpassad färg%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13010,12 +13011,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: Inget mönster hittades. Ange sökvägen till mönstret i programmets inställningar.</translation>
+        <translation>Skraffering: Inget mönster hittades. Ange sökvägen till mönstren i programmets inställningar.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Misslyckades med att ladda mönstret: %1</translation>
+        <translation>Skraffering: inläsning av mönstret misslyckades: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13293,7 +13294,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Ange ursprung för den första förlängningslinjen.</translation>
+        <translation>Ange utgångspunkt för den första förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13303,7 +13304,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Ange ursprung för den andra förlängningslinjen.</translation>
+        <translation>Ange utgångspunkt för den andra förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13357,7 +13358,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>Inte en cirkel- eller bågenhet</translation>
+        <translation>Inte en cirkel eller båge</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="258"/>
@@ -13367,7 +13368,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>Välj en cirkel- eller bågenhet</translation>
+        <translation>Välj en cirkel eller båge</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13419,7 +13420,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Ange ursprung för den första förlängningslinjen</translation>
+        <translation>Ange utgångspunkt för den första förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13429,7 +13430,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Ange ursprung för den andra förlängningslinjen</translation>
+        <translation>Ange utgångspunkt för den andra förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13458,7 +13459,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>Inte en cirkel- eller båge-entitet</translation>
+        <translation>Inte en cirkel eller båge</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="251"/>
@@ -13468,7 +13469,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>Välj båge eller cirkel.</translation>
+        <translation>Välj en cirkel eller båge</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -14446,7 +14447,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>Välj enhet</translation>
+        <translation>Välj objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -15088,7 +15089,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Av-)lås relativ nollpunkt</translation>
+        <translation>&amp;Lås/lås upp relativ nollpunkt</translation>
     </message>
 </context>
 <context>
@@ -15428,7 +15429,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
         <source>Specify second entity</source>
-        <translation>Ange andra enheten</translation>
+        <translation>Ange andra objektet</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
@@ -15443,7 +15444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Ange första enheten eller radie &lt;%1&gt;</translation>
+        <translation>Ange första objektet eller radie &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -15603,7 +15604,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entiteten måste vara en polylinje.</translation>
+        <translation>Objektet måste vara en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15701,7 +15702,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entiteten måste vara en polylinje.</translation>
+        <translation>Objektet måste vara en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15851,7 +15852,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Enheten måste vara en polylinje.</translation>
+        <translation>Objektet måste vara en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -15863,7 +15864,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>Inga segment hittades i enheten.</translation>
+        <translation>Inga segment hittades i objektet.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
@@ -16093,7 +16094,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
-        <translation>Välj andra skärningspunkten på linjen</translation>
+        <translation>Välj andra punkten på skärningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
@@ -16129,7 +16130,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>Ange relativt nollvärde</translation>
+        <translation>Ange relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
@@ -16139,7 +16140,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>Ange &amp;relativt nollvärde</translation>
+        <translation>Ange &amp;relativ nollpunkt</translation>
     </message>
 </context>
 <context>
@@ -16300,7 +16301,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Trimma</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16565,7 +16566,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Snäppunkt:</translation>
+        <translation>Snappunkt:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -17002,7 +17003,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Trimma</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17015,7 +17016,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Alternativ för avståndssnappning</translation>
+        <translation>Alternativ för avståndssnapp</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17028,7 +17029,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Alternativ för avståndssnappning</translation>
+        <translation>Alternativ för avståndssnapp</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>

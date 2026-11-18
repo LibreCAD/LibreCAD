@@ -118,7 +118,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Nimekirja üksused</translation>
+        <translation>Loetle elemendid</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -128,7 +128,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Tühi üksus</translation>
+        <translation>Tühi element</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -143,7 +143,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Kiht</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -153,12 +153,12 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Liinitüüp</translation>
+        <translation>Joonetüüp</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Liini paksus</translation>
+        <translation>Joone paksus</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -180,7 +180,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>JOON</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -330,7 +330,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>POLÜJOON</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -360,7 +360,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>SPLAIN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
@@ -370,7 +370,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>VIIRUTUS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -419,12 +419,12 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>vali originaalolem:</translation>
+        <translation>vali algne element:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>üksuste muutmine</translation>
+        <translation>vali muudetavad elemendid</translation>
     </message>
 </context>
 <context>
@@ -653,7 +653,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tühi üksus</translation>
+        <translation>Tühi element</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -668,7 +668,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Kiht</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -678,12 +678,12 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Liinitüüp</translation>
+        <translation>Joonetüüp</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Liini paksus</translation>
+        <translation>Joone paksus</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -693,7 +693,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>JOON</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -767,7 +767,7 @@ esimene aluspunkt, teine aluspunkt, esimene sihtpunkt, teine sihtpunkt.</transla
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>POLÜJOON</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -875,7 +875,7 @@ vastupäeva.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Märgid</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -1029,7 +1029,7 @@ vastupäeva.</translation>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Nimekirja üksused</translation>
+        <translation>Loetle elemendid</translation>
     </message>
 </context>
 <context>

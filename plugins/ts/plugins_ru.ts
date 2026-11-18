@@ -180,7 +180,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ЛИНИЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +211,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -285,12 +285,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>ТЕКСТ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>СОГЛАШЕНИЕ</translation>
+        <translation>СОДЕРЖИМОЕ ТЕКСТА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
@@ -315,7 +315,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation>Вращение</translation>
+        <translation>Поворот</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
@@ -380,7 +380,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>ВЫРАВНЕННЫЙРАЗМЕР</translation>
+        <translation>ПАРАЛЛЕЛЬНЫЙРАЗМЕР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
@@ -693,7 +693,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ЛИНИЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,7 +724,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -767,7 +767,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>ПОЛИЛИНИЯ</translation>
+        <translation>ЛОМАНАЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>

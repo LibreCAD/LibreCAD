@@ -434,7 +434,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Bue</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -755,7 +755,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Beskær segmenter</translation>
+        <translation>&amp;Trim segmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
@@ -770,7 +770,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;Flere tekst</translation>
+        <translation>&amp;MTekst</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
@@ -780,7 +780,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Skravering</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Ledelinje</translation>
+        <translation>&amp;Henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -880,7 +880,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Beskær</translation>
+        <translation>&amp;Trim</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -905,7 +905,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Runding</translation>
+        <translation>&amp;Afrunding</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
@@ -1859,7 +1859,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>Dimensionel</translation>
+        <translation>Målsætning</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1964,7 +1964,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Dimensionel lag</translation>
+        <translation>Målsætningslag</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2122,7 +2122,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Tilføj dimensions-underlag</translation>
+        <translation>Tilf&amp;øj målsætningsunderlag</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2379,7 +2379,7 @@ eller [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Udvid/beskær</translation>
+        <translation>Forlæng/trim</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2597,12 +2597,12 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Linjebredde-ikon</translation>
+        <translation>Ikon for linjetykkelse</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Linjebredde-navn</translation>
+        <translation>Navn på linjetykkelse</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -3586,7 +3586,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>&amp;View</source>
-        <translation>&amp;View</translation>
+        <translation>&amp;Vis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
@@ -3707,7 +3707,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Command line</source>
-        <translation>Komandolinie</translation>
+        <translation>Kommandolinje</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
@@ -3923,7 +3923,7 @@ Kontroller venligst dens eksistens og tilladelser.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -3980,7 +3980,7 @@ Kontroller venligst dens eksistens og tilladelser.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dim&amp;ension</translation>
+        <translation>&amp;Mål</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
@@ -4561,13 +4561,13 @@ i et nyt vindue</translation>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="14"/>
         <source>Command Line</source>
-        <translation>Komando linie</translation>
+        <translation>Kommandolinje</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="82"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="188"/>
         <source>Command:</source>
-        <translation>Komando:</translation>
+        <translation>Kommando:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
@@ -4677,7 +4677,7 @@ i et nyt vindue</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
         <source>π (Pi)</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format for dimensionsteksten, &amp;lt;&amp;gt; kan bruges som en pladsholder for dimensionmåleværdien&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>π (Pi)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
@@ -4703,7 +4703,7 @@ i et nyt vindue</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Bue</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4837,7 +4837,7 @@ Dette ændrer rekursivt alle objekter i selve blokken.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Mål</translation>
     </message>
 </context>
 <context>
@@ -5029,7 +5029,7 @@ Dette ændrer rekursivt alle objekter i selve blokken.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="124"/>
         <source>Command Language:</source>
-        <translation>Sprog i komandolinien:</translation>
+        <translation>Sprog i kommandolinjen:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
@@ -6183,7 +6183,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>Afstand mållinie:</translation>
+        <translation>Mållinjeafstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -6238,7 +6238,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Målsætte</translation>
+        <translation>&amp;Målsætning</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -6364,12 +6364,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skala til at gange alle dimensionværdier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skala, som alle målværdier ganges med.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Skala til at gange alle dimensionsgeometrier.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skala, som alle målgeometrier ganges med.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6502,7 +6502,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Forlængelseslinjer</translation>
+        <translation>Hjælpelinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6558,7 +6558,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>fast længde af forlængelseslinjen</translation>
+        <translation>fast længde af hjælpelinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6701,7 +6701,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
         <source>&amp;Command Language:</source>
-        <translation>Sprog i &amp;komandolinien:</translation>
+        <translation>Sprog i &amp;kommandolinjen:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="828"/>
@@ -6971,7 +6971,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>Relativ nul-markørfarve:</translation>
+        <translation>Farve på markør for relativt &amp;nulpunkt:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
@@ -8215,7 +8215,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
-        <translation>A&amp;ligned</translation>
+        <translation>&amp;Justeret</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
@@ -8424,7 +8424,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
         <source>B&amp;lack</source>
-        <translation>B&amp;lack</translation>
+        <translation>&amp;Sort</translation>
     </message>
 </context>
 <context>
@@ -8792,7 +8792,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Linjebredde</translation>
+        <translation>Linjetykkelse</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8920,12 +8920,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>Flyt relativt nul</translation>
+        <translation>Flyt relativt nulpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Lås relativt nul</translation>
+        <translation>Lås relativt nulpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
@@ -8990,12 +8990,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>Indstil relativ nulposition</translation>
+        <translation>Sæt det relative nulpunkts position</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>Lås relativ nulposition</translation>
+        <translation>Lås det relative nulpunkts position</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -9005,7 +9005,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>Relativ nulposition er %1</translation>
+        <translation>Det relative nulpunkts position er %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9034,7 +9034,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
         <source>Line type:</source>
-        <translation>Linie type:</translation>
+        <translation>Linjetype:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
@@ -9242,7 +9242,8 @@ Vælg venligst et andet navn.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Et dimensionelt lag kan kun tilføjes til et normalt aktivt lag.</translation>
+        <translation>Et målsætningslag kan kun tilføjes til et normalt aktivt lag.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9345,9 +9346,9 @@ Angiv venligst en anden værdi.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Lag(e) uden entiteter fundet, men de er stadig filtreret og ikke synlige.
+        <translation>Der blev fundet lag uden objekter, men de er filtreret og ikke synlige.
 
-Fjern filtermasken og gentag.</translation>
+Ryd filtermasken, og prøv igen.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1272"/>
@@ -10186,7 +10187,7 @@ Vil du overskrive den?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>ledelinje</translation>
+        <translation>henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -10972,7 +10973,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimension</translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -11008,7 +11009,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -12429,7 +12430,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13299,7 +13300,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Angiv første forlængelseslinjes oprindelse</translation>
+        <translation>Angiv første hjælpelinjes udgangspunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13309,7 +13310,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Angiv start på anden måludførende linie</translation>
+        <translation>Angiv anden hjælpelinjes udgangspunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13320,7 +13321,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Angiv placering af mållinie</translation>
+        <translation>Angiv mållinjens placering</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
@@ -13333,7 +13334,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="239"/>
         <source>Select first line</source>
-        <translation>Vælg første linie</translation>
+        <translation>Vælg første linje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="240"/>
@@ -13345,12 +13346,12 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="244"/>
         <source>Select second line</source>
-        <translation>Vælg den anden linie</translation>
+        <translation>Vælg anden linje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Angiv placering af mållinie for bue</translation>
+        <translation>Angiv placering af mållinjen for buen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
@@ -13384,7 +13385,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Angiv placering af mållinie</translation>
+        <translation>Angiv mållinjens placering</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
@@ -13425,7 +13426,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Angiv første forlængelseslinjes oprindelse</translation>
+        <translation>Angiv første hjælpelinjes udgangspunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13435,7 +13436,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Angiv start på anden måludførende linie</translation>
+        <translation>Angiv anden hjælpelinjes udgangspunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13446,7 +13447,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Angiv placering af mållinie</translation>
+        <translation>Angiv mållinjens placering</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
@@ -13456,7 +13457,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Indtast vinkel for mållinie :</translation>
+        <translation>Indtast mållinjevinkel:</translation>
     </message>
 </context>
 <context>
@@ -13485,7 +13486,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Angiv position for mållinie eller skriv vinkel:</translation>
+        <translation>Angiv mållinjens position eller indtast vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
@@ -14323,7 +14324,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
         <source>Select first line</source>
-        <translation>Vælg første linie</translation>
+        <translation>Vælg første linje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="289"/>
@@ -14333,7 +14334,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="292"/>
         <source>Select second line</source>
-        <translation>Vælg den anden linie</translation>
+        <translation>Vælg anden linje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="293"/>
@@ -14364,7 +14365,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
         <source>Click and drag to draw a line</source>
-        <translation>Klik og træk for at tegne en linie</translation>
+        <translation>Klik og træk for at tegne en linje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
@@ -15094,7 +15095,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>&amp;Lås (til/fra) relativt nul</translation>
+        <translation>&amp;Lås relativt nulpunkt til/fra</translation>
     </message>
 </context>
 <context>
@@ -15187,7 +15188,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Angiv første knæk på linien</translation>
+        <translation>Angiv første brudpunkt på en polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15197,7 +15198,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Angiv andet knæk på samme linie</translation>
+        <translation>Angiv andet brudpunkt på samme polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15276,7 +15277,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>Angiv første punkt for spejlingslinie</translation>
+        <translation>Angiv første punkt på spejlingslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15286,7 +15287,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Angiv andet punkt for spejlingslinie</translation>
+        <translation>Angiv andet punkt på spejlingslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -15885,7 +15886,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Angiv polylinje til beskæring</translation>
+        <translation>Angiv polylinjen, der skal trimmes</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
@@ -15938,7 +15939,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Udskrivningsforskydning ignorerer relativ nul. Ignorerer &apos;@&apos;</translation>
+        <translation>Udskrivningsforskydning ignorerer det relative nulpunkt. Ignorerer &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -16089,7 +16090,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>Vælg første punkt for skæringslinie</translation>
+        <translation>Vælg første punkt på skæringslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
@@ -16099,7 +16100,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
-        <translation>Vælg det andet punkt for skæringslinie</translation>
+        <translation>Vælg andet punkt på skæringslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
@@ -16145,7 +16146,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>Indstil &amp;relativ nul</translation>
+        <translation>Sæt &amp;relativt nulpunkt</translation>
     </message>
 </context>
 <context>
@@ -16209,7 +16210,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Specify first edge</source>
-        <translation>Angiv første linie</translation>
+        <translation>Angiv første hjørne</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
@@ -16219,7 +16220,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Specify second edge</source>
-        <translation>Angiv den anden linie</translation>
+        <translation>Angiv andet hjørne</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
@@ -16980,7 +16981,7 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Anvend udskrivningsskala på linjebredde</translation>
+        <translation>Anvend udskrivningsskala på linjetykkelse</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -16998,12 +16999,12 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>Runde indstillinger</translation>
+        <translation>Afrundingsindstillinger</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Marker for at beskære begge kanter til afrunding</translation>
+        <translation>Markér for at trimme begge kanter til afrundingen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -17093,12 +17094,12 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Beskæringsmængde-indstillinger</translation>
+        <translation>Indstillinger for trimlængde</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Afstand. Negative værdier for beskæring, positive for forlængelse.</translation>
+        <translation>Afstand. Negative værdier for trimning, positive værdier for forlængelse.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17108,12 +17109,12 @@ Denne blok kan ikke indsættes.</translation>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Afstand. Negative værdier for beskæring, positive for forlængelse. Negativt fortegn ignoreres ved beskæring til endelig total længde.</translation>
+        <translation>Afstand. Negative værdier for trimning, positive værdier for forlængelse. Fortegnet ignoreres ved trimning til en endelig samlet længde.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Den indtastede længde bruges som total længde efter beskæring i stedet for længdeforøgelse</translation>
+        <translation>Den indtastede længde bruges som samlet længde efter trimning i stedet for som længdeforøgelse</translation>
     </message>
 </context>
 <context>

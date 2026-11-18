@@ -118,7 +118,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>รายการเอนทิตี</translation>
+        <translation>รายการวัตถุ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -128,7 +128,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>เอนทิตีว่างเปล่า</translation>
+        <translation>วัตถุว่างเปล่า</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -153,7 +153,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>ประเภทเส้น</translation>
+        <translation>ชนิดเส้น</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -180,7 +180,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>เส้นตรง</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +211,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -285,7 +285,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>ข้อความ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -360,22 +360,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>สปลายน์</translation>
+        <translation>สไปลน์</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>จุดสปลายน์</translation>
+        <translation>จุดสไปลน์</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>แฮตช์</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>เส้นนำบอกขนาด</translation>
+        <translation>เส้นชี้</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -419,12 +419,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>เลือกเอนทิตีต้นแบบ:</translation>
+        <translation>เลือกวัตถุต้นแบบ:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>เลือกเอนทิตีที่ต้องการเปลี่ยน</translation>
+        <translation>เลือกวัตถุที่ต้องการเปลี่ยน</translation>
     </message>
 </context>
 <context>
@@ -653,7 +653,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>เอนทิตีว่างเปล่า</translation>
+        <translation>วัตถุว่างเปล่า</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -678,7 +678,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>ประเภทเส้น</translation>
+        <translation>ชนิดเส้น</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -693,7 +693,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>เส้นตรง</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,7 +724,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -1028,7 +1028,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>รายการเอนทิตี</translation>
+        <translation>รายการวัตถุ</translation>
     </message>
 </context>
 <context>
@@ -1237,7 +1237,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>จุดสปลายน์</translation>
+        <translation>จุดสไปลน์</translation>
     </message>
 </context>
 <context>

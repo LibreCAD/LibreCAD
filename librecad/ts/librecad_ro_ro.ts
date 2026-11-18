@@ -72,7 +72,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation>Puncte Spline</translation>
+        <translation>Puncte spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>Puncte Spline</translation>
+        <translation>Puncte spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -103,7 +103,7 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation>Puncte pe Spline</translation>
+        <translation>Puncte pe spline</translation>
     </message>
 </context>
 <context>
@@ -820,7 +820,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Indicator</translation>
+        <translation>&amp;Linie de indicație</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -1211,7 +1211,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Draft</source>
-        <translation>&amp;Schita</translation>
+        <translation>&amp;Ciornă</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1318"/>
@@ -2272,7 +2272,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>Ancorare linie:</translation>
+        <translation>Fixare linie:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2287,7 +2287,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Ancorare marcaj:</translation>
+        <translation>Fixare la marcaje:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>Distanță ancorare:</translation>
+        <translation>Distanță de fixare:</translation>
     </message>
 </context>
 <context>
@@ -2365,7 +2365,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>Ancorare:</translation>
+        <translation>Fixare:</translation>
     </message>
 </context>
 <context>
@@ -2520,12 +2520,12 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Ancorare interval:</translation>
+        <translation>Fixare interval:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>Distanță ancorare:</translation>
+        <translation>Distanță de fixare:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -2559,7 +2559,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>Ancorare linie:</translation>
+        <translation>Fixare linie:</translation>
     </message>
 </context>
 <context>
@@ -2904,7 +2904,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>Ancorare:</translation>
+        <translation>Fixare:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -2974,7 +2974,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>Deplasare ancorare</translation>
+        <translation>Deplasare fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -3012,7 +3012,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>Deplasare ancorare</translation>
+        <translation>Deplasare fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3032,7 +3032,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Ancorare la sfârșit:</translation>
+        <translation>Fixare la sfârșit:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Ancorare la început:</translation>
+        <translation>Fixare la început:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3184,7 +3184,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>Deplasare ancorare</translation>
+        <translation>Deplasare fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3277,7 +3277,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Ancorare marcaj:</translation>
+        <translation>Fixare la marcaje:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3566,7 +3566,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="677"/>
         <source>&amp;File</source>
-        <translation>&amp;Fisier</translation>
+        <translation>&amp;Fișier</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="719"/>
@@ -3647,7 +3647,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Fișier</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
@@ -3662,7 +3662,7 @@ sau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilou</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3792,7 +3792,7 @@ Autosalvare dezactivata.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Selecție ancorare</translation>
+        <translation>Selecție fixare</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1741"/>
@@ -3836,7 +3836,7 @@ Autosalvare dezactivata.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
-        <translation>Mod schiță</translation>
+        <translation>Mod ciornă</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
@@ -4242,12 +4242,12 @@ Verificați existența și permisiunile.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spațiu: a revenit la modul normal de ancorare</translation>
+        <translation>Spațiu: modul de fixare a revenit la normal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spațiu: a setat temporar modul de ancorare la ancorare liberă</translation>
+        <translation>Spațiu: modul de fixare a fost setat temporar la fixare liberă</translation>
     </message>
 </context>
 <context>
@@ -4420,17 +4420,17 @@ intr-o fereastra noua</translation>
         <location filename="../src/ui/qg_colorbox.cpp" line="106"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="282"/>
         <source>By Layer</source>
-        <translation>Dupa strat</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="107"/>
         <source>By Block</source>
-        <translation>Dupa Bloc</translation>
+        <translation>După bloc</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation>Roșu</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="120"/>
@@ -4450,7 +4450,7 @@ intr-o fereastra noua</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>Albastru</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="128"/>
@@ -4465,7 +4465,7 @@ intr-o fereastra noua</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>Gri</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="139"/>
@@ -4903,7 +4903,7 @@ Aceasta modifică recursiv toate entitățile blocului în sine.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Alegeti atributele hasurului</translation>
+        <translation>Alegeți atributele hașurii</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -6362,7 +6362,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Scală pentru a multiplica toate valorile dimensiunilor.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scară pentru multiplicarea tuturor valorilor cotelor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6372,7 +6372,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Scală pentru a multiplica toate geometriile dimensiunilor.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scară pentru multiplicarea geometriei tuturor cotelor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6387,7 +6387,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="898"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;, &apos; (virgulă)</translation>
+        <translation>&apos;,&apos; (virgulă)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
@@ -6505,7 +6505,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Linii de prelungire</translation>
+        <translation>Linii ajutătoare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6561,7 +6561,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>lungime fixă a liniei de extensie</translation>
+        <translation>lungime fixă a liniei ajutătoare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6659,7 +6659,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Sabloane pentru hasur:</translation>
+        <translation>Modele de hașură:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6819,7 +6819,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Indicator de ancorare:</translation>
+        <translation>Indicator de fixare:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -6864,17 +6864,17 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Liniile indicatorului de ancorare</translation>
+        <translation>Liniile indicatorului de fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Forma indicatorului de ancorare</translation>
+        <translation>Forma indicatorului de fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Ascunde cursorul la ancorare</translation>
+        <translation>Ascunde cursorul la fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -7024,7 +7024,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Activează/dezactivează modul de fixare liberă când se apasă bara de spațiu.</translation>
+        <translation>Comută modul de fixare liberă la apăsarea tastei SPACE</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7049,7 +7049,7 @@ Vă rugăm să alegeți unitatea de măsură pe care doriți să o utilizați pe
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activați temporar funcția de fixare liberă atunci când se apasă tasta Space și fereastra de comandă este activă&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comută temporar fixarea liberă atunci când se apasă tasta Space și fereastra de comandă este activă&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7408,7 +7408,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Splină</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -8284,7 +8284,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="138"/>
         <source>QCad 1.x file %1</source>
-        <translation>Fisier QCad 1.x  %1</translation>
+        <translation>Fișier QCad 1.x %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="125"/>
@@ -8453,7 +8453,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Creion implicit</translation>
+        <translation>Stilou implicit</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
@@ -8615,52 +8615,52 @@ Conținutul unui strat de construcție nu ar trebui să apară în imprimare.</t
         <location filename="../src/ui/qg_linetypebox.cpp" line="79"/>
         <location filename="../src/ui/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Dupa Strat</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
         <source>By Block</source>
-        <translation>Dupa Bloc</translation>
+        <translation>După bloc</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
         <source>No Pen</source>
-        <translation>Niciun creion</translation>
+        <translation>Fără stilou</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="83"/>
         <source>Continuous</source>
-        <translation>Continua</translation>
+        <translation>Continuă</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Punctată</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
         <source>Dot (small)</source>
-        <translation>Punctata (micat)</translation>
+        <translation>Punctată (mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="87"/>
         <source>Dot (large)</source>
-        <translation>Punctata (mare)</translation>
+        <translation>Punctată (mare)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Întreruptă</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
         <source>Dash (small)</source>
-        <translation>Intrerupta (mica)</translation>
+        <translation>Întreruptă (mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="91"/>
         <source>Dash (large)</source>
-        <translation>Intrerupta (mare)</translation>
+        <translation>Întreruptă (mare)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="92"/>
@@ -8670,7 +8670,7 @@ Conținutul unui strat de construcție nu ar trebui să apară în imprimare.</t
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
         <source>Dash Dot (small)</source>
-        <translation>Linie-punct (mica)</translation>
+        <translation>Linie-punct (mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="95"/>
@@ -8680,82 +8680,82 @@ Conținutul unui strat de construcție nu ar trebui să apară în imprimare.</t
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="96"/>
         <source>Divide</source>
-        <translation>Divizata</translation>
+        <translation>Linie-două puncte</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Divizata (mica)</translation>
+        <translation>Linie-două puncte (mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
         <source>Divide (large)</source>
-        <translation>Divizata (mare)</translation>
+        <translation>Linie-două puncte (mare)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Centrata</translation>
+        <translation>Axă</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Centrata (mica)</translation>
+        <translation>Axă (mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>Centrata (mare)</translation>
+        <translation>Axă (mare)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
         <source>Border</source>
-        <translation>Bordura</translation>
+        <translation>Bordură</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
         <source>Border (small)</source>
-        <translation>Bordura (mica)</translation>
+        <translation>Bordură (mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="107"/>
         <source>Border (large)</source>
-        <translation>Bordura (mare)</translation>
+        <translation>Bordură (mare)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="75"/>
         <source>- Unchanged -</source>
-        <translation>- Nemodificata -</translation>
+        <translation>- Nemodificat -</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>Punct (foarte mic)</translation>
+        <translation>Punctată (foarte mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Linie (foarte mică)</translation>
+        <translation>Întreruptă (foarte mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Linie punctată (foarte mică)</translation>
+        <translation>Linie-punct (foarte mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Împarte (mic)</translation>
+        <translation>Linie-două puncte (foarte mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Centru (mic)</translation>
+        <translation>Axă (foarte mică)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Margine (mic)</translation>
+        <translation>Bordură (foarte mică)</translation>
     </message>
 </context>
 <context>
@@ -8868,47 +8868,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Ancorare la capete</translation>
+        <translation>Fixare la capete</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Ancorare la punctele echidistante ale entității</translation>
+        <translation>Fixare la punctele echidistante ale entității</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Ancorare la centre</translation>
+        <translation>Fixare la centre</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Ancorare automată la intersecții</translation>
+        <translation>Fixare automată la intersecții</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Ancorare la cel mai apropiat punct de pe entitate</translation>
+        <translation>Fixare la cel mai apropiat punct de pe entitate</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Ancorare la un punct aflat la o distanță dată față de capăt</translation>
+        <translation>Fixare la un punct aflat la o distanță dată față de capăt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Ancorare manuală la intersecții</translation>
+        <translation>Fixare manuală la intersecții</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Ancorare la grilă</translation>
+        <translation>Fixare la grilă</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8933,42 +8933,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Ancorare liberă</translation>
+        <translation>Fixare liberă</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Ancorare la grilă</translation>
+        <translation>Fixare la grilă</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Ancorare la punctele finale</translation>
+        <translation>Fixare la punctele finale</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Ancorare pe entitate</translation>
+        <translation>Fixare pe entitate</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Ancorare la centru</translation>
+        <translation>Fixare la centru</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Ancorare la mijloc</translation>
+        <translation>Fixare la mijloc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Ancorare la distanță</translation>
+        <translation>Fixare la distanță</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Ancorare la intersecție</translation>
+        <translation>Fixare la intersecție</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9003,7 +9003,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Mod de ancorare exclusiv</translation>
+        <translation>Mod de fixare exclusiv</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9023,7 +9023,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Ancorare manuală la mijloc</translation>
+        <translation>Fixare manuală la mijloc</translation>
     </message>
 </context>
 <context>
@@ -9032,7 +9032,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilou</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9055,7 +9055,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
-        <translation>Dupa strat</translation>
+        <translation>După strat</translation>
     </message>
 </context>
 <context>
@@ -9272,12 +9272,12 @@ Vă rugăm să specificați o altă valoare.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
-        <translation>Eliminați penița</translation>
+        <translation>Eliminați stiloul</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Penița va fi eliminată din paletă, entitățile desenate nu vor fi afectate.</translation>
+        <translation>Stiloul va fi eliminat din paletă; entitățile din desen nu vor fi afectate.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9288,22 +9288,22 @@ Vă rugăm să specificați o altă valoare.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
-        <translation>Penița de eliminat:</translation>
+        <translation>Stiloul de eliminat:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
-        <translation>Eliminați penițele</translation>
+        <translation>Eliminați stilourile</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Penițele vor fi eliminate din paletă, entitățile de desen nu vor fi afectate.</translation>
+        <translation>Stilourile vor fi eliminate din paletă; entitățile din desen nu vor fi afectate.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
-        <translation>Penițele de eliminat:</translation>
+        <translation>Stilourile de eliminat:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
@@ -9313,7 +9313,7 @@ Vă rugăm să specificați o altă valoare.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Nu există entități care să corespundă peniței pe straturile vizibile.</translation>
+        <translation>Nu există entități care să corespundă stiloului pe straturile vizibile.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
@@ -9330,17 +9330,17 @@ Vă rugăm să specificați o altă valoare.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
-        <translation>Vă rugăm să utilizați atribute diferite pentru peniță.</translation>
+        <translation>Vă rugăm să folosiți alte atribute ale stiloului.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>Setează penița după entitate</translation>
+        <translation>Setează stiloul după entitate</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Vă rugăm să selectați o singură entitate pentru a prelua setările peniței.</translation>
+        <translation>Vă rugăm să selectați o singură entitate din care să se preia setarea stiloului.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -9358,11 +9358,11 @@ Clear filtering mask and repeat.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Înlocuiți valoarea „Pe strat” cu valorile straturilor sursă?
+        <translation>Înlocuiți valoarea „După strat” cu valorile straturilor sursă?
 
-Dacă da, entitățile cu penițe „Pe strat” vor arăta pe noul strat exact ca pe straturile anterioare, iar valoarea „Pe strat” va fi înlocuită cu penițele rezolvate.
+Dacă da, entitățile cu stilouri „După strat” vor arăta pe noul strat exact ca pe straturile anterioare, iar valoarea „După strat” va fi înlocuită cu stilourile rezolvate.
 
-Dacă nu, valorile „Pe strat” vor rămâne, iar penița stratului țintă va defini penița pentru aceste entități.</translation>
+Dacă nu, valorile „După strat” vor rămâne, iar stiloul stratului țintă va defini stiloul pentru aceste entități.</translation>
     </message>
 </context>
 <context>
@@ -9453,7 +9453,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="460"/>
         <source>QCad 1.x file %1</source>
-        <translation>Fichier QCad 1.x  %1</translation>
+        <translation>Fișier QCad 1.x %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="462"/>
@@ -9840,7 +9840,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>splină</translation>
+        <translation>spline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="475"/>
@@ -9852,7 +9852,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>splină2</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -10969,7 +10969,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Fișier</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -11025,12 +11025,12 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Opțiuni suplimentare pentru ancorare</translation>
+        <translation>Opțiuni suplimentare de fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -12329,7 +12329,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
         <source> -o some.pdf *.dxf</source>
-        <translation>CONTEXT: QObject -o some.pdf *.dxf</translation>
+        <translation> -o some.pdf *.dxf</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
@@ -12431,7 +12431,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CuloarePersonalizată%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13032,7 +13032,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>Pe strat</translation>
+        <translation>După strat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
@@ -13299,7 +13299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Specificați originea primei linii de extensie</translation>
+        <translation>Specificați originea primei linii ajutătoare</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13309,7 +13309,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Specificati originea celei de a doua linii de extindere</translation>
+        <translation>Specificați originea celei de-a doua linii ajutătoare</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13425,7 +13425,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Specificați originea primei linii de extensie</translation>
+        <translation>Specificați originea primei linii ajutătoare</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13435,7 +13435,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Specificati originea celei de a doua linii de extindere</translation>
+        <translation>Specificați originea celei de-a doua linii ajutătoare</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13507,7 +13507,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>Lungime de coarda incorecta</translation>
+        <translation>Lungime de coardă nevalidă</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -13546,7 +13546,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>Specificati lungimea corzii:</translation>
+        <translation>Specificați lungimea coardei:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
@@ -13559,7 +13559,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="108"/>
         <source>Invalid arc data.</source>
-        <translation>Données d&apos;arc invalides.</translation>
+        <translation>Date de arc nevalide.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
@@ -14160,12 +14160,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Zona de hasur incorecta. Verificati daca obiectele alese formeaza unul sau mai multe contururi inchise.</translation>
+        <translation>Zonă de hașurare incorectă. Verificați dacă entitățile alese formează unul sau mai multe contururi închise.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>Hasururi create cu succes.</translation>
+        <translation>Hașura a fost creată cu succes.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
@@ -15179,7 +15179,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entitatea trebuie să fie o linie, arc, cerc, elipsă sau splină de interpolare.</translation>
+        <translation>Entitatea trebuie să fie o linie, un arc, un cerc, o elipsă sau un spline de interpolare.</translation>
     </message>
 </context>
 <context>
@@ -15286,7 +15286,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Specificati al doileal punct al axei de simetrie</translation>
+        <translation>Specificați al doilea punct al axei de simetrie</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -16190,7 +16190,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Click-and-drag pentru deplasare panoramica</translation>
+        <translation>Faceți clic și trageți pentru panoramare</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16201,7 +16201,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Deplasare Panoramica</translation>
+        <translation>Panoramare</translation>
     </message>
 </context>
 <context>
@@ -16232,7 +16232,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/lib/gui/rs_graphicview.cpp" line="1550"/>
         <source>Draft</source>
-        <translation>Schiță</translation>
+        <translation>Ciornă</translation>
     </message>
 </context>
 <context>
@@ -16306,7 +16306,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Tăiere</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16571,7 +16571,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Punct de ancorare:</translation>
+        <translation>Punct de fixare:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -17008,7 +17008,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Tăiere</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17021,7 +17021,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opțiuni distanță de ancorare</translation>
+        <translation>Opțiuni distanță de fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17034,7 +17034,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opțiuni distanță de ancorare</translation>
+        <translation>Opțiuni distanță de fixare</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17052,7 +17052,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>Opțiuni Spline</translation>
+        <translation>Opțiuni spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>

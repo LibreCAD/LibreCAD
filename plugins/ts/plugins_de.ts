@@ -143,7 +143,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Ebene</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -275,7 +275,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>KÖRPER</translation>
+        <translation>2D-VOLUMENKÖRPER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
@@ -315,7 +315,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation>Rotation</translation>
+        <translation>Drehung</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
@@ -375,7 +375,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>BEMASSUNGSFÜHRUNG</translation>
+        <translation>FÜHRUNGSLINIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -564,17 +564,17 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Layer 2D Punkt ist leer</translation>
+        <translation>Ebene für 2D-Punkte ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Layer 3D Punkt ist leer</translation>
+        <translation>Ebene für 3D-Punkte ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Layer Höhenpunkt ist leer</translation>
+        <translation>Ebene für Höhenpunkte ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
@@ -589,7 +589,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Layer Punkt Nummer ist leer</translation>
+        <translation>Ebene für Punktnummern ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
@@ -604,7 +604,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Layer Punkt Code ist leer</translation>
+        <translation>Ebene für Punktcodes ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
@@ -840,7 +840,7 @@ erstes Basisobjekt, zweites Basisobjekt, erstes Zielobjekt, zweites Zielobjekt.<
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Markierungen - Aus</translation>
+        <translation>Teilstriche - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -870,7 +870,7 @@ gegen den Uhrzeigersinn.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Neu&quot;&lt;/i&gt;&lt;br&gt;Name eingeben&lt;br&gt;für eine neue Ebene&lt;br&gt;(falls erforderlich?) zum&lt;br&gt;Zeichnen von Markierungen.</translation>
+        <translation>&lt;i&gt;&quot;Neu&quot;&lt;/i&gt;&lt;br&gt;Namen&lt;br&gt;für eine neue Ebene&lt;br&gt;(falls nötig) zum&lt;br&gt;Zeichnen der Teilstriche eingeben.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -1247,7 +1247,7 @@ Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>Ebene:</translation>
     </message>
 </context>
 <context>

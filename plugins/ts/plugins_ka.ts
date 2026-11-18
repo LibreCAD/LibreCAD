@@ -33,7 +33,7 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>სწორება</translation>
+        <translation>გასწორება</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
@@ -255,7 +255,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation>ოვალი</translation>
+        <translation>ელიფსი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="148"/>

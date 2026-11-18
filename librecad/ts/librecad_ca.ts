@@ -780,7 +780,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Ombreig</translation>
+        <translation>&amp;Ombrejat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Guia</translation>
+        <translation>&amp;Línia de referència</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -910,7 +910,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Esclata el text en lletres</translation>
+        <translation>&amp;Descompon el text en lletres</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -1468,22 +1468,22 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Agafar el traç de l’entitat</translation>
+        <translation>&amp;Agafar el llapis de l’entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Agafar el traç de l’entitat (resolt)</translation>
+        <translation>&amp;Agafar el llapis de l’entitat (resolt)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>Aplicar el traç a l’entitat</translation>
+        <translation>Aplicar el llapis a l’entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>Copiar el traç</translation>
+        <translation>Copiar el llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
@@ -1498,7 +1498,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualitzar el traç actual amb el traç de la capa activa</translation>
+        <translation>Actualitzar el llapis actual amb el llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1527,7 +1527,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Especifiqueu l’entitat per agafar el traç</translation>
+        <translation>Especifiqueu l’entitat per agafar el llapis</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Especifiqueu l’entitat per aplicar el traç</translation>
+        <translation>Especifiqueu l’entitat per aplicar el llapis</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Especifiqueu l’entitat per agafar el traç</translation>
+        <translation>Especifiqueu l’entitat per agafar el llapis</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1625,7 +1625,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>Traç:</translation>
+        <translation>Llapis:</translation>
     </message>
 </context>
 <context>
@@ -1744,7 +1744,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>Traç:</translation>
+        <translation>Llapis:</translation>
     </message>
 </context>
 <context>
@@ -1826,7 +1826,7 @@ o [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>Traç predeterminat</translation>
+        <translation>Llapis predeterminat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
@@ -1954,7 +1954,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
         <source>Default Pens</source>
-        <translation>Traços predeterminats</translation>
+        <translation>Llapis predeterminats</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -2406,7 +2406,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>Traç actiu</translation>
+        <translation>Llapis actiu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2567,7 +2567,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>Configuració de la paleta de traços</translation>
+        <translation>Configuració de la paleta de llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -2612,12 +2612,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>Fons del traç actiu:</translation>
+        <translation>Fons del llapis actiu:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Tota la fila de la taula és en negreta per al traç actiu</translation>
+        <translation>Tota la fila de la taula és en negreta per al llapis actiu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2632,7 +2632,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Filtratge de traços sense distinció de majúscules</translation>
+        <translation>Filtratge de llapis sense distinció de majúscules</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -2667,7 +2667,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Mostrar missatge informatiu si no es poden seleccionar entitats pel traç</translation>
+        <translation>Mostrar missatge informatiu si no es poden seleccionar entitats pel llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>Seleccionar entitats pel traç d’atributs</translation>
+        <translation>Seleccionar entitats pel llapis d’atributs</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>Seleccionar entitats pel traç de dibuix</translation>
+        <translation>Seleccionar entitats pel llapis de dibuix</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>Paleta de traços</translation>
+        <translation>Paleta de llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>Nom del traç:</translation>
+        <translation>Nom del llapis:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -2735,22 +2735,22 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Omplir l’editor de traç amb el traç de dibuix de l’entitat</translation>
+        <translation>Omplir l’editor de llapis amb el llapis de dibuix de l’entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Omplir l’editor de traç amb els atributs de l’entitat</translation>
+        <translation>Omplir l’editor de llapis amb els atributs de l’entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Seleccionar entitats pel traç de dibuix</translation>
+        <translation>Seleccionar entitats pel llapis de dibuix</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Seleccionar entitats pels atributs del traç</translation>
+        <translation>Seleccionar entitats pels atributs del llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2761,17 +2761,17 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>Aplicar traç a la selecció</translation>
+        <translation>Aplicar el llapis a la selecció</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Omplir l’editor amb el traç actual</translation>
+        <translation>Omplir l’editor amb el llapis actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Aplicar el traç de l’editor com a traç actual</translation>
+        <translation>Aplicar el llapis de l’editor com a llapis actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -2781,12 +2781,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualitzar el traç actual amb el traç de la capa activa</translation>
+        <translation>Actualitzar el llapis actual amb el llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Omplir l’editor de traç amb el traç de la capa activa</translation>
+        <translation>Omplir l’editor de llapis amb el llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
@@ -2796,7 +2796,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplicar el traç de l’editor al traç de la capa activa</translation>
+        <translation>Aplicar el llapis de l’editor al llapis de la capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -2806,57 +2806,57 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>Eliminar traç seleccionat</translation>
+        <translation>Eliminar el llapis seleccionat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>Eliminar traç</translation>
+        <translation>Eliminar el llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
-        <translation>Menú de traços</translation>
+        <translation>Menú de llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Aplicar traç a la selecció</translation>
+        <translation>&amp;Aplicar el llapis a la selecció</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Establir com a traç actual</translation>
+        <translation>&amp;Establir com a llapis actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Aplicar traç a la capa activa</translation>
+        <translation>&amp;Aplicar el llapis a la capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Seleccionar entitats amb traç d’atributs</translation>
+        <translation>&amp;Seleccionar entitats amb el llapis d’atributs</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Seleccionar entitats amb traç de dibuix</translation>
+        <translation>&amp;Seleccionar entitats amb el llapis de dibuix</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Editar traç</translation>
+        <translation>&amp;Editar el llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Eliminar traç</translation>
+        <translation>&amp;Eliminar el llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Eliminar traços</translation>
+        <translation>&amp;Eliminar els llapis</translation>
     </message>
 </context>
 <context>
@@ -3800,7 +3800,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Força la selecció</translation>
+        <translation>Selecció d&apos;ajust</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3938,7 +3938,7 @@ Comproveu la seva existència i els permisos.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -4232,7 +4232,7 @@ Comproveu la seva existència i els permisos.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
-        <translation>Paleta de traços</translation>
+        <translation>Paleta de llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
@@ -6250,7 +6250,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
         <source>Grid Settings</source>
-        <translation>Ajusts de la quadrícula</translation>
+        <translation>Paràmetres de la quadrícula</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
@@ -6509,7 +6509,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Línies d&apos;extensió</translation>
+        <translation>Línies auxiliars</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6565,7 +6565,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>Longitud de línia d&apos;extensió fixa</translation>
+        <translation>Longitud fixa de la línia auxiliar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6663,7 +6663,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Patrons d&apos;ombreig:</translation>
+        <translation>Patrons d&apos;ombrejat:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6803,17 +6803,17 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Color del punt inici&amp;al de maneig:</translation>
+        <translation>Color de la nansa inici&amp;al:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>Color del p&amp;unt de maneig:</translation>
+        <translation>Color de la &amp;nansa:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
         <source>&amp;End Handle Color:</source>
-        <translation>Color del punt final de man&amp;eig:</translation>
+        <translation>Color de la nansa fina&amp;l:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
@@ -6823,7 +6823,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Indicador de forçament:</translation>
+        <translation>Indicador d&apos;ajust:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -6868,17 +6868,17 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Línies de l&apos;indicador de forçament</translation>
+        <translation>Línies de l&apos;indicador d&apos;ajust</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Forma de l&apos;indicador de forçament</translation>
+        <translation>Forma de l&apos;indicador d&apos;ajust</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Oculta el cursor amb el forçament</translation>
+        <translation>Oculta el cursor en ajustar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6953,7 +6953,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Panoràmic auto</translation>
+        <translation>Enquadrament automàtic</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -8464,7 +8464,7 @@ per tant, es requereix un valor de pas per defecte per a la cocció (baking)</tr
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Traç predeterminat</translation>
+        <translation>Llapis predeterminat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
@@ -8883,47 +8883,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Ajust</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Força als extrems</translation>
+        <translation>Ajusta als extrems</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Força a punts equidistants de l&apos;entitat</translation>
+        <translation>Ajusta als punts equidistants de l&apos;entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Força al centre</translation>
+        <translation>Ajusta als centres</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Força a interseccions automàticament</translation>
+        <translation>Ajusta a les interseccions automàticament</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Força al punt més proper en l&apos;entitat</translation>
+        <translation>Ajusta al punt més proper de l&apos;entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Força al punt amb una distància donada a l&apos;extrem</translation>
+        <translation>Ajusta al punt a una distància donada de l&apos;extrem</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Força a interseccions manualment</translation>
+        <translation>Ajusta a les interseccions manualment</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Força a la quadrícula</translation>
+        <translation>Ajusta a la quadrícula</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8948,42 +8948,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Forçament lliure</translation>
+        <translation>Ajust lliure</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Força a la quadrícula</translation>
+        <translation>Ajusta a la quadrícula</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Força als extrems</translation>
+        <translation>Ajusta als extrems</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Força a l&apos;entitat</translation>
+        <translation>Ajusta a l&apos;entitat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Força al centre</translation>
+        <translation>Ajusta al centre</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Força al mig</translation>
+        <translation>Ajusta al mig</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Força a la distància</translation>
+        <translation>Ajusta a la distància</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Força a la intersecció</translation>
+        <translation>Ajusta a la intersecció</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9018,7 +9018,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Mode de forçament exclusiu</translation>
+        <translation>Mode d&apos;ajust exclusiu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9047,7 +9047,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9160,7 +9160,7 @@ Aquesta acció no es pot desfer.</translation>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Advertència: la capa &quot;0&quot; no es por eliminar mai.</translation>
+        <translation>Advertència: la capa &quot;0&quot; no es pot eliminar mai.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
@@ -9334,13 +9334,15 @@ Si us plau, especifiqueu un valor diferent.</translation>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Todes aquestes entitats existeixen en capes congelades.</translation>
+        <translation>Aquestes entitats són en capes congelades.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Todes aquestes entitats existeixen en capes bloquejades.</translation>
+        <translation>Aquestes entitats són en capes bloquejades.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -9745,7 +9747,7 @@ Voleu substituir-ho?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>s&apos;ha produït un error en llegir els desfasaments en el fitxer dwg</translation>
+        <translation>s&apos;ha produït un error en llegir els desplaçaments al fitxer DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
@@ -9981,7 +9983,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>ratllat</translation>
+        <translation>ombrejat</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -10203,7 +10205,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>cotaguia</translation>
+        <translation>líniareferència</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -10371,7 +10373,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>senseforçat</translation>
+        <translation>ajustlliure</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10383,7 +10385,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>forçaalcentre</translation>
+        <translation>ajustcentre</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10395,7 +10397,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>forçaaunadistància</translation>
+        <translation>ajustdistància</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10407,7 +10409,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>forçaalfinal</translation>
+        <translation>ajustfinal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10419,7 +10421,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>forçaalagraella</translation>
+        <translation>ajustgraella</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10431,7 +10433,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>forçaalaintersecció</translation>
+        <translation>ajustintersecció</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10443,7 +10445,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>forçaalmig</translation>
+        <translation>ajustmig</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10455,7 +10457,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>forçaalentitat</translation>
+        <translation>ajustentitat</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -11040,12 +11042,12 @@ Voleu substituir-ho?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Ajust</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Forçament extra</translation>
+        <translation>Ajustos addicionals</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -11077,7 +11079,7 @@ Voleu substituir-ho?</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
-        <translation>Assistent del traç</translation>
+        <translation>Assistent de llapis</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
@@ -12446,7 +12448,7 @@ Voleu substituir-ho?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12734,7 +12736,7 @@ Voleu substituir-ho?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>forçaalmigmanual</translation>
+        <translation>ajustmigmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
@@ -13315,7 +13317,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la primera línia d&apos;extensió</translation>
+        <translation>Especifiqueu l&apos;origen de la primera línia auxiliar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13325,7 +13327,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la segona línia d&apos;extensió</translation>
+        <translation>Especifiqueu l&apos;origen de la segona línia auxiliar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13441,7 +13443,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la primera línia d&apos;extensió</translation>
+        <translation>Especifiqueu l&apos;origen de la primera línia auxiliar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13451,7 +13453,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la segona línia d&apos;extensió</translation>
+        <translation>Especifiqueu l&apos;origen de la segona línia auxiliar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13668,7 +13670,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="231"/>
         <source>Not a valid coordinate</source>
-        <translation>Coordinada no vàlida</translation>
+        <translation>Coordenada no vàlida</translation>
     </message>
 </context>
 <context>
@@ -14128,7 +14130,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>La distància total %1 és més petita que la distancia entre focus</translation>
+        <translation>La distància total %1 és més petita que la distància entre els focus</translation>
     </message>
 </context>
 <context>
@@ -15377,7 +15379,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Especifiqueu la direcció del desfasament</translation>
+        <translation>Especifiqueu la direcció de l&apos;equidistància</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -15588,7 +15590,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Seleccioneu l&apos;entitat a reduir o introduïu la distància:</translation>
+        <translation>Seleccioneu l&apos;entitat a retallar o introduïu la distància:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15924,27 +15926,27 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Coordinades desplaçades en la impressió (%1, %2)</translation>
+        <translation>Desplaçament de la impressió en coordenades del paper: (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Coordinades desplaçades en impressió gràfica (%1, %2)</translation>
+        <translation>Desplaçament de la impressió en coordenades del dibuix: (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Coordinades desplaçades en impressió gràfica</translation>
+        <translation>Desplaçament de la impressió en coordenades del dibuix</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Coordinades desplaçades en impressió sobre paper</translation>
+        <translation>Desplaçament de la impressió en coordenades del paper</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
-        <translation>: selecciona el desplaçament de les coordinades d&apos;impressió</translation>
+        <translation>: seleccioneu les coordenades del desplaçament de la impressió</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
@@ -16074,7 +16076,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Seleccioneu per crear el desfasament</translation>
+        <translation>Seleccioneu per crear l&apos;equidistància</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
@@ -16317,12 +16319,12 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Comprova si es pot construir el bisell</translation>
+        <translation>Marqueu-ho per retallar les dues entitats fins al bisell</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Retalla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16587,7 +16589,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Força al punt:</translation>
+        <translation>Punt d&apos;ajust:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16877,7 +16879,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Opcions de modificació de desfasament</translation>
+        <translation>Opcions de l&apos;equidistància</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16887,7 +16889,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>Desfasament a partir de l’entitat original</translation>
+        <translation>Equidistància respecte de l&apos;entitat original</translation>
     </message>
 </context>
 <context>
@@ -17024,7 +17026,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Retalla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17037,7 +17039,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opcions de forçar distància</translation>
+        <translation>Opcions de l&apos;ajust a distància</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17050,7 +17052,7 @@ Aquest bloc no es pot inserir.</translation>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opcions de força distància</translation>
+        <translation>Opcions de l&apos;ajust a distància</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>

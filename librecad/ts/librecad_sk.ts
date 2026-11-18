@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="62"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
@@ -77,7 +77,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="95"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>Vyberte entitu oblúka</translation>
+        <translation>Vyberte oblúk</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -137,7 +137,7 @@ vzdialenosť medzi bodmi=%2 je väčšia ako priemer=%3</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>Vyberte z dvoch možných stredov kruhu</translation>
+        <translation>Vyberte z dvoch možných stredov kružnice</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
@@ -163,7 +163,7 @@ vzdialenosť medzi bodmi=%2 je väčšia ako priemer=%3</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
         <source>Select circle center</source>
-        <translation>Vyberte stred kruhu</translation>
+        <translation>Vyberte stred kružnice</translation>
     </message>
 </context>
 <context>
@@ -434,12 +434,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Oblúk</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
-        <translation>Kruh</translation>
+        <translation>Kružnica</translation>
     </message>
 </context>
 <context>
@@ -474,7 +474,7 @@ alebo [%2]</translation>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Nemožno vrátiť späť: ešte nie je definovaných dostatok entít.</translation>
+        <translation>Nemožno vrátiť späť: ešte nie je definovaných dostatok objektov.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
@@ -487,27 +487,27 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1537"/>
         <source>&amp;Window Zoom</source>
-        <translation>Zoom &amp;okna</translation>
+        <translation>&amp;Priblížiť oknom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;posúvanie</translation>
+        <translation>Posúvanie &amp;pohľadu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>Vyberte entitu</translation>
+        <translation>Vyberte objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
         <source>Select Window</source>
-        <translation>Vyberte okno</translation>
+        <translation>Vybrať oknom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
         <source>Deselect Window</source>
-        <translation>Zrušiť výber okna</translation>
+        <translation>Zrušiť výber oknom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
@@ -517,17 +517,17 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>Vyberte pretínajúce sa entity</translation>
+        <translation>Vyberte pretínajúce sa objekty</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Zrušiť výber pretínajúcich sa entít</translation>
+        <translation>Zrušiť výber pretínajúcich sa objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
-        <translation>(Zrušiť)Vybrať vrstvu</translation>
+        <translation>(Zrušiť)Vybrať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
@@ -593,7 +593,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangent &amp;ortogonálna</translation>
+        <translation>Tangenta &amp;ortogonálna</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
@@ -644,33 +644,33 @@ alebo [%2]</translation>
         <location filename="../src/ui/lc_actionfactory.cpp" line="389"/>
         <location filename="../src/ui/lc_actionfactory.cpp" line="450"/>
         <source>&amp;Concentric</source>
-        <translation>&amp;Koncentrický</translation>
+        <translation>&amp;Sústredná</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>Kruh &amp;vpísaný</translation>
+        <translation>Kružnica &amp;vpísaná</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>Tangentný 2 kruhy, polomer</translation>
+        <translation>Tangenciálna k 2 kružniciam, polomer</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>Tangentný 2 kruhy, 1 bod</translation>
+        <translation>Tangenciálna k 2 kružniciam, 1 bod</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>Tangentný &amp;3 kruhy</translation>
+        <translation>Tangenciálna k &amp;3 kružniciam</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangentný, 2 b&amp;ody</translation>
+        <translation>Tangenciálna, 2 b&amp;ody</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
@@ -770,7 +770,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;Viacerý text</translation>
+        <translation>&amp;Viacriadkový text</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
@@ -900,7 +900,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Skos</translation>
+        <translation>&amp;Skosiť</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
@@ -925,7 +925,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Vzdialenosť entita-bod</translation>
+        <translation>&amp;Vzdialenosť objekt-bod</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
@@ -935,7 +935,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Celková dĺžka vybraných entít</translation>
+        <translation>&amp;Celková dĺžka vybraných objektov</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
@@ -980,12 +980,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>znížiť za entitou</translation>
+        <translation>znížiť za objektom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>zdvihnúť nad entitou</translation>
+        <translation>zdvihnúť nad objektom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -995,37 +995,37 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Pridať vrstvu</translation>
+        <translation>&amp;Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Odstrániť vrstvu</translation>
+        <translation>&amp;Odstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Upraviť vrstvu</translation>
+        <translation>&amp;Upraviť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Prepnúť zamknutie vrstvy</translation>
+        <translation>Prepnúť zamknutie &amp;hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Prepnúť viditeľnosť vrstvy</translation>
+        <translation>&amp;Prepnúť viditeľnosť hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Prepnúť tlač vrstvy</translation>
+        <translation>Prepnúť &amp;tlač hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Prepnúť vrstvu &amp;konštrukcie</translation>
+        <translation>Prepnúť &amp;konštrukčnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
@@ -1237,7 +1237,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Vľavo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,7 +1247,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
@@ -1282,7 +1282,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>O&amp;dsadiť</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1313,7 +1313,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Zobraziť všetky vrstvy</translation>
+        <translation>&amp;Zobraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
@@ -1333,12 +1333,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Exportovať vybrané vrstvy</translation>
+        <translation>&amp;Exportovať vybrané hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportovať &amp;viditeľné vrstvy</translation>
+        <translation>Exportovať &amp;viditeľné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
@@ -1408,7 +1408,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>Hviezda</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -1443,7 +1443,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Slice/Divide Circle</source>
-        <translation>Rozrezať/Rozdeliť kruh</translation>
+        <translation>Rozrezať/Rozdeliť kružnicu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
@@ -1468,17 +1468,17 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Vybrať pero z entity</translation>
+        <translation>&amp;Vybrať pero z objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Vybrať pero z entity (vyriešené)</translation>
+        <translation>&amp;Vybrať pero z objektu (vyriešené)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>Použiť pero na entitu</translation>
+        <translation>Použiť pero na objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
@@ -1498,7 +1498,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktualizovať aktuálne pero podľa pera aktívnej vrstvy</translation>
+        <translation>Aktualizovať aktuálne pero podľa pera aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1519,7 +1519,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Ukladanie vrstvy &quot;%1&quot; ako &quot;%2&quot; </translation>
+        <translation>Ukladanie hladiny &quot;%1&quot; ako &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -1527,7 +1527,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Určite entitu na výber pera</translation>
+        <translation>Určite objekt na výber pera</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Určite entitu na použitie pera</translation>
+        <translation>Určite objekt na použitie pera</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Určite entitu na výber pera</translation>
+        <translation>Určite objekt na výber pera</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1615,7 +1615,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
@@ -1707,7 +1707,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
@@ -1752,17 +1752,17 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Nastavenia vrstvy</translation>
+        <translation>Nastavenia hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
         <source>Parent Layers Path:</source>
-        <translation>Cesta rodičovských vrstiev:</translation>
+        <translation>Cesta rodičovských hladín:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
         <source>Layer Type</source>
-        <translation>Typ vrstvy</translation>
+        <translation>Typ hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
@@ -1788,39 +1788,39 @@ alebo [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Vrstva konštrukcie obsahuje entity nekonečných priamych čiar určené na geometrickú konštrukciu.
-       Obsah vrstvy konštrukcie by sa nemal objaviť na výtlačku.</translation>
+        <translation>Konštrukčná hladina obsahuje objekty v podobe nekonečných priamok určené na geometrické konštrukcie.
+       Obsah konštrukčnej hladiny by sa nemal objaviť na výtlačku.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>Vrstva konštrukcie</translation>
+        <translation>Konštrukčná hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
         <source>Layer Name:</source>
-        <translation>Názov vrstvy:</translation>
+        <translation>Názov hladiny:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>Premenovať virtuálnu vrstvu</translation>
+        <translation>Premenovať virtuálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>Pridať sekundárnu vrstvu</translation>
+        <translation>Pridať sekundárnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>Pridať vrstvu</translation>
+        <translation>Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>Upraviť vrstvu</translation>
+        <translation>Upraviť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
@@ -1831,7 +1831,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>Premenovať vrstvu</translation>
+        <translation>Premenovať hladinu</translation>
     </message>
 </context>
 <context>
@@ -1839,7 +1839,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Možnosti stromu vrstiev</translation>
+        <translation>Možnosti stromu hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
@@ -1849,12 +1849,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
         <source>Layer Level Name Separator</source>
-        <translation>Oddeľovač názvov úrovní vrstiev</translation>
+        <translation>Oddeľovač názvov úrovní hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>Sufixy sekundárnych vrstiev</translation>
+        <translation>Sufixy sekundárnych hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
@@ -1899,12 +1899,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
         <source>Show layer type icons</source>
-        <translation>Zobraziť ikony typov vrstiev</translation>
+        <translation>Zobraziť ikony typov hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Zobraziť odsadené názvy vrstiev. Veľkosť odsadenia:</translation>
+        <translation>Zobraziť odsadené názvy hladín. Veľkosť odsadenia:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -1914,7 +1914,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Premenovať sekundárne vrstvy pri premenovaní primárnej</translation>
+        <translation>Premenovať sekundárne hladiny pri premenovaní primárnej</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -1934,7 +1934,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="441"/>
         <source>Virtual layer background color</source>
-        <translation>Farba pozadia virtuálnej vrstvy</translation>
+        <translation>Farba pozadia virtuálnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
@@ -1949,7 +1949,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
-        <translation>Farba pozadia aktívnej vrstvy</translation>
+        <translation>Farba pozadia aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -1959,22 +1959,22 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Normal Layer</source>
-        <translation>Normálna vrstva</translation>
+        <translation>Normálna hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Rozmerová vrstva</translation>
+        <translation>Hladina kót</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
         <source>Informational Layer</source>
-        <translation>Informačná vrstva</translation>
+        <translation>Informačná hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
-        <translation>Vrstva alternatívnej polohy</translation>
+        <translation>Hladina alternatívnej polohy</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
@@ -1992,7 +1992,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>Hľadanie zodpovedajúcich názvov vrstiev</translation>
+        <translation>Hľadanie zodpovedajúcich názvov hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="151"/>
@@ -2007,22 +2007,22 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="185"/>
         <source>Show all layers</source>
-        <translation>Zobraziť všetky vrstvy</translation>
+        <translation>Zobraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers except current</source>
-        <translation>Skryť všetky vrstvy okrem aktuálnej</translation>
+        <translation>Skryť všetky hladiny okrem aktuálnej</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>Zobraziť sekundárne vrstvy</translation>
+        <translation>Zobraziť sekundárne hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>Zobraziť iba aktívnu vrstvu</translation>
+        <translation>Zobraziť iba aktívnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="222"/>
@@ -2042,32 +2042,32 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="251"/>
         <source>Unlock all layers</source>
-        <translation>Odomknúť všetky vrstvy</translation>
+        <translation>Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="259"/>
         <source>Lock all layers</source>
-        <translation>Zamknúť všetky vrstvy</translation>
+        <translation>Zamknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="267"/>
         <source>Add a layer</source>
-        <translation>Pridať vrstvu</translation>
+        <translation>Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Pridať vrstvu kót</translation>
+        <translation>Pridať hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
         <source>Remove layer</source>
-        <translation>Odstrániť vrstvu</translation>
+        <translation>Odstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Upraviť atribúty vrstvy / premenovať</translation>
+        <translation>Upraviť atribúty hladiny / premenovať</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2077,12 +2077,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
         <source>Layer Menu</source>
-        <translation>Menu vrstvy</translation>
+        <translation>Menu hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Pridať podradenú vrstvu</translation>
+        <translation>&amp;Pridať podradenú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
@@ -2092,7 +2092,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Odstrániť vrstvy (podstrom)</translation>
+        <translation>&amp;Odstrániť hladiny (podstrom)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
@@ -2107,130 +2107,130 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Vybrať entity (podstrom)</translation>
+        <translation>&amp;Vybrať objekty (podstrom)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Upraviť &amp;atribúty vrstvy</translation>
+        <translation>&amp;Upraviť &amp;atribúty hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Odstrániť vrstvu</translation>
+        <translation>&amp;Odstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Pridať podvrstvu kót</translation>
+        <translation>&amp;Pridať podradenú hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Pridať informačnú podvrstvu</translation>
+        <translation>&amp;Pridať podradenú informačnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Pridať podvrstvu alternatívneho zobrazenia</translation>
+        <translation>&amp;Pridať podradenú hladinu alternatívneho zobrazenia</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Odstrániť podvrstvy</translation>
+        <translation>&amp;Odstrániť podradené hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Previesť na rozmerovú vrstvu</translation>
+        <translation>Previesť na hladinu kót</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Info Layer</source>
-        <translation>Previesť na informačnú vrstvu</translation>
+        <translation>Previesť na informačnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="722"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="737"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Previesť na vrstvu alternatívnej polohy</translation>
+        <translation>Previesť na hladinu alternatívnej polohy</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="729"/>
         <source>Convert to Normal Layer</source>
-        <translation>Previesť na normálnu vrstvu</translation>
+        <translation>Previesť na normálnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Vybrať entity vrstvy</translation>
+        <translation>&amp;Vybrať objekty hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Vytvoriť kópiu vrstvy</translation>
+        <translation>&amp;Vytvoriť kópiu hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Duplikovať vrstvu s obsahom</translation>
+        <translation>&amp;Duplikovať hladinu s obsahom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
-        <translation>Presunúť výber do vrstvy</translation>
+        <translation>Presunúť výber do hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplikovať výber do vrstvy</translation>
+        <translation>Duplikovať výber do hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Pridať vrstvu</translation>
+        <translation>&amp;Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Zmraziť ostatné vrstvy</translation>
+        <translation>&amp;Zmraziť ostatné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Odmraziť všetky vrstvy</translation>
+        <translation>&amp;Rozmraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>&amp;Skryť všetky vrstvy okrem aktuálnej</translation>
+        <translation>&amp;Skryť všetky hladiny okrem aktuálnej</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Odomknúť všetky vrstvy</translation>
+        <translation>&amp;Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Zamknúť všetky vrstvy</translation>
+        <translation>&amp;Zamknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Povoliť &amp;tlač všetkých vrstiev</translation>
+        <translation>Povoliť &amp;tlač všetkých hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Zakázať tlač všetkých vrstiev</translation>
+        <translation>&amp;Zakázať tlač všetkých hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Nájsť a odstrániť prázdne vrstvy</translation>
+        <translation>&amp;Nájsť a odstrániť prázdne hladiny</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2249,7 @@ alebo [%2]</translation>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2459,7 +2459,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>Žiadne</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
@@ -2531,7 +2531,7 @@ alebo [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Voľné</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2597,12 +2597,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Ikona šírky čiary</translation>
+        <translation>Ikona hrúbky čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Názov šírky čiary</translation>
+        <translation>Názov hrúbky čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2667,7 +2667,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Zobraziť informačnú správu, ak žiadne entity nemožno vybrať perom</translation>
+        <translation>Zobraziť informačnú správu, ak žiadne objekty nemožno vybrať perom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>Vybrať entity podľa pera atribútov</translation>
+        <translation>Vybrať objekty podľa pera atribútov</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>Vybrať entity podľa kresliaceho pera</translation>
+        <translation>Vybrať objekty podľa kresliaceho pera</translation>
     </message>
 </context>
 <context>
@@ -2725,7 +2725,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
         <source>Width:</source>
-        <translation>Šírka:</translation>
+        <translation>Hrúbka:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="271"/>
@@ -2735,22 +2735,22 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Vyplniť editor pera podľa kresliaceho pera entity</translation>
+        <translation>Vyplniť editor pera podľa kresliaceho pera objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Vyplniť editor pera podľa atribútov entity</translation>
+        <translation>Vyplniť editor pera podľa atribútov objektu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Vybrať entity podľa kresliaceho pera</translation>
+        <translation>Vybrať objekty podľa kresliaceho pera</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Vybrať entity podľa atribútov pera</translation>
+        <translation>Vybrať objekty podľa atribútov pera</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2781,27 +2781,27 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Aktualizovať aktuálne pero podľa pera aktívnej vrstvy</translation>
+        <translation>Aktualizovať aktuálne pero podľa pera aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Vyplniť editor pera podľa pera aktívnej vrstvy</translation>
+        <translation>Vyplniť editor pera podľa pera aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>Vybrať z aktívnej vrstvy</translation>
+        <translation>Vybrať z aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Použiť pero editora na pero aktívnej vrstvy</translation>
+        <translation>Použiť pero editora na pero aktívnej hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
         <source>Apply To Layer</source>
-        <translation>Použiť na vrstvu</translation>
+        <translation>Použiť na hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
@@ -2831,17 +2831,17 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Použiť pero na aktívnu vrstvu</translation>
+        <translation>&amp;Použiť pero na aktívnu hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Vybrať entity s perom atribútov</translation>
+        <translation>&amp;Vybrať objekty s perom atribútov</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Vybrať entity s kresliacim perom</translation>
+        <translation>&amp;Vybrať objekty s kresliacim perom</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
@@ -2919,7 +2919,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Vľavo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -3225,7 +3225,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>Žiadne</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
@@ -3267,7 +3267,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
         <source>Start Circle Angle:</source>
-        <translation>Uhol začiatku kruhu:</translation>
+        <translation>Uhol začiatku kružnice:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
@@ -3368,7 +3368,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
         <source>Circles</source>
-        <translation>Kruhy</translation>
+        <translation>Kružnice</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
@@ -3662,7 +3662,7 @@ alebo [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pero</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3894,7 +3894,7 @@ Skontrolujte jeho existenciu a povolenia.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Circle</source>
-        <translation>Kruh</translation>
+        <translation>Kružnica</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
@@ -4204,7 +4204,7 @@ Skontrolujte jeho existenciu a povolenia.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="892"/>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip &amp; Chat</translation>
+        <translation>Zulip &amp;chat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="893"/>
@@ -4234,7 +4234,7 @@ Skontrolujte jeho existenciu a povolenia.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
         <source>Layer Tree</source>
-        <translation>Strom vrstiev</translation>
+        <translation>Strom hladín</translation>
     </message>
 </context>
 <context>
@@ -4265,7 +4265,7 @@ Skontrolujte jeho existenciu a povolenia.</translation>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Aktívna vrstva</translation>
+        <translation>Aktívna hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="105"/>
@@ -4278,7 +4278,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Názov aktuálnej aktívnej vrstvy&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Názov aktuálnej aktívnej hladiny&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4331,7 +4331,7 @@ v inom okne</translation>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>&amp;Odomkni všetky bloky</translation>
+        <translation>&amp;Rozmraziť všetky bloky</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
@@ -4703,7 +4703,7 @@ v inom okne</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Oblúk</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4762,8 +4762,8 @@ v inom okne</translation>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Použiť atribúty aj na všetky podradené entity vybraného bloku INSERT.
-Rekurzívne upravuje všetky entity samotného bloku.</translation>
+        <translation>Použiť atribúty aj na všetky podradené objekty vybraného bloku INSERT.
+Rekurzívne upravuje všetky objekty samotného bloku.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -4903,7 +4903,7 @@ Rekurzívne upravuje všetky entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Voľba štýlu šráfov</translation>
+        <translation>Voľba atribútov šrafovania</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -4951,7 +4951,7 @@ Rekurzívne upravuje všetky entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
@@ -5159,7 +5159,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="223"/>
@@ -6297,7 +6297,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Vľavo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6309,7 +6309,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6658,7 +6658,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Šráfovacie vzory:</translation>
+        <translation>Šrafovacie vzory:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6828,7 +6828,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Upravte vrstvu vybratých entít pri aktivácii vrstvy</translation>
+        <translation>Zmeniť hladinu vybraných objektov pri aktivácii hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -6923,7 +6923,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keď je táto možnosť povolená, aktivácia vrstvy upraví všetky vybrané objekty a presunie ich do novej vrstvy. Ak chcete zmeniť vrstvu viacerých objektov: najprv vyberte požadované objekty, potom aktivujte vrstvu v paneli nástrojov vrstiev. Tým sa všetky vybrané objekty presunú do novej vrstvy.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keď je táto možnosť povolená, aktivácia hladiny upraví všetky vybrané objekty a presunie ich do novej hladiny. Ak chcete zmeniť hladinu viacerých objektov: najprv vyberte požadované objekty, potom aktivujte hladinu v paneli nástrojov hladín. Tým sa všetky vybrané objekty presunú do novej hladiny.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -6963,7 +6963,7 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>Vizualizovať entitu pod kurzorom</translation>
+        <translation>Vizualizovať objekt pod kurzorom</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -7056,17 +7056,17 @@ Vyberte jednotku, ktorú chcete použiť pre nové výkresy, a preferovaný jazy
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
         <source>Export invisible layers</source>
-        <translation>Exportovať neviditeľné vrstvy</translation>
+        <translation>Exportovať neviditeľné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>Exportovať viditeľné konštrukčné vrstvy</translation>
+        <translation>Exportovať viditeľné konštrukčné hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -7220,7 +7220,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
@@ -7412,7 +7412,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
@@ -8155,7 +8155,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
@@ -8207,7 +8207,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>Prispôsobiť</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8458,13 +8458,13 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Konštrukčná vrstva obsahuje entity nekonečných priamok, ktoré sú určené na použitie pri geometrickej konštrukcii.
-Obsah konštrukčnej vrstvy by sa nemal zobrazovať pri tlači.</translation>
+        <translation>Konštrukčná hladina obsahuje objekty nekonečných priamok, ktoré sú určené na použitie pri geometrickej konštrukcii.
+Obsah konštrukčnej hladiny by sa nemal zobrazovať pri tlači.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Konštrukčná vrstva</translation>
+        <translation>Konštrukčná hladina</translation>
     </message>
 </context>
 <context>
@@ -8497,7 +8497,7 @@ Obsah konštrukčnej vrstvy by sa nemal zobrazovať pri tlači.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Odomkni všetky hladiny</translation>
+        <translation>&amp;Rozmraziť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
@@ -8517,42 +8517,42 @@ Obsah konštrukčnej vrstvy by sa nemal zobrazovať pri tlači.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Hľadanie vrstiev so zhodnými názvami</translation>
+        <translation>Hľadanie hladín so zhodnými názvami</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Upraviť atribúty vrstvy</translation>
+        <translation>Upraviť &amp;atribúty hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Prepnúť viditeľnosť vrstvy</translation>
+        <translation>Prepnúť &amp;viditeľnosť hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Prepínať tlač vrstvy</translation>
+        <translation>Prepínať &amp;tlač hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Prepínať konštrukčnú vrstvu</translation>
+        <translation>Prepínať &amp;konštrukčnú hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>Odomknúť všetky vrstvy</translation>
+        <translation>Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>Zamknúť všetky vrstvy</translation>
+        <translation>Zamknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Odstrániť vrstvu</translation>
+        <translation>Odstrániť hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="276"/>
@@ -8562,27 +8562,27 @@ Obsah konštrukčnej vrstvy by sa nemal zobrazovať pri tlači.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>Odomknúť všetky vrstvy</translation>
+        <translation>&amp;Odomknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
         <source>&amp;Lock all Layers</source>
-        <translation>Zamknúť všetky vrstvy</translation>
+        <translation>&amp;Zamknúť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Prepínať zamykanie vrstvy</translation>
+        <translation>Prepínať zamykanie &amp;hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>Exportovať vybrané vrstvy</translation>
+        <translation>&amp;Exportovať vybrané hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Exportovať &amp;viditeľné vrstvy</translation>
+        <translation>Exportovať &amp;viditeľné hladiny</translation>
     </message>
 </context>
 <context>
@@ -8772,7 +8772,7 @@ Obsah konštrukčnej vrstvy by sa nemal zobrazovať pri tlači.</translation>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Vľavo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8798,7 +8798,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Šírka čiary</translation>
+        <translation>Hrúbka čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8863,7 +8863,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Prichytenie</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8903,7 +8903,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Prichytiť k sieti</translation>
+        <translation>Prichytiť k mriežke</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8923,7 +8923,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Zablokovať relatívnu nulu</translation>
+        <translation>Zamknúť relatívnu nulu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
@@ -8943,7 +8943,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Prichytiť na entitu</translation>
+        <translation>Prichytiť na objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
@@ -8993,7 +8993,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>Zablokovať relatívnu nulovú pozíciu</translation>
+        <translation>Zamknúť polohu relatívnej nuly</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -9008,7 +9008,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
-        <translation>zablokované</translation>
+        <translation>zamknuté</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9027,7 +9027,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pero</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9107,30 +9107,30 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Vrstva „%1“ a všetky entity na nej budú odstránené.
+        <translation>Hladina „%1“ a všetky objekty na nej budú odstránené.
 Táto akcia sa nedá vrátiť.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Vrstvu „0“ nie je možné odstrániť.</translation>
+        <translation>Hladinu „0“ nie je možné odstrániť.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="395"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Odstrániť %n vrstvu</numerusform>
-            <numerusform>Odstrániť %n vrstvy</numerusform>
-            <numerusform>Odstrániť %n vrstiev</numerusform>
+            <numerusform>Odstrániť %n hladinu</numerusform>
+            <numerusform>Odstrániť %n hladiny</numerusform>
+            <numerusform>Odstrániť %n hladín</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Uvedené vrstvy a všetky entity na nich budú odstránené.</translation>
+        <translation>Uvedené hladiny a všetky objekty na nich budú odstránené.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9141,13 +9141,13 @@ Táto akcia sa nedá vrátiť.</translation>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Upozornenie: vrstvu „0“ nie je možné odstrániť.</translation>
+        <translation>Upozornenie: hladinu „0“ nie je možné odstrániť.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Vrstvy na odstránenie:</translation>
+        <translation>Hladiny na odstránenie:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -9161,7 +9161,7 @@ Táto akcia sa nedá vrátiť.</translation>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Uvedené bloky a všetky ich entity budú odstránené.</translation>
+        <translation>Uvedené bloky a všetky ich objekty budú odstránené.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9171,14 +9171,14 @@ Táto akcia sa nedá vrátiť.</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Názov vrstvy nemôže byť prázdny.</translation>
+        <translation>Názov hladiny nemôže byť prázdny.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Pokus o vytvorenie vrstvy s duplicitným názvom. Duplicitný názov vrstvy je 
+        <translation>Pokus o vytvorenie hladiny s duplicitným názvom. Duplicitný názov hladiny je 
 [%1].
 Zadajte iný názov.</translation>
     </message>
@@ -9193,7 +9193,7 @@ Zadajte iný názov.</translation>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Reťazec pre oddeľovač zoznamu vrstiev je prázdny. Nebude možné vytvoriť strom vrstiev.
+        <translation>Reťazec pre oddeľovač zoznamu hladín je prázdny. Nebude možné vytvoriť strom hladín.
 Zadajte inú hodnotu.</translation>
     </message>
     <message>
@@ -9207,26 +9207,26 @@ Zadajte inú hodnotu.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
-        <translation>Odstrániť prázdne vrstvy</translation>
+        <translation>Odstrániť prázdne hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Nenašli sa žiadne vrstvy bez entít, nič na odstránenie.</translation>
+        <translation>Nenašli sa žiadne hladiny bez objektov, nič na odstránenie.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1176"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
-        <translation>Pridať vrstvu</translation>
+        <translation>Pridať hladinu</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1132"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Takáto podradená vrstva už existuje pre 
+        <translation>Takáto podradená hladina už existuje pre 
 [%1].
 Zadajte iný názov.</translation>
     </message>
@@ -9235,14 +9235,16 @@ Zadajte iný názov.</translation>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Takéto podradené vrstvenie už existuje pre 
-[%1].</translation>
+        <translation>Takáto podradená hladina už existuje pre 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Vrstvenie dimenzií sa môže pridať iba pre normálnu aktívnu vrstvu.</translation>
+        <translation>Hladinu kót možno pridať iba k normálnej aktívnej hladine.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9258,7 +9260,7 @@ Zadajte iný názov.</translation>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
-        <translation>Dialóg vrstiev</translation>
+        <translation>Dialóg hladín</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
@@ -9275,7 +9277,7 @@ Zadajte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pero bude odstránené z palety, kreslené entity nebudú ovplyvnené.</translation>
+        <translation>Pero bude odstránené z palety, kreslené objekty nebudú ovplyvnené.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9311,19 +9313,21 @@ Zadajte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Na viditeľných vrstvách sa nenachádzajú žiadne objekty, ktoré by zodpovedali vybranému peru.</translation>
+        <translation>Na viditeľných hladinách sa nenachádzajú žiadne objekty, ktoré by zodpovedali vybranému peru.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Takéto objekty existujú na zamrznutých vrstvách.</translation>
+        <translation>Takéto objekty existujú na zmrazených hladinách.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Takéto objekty existujú na uzamknutých vrstvách.</translation>
+        <translation>Takéto objekty existujú na zamknutých hladinách.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -9333,19 +9337,19 @@ Zadajte inú hodnotu.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>Nastaviť pero pre entitu</translation>
+        <translation>Nastaviť pero pre objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Vyberte iba jednu entitu, pre ktorú chcete nastaviť pero.</translation>
+        <translation>Vyberte iba jeden objekt, z ktorého sa prevezme nastavenie pera.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Nenašli sa žiadne entity v danej vrstve, no sú filtrované a preto nie sú viditeľné.
+        <translation>Našli sa hladiny bez objektov, sú však filtrované a nie sú viditeľné.
 
 Vymažte masku filtrovania a opakujte.</translation>
     </message>
@@ -9356,11 +9360,11 @@ Vymažte masku filtrovania a opakujte.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Nahradiť hodnotu „Podľa vrstvy“ hodnotami zdrojových vrstiev?
+        <translation>Nahradiť hodnotu „Podľa hladiny“ hodnotami zdrojových hladín?
 
-Ak áno, entity s perami „Podľa vrstvy“ budú na novej vrstve vyzerať presne tak, ako na predchádzajúcich vrstvách, a hodnota „Podľa vrstvy“ bude nahradená vypočítanými perami.
+Ak áno, objekty s perami „Podľa hladiny“ budú na novej hladine vyzerať presne tak, ako na predchádzajúcich hladinách, a hodnota „Podľa hladiny“ bude nahradená vypočítanými perami.
 
-Ak nie, hodnoty „Podľa vrstvy“ zostanú a pero cieľovej vrstvy bude definovať pero pre dané entity.</translation>
+Ak nie, hodnoty „Podľa hladiny“ zostanú a pero cieľovej hladiny bude definovať pero pre dané objekty.</translation>
     </message>
 </context>
 <context>
@@ -9743,7 +9747,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>Chyba pri čítaní entít v súbore DWG.</translation>
+        <translation>Chyba pri čítaní objektov v súbore DWG.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
@@ -10893,7 +10897,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>Žiadne</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
@@ -10946,7 +10950,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="65"/>
         <source>Circle</source>
-        <translation>Kruh</translation>
+        <translation>Kružnica</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="66"/>
@@ -10982,7 +10986,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
@@ -11023,7 +11027,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Prichytenie</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11101,7 +11105,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>Nenašli sa žiadne vrstvy %1</translation>
+        <translation>Nenašli sa žiadne hladiny %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
@@ -12200,7 +12204,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Tak či tak, našli sa niektoré entity.</translation>
+        <translation>Tak či tak, našli sa niektoré objekty.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12278,7 +12282,7 @@ Chcete ho nahradiť?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>Chyba pri čítaní entít súboru DXF/DWG</translation>
+        <translation>Chyba pri čítaní objektov súboru DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
@@ -12419,7 +12423,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Spojiť všetky vrstvy</translation>
+        <translation>Spojiť všetky hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
@@ -12429,7 +12433,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/VlastnáFarba%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13030,7 +13034,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>Podľa vrstvy</translation>
+        <translation>Podľa hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
@@ -13055,7 +13059,7 @@ Chcete ho nahradiť?</translation>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>Podľa vrstvy</translation>
+        <translation>Podľa hladiny</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="39"/>
@@ -13297,7 +13301,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Zvoľte začiatok prvej vynášacej čiary</translation>
+        <translation>Zvoľte začiatok prvej predlžovacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13307,7 +13311,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Zvoľte koniec kótovanej čiary</translation>
+        <translation>Zvoľte začiatok druhej predlžovacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13348,7 +13352,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Zvoľte umiestnenie kótovacej čiary</translation>
+        <translation>Zvoľte umiestnenie kótovacieho oblúka</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
@@ -13423,7 +13427,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Zvoľte začiatok prvej vynášacej čiary</translation>
+        <translation>Zvoľte začiatok prvej predlžovacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13433,7 +13437,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Zvoľte koniec kótovanej čiary</translation>
+        <translation>Zvoľte začiatok druhej predlžovacej čiary</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13591,7 +13595,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>Určite základnú entitu.</translation>
+        <translation>Určite základný objekt</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -13784,7 +13788,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>Určte tretiu líniu</translation>
+        <translation>Určte tretiu čiaru</translation>
     </message>
 </context>
 <context>
@@ -13814,12 +13818,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Vyberte stred dotykovej kružnice</translation>
+        <translation>Vyberte stred tangenciálnej kružnice</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Určte líniu/oblúk/kružnicu</translation>
+        <translation>Určte čiaru/oblúk/kružnicu</translation>
     </message>
 </context>
 <context>
@@ -13827,7 +13831,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Určte prvú líniu/oblúk/kružnicu</translation>
+        <translation>Zadajte prvú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="327"/>
@@ -13837,7 +13841,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="331"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Určte druhú líniu/oblúk/kružnicu</translation>
+        <translation>Zadajte druhú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
@@ -13848,7 +13852,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Vyberte stred dotyčnice kružnice</translation>
+        <translation>Vyberte stred tangenciálnej kružnice</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="154"/>
@@ -13881,7 +13885,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Určite čiaru/oblúk/kružnicu</translation>
+        <translation>Určte čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
@@ -13903,12 +13907,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>Zadajte bod na dotyčnici kružnice</translation>
+        <translation>Zadajte bod na tangenciálnej kružnici</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Vyberte stred dotyčnice kružnice</translation>
+        <translation>Vyberte stred tangenciálnej kružnice</translation>
     </message>
 </context>
 <context>
@@ -13928,22 +13932,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Vyberte stred dotyčnice kružnice</translation>
+        <translation>Vyberte stred tangenciálnej kružnice</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Zadajte prvú líniu/oblúk/kružnicu</translation>
+        <translation>Zadajte prvú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Zadajte druhú líniu/oblúk/kružnicu</translation>
+        <translation>Zadajte druhú čiaru/oblúk/kružnicu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>Zadajte tretiu líniu/oblúk/kružnicu</translation>
+        <translation>Zadajte tretiu čiaru/oblúk/kružnicu</translation>
     </message>
 </context>
 <context>
@@ -14140,7 +14144,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
         <source>Specify the third line</source>
-        <translation>Zadajte tretiu čiaru</translation>
+        <translation>Určte tretiu čiaru</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="294"/>
@@ -14158,7 +14162,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Neplatná oblasť šrafovania. Skontrolujte, či vybrané entity tvoria jednu alebo viac uzavretých obrysov.</translation>
+        <translation>Neplatná oblasť šrafovania. Skontrolujte, či vybrané objekty tvoria jednu alebo viac uzavretých obrysov.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
@@ -14262,7 +14266,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Nie je možné uzavrieť postupnosť čiar: Zatiaľ nie je definované dostatočné množstvo entít alebo je už uzavretá.</translation>
+        <translation>Nie je možné uzavrieť postupnosť čiar: Zatiaľ nie je definované dostatočné množstvo objektov alebo je už uzavretá.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
@@ -14408,7 +14412,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Vyberte kruh, oblúk alebo elipsu</translation>
+        <translation>Vyberte kružnicu, oblúk alebo elipsu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -14642,12 +14646,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Vyberte prvý kruh/elipsu/parabolu</translation>
+        <translation>Vyberte prvú kružnicu/elipsu/parabolu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Vyberte druhý kruh/elipsu/parabolu</translation>
+        <translation>Vyberte druhú kružnicu/elipsu/parabolu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
@@ -14717,12 +14721,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Nemožné uzavrieť postupnosť čiar: Zatiaľ nie je definované dostatočné množstvo entít.</translation>
+        <translation>Nemožné uzavrieť postupnosť čiar: Zatiaľ nie je definované dostatočné množstvo objektov.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Nemožné vrátiť späť: Zatiaľ nie je definované dostatočné množstvo entít.</translation>
+        <translation>Nemožné vrátiť späť: Zatiaľ nie je definované dostatočné množstvo objektov.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
@@ -14739,7 +14743,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Zadajte počet polylín</translation>
+        <translation>Zadajte počet polylínií</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -14808,12 +14812,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Nemožné uzavrieť postupnosť čiar: Zatiaľ nie je definované dostatočné množstvo entít.</translation>
+        <translation>Nemožné uzavrieť postupnosť čiar: Zatiaľ nie je definované dostatočné množstvo objektov.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Nedá sa vrátiť: Zatiaľ nie je definovaných dostatok entít.</translation>
+        <translation>Nedá sa vrátiť: Zatiaľ nie je definovaných dostatok objektov.</translation>
     </message>
 </context>
 <context>
@@ -15177,7 +15181,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entita musí byť čiara, oblúk, kruh, elipsa alebo interpolačná splina.</translation>
+        <translation>Objekt musí byť čiara, oblúk, kružnica, elipsa alebo interpolačný spline.</translation>
     </message>
 </context>
 <context>
@@ -15185,7 +15189,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Zvoľte prvý bod na polyline</translation>
+        <translation>Zvoľte prvý bod prerušenia na polylínii</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15195,7 +15199,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Zvoľte druhý bod na tej istej polyline</translation>
+        <translation>Zvoľte druhý bod prerušenia na tej istej polylínii</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15205,7 +15209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Entity nie sú v rovnakej polylinii.</translation>
+        <translation>Objekty nie sú v rovnakej polylínii.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
@@ -15359,7 +15363,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Určite smer posunu</translation>
+        <translation>Určite smer odsadenia</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -15447,7 +15451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Určite prvú entitu alebo zadajte polomer &lt;%1&gt;</translation>
+        <translation>Určite prvý objekt alebo zadajte polomer &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -15583,12 +15587,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>Nenašli sa žiadne entity.</translation>
+        <translation>Nenašli sa žiadne objekty.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>Vyberte entitu pre zoradenie</translation>
+        <translation>Vyberte objekt pre zoradenie</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
@@ -15612,12 +15616,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>Nenašli sa žiadne entity.</translation>
+        <translation>Nenašli sa žiadne objekty.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entita musí byť polylínia.</translation>
+        <translation>Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15627,7 +15631,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>Pridávaný bod nie je na entite.</translation>
+        <translation>Pridávaný bod nie je na objekte.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
@@ -15650,17 +15654,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>Nenašli sa žiadne entity.</translation>
+        <translation>Nenašli sa žiadne objekty.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entita musí byť polylínia.</translation>
+        <translation>Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Kliknite niekde blízko začiatku alebo konca existujúcej polylinie.</translation>
+        <translation>Kliknite niekde blízko začiatku alebo konca existujúcej polylínie.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
@@ -15686,12 +15690,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Nedá sa pridať uzly do uzavretej polylinie.</translation>
+        <translation>Do uzavretej polylínie nemožno pridať uzly.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Nedá sa vrátiť späť: Zatiaľ nie je definované dostatočné množstvo entít.</translation>
+        <translation>Nedá sa vrátiť späť: Zatiaľ nie je definované dostatočné množstvo objektov.</translation>
     </message>
 </context>
 <context>
@@ -15710,12 +15714,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>Nebol nájdená žiadna entita.</translation>
+        <translation>Nebol nájdený žiadny objekt.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entita musí byť polylínia.</translation>
+        <translation>Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15735,7 +15739,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Vybraný bod na odstránenie nie je súčasťou entity.</translation>
+        <translation>Vybraný bod na odstránenie nie je súčasťou objektu.</translation>
     </message>
 </context>
 <context>
@@ -15756,18 +15760,18 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>Nebola nájdená žiadna entita.</translation>
+        <translation>Nebol nájdený žiadny objekt.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entita musí byť polylínia.</translation>
+        <translation>Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>Bod, ktorý sa má odstrániť, nie je entitou.</translation>
+        <translation>Bod, ktorý sa má odstrániť, neleží na objekte.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
@@ -15796,12 +15800,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>Nenašli sa žiadne entity.</translation>
+        <translation>Nenašli sa žiadne objekty.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entita musí byť polylínia.</translation>
+        <translation>Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
@@ -15819,12 +15823,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
-        <translation>Nenašli sa žiadne entity.</translation>
+        <translation>Nenašli sa žiadne objekty.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Vyberte jeden zo segmentov na pôvodnej polylinii</translation>
+        <translation>Vyberte jeden zo segmentov pôvodnej polylínie</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
@@ -15834,13 +15838,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Entita nemôže byť uzavretá polylinia.</translation>
+        <translation>Objekt nemôže byť uzavretá polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>Polylinia vytvorená</translation>
+        <translation>Polylínia vytvorená</translation>
     </message>
 </context>
 <context>
@@ -15861,12 +15865,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>Nenašli sa žiadne entity.</translation>
+        <translation>Nenašli sa žiadne objekty.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entita musí byť polylinia.</translation>
+        <translation>Objekt musí byť polylínia.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -15878,7 +15882,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>Na entite sa nenašiel žiadny segment.</translation>
+        <translation>Na objekte sa nenašiel žiadny segment.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
@@ -16051,27 +16055,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>Nebola vybraná žiadna entita!</translation>
+        <translation>Nebol vybraný žiadny objekt!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Vyberte pre vytvorenie posunu</translation>
+        <translation>Vyberte objekt na odsadenie</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>Vyberte entity, ktoré chcete objednať</translation>
+        <translation>Vyberte objekty na zoradenie</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Vyberte entity, ktoré chcete rozložiť</translation>
+        <translation>Vyberte blok na rozloženie</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>Vyberte entity, ktorých smer chcete zmeniť</translation>
+        <translation>Vyberte objekty, ktorých smer chcete zmeniť</translation>
     </message>
 </context>
 <context>
@@ -16294,17 +16298,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Možnosti zoskosenia</translation>
+        <translation>Možnosti skosenia</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Začiarknite, ak chcete orezať obe entity po skosenie</translation>
+        <translation>Začiarknite, ak chcete orezať oba objekty po skosenie</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Orezať</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16322,7 +16326,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="32"/>
         <source>Circle Options</source>
-        <translation>Nastavenia kruhu</translation>
+        <translation>Nastavenia kružnice</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -16335,12 +16339,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>Nastavenia kruhu – tangenciála 2</translation>
+        <translation>Nastavenia kružnice tangenciálnej k 2 objektom</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Polomer tangenciálneho kruhu, ktorý sa má nakresliť&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Polomer tangenciálnej kružnice, ktorá sa má nakresliť&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16350,7 +16354,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>Polomer tangenciálneho kruhu</translation>
+        <translation>Polomer tangenciálnej kružnice</translation>
     </message>
 </context>
 <context>
@@ -16859,7 +16863,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Upraviť možnosti posunu</translation>
+        <translation>Možnosti odsadenia</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16869,7 +16873,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>Posun od pôvodného objektu</translation>
+        <translation>Odsadenie od pôvodného objektu</translation>
     </message>
 </context>
 <context>
@@ -16890,7 +16894,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>Možnosti polylinie</translation>
+        <translation>Možnosti polylínie</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="53"/>
@@ -16978,7 +16982,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Použiť mierku tlače na šírku čiary</translation>
+        <translation>Použiť mierku tlače na hrúbku čiary</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -17006,7 +17010,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Orezať</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>

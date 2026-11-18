@@ -72,7 +72,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation>Točke splina</translation>
+        <translation>Zlepek skozi točke</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>Izberite entiteto obloka</translation>
+        <translation>Izberite lok</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Določite lokacijo dimenzijskega obloka</translation>
+        <translation>Določite položaj kotirnega loka</translation>
     </message>
 </context>
 <context>
@@ -429,12 +429,12 @@ ali [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Črta</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -492,7 +492,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Povečava &amp;premik</translation>
+        <translation>Premik &amp;pogleda</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -720,12 +720,12 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Spline</translation>
+        <translation>&amp;Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Spline skozi točke</translation>
+        <translation>Zlepek &amp;skozi točke</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
@@ -770,12 +770,12 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;Večvrstični tekst</translation>
+        <translation>&amp;Večvrstično besedilo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Text</source>
-        <translation>&amp;Tekst</translation>
+        <translation>&amp;Besedilo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
@@ -820,7 +820,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Vodilo</translation>
+        <translation>&amp;Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -910,7 +910,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Razstavi tekst v črke</translation>
+        <translation>&amp;Razbij besedilo v črke</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -940,7 +940,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Poligonalna &amp;ploskev</translation>
+        <translation>Ploščina &amp;mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
@@ -1110,7 +1110,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
-        <translation>Povečaj</translation>
+        <translation>Po&amp;večaj</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
@@ -1120,7 +1120,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Samodejni zoom</translation>
+        <translation>&amp;Samodejna povečava</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
@@ -1282,7 +1282,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>&amp;Odmik</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1453,7 +1453,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>By Arc</source>
-        <translation>Po obloku</translation>
+        <translation>Po loku</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
@@ -1620,7 +1620,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
         <source>Replace arc</source>
-        <translation>Zamenjaj oblok</translation>
+        <translation>Zamenjaj lok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
@@ -2057,7 +2057,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Dodaj plast dimenzij</translation>
+        <translation>Dodaj kotirno plast</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2122,7 +2122,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Dodaj podplast dimenzij</translation>
+        <translation>Dodaj podplast &amp;kotiranja</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2330,7 +2330,7 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>Do preseka</translation>
+        <translation>Do presečišča</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2597,12 +2597,12 @@ ali [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Ikona širine črte</translation>
+        <translation>Ikona debeline črte</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Ime širine črte</translation>
+        <translation>Ime debeline črte</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -3701,7 +3701,7 @@ Prosim, preverite dovoljenja.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Lomljenka</translation>
+        <translation>&amp;Polilinija</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3830,7 +3830,7 @@ Samodejno shranjevanje je zaustavljeno.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
-        <translation>Osnutek način</translation>
+        <translation>Način osnutka</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
@@ -3882,7 +3882,7 @@ Preverite njeno obstojnost in dovoljenja.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Črta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3934,7 +3934,7 @@ Preverite njeno obstojnost in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pero</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -3979,7 +3979,7 @@ Preverite njeno obstojnost in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dimenzija</translation>
+        <translation>&amp;Kotiranje</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
@@ -4241,12 +4241,12 @@ Preverite njeno obstojnost in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Presledna vrstica: obnovljen običajen način pripenjanja</translation>
+        <translation>Preslednica: običajni način pripenjanja je obnovljen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Presledna vrstica: začasno nastavljen način pripenjanja na prosto pripenjanje</translation>
+        <translation>Preslednica: začasno je nastavljeno prosto pripenjanje</translation>
     </message>
 </context>
 <context>
@@ -4631,12 +4631,12 @@ v ločenem oknu</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Urejevalnik oznake dimenzije</translation>
+        <translation>Urejevalnik oznake kote</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>Oznaka dimenzije:</translation>
+        <translation>Oznaka kote:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4702,7 +4702,7 @@ v ločenem oknu</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4836,7 +4836,7 @@ To rekurzivno spremeni vse entitete samega bloka.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>Mere</translation>
+        <translation>Kota</translation>
     </message>
 </context>
 <context>
@@ -4950,7 +4950,7 @@ To rekurzivno spremeni vse entitete samega bloka.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Sloj:</translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
@@ -5110,7 +5110,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Črta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -6239,7 +6239,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimenzije</translation>
+        <translation>&amp;Kote</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -6279,7 +6279,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Število segmentov črte na krivulji:</translation>
+        <translation>Število daljic na odsek zlepka:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6350,7 +6350,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost označevalca dimenzije. Nastavitev na 0 bo onemogočila označevalec dimenzije. Puščica dimenzije se ne bo narisala, ko je omogočen označevalec dimenzije.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost kotirne oznake. Nastavitev na 0 onemogoči kotirno oznako. Kotirna puščica se ne nariše, kadar je kotirna oznaka omogočena.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6365,12 +6365,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Merilnik, s katerim se pomnožijo vse vrednosti dimenzij.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Merilo, s katerim se pomnožijo vse vrednosti kot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Merilnik, s katerim se pomnožijo vse geometrije dimenzij.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Merilo, s katerim se pomnožijo vse geometrije kot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6437,12 +6437,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Dolžina za povečavo nad dimenzijsko črto</translation>
+        <translation>Dolžina podaljšanja čez kotirno črto</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost puščice dimenzije. &lt;a name=&quot;result_box&quot;/&gt;brez učinka, če je velikost črtice &lt;a name=&quot;result_box&quot;/&gt;drugačna od 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost kotirne puščice. &lt;a name=&quot;result_box&quot;/&gt;Nima učinka, kadar je velikost oznake &lt;a name=&quot;result_box&quot;/&gt;različna od 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6453,7 +6453,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimenzijske črte, puščice in črtice</translation>
+        <translation>Kotirne črte, puščice in oznake</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6483,7 +6483,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Besedilo je poravnano glede na kotirno črto.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poravnava besedila &lt;a name=&quot;result_box&quot;/&gt;glede na kotirno črto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
@@ -6503,7 +6503,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Podaljševalne črte</translation>
+        <translation>Pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6559,12 +6559,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>fiksna dolžina podaljšane črte</translation>
+        <translation>stalna dolžina pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Spline</translation>
+        <translation>&amp;Zlepki</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -6797,12 +6797,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>&amp;Začetna barva ročaja:</translation>
+        <translation>Barva &amp;začetne ročice:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>&amp;Barva ročaja:</translation>
+        <translation>&amp;Barva ročice:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -6862,7 +6862,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Prikaži vodilne črte za pripenjanje</translation>
+        <translation>Črte indikatorja pripenjanja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
@@ -6922,7 +6922,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ko je omogočeno, bo aktiviranje sloja spremenilo vse izbrane entitete v ta novi sloj. Če želite spremeniti sloj več entitet: najprej izberite potrebne entitete; nato aktivirajte sloj v prikazu slojev. S tem bodo vse izbrane entitete spremenjene in dodeljene novemu sloju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ko je omogočeno, aktiviranje plasti premakne vse izbrane entitete v to novo plast. Če želite spremeniti plast več entitet: najprej izberite potrebne entitete, nato aktivirajte plast v pripomočku plasti. S tem bodo vse izbrane entitete dodeljene novi plasti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -7055,7 +7055,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
         <source>Layers</source>
-        <translation>Sloji</translation>
+        <translation>Plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
@@ -7191,7 +7191,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Sloj:</translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
@@ -7219,7 +7219,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Sloj:</translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
@@ -7406,12 +7406,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Sloj:</translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
@@ -8154,7 +8154,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
         <source>Layer:</source>
-        <translation>Sloj:</translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
@@ -8441,29 +8441,29 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Nastavitve sloja</translation>
+        <translation>Nastavitve plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Ime sloja:</translation>
+        <translation>Ime plasti:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Privzeta pisala</translation>
+        <translation>Privzeto pero</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Konstrukcijski sloj vsebuje entitete neskončno dolgih črt, ki so namenjene geometrijski konstrukciji.
-Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translation>
+        <translation>Konstrukcijska plast vsebuje entitete neskončno dolgih črt, ki so namenjene geometrijski konstrukciji.
+Vsebina konstrukcijske plasti se ne sme pojavljati v tiskanem izhodu.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Konstrukcijski sloj</translation>
+        <translation>Konstrukcijska plast</translation>
     </message>
 </context>
 <context>
@@ -8516,42 +8516,42 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Iščem ujemanja imen slojev</translation>
+        <translation>Iščem ujemajoča se imena plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Uredi &amp;lastnosti sloja</translation>
+        <translation>Uredi &amp;lastnosti plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Izklopi/vklopi &amp;vidnost sloja</translation>
+        <translation>Izklopi/vklopi &amp;vidnost plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Izklopi/vklopi &amp;tiskanje sloja</translation>
+        <translation>Izklopi/vklopi &amp;tiskanje plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Izklopi/vklopi &amp;konstrukcijski sloj</translation>
+        <translation>Izklopi/vklopi &amp;konstrukcijsko plast</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>Odkleni vse sloje</translation>
+        <translation>Odkleni vse plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>Zakleni vse sloje</translation>
+        <translation>Zakleni vse plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Odstrani sloj</translation>
+        <translation>Odstrani plast</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="276"/>
@@ -8561,7 +8561,7 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Odkleni vse sloje</translation>
+        <translation>&amp;Odkleni vse plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
@@ -8633,7 +8633,7 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Pikčasta</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8648,7 +8648,7 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Črtkana</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8793,7 +8793,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Širina črte</translation>
+        <translation>Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8858,7 +8858,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Pripni</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8873,7 +8873,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Pripni k sredinskim točkam</translation>
+        <translation>Pripni k središčem</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
@@ -8943,7 +8943,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Pripenjanje na sredino</translation>
+        <translation>Pripenjanje na središče</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
@@ -9022,7 +9022,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pero</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9045,7 +9045,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
-        <translation>Po sloju</translation>
+        <translation>Po plasti</translation>
     </message>
 </context>
 <context>
@@ -9064,17 +9064,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="384"/>
         <source>Remove Layer</source>
-        <translation>Odstrani sloj</translation>
+        <translation>Odstrani plast</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Sloj &quot;%1&quot; se ne more odstraniti.</translation>
+        <translation>Plasti &quot;%1&quot; ni mogoče odstraniti.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Dialog sloja</translation>
+        <translation>Pogovorno okno plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
@@ -9091,25 +9091,25 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>Lastnosti sloja</translation>
+        <translation>Lastnosti plasti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Sloj z imenom &quot;%1&quot; že obstaja. Prosimo, navedite drugačno ime.</translation>
+        <translation>Plast z imenom &quot;%1&quot; že obstaja. Navedite drugačno ime.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Sloj &quot;%1&quot; in vse entitete na njem bodo odstranjene.
-To dejanje ni mogoče povrniti.</translation>
+        <translation>Plast &quot;%1&quot; in vse entitete na njej bodo odstranjene.
+Tega dejanja NI mogoče razveljaviti.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Sloj &quot;0&quot; se ne more odstraniti.</translation>
+        <translation>Plasti &quot;0&quot; ni mogoče odstraniti.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
@@ -9118,15 +9118,15 @@ To dejanje ni mogoče povrniti.</translation>
         <translation>
             <numerusform>Odstrani %n plast</numerusform>
             <numerusform>Odstrani %n plasti</numerusform>
-            <numerusform>Odstrani %n sloj(ev)</numerusform>
-            <numerusform>Odstrani %n sloj(ev)</numerusform>
+            <numerusform>Odstrani %n plasti</numerusform>
+            <numerusform>Odstrani %n plasti</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Navedeni sloji in vse entitete na njih bodo odstranjeni.</translation>
+        <translation>Navedene plasti in vse entitete na njih bodo odstranjene.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9351,11 +9351,11 @@ Počistite filter in ponovite.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Nadomestiti vrednost »Po sloju« z vrednostmi izvorne plasti?
+        <translation>Nadomestiti vrednost »Po plasti« z vrednostmi izvornih plasti?
 
-Če izberete »Da«, bodo entitete s peresi »Po sloju« na novi plasti izgledale enako kot na prejšnjih plasteh, vrednost »Po sloju« pa bo nadomeščena z določenimi peresi.
+Če izberete »Da«, bodo entitete s peresi »Po plasti« na novi plasti videti enako kot na prejšnjih plasteh, vrednost »Po plasti« pa bo nadomeščena z razrešenimi peresi.
 
-Če izberete »Ne«, bodo vrednosti »Po sloju« ohranjene, peres ciljne plasti pa bo določalo peres za te entitete.</translation>
+Če izberete »Ne«, bodo vrednosti »Po plasti« ohranjene, zato bo pero ciljne plasti določalo pero teh entitet.</translation>
     </message>
 </context>
 <context>
@@ -9833,7 +9833,7 @@ Ali ga želite nadomestiti?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>spline</translation>
+        <translation>zlepek</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="475"/>
@@ -9845,7 +9845,7 @@ Ali ga želite nadomestiti?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>spline2</translation>
+        <translation>zlepek2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -10977,12 +10977,12 @@ Ali ga želite nadomestiti?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
         <source>Layer</source>
-        <translation>Sloj</translation>
+        <translation>Plast</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Črta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11018,7 +11018,7 @@ Ali ga želite nadomestiti?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Pripni</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11096,7 +11096,7 @@ Ali ga želite nadomestiti?</translation>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>Ni bilo najdenih %1 slojev</translation>
+        <translation>Ni najdenih plasti (%1)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
@@ -12424,7 +12424,7 @@ Ali ga želite nadomestiti?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Po meri%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13010,12 +13010,12 @@ Ali ga želite nadomestiti?</translation>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch: ni bilo najdeno nobenega vzorca. Prosimo, nastavite pot do vzorca v nastavitvah aplikacije.</translation>
+        <translation>Šrafura: ni najdenega vzorca. Nastavite pot do vzorcev v nastavitvah programa.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: nalaganje vzorca je spodletelo: %1</translation>
+        <translation>Šrafura: nalaganje vzorca ni uspelo: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13292,7 +13292,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Določite izhodišče prve podaljševalne črte.</translation>
+        <translation>Določite izhodišče prve pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13302,7 +13302,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Določite izhodišče druge podaljševalne črte.</translation>
+        <translation>Določite izhodišče druge pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13418,7 +13418,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Določite začetno točko prve pomožne črte</translation>
+        <translation>Določite izhodišče prve pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13428,7 +13428,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Določite začetno točko druge pomožne črte</translation>
+        <translation>Določite izhodišče druge pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -14927,7 +14927,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>Določite prvo točko poligona</translation>
+        <translation>Določite prvo točko mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="166"/>
@@ -14938,7 +14938,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>Določite naslednjo točko poligona</translation>
+        <translation>Določite naslednjo točko mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
@@ -15172,7 +15172,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Entiteta mora biti črta, lok, krog, elipsa ali interpolacijska krivulja.</translation>
+        <translation>Entiteta mora biti črta, lok, krog, elipsa ali interpolacijski zlepek.</translation>
     </message>
 </context>
 <context>
@@ -16020,7 +16020,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Izberite za razčlenitev besedila</translation>
+        <translation>Izberite besedilo za razbitje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16061,7 +16061,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Izberite za razčlenitev bloka.</translation>
+        <translation>Izberite blok za razbitje</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16170,12 +16170,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Ponovno ustvarjenih %1 dimenzijskih elementov</translation>
+        <translation>Regeneriranih kotirnih entitet: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>Ni bilo najdenih dimenzijskih elementov</translation>
+        <translation>Ni najdenih kotirnih entitet</translation>
     </message>
 </context>
 <context>
@@ -16194,7 +16194,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Povečava in pomik</translation>
+        <translation>Premik pogleda</translation>
     </message>
 </context>
 <context>
@@ -16269,7 +16269,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Skupni odklon tangencialnega loka</translation>
+        <translation>Skupni središčni kot tangencialnega loka</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -16299,7 +16299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16353,7 +16353,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>Možnosti linearne mere</translation>
+        <translation>Možnosti linearne kote</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16366,7 +16366,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Možnosti mere</translation>
+        <translation>Možnosti kotiranja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -16564,7 +16564,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Pripni na točko:</translation>
+        <translation>Točka pripenjanja:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16772,7 +16772,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Možnosti poligona</translation>
+        <translation>Možnosti mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -16790,7 +16790,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>Možnosti poligona</translation>
+        <translation>Možnosti mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -16900,7 +16900,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Črta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -16973,7 +16973,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Uporabi merilo tiskanja za širino črte</translation>
+        <translation>Uporabi merilo tiskanja za debelino črte</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -17001,7 +17001,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17045,7 +17045,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>Možnosti spline</translation>
+        <translation>Možnosti zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>

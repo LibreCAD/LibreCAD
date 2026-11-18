@@ -240,7 +240,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation>עיגול</translation>
+        <translation>מעגל</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
@@ -330,7 +330,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>קו פולי</translation>
+        <translation>פוליליין</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -375,7 +375,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>מנהיג מידה</translation>
+        <translation>קו שיוך של מידה</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -638,7 +638,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>בחר קו, עיגול או קשת ולחץ Enter</translation>
+        <translation>בחר קו, מעגל או קשת ולחץ Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -752,7 +752,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>עיגול</translation>
+        <translation>מעגל</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,7 +767,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>קו פולי</translation>
+        <translation>פוליליין</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -797,7 +797,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>חייב להיות קו, עיגול או קשת</translation>
+        <translation>חייב להיות קו, מעגל או קשת</translation>
     </message>
 </context>
 <context>
@@ -976,22 +976,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>לצייר עיגול תוספת?</translation>
+        <translation>לשרטט את מעגל הראשים?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>לצייר עיגול חריצים?</translation>
+        <translation>לשרטט את מעגל החלוקה?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>לצייר עיגול בסיס?</translation>
+        <translation>לשרטט את מעגל הבסיס?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>לצייר עיגול שורש?</translation>
+        <translation>לשרטט את מעגל העיקרים?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
@@ -1232,7 +1232,7 @@ Use t or x in your equation as a variable/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>קו פולי</translation>
+        <translation>פוליליין</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

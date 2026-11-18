@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Ascii 포인트 읽기</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
 </context>
 <context>
@@ -43,12 +43,12 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>원래 개체를 유지</translation>
+        <translation>원래 객체를 유지</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>기본 포인트를 지정</translation>
+        <translation>기준점 먼저 지정</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -118,7 +118,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>구성요소 목록</translation>
+        <translation>엔티티 목록</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -128,7 +128,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>구성요소가 없습니다.</translation>
+        <translation>빈 엔티티</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -143,7 +143,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>도면층</translation>
+        <translation>레이어</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -211,7 +211,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -454,7 +454,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>Ascii 포인트 읽기</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -499,7 +499,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
-        <translation>2D 포인트</translation>
+        <translation>2D 점</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
@@ -509,7 +509,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation>3D 포인트</translation>
+        <translation>3D 점</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -529,7 +529,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>포인트 상승</translation>
+        <translation>점 표고</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -539,7 +539,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation>포인트 코드</translation>
+        <translation>점 코드</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
@@ -564,22 +564,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>점 2D 층은 비어 있습니다</translation>
+        <translation>점 2D 레이어는 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>점 3D 층은 비어 있습니다</translation>
+        <translation>점 3D 레이어는 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>점 표고 층은 비어 있습니다</translation>
+        <translation>점 표고 레이어는 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>포인트 높이가 비어 있습니다</translation>
+        <translation>점 표고 높이가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
@@ -589,12 +589,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>점 번호 층은 비어 있습니다</translation>
+        <translation>점 번호 레이어는 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>포인트 번호 높이가 비어 있습니다</translation>
+        <translation>점 번호 높이가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
@@ -604,12 +604,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>점 코드 층은 비어 있습니다</translation>
+        <translation>점 코드 레이어는 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>포인트 코드 높이가 비어 있습니다</translation>
+        <translation>점 코드 높이가 비어 있습니다</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
@@ -638,7 +638,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>선, 원형 또는 아크를 선택하고 반환</translation>
+        <translation>선, 원 또는 호를 선택하고 Enter 키를 누르십시오</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -678,7 +678,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>라인 타입</translation>
+        <translation>선종류</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -724,7 +724,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -797,7 +797,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST는 선, 원형 또는 아크입니다</translation>
+        <translation>선, 원 또는 호여야 합니다</translation>
     </message>
 </context>
 <context>
@@ -880,17 +880,17 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>상세 정보</translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation>이름 *</translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>기타 제품</translation>
+        <translation>바깥쪽</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
@@ -971,22 +971,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>층을 사용?</translation>
+        <translation>레이어 사용?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Draw addendum 원형?</translation>
+        <translation>이끝원 그리기?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Draw 피치 원형?</translation>
+        <translation>피치원 그리기?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Draw 기초 원형?</translation>
+        <translation>기초원 그리기?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -1037,7 +1037,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation>Draw 라인</translation>
+        <translation>선 그리기</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="60"/>
@@ -1150,7 +1150,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto drawLine: 다음 포인트는 빈 %1</translation>
+        <translation>picPunto drawLine: 다음 점이 비어 있음 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262"/>
@@ -1165,7 +1165,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plot 플러그인</translation>
+        <translation>그래프 그리기 플러그인</translation>
     </message>
 </context>
 <context>
@@ -1227,7 +1227,7 @@ pi 값이 필요하면 pi를 사용할 수 있습니다(예: (3*pi)).
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>라인 세그먼트</translation>
+        <translation>선 세그먼트</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
@@ -1239,7 +1239,7 @@ pi 값이 필요하면 pi를 사용할 수 있습니다(예: (3*pi)).
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>스플라인 포인트</translation>
+        <translation>스플라인 점</translation>
     </message>
 </context>
 <context>
@@ -1247,7 +1247,7 @@ pi 값이 필요하면 pi를 사용할 수 있습니다(예: (3*pi)).
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>도면층 :</translation>
+        <translation>레이어:</translation>
     </message>
 </context>
 <context>

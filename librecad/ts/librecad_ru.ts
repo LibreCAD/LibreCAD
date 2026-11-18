@@ -424,17 +424,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> не делится, так как является частью полилинии. Сначала расширьте полилинию.</translation>
+        <translation> не делится, так как является частью ломаной. Сначала разбейте ломаную.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Дуга</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -487,12 +487,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1537"/>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Увеличение окна</translation>
+        <translation>Показать &amp;рамкой</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Масштабирование &amp;Панорамирование</translation>
+        <translation>&amp;Панорамирование</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -770,7 +770,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;Текст</translation>
+        <translation>&amp;Многострочный текст</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
@@ -820,7 +820,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>П&amp;олка-выноска</translation>
+        <translation>&amp;Выноска</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -870,12 +870,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Вращени&amp;е по двум</translation>
+        <translation>Поворот по &amp;двум</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Properties</source>
-        <translation>&amp;Характеристики</translation>
+        <translation>&amp;Свойства</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
@@ -895,7 +895,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Вытянуть</translation>
+        <translation>&amp;Растянуть</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
@@ -1110,12 +1110,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
         <source>Zoom &amp;In</source>
-        <translation>&amp;Приблизить</translation>
+        <translation>&amp;Увеличить</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1495"/>
         <source>Zoom &amp;Out</source>
-        <translation>Увеличение&amp;Уменьшение</translation>
+        <translation>У&amp;меньшить</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
@@ -1788,13 +1788,13 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Слой конструкции содержит объекты бесконечных прямых линий, предназначенные для геометрического построения.
-       Содержимое слоя конструкции не должно появляться на печати.</translation>
+        <translation>Вспомогательный слой содержит бесконечные прямые, предназначенные для геометрических построений.
+       Содержимое вспомогательного слоя не выводится на печать.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>Слой конструкции</translation>
+        <translation>Вспомогательный слой</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -2379,7 +2379,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Продлить/Обрезать</translation>
+        <translation>Удлинить/Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2396,7 +2396,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>Создать полилинию</translation>
+        <translation>Создать ломаную</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2597,12 +2597,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Иконка ширины линии</translation>
+        <translation>Иконка толщины линии</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Имя ширины линии</translation>
+        <translation>Название толщины линии</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2869,7 +2869,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -2969,7 +2969,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>Скос</translation>
+        <translation>Фаска</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
@@ -3027,7 +3027,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -3091,7 +3091,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>Скос</translation>
+        <translation>Фаска</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -3124,7 +3124,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -3174,7 +3174,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>Скос</translation>
+        <translation>Фаска</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -3320,7 +3320,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3888,7 +3888,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -4703,7 +4703,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Дуга</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -5113,7 +5113,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -6660,7 +6660,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Стили штриховки:</translation>
+        <translation>Образцы штриховки:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6805,7 +6805,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>Цвет маркера &amp;продолжения:</translation>
+        <translation>Цвет &amp;промежуточного маркера:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -7296,7 +7296,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
         <source>Rotate Two Options</source>
-        <translation>Параметры вращения вокруг двух центров</translation>
+        <translation>Параметры поворота вокруг двух центров</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
@@ -7445,7 +7445,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -8217,7 +8217,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8956,7 +8956,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>К конечным точками</translation>
+        <translation>К конечным точкам</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
@@ -9686,7 +9686,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1827"/>
         <source>ZSoft Paintbrush</source>
-        <translation>ZМягкая кисть</translation>
+        <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1829"/>
@@ -10131,7 +10131,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>размвыравн</translation>
+        <translation>размпарал</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
@@ -11015,7 +11015,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11036,7 +11036,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -11705,7 +11705,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>вращение</translation>
+        <translation>поворот</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
@@ -11855,7 +11855,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>дистанция</translation>
+        <translation>расстояние</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -12457,7 +12457,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Пользовательский Цвет%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13043,12 +13043,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Штриховка: не найден шаблон. Пожалуйста, укажите путь к шаблону в настройках приложения.</translation>
+        <translation>Штриховка: не найден образец. Пожалуйста, укажите путь к образцу в настройках приложения.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Штриховка: не удалось загрузить шаблон: %1</translation>
+        <translation>Штриховка: не удалось загрузить образец: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13857,7 +13857,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Укажите первую прямую, дугу или окружность</translation>
+        <translation>Укажите первую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="327"/>
@@ -13867,7 +13867,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="331"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Укажите вторую прямую, дугу или окружность</translation>
+        <translation>Укажите вторую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
@@ -13911,7 +13911,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Укажите прямую, дугу или окружность</translation>
+        <translation>Укажите линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
@@ -14203,12 +14203,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Ошибка штриховки: вид штриховки не найден!</translation>
+        <translation>Ошибка штриховки: образец штриховки не найден!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Ошибка штриховки: контур или вид штриховки слишком мал!</translation>
+        <translation>Ошибка штриховки: контур или образец штриховки слишком мал!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
@@ -14769,7 +14769,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>Введите количество полилиний</translation>
+        <translation>Введите количество ломаных</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -15414,12 +15414,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>Укажите центр вращения</translation>
+        <translation>Укажите центр поворота</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>Укажите целевую точку вращения</translation>
+        <translation>Укажите целевую точку поворота</translation>
     </message>
 </context>
 <context>
@@ -15870,7 +15870,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>Полилиния создана</translation>
+        <translation>Ломаная создана</translation>
     </message>
 </context>
 <context>
@@ -16050,7 +16050,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>Выберите для двухосного вращения</translation>
+        <translation>Выберите объекты для поворота вокруг двух центров</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
@@ -16698,7 +16698,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -16907,7 +16907,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Параметры сдвига и поворота</translation>
+        <translation>Параметры перемещения и поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -16935,7 +16935,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>

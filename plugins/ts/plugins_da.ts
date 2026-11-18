@@ -124,7 +124,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Slet objekt</translation>
+        <translation>Tomt objekt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -171,7 +171,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation>aktuelle objekt</translation>
+        <translation>i punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
@@ -326,7 +326,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>KNÆKLINJE</translation>
+        <translation>POLYLINJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -351,12 +351,12 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
-        <translation>BILLED</translation>
+        <translation>BILLEDE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>KURVE</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
@@ -366,7 +366,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>SKRAVER</translation>
+        <translation>SKRAVERING</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -726,7 +726,7 @@ Hvis &apos;Angiv først basispunkterne&apos; er markeret, vil Justér bede om ju
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation>midterpunkt</translation>
+        <translation>centrum</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>

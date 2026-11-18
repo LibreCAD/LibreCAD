@@ -673,7 +673,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Στρώμα</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -815,7 +815,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Στρώματα</translation>
+        <translation>Στρώσεις</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -875,7 +875,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Νέο&quot;&lt;/i&gt;&lt;br&gt;Εισαγάγετε το όνομα&lt;br&gt; για ένα νέο στρώμα&lt;br&gt; (αν απαιτείται;) για να &lt;br&gt; σχεδιαστούν τα σημάδια.</translation>
+        <translation>&lt;i&gt;&quot;Νέα&quot;&lt;/i&gt;&lt;br&gt;Εισαγάγετε το όνομα&lt;br&gt;μιας νέας στρώσης&lt;br&gt;(αν χρειάζεται) όπου&lt;br&gt;θα σχεδιαστούν τα σημάδια.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -976,7 +976,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Να χρησιμοποιείς στρώματα?</translation>
+        <translation>Χρήση στρώσεων;</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>

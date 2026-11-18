@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>चाप इकाई चुनें</translation>
+        <translation>चाप एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -271,7 +271,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
         <source>Specify a tangent</source>
-        <translation>एक स्पर्शज्या निर्दिष्ट करें</translation>
+        <translation>एक स्पर्शरेखा निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
@@ -474,7 +474,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>पूर्ववत नहीं कर सकते: अभी पर्याप्त इकाइयाँ परिभाषित नहीं हैं।</translation>
+        <translation>पूर्ववत नहीं कर सकते: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
@@ -497,7 +497,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>इकाई चुनें</translation>
+        <translation>एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
@@ -517,12 +517,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>प्रतिच्छेदित इकाइयाँ चुनें</translation>
+        <translation>प्रतिच्छेदित एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>प्रतिच्छेदित इकाइयों की चयन रद्द करें</translation>
+        <translation>प्रतिच्छेदित एंटिटीज़ की चयन रद्द करें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
@@ -583,17 +583,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
-        <translation>स्पर्शज्या (P,C)</translation>
+        <translation>स्पर्शरेखा (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
-        <translation>स्पर्शज्या (C,C)</translation>
+        <translation>स्पर्शरेखा (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>स्पर्शज्या &amp;लंबवत</translation>
+        <translation>स्पर्शरेखा &amp;लंबवत</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
@@ -745,22 +745,22 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>स्पर्शज्या 2 वृत्त, त्रिज्या</translation>
+        <translation>स्पर्शी, 2 वृत्त, त्रिज्या</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>स्पर्शज्या 2 वृत्त, 1 बिंदु</translation>
+        <translation>स्पर्शी, 2 वृत्त, 1 बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>स्पर्शज्या &amp;3 वृत्त</translation>
+        <translation>स्पर्शी, &amp;3 वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>स्पर्शज्या, 2 बिंदु</translation>
+        <translation>स्पर्शी, 2 बिंदु (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
@@ -930,7 +930,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;गुण</translation>
+        <translation>&amp;विशेषताएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="716"/>
@@ -975,17 +975,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>इकाई से &amp;पेन चुनें</translation>
+        <translation>एंटिटी से &amp;पेन चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>इकाई से &amp;पेन चुनें (हल किया गया)</translation>
+        <translation>एंटिटी से &amp;पेन चुनें (हल किया गया)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>इकाई पर पेन लागू करें</translation>
+        <translation>एंटिटी पर पेन लागू करें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
@@ -1136,7 +1136,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;इकाई से बिंदु तक दूरी</translation>
+        <translation>&amp;एंटिटी से बिंदु तक दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
@@ -1146,7 +1146,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>चयनित इकाइयों की &amp;कुल लंबाई</translation>
+        <translation>चयनित एंटिटीज़ की &amp;कुल लंबाई</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
@@ -1231,12 +1231,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>इकाई के बाद नीचे</translation>
+        <translation>एंटिटी के बाद नीचे</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>इकाई के ऊपर उठाएं</translation>
+        <translation>एंटिटी के ऊपर उठाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -1527,7 +1527,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>पेन चुनने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation>पेन चुनने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>पेन लागू करने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation>पेन लागू करने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>पेन चुनने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation>पेन चुनने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1788,7 +1788,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>निर्माण परत में अनंत सीधी रेखाओं की इकाइयाँ होती हैं जो ज्यामितीय निर्माण के लिए उपयोग की जाती हैं।
+        <translation>निर्माण परत में अनंत सीधी रेखाओं की एंटिटीज़ होती हैं जो ज्यामितीय निर्माण के लिए उपयोग की जाती हैं।
        निर्माण परत की सामग्री प्रिंटआउट में नहीं दिखनी चाहिए।</translation>
     </message>
     <message>
@@ -2067,7 +2067,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>परत गुण संशोधित करें / नाम बदलें</translation>
+        <translation>परत की विशेषताएँ संशोधित करें / नाम बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2107,12 +2107,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;इकाइयाँ चुनें (उप-वृक्ष)</translation>
+        <translation>&amp;एंटिटीज़ चुनें (उप-वृक्ष)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;परत &amp;गुण संपादित करें</translation>
+        <translation>&amp;परत &amp;विशेषताएँ संपादित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
@@ -2165,7 +2165,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;परत की इकाइयाँ चुनें</translation>
+        <translation>&amp;परत की एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
@@ -2401,7 +2401,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
         <source>Attributes:</source>
-        <translation>गुण:</translation>
+        <translation>विशेषताएँ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
@@ -2667,7 +2667,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>यदि पेन द्वारा कोई इकाई नहीं चुनी जा सकती तो सूचना संदेश दिखाएं</translation>
+        <translation>यदि पेन द्वारा कोई एंटिटी नहीं चुनी जा सकती तो सूचना संदेश दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>गुण पेन द्वारा इकाइयाँ चुनें</translation>
+        <translation>विशेषता पेन द्वारा एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>ड्राइंग पेन द्वारा इकाइयाँ चुनें</translation>
+        <translation>ड्राइंग पेन द्वारा एंटिटीज़ चुनें</translation>
     </message>
 </context>
 <context>
@@ -2735,22 +2735,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>इकाई ड्राइंग पेन द्वारा पेन संपादक भरें</translation>
+        <translation>एंटिटी ड्राइंग पेन द्वारा पेन संपादक भरें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>इकाई गुण द्वारा पेन संपादक भरें</translation>
+        <translation>एंटिटी विशेषताओं द्वारा पेन संपादक भरें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>ड्राइंग पेन द्वारा इकाइयाँ चुनें</translation>
+        <translation>ड्राइंग पेन द्वारा एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>पेन गुण द्वारा इकाइयाँ चुनें</translation>
+        <translation>पेन विशेषताओं द्वारा एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2836,12 +2836,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;गुण पेन वाली इकाइयाँ चुनें</translation>
+        <translation>&amp;विशेषता पेन वाली एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;ड्राइंग पेन वाली इकाइयाँ चुनें</translation>
+        <translation>&amp;ड्राइंग पेन वाली एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
@@ -4757,8 +4757,8 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>चयनित INSERT की सभी उप-इकाइयों पर भी विशेषताएँ लागू करें।
-यह ब्लॉक की सभी इकाइयों को पुनरावर्ती रूप से संशोधित करता है।</translation>
+        <translation>चयनित INSERT की सभी उप-एंटिटीज़ पर भी विशेषताएँ लागू करें।
+यह ब्लॉक की सभी एंटिटीज़ को पुनरावर्ती रूप से संशोधित करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -6031,7 +6031,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
         <source>Use current &amp;attributes</source>
-        <translation>वर्तमान और विशेषताएँ का उपयोग करें</translation>
+        <translation>वर्तमान विशेषताओं का उपयोग करें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
@@ -6791,7 +6791,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>पूर्वावलोकन इकाइयों की &amp;संख्या:</translation>
+        <translation>पूर्वावलोकन एंटिटीज़ की &amp;संख्या:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
@@ -6811,7 +6811,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>कर्सर के नीचे इकाई को दृश्यमान करें</translation>
+        <translation>कर्सर के नीचे एंटिटी को दृश्यमान करें</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -6976,7 +6976,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>सक्षम होने पर, एक परत को सक्रिय करने से सभी चयनित इकाइयों को उस नई परत में संशोधित किया जाएगा। कई इकाइयों की परत बदलने के लिए: पहले आवश्यक इकाइयों का चयन करें; लेयर विजेट में एक परत सक्रिय करें। यह सभी चयनित इकाइयों को नई परत से संबंधित होने के लिए संशोधित करता है।</translation>
+        <translation>सक्षम होने पर, एक परत को सक्रिय करने से सभी चयनित एंटिटीज़ को उस नई परत में संशोधित किया जाएगा। कई एंटिटीज़ की परत बदलने के लिए: पहले आवश्यक एंटिटीज़ का चयन करें; परत विजेट में एक परत सक्रिय करें। यह सभी चयनित एंटिटीज़ को नई परत से संबंधित होने के लिए संशोधित करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
@@ -6991,7 +6991,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>चयनित इकाइयों की परत को, परत सक्रियण पर संशोधित करें।</translation>
+        <translation>चयनित एंटिटीज़ की परत को, परत सक्रियण पर संशोधित करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -7143,7 +7143,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>मार्च 2015 तक MakerCAM एलिप्स और एलिप्स आर्क को सही ढंग से प्रदर्शित नहीं कर सकता, जब उन्हें &lt;transform&gt; विशेषता में रोटेशन के साथ &lt;ellipse&gt; टैग का उपयोग करके या एलीप्टिक आर्क सेगमेंट का उपयोग करके &lt;path&gt; के रूप में बनाया जाता है।</translation>
+        <translation>मार्च 2015 तक MakerCAM दीर्घवृत्त और दीर्घवृत्त चाप को सही ढंग से प्रदर्शित नहीं कर सकता,
+जब उन्हें &lt;transform&gt; विशेषता में घूर्णन के साथ &lt;ellipse&gt; टैग का उपयोग करके
+या दीर्घवृत्तीय चाप खंडों का उपयोग करके &lt;path&gt; के रूप में बनाया जाता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
@@ -7319,12 +7321,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
         <source>Use current &amp;attributes</source>
-        <translation>वर्तमान &amp;एट्रिब्यूट का उपयोग करें</translation>
+        <translation>वर्तमान &amp;विशेषताओं का उपयोग करें</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
         <source>Use current &amp;layer</source>
-        <translation>वर्तमान &amp;लेयर का उपयोग करें</translation>
+        <translation>वर्तमान &amp;परत का उपयोग करें</translation>
     </message>
 </context>
 <context>
@@ -7377,7 +7379,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>वर्तमान &amp;लेयर का उपयोग करें</translation>
+        <translation>वर्तमान &amp;परत का उपयोग करें</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
@@ -7405,7 +7407,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
         <source>Layer:</source>
-        <translation>लेयर:</translation>
+        <translation>परत:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
@@ -8030,7 +8032,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1303"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] [CONTEXT: QG_DlgText] [3000-303F] CJK प्रतीक और विराम चिह्न</translation>
+        <translation>[3000-303F] CJK प्रतीक और विराम चिह्न</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1308"/>
@@ -8441,18 +8443,18 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>एक कंस्ट्रक्शन लेयर में अनंत सीधी रेखाओं की इकाइयाँ होती हैं जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाना है।
-कंस्ट्रक्शन लेयर की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।</translation>
+        <translation>एक निर्माण परत में अनंत सीधी रेखाओं की एंटिटीज़ होती हैं जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाना है।
+निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>कंस्ट्रक्शन लेयर</translation>
+        <translation>निर्माण परत</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>लेयर का नाम:</translation>
+        <translation>परत का नाम:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
@@ -8465,7 +8467,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="227"/>
         <source>Show all layers</source>
-        <translation>सभी लेयर्स दिखाएं</translation>
+        <translation>सभी परतें दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
@@ -8475,22 +8477,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>सभी लेयर्स अनलॉक करें</translation>
+        <translation>सभी परतें अनलॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>सभी लेयर्स लॉक करें</translation>
+        <translation>सभी परतें लॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
         <source>Add a layer</source>
-        <translation>एक लेयर जोड़ें</translation>
+        <translation>एक परत जोड़ें</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>परत गुण संशोधित करें / नाम बदलें</translation>
+        <translation>परत की विशेषताएँ संशोधित करें / नाम बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="276"/>
@@ -8545,7 +8547,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>निर्यात और दृश्यमान परत(ओं)</translation>
+        <translation>दृश्यमान परतें निर्यात करें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
@@ -8555,12 +8557,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>परत संपादित करें और विशेषताएँ</translation>
+        <translation>परत की विशेषताएँ संपादित करें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>परत और दृश्यता टॉगल करें</translation>
+        <translation>परत दृश्यता टॉगल करें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
@@ -8570,7 +8572,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>परत और प्रिंटिंग टॉगल करें</translation>
+        <translation>परत प्रिंटिंग टॉगल करें (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
@@ -8839,7 +8841,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;चयनित इकाइयों की संख्या&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;चयनित एंटिटीज़ की संख्या&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -8852,7 +8854,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;चयनित इकाइयों की कुल लंबाई&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;चयनित एंटिटीज़ की कुल लंबाई&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8865,12 +8867,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>एंडपॉइंट्स पर स्नैप</translation>
+        <translation>अंत बिंदु पर स्नैप</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>इकाई के समदूरस्थ बिंदुओं पर स्नैप</translation>
+        <translation>एंटिटी के समदूरस्थ बिंदुओं पर स्नैप</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
@@ -8885,12 +8887,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>इकाई पर निकटतम बिंदु पर स्नैप करें</translation>
+        <translation>एंटिटी पर निकटतम बिंदु पर स्नैप करें</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>एंडपॉइंट पर दी गई दूरी के बिंदु पर स्नैप करें</translation>
+        <translation>अंत बिंदु पर दी गई दूरी के बिंदु पर स्नैप करें</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
@@ -8945,12 +8947,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>एंडपॉइंट्स पर स्नैप</translation>
+        <translation>अंत बिंदु पर स्नैप</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>इकाई पर स्नैप</translation>
+        <translation>एंटिटी पर स्नैप</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
@@ -9097,7 +9099,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>परत &quot;%1&quot; और उस पर सभी इकाइयाँ हटा दी जाएँगी।
+        <translation>परत &quot;%1&quot; और उस पर सभी एंटिटीज़ हटा दी जाएँगी।
 इस कार्रवाई को पूर्ववत नहीं किया जा सकता है।</translation>
     </message>
     <message>
@@ -9116,14 +9118,14 @@ This action can NOT be undone.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>कोई इकाई नहीं मिली, फिर भी परत फ़िल्टर की गई है और दिखाई नहीं दे रही है।
+        <translation>कोई एंटिटी नहीं मिली, फिर भी परत फ़िल्टर की गई है और दिखाई नहीं दे रही है।
 
 फ़िल्टर मास्क साफ़ करें और दोहराएँ।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>इकाइयों के बिना कोई परत नहीं मिली, हटाने के लिए कुछ नहीं है।</translation>
+        <translation>एंटिटीज़ के बिना कोई परत नहीं मिली, हटाने के लिए कुछ नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
@@ -9169,11 +9171,11 @@ Please specify a different name.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>लेयर के अनुसार&quot; मान को स्रोत लेयर मानों से बदलें?
+        <translation>&quot;परत के अनुसार&quot; मान को स्रोत परतों के मानों से बदलें?
 
-यदि हाँ - &quot;लेयर के अनुसार&quot; पेन वाली इकाइयाँ नए लेयर पर ठीक उसी तरह दिखाई देंगी जैसे कि वे पिछली लेयर पर थीं, और &quot;लेयर के अनुसार&quot; मान को हल किए गए पेन से बदल दिया जाएगा।
+यदि हाँ - &quot;परत के अनुसार&quot; पेन वाली एंटिटीज़ नई परत पर ठीक वैसी ही दिखेंगी जैसी पिछली परतों पर थीं, और &quot;परत के अनुसार&quot; मान को हल किए गए पेन से बदल दिया जाएगा।
 
-यदि नहीं - &quot;लेयर के अनुसार&quot; मान अपरिवर्तित रहेंगे, और इसलिए लक्षित लेयर का पेन ऐसी इकाइयों के लिए पेन को परिभाषित करेगा।</translation>
+यदि नहीं - &quot;परत के अनुसार&quot; मान बने रहेंगे, और इसलिए लक्ष्य परत का पेन ऐसी एंटिटीज़ का पेन निर्धारित करेगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9186,15 +9188,15 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/qg_dialogfactory.cpp" line="395"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>%n लेयर हटाएँ</numerusform>
-            <numerusform>%n लेयर्स हटाएँ</numerusform>
+            <numerusform>%n परत हटाएँ</numerusform>
+            <numerusform>%n परतें हटाएँ</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>सूचीबद्ध परतें और उन पर सभी इकाइयाँ हटा दी जाएँगी।</translation>
+        <translation>सूचीबद्ध परतें और उन पर सभी एंटिटीज़ हटा दी जाएँगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9232,7 +9234,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>ब्लॉक &quot;%1&quot; और इसकी सभी इकाइयाँ हटा दी जाएँगी।</translation>
+        <translation>ब्लॉक &quot;%1&quot; और इसकी सभी एंटिटीज़ हटा दी जाएँगी।</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -9245,7 +9247,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>सूचीबद्ध ब्लॉक और उनकी सभी इकाइयाँ हटा दी जाएँगी।</translation>
+        <translation>सूचीबद्ध ब्लॉक और उनकी सभी एंटिटीज़ हटा दी जाएँगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9263,7 +9265,8 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>लेयर सूची विभाजक स्ट्रिंग खाली है। लेयर्स ट्री बनाना संभव नहीं होगा। कृपया कोई अन्य मान निर्दिष्ट करें।</translation>
+        <translation>परत सूची विभाजक स्ट्रिंग खाली है। परत ट्री बनाना संभव नहीं होगा।
+कृपया कोई अन्य मान निर्दिष्ट करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
@@ -9285,7 +9288,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>पेन पैलेट से हटा दिया जाएगा, ड्राइंग इकाइयों पर कोई प्रभाव नहीं पड़ेगा।</translation>
+        <translation>पेन पैलेट से हटा दिया जाएगा, ड्राइंग एंटिटीज़ पर कोई प्रभाव नहीं पड़ेगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9306,7 +9309,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>पेन पैलेट से हटा दिए जाएंगे, ड्राइंग की इकाइयाँ प्रभावित नहीं होंगी।</translation>
+        <translation>पेन पैलेट से हटा दिए जाएंगे, ड्राइंग की एंटिटीज़ प्रभावित नहीं होंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9316,25 +9319,25 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>इकाइयाँ चुनें </translation>
+        <translation>एंटिटीज़ चुनें </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>दृश्यमान परतों पर पेन से मेल खाने वाली कोई इकाई नहीं है।</translation>
+        <translation>दृश्यमान परतों पर पेन से मेल खाने वाली कोई एंटिटी नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>ऐसी इकाइयाँ फ़्रीज़ की गई परतों पर मौजूद हैं।
+        <translation>ऐसी एंटिटीज़ फ़्रीज़ की गई परतों पर मौजूद हैं।
 </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>ऐसी इकाइयाँ लॉक की गई परतों पर मौजूद हैं।
+        <translation>ऐसी एंटिटीज़ लॉक की गई परतों पर मौजूद हैं।
 </translation>
     </message>
     <message>
@@ -9345,12 +9348,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>इकाई द्वारा पेन सेट करें</translation>
+        <translation>एंटिटी द्वारा पेन सेट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>पेन सेटिंग चुनने के लिए कृपया केवल एक इकाई का चयन करें।</translation>
+        <translation>पेन सेटिंग चुनने के लिए कृपया केवल एक एंटिटी का चयन करें।</translation>
     </message>
 </context>
 <context>
@@ -9557,31 +9560,31 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="956"/>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation>आर्क ए</translation>
+        <translation>आर्च ए</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="957"/>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation>आर्क बी</translation>
+        <translation>आर्च बी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="958"/>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation>आर्क सी</translation>
+        <translation>आर्च सी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation>आर्क डी</translation>
+        <translation>आर्च डी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation>आर्क ई</translation>
+        <translation>आर्च ई</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="978"/>
@@ -9659,31 +9662,31 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>आर्क ए</translation>
+        <translation>आर्च ए</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>आर्क बी</translation>
+        <translation>आर्च बी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>आर्क सी</translation>
+        <translation>आर्च सी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>आर्क डी</translation>
+        <translation>आर्च डी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>आर्क ई</translation>
+        <translation>आर्च ई</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
@@ -9749,7 +9752,7 @@ Please specify a different value.</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWG इकाइयाँ पढ़ने में त्रुटि</translation>
+        <translation>DXF/DWG एंटिटीज़ पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
@@ -9827,7 +9830,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg फ़ाइल में इकाइयों को पढ़ने में त्रुटि</translation>
+        <translation>dwg फ़ाइल में एंटिटीज़ को पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
@@ -10105,7 +10108,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>वैसे भी, कुछ इकाइयाँ पहचानी गई हैं।</translation>
+        <translation>वैसे भी, कुछ एंटिटीज़ पहचानी गई हैं।</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -11904,7 +11907,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>स्नैपइकाई</translation>
+        <translation>स्नैपएंटिटी</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -12860,7 +12863,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>कोई %1 लेयर नहीं मिली</translation>
+        <translation>कोई %1 परत नहीं मिली</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -12983,7 +12986,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>सभी लेयर्स को मिलाएं</translation>
+        <translation>सभी परतों को मिलाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
@@ -12993,7 +12996,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13024,7 +13027,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>लेयर द्वारा</translation>
+        <translation>परत के अनुसार</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
@@ -13286,7 +13289,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>पहला एक्सटेंशन लाइन मूल बिंदु निर्दिष्ट करें</translation>
+        <translation>पहली विस्तार रेखा का मूल बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13296,7 +13299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>दूसरा एक्सटेंशन लाइन मूल बिंदु निर्दिष्ट करें</translation>
+        <translation>दूसरी विस्तार रेखा का मूल बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13350,7 +13353,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>यह वृत्त या चाप इकाई नहीं है</translation>
+        <translation>यह वृत्त या चाप एंटिटी नहीं है</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="258"/>
@@ -13360,7 +13363,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>चाप या वृत्त इकाई का चयन करें</translation>
+        <translation>चाप या वृत्त एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13422,7 +13425,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>दूसरी एक्सटेंशन लाइन का मूल बिंदु निर्दिष्ट करें</translation>
+        <translation>दूसरी विस्तार रेखा का मूल बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13451,7 +13454,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>वृत्त या चाप इकाई नहीं है</translation>
+        <translation>वृत्त या चाप एंटिटी नहीं है</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="251"/>
@@ -13461,7 +13464,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>चाप या वृत्त इकाई का चयन करें</translation>
+        <translation>चाप या वृत्त एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -13580,7 +13583,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>आधार इकाई निर्दिष्ट करें</translation>
+        <translation>आधार एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -13997,7 +14000,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="355"/>
         <source>Specify endpoint of major axis</source>
-        <translation>मुख्य अक्ष का एंडपॉइंट निर्दिष्ट करें</translation>
+        <translation>मुख्य अक्ष का अंत बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="356"/>
@@ -14010,7 +14013,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>लघु अक्ष का एंडपॉइंट या लंबाई निर्दिष्ट करें:</translation>
+        <translation>लघु अक्ष का अंत बिंदु या लंबाई निर्दिष्ट करें:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="366"/>
@@ -14182,7 +14185,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>अमान्य हैच क्षेत्र। कृपया जांच लें कि चुनी गई इकाइयाँ एक या अधिक बंद कंटूर बनाती हैं।</translation>
+        <translation>अमान्य हैच क्षेत्र। कृपया जांच लें कि चुनी गई एंटिटीज़ एक या अधिक बंद कंटूर बनाती हैं।</translation>
     </message>
 </context>
 <context>
@@ -14251,7 +14254,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>रेखाओं का अनुक्रम बंद नहीं किया जा सकता: अभी तक पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं, या पहले ही बंद हो चुका है।</translation>
+        <translation>रेखाओं का अनुक्रम बंद नहीं किया जा सकता: अभी तक पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं, या पहले ही बंद हो चुका है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
@@ -14410,7 +14413,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>दूरी निर्दिष्ट करें &lt;%1&gt; या इकाई चुनें या [%2]</translation>
+        <translation>दूरी निर्दिष्ट करें &lt;%1&gt; या एंटिटी चुनें या [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
@@ -14439,7 +14442,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>इकाई चुनें</translation>
+        <translation>एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -14574,7 +14577,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>आधार इकाई का चयन करें</translation>
+        <translation>आधार एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
@@ -14758,12 +14761,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>रेखाओं का क्रम बंद नहीं किया जा सकता: अभी पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं।</translation>
+        <translation>रेखाओं का क्रम बंद नहीं किया जा सकता: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>पूर्ववत नहीं किया जा सकता: अभी पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं।</translation>
+        <translation>पूर्ववत नहीं किया जा सकता: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं।</translation>
     </message>
 </context>
 <context>
@@ -14797,12 +14800,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>रेखाओं का क्रम बंद नहीं किया जा सकता: अभी पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं।</translation>
+        <translation>रेखाओं का क्रम बंद नहीं किया जा सकता: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>पूर्ववत नहीं किया जा सकता: अभी पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं।</translation>
+        <translation>पूर्ववत नहीं किया जा सकता: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं।</translation>
     </message>
 </context>
 <context>
@@ -14983,7 +14986,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>इकाई निर्दिष्ट करें</translation>
+        <translation>एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -15029,12 +15032,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>चयनित इकाइयों की कुल लंबाई: %1</translation>
+        <translation>चयनित एंटिटीज़ की कुल लंबाई: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>चयनित इकाइयों में से कम से कम एक को मापा नहीं जा सकता है।</translation>
+        <translation>चयनित एंटिटीज़ में से कम से कम एक को मापा नहीं जा सकता है।</translation>
     </message>
 </context>
 <context>
@@ -15081,7 +15084,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(अ-) और लॉक सापेक्ष शून्य</translation>
+        <translation>सापेक्ष शून्य लॉक/अनलॉक करें (&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -15095,7 +15098,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="272"/>
         <source>Select first entity</source>
-        <translation>पहली इकाई का चयन करें।</translation>
+        <translation>पहली एंटिटी का चयन करें।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="273"/>
@@ -15105,7 +15108,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="276"/>
         <source>Select second entity</source>
-        <translation>दूसरी इकाई का चयन करें।</translation>
+        <translation>दूसरी एंटिटी का चयन करें।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="277"/>
@@ -15131,12 +15134,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>इकाई एक रेखा, चाप, वृत्त, दीर्घवृत्त या इंटरपोलेशन स्प्लाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक रेखा, चाप, वृत्त, दीर्घवृत्त या इंटरपोलेशन स्प्लाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15146,12 +15149,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>कटिंग पॉइंट इकाई पर नहीं है।</translation>
+        <translation>कटिंग बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>काटने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation>काटने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -15161,7 +15164,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="149"/>
         <source>Specify cutting point</source>
-        <translation>कटिंग पॉइंट निर्दिष्ट करें</translation>
+        <translation>कटिंग बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
@@ -15174,47 +15177,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>इकाइयाँ एक ही पॉलीलाइन में नहीं हैं।</translation>
+        <translation>एंटिटीज़ एक ही पॉलीलाइन में नहीं हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>दूसरी इकाई का पैरेंट पॉलीलाइन नहीं है।</translation>
+        <translation>दूसरी एंटिटी का पैरेंट पॉलीलाइन नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>पहली इकाई का पैरेंट पॉलीलाइन नहीं है।</translation>
+        <translation>पहली एंटिटी का पैरेंट पॉलीलाइन नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>दूसरी इकाई का पैरेंट नल पॉइंटर है।</translation>
+        <translation>दूसरी एंटिटी का पैरेंट नल पॉइंटर है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>चुनी गई इकाइयों में से एक नल पॉइंटर है।</translation>
+        <translation>चुनी गई एंटिटीज़ में से एक नल पॉइंटर है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>पहली इकाई का जनक (parent) शून्य है</translation>
+        <translation>पहली एंटिटी का जनक (parent) शून्य है</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
-        <translation>पहली इकाई शून्य है</translation>
+        <translation>पहली एंटिटी शून्य है</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
-        <translation>दूसरी इकाई शून्य है</translation>
+        <translation>दूसरी एंटिटी शून्य है</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>पॉलीलाइन पर पहला ब्रेक पॉइंट निर्दिष्ट करें</translation>
+        <translation>पॉलीलाइन पर पहला ब्रेक बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15224,7 +15227,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>उसी पॉलीलाइन पर दूसरा ब्रेक पॉइंट निर्दिष्ट करें</translation>
+        <translation>उसी पॉलीलाइन पर दूसरा ब्रेक बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15237,7 +15240,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>हटाने के लिए इकाई चुनें</translation>
+        <translation>हटाने के लिए एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -15250,7 +15253,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>संशोधित करने के लिए इकाई पर क्लिक करें</translation>
+        <translation>संशोधित करने के लिए एंटिटी पर क्लिक करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -15415,7 +15418,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>पहली इकाई निर्दिष्ट करें या त्रिज्या &lt;%1&gt; दर्ज करें</translation>
+        <translation>पहली एंटिटी निर्दिष्ट करें या त्रिज्या &lt;%1&gt; दर्ज करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
@@ -15426,7 +15429,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
         <source>Specify second entity</source>
-        <translation>दूसरी इकाई निर्दिष्ट करें</translation>
+        <translation>दूसरी एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
@@ -15504,7 +15507,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>पहली ट्रिम करने योग्य इकाई चुनें</translation>
+        <translation>पहली ट्रिम करने योग्य एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15515,7 +15518,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>सीमित करने वाली इकाई चुनें</translation>
+        <translation>सीमित करने वाली एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -15526,12 +15529,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>दूसरी ट्रिम करने योग्य इकाई चुनें</translation>
+        <translation>दूसरी ट्रिम करने योग्य एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>ट्रिम करने के लिए इकाई चुनें</translation>
+        <translation>ट्रिम करने के लिए एंटिटी चुनें</translation>
     </message>
 </context>
 <context>
@@ -15539,17 +15542,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>कोई इकाई नहीं मिली। </translation>
+        <translation>कोई एंटिटी नहीं मिली। </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>चुनी गई इकाई एक ब्लॉक में है। कृपया ब्लॉक संपादित करें।</translation>
+        <translation>चुनी गई एंटिटी एक ब्लॉक में है। कृपया ब्लॉक संपादित करें।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>चुनी गई इकाई एटॉमिक इकाई नहीं है या ट्रिम नहीं की जा सकती है।</translation>
+        <translation>चुनी गई एंटिटी एटॉमिक एंटिटी नहीं है या ट्रिम नहीं की जा सकती है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15559,7 +15562,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>ट्रिम करने के लिए इकाई चुनें या दूरी दर्ज करें:</translation>
+        <translation>ट्रिम करने के लिए एंटिटी चुनें या दूरी दर्ज करें:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15572,12 +15575,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>ऑर्डर के लिए इकाई चुनें</translation>
+        <translation>ऑर्डर के लिए एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
@@ -15591,12 +15594,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>इकाई एक पॉलीलाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15606,7 +15609,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>जोड़ा जा रहा बिंदु इकाई पर नहीं है।</translation>
+        <translation>जोड़ा जा रहा बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
@@ -15634,12 +15637,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>इकाई एक पॉलीलाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
@@ -15680,7 +15683,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>पूर्ववत नहीं किया जा सकता: अभी पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं।</translation>
+        <translation>पूर्ववत नहीं किया जा सकता: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं।</translation>
     </message>
 </context>
 <context>
@@ -15689,12 +15692,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>इकाई एक पॉलीलाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="129"/>
@@ -15704,7 +15707,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>हटाया जाने वाला बिंदु इकाई पर नहीं है।</translation>
+        <translation>हटाया जाने वाला बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15734,12 +15737,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>इकाई एक पॉलीलाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
@@ -15751,7 +15754,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>बिंदु इकाई पर नहीं है।</translation>
+        <translation>बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
@@ -15785,12 +15788,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>इकाई एक पॉलीलाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
@@ -15808,7 +15811,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
@@ -15819,7 +15822,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>इकाई बंद पॉलीलाइन नहीं हो सकती।</translation>
+        <translation>एंटिटी बंद पॉलीलाइन नहीं हो सकती।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
@@ -15839,12 +15842,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>कोई इकाई नहीं मिली।</translation>
+        <translation>कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>इकाई एक पॉलीलाइन होनी चाहिए।</translation>
+        <translation>एंटिटी एक पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -15856,7 +15859,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>इकाई पर कोई खंड नहीं मिला।</translation>
+        <translation>एंटिटी पर कोई खंड नहीं मिला।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
@@ -15948,7 +15951,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>कोई इकाई चयनित नहीं है!</translation>
+        <translation>कोई एंटिटी चयनित नहीं है!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
@@ -15979,7 +15982,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>क्रमबद्ध करने के लिए इकाइयाँ चुनें</translation>
+        <translation>क्रमबद्ध करने के लिए एंटिटीज़ चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="89"/>
@@ -16068,7 +16071,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>इकाई एक परमाणु इकाई होनी चाहिए।</translation>
+        <translation>एंटिटी एक परमाणु एंटिटी होनी चाहिए।</translation>
     </message>
 </context>
 <context>
@@ -16145,7 +16148,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>पहली इकाई का चयन करें</translation>
+        <translation>पहली एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -16156,7 +16159,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>दूसरी इकाई का चयन करें</translation>
+        <translation>दूसरी एंटिटी का चयन करें</translation>
     </message>
 </context>
 <context>
@@ -16164,12 +16167,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>%1 आयाम वाली इकाइयों का पुनर्जनन किया गया</translation>
+        <translation>%1 आयाम वाली एंटिटीज़ का पुनर्जनन किया गया</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>कोई आयाम वाली इकाई नहीं मिली</translation>
+        <translation>कोई आयाम वाली एंटिटी नहीं मिली</translation>
     </message>
 </context>
 <context>
@@ -16288,7 +16291,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>दोनों इकाइयों को बेवेल तक ट्रिम करने के लिए चेक करें</translation>
+        <translation>दोनों एंटिटीज़ को बेवेल तक ट्रिम करने के लिए चेक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -16558,7 +16561,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>स्नैप पॉइंट:</translation>
+        <translation>स्नैप बिंदु:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16730,7 +16733,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation>मूल इकाई से दूरी</translation>
+        <translation>मूल एंटिटी से दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
@@ -16858,7 +16861,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>मूल इकाई से ऑफसेट</translation>
+        <translation>मूल एंटिटी से ऑफसेट</translation>
     </message>
 </context>
 <context>

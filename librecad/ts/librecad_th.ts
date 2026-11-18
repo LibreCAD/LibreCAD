@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="62"/>
         <source>Layer:</source>
-        <translation>ชั้นงาน:</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
@@ -59,7 +59,7 @@
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="113"/>
         <source>Points on Spline</source>
-        <translation>จุดบนสปลายน์</translation>
+        <translation>จุดบนสไปลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -72,12 +72,12 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation>จุดสปลายน์</translation>
+        <translation>จุดสไปลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
         <source>Layer:</source>
-        <translation>ชั้นงาน:</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="95"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>จุดสปลายน์</translation>
+        <translation>จุดสไปลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -103,7 +103,7 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation>จุดบนสปลายน์</translation>
+        <translation>จุดบนสไปลน์</translation>
     </message>
 </context>
 <context>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>เลือกเอนทิตีวงโค้ง</translation>
+        <translation>เลือกวัตถุส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>ระบุตำแหน่งเส้นบอกขนาดวงโค้ง</translation>
+        <translation>ระบุตำแหน่งเส้นบอกขนาดส่วนโค้ง</translation>
     </message>
 </context>
 <context>
@@ -429,12 +429,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>เส้น</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -474,7 +474,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดเอนทิตีพอ</translation>
+        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดวัตถุพอ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
@@ -497,7 +497,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>เลือกเอนทิตี</translation>
+        <translation>เลือกวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
@@ -517,17 +517,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>เลือกเอนทิตีที่ตัดกัน</translation>
+        <translation>เลือกวัตถุที่ตัดกัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
         <source>Deselect Intersected Entities</source>
-        <translation>ยกเลิกการเลือกเอนทิตีที่ตัดกัน</translation>
+        <translation>ยกเลิกการเลือกวัตถุที่ตัดกัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
-        <translation>(ยกเลิก)เลือกชั้นงาน</translation>
+        <translation>(ยกเลิก)เลือกเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
@@ -649,7 +649,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>วงกลม&amp;จารึก</translation>
+        <translation>วงกลม&amp;แนบใน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
@@ -685,7 +685,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
-        <translation>วงโค้ง&amp;สัมผัส</translation>
+        <translation>ส่วนโค้ง&amp;สัมผัส</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
@@ -695,7 +695,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>วงรี&amp;วงโค้ง (แกน)</translation>
+        <translation>ส่วนโค้ง&amp;วงรี (แกน)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
@@ -715,17 +715,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>วงรี&amp;จารึก</translation>
+        <translation>วงรี&amp;แนบใน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;สปลายน์</translation>
+        <translation>&amp;สไปลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;สปลายน์ผ่านจุด</translation>
+        <translation>&amp;สไปลน์ผ่านจุด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
@@ -780,7 +780,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;แฮช</translation>
+        <translation>&amp;ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -825,7 +825,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;คุณสมบัติ</translation>
+        <translation>&amp;คุณลักษณะ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="716"/>
@@ -860,7 +860,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Scale</source>
-        <translation>&amp;ขยายขนาด</translation>
+        <translation>&amp;ปรับมาตราส่วน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
@@ -885,7 +885,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;ยืด</translation>
+        <translation>&amp;ยืดความยาว</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="824"/>
@@ -905,7 +905,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;กลมมน</translation>
+        <translation>&amp;ลบมุมมน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
@@ -925,7 +925,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;ระยะห่างเอนทิตีต่อจุด</translation>
+        <translation>&amp;ระยะห่างวัตถุต่อจุด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
@@ -935,7 +935,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;ความยาวรวมของเอนทิตีที่เลือก</translation>
+        <translation>&amp;ความยาวรวมของวัตถุที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
@@ -980,12 +980,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>ลดลงหลังเอนทิตี</translation>
+        <translation>ลดลงหลังวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>ยกขึ้นเหนือเอนทิตี</translation>
+        <translation>ยกขึ้นเหนือวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -995,37 +995,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;เพิ่มชั้นงาน</translation>
+        <translation>&amp;เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;ลบชั้นงาน</translation>
+        <translation>&amp;ลบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;แก้ไขชั้นงาน</translation>
+        <translation>&amp;แก้ไขเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>สลับการ&amp;ล็อกชั้นงาน</translation>
+        <translation>สลับการ&amp;ล็อกเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;สลับการมองเห็นชั้นงาน</translation>
+        <translation>&amp;สลับการมองเห็นเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>สลับการ&amp;พิมพ์ชั้นงาน</translation>
+        <translation>สลับการ&amp;พิมพ์เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>สลับชั้นงาน&amp;ก่อสร้าง</translation>
+        <translation>สลับเลเยอร์&amp;ก่อสร้าง</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
@@ -1282,7 +1282,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>&amp;ออฟเซ็ต</translation>
+        <translation>&amp;ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1308,12 +1308,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="692"/>
         <source>&amp;Arc</source>
-        <translation>&amp;วงโค้ง</translation>
+        <translation>&amp;ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;แสดงชั้นงานทั้งหมด</translation>
+        <translation>&amp;แสดงเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
@@ -1333,12 +1333,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;ส่งออกชั้นงานที่เลือก</translation>
+        <translation>&amp;ส่งออกเลเยอร์ที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>ส่งออกชั้นงานที่&amp;มองเห็น</translation>
+        <translation>ส่งออกเลเยอร์ที่&amp;มองเห็น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
@@ -1453,7 +1453,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="354"/>
         <source>By Arc</source>
-        <translation>โดยวงโค้ง</translation>
+        <translation>โดยส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
@@ -1468,17 +1468,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;เลือกปากกาจากเอนทิตี</translation>
+        <translation>&amp;เลือกปากกาจากวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;เลือกปากกาจากเอนทิตี (แก้ไขแล้ว)</translation>
+        <translation>&amp;เลือกปากกาจากวัตถุ (แก้ไขแล้ว)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>ใช้ปากกากับเอนทิตี</translation>
+        <translation>ใช้ปากกากับวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
@@ -1498,7 +1498,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>อัปเดตปากกาปัจจุบันด้วยปากกาของชั้นงานที่ใช้งาน</translation>
+        <translation>อัปเดตปากกาปัจจุบันด้วยปากกาของเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1519,7 +1519,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>กำลังบันทึกชั้นงาน &quot;%1&quot; เป็น &quot;%2&quot; </translation>
+        <translation>กำลังบันทึกเลเยอร์ &quot;%1&quot; เป็น &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -1527,7 +1527,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>ระบุเอนทิตีเพื่อเลือกปากกา</translation>
+        <translation>ระบุวัตถุเพื่อเลือกปากกา</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>ระบุเอนทิตีเพื่อใช้ปากกา</translation>
+        <translation>ระบุวัตถุเพื่อใช้ปากกา</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>ระบุเอนทิตีเพื่อเลือกปากกา</translation>
+        <translation>ระบุวัตถุเพื่อเลือกปากกา</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1615,12 +1615,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
         <source>Layer:</source>
-        <translation>ชั้นงาน:</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
         <source>Replace arc</source>
-        <translation>แทนที่วงโค้ง</translation>
+        <translation>แทนที่ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
@@ -1707,7 +1707,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
         <source>Layer:</source>
-        <translation>ชั้นงาน:</translation>
+        <translation>เลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
@@ -1717,7 +1717,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
         <source>Offset X:</source>
-        <translation>ออฟเซ็ต X:</translation>
+        <translation>ออฟเซต X:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
@@ -1739,7 +1739,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
         <source>Offset Y:</source>
-        <translation>ออฟเซ็ต Y:</translation>
+        <translation>ออฟเซต Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
@@ -1752,17 +1752,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>การตั้งค่าชั้นงาน</translation>
+        <translation>การตั้งค่าเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
         <source>Parent Layers Path:</source>
-        <translation>พาธชั้นงานหลัก:</translation>
+        <translation>พาธเลเยอร์หลัก:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
         <source>Layer Type</source>
-        <translation>ประเภทชั้นงาน</translation>
+        <translation>ประเภทเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
@@ -1777,7 +1777,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>เส้นบอกขนาด</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1788,39 +1788,39 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>ชั้นงานก่อสร้างมีเอนทิตีเส้นตรงไม่จำกัดสำหรับการก่อสร้างเรขาคณิต
-       เนื้อหาของชั้นงานก่อสร้างไม่ควรปรากฏในการพิมพ์</translation>
+        <translation>เลเยอร์ก่อสร้างมีวัตถุเส้นตรงไม่จำกัดสำหรับการก่อสร้างเรขาคณิต
+       เนื้อหาของเลเยอร์ก่อสร้างไม่ควรปรากฏในการพิมพ์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>ชั้นงานก่อสร้าง</translation>
+        <translation>เลเยอร์ก่อสร้าง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
         <source>Layer Name:</source>
-        <translation>ชื่อชั้นงาน:</translation>
+        <translation>ชื่อเลเยอร์:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>เปลี่ยนชื่อชั้นงานเสมือน</translation>
+        <translation>เปลี่ยนชื่อเลเยอร์เสมือน</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>เพิ่มชั้นงานรอง</translation>
+        <translation>เพิ่มเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>เพิ่มชั้นงาน</translation>
+        <translation>เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>แก้ไขชั้นงาน</translation>
+        <translation>แก้ไขเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
@@ -1831,7 +1831,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>เปลี่ยนชื่อชั้นงาน</translation>
+        <translation>เปลี่ยนชื่อเลเยอร์</translation>
     </message>
 </context>
 <context>
@@ -1839,7 +1839,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>ตัวเลือกต้นไม้ชั้นงาน</translation>
+        <translation>ตัวเลือกต้นไม้เลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
@@ -1849,17 +1849,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
         <source>Layer Level Name Separator</source>
-        <translation>ตัวคั่นชื่อระดับชั้นงาน</translation>
+        <translation>ตัวคั่นชื่อระดับเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>คำต่อท้ายชั้นงานรอง</translation>
+        <translation>คำต่อท้ายเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>มิติ</translation>
+        <translation>บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1899,12 +1899,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
         <source>Show layer type icons</source>
-        <translation>แสดงไอคอนประเภทชั้นงาน</translation>
+        <translation>แสดงไอคอนประเภทเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>แสดงชื่อชั้นงานแบบย่อหน้า ขนาดย่อหน้า:</translation>
+        <translation>แสดงชื่อเลเยอร์แบบย่อหน้า ขนาดย่อหน้า:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -1914,7 +1914,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>เปลี่ยนชื่อชั้นงานรองเมื่อเปลี่ยนชื่อหลัก</translation>
+        <translation>เปลี่ยนชื่อเลเยอร์รองเมื่อเปลี่ยนชื่อหลัก</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -1934,7 +1934,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="441"/>
         <source>Virtual layer background color</source>
-        <translation>สีพื้นหลังชั้นงานเสมือน</translation>
+        <translation>สีพื้นหลังเลเยอร์เสมือน</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
@@ -1949,7 +1949,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
-        <translation>สีพื้นหลังชั้นงานที่ใช้งาน</translation>
+        <translation>สีพื้นหลังเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
@@ -1959,22 +1959,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Normal Layer</source>
-        <translation>ชั้นงานปกติ</translation>
+        <translation>เลเยอร์ปกติ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>ชั้นงานมิติ</translation>
+        <translation>เลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
         <source>Informational Layer</source>
-        <translation>ชั้นงานข้อมูล</translation>
+        <translation>เลเยอร์ข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
-        <translation>ชั้นงานตำแหน่งทางเลือก</translation>
+        <translation>เลเยอร์ตำแหน่งทางเลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
@@ -1992,7 +1992,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>กำลังค้นหาชื่อชั้นงานที่ตรงกัน</translation>
+        <translation>กำลังค้นหาชื่อเลเยอร์ที่ตรงกัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="151"/>
@@ -2007,22 +2007,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="185"/>
         <source>Show all layers</source>
-        <translation>แสดงชั้นงานทั้งหมด</translation>
+        <translation>แสดงเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers except current</source>
-        <translation>ซ่อนทุกชั้นงานยกเว้นชั้นงานปัจจุบัน</translation>
+        <translation>ซ่อนทุกเลเยอร์ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>แสดงชั้นงานรอง</translation>
+        <translation>แสดงเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>แสดงเฉพาะชั้นงานที่ใช้งาน</translation>
+        <translation>แสดงเฉพาะเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="222"/>
@@ -2037,37 +2037,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="240"/>
         <source>Collapse Secondary</source>
-        <translation>ยุบชั้นงานรอง</translation>
+        <translation>ยุบเลเยอร์รอง</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="251"/>
         <source>Unlock all layers</source>
-        <translation>ปลดล็อกชั้นงานทั้งหมด</translation>
+        <translation>ปลดล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="259"/>
         <source>Lock all layers</source>
-        <translation>ล็อกชั้นงานทั้งหมด</translation>
+        <translation>ล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="267"/>
         <source>Add a layer</source>
-        <translation>เพิ่มชั้นงาน</translation>
+        <translation>เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>เพิ่มชั้นงานมิติ</translation>
+        <translation>เพิ่มเลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
         <source>Remove layer</source>
-        <translation>ลบชั้นงาน</translation>
+        <translation>ลบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>แก้ไขคุณสมบัติชั้นงาน / เปลี่ยนชื่อ</translation>
+        <translation>แก้ไขคุณสมบัติเลเยอร์ / เปลี่ยนชื่อ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2077,12 +2077,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
         <source>Layer Menu</source>
-        <translation>เมนูชั้นงาน</translation>
+        <translation>เมนูเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;เพิ่มชั้นงานลูก</translation>
+        <translation>&amp;เพิ่มเลเยอร์ลูก</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
@@ -2092,7 +2092,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;ลบชั้นงาน (ต้นไม้ย่อย)</translation>
+        <translation>&amp;ลบเลเยอร์ (ต้นไม้ย่อย)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
@@ -2107,130 +2107,130 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;เลือกเอนทิตี (ต้นไม้ย่อย)</translation>
+        <translation>&amp;เลือกวัตถุ (ต้นไม้ย่อย)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;แก้ไข&amp;คุณสมบัติชั้นงาน</translation>
+        <translation>&amp;แก้ไข&amp;คุณสมบัติเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;ลบชั้นงาน</translation>
+        <translation>&amp;ลบเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;เพิ่มชั้นงานย่อยมิติ</translation>
+        <translation>&amp;เพิ่มเลเยอร์ย่อยบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;เพิ่มชั้นงานย่อยข้อมูล</translation>
+        <translation>&amp;เพิ่มเลเยอร์ย่อยข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;เพิ่มชั้นงานย่อยมุมมองทางเลือก</translation>
+        <translation>&amp;เพิ่มเลเยอร์ย่อยมุมมองทางเลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;ลบชั้นงานย่อย</translation>
+        <translation>&amp;ลบเลเยอร์ย่อย</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>แปลงเป็นชั้นงานมิติ</translation>
+        <translation>แปลงเป็นเลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Info Layer</source>
-        <translation>แปลงเป็นชั้นงานข้อมูล</translation>
+        <translation>แปลงเป็นเลเยอร์ข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="722"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="737"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>แปลงเป็นชั้นงานตำแหน่งทางเลือก</translation>
+        <translation>แปลงเป็นเลเยอร์ตำแหน่งทางเลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="729"/>
         <source>Convert to Normal Layer</source>
-        <translation>แปลงเป็นชั้นงานปกติ</translation>
+        <translation>แปลงเป็นเลเยอร์ปกติ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;เลือกเอนทิตีของชั้นงาน</translation>
+        <translation>&amp;เลือกวัตถุของเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;สร้างสำเนาชั้นงาน</translation>
+        <translation>&amp;สร้างสำเนาเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;ทำซ้ำชั้นงานพร้อมเนื้อหา</translation>
+        <translation>&amp;ทำซ้ำเลเยอร์พร้อมเนื้อหา</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
-        <translation>ย้ายการเลือกไปยังชั้นงาน</translation>
+        <translation>ย้ายการเลือกไปยังเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>ทำซ้ำการเลือกไปยังชั้นงาน</translation>
+        <translation>ทำซ้ำการเลือกไปยังเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;เพิ่มชั้นงาน</translation>
+        <translation>&amp;เพิ่มเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;แช่แข็งชั้นงานอื่น</translation>
+        <translation>&amp;แช่แข็งเลเยอร์อื่น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;ปลดแช่แข็งชั้นงานทั้งหมด</translation>
+        <translation>&amp;ปลดแช่แข็งเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>ซ่อนทุกชั้นงาน&amp;ยกเว้นชั้นงานปัจจุบัน</translation>
+        <translation>ซ่อนทุกเลเยอร์&amp;ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;ปลดล็อกชั้นงานทั้งหมด</translation>
+        <translation>&amp;ปลดล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;ล็อกชั้นงานทั้งหมด</translation>
+        <translation>&amp;ล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>เปิด&amp;การพิมพ์ชั้นงานทั้งหมด</translation>
+        <translation>เปิด&amp;การพิมพ์เลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;ปิดการพิมพ์ชั้นงานทั้งหมด</translation>
+        <translation>&amp;ปิดการพิมพ์เลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;ค้นหาและลบชั้นงานว่าง</translation>
+        <translation>&amp;ค้นหาและลบเลเยอร์ว่าง</translation>
     </message>
 </context>
 <context>
@@ -2243,13 +2243,13 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
         <source>Offset:</source>
-        <translation>ออฟเซ็ต:</translation>
+        <translation>ออฟเซต:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>อิสระ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2340,7 +2340,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
         <source>End offset:</source>
-        <translation>ออฟเซ็ตปลาย:</translation>
+        <translation>ออฟเซตปลาย:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
@@ -2401,7 +2401,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
         <source>Attributes:</source>
-        <translation>คุณสมบัติ:</translation>
+        <translation>คุณลักษณะ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
@@ -2531,7 +2531,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>อิสระ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2577,7 +2577,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
         <source>Line Type Name</source>
-        <translation>ชื่อประเภทเส้น</translation>
+        <translation>ชื่อชนิดเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -2587,7 +2587,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
         <source>Line Type Icon</source>
-        <translation>ไอคอนประเภทเส้น</translation>
+        <translation>ไอคอนชนิดเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -2667,7 +2667,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>แสดงข้อความแจ้งหากไม่มีเอนทิตีที่เลือกได้ด้วยปากกา</translation>
+        <translation>แสดงข้อความแจ้งหากไม่มีวัตถุที่เลือกได้ด้วยปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>เลือกเอนทิตีตามคุณสมบัติปากกา</translation>
+        <translation>เลือกวัตถุตามคุณสมบัติปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>เลือกเอนทิตีตามปากกาที่วาด</translation>
+        <translation>เลือกวัตถุตามปากกาที่วาด</translation>
     </message>
 </context>
 <context>
@@ -2735,22 +2735,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>เติมตัวแก้ไขปากกาด้วยปากกาที่วาดของเอนทิตี</translation>
+        <translation>เติมตัวแก้ไขปากกาด้วยปากกาที่วาดของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>เติมตัวแก้ไขปากกาด้วยคุณสมบัติของเอนทิตี</translation>
+        <translation>เติมตัวแก้ไขปากกาด้วยคุณสมบัติของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>เลือกเอนทิตีตามปากกาที่วาด</translation>
+        <translation>เลือกวัตถุตามปากกาที่วาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>เลือกเอนทิตีตามคุณสมบัติปากกา</translation>
+        <translation>เลือกวัตถุตามคุณสมบัติปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2781,27 +2781,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>อัปเดตปากกาปัจจุบันด้วยปากกาของชั้นงานที่ใช้งาน</translation>
+        <translation>อัปเดตปากกาปัจจุบันด้วยปากกาของเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>เติมตัวแก้ไขปากกาจากปากกาของชั้นงานที่ใช้งาน</translation>
+        <translation>เติมตัวแก้ไขปากกาจากปากกาของเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>เลือกจากชั้นงานที่ใช้งาน</translation>
+        <translation>เลือกจากเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>ใช้ปากกาในตัวแก้ไขกับปากกาของชั้นงานที่ใช้งาน</translation>
+        <translation>ใช้ปากกาในตัวแก้ไขกับปากกาของเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
         <source>Apply To Layer</source>
-        <translation>ใช้กับชั้นงาน</translation>
+        <translation>ใช้กับเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
@@ -2831,17 +2831,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;ใช้ปากกากับชั้นงานที่ใช้งาน</translation>
+        <translation>&amp;ใช้ปากกากับเลเยอร์ที่ใช้งาน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;เลือกเอนทิตีด้วยปากกาคุณสมบัติ</translation>
+        <translation>&amp;เลือกวัตถุด้วยปากกาคุณสมบัติ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;เลือกเอนทิตีด้วยปากกาที่วาด</translation>
+        <translation>&amp;เลือกวัตถุด้วยปากกาที่วาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
@@ -3257,7 +3257,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
         <source>Offset:</source>
-        <translation>ออฟเซ็ต:</translation>
+        <translation>ออฟเซต:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="158"/>
@@ -3393,7 +3393,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
-        <translation>เส้นบอกขนาด</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
@@ -3647,12 +3647,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
         <source>Layer List</source>
-        <translation>รายชื่อชั้นงาน</translation>
+        <translation>รายชื่อเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
         <source>Block List</source>
-        <translation>รายชื่อบล็อค</translation>
+        <translation>รายชื่อบล็อก</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2768"/>
@@ -3687,7 +3687,7 @@ or [%2]</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>บล็อค &apos;%1&apos;</translation>
+        <translation>บล็อก &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1806"/>
@@ -3883,7 +3883,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>เส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3918,7 +3918,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>เส้นบอกขนาด</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -4234,7 +4234,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
         <source>Layer Tree</source>
-        <translation>ต้นไม้ชั้นงาน</translation>
+        <translation>ต้นไม้เลเยอร์</translation>
     </message>
 </context>
 <context>
@@ -4265,7 +4265,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>ชั้นงานปัจจุบัน</translation>
+        <translation>เลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="105"/>
@@ -4278,7 +4278,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ชื่อชั้นงานที่ใช้งานปัจจุบัน&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ชื่อเลเยอร์ที่ใช้งานปัจจุบัน&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4420,7 +4420,7 @@ in a separate window</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="106"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="282"/>
         <source>By Layer</source>
-        <translation>ตามชั้นงาน</translation>
+        <translation>ตามเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="107"/>
@@ -4632,12 +4632,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>ตัวแก้ไขป้ายกำกับมิติ</translation>
+        <translation>ตัวแก้ไขป้ายกำกับบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>ป้ายกำกับมิติ:</translation>
+        <translation>ป้ายกำกับบอกขนาด:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4682,7 +4682,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;รูปแบบของข้อความมิติ &amp;lt;&amp;gt; สามารถใช้เป็นตัวแทนสำหรับค่าการวัดของมิติ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;รูปแบบของข้อความบอกขนาด &amp;lt;&amp;gt; สามารถใช้เป็นตัวแทนสำหรับค่าการวัดของการบอกขนาด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4703,7 +4703,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4751,7 +4751,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>คุณสมบัติ</translation>
+        <translation>คุณลักษณะ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
@@ -4762,8 +4762,8 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>ใช้คุณสมบัติกับองค์ประกอบย่อยทั้งหมดของ INSERT ที่เลือกด้วย
-ซึ่งจะแก้ไของค์ประกอบทั้งหมดของบล็อกแบบเรียกซ้ำ</translation>
+        <translation>ใช้คุณสมบัติกับวัตถุย่อยทั้งหมดของ INSERT ที่เลือกด้วย
+ซึ่งจะแก้ไขวัตถุทั้งหมดของบล็อกแบบเรียกซ้ำ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -4809,7 +4809,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -4837,7 +4837,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
 </context>
 <context>
@@ -4903,7 +4903,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>เลือกคุณลักษณะการแรเงา</translation>
+        <translation>เลือกคุณลักษณะของลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -5113,7 +5113,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>เส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5156,7 +5156,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
         <source>MText</source>
-        <translation>ข้อความ</translation>
+        <translation>ข้อความหลายบรรทัด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
@@ -6187,7 +6187,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>ช่องว่างเส้นมิติ:</translation>
+        <translation>ช่องว่างเส้นบอกขนาด:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -6242,7 +6242,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;มิติ</translation>
+        <translation>&amp;บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -6353,7 +6353,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ขนาดขีดของมิติ เมื่อตั้งค่าเป็น 0 จะปิดการใช้งานขีดของมิติ ลูกศรของมิติจะไม่ถูกวาดเมื่อเปิดใช้งานขีดของมิติ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ขนาดขีดบอกขนาด เมื่อตั้งค่าเป็น 0 จะปิดการใช้งานขีดบอกขนาด ลูกศรบอกขนาดจะไม่ถูกวาดเมื่อเปิดใช้งานขีดบอกขนาด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6368,12 +6368,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;สเกลที่ใช้คูณค่ามิติทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;สเกลที่ใช้คูณค่าบอกขนาดทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;สเกลที่ใช้คูณเรขาคณิตของมิติทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;สเกลที่ใช้คูณเรขาคณิตของการบอกขนาดทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6476,7 +6476,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
         <source>Offset:</source>
-        <translation>ค่าออฟเซ็ต:</translation>
+        <translation>ค่าออฟเซต:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
@@ -6496,7 +6496,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ค่าออฟเซ็ตจากจุดเริ่มต้น&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ค่าออฟเซตจากจุดเริ่มต้น&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
@@ -6660,7 +6660,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>รูปแบบแฮทช์:</translation>
+        <translation>รูปแบบลายตัด:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6925,7 +6925,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;เมื่อเปิดใช้งาน การเลือกเลเยอร์จะเปลี่ยนเลเยอร์ของเอนทิตีที่เลือกทั้งหมดเป็นเลเยอร์ใหม่ วิธีเปลี่ยนเลเยอร์ของเอนทิตีหลายรายการ: เลือกเอนทิตีที่ต้องการก่อน จากนั้นเลือกเลเยอร์ในพาเนลเลเยอร์ ซึ่งจะทำให้เอนทิตีที่เลือกทั้งหมดอยู่ในเลเยอร์ใหม่&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;เมื่อเปิดใช้งาน การเลือกเลเยอร์จะเปลี่ยนเลเยอร์ของวัตถุที่เลือกทั้งหมดเป็นเลเยอร์ใหม่ วิธีเปลี่ยนเลเยอร์ของวัตถุหลายรายการ: เลือกวัตถุที่ต้องการก่อน จากนั้นเลือกเลเยอร์ในพาเนลเลเยอร์ ซึ่งจะทำให้วัตถุที่เลือกทั้งหมดอยู่ในเลเยอร์ใหม่&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -6940,7 +6940,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>จำนวนเอนทิตีที่แสดงตัวอย่าง:</translation>
+        <translation>จำนวนวัตถุที่แสดงตัวอย่าง:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -6965,7 +6965,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>แสดงภาพเอนทิตีที่อยู่ใต้เคอร์เซอร์</translation>
+        <translation>แสดงภาพวัตถุที่อยู่ใต้เคอร์เซอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -7217,7 +7217,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>เส้นหลายส่วน</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -7437,7 +7437,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>ข้อความ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -8460,7 +8460,8 @@ so default step value required for baking</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>เลเยอร์การสร้างประกอบด้วยเอนทิตีที่เป็นเส้นตรงอนันต์ ซึ่งมีจุดประสงค์เพื่อใช้ในการสร้างรูปทรงเรขาคณิต เนื้อหาของเลเยอร์การสร้างไม่ควรปรากฏในการพิมพ์</translation>
+        <translation>เลเยอร์การสร้างประกอบด้วยวัตถุที่เป็นเส้นตรงอนันต์ ซึ่งมีจุดประสงค์เพื่อใช้ในการสร้างรูปทรงเรขาคณิต
+เนื้อหาของเลเยอร์การสร้างไม่ควรปรากฏในการพิมพ์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
@@ -8498,7 +8499,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;ยกเลิกการล็อคเลเยอร์ทั้งหมด</translation>
+        <translation>&amp;ปลดแช่แข็งเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
@@ -8543,7 +8544,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>ปลดล็อคเลเยอร์ทั้งหมด</translation>
+        <translation>ปลดล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
@@ -8795,7 +8796,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>ความกว้างของเส้น</translation>
+        <translation>ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8860,7 +8861,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>จับ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8870,7 +8871,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>จับไปยังจุดที่ห่างเท่ากันของรายการ</translation>
+        <translation>จับไปยังจุดที่ห่างเท่ากันบนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
@@ -8885,7 +8886,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>จับไปยังจุดที่ใกล้ที่สุดบนเอนทิตี</translation>
+        <translation>จับไปยังจุดที่ใกล้ที่สุดบนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
@@ -8920,7 +8921,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>ล็อคศูนย์สัมพัทธ์</translation>
+        <translation>ล็อกศูนย์สัมพัทธ์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
@@ -8940,7 +8941,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>จับบนเอนทิตี</translation>
+        <translation>จับบนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
@@ -8990,7 +8991,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>ล็อคตำแหน่งศูนย์สัมพัทธ์</translation>
+        <translation>ล็อกตำแหน่งศูนย์สัมพัทธ์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -9005,12 +9006,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
-        <translation>ล็อคแล้ว</translation>
+        <translation>ล็อกแล้ว</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>unlocked</source>
-        <translation>ปลดล็อคแล้ว</translation>
+        <translation>ปลดล็อกแล้ว</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
@@ -9086,7 +9087,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>บล็อก &quot;%1&quot; และองค์ประกอบทั้งหมดจะถูกลบ</translation>
+        <translation>บล็อก &quot;%1&quot; และวัตถุทั้งหมดในบล็อกจะถูกลบ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
@@ -9104,7 +9105,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>เลเยอร์ &quot;%1&quot; และองค์ประกอบทั้งหมดบนเลเยอร์นั้นจะถูกลบออก การดำเนินการนี้ไม่สามารถยกเลิกได้</translation>
+        <translation>เลเยอร์ &quot;%1&quot; และวัตถุทั้งหมดบนเลเยอร์นั้นจะถูกลบออก
+การดำเนินการนี้ไม่สามารถยกเลิกได้</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9124,7 +9126,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>เลเยอร์ที่ระบุและองค์ประกอบทั้งหมดบนเลเยอร์เหล่านั้นจะถูกลบออก</translation>
+        <translation>เลเยอร์ที่ระบุและวัตถุทั้งหมดบนเลเยอร์เหล่านั้นจะถูกลบออก</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9153,7 +9155,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>บล็อกที่ระบุและองค์ประกอบทั้งหมดบนบล็อกเหล่านั้นจะถูกลบออก</translation>
+        <translation>บล็อกที่ระบุและวัตถุทั้งหมดในบล็อกเหล่านั้นจะถูกลบออก</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9200,7 +9202,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>ไม่พบเลเยอร์ที่ไม่มีเอนทิตี ไม่มีอะไรให้ลบ</translation>
+        <translation>ไม่พบเลเยอร์ที่ไม่มีวัตถุ ไม่มีอะไรให้ลบ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
@@ -9227,7 +9229,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>สามารถเพิ่มเลเยอร์ด้านมิติได้เฉพาะสำหรับเลเยอร์ที่ใช้งานปกติเท่านั้น</translation>
+        <translation>สามารถเพิ่มเลเยอร์บอกขนาดได้เฉพาะสำหรับเลเยอร์ที่ใช้งานปกติเท่านั้น
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9259,7 +9262,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ปากกาจะถูกลบออกจากพาเลตต์ เอนทิตีที่วาดจะไม่ได้รับผลกระทบ</translation>
+        <translation>ปากกาจะถูกลบออกจากพาเลตต์ วัตถุที่วาดจะไม่ได้รับผลกระทบ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9280,7 +9283,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ปากกาจะถูกลบออกจากพาเลตต์ แต่เอนทิตีการวาดจะไม่ได้รับผลกระทบ</translation>
+        <translation>ปากกาจะถูกลบออกจากพาเลตต์ แต่วัตถุการวาดจะไม่ได้รับผลกระทบ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9290,24 +9293,26 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>เลือกเอนทิตี</translation>
+        <translation>เลือกวัตถุ </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>ไม่มีเอนทิตีใดๆ ที่ตรงกับปากกาในเลเยอร์ที่มองเห็นได้</translation>
+        <translation>ไม่มีวัตถุใดๆ ที่ตรงกับปากกาในเลเยอร์ที่มองเห็นได้</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>มีเอนทิตีดังกล่าวอยู่ในเลเยอร์ที่ถูกแช่แข็ง</translation>
+        <translation>มีวัตถุดังกล่าวอยู่ในเลเยอร์ที่ถูกแช่แข็ง
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>มีเอนทิตีดังกล่าวอยู่ในเลเยอร์ที่ถูกล็อค</translation>
+        <translation>มีวัตถุดังกล่าวอยู่ในเลเยอร์ที่ถูกล็อก
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -9317,19 +9322,19 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>ตั้งค่าปากกาตามเอนทิตี</translation>
+        <translation>ตั้งค่าปากกาตามวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>โปรดเลือกเอนทิตีเพียงเอนทิตีเดียวเพื่อตั้งค่าปากกา</translation>
+        <translation>โปรดเลือกวัตถุเพียงวัตถุเดียวเพื่อตั้งค่าปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>ไม่พบเอนทิตีในเลเยอร์ แต่ยังคงถูกกรองและซ่อนไว้
+        <translation>ไม่พบวัตถุในเลเยอร์ แต่ยังคงถูกกรองและซ่อนไว้
 
 ล้างตัวกรองและลองอีกครั้ง</translation>
     </message>
@@ -9711,7 +9716,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>เกิดข้อผิดพลาดในการอ่านค่าออฟเซ็ตในไฟล์ dwg</translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านค่าออฟเซตในไฟล์ dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
@@ -9721,7 +9726,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>เกิดข้อผิดพลาดในการอ่านเอนทิตีในไฟล์ dwg</translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านวัตถุในไฟล์ dwg</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
@@ -9736,7 +9741,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>การแรเงาไม่สำเร็จเนื่องจากมีช่องว่าง=%1 ระหว่าง (%2, %3) และ (%4, %5)</translation>
+        <translation>สร้างลายตัดไม่สำเร็จ เนื่องจากมีช่องว่าง=%1 ระหว่าง (%2, %3) และ (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -9797,7 +9802,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>เส้นหลายส่วน</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="548"/>
@@ -10955,7 +10960,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -10970,7 +10975,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>เส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -10991,7 +10996,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>เส้นหลายส่วน</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -11006,7 +11011,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>จับ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12183,7 +12188,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>อย่างไรก็ตาม มีเอนทิตีบางส่วนที่ถูกระบุแล้ว</translation>
+        <translation>อย่างไรก็ตาม มีวัตถุบางส่วนที่ถูกระบุแล้ว</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12261,7 +12266,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>เกิดข้อผิดพลาดในการอ่านเอนทิตี DXF/DWG</translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านวัตถุ DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
@@ -12412,7 +12417,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12597,7 +12602,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>ทำซ้ำ</translation>
+        <translation>คัดลอก</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="289"/>
@@ -12998,12 +13003,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: ไม่พบรูปแบบ โปรดตั้งค่าเส้นทางรูปแบบในการตั้งค่าโปรแกรม</translation>
+        <translation>ลายตัด: ไม่พบรูปแบบ โปรดตั้งค่าพาธของรูปแบบในการตั้งค่าโปรแกรม</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: การโหลดรูปแบบล้มเหลว: %1</translation>
+        <translation>ลายตัด: โหลดรูปแบบไม่สำเร็จ: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13282,7 +13287,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>ระบุจุดเริ่มต้นของเส้นขยายแรก</translation>
+        <translation>ระบุจุดเริ่มต้นของเส้นช่วยบอกขนาดเส้นแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13292,7 +13297,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>ระบุจุดเริ่มต้นของเส้นขยายที่สอง</translation>
+        <translation>ระบุจุดเริ่มต้นของเส้นช่วยบอกขนาดเส้นที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13333,7 +13338,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>ระบุตำแหน่งเส้นบอกขนาดวงโค้ง</translation>
+        <translation>ระบุตำแหน่งเส้นบอกขนาดส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
@@ -13346,7 +13351,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>ไม่ใช่เอนทิตีวงกลมหรือวงโค้ง</translation>
+        <translation>ไม่ใช่วัตถุวงกลมหรือส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="258"/>
@@ -13356,7 +13361,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>เลือกเอนทิตีวงโค้งหรือวงกลม</translation>
+        <translation>เลือกวัตถุส่วนโค้งหรือวงกลม</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13408,7 +13413,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>ระบุจุดเริ่มต้นของเส้นขยายแรก</translation>
+        <translation>ระบุจุดเริ่มต้นของเส้นช่วยบอกขนาดเส้นแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13418,7 +13423,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>ระบุจุดเริ่มต้นของเส้นขยายที่สอง</translation>
+        <translation>ระบุจุดเริ่มต้นของเส้นช่วยบอกขนาดเส้นที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13447,7 +13452,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>ไม่ใช่เอนทิตีวงกลมหรือวงโค้ง</translation>
+        <translation>ไม่ใช่วัตถุวงกลมหรือส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="251"/>
@@ -13457,7 +13462,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>เลือกเอนทิตีวงโค้งหรือวงกลม</translation>
+        <translation>เลือกวัตถุส่วนโค้งหรือวงกลม</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -13542,7 +13547,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="108"/>
         <source>Invalid arc data.</source>
-        <translation>ข้อมูลวงโค้งไม่ถูกต้อง</translation>
+        <translation>ข้อมูลส่วนโค้งไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
@@ -13576,7 +13581,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>ระบุเอนทิตีฐาน</translation>
+        <translation>ระบุวัตถุฐาน</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -13804,7 +13809,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลม</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลม</translation>
     </message>
 </context>
 <context>
@@ -13812,7 +13817,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลมแรก</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลมแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="327"/>
@@ -13822,7 +13827,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="331"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลมที่สอง</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลมที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
@@ -13866,7 +13871,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลม</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลม</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
@@ -13876,7 +13881,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>ระบุวงโค้ง/วงกลมอีกอัน</translation>
+        <translation>ระบุส่วนโค้ง/วงกลมอีกอัน</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
@@ -13918,17 +13923,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลมแรก</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลมแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลมที่สอง</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลมที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>ระบุเส้น/วงโค้ง/วงกลมที่สาม</translation>
+        <translation>ระบุเส้น/ส่วนโค้ง/วงกลมที่สาม</translation>
     </message>
 </context>
 <context>
@@ -14143,42 +14148,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>พื้นที่แฮชไม่ถูกต้อง โปรดตรวจสอบว่าเอนทิตีที่เลือกก่อเป็นเส้นขอบปิดอย่างน้อยหนึ่งเส้น</translation>
+        <translation>พื้นที่ลายตัดไม่ถูกต้อง โปรดตรวจสอบว่าวัตถุที่เลือกประกอบเป็นเส้นขอบปิดอย่างน้อยหนึ่งวง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>สร้างแฮชสำเร็จแล้ว</translation>
+        <translation>สร้างลายตัดสำเร็จแล้ว</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>ข้อผิดพลาดแฮช: พบเส้นขอบไม่ถูกต้อง!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: พบเส้นขอบไม่ถูกต้อง!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>ข้อผิดพลาดแฮทช์: ไม่พบลวดลาย!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: ไม่พบรูปแบบ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>ข้อผิดพลาดแฮทช์: เส้นขอบหรือลวดลายเล็กเกินไป!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: เส้นขอบหรือรูปแบบเล็กเกินไป!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>ข้อผิดพลาดแฮช: เส้นขอบใหญ่เกินไป!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: เส้นขอบใหญ่เกินไป!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>ข้อผิดพลาดแฮช: ข้อผิดพลาดไม่ทราบสาเหตุ!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: ข้อผิดพลาดที่ไม่ทราบสาเหตุ!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>พื้นที่แฮชรวม = %1</translation>
+        <translation>พื้นที่ลายตัดทั้งหมด = %1</translation>
     </message>
 </context>
 <context>
@@ -14247,7 +14252,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>ไม่สามารถปิดลำดับเส้นได้: ยังไม่มีการกำหนดเอนทิตีพอ หรือปิดไปแล้ว</translation>
+        <translation>ไม่สามารถปิดลำดับเส้นได้: ยังไม่มีการกำหนดวัตถุพอ หรือปิดไปแล้ว</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
@@ -14393,7 +14398,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>เลือกวงกลม วงโค้ง หรือวงรี</translation>
+        <translation>เลือกวงกลม ส่วนโค้ง หรือวงรี</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -14406,7 +14411,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>ระบุระยะทาง &lt;%1&gt; หรือเลือกเอนทิตีหรือ [%2]</translation>
+        <translation>ระบุระยะทาง &lt;%1&gt; หรือเลือกวัตถุหรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
@@ -14435,7 +14440,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>เลือกเอนทิตี</translation>
+        <translation>เลือกวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -14570,7 +14575,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>เลือกเอนทิตีฐาน</translation>
+        <translation>เลือกวัตถุฐาน</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
@@ -14603,7 +14608,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>เลือกวงกลม วงโค้ง หรือวงรี</translation>
+        <translation>เลือกวงกลม ส่วนโค้ง หรือวงรี</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
@@ -14707,12 +14712,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>ไม่สามารถปิดลำดับเส้นได้: ยังไม่มีการกำหนดเอนทิตีพอ</translation>
+        <translation>ไม่สามารถปิดลำดับเส้นได้: ยังไม่มีการกำหนดวัตถุพอ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดเอนทิตีพอ</translation>
+        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดวัตถุพอ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
@@ -14793,12 +14798,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>ไม่สามารถปิดลำดับเส้นได้: ยังไม่มีการกำหนดเอนทิตีพอ</translation>
+        <translation>ไม่สามารถปิดลำดับเส้นได้: ยังไม่มีการกำหนดวัตถุพอ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดเอนทิตีพอ</translation>
+        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดวัตถุพอ</translation>
     </message>
 </context>
 <context>
@@ -14979,7 +14984,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>ระบุเอนทิตี</translation>
+        <translation>ระบุวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -15025,12 +15030,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>ความยาวรวมของเอนทิตีที่เลือก: %1</translation>
+        <translation>ความยาวรวมของวัตถุที่เลือก: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>อย่างน้อยหนึ่งเอนทิตีที่เลือกไม่สามารถวัดได้</translation>
+        <translation>อย่างน้อยหนึ่งวัตถุที่เลือกไม่สามารถวัดได้</translation>
     </message>
 </context>
 <context>
@@ -15091,7 +15096,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="272"/>
         <source>Select first entity</source>
-        <translation>เลือกเอนทิตีแรก</translation>
+        <translation>เลือกวัตถุแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="273"/>
@@ -15101,7 +15106,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="276"/>
         <source>Select second entity</source>
-        <translation>เลือกเอนทิตีที่สอง</translation>
+        <translation>เลือกวัตถุที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="277"/>
@@ -15127,7 +15132,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15137,12 +15142,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>จุดตัดไม่อยู่บนเอนทิตี</translation>
+        <translation>จุดตัดไม่อยู่บนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>ระบุเอนทิตีที่จะตัด</translation>
+        <translation>ระบุวัตถุที่จะตัด</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -15162,7 +15167,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>เอนทิตีต้องเป็นเส้น วงโค้ง วงกลม วงรี หรือสปลายน์แบบแทรก</translation>
+        <translation>วัตถุต้องเป็นเส้น ส่วนโค้ง วงกลม วงรี หรือสไปลน์แบบแทรก</translation>
     </message>
 </context>
 <context>
@@ -15190,42 +15195,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>เอนทิตีไม่อยู่ในโพลีไลน์เดียวกัน</translation>
+        <translation>วัตถุไม่อยู่ในโพลีไลน์เดียวกัน</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>พาเรนต์ของเอนทิตีที่สองไม่ใช่โพลีไลน์</translation>
+        <translation>พาเรนต์ของวัตถุที่สองไม่ใช่โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>พาเรนต์ของเอนทิตีแรกไม่ใช่โพลีไลน์</translation>
+        <translation>พาเรนต์ของวัตถุแรกไม่ใช่โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>พาเรนต์ของเอนทิตีที่สองเป็น nullptr</translation>
+        <translation>พาเรนต์ของวัตถุที่สองเป็น nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>เอนทิตีที่เลือกหนึ่งอันเป็น nullptr</translation>
+        <translation>วัตถุที่เลือกหนึ่งอันเป็น nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>พาเรนต์ของเอนทิตีแรกเป็น nullptr</translation>
+        <translation>พาเรนต์ของวัตถุแรกเป็น nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
-        <translation>เอนทิตีแรกเป็น nullptr</translation>
+        <translation>วัตถุแรกเป็น nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
-        <translation>เอนทิตีที่สองเป็น nullptr</translation>
+        <translation>วัตถุที่สองเป็น nullptr</translation>
     </message>
 </context>
 <context>
@@ -15233,7 +15238,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>เลือกเอนทิตีเพื่อลบ</translation>
+        <translation>เลือกวัตถุเพื่อลบ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -15246,7 +15251,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>คลิกที่เอนทิตีเพื่อแก้ไข</translation>
+        <translation>คลิกที่วัตถุเพื่อแก้ไข</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -15344,7 +15349,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>ระบุทิศทางออฟเซ็ต</translation>
+        <translation>ระบุทิศทางออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -15417,7 +15422,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
         <source>Specify second entity</source>
-        <translation>ระบุเอนทิตีที่สอง</translation>
+        <translation>ระบุวัตถุที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
@@ -15432,7 +15437,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>ระบุเอนทิตีแรกหรือป้อนรัศมี &lt;%1&gt;</translation>
+        <translation>ระบุวัตถุแรกหรือป้อนรัศมี &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -15500,7 +15505,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>เลือกเอนทิตีตัดแต่งแรก</translation>
+        <translation>เลือกวัตถุตัดแต่งแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15511,7 +15516,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>เลือกเอนทิตีจำกัด</translation>
+        <translation>เลือกวัตถุจำกัด</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -15522,12 +15527,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>เลือกเอนทิตีตัดแต่งที่สอง</translation>
+        <translation>เลือกวัตถุตัดแต่งที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>เลือกเอนทิตีที่จะตัดแต่ง</translation>
+        <translation>เลือกวัตถุที่จะตัดแต่ง</translation>
     </message>
 </context>
 <context>
@@ -15535,17 +15540,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>ไม่พบเอนทิตี </translation>
+        <translation>ไม่พบวัตถุ </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>เอนทิตีที่เลือกอยู่ในบล็อก โปรดแก้ไขบล็อก</translation>
+        <translation>วัตถุที่เลือกอยู่ในบล็อก โปรดแก้ไขบล็อก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>เอนทิตีที่เลือกไม่ใช่เอนทิตีอะตอมหรือไม่สามารถตัดแต่งได้</translation>
+        <translation>วัตถุที่เลือกไม่ใช่วัตถุพื้นฐานหรือไม่สามารถตัดแต่งได้</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15555,7 +15560,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>เลือกเอนทิตีที่จะตัดแต่งหรือป้อนระยะทาง:</translation>
+        <translation>เลือกวัตถุที่จะตัดแต่งหรือป้อนระยะทาง:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15568,12 +15573,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>เลือกเอนทิตีเพื่อเรียงลำดับ</translation>
+        <translation>เลือกวัตถุเพื่อเรียงลำดับ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
@@ -15587,12 +15592,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>เอนทิตีต้องเป็นโพลีไลน์</translation>
+        <translation>วัตถุต้องเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15602,7 +15607,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>จุดที่เพิ่มไม่อยู่บนเอนทิตี</translation>
+        <translation>จุดที่เพิ่มไม่อยู่บนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
@@ -15630,12 +15635,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>เอนทิตีต้องเป็นโพลีไลน์</translation>
+        <translation>วัตถุต้องเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
@@ -15676,7 +15681,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดเอนทิตีพอ</translation>
+        <translation>ไม่สามารถย้อนกลับได้: ยังไม่มีการกำหนดวัตถุพอ</translation>
     </message>
 </context>
 <context>
@@ -15685,12 +15690,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>เอนทิตีต้องเป็นโพลีไลน์</translation>
+        <translation>วัตถุต้องเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15720,7 +15725,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>จุดที่ลบไม่อยู่บนเอนทิตี</translation>
+        <translation>จุดที่ลบไม่อยู่บนวัตถุ</translation>
     </message>
 </context>
 <context>
@@ -15730,18 +15735,18 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>เอนทิตีต้องเป็นโพลีไลน์</translation>
+        <translation>วัตถุต้องเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>จุดที่ลบไม่อยู่บนเอนทิตี</translation>
+        <translation>จุดที่ลบไม่อยู่บนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
@@ -15781,12 +15786,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>เอนทิตีต้องเป็นโพลีไลน์</translation>
+        <translation>วัตถุต้องเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
@@ -15804,7 +15809,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
@@ -15819,7 +15824,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>เอนทิตีไม่สามารถเป็นโพลีไลน์ที่ปิดแล้วได้</translation>
+        <translation>วัตถุไม่สามารถเป็นโพลีไลน์ที่ปิดแล้วได้</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
@@ -15835,12 +15840,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>ไม่พบเอนทิตี</translation>
+        <translation>ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>เอนทิตีต้องเป็นโพลีไลน์</translation>
+        <translation>วัตถุต้องเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -15852,7 +15857,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>ไม่พบส่วนบนเอนทิตี</translation>
+        <translation>ไม่พบส่วนบนวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
@@ -15891,37 +15896,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>ออฟเซ็ตการพิมพ์ในพิกัดกระดาษ (%1, %2)</translation>
+        <translation>ออฟเซตการพิมพ์ในพิกัดกระดาษ (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>ออฟเซ็ตการพิมพ์ในพิกัดกราฟ (%1, %2)</translation>
+        <translation>ออฟเซตการพิมพ์ในพิกัดกราฟ (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>ออฟเซ็ตการพิมพ์ในพิกัดกราฟ</translation>
+        <translation>ออฟเซตการพิมพ์ในพิกัดกราฟ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>ออฟเซ็ตการพิมพ์ในพิกัดกระดาษ</translation>
+        <translation>ออฟเซตการพิมพ์ในพิกัดกระดาษ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
-        <translation>: เลือกพิกัดออฟเซ็ตการพิมพ์</translation>
+        <translation>: เลือกพิกัดออฟเซตการพิมพ์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>ป้อนออฟเซ็ตจากบรรทัดคำสั่งเพื่อออฟเซ็ตการพิมพ์</translation>
+        <translation>ป้อนออฟเซตจากบรรทัดคำสั่งเพื่อออฟเซตการพิมพ์</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>ออฟเซ็ตการพิมพ์ไม่สนใจศูนย์สัมพัทธ์ กำลังเพิกเฉย &apos;@&apos;</translation>
+        <translation>ออฟเซตการพิมพ์ไม่สนใจศูนย์สัมพัทธ์ กำลังเพิกเฉย &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -16036,17 +16041,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>ไม่มีเอนทิตีที่เลือก!</translation>
+        <translation>ไม่มีวัตถุที่เลือก!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>เลือกเพื่อสร้างออฟเซ็ต</translation>
+        <translation>เลือกเพื่อสร้างออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>เลือกเอนทิตีเพื่อเรียงลำดับ</translation>
+        <translation>เลือกวัตถุเพื่อเรียงลำดับ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
@@ -16064,7 +16069,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>เอนทิตีต้องเป็นเอนทิตีอะตอม</translation>
+        <translation>วัตถุต้องเป็นวัตถุพื้นฐาน</translation>
     </message>
 </context>
 <context>
@@ -16141,7 +16146,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>เลือกเอนทิตีแรก</translation>
+        <translation>เลือกวัตถุแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -16152,7 +16157,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>เลือกเอนทิตีที่สอง</translation>
+        <translation>เลือกวัตถุที่สอง</translation>
     </message>
 </context>
 <context>
@@ -16165,7 +16170,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>ไม่พบเอนทิตีเส้นบอกขนาด</translation>
+        <translation>ไม่พบวัตถุเส้นบอกขนาด</translation>
     </message>
 </context>
 <context>
@@ -16231,7 +16236,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="26"/>
         <source>Arc Options</source>
-        <translation>ตัวเลือกวงโค้ง</translation>
+        <translation>ตัวเลือกส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="77"/>
@@ -16249,17 +16254,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation>ตัวเลือกวงโค้งสัมผัส</translation>
+        <translation>ตัวเลือกส่วนโค้งสัมผัส</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>รัศมีของวงโค้งสัมผัส</translation>
+        <translation>รัศมีของส่วนโค้งสัมผัส</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>มุมรวมของวงโค้งสัมผัส</translation>
+        <translation>มุมรวมของส่วนโค้งสัมผัส</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -16284,12 +16289,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>เลือกเพื่อตัดแต่งทั้งสองเอนทิตีให้เข้ากับการลบมุม</translation>
+        <translation>เลือกเพื่อตัดแต่งทั้งสองวัตถุให้เข้ากับการลบมุม</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16343,7 +16348,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>ตัวเลือกมิติเชิงเส้น</translation>
+        <translation>ตัวเลือกการบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16726,7 +16731,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation>ระยะทางถึงเอนทิตีต้นฉบับ</translation>
+        <translation>ระยะทางถึงวัตถุต้นฉบับ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
@@ -16844,7 +16849,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>ตัวเลือกการปรับออฟเซ็ต</translation>
+        <translation>ตัวเลือกการปรับออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16854,7 +16859,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>ออฟเซ็ตจากเอนทิตีต้นฉบับ</translation>
+        <translation>ออฟเซตจากวัตถุต้นฉบับ</translation>
     </message>
 </context>
 <context>
@@ -16890,7 +16895,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>เส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -16981,7 +16986,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>ตัวเลือกกลมมน</translation>
+        <translation>ตัวเลือกการลบมุมมน</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
@@ -16991,7 +16996,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17035,7 +17040,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>ตัวเลือกสปลายน์</translation>
+        <translation>ตัวเลือกสไปลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>

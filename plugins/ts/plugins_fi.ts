@@ -265,7 +265,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>RAKENNE</translation>
+        <translation>APUVIIVA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -330,7 +330,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLYLIN</translation>
+        <translation>POLYLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -569,7 +569,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Piste 3D-kerros on tyhjä</translation>
+        <translation>Pisteen 3D-taso on tyhjä</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -767,7 +767,7 @@ ensimmäinen tukipiste, toinen tukipiste, ensimmäinen kohdepiste, toinen kohdep
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLIN</translation>
+        <translation>POLYLINE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -870,7 +870,7 @@ Vastapäivään.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Uusi&quot;&lt;/i&gt;&lt;br&gt;Anna nimi &lt;br&gt;uudelle kerrokselle &lt;br&gt;(tarvittaessa), jotta &lt;br&gt;merkit voidaan piirtää.</translation>
+        <translation>&lt;i&gt;&quot;Uusi&quot;&lt;/i&gt;&lt;br&gt;Anna nimi&lt;br&gt;uudelle tasolle&lt;br&gt;(tarvittaessa), jolle&lt;br&gt;merkit piirretään.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -971,7 +971,7 @@ Vastapäivään.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Käyttää kerroksia?</translation>
+        <translation>Käytä tasoja?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1216,7 +1216,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Piirrä</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1233,7 +1233,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

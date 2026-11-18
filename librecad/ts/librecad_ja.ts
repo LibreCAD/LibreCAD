@@ -492,7 +492,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>パン拡大(&amp;P)</translation>
+        <translation>パン(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -795,7 +795,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="650"/>
         <source>&amp;Linear</source>
-        <translation>線形寸法(&amp;L)</translation>
+        <translation>長さ寸法(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="664"/>
@@ -1401,7 +1401,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="276"/>
         <source>Snake (Y)</source>
-        <translation>スネーク (X)</translation>
+        <translation>スネーク (Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
@@ -4847,7 +4847,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>線形寸法</translation>
+        <translation>長さ寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -6168,7 +6168,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="456"/>
         <source>linear</source>
-        <translation>線形</translation>
+        <translation>長さ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
@@ -6436,7 +6436,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
         <source>Linear units:</source>
-        <translation>線形単位:</translation>
+        <translation>長さ単位:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
@@ -6458,7 +6458,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
         <source>Linear zeros:</source>
-        <translation>線形ゼロ:</translation>
+        <translation>長さの0省略:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1146"/>
@@ -6499,7 +6499,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
         <source>Angular zeros:</source>
-        <translation>角度ゼロ:</translation>
+        <translation>角度の0省略:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
@@ -6519,7 +6519,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
         <source>Linear precision:</source>
-        <translation>線形精度:</translation>
+        <translation>長さ精度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
@@ -6529,12 +6529,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
         <source>Aligned</source>
-        <translation>両端揃え</translation>
+        <translation>寸法線に合わせる</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;原点からのオフセットです。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;起点からのオフセットです。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
@@ -6544,7 +6544,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>延長線</translation>
+        <translation>寸法補助線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6600,7 +6600,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>延長線固定長</translation>
+        <translation>寸法補助線の固定長</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -8257,7 +8257,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>調整</translation>
+        <translation>フィット</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8267,7 +8267,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
-        <translation>整列(&amp;L)</translation>
+        <translation>両端揃え(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
@@ -10130,7 +10130,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>パン拡大</translation>
+        <translation>パン</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10220,7 +10220,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>線形寸法</translation>
+        <translation>長さ寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="645"/>
@@ -12514,7 +12514,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/カスタムカラー%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13100,12 +13100,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>ハッチ:: パターンが見つかりません。アプリケーション設定でパターンパスを設定してください</translation>
+        <translation>ハッチング:: パターンが見つかりません。アプリケーション設定でパターンパスを設定してください</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>ハッチ:: パターン読み込み失敗: %1</translation>
+        <translation>ハッチング:: パターン読み込み失敗: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -16279,7 +16279,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>クリック＆ドラッグでパン拡大</translation>
+        <translation>クリック＆ドラッグでパン</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16290,7 +16290,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>パン拡大</translation>
+        <translation>パン</translation>
     </message>
 </context>
 <context>
@@ -16449,7 +16449,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>線形寸法オプション</translation>
+        <translation>長さ寸法オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>

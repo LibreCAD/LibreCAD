@@ -424,17 +424,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> غير مقسم لأنه جزء من متعدد خطوط. قم بتوسيع متعدد الخطوط أولاً.</translation>
+        <translation> لا يُقسَم لأنه جزء من خط متعدد. فكّك الخط المتعدد أولًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -492,7 +492,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>تكبير التحريك</translation>
+        <translation>&amp;تحريك العرض</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -695,22 +695,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>قطع ناقص وقوس (محور)</translation>
+        <translation>&amp;قوس قطع ناقص (محور)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>قطع ناقص وبؤرة نقطة</translation>
+        <translation>&amp;قطع ناقص بالبؤرتين ونقطة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>قطع ناقص وأربع نقاط</translation>
+        <translation>&amp;قطع ناقص بأربع نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>مركز قطع ناقص وثلاث نقاط</translation>
+        <translation>&amp;قطع ناقص بالمركز وثلاث نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
@@ -730,7 +730,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>&amp;خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
@@ -760,7 +760,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>إنشاء متعدد خطوط متساوية المسافة</translation>
+        <translation>&amp;إنشاء خطوط متعددة متساوية البعد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
@@ -780,7 +780,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>تظليل</translation>
+        <translation>&amp;تهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>دليل</translation>
+        <translation>&amp;خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -905,12 +905,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>تقريب</translation>
+        <translation>&amp;تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>تفجير النص إلى حروف</translation>
+        <translation>&amp;تفكيك النص إلى حروف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -945,7 +945,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
         <source>&amp;Selection pointer</source>
-        <translation>اختيار مؤشر</translation>
+        <translation>&amp;مؤشر التحديد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
@@ -980,7 +980,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>خفض بعد الكيان</translation>
+        <translation>إنزال تحت الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
@@ -1070,7 +1070,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
-        <translation>تفجير</translation>
+        <translation>تف&amp;كيك</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
@@ -1120,7 +1120,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
-        <translation>تقريب – تبعيد تلقائي</translation>
+        <translation>&amp;تكبير/تصغير تلقائي</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
@@ -1175,7 +1175,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1274"/>
         <source>Export as PDF</source>
-        <translation>تصدير بتنسيق بي دي اف</translation>
+        <translation>تصدير بتنسيق PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
@@ -1237,7 +1237,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,7 +1247,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
@@ -1408,7 +1408,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>نجمة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -1458,22 +1458,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>مكافئ 4 نقاط</translation>
+        <translation>&amp;قطع مكافئ بأربع نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>مكافئ بؤرة مباشرة</translation>
+        <translation>&amp;قطع مكافئ بالبؤرة والدليل</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>اختر قلم من كيان</translation>
+        <translation>&amp;أخذ القلم من كيان</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>اختر قلم من كيان (محلول)</translation>
+        <translation>&amp;أخذ القلم الفعلي من كيان</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
@@ -1488,7 +1488,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
-        <translation>ربط خط</translation>
+        <translation>وصل الخطوط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
@@ -1503,7 +1503,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Hyperbola Foci Point</source>
-        <translation>&amp;نقطة بؤرة القطع الزائد</translation>
+        <translation>&amp;قطع زائد بالبؤرتين ونقطة</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2249,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>حر</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2267,7 +2267,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
@@ -2277,7 +2277,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>نسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -2355,7 +2355,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
@@ -2396,7 +2396,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>إنشاء متعدد خطوط</translation>
+        <translation>إنشاء خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2459,12 +2459,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
@@ -2474,7 +2474,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
@@ -2531,7 +2531,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>حر</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2554,7 +2554,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
@@ -2869,7 +2869,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -2919,7 +2919,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2979,7 +2979,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -3027,7 +3027,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -3101,7 +3101,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3124,12 +3124,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3225,12 +3225,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -3242,7 +3242,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
@@ -3252,7 +3252,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>نسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
@@ -3320,7 +3320,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3353,7 +3353,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>إرساء</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
@@ -3383,7 +3383,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خطوط متعددة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
@@ -3518,7 +3518,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>المسافة من متعدد الخطوط الأصلي</translation>
+        <translation>المسافة من الخط المتعدد الأصلي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3701,7 +3701,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>متعدّد خطوط</translation>
+        <translation>&amp;خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3782,17 +3782,17 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>ملف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
@@ -3883,7 +3883,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3912,7 +3912,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
@@ -3930,12 +3930,12 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>قلم</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -4005,7 +4005,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4117,12 +4117,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
-        <translation>East</translation>
+        <translation>الشرق</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
-        <translation>West</translation>
+        <translation>الغرب</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
@@ -4158,7 +4158,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>الأوامر</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
@@ -4169,7 +4169,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dock</translation>
+        <translation>إرساء</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
@@ -4430,7 +4430,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation>أحمر</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="120"/>
@@ -4445,12 +4445,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>سماوي</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>أزرق</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="128"/>
@@ -4465,7 +4465,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>رمادي</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="139"/>
@@ -4588,7 +4588,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>إرساء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -4603,7 +4603,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>الأوامر</translation>
     </message>
 </context>
 <context>
@@ -4632,7 +4632,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>محرر ملصق البعد</translation>
+        <translation>محرر تسمية البعد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
@@ -4703,7 +4703,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4903,7 +4903,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>اختيار سمات التظليل</translation>
+        <translation>اختيار سمات التهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -4938,7 +4938,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>المساحة</translation>
     </message>
 </context>
 <context>
@@ -5110,7 +5110,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5258,7 +5258,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -6194,17 +6194,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
         <source>&amp;Paper</source>
-        <translation>&amp;Paper</translation>
+        <translation>&amp;الورق</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
         <source>&amp;Landscape</source>
-        <translation>&amp;Landscape</translation>
+        <translation>&amp;أفقي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>&amp;رأسي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
@@ -6274,12 +6274,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>عدد قطاعات الخط لكل شريحة تصحيح:</translation>
+        <translation>عدد المقاطع الخطية لكل رقعة منحنى شريحي:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6289,31 +6289,31 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>مؤشر التقاطع الأيسر بشبكة متساوية الأبعاد</translation>
+        <translation>مؤشر التقاطع الأيسر بشبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>مؤشر التقاطع العلوي بشبكة متساوية الأبعاد</translation>
+        <translation>مؤشر التقاطع العلوي بشبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>مؤشر التقاطع الأيمن بشبكة متساوية الأبعاد</translation>
+        <translation>مؤشر التقاطع الأيمن بشبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -6335,12 +6335,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>استخدام شبكة آيزومترية</translation>
+        <translation>استخدام شبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>شبكة آيزومترية</translation>
+        <translation>شبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -6503,7 +6503,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>خطوط التمديد</translation>
+        <translation>خطوط الامتداد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6559,7 +6559,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>طول خط التمديد الثابت</translation>
+        <translation>طول خط الامتداد الثابت</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6657,7 +6657,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation> أنماط التظليل:</translation>
+        <translation>أنماط التهشير:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6947,7 +6947,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>التمرير التلقائي</translation>
+        <translation>التحريك التلقائي للعرض</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -7032,7 +7032,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>تكبير الرسم تلقائيًا عند الفتح</translation>
+        <translation>تكبير/تصغير الرسم تلقائيًا عند الفتح</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -7169,8 +7169,8 @@ but ignored by other</source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>يرتبط طول نمط الخط بالتكبير، 
-لذا يتطلب قيمة خطوة افتراضية للخبز (Baking).</translation>
+        <translation>طول نمط الخط مرتبط بالتكبير،
+لذا تلزم قيمة خطوة افتراضية للتجهيز المسبق</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -7221,7 +7221,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>متعدّد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -7441,7 +7441,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>نص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -7471,7 +7471,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -8213,7 +8213,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>ملاءمة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8639,7 +8639,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>نقطي</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8654,7 +8654,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>متقطع</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8777,7 +8777,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8868,7 +8868,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>التقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -9032,7 +9032,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>قلم</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9974,7 +9974,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>تظليل</translation>
+        <translation>تهشير</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -10903,7 +10903,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
@@ -10966,18 +10966,18 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>شكل بيضاوي</translation>
+        <translation>قطع ناقص</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>ملف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -10987,7 +10987,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -10997,7 +10997,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11018,7 +11018,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>سطر متعدد النقاط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -11033,7 +11033,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>التقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11043,7 +11043,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -12282,7 +12282,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>الكتل</translation>
+        <translation>خطأ في قراءة كتل DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
@@ -12439,7 +12439,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13308,7 +13308,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>حدد منشأ أول خط امتداد</translation>
+        <translation>حدد منشأ خط الامتداد الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13318,7 +13318,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>حدد منشأ ثاني خط أمتداد</translation>
+        <translation>حدد منشأ خط الامتداد الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13434,7 +13434,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>حدد منشأ أول خط امتداد</translation>
+        <translation>حدد منشأ خط الامتداد الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13444,7 +13444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>حدد منشأ ثاني خط أمتداد</translation>
+        <translation>حدد منشأ خط الامتداد الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -14169,42 +14169,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>منطقة تظليل غير صالحة. يرجى التحقق من أن الكيانات مختارة من معلم مغلق واحد أو اكثر.</translation>
+        <translation>منطقة تهشير غير صالحة. يرجى التحقق من أن الكيانات المختارة تشكّل محيطًا مغلقًا واحدًا أو أكثر.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>أنشئت الظلال بنجاح.</translation>
+        <translation>أُنشئ التهشير بنجاح.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>خطأ في التظليل: تم العثور على محيط غير صالح!</translation>
+        <translation>خطأ في التهشير: تم العثور على محيط غير صالح!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>خطأ في التظليل: نمط غير موجود!</translation>
+        <translation>خطأ في التهشير: النمط غير موجود!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>خطأ في التظليل: المحيط أو النمط صغير جدًا!</translation>
+        <translation>خطأ في التهشير: المحيط أو النمط صغير جدًا!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>خطأ في التظليل: المحيط كبير جدًا!</translation>
+        <translation>خطأ في التهشير: المحيط كبير جدًا!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>خطأ في التظليل: خطأ غير معروف!</translation>
+        <translation>خطأ في التهشير: خطأ غير معروف!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>مجموع مساحة التظليل =%1</translation>
+        <translation>مجموع مساحة التهشير = %1</translation>
     </message>
 </context>
 <context>
@@ -14653,12 +14653,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>تحديد الدائرة/الإهليلج/القطع المكافئ الأول</translation>
+        <translation>حدد الدائرة/القطع الناقص/القطع المكافئ الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>تحديد الدائرة/الإهليلج/القطع المكافئ الثاني</translation>
+        <translation>حدد الدائرة/القطع الناقص/القطع المكافئ الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
@@ -15196,7 +15196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>حدد أول نقطة قطع على متعدّد الخطوط</translation>
+        <translation>حدد نقطة الكسر الأولى على خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15206,7 +15206,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>حدد ثاني نقطة قطع على نفس متعدّد الخطوط</translation>
+        <translation>حدد نقطة الكسر الثانية على الخط المتعدد نفسه</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15216,17 +15216,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>الكيانات ليست على نفس متعدّد الخطوط.</translation>
+        <translation>الكيانات ليست ضمن الخط المتعدد نفسه.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>اصل الكيان الثاني ليس متعدّد خطوط</translation>
+        <translation>أصل الكيان الثاني ليس خطًا متعددًا</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>اصل الكيان اﻷول ليس متعدّد خطوط</translation>
+        <translation>أصل الكيان الأول ليس خطًا متعددًا</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
@@ -15618,7 +15618,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15633,7 +15633,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>حدد متعدّد خطوط لإضافة عُقد</translation>
+        <translation>حدد خطًا متعددًا لإضافة عُقد</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -15661,7 +15661,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
@@ -15671,7 +15671,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>حدد متعدّد خطوط في مكان ما بالقرب من نقطة البداية أو النهاية</translation>
+        <translation>حدد الخط المتعدد في مكان ما بالقرب من نقطة البداية أو النهاية</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="192"/>
@@ -15697,7 +15697,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>لا يمكن أرفاق عقد في متعدّد خطوط مغلق.</translation>
+        <translation>لا يمكن إلحاق عُقد بخط متعدد مغلق.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
@@ -15716,7 +15716,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15761,7 +15761,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
@@ -15812,12 +15812,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>اختار متعدّد الخطوط الأصلي</translation>
+        <translation>اختر الخط المتعدد الأصلي</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -15845,7 +15845,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>الكيان لا يمكن أن يكون متعدّد خطوط مغلق.</translation>
+        <translation>لا يمكن أن يكون الكيان خطًا متعددًا مغلقًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
@@ -15866,7 +15866,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -16036,7 +16036,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>تحديد لتفجير النص</translation>
+        <translation>تحديد لتفكيك النص</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16077,7 +16077,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>تحديد لتفجير الكتلة</translation>
+        <translation>تحديد لتفكيك الكتلة</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16315,7 +16315,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>قص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16361,7 +16361,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>نصف قطر الدائرة المماسية</translation>
+        <translation>نصف قطر الدائرة المماسة</translation>
     </message>
 </context>
 <context>
@@ -16595,7 +16595,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
 </context>
 <context>
@@ -16651,7 +16651,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16661,7 +16661,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>إعادة</translation>
     </message>
 </context>
 <context>
@@ -16679,7 +16679,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>خط متعدد الأجزاء</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -16699,7 +16699,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>نسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
@@ -16709,7 +16709,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
@@ -16729,7 +16729,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>إعادة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -16911,12 +16911,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17007,17 +17007,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>خيارات التقريب</translation>
+        <translation>خيارات التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>تحديد قص كلا الحافتين وفقًا للتقريب</translation>
+        <translation>حدد لقص كلتا الحافتين حتى التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>قص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17076,7 +17076,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
 </context>
 <context>
@@ -17145,7 +17145,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>

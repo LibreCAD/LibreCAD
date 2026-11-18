@@ -43,7 +43,7 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Pertahankan obyek asli</translation>
+        <translation>Pertahankan objek asli</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
@@ -143,7 +143,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Lapis</translation>
+        <translation>Lapisan</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -153,7 +153,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Tipe garis</translation>
+        <translation>Jenis garis</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -990,7 +990,7 @@ berlawanan arah jarum jam.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Gambar lingkaran akar?</translation>
+        <translation>Gambar lingkaran kaki?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>

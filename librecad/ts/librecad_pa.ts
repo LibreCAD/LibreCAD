@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>ਆਰਕ ਡਾਇਮੈਂਸ਼ਨ ਦੀ ਥਾਂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਆਰਕ ਮਾਪ ਦੀ ਥਾਂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -137,7 +137,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>ਦੋ ਸੰਭਾਵਿਤ ਸਰਕਲ ਸੈਂਟਰਾਂ ਵਿੱਚੋਂ ਚੁਣੋ</translation>
+        <translation>ਦੋ ਸੰਭਾਵਿਤ ਚੱਕਰ ਕੇਂਦਰਾਂ ਵਿੱਚੋਂ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
@@ -163,7 +163,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
         <source>Select circle center</source>
-        <translation>ਸਰਕਲ ਸੈਂਟਰ ਚੁਣੋ</translation>
+        <translation>ਚੱਕਰ ਕੇਂਦਰ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -266,7 +266,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="140"/>
         <source>Specify center</source>
-        <translation>ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਕੇਂਦਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
@@ -439,7 +439,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
         <source>Circle</source>
-        <translation>ਸਰਕਲ</translation>
+        <translation>ਚੱਕਰ</translation>
     </message>
 </context>
 <context>
@@ -618,12 +618,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
         <source>Center, &amp;Point</source>
-        <translation>ਸੈਂਟਰ, &amp;ਬਿੰਦੂ</translation>
+        <translation>ਕੇਂਦਰ, &amp;ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
-        <translation>ਸੈਂਟਰ, &amp;ਰੇਡੀਅਸ</translation>
+        <translation>ਕੇਂਦਰ, &amp;ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
@@ -649,23 +649,23 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="397"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>ਸਰਕਲ &amp;ਇਨਸਕ੍ਰਾਈਬਡ</translation>
+        <translation>ਚੱਕਰ &amp;ਇਨਸਕ੍ਰਾਈਬਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>ਟੈਨਜੈਂਟੀਅਲ 2 ਸਰਕਲ, ਰੇਡੀਅਸ</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ 2 ਚੱਕਰ, ਰੇਡੀਅਸ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>ਟੈਨਜੈਂਟੀਅਲ 2 ਸਰਕਲ, 1 ਬਿੰਦੂ</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ 2 ਚੱਕਰ, 1 ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>ਟੈਨਜੈਂਟੀਅਲ &amp;3 ਸਰਕਲ</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ &amp;3 ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
@@ -675,7 +675,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;ਸੈਂਟਰ, ਬਿੰਦੂ, ਕੋਣ</translation>
+        <translation>&amp;ਕੇਂਦਰ, ਬਿੰਦੂ, ਕੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
@@ -710,7 +710,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>ਐਲਿਪਸ ਸੈਂਟਰ ਅਤੇ &amp;3 ਬਿੰਦੂ</translation>
+        <translation>ਐਲਿਪਸ ਕੇਂਦਰ ਅਤੇ &amp;3 ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
@@ -910,7 +910,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;ਟੈਕਸਟ ਨੂੰ ਅੱਖਰਾਂ ਵਿੱਚ ਫਟਾਓ</translation>
+        <translation>&amp;ਟੈਕਸਟ ਨੂੰ ਅੱਖਰਾਂ ਵਿੱਚ ਐਕਸਪਲੋਡ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -1200,7 +1200,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Grid</source>
-        <translation>&amp;ਗ੍ਰਿਡ</translation>
+        <translation>&amp;ਗਰਿੱਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1301"/>
@@ -1272,7 +1272,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="770"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>ਭੇਜੋ ਅਤੇ ਘੁਮਾਓ</translation>
+        <translation>ਹਿਲਾਓ ਅਤੇ ਘੁਮਾਓ(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
@@ -1443,7 +1443,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="342"/>
         <source>Slice/Divide Circle</source>
-        <translation>ਸਲਾਈਸ/ਵੰਡ ਸਰਕਲ</translation>
+        <translation>ਸਲਾਈਸ/ਵੰਡ ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
@@ -1777,7 +1777,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ</translation>
+        <translation>ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1859,7 +1859,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨਲ</translation>
+        <translation>ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1939,7 +1939,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
         <source>Threeview items separator grid</source>
-        <translation>ਥ੍ਰੀਵਿਊ ਆਈਟਮਾਂ ਵਿਭਾਜਕ ਗ੍ਰਿਡ</translation>
+        <translation>ਥ੍ਰੀਵਿਊ ਆਈਟਮਾਂ ਵਿਭਾਜਕ ਗਰਿੱਡ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
@@ -1964,7 +1964,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨਲ ਲੇਅਰ</translation>
+        <translation>ਮਾਪ ਲੇਅਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2057,7 +2057,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਲੇਅਰ ਸ਼ਾਮਲ ਕਰੋ</translation>
+        <translation>ਮਾਪ ਲੇਅਰ ਸ਼ਾਮਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2122,7 +2122,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;ਡਾਇਮੈਂਸ਼ਨ ਸਬ-ਲੇਅਰ ਸ਼ਾਮਲ ਕਰੋ</translation>
+        <translation>&amp;ਮਾਪ ਸਬ-ਲੇਅਰ ਸ਼ਾਮਲ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2143,7 +2143,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨਲ ਲੇਅਰ ਵਿੱਚ ਬਦਲੋ</translation>
+        <translation>ਮਾਪ ਲੇਅਰ ਵਿੱਚ ਬਦਲੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2622,7 +2622,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
         <source>Grid Color:</source>
-        <translation>ਗ੍ਰਿਡ ਰੰਗ:</translation>
+        <translation>ਗਰਿੱਡ ਰੰਗ:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="164"/>
@@ -3267,7 +3267,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
         <source>Start Circle Angle:</source>
-        <translation>ਸ਼ੁਰੂਆਤੀ ਸਰਕਲ ਕੋਣ:</translation>
+        <translation>ਸ਼ੁਰੂਆਤੀ ਚੱਕਰ ਕੋਣ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
@@ -3368,7 +3368,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
         <source>Circles</source>
-        <translation>ਸਰਕਲ</translation>
+        <translation>ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
@@ -3393,7 +3393,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ</translation>
+        <translation>ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
@@ -3403,7 +3403,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="657"/>
         <source>Measure</source>
-        <translation>ਮਾਪ</translation>
+        <translation>ਮਾਪੋ</translation>
     </message>
 </context>
 <context>
@@ -3707,7 +3707,7 @@ or [%2]</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Command line</source>
-        <translation>ਕਮਾਂਡ ਲਾਇਨ</translation>
+        <translation>ਕਮਾਂਡ ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
@@ -3894,7 +3894,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="529"/>
         <source>Circle</source>
-        <translation>ਸਰਕਲ</translation>
+        <translation>ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="778"/>
@@ -3923,7 +3923,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ</translation>
+        <translation>ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -3945,7 +3945,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
-        <translation>ਗ੍ਰਿਡ ਸਥਿਤੀ</translation>
+        <translation>ਗਰਿੱਡ ਸਥਿਤੀ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3307"/>
@@ -4561,7 +4561,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="14"/>
         <source>Command Line</source>
-        <translation>ਕਮਾਂਡ ਲਾਇਨ</translation>
+        <translation>ਕਮਾਂਡ ਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="82"/>
@@ -4682,7 +4682,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਡਾਇਮੈਂਸ਼ਨ ਟੈਕਸਟ ਦਾ ਫਾਰਮਿਟ, &amp;lt;&amp;gt; ਨੂੰ ਡਾਇਮੈਂਸ਼ਨ ਮਾਪ ਮੁੱਲ ਲਈ ਪਲੇਸਹੋਲਡਰ ਵਜੋਂ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਮਾਪ ਟੈਕਸਟ ਦਾ ਫਾਰਮਿਟ, &amp;lt;&amp;gt; ਨੂੰ ਮਾਪੇ ਗਏ ਮੁੱਲ ਲਈ ਪਲੇਸਹੋਲਡਰ ਵਜੋਂ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4751,7 +4751,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>ਗੁਣ</translation>
+        <translation>ਐਟ੍ਰੀਬਿਊਟ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
@@ -4885,7 +4885,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="226"/>
         <source>Minor:</source>
-        <translation>ਪ੍ਰਤੀਬਿੰਬ:</translation>
+        <translation>ਛੋਟਾ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="236"/>
@@ -4903,7 +4903,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>ਹੈਚ ਗੁਣ ਚੁਣੋ</translation>
+        <translation>ਹੈਚ ਐਟ੍ਰੀਬਿਊਟ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -4918,7 +4918,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
         <source>Scale:</source>
-        <translation>ਪੈਮਾਨਾ:</translation>
+        <translation>ਸਕੇਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
@@ -4976,7 +4976,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
         <source>Scale:</source>
-        <translation>ਪੈਮਾਨਾ:</translation>
+        <translation>ਸਕੇਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="153"/>
@@ -5100,12 +5100,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>X ਪੈਮਾਨਾ:</translation>
+        <translation>X ਸਕੇਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>Y ਪੈਮਾਨਾ:</translation>
+        <translation>Y ਸਕੇਲ:</translation>
     </message>
 </context>
 <context>
@@ -5954,7 +5954,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
         <source>Use current &amp;attributes</source>
-        <translation>ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
+        <translation>ਮੌਜੂਦਾ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋਂ(&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
@@ -5992,7 +5992,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="121"/>
         <source>Use current &amp;attributes</source>
-        <translation>ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
+        <translation>ਮੌਜੂਦਾ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋਂ(&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
@@ -6035,7 +6035,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
         <source>Use current &amp;attributes</source>
-        <translation>ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
+        <translation>ਮੌਜੂਦਾ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋਂ(&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
@@ -6282,7 +6282,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>ਪ੍ਰਤੀ ਸਪਲਾਇਨ ਪੈਂਚ ਰੇਖਾ ਖੰਡਾਂ ਦੀ ਗਿਣਤੀ:</translation>
+        <translation>ਪ੍ਰਤੀ ਸਪਲਾਈਨ ਪੈਂਚ ਰੇਖਾ ਖੰਡਾਂ ਦੀ ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6363,17 +6363,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
         <source>General Scale:</source>
-        <translation>ਆਮ ਪੈਮਾਨਾ:</translation>
+        <translation>ਆਮ ਸਕੇਲ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਸਾਰੇ ਮਾਪ ਮੁੱਲਾਂ ਨੂੰ ਗੁਣਾ ਕਰਨ ਲਈ ਪੈਮਾਨਾ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਸਾਰੇ ਮਾਪ ਮੁੱਲਾਂ ਨੂੰ ਗੁਣਾ ਕਰਨ ਲਈ ਸਕੇਲ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਸਾਰੀਆਂ ਮਾਪ ਜੁਮੈਟਰੀਆਂ ਨੂੰ ਗੁਣਾ ਕਰਨ ਲਈ ਪੈਮਾਨਾ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਸਾਰੀਆਂ ਮਾਪ ਜੁਮੈਟਰੀਆਂ ਨੂੰ ਗੁਣਾ ਕਰਨ ਲਈ ਸਕੇਲ।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6740,7 +6740,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>ਸਵੈ-ਚਾਲਤ ਪੈਮਾਨਾ ਗਰਿੱਡ(&amp;u)</translation>
+        <translation>ਗਰਿੱਡ ਆਪਣੇ-ਆਪ ਸਕੇਲ ਕਰੋ(&amp;u)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6935,7 +6935,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>ਘੱਟੋ-ਘੱਟ ਗ੍ਰਿਡ ਸਪੇਸਿੰਗ (p&amp;x):</translation>
+        <translation>ਘੱਟੋ-ਘੱਟ ਗਰਿੱਡ ਸਪੇਸਿੰਗ (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -7278,7 +7278,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
         <source>Use current &amp;attributes</source>
-        <translation>ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
+        <translation>ਮੌਜੂਦਾ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋਂ(&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
@@ -7331,7 +7331,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
         <source>Use current &amp;attributes</source>
-        <translation>ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
+        <translation>ਮੌਜੂਦਾ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋਂ(&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
@@ -7349,7 +7349,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="26"/>
         <source>Scaling Options</source>
-        <translation>ਪੈਮਾਨਾ ਗੁਣ</translation>
+        <translation>ਸਕੇਲ ਚੋਣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="32"/>
@@ -7359,7 +7359,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
         <source>Use current &amp;attributes</source>
-        <translation>ਮੌਜੂਦਾ ਗੁਣ ਵਰਤੋਂ(&amp;a)</translation>
+        <translation>ਮੌਜੂਦਾ ਐਟ੍ਰੀਬਿਊਟ ਵਰਤੋਂ(&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
@@ -8497,7 +8497,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>ਪਰਤ ਗੁਣ ਸੋਧ / ਨਾਂ-ਤਬਦੀਲ</translation>
+        <translation>ਪਰਤ ਐਟ੍ਰੀਬਿਊਟ ਸੋਧ / ਨਾਂ-ਤਬਦੀਲ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
@@ -8896,7 +8896,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>ਸੈਂਟਰ ਬਿੰਦੂਆਂ ਤੱਕ ਸਨੈਪ</translation>
+        <translation>ਕੇਂਦਰ ਬਿੰਦੂਆਂ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
@@ -8921,7 +8921,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>ਗ੍ਰਿਡ ਤੱਕ ਸਨੈਪ</translation>
+        <translation>ਗਰਿੱਡ ਤੱਕ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8936,7 +8936,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਭੇਜੋ</translation>
+        <translation>ਅਨੁਸਾਰੀ ਜ਼ੀਰੋ ਹਿਲਾਓ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
@@ -8951,7 +8951,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>ਗ੍ਰਿਡ ਉੱਤੇ ਸਨੈਪ</translation>
+        <translation>ਗਰਿੱਡ ਉੱਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
@@ -8966,7 +8966,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>ਸਨੈਪ ਸੈਂਟਰ</translation>
+        <translation>ਸਨੈਪ ਕੇਂਦਰ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
@@ -9107,7 +9107,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>ਬਲਾਕ &quot;%1&quot; ਅਤੇ ਇਸ ਦੀਆਂ ਸਭ ਇਕਾਈਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
+        <translation>ਬਲਾਕ &quot;%1&quot; ਅਤੇ ਇਸ ਦੀਆਂ ਸਭ ਐਂਟੀਟੀਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
@@ -9259,7 +9259,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨਲ ਲੇਅਰ ਸਿਰਫ ਨੌਰਮਲ ਐਕਟਿਵ ਲੇਅਰ ਲਈ ਹੀ ਸ਼ਾਮਲ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ।
+        <translation>ਮਾਪ ਲੇਅਰ ਸਿਰਫ ਨੌਰਮਲ ਐਕਟਿਵ ਲੇਅਰ ਲਈ ਹੀ ਸ਼ਾਮਲ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ।
 </translation>
     </message>
     <message>
@@ -12388,7 +12388,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>ਆਉਟਪੁੱਟ ਪੈਮਾਨਾ। ਉਦਾਹਰਨ ਲਈ: 0.01 (1:100 ਪੈਮਾਨੇ ਲਈ)।</translation>
+        <translation>ਆਉਟਪੁੱਟ ਸਕੇਲ। ਉਦਾਹਰਨ ਲਈ: 0.01 (1:100 ਸਕੇਲ ਲਈ)।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
@@ -12449,7 +12449,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13383,7 +13383,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇਕਾਈ ਨਹੀਂ</translation>
+        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਐਂਟੀਟੀ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="258"/>
@@ -13393,7 +13393,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13484,7 +13484,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>ਇੱਕ ਚੱਕਰ ਜਾਂ ਚਾਪ ਇਕਾਈ ਨਹੀਂ</translation>
+        <translation>ਇੱਕ ਚੱਕਰ ਜਾਂ ਚਾਪ ਐਂਟੀਟੀ ਨਹੀਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="251"/>
@@ -13494,7 +13494,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਚਾਪ ਜਾਂ ਚੱਕਰ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -13613,7 +13613,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>ਮੂਲ ਇਕਾਈ ਦਿਓ</translation>
+        <translation>ਮੂਲ ਐਂਟੀਟੀ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
@@ -13859,7 +13859,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="331"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>ਦੂਜੀ ਲਾਈਨ/ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਦੂਜੀ ਲਾਈਨ/ਆਰਕ/ਚੱਕਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
@@ -13913,7 +13913,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>ਇੱਕ ਹੋਰ ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਇੱਕ ਹੋਰ ਆਰਕ/ਚੱਕਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
@@ -13925,7 +13925,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>ਟੈਨਜੈਂਟ ਸਰਕਲ ਉੱਤੇ ਇੱਕ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਟੈਨਜੈਂਟ ਚੱਕਰ ਉੱਤੇ ਇੱਕ ਬਿੰਦੂ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
@@ -13960,12 +13960,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>ਦੂਜੀ ਲਾਈਨ/ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਦੂਜੀ ਲਾਈਨ/ਆਰਕ/ਚੱਕਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>ਤੀਜੀ ਲਾਈਨ/ਆਰਕ/ਸਰਕਲ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਤੀਜੀ ਲਾਈਨ/ਆਰਕ/ਚੱਕਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -14061,7 +14061,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="282"/>
         <source>Specify the center of ellipse</source>
-        <translation>ਐਲਿਪਸ ਦਾ ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਐਲਿਪਸ ਦਾ ਕੇਂਦਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
@@ -14180,7 +14180,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>ਗਲਤ ਹੈਚ ਖੇਤਰ। ਕਿਰਪਾ ਕਰਕੇ ਜਾਂਚ ਕਰੋ ਕਿ ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਇੱਕ ਜਾਂ ਵੱਧ ਬੰਦ ਰੂਪਰੇਖਾਵਾਂ ਬਣਾਉਂਦੀਆਂ ਹਨ।</translation>
+        <translation>ਗਲਤ ਹੈਚ ਖੇਤਰ। ਕਿਰਪਾ ਕਰਕੇ ਜਾਂਚ ਕਰੋ ਕਿ ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਇੱਕ ਜਾਂ ਵੱਧ ਬੰਦ ਰੂਪਰੇਖਾਵਾਂ ਬਣਾਉਂਦੀਆਂ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
@@ -14443,7 +14443,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>ਦੂਰੀ &lt;%1&gt; ਦਿਓ ਜਾਂ ਇਕਾਈ ਚੁਣੋ ਜਾਂ [%2]</translation>
+        <translation>ਦੂਰੀ &lt;%1&gt; ਦਿਓ ਜਾਂ ਐਂਟੀਟੀ ਚੁਣੋ ਜਾਂ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
@@ -14472,7 +14472,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
@@ -14607,7 +14607,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>ਮੂਲ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਮੂਲ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
@@ -14664,12 +14664,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>ਪਹਿਲਾ ਸਰਕਲ/ਐਲਿਪਸ/ਪੈਰਾਬੋਲਾ ਚੁਣੋ</translation>
+        <translation>ਪਹਿਲਾ ਚੱਕਰ/ਐਲਿਪਸ/ਪੈਰਾਬੋਲਾ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>ਦੂਜਾ ਸਰਕਲ/ਐਲਿਪਸ/ਪੈਰਾਬੋਲਾ ਚੁਣੋ</translation>
+        <translation>ਦੂਜਾ ਚੱਕਰ/ਐਲਿਪਸ/ਪੈਰਾਬੋਲਾ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
@@ -14749,7 +14749,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਇਕਾਈਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
+        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਐਂਟੀਟੀਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
@@ -14835,7 +14835,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਇਕਾਈਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
+        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਐਂਟੀਟੀਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
     </message>
 </context>
 <context>
@@ -15016,7 +15016,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>ਇਕਾਈ ਦਿਓ</translation>
+        <translation>ਐਂਟੀਟੀ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="156"/>
@@ -15062,12 +15062,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਦੀ ਕੁੱਲ ਲੰਬਾਈ: %1</translation>
+        <translation>ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਦੀ ਕੁੱਲ ਲੰਬਾਈ: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਵਿੱਚੋਂ ਇੱਕ ਨੂੰ ਮਾਪਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਹੈ।</translation>
+        <translation>ਚੁਣੀਆਂ ਐਂਟੀਟੀਆਂ ਵਿੱਚੋਂ ਇੱਕ ਨੂੰ ਮਾਪਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -15075,7 +15075,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>ਲਾਇਬ੍ਰੇਰੀ ਇਕਾਈ ਸ਼ਾਮਿਲ</translation>
+        <translation>ਲਾਇਬ੍ਰੇਰੀ ਆਬਜੈਕਟ ਸ਼ਾਮਿਲ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="187"/>
@@ -15128,7 +15128,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="272"/>
         <source>Select first entity</source>
-        <translation>ਪਹਿਲੀ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="273"/>
@@ -15138,7 +15138,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="276"/>
         <source>Select second entity</source>
-        <translation>ਦੂਜੀ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="277"/>
@@ -15164,7 +15164,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15174,12 +15174,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>ਕੱਟਦਾ ਬਿੰਦੂ ਇਕਾਈ ਉੱਤੇ ਨਹੀਂ ਹੈ।</translation>
+        <translation>ਕੱਟਦਾ ਬਿੰਦੂ ਐਂਟੀਟੀ ਉੱਤੇ ਨਹੀਂ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>ਕੱਟ ਲਈ ਇਕਾਈ ਦਿਓ</translation>
+        <translation>ਕੱਟ ਲਈ ਐਂਟੀਟੀ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -15199,7 +15199,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>ਐਂਟੀਟੀ ਲਾਈਨ, ਆਰਕ, ਸਰਕਲ, ਐਲਿਪਸ ਜਾਂ ਇੰਟਰਪੋਲੇਸ਼ਨ ਸਪਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
+        <translation>ਐਂਟੀਟੀ ਲਾਈਨ, ਆਰਕ, ਚੱਕਰ, ਐਲਿਪਸ ਜਾਂ ਇੰਟਰਪੋਲੇਸ਼ਨ ਸਪਲਾਈਨ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -15227,17 +15227,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>ਇਕਾਈਆਂ ਇੱਕੋ ਬਹੁ-ਰੇਖਾ ਵਿੱਚ ਨਹੀਂ ਹਨ।</translation>
+        <translation>ਐਂਟੀਟੀਆਂ ਇੱਕੋ ਪੌਲੀਲਾਈਨ ਵਿੱਚ ਨਹੀਂ ਹਨ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>ਮੁੱਢਲੀ ਦੀ ਦੂਜੀ ਇਕਾਈ ਇੱਕ ਬਹੁ-ਰੇਖਾ ਨਹੀਂ ਹੈ</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ ਦਾ ਪੇਰੈਂਟ ਪੌਲੀਲਾਈਨ ਨਹੀਂ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>ਮੁੱਢਲੀ ਦੀ ਪਹਿਲੀ ਇਕਾਈ ਇੱਕ ਬਹੁ-ਰੇਖਾ ਨਹੀਂ ਹੈ</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ ਦਾ ਪੇਰੈਂਟ ਪੌਲੀਲਾਈਨ ਨਹੀਂ ਹੈ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
@@ -15270,7 +15270,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>ਹਟਾਉਣ ਲਈ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਹਟਾਉਣ ਲਈ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -15406,7 +15406,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>ਘੁਮਾਉਣ ਦਾ ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਘੁਮਾਉਣ ਦਾ ਕੇਂਦਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
@@ -15454,7 +15454,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
         <source>Specify second entity</source>
-        <translation>ਦੂਜੀ ਇਕਾਈ ਦਿਓ</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ ਦਿਓ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
@@ -15489,7 +15489,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>ਸਕੇਲ ਸੈਂਟਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
+        <translation>ਸਕੇਲ ਕੇਂਦਰ ਨਿਰਧਾਰਤ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
@@ -15537,7 +15537,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>ਪਹਿਲੀ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15548,7 +15548,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>ਸੀਮਿਤ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਸੀਮਿਤ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -15559,12 +15559,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>ਦੂਜੀ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -15572,17 +15572,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ। </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>ਚੁਣੀ ਇਕਾਈ ਇੱਕ ਬਲਾਕ ਵਿੱਚ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਬਲਾਕ ਨੂੰ ਸੋਧੋ।</translation>
+        <translation>ਚੁਣੀ ਐਂਟੀਟੀ ਇੱਕ ਬਲਾਕ ਵਿੱਚ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਬਲਾਕ ਨੂੰ ਸੋਧੋ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>ਚੁਣੀ ਇਕਾਈ ਐਟੌਮਿਕ ਇਕਾਈ ਨਹੀਂ ਹੈ ਜਾਂ ਇਸ ਨੂੰ ਟ੍ਰਿਮ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
+        <translation>ਚੁਣੀ ਐਂਟੀਟੀ ਐਟੌਮਿਕ ਐਂਟੀਟੀ ਨਹੀਂ ਹੈ ਜਾਂ ਇਸ ਨੂੰ ਟ੍ਰਿਮ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15592,7 +15592,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਇਕਾਈ ਚੁਣੋ ਜਾਂ ਦੂਰੀ ਦਿਓ:</translation>
+        <translation>ਟ੍ਰਿਮ ਕਰਨ ਲਈ ਐਂਟੀਟੀ ਚੁਣੋ ਜਾਂ ਦੂਰੀ ਦਿਓ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15605,7 +15605,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
@@ -15624,7 +15624,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
@@ -15667,7 +15667,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
@@ -15713,7 +15713,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਇਕਾਈਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
+        <translation>ਵਾਪਸੀ ਨਹੀਂ: ਹਾਲੇ ਲੋੜੀਦੀਆਂ ਐਂਟੀਟੀਆਂ ਨਹੀਂ ਦਿੱਤੀਆਂ ਹਨ।</translation>
     </message>
 </context>
 <context>
@@ -15722,7 +15722,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="127"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
@@ -15767,7 +15767,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="144"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="157"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
@@ -15818,7 +15818,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
@@ -15841,7 +15841,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="312"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
@@ -15872,7 +15872,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="124"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="143"/>
         <source>No Entity found.</source>
-        <translation>ਕੋਈ ਇਕਾਈ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
+        <translation>ਕੋਈ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
@@ -16101,7 +16101,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>ਇਕਾਈ ਇੱਕ ਇੱਕਲੀ ਹੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
+        <translation>ਐਂਟੀਟੀ ਐਟੌਮਿਕ ਐਂਟੀਟੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
 </context>
 <context>
@@ -16178,7 +16178,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>ਪਹਿਲੀ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਪਹਿਲੀ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -16189,7 +16189,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>ਦੂਜੀ ਇਕਾਈ ਚੁਣੋ</translation>
+        <translation>ਦੂਜੀ ਐਂਟੀਟੀ ਚੁਣੋ</translation>
     </message>
 </context>
 <context>
@@ -16197,12 +16197,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>%1 ਮਾਪ ਇਕਾਈਆਂ ਮੁੜ ਬਣਾਉ</translation>
+        <translation>%1 ਮਾਪ ਐਂਟੀਟੀਆਂ ਮੁੜ ਬਣਾਈਆਂ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>ਕੋਈ ਮਾਪ ਇਕਾਈਆਂ ਨਹੀਂ ਮਿਲੀਆਂ</translation>
+        <translation>ਕੋਈ ਮਾਪ ਐਂਟੀਟੀ ਨਹੀਂ ਮਿਲੀ</translation>
     </message>
 </context>
 <context>
@@ -16344,7 +16344,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="32"/>
         <source>Circle Options</source>
-        <translation>ਸਰਕਲ ਆਪਸ਼ਨ</translation>
+        <translation>ਚੱਕਰ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
@@ -16357,12 +16357,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>ਸਰਕਲ ਟੈਨਜੈਂਟੀਅਲ2 ਆਪਸ਼ਨ</translation>
+        <translation>ਚੱਕਰ ਟੈਨਜੈਂਟੀਅਲ2 ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਖਿੱਚੇ ਜਾਣ ਵਾਲੇ ਟੈਨਜੈਂਟੀਅਲ ਸਰਕਲ ਦਾ ਰੇਡੀਅਸ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ਖਿੱਚੇ ਜਾਣ ਵਾਲੇ ਟੈਨਜੈਂਟੀਅਲ ਚੱਕਰ ਦਾ ਰੇਡੀਅਸ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16372,7 +16372,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>ਟੈਨਜੈਂਟੀਅਲ ਸਰਕਲ ਦਾ ਰੇਡੀਅਸ</translation>
+        <translation>ਟੈਨਜੈਂਟੀਅਲ ਚੱਕਰ ਦਾ ਰੇਡੀਅਸ</translation>
     </message>
 </context>
 <context>
@@ -16380,7 +16380,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>ਲੀਨੀਅਰ ਡਾਇਮੈਂਸ਼ਨ ਆਪਸ਼ਨ</translation>
+        <translation>ਲੀਨੀਅਰ ਮਾਪ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16393,7 +16393,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਆਪਸ਼ਨ</translation>
+        <translation>ਮਾਪ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -16899,7 +16899,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>ਭੇਜੋ ਅਤੇ ਘੁਮਾਓ ਆਪਸ਼ਨ</translation>
+        <translation>ਹਿਲਾਓ ਅਤੇ ਘੁਮਾਓ ਆਪਸ਼ਨ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>

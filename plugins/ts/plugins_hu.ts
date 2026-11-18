@@ -124,7 +124,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Üres entitás</translation>
+        <translation>Üres elem</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -139,7 +139,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Fólia</translation>
+        <translation>Réteg</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -301,12 +301,12 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Beillesztési pont</translation>
+        <translation>Beszúrási pont</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Méretezés</translation>
+        <translation>Lépték</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -366,7 +366,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>MINTA</translation>
+        <translation>SRAFFOZÁS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -886,7 +886,7 @@ ellentétes irányban.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Kifelé</translation>
+        <translation>Kívül</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>

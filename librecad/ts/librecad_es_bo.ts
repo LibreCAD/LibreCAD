@@ -487,7 +487,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;desplazamiento</translation>
+        <translation>&amp;Encuadre</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -663,7 +663,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
-        <translation>Romper/Dividir</translation>
+        <translation>Partir/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
@@ -865,7 +865,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
         <source>&amp;MText</source>
-        <translation>&amp;Mtexto</translation>
+        <translation>&amp;Texto múltiple</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="620"/>
@@ -920,7 +920,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Líder</translation>
+        <translation>&amp;Directriz</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -955,7 +955,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Rotar</translation>
+        <translation>&amp;Girar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
@@ -970,12 +970,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="770"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Mo&amp;ver y rotar</translation>
+        <translation>Mo&amp;ver y girar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Rotar d&amp;os</translation>
+        <translation>Girar d&amp;os</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
@@ -1015,7 +1015,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bisel</translation>
+        <translation>&amp;Chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
@@ -1035,22 +1035,22 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Seleccionar lápiz de entidad</translation>
+        <translation>&amp;Seleccionar pluma desde entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Seleccionar lápiz de entidad (resuelto)</translation>
+        <translation>&amp;Seleccionar pluma desde entidad (resuelta)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>Aplicar lápiz a entidad</translation>
+        <translation>Aplicar pluma a entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>Copiar lápiz</translation>
+        <translation>Copiar pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
@@ -1310,7 +1310,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Cuadrícula</translation>
+        <translation>&amp;Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1301"/>
@@ -1498,7 +1498,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizar lápiz actual con lápiz de capa activa</translation>
+        <translation>Actualizar pluma actual con pluma de capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1527,7 +1527,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Especificar entidad para seleccionar lápiz</translation>
+        <translation>Especifique entidad para seleccionar la pluma</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Especificar entidad para aplicar lápiz</translation>
+        <translation>Especifique entidad para aplicar pluma</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Especificar entidad para seleccionar lápiz</translation>
+        <translation>Especifique entidad para seleccionar la pluma</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1625,7 +1625,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>Lápiz:</translation>
+        <translation>Pluma:</translation>
     </message>
 </context>
 <context>
@@ -1744,7 +1744,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>Lápiz:</translation>
+        <translation>Pluma:</translation>
     </message>
 </context>
 <context>
@@ -1826,7 +1826,7 @@ o [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>Lápiz predeterminado</translation>
+        <translation>Pluma predeterminada</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
@@ -1939,7 +1939,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
         <source>Threeview items separator grid</source>
-        <translation>Cuadrícula separadora de elementos de vista triple</translation>
+        <translation>Cuadrícula separadora de elementos de la vista de árbol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
@@ -1954,7 +1954,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
         <source>Default Pens</source>
-        <translation>Lápices predeterminados</translation>
+        <translation>Plumas predeterminadas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -2272,7 +2272,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>Ajuste de línea:</translation>
+        <translation>Forzado de línea:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2287,7 +2287,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Ajuste de marca:</translation>
+        <translation>Forzado de marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>Distancia de ajuste:</translation>
+        <translation>Distancia de forzado:</translation>
     </message>
 </context>
 <context>
@@ -2365,7 +2365,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>Ajuste:</translation>
+        <translation>Forzado:</translation>
     </message>
 </context>
 <context>
@@ -2406,7 +2406,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>Lápiz activo</translation>
+        <translation>Pluma activa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2520,12 +2520,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Ajuste de brecha:</translation>
+        <translation>Forzado del hueco:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>Distancia de ajuste:</translation>
+        <translation>Distancia de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -2559,7 +2559,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>Ajuste de línea:</translation>
+        <translation>Forzado de línea:</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2567,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>Configuración de paleta de lápiz</translation>
+        <translation>Configuración de paleta de plumas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -2597,12 +2597,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Icono de ancho de línea</translation>
+        <translation>Icono del grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Nombre de ancho de línea</translation>
+        <translation>Nombre del grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2612,12 +2612,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>Fondo de lápiz activo:</translation>
+        <translation>Fondo de pluma activa:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Toda la fila de la tabla está en negrita para lápiz activo</translation>
+        <translation>Toda la fila de tabla en negrita para la pluma activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2632,7 +2632,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Filtrado de lápices sin distinción de mayúsculas</translation>
+        <translation>Filtrado de plumas sin distinción de mayúsculas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -2667,7 +2667,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Mostrar mensaje de información si ninguna entidad puede seleccionarse por lápiz</translation>
+        <translation>Mostrar mensaje informativo si no se pueden seleccionar entidades por pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>Seleccionar entidades por lápiz de atributos</translation>
+        <translation>Seleccionar entidades por pluma de atributos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>Seleccionar entidades por lápiz de dibujo</translation>
+        <translation>Seleccionar entidades por pluma de dibujo</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>Paleta de lápiz</translation>
+        <translation>Paleta de plumas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>Nombre de lápiz:</translation>
+        <translation>Nombre de pluma:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -2725,7 +2725,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
         <source>Width:</source>
-        <translation>Ancho:</translation>
+        <translation>Grosor:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="271"/>
@@ -2735,22 +2735,22 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Llenar editor de lápiz con lápiz de dibujo de entidad</translation>
+        <translation>Rellenar editor de pluma con pluma de dibujo de entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Llenar editor de lápiz con atributos de entidad</translation>
+        <translation>Rellenar editor de pluma con atributos de entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Seleccionar entidades por lápiz de dibujo</translation>
+        <translation>Seleccionar entidades por pluma de dibujo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Seleccionar entidades por lápiz de atributos</translation>
+        <translation>Seleccionar entidades por atributos de pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2761,17 +2761,17 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>Aplicar lápiz a selección</translation>
+        <translation>Aplicar pluma a selección</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Llenar lápiz de editor con lápiz actual</translation>
+        <translation>Rellenar pluma de editor con pluma actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Aplicar lápiz de editor como lápiz actual</translation>
+        <translation>Aplicar pluma de editor como pluma actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -2781,12 +2781,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizar lápiz actual con lápiz de capa activa</translation>
+        <translation>Actualizar pluma actual con pluma de capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Llenar editor de lápiz desde lápiz de capa activa</translation>
+        <translation>Rellenar editor de pluma desde pluma de capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
@@ -2796,7 +2796,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplicar lápiz de editor a lápiz de capa activa</translation>
+        <translation>Aplicar pluma de editor a pluma de capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -2806,57 +2806,57 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>Eliminar lápiz seleccionado</translation>
+        <translation>Eliminar pluma seleccionada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>Eliminar lápiz</translation>
+        <translation>Eliminar pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
-        <translation>Menú de lápices</translation>
+        <translation>Menú de plumas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Aplicar lápiz a selección</translation>
+        <translation>&amp;Aplicar pluma a selección</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Establecer como lápiz actual</translation>
+        <translation>&amp;Establecer como pluma actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Aplicar lápiz a capa activa</translation>
+        <translation>&amp;Aplicar pluma a capa activa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Seleccionar entidades con lápiz de atributos</translation>
+        <translation>&amp;Seleccionar entidades con pluma de atributos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Seleccionar entidades con lápiz de dibujo</translation>
+        <translation>&amp;Seleccionar entidades con pluma de dibujo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Editar lápiz</translation>
+        <translation>&amp;Editar pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Eliminar lápiz</translation>
+        <translation>&amp;Eliminar pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Eliminar lápices</translation>
+        <translation>&amp;Eliminar plumas</translation>
     </message>
 </context>
 <context>
@@ -2904,7 +2904,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>Ajuste:</translation>
+        <translation>Forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -2969,12 +2969,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>Bisel</translation>
+        <translation>Chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>Desplazamiento de ajuste</translation>
+        <translation>Desplazamiento del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -3012,7 +3012,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>Desplazamiento de ajuste</translation>
+        <translation>Desplazamiento del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3032,7 +3032,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Ajuste final:</translation>
+        <translation>Forzado final:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Ajuste inicial:</translation>
+        <translation>Forzado inicial:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3091,7 +3091,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>Bisel</translation>
+        <translation>Chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -3174,7 +3174,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>Bisel</translation>
+        <translation>Chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -3184,7 +3184,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>Desplazamiento de ajuste</translation>
+        <translation>Desplazamiento del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3277,7 +3277,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Ajuste de marca:</translation>
+        <translation>Forzado de marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3566,7 +3566,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
-        <translation>Estado de cuadrícula</translation>
+        <translation>Estado de la rejilla</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="364"/>
@@ -3647,7 +3647,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1199"/>
         <source>&amp;Layout</source>
-        <translation>&amp;Diseño</translation>
+        <translation>&amp;Disposición</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1202"/>
@@ -4019,7 +4019,7 @@ Guardado automático deshabilitado.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
-        <translation>Paleta de lápiz</translation>
+        <translation>Paleta de plumas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
@@ -4054,12 +4054,12 @@ Guardado automático deshabilitado.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Ajuste de selección</translation>
+        <translation>Selección de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -4242,12 +4242,12 @@ Guardado automático deshabilitado.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Barra espaciadora: modo de ajuste restaurado a normal</translation>
+        <translation>Barra espaciadora: modo de forzado restablecido a normal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Barra espaciadora: modo de ajuste temporalmente establecido en libre</translation>
+        <translation>Barra espaciadora: modo de forzado establecido temporalmente en forzado libre</translation>
     </message>
 </context>
 <context>
@@ -5152,7 +5152,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
         <source>MText</source>
-        <translation>MTexto</translation>
+        <translation>TextoM</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
@@ -5930,7 +5930,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>Opciones de espejado</translation>
+        <translation>Opciones de simetría</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
@@ -6016,7 +6016,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
         <source>Move/Rotate Options</source>
-        <translation>Opciones de Mover/Rotar</translation>
+        <translation>Opciones de mover/girar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
@@ -6218,52 +6218,52 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Cuadrícula</translation>
+        <translation>&amp;Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
         <source>Grid Settings</source>
-        <translation>Configuración de la cuadrícula</translation>
+        <translation>Configuración de la rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
         <source>Show Grid</source>
-        <translation>Mostrar cuadrícula</translation>
+        <translation>Mostrar rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
         <source>Use orthogonal grid</source>
-        <translation>Usar cuadrícula ortogonal</translation>
+        <translation>Usar rejilla ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
         <source>Orthogonal Grid</source>
-        <translation>Cuadrícula ortogonal</translation>
+        <translation>Rejilla ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>Usar cuadrícula isométrica</translation>
+        <translation>Usar rejilla isométrica</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>Cuadrícula isométrica</translation>
+        <translation>Rejilla isométrica</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>Cruz de mira izquierda con cuadrícula isométrica</translation>
+        <translation>Cruz de mira izquierda con rejilla isométrica</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>Cruz de mira superior con cuadrícula isométrica</translation>
+        <translation>Cruz de mira superior con rejilla isométrica</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>Cruz de mira derecha con cuadrícula isométrica</translation>
+        <translation>Cruz de mira derecha con rejilla isométrica</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6676,7 +6676,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Panorámica automática</translation>
+        <translation>Encuadre automático</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -6686,12 +6686,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Forma del indicador de ajuste</translation>
+        <translation>Forma del indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Ocultar cursor al ajustar</translation>
+        <translation>Ocultar el cursor al forzar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
@@ -6706,7 +6706,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Escalar cuadrícula automáticamente</translation>
+        <translation>Escalar la rejilla a&amp;utomáticamente</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="258"/>
@@ -6726,7 +6726,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Líneas indicador de ajuste</translation>
+        <translation>Líneas del indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
@@ -6736,7 +6736,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Espaciado mínimo de la cuadrícula (p&amp;x):</translation>
+        <translation>Espaciado mínimo de la rejilla (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
@@ -6766,7 +6766,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="398"/>
         <source>G&amp;rid Color:</source>
-        <translation>Color de la &amp;cuadrícula:</translation>
+        <translation>Color de la &amp;rejilla:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="599"/>
@@ -6776,7 +6776,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>Color de la cuadrícula meta:</translation>
+        <translation>&amp;Color de la metarrejilla:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6801,7 +6801,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Indicador de ajuste:</translation>
+        <translation>Indicador de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
@@ -6926,7 +6926,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
         <source>Layout</source>
-        <translation>Diseño</translation>
+        <translation>Disposición</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
@@ -7001,12 +7001,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternar temporalmente el ajuste libre al presionar la barra espaciadora y activar la ventana de comandos&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternar temporalmente el forzado libre al presionar la barra espaciadora y activar la ventana de comandos&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Alternar modo de ajuste libre al presionar la BARRA ESPACIADORA</translation>
+        <translation>Alternar el modo de forzado libre al presionar la BARRA ESPACIADORA</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7291,7 +7291,7 @@ por lo que se requiere un valor de paso predeterminado para la conversión.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
         <source>Rotate Two Options</source>
-        <translation>Opciones para Rotar Dos</translation>
+        <translation>Opciones de Girar dos</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
@@ -8643,7 +8643,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
@@ -8663,7 +8663,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Guion</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
@@ -8703,37 +8703,37 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="96"/>
         <source>Divide</source>
-        <translation>Dividir</translation>
+        <translation>Raya 2 puntos</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Dividir (muy pequeño)</translation>
+        <translation>Raya 2 puntos (diminuta)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Dividir (pequeño)</translation>
+        <translation>Raya 2 puntos (pequeña)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
         <source>Divide (large)</source>
-        <translation>Dividir (grande)</translation>
+        <translation>Raya 2 puntos (grande)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Centrado</translation>
+        <translation>Centro</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Centrado (muy pequeño)</translation>
+        <translation>Centro (diminuto)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Centrado (pequeño)</translation>
+        <translation>Centro (pequeño)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
@@ -8802,7 +8802,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8875,47 +8875,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Ajustar a Puntos Finales</translation>
+        <translation>Forzar a puntos finales</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Ajustar a puntos equidistantes de la entidad</translation>
+        <translation>Forzar a puntos equidistantes de la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Ajustar a puntos centrales</translation>
+        <translation>Forzar a puntos centrales</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Ajuste automático a intersecciones</translation>
+        <translation>Forzar automáticamente a intersecciones</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Ajustar al punto más cercano de la entidad</translation>
+        <translation>Forzar al punto más cercano de la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Ajustar a un punto con distancia dada al punto final</translation>
+        <translation>Forzar a un punto a una distancia dada del extremo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Ajustar manualmente a intersecciones</translation>
+        <translation>Forzar manualmente a intersecciones</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Ajustar a la cuadrícula</translation>
+        <translation>Forzar a la rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8940,52 +8940,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Modo de ajuste exclusivo</translation>
+        <translation>Modo de forzado exclusivo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Ajuste manual de punto medio</translation>
+        <translation>Forzar a punto medio (manual)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Ajuste libre</translation>
+        <translation>Forzado libre</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Ajustar en cuadrícula</translation>
+        <translation>Forzar a la rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Ajustar en puntos finales</translation>
+        <translation>Forzar a puntos finales</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Ajustar en entidad</translation>
+        <translation>Forzar a la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Ajustar en centro</translation>
+        <translation>Forzar al centro</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Ajustar en punto medio</translation>
+        <translation>Forzar al punto medio</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Distancia de ajuste</translation>
+        <translation>Forzar a una distancia</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Intersección de ajuste</translation>
+        <translation>Forzar a la intersección</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9039,7 +9039,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pluma</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="59"/>
@@ -9049,7 +9049,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
         <source>Width:</source>
-        <translation>Ancho:</translation>
+        <translation>Grosor:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -12785,7 +12785,7 @@ Esta acción NO se puede deshacer.</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12840,7 +12840,7 @@ Esta acción NO se puede deshacer.</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -15283,7 +15283,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>Especificar primer punto de línea de espejo</translation>
+        <translation>Especifique el primer punto de la línea de simetría</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15293,7 +15293,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Especificar segundo punto de línea de espejo</translation>
+        <translation>Especifique el segundo punto de la línea de simetría</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -15398,7 +15398,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>Especificar punto objetivo para rotar</translation>
+        <translation>Especifique el punto de destino del giro</translation>
     </message>
 </context>
 <context>
@@ -16034,7 +16034,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>Seleccionar para rotar</translation>
+        <translation>Seleccione para girar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
@@ -16049,7 +16049,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>Seleccionar para mover y rotar</translation>
+        <translation>Seleccione para mover y girar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
@@ -16064,12 +16064,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Seleccionar para explotar texto</translation>
+        <translation>Seleccione para descomponer el texto</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Seleccionar para explotar bloque</translation>
+        <translation>Seleccione para descomponer el bloque</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16197,7 +16197,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Haga clic y arrastre para desplazar zoom</translation>
+        <translation>Haga clic y arrastre para encuadrar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16208,7 +16208,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Desplazamiento de zoom</translation>
+        <translation>Encuadre</translation>
     </message>
 </context>
 <context>
@@ -16303,12 +16303,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Opciones de bisel</translation>
+        <translation>Opciones de chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Marcar para recortar ambas entidades al bisel</translation>
+        <translation>Marque para recortar ambas entidades al chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -16578,7 +16578,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Punto de ajuste:</translation>
+        <translation>Punto de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16868,7 +16868,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Opciones de modificación de desplazamiento</translation>
+        <translation>Opciones de desfase</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16886,7 +16886,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Opciones de mover y rotar</translation>
+        <translation>Opciones de mover y girar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -16977,7 +16977,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Aplicar escala de impresión a ancho de línea</translation>
+        <translation>Aplicar la escala de impresión al grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -17028,7 +17028,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opciones de distancia de ajuste</translation>
+        <translation>Opciones de forzado a distancia</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17041,7 +17041,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opciones de distancia de ajuste</translation>
+        <translation>Opciones de forzado a distancia</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>

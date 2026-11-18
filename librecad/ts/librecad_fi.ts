@@ -429,12 +429,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -492,7 +492,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>&amp;Raahaa Näkymää</translation>
+        <translation>&amp;Panorointi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -623,7 +623,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
         <source>Center, &amp;Point</source>
-        <translation>Keski, &amp;Piste</translation>
+        <translation>Keskipiste, &amp;piste</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
@@ -713,7 +713,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
-        <translation>Keski, &amp;Säde</translation>
+        <translation>Keskipiste, &amp;säde</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
@@ -765,7 +765,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Keski, Piste, Kulmat</translation>
+        <translation>&amp;Keskipiste, piste, kulmat</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
@@ -800,7 +800,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipsi keski ja &amp;3 Pistettä</translation>
+        <translation>Ellipsi, keskipiste ja &amp;3 pistettä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
@@ -905,7 +905,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="671"/>
         <source>&amp;Radial</source>
-        <translation>&amp;Säteen Suuntainen</translation>
+        <translation>&amp;Säde</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
@@ -915,7 +915,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Angular</source>
-        <translation>&amp;Kulmikas</translation>
+        <translation>&amp;Kulma</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="692"/>
@@ -1121,7 +1121,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Purka teksti kirjaimiksi</translation>
+        <translation>&amp;Pura teksti kirjaimiksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -1246,12 +1246,12 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Lisää Taso</translation>
+        <translation>&amp;Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Poista Taso</translation>
+        <translation>&amp;Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
@@ -1992,7 +1992,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>Etsitään vastaavia tasonimiä</translation>
+        <translation>Etsitään vastaavia tasojen nimiä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="151"/>
@@ -2067,7 +2067,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Muokkaa tason attribuutteja / nimeä uudelleen</translation>
+        <translation>Muokkaa tason ominaisuuksia / nimeä uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2249,7 +2249,7 @@ tai [%2]</translation>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Vapaa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2531,7 +2531,7 @@ tai [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Vapaa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2632,7 +2632,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Isot/pienet kirjaimet erotamaton kynien suodatus</translation>
+        <translation>Kynien suodatus kirjainkoosta riippumatta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -3629,7 +3629,7 @@ tai [%2]</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3676,7 +3676,7 @@ tai [%2]</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Tietoja</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
@@ -3691,7 +3691,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Kynä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -3796,7 +3796,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="824"/>
         <source>&amp;Info</source>
-        <translation>&amp;Info</translation>
+        <translation>&amp;Tiedot</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="538"/>
@@ -3820,7 +3820,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Näytä</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
@@ -4034,7 +4034,7 @@ tai [%2]</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopioi</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4242,12 +4242,12 @@ Automaattitallennus otettu pois käytöstä.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Välilyönti: kiinnitystila palautettu normaaliin</translation>
+        <translation>Välilyönti: tartuntatila palautettu normaaliksi</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Välilyönti: kiinnitystila asetettu tilapäisesti vapaaksi</translation>
+        <translation>Välilyönti: tartuntatilaksi asetettu tilapäisesti vapaa tartunta</translation>
     </message>
 </context>
 <context>
@@ -4647,7 +4647,7 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Dimensiotekstin muoto. `&lt;&amp;gt;` voidaan käyttää paikkamerkkinä dimensio-mittausarvolle.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mittatekstin muoto, &amp;lt;&amp;gt; toimii mitta-arvon paikkamerkkinä&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
@@ -4703,7 +4703,7 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4723,12 +4723,12 @@ erillisessä ikkunassa</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="104"/>
         <source>Center (y):</source>
-        <translation>Keskus (y):</translation>
+        <translation>Keskipiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
         <source>Center (x):</source>
-        <translation>Keskus (x):</translation>
+        <translation>Keskipiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="144"/>
@@ -4762,7 +4762,8 @@ erillisessä ikkunassa</translation>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Sovella attribuutit myös valitulle INSERT-kohteelle. Tämä muokkaa rekursiivisesti kaikki lohkon (Block) entiteetit.</translation>
+        <translation>Käytä attribuutteja myös valitun INSERTin kaikkiin alikohteisiin.
+Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -4795,12 +4796,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
         <source>Center (y):</source>
-        <translation>Keskitys (y):</translation>
+        <translation>Keskipiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
         <source>Center (x):</source>
-        <translation>Keskitys (x):</translation>
+        <translation>Keskipiste (x):</translation>
     </message>
 </context>
 <context>
@@ -4859,12 +4860,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="84"/>
         <source>Center (y):</source>
-        <translation>Keskitys (y):</translation>
+        <translation>Keskipiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="104"/>
         <source>Center (x):</source>
-        <translation>Keskitys (x):</translation>
+        <translation>Keskipiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="156"/>
@@ -5108,7 +5109,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
@@ -5286,7 +5287,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopioi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -5396,12 +5397,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="972"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Laajennettu latina A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="977"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Laajennettu latina B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="982"/>
@@ -5766,7 +5767,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1342"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Laajennettu bopomofo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1347"/>
@@ -5954,7 +5955,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
         <source>Use current &amp;layer</source>
-        <translation>Käytä nykyistä &amp;kerrosta</translation>
+        <translation>Käytä nykyistä &amp;tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="53"/>
@@ -6040,7 +6041,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
         <source>Use current &amp;layer</source>
-        <translation>Käytä nykyistä &amp;kerrosta</translation>
+        <translation>Käytä nykyistä &amp;tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
@@ -6145,7 +6146,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
         <source>angular</source>
-        <translation>kulmikas</translation>
+        <translation>kulma</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
@@ -6920,7 +6921,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Väliaikaisesti kytke vapaa kiinnitys päälle/pois, kun välilyöntitilaa painetaan ja komentoympäristö on aktiivinen</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vaihda vapaa tartunta tilapäisesti päälle/pois, kun välilyöntiä painetaan komentoikkunan ollessa aktiivinen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
@@ -6970,7 +6971,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Vaihda vapaan kiinnitystilan tila välilyöntitilalla painettaessa</translation>
+        <translation>Vaihda vapaa tartunta päälle/pois VÄLILYÖNTIÄ painettaessa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -6995,7 +6996,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Muokkaa valittujen kohteiden kerrosta kerroksen aktivoinnissa</translation>
+        <translation>Muuta valittujen kohteiden taso tason aktivoinnin yhteydessä</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -7053,7 +7054,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="38"/>
         <source>Layers</source>
-        <translation>Kerrokset</translation>
+        <translation>Tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -7073,7 +7074,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>Vie näkyvät rakennuskerrokset</translation>
+        <translation>Vie näkyvät apuviivatasot</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -7147,7 +7148,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM ei voi näyttää elipsiä ja elipsikaaria oikein (versio maaliskuussa 2015), kun ne luodaan &lt;ellipse&gt;-elementillä rotaatiolla &lt;transform&gt;-attribuutissa tai &lt;path&gt;-elementillä elliptisillä kaariosuuksilla.</translation>
+        <translation>MakerCAM ei maaliskuun 2015 versiossa pysty näyttämään ellipsejä ja ellipsin kaaria oikein, 
+kun ne on luotu &lt;ellipse&gt;-tagilla, jonka kierto on 
+&lt;transform&gt;-attribuutissa, tai &lt;path&gt;-elementtinä elliptisillä kaarisegmenteillä.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
@@ -7190,7 +7193,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Kerros:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
@@ -7213,12 +7216,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Polylinja</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Kerros:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
@@ -7276,7 +7279,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
         <source>Use current &amp;layer</source>
-        <translation>Käytä nykyistä kerrosta</translation>
+        <translation>Käytä nykyistä &amp;tasoa</translation>
     </message>
 </context>
 <context>
@@ -7329,7 +7332,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
         <source>Use current &amp;layer</source>
-        <translation>Käytä nykyistä &amp;kerrosta</translation>
+        <translation>Käytä nykyistä &amp;tasoa</translation>
     </message>
 </context>
 <context>
@@ -7367,7 +7370,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Etsi skaalauskerroin keskustan ympäri viitepisteen ja kohdepisteen avulla.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Etsi skaalauskertoimet keskipisteen suhteen viitepisteen ja kohdepisteen avulla.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
@@ -7377,7 +7380,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>Käytä nykyistä kerrosta</translation>
+        <translation>Käytä nykyistä &amp;tasoa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="32"/>
@@ -7410,7 +7413,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Kerros:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
@@ -7433,7 +7436,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Teksti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -7518,7 +7521,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Kopioi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7528,7 +7531,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
         <source>Layer:</source>
-        <translation>Kerros:</translation>
+        <translation>Taso:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
@@ -7850,7 +7853,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1118"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] 8. [CONTEXT: QG_DlgText] [1400-167F] Yhtenäistetty kanadalainen alkuperäiskansojen silabi</translation>
+        <translation>[1400-167F] Yhtenäistetty kanadalainen alkuperäiskansojen tavukirjoitus</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1123"/>
@@ -8440,23 +8443,24 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Kerrosasetukset</translation>
+        <translation>Tason asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Rakennuskerroksella on äärettömien suorien viivojen entiteettejä, jotka on tarkoitettu geometriseen rakentamiseen. Rakennuskerroksen sisältö ei saa näkyä tulostuksessa.</translation>
+        <translation>Apuviivatasolla on äärettömiä suoria viivoja, jotka on tarkoitettu geometriseen konstruointiin.
+Apuviivatason sisältö ei näy tulosteessa.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Rakennuskerros</translation>
+        <translation>Apuviivataso</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Kerrosnimi:</translation>
+        <translation>Tason nimi:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
@@ -8489,12 +8493,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
         <source>Add a layer</source>
-        <translation>Lisää kerros</translation>
+        <translation>Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Muokkaa kerroksen ominaisuuksia / uudelleennimeäminen</translation>
+        <translation>Muokkaa tason ominaisuuksia / nimeä uudelleen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="276"/>
@@ -8504,17 +8508,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Etsitään vastaavia kerrosnimiä</translation>
+        <translation>Etsitään vastaavia tasojen nimiä</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
         <source>Layer Menu</source>
-        <translation>Kerrosvalikko</translation>
+        <translation>Tasovalikko</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Poista jäätymä kaikilta kerroksilta</translation>
+        <translation>&amp;Poista kaikkien tasojen jäädytys</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
@@ -8539,47 +8543,47 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
         <source>&amp;Add Layer</source>
-        <translation>Lisää kerros</translation>
+        <translation>&amp;Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>Vie valitut kerrokset</translation>
+        <translation>&amp;Vie valitut tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Vie näkyvät kerrokset</translation>
+        <translation>Vie &amp;näkyvät tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
         <source>&amp;Remove Layer</source>
-        <translation>Poista kerros</translation>
+        <translation>&amp;Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Muokkaa kerrosta ja attribuutteja</translation>
+        <translation>Muokkaa tason &amp;ominaisuuksia</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Näkyvyyden kytkeminen kerrokselle</translation>
+        <translation>Tason &amp;näkyvyys päälle/pois</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Poista kerros</translation>
+        <translation>Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Tulostuksen kytkeminen kerrokselle</translation>
+        <translation>Tason &amp;tulostus päälle/pois</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Rakennuskerroksen kytkeminen</translation>
+        <translation>Vaihda tason &amp;apuviivatila</translation>
     </message>
 </context>
 <context>
@@ -8636,7 +8640,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Piste</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
@@ -8656,7 +8660,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Katkoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
@@ -8701,12 +8705,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Jako (pieni)</translation>
+        <translation>Jako (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>Jako (kohtuullinen)</translation>
+        <translation>Jako (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
@@ -8716,12 +8720,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Keskitys</translation>
+        <translation>Keskiviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Keskitys (pieni)</translation>
+        <translation>Keskiviiva (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
@@ -8741,7 +8745,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Reunus (mikro)</translation>
+        <translation>Reunus (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
@@ -8868,47 +8872,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Tartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Kiinnitä päätepisteisiin</translation>
+        <translation>Tartu päätepisteisiin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Kiinnitä entiteetin tasavälein etäisille pisteille</translation>
+        <translation>Tartu kohteen tasavälisiin pisteisiin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Kiinnitä keskipisteisiin</translation>
+        <translation>Tartu keskipisteisiin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Kiinnitä leikkauspisteisiin automaattisesti</translation>
+        <translation>Tartu leikkauspisteisiin automaattisesti</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Kiinnitä lähimpään pisteeseen entiteetissä</translation>
+        <translation>Tartu kohteen lähimpään pisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Kiinnitä annetulla etäisyydellä päätepisteeseen</translation>
+        <translation>Tartu pisteeseen, joka on annetulla etäisyydellä päätepisteestä</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Kiinnitä leikkauspisteisiin manuaalisesti</translation>
+        <translation>Tartu leikkauspisteisiin käsin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Kiinnitä ruudukkoon</translation>
+        <translation>Tartu ruudukkoon</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8933,52 +8937,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Eksklusiivinen kiinnitystila</translation>
+        <translation>Yksinomainen tartuntatila</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Manuaalinen keskikohta</translation>
+        <translation>Tartunta keskikohtaan käsin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Vapaa kiinnitys</translation>
+        <translation>Vapaa tartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Ruudukkoon kiinnitys</translation>
+        <translation>Tartunta ruudukkoon</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Päätepisteisiin kiinnitys</translation>
+        <translation>Tartunta päätepisteisiin</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Kohteeseen kiinnitys</translation>
+        <translation>Tartunta kohteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Keskipisteeseen kiinnitys</translation>
+        <translation>Tartunta keskipisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Keskikohtaan kiinnitys</translation>
+        <translation>Tartunta keskikohtaan</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>Etäisyyskiinnitys</translation>
+        <translation>Etäisyystartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Leikkauskiinnitys</translation>
+        <translation>Tartunta leikkauspisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9032,7 +9036,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Kynä</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9073,25 +9077,26 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>Kerroksen ominaisuudet</translation>
+        <translation>Tason ominaisuudet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Kerrokselle ei voida antaa tyhjää nimeä.</translation>
+        <translation>Tason nimi ei voi olla tyhjä.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Yrität luoda kerroksen, jonka nimi on jo käytössä. Käytetty nimi on 
-[%1]. Anna sille eri nimi.</translation>
+        <translation>Yrität luoda tason, jonka nimi on jo käytössä. Käytetty tason nimi on 
+[%1].
+Anna eri nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Kerroksella nimellä &quot;%1&quot; on jo olemassa. Ole hyvä ja määritä eri nimi.</translation>
+        <translation>Taso nimeltä &quot;%1&quot; on jo olemassa. Anna eri nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9099,7 +9104,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="384"/>
         <source>Remove Layer</source>
-        <translation>Poista kerros</translation>
+        <translation>Poista taso</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
@@ -9111,56 +9116,59 @@ Tätä toimintoa EI voi kumota.</translation>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Kerrosta &quot;%1&quot; ei voi koskaan poistaa.</translation>
+        <translation>Tasoa &quot;%1&quot; ei voi koskaan poistaa.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
-        <translation>Poista tyhjät kerrokset</translation>
+        <translation>Poista tyhjät tasot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Kerroksia, joissa ei ole objekteja, mutta ne on suodatettu ja piilotettu.
+        <translation>Löytyi tasoja, joilla ei ole kohteita, mutta ne on suodatettu eivätkä ne näy.
 
-Poista suodatin ja toista.</translation>
+Tyhjennä suodatin ja yritä uudelleen.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Entiteettejä sisältämättömiä kerroksia ei löytynyt, poistettavaa ei ole.</translation>
+        <translation>Tasoja ilman kohteita ei löytynyt, ei poistettavaa.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1176"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
-        <translation>Lisää kerros</translation>
+        <translation>Lisää taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1132"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Tällainen alakerros on jo olemassa kohdassa 
-[%1]. Ole hyvä ja määritä eri nimi.</translation>
+        <translation>Tällainen alataso on jo olemassa kohteelle 
+[%1].
+Anna eri nimi.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1177"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Tällainen alakerros on jo olemassa kohdassa 
-[%1].</translation>
+        <translation>Tällainen alataso on jo olemassa kohteelle 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Dimensioita voidaan lisätä vain normaaliin aktiiviseen kerrokseen.</translation>
+        <translation>Mittataso voidaan lisätä vain tavalliselle aktiiviselle tasolle.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9189,15 +9197,15 @@ Jos Ei, &quot;Tason Mukaan&quot; -arvot säilyvät, joten kohdetason kynä mää
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Kerrosta &quot;0&quot; ei voi koskaan poistaa.</translation>
+        <translation>Tasoa &quot;0&quot; ei voi koskaan poistaa.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="395"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform>Poista %n kerrosta</numerusform>
-            <numerusform>Poista %n kerrosta</numerusform>
+            <numerusform>Poista %n taso</numerusform>
+            <numerusform>Poista %n tasoa</numerusform>
         </translation>
     </message>
     <message>
@@ -9216,23 +9224,23 @@ Jos Ei, &quot;Tason Mukaan&quot; -arvot säilyvät, joten kohdetason kynä mää
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
-        <translation>Kerros DialogEx</translation>
+        <translation>Tasoikkuna (laajennettu)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Varoitus: kerrosta &quot;0&quot; ei voi koskaan poistaa.</translation>
+        <translation>Varoitus: tasoa &quot;0&quot; ei voi koskaan poistaa.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Poistettavat kerrokset:</translation>
+        <translation>Poistettavat tasot:</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Kerrosdialogi</translation>
+        <translation>Tasoikkuna</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
@@ -9273,7 +9281,8 @@ Jos Ei, &quot;Tason Mukaan&quot; -arvot säilyvät, joten kohdetason kynä mää
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Kerroslistan erotinmerkkijono on tyhjä. Kerrosten puun rakentaminen ei ole mahdollista. Määritä toinen arvo.</translation>
+        <translation>Tasoluettelon erotinmerkkijono on tyhjä. Tasopuuta ei voi muodostaa.
+Määritä toinen arvo.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
@@ -9331,19 +9340,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Ei ole entiteettejä, jotka vastaavat kynää näkyvillä kerroksilla.</translation>
+        <translation>Näkyvillä tasoilla ei ole kohteita, joiden kynä vastaa tätä.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Tällaiset entiteetit ovat jäädytetyillä kerroksilla.</translation>
+        <translation>Tällaisia kohteita on jäädytetyillä tasoilla.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Tällaiset entiteetit ovat lukituilla kerroksilla.</translation>
+        <translation>Tällaisia kohteita on lukituilla tasoilla.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -10568,7 +10579,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>linja2p</translation>
+        <translation>viiva2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
@@ -11235,7 +11246,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>kulmalinja</translation>
+        <translation>kulmaviiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
@@ -12755,17 +12766,17 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Tietoja</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
         <source>Layer</source>
-        <translation>Kerros</translation>
+        <translation>Taso</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -12801,17 +12812,17 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Tartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Kiinnityksen lisäominaisuudet</translation>
+        <translation>Tartunnan lisätoiminnot</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Näytä</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -12869,7 +12880,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>Ei %1 -kerroksia löydetty</translation>
+        <translation>%1-tasoja ei löytynyt</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -13002,7 +13013,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13033,7 +13044,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>Kerroksittain</translation>
+        <translation>Tason mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
@@ -13053,12 +13064,12 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>Kerroksittain</translation>
+        <translation>Tason mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="39"/>
         <source>ByBlock</source>
-        <translation>Lohkkoittain</translation>
+        <translation>Lohkon mukaan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="41"/>
@@ -13204,7 +13215,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Lohko ei voi sisältää itsensä upotusta.</translation>
+        <translation>Lohko ei voi sisältää omaa lisäystään.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
@@ -13217,7 +13228,8 @@ Haluatko korvata sen?</translation>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>Tätä lohkoa ei voi upottaa.</translation>
+        <translation>
+Tätä lohkoa ei voi lisätä.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="217"/>
@@ -14659,7 +14671,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="255"/>
         <source>Specify insertion point</source>
-        <translation>Määritä upotuspiste</translation>
+        <translation>Määritä lisäyspiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="256"/>
@@ -14820,7 +14832,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
-        <translation>Määritä syöttöpiste</translation>
+        <translation>Määritä lisäyspiste</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="282"/>
@@ -15091,7 +15103,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Poisto-)Lukitse suhteellinen nolla</translation>
+        <translation>&amp;Lukitse/vapauta suhteellinen nolla</translation>
     </message>
 </context>
 <context>
@@ -15606,7 +15618,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Kohde on oltava polylinja.</translation>
+        <translation>Kohteen on oltava murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15621,7 +15633,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Määritä polylinja solmujen lisäämiseksi</translation>
+        <translation>Määritä murtoviiva, johon solmuja lisätään</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -15649,17 +15661,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Kohde on oltava polylinja.</translation>
+        <translation>Kohteen on oltava murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Solmuja ei voi liittää suljettaan polylineen.</translation>
+        <translation>Suljettuun murtoviivaan ei voi lisätä solmuja.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Napsauta läheltä olemassa olevan polylineen alkua tai loppua.</translation>
+        <translation>Napsauta olemassa olevan murtoviivan alun tai lopun läheltä.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
@@ -15704,7 +15716,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entiteetin on oltava polylinja.</translation>
+        <translation>Kohteen on oltava murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="129"/>
@@ -15719,7 +15731,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Määritä polylinja, josta poistetaan solmu</translation>
+        <translation>Määritä murtoviiva, josta solmu poistetaan</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="159"/>
@@ -15749,7 +15761,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Entiteetti on oltava polylinja.</translation>
+        <translation>Kohteen on oltava murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
@@ -15766,7 +15778,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Määritä polylinja, joka poistetaan kahden solmun väliltä.</translation>
+        <translation>Määritä murtoviiva, josta poistetaan kahden solmun välinen osa</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -15800,12 +15812,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Kohde on oltava polylinja.</translation>
+        <translation>Kohteen on oltava murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>Valitse alkuperäinen polylinja</translation>
+        <translation>Valitse alkuperäinen murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -15824,17 +15836,17 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>Polylinja luotu</translation>
+        <translation>Murtoviiva luotu</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Kohde ei voi olla suljettu polylinja.</translation>
+        <translation>Kohde ei voi olla suljettu murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Valitse yksi alkuperäisen polylinjalla olevista segmenteistä</translation>
+        <translation>Valitse yksi alkuperäisen murtoviivan segmenteistä</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
@@ -15854,7 +15866,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Kohde on oltava polylinja.</translation>
+        <translation>Kohteen on oltava murtoviiva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -16198,7 +16210,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Raahaa näkymää</translation>
+        <translation>Panorointi</translation>
     </message>
 </context>
 <context>
@@ -16303,7 +16315,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16568,7 +16580,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Kiinnityskohta:</translation>
+        <translation>Tartuntapiste:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16904,7 +16916,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -16967,7 +16979,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Sovella tulostoskaala viivan leveyteen</translation>
+        <translation>Sovella tulostusmittakaavaa viivan leveyteen</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -17005,7 +17017,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17018,7 +17030,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Etäisyyskiinnityksen asetukset</translation>
+        <translation>Etäisyystartunnan asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17031,7 +17043,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Etäisyyskiinnityksen asetukset</translation>
+        <translation>Etäisyystartunnan asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>

@@ -271,7 +271,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
         <source>Specify a tangent</source>
-        <translation>ציין טנגנט</translation>
+        <translation>ציין משיק</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
@@ -434,7 +434,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>קשת</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -583,17 +583,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
-        <translation>טנגנט (P,C)</translation>
+        <translation>משיק (נקודה, מעגל)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
-        <translation>טנגנט (C,C)</translation>
+        <translation>משיק (מעגל, מעגל)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>טנגנט &amp;אורתוגונלי</translation>
+        <translation>משיק &amp;אורתוגונלי</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
@@ -608,12 +608,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>פוליגון (מרכז,פינה)</translation>
+        <translation>מצו&amp;לע (מרכז, פינה)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>פוליגון (פינה,פינה)</translation>
+        <translation>מצולע (פינה, פי&amp;נה)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
@@ -655,22 +655,22 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>טנגנטי ל-2 מעגלים, רדיוס</translation>
+        <translation>משיק ל-2 מעגלים, רדיוס</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>טנגנטי ל-2 מעגלים, 1 נקודה</translation>
+        <translation>משיק ל-2 מעגלים, נקודה אחת</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="418"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>טנגנטי ל-&amp;3 מעגלים</translation>
+        <translation>משיק ל-&amp;3 מעגלים</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>טנגנטי, 2 נקודות</translation>
+        <translation>משיק, 2 נ&amp;קודות</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
@@ -685,7 +685,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
-        <translation>קשת &amp;טנגנטית</translation>
+        <translation>קשת &amp;משיקה</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
@@ -820,7 +820,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;מוביל</translation>
+        <translation>קו &amp;שיוך</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -865,7 +865,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Mirror</source>
-        <translation>תמונת &amp;ראי</translation>
+        <translation>&amp;שיקוף</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
@@ -905,12 +905,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;עיגול</translation>
+        <translation>&amp;עיגול פינה</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;פירק טקסט לאותיות</translation>
+        <translation>&amp;פירוק טקסט לאותיות</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -940,7 +940,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
-        <translation>&amp;שטח פוליגוני</translation>
+        <translation>&amp;שטח מצולע</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
@@ -1303,7 +1303,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="236"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>פוליגון (מרכז,טנגנט)</translation>
+        <translation>מצו&amp;לע (מרכז, משיק)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="692"/>
@@ -3368,7 +3368,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
         <source>Circles</source>
-        <translation>עיגולים</translation>
+        <translation>מעגלים</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
@@ -3591,7 +3591,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="771"/>
         <source>&amp;Circle</source>
-        <translation>&amp;עיגול</translation>
+        <translation>&amp;מעגל</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
@@ -4698,7 +4698,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>קשת</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -5347,152 +5347,152 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="962"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] [CONTEXT: QG_DlgMText] [0000-007F] לטינית בסיסית</translation>
+        <translation>[0000-007F] לטינית בסיסית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="967"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] [CONTEXT: QG_DlgMText] [0080-00FF] לטיני-1 משלים</translation>
+        <translation>[0080-00FF] לטינית-1 משלימה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="972"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] [CONTEXT: QG_DlgMText] [0100-017F] לטיני מורחב-א</translation>
+        <translation>[0100-017F] לטינית מורחבת-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="977"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] [CONTEXT: QG_DlgMText] [0180-024F] לטיני מורחב-ב</translation>
+        <translation>[0180-024F] לטינית מורחבת-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="982"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] [CONTEXT: QG_DlgMText] [0250-02AF] הרחבות IPA</translation>
+        <translation>[0250-02AF] הרחבות IPA</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="987"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] [CONTEXT: QG_DlgMText] [02B0-02FF] אותיות משנות רווח</translation>
+        <translation>[02B0-02FF] אותיות משנות מרווח</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="992"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] [CONTEXT: QG_DlgMText] [0300-036F] סימני דיאקריטיים משולבים</translation>
+        <translation>[0300-036F] סימנים דיאקריטיים משולבים</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="997"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] [CONTEXT: QG_DlgMText] [0370-03FF] יוונית וקופטיק</translation>
+        <translation>[0370-03FF] יוונית וקופטית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1002"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] [CONTEXT: QG_DlgMText] [0400-04FF] קירילי</translation>
+        <translation>[0400-04FF] קירילית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1007"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] [CONTEXT: QG_DlgMText] [0500-052F] קירילי משלים</translation>
+        <translation>[0500-052F] קירילית משלימה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1012"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] 1. [CONTEXT: QG_DlgMText] [0530-058F] ארמנית</translation>
+        <translation>[0530-058F] ארמנית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1017"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] 2. [CONTEXT: QG_DlgMText] [0590-05FF] עברית</translation>
+        <translation>[0590-05FF] עברית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1022"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] 3. [CONTEXT: QG_DlgMText] [0600-06FF] ערבית</translation>
+        <translation>[0600-06FF] ערבית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1027"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] 4. [CONTEXT: QG_DlgMText] [0700-074F] סיריינית</translation>
+        <translation>[0700-074F] סורית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1032"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] 5. [CONTEXT: QG_DlgMText] [0780-07BF] תאנה</translation>
+        <translation>[0780-07BF] תאנה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1037"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] 6. [CONTEXT: QG_DlgMText] [0900-097F] דהוּנאגארי</translation>
+        <translation>[0900-097F] דוואנאגרי</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1042"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] 7. [CONTEXT: QG_DlgMText] [0980-09FF] בנגאלית</translation>
+        <translation>[0980-09FF] בנגלית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1047"/>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation>[0A00-0A7F] 8. [CONTEXT: QG_DlgMText] [0A00-0A7F] גורמוכית</translation>
+        <translation>[0A00-0A7F] גורמוקהי</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1052"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] 9. [CONTEXT: QG_DlgMText] [0A80-0AFF] גוג&apos;אראטית</translation>
+        <translation>[0A80-0AFF] גוג&apos;ראטית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1057"/>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] 10. [CONTEXT: QG_DlgMText] [0B00-0B7F] אוריאית</translation>
+        <translation>[0B00-0B7F] אורייה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1062"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] [CONTEXT: QG_DlgMText] [0B80-0BFF] תאמיל</translation>
+        <translation>[0B80-0BFF] טמילית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1067"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] [CONTEXT: QG_DlgMText] [0C00-0C7F] טלוגו</translation>
+        <translation>[0C00-0C7F] טלוגו</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1072"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] [CONTEXT: QG_DlgMText] [0C80-0CFF] קַנְנַדָּ</translation>
+        <translation>[0C80-0CFF] קנדה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1077"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] [CONTEXT: QG_DlgMText] [0D00-0D7F] מַלַאיָּלַם</translation>
+        <translation>[0D00-0D7F] מלאיאלאם</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1082"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] [CONTEXT: QG_DlgMText] [0D80-0DFF] סינהאלה</translation>
+        <translation>[0D80-0DFF] סינהלה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1087"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] [CONTEXT: QG_DlgMText] [0E00-0E7F] תאילנדי</translation>
+        <translation>[0E00-0E7F] תאית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1092"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] [CONTEXT: QG_DlgMText] [0E80-0EFF] לאו</translation>
+        <translation>[0E80-0EFF] לאית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1097"/>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] [CONTEXT: QG_DlgMText] [0F00-0FFF] טיבטי</translation>
+        <translation>[0F00-0FFF] טיבטית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] [CONTEXT: QG_DlgMText] [1000-109F] מיאנמר</translation>
+        <translation>[1000-109F] מיאנמר</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1107"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] [CONTEXT: QG_DlgMText] [10A0-10FF] גאורגית</translation>
+        <translation>[10A0-10FF] גאורגית</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1112"/>
@@ -5925,7 +5925,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>אפשרויות מראה</translation>
+        <translation>אפשרויות שיקוף</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6553,7 +6553,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>אורך קו הארכה קבוע</translation>
+        <translation>אורך קבוע של קו העזר</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -7208,7 +7208,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>פולילין</translation>
+        <translation>פוליליין</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -7813,52 +7813,52 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1163"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] [CONTEXT: QG_DlgText] [1E00-1EFF] לטינית מורחבת נוספת</translation>
+        <translation>[1E00-1EFF] לטינית מורחבת נוספת</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1168"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] [CONTEXT: QG_DlgText] [1F00-1FFF] יוונית מורחבת</translation>
+        <translation>[1F00-1FFF] יוונית מורחבת</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1173"/>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] [CONTEXT: QG_DlgText] [2000-206F] פיסוק כללי</translation>
+        <translation>[2000-206F] פיסוק כללי</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1178"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] [CONTEXT: QG_DlgText] [2070-209F] מעריכים ומדעיכה</translation>
+        <translation>[2070-209F] כתב עילי וכתב תחתי</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1183"/>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] [CONTEXT: QG_DlgText] [20A0-20CF] סמלי מטבע</translation>
+        <translation>[20A0-20CF] סמלי מטבע</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1188"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] [CONTEXT: QG_DlgText] [20D0-20FF] סימני צירוף לסמלים</translation>
+        <translation>[20D0-20FF] סימנים משולבים לסמלים</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1193"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] [CONTEXT: QG_DlgText] [2100-214F] סמלים דמויי אות</translation>
+        <translation>[2100-214F] סמלים דמויי אותיות</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1198"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] [CONTEXT: QG_DlgText] [2150-218F] צורות מספרים</translation>
+        <translation>[2150-218F] צורות מספרים</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1203"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] [CONTEXT: QG_DlgText] [2190-21FF] חצים</translation>
+        <translation>[2190-21FF] חצים</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1208"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] [CONTEXT: QG_DlgText] [2200-22FF] אופרטורים מתמטיים</translation>
+        <translation>[2200-22FF] אופרטורים מתמטיים</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1213"/>
@@ -8859,7 +8859,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>הצמדה</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -9515,7 +9515,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>אנגstrom</translation>
+        <translation>אנגסטרום</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
@@ -11016,7 +11016,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>הצמדה</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12422,7 +12422,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/צבע מותאם אישית%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13008,12 +13008,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: לא נמצאה תבנית. אנא הגדר את נתיב התבנית בהעדפות היישום</translation>
+        <translation>קווקוו: לא נמצאה תבנית. הגדר את נתיב התבניות בהעדפות היישום</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: כשל בטעינת התבנית: %1</translation>
+        <translation>קווקוו: טעינת התבנית נכשלה: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -14732,7 +14732,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>הזן את מספר הקווי הפולי</translation>
+        <translation>הזן את מספר הפוליליינים</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -15033,12 +15033,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>אורך מוחלט של גופים נבחרים: %1</translation>
+        <translation>האורך הכולל של הישויות שנבחרו: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>לפחות אחד מהגופים שנבחרו לא ניתן למדידה.</translation>
+        <translation>לא ניתן למדוד לפחות אחת מהישויות שנבחרו.</translation>
     </message>
 </context>
 <context>
@@ -15099,7 +15099,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="272"/>
         <source>Select first entity</source>
-        <translation>בחר גוף ראשון</translation>
+        <translation>בחר ישות ראשונה</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="273"/>
@@ -15109,7 +15109,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="276"/>
         <source>Select second entity</source>
-        <translation>בחר גוף שני</translation>
+        <translation>בחר ישות שנייה</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="277"/>
@@ -15135,7 +15135,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="103"/>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation>גוף לא נמצא.</translation>
+        <translation>לא נמצאה ישות.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
@@ -15145,12 +15145,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>נקודת החיתוך לא נמצאת על גוף.</translation>
+        <translation>נקודת החיתוך אינה על הישות.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>ציין גוף לחיתוך</translation>
+        <translation>ציין ישות לחיתוך</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="146"/>
@@ -15198,42 +15198,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>הגופים אינם באותה פולילין.</translation>
+        <translation>הישויות אינן באותו פוליליין.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>ההורה של הגוף השני אינו פולילין</translation>
+        <translation>ההורה של הישות השנייה אינו פוליליין</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>ההורה של הגוף הראשון אינו פולילין</translation>
+        <translation>ההורה של הישות הראשונה אינו פוליליין</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>ההורה של הגוף השני הוא nullptr</translation>
+        <translation>ההורה של הישות השנייה הוא nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>אחד הגופים שנבחרו הוא nullptr</translation>
+        <translation>אחת הישויות שנבחרו היא nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>ההורה של הגוף הראשון הוא nullptr</translation>
+        <translation>ההורה של הישות הראשונה הוא nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="146"/>
         <source>First entity is nullptr</source>
-        <translation>הגוף הראשון הוא nullptr</translation>
+        <translation>הישות הראשונה היא nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="158"/>
         <source>Second entity is nullptr</source>
-        <translation>הגוף השני הוא nullptr</translation>
+        <translation>הישות השנייה היא nullptr</translation>
     </message>
 </context>
 <context>
@@ -15241,7 +15241,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>בחר גוף למחיקה</translation>
+        <translation>בחר ישות למחיקה</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
@@ -15267,7 +15267,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>הגדר את הנקודה הראשונה של קו המראה</translation>
+        <translation>ציין את הנקודה הראשונה של קו השיקוף</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15277,7 +15277,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>הגדר את הנקודה השנייה של קו המראה</translation>
+        <translation>ציין את הנקודה השנייה של קו השיקוף</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -15581,7 +15581,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>בחר ישות להזמנה</translation>
+        <translation>בחר ישות לשינוי סדר השרטוט</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
@@ -15600,7 +15600,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>הישות חייבת להיות פולילין.</translation>
+        <translation>הישות חייבת להיות פוליליין.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15615,7 +15615,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>הגדר פולילין להוספת צמתים</translation>
+        <translation>ציין פוליליין להוספת צמתים</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -15643,12 +15643,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>הישות חייבת להיות פולילין.</translation>
+        <translation>הישות חייבת להיות פוליליין.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>לחץ במקום קרוב לתחילת או לסוף הפולילין הקיים.</translation>
+        <translation>לחץ במקום כלשהו קרוב לתחילת הפוליליין הקיים או לסופו.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
@@ -15743,7 +15743,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>הישות חייבת להיות פולילין.</translation>
+        <translation>הישות חייבת להיות פוליליין.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
@@ -15754,7 +15754,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>לציין פולילין למחיקה בין שני צמתים</translation>
+        <translation>ציין פוליליין למחיקה בין שני צמתים</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -15794,12 +15794,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>הישות חייבת להיות פולילין.</translation>
+        <translation>הישות חייבת להיות פוליליין.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>בחר את הפולילין המקורי</translation>
+        <translation>בחר את הפוליליין המקורי</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -15817,7 +15817,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>בחר אחד מהמקטעים בפולילין המקורי</translation>
+        <translation>בחר אחד מהמקטעים בפוליליין המקורי</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
@@ -15827,13 +15827,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>הישות אינה יכולה להיות פולילין סגור.</translation>
+        <translation>הישות אינה יכולה להיות פוליליין סגור.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>נוצר פולילין</translation>
+        <translation>נוצר פוליליין</translation>
     </message>
 </context>
 <context>
@@ -15848,7 +15848,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>הישות חייבת להיות פולילין.</translation>
+        <translation>הישות חייבת להיות פוליליין.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -16003,7 +16003,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>לבחור כדי לשקף</translation>
+        <translation>בחר לשיקוף</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
@@ -16059,7 +16059,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>בחר כדי לפוצץ בלוק</translation>
+        <translation>בחר בלוק לפירוק</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16144,7 +16144,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>צומת ידני</translation>
+        <translation>נקודת &amp;חיתוך ידנית</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
@@ -16770,7 +16770,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>אפשרויות פוליגון</translation>
+        <translation>אפשרויות מצולע</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
@@ -16788,7 +16788,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation>אפשרויות פוליגון</translation>
+        <translation>אפשרויות מצולע</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
@@ -16862,7 +16862,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>היסטה מהגוף המקורי</translation>
+        <translation>היסט מהישות המקורית</translation>
     </message>
 </context>
 <context>
@@ -16903,12 +16903,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
         <source>Tangential</source>
-        <translation>טנגנציאלי</translation>
+        <translation>משיק</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>רדיוס טנגנס</translation>
+        <translation>רדיוס משיק</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>

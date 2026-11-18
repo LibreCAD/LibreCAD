@@ -424,7 +424,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> nie jest dzielony, ponieważ jest częścią polilini. Najpierw rozwiń polilinię.</translation>
+        <translation> nie jest dzielony, ponieważ jest częścią polilinii. Najpierw rozbij polilinię.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -434,7 +434,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Łuk</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -885,7 +885,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Wydłuż</translation>
+        <translation>&amp;Przedłuż</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="824"/>
@@ -900,7 +900,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Ścięcie</translation>
+        <translation>&amp;Faza</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
@@ -1211,7 +1211,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
         <source>&amp;Draft</source>
-        <translation>&amp;Rysunek roboczy</translation>
+        <translation>&amp;Szkic</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1318"/>
@@ -2969,7 +2969,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>Ścięcie</translation>
+        <translation>Faza</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
@@ -3091,7 +3091,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>Ścięcie</translation>
+        <translation>Faza</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -3174,7 +3174,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>Ścięcie</translation>
+        <translation>Faza</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -3368,7 +3368,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
         <source>Circles</source>
-        <translation>Okregi</translation>
+        <translation>Okręgi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="615"/>
@@ -3662,7 +3662,7 @@ lub [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pióro</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -4703,7 +4703,7 @@ w oddzielnym oknie</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Łuk</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -6279,7 +6279,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Liczba odcinków dla każdego elementu krzywej składanej:</translation>
+        <translation>Liczba odcinków na każdy fragment splajnu:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6503,7 +6503,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Linie przedłużające</translation>
+        <translation>Linie pomocnicze</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6559,7 +6559,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>stała długość linii przedłużenia</translation>
+        <translation>stała długość linii pomocniczej</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -7214,7 +7214,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Linia łamana</translation>
+        <translation>Polilinia</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -7406,7 +7406,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Krzywa składana</translation>
+        <translation>Splajn</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -8633,7 +8633,7 @@ Zawartość warstwy konstrukcyjnej nie powinna być wyświetlana w wydruku.</tra
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Kropka</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8648,7 +8648,7 @@ Zawartość warstwy konstrukcyjnej nie powinna być wyświetlana w wydruku.</tra
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Kreska</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8693,17 +8693,17 @@ Zawartość warstwy konstrukcyjnej nie powinna być wyświetlana w wydruku.</tra
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>Środek</translation>
+        <translation>Osiowa</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>Środek (maly)</translation>
+        <translation>Osiowa (mała)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>Środek (duży)</translation>
+        <translation>Osiowa (duża)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
@@ -8738,22 +8738,22 @@ Zawartość warstwy konstrukcyjnej nie powinna być wyświetlana w wydruku.</tra
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Kreska-kropka (bardzo mała)</translation>
+        <translation>Kreska kropka (bardzo mała)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>Podział (bardzo mały)</translation>
+        <translation>Podzielona (bardzo mała)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>Środek (bardzo mały)</translation>
+        <translation>Osiowa (bardzo mała)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>Obrzeże (bardzo małe)</translation>
+        <translation>Obwódka (bardzo mała)</translation>
     </message>
 </context>
 <context>
@@ -8862,7 +8862,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Przyciąganie</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8977,7 +8977,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
         <source>Restrict Orthogonal</source>
-        <translation>Ograniczenie do osi ortogonalnej</translation>
+        <translation>Ograniczenie ortogonalne</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
@@ -8987,12 +8987,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>Ustaw względną pozycję zerową</translation>
+        <translation>Ustaw położenie względnego zera</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>Zablokuj względną pozycję zerową</translation>
+        <translation>Zablokuj położenie względnego zera</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -9002,7 +9002,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>Względna pozycja zerowa to %1</translation>
+        <translation>Położenie względnego zera: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9026,7 +9026,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pióro</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -10944,7 +10944,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="65"/>
         <source>Circle</source>
-        <translation>Koło</translation>
+        <translation>Okrąg</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="66"/>
@@ -11021,7 +11021,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Przyciąganie</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11058,7 +11058,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
-        <translation>Kreator piórka</translation>
+        <translation>Kreator pióra</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
@@ -12427,7 +12427,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13013,12 +13013,12 @@ Czy chcesz zastąpić?</translation>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: Nie znaleziono wzoru. Ustaw ścieżkę do wzoru w preferencjach aplikacji.</translation>
+        <translation>Kreskowanie: nie znaleziono wzoru. Ustaw ścieżkę do wzorów w preferencjach aplikacji.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Wczytywanie wzoru nie powiodło się: %1</translation>
+        <translation>Kreskowanie: nie udało się wczytać wzoru: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13452,7 +13452,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Wskaż położenie linii wymiarowej:</translation>
+        <translation>Wprowadź kąt linii wymiarowej:</translation>
     </message>
 </context>
 <context>
@@ -15090,7 +15090,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Od/Za)&amp;blokuj zero względne</translation>
+        <translation>(Od/Za)&amp;blokuj względne zero</translation>
     </message>
 </context>
 <context>
@@ -15183,7 +15183,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Wskaż pierwszy punkt łamania na linii łamanej</translation>
+        <translation>Wskaż pierwszy punkt przerwania na polilinii</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15193,7 +15193,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Wskaż drugi punkt łamania na tej samej linii łamanej</translation>
+        <translation>Wskaż drugi punkt przerwania na tej samej polilinii</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15203,17 +15203,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Obiekty nie leżą na tej samej łamanej.</translation>
+        <translation>Obiekty nie należą do tej samej polilinii.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Nadrzędny względem drugiego obiektu nie jest linią łamaną</translation>
+        <translation>Obiekt nadrzędny drugiego obiektu nie jest polilinią</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Nadrzędny względem pierwszego obiektu nie jest linią łamaną</translation>
+        <translation>Obiekt nadrzędny pierwszego obiektu nie jest polilinią</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
@@ -15615,7 +15615,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>Obiekt musi być linią łamaną.</translation>
+        <translation>Obiekt musi być polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15630,7 +15630,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Zaznacz linię łamaną, aby dodać wierzchołki</translation>
+        <translation>Wskaż polilinię, aby dodać węzły</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="161"/>
@@ -15653,17 +15653,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>Obiekt musi być linia łamaną.</translation>
+        <translation>Obiekt musi być polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Kliknij blisko początku lub końca istniejącej linii łamanej.</translation>
+        <translation>Kliknij w pobliżu początku lub końca istniejącej polilinii.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Wskaż początkowy lub końcowy punkt łamanej</translation>
+        <translation>Wskaż polilinię w pobliżu jej punktu początkowego lub końcowego</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="207"/>
@@ -15684,7 +15684,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Nie można dodać węzłów do zamkniętej linii wieloliniowej.</translation>
+        <translation>Nie można dodać węzłów do zamkniętej polilinii.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
@@ -15713,12 +15713,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>Obiekt musi być linią łamaną.</translation>
+        <translation>Obiekt musi być polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>Określ linię łamaną, by usunąć wierzchołek</translation>
+        <translation>Wskaż polilinię, aby usunąć węzeł</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="162"/>
@@ -15759,7 +15759,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>Obiekt musi być linią łamaną.</translation>
+        <translation>Obiekt musi być polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
@@ -15770,7 +15770,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Wybierz linię łamaną, aby usunąć</translation>
+        <translation>Wskaż polilinię, aby usunąć fragment między dwoma węzłami</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
@@ -15799,12 +15799,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>Obiekt musi być linią łamaną. </translation>
+        <translation>Obiekt musi być polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>Wskaż pierwotną łamaną</translation>
+        <translation>Wskaż pierwotną polilinię</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -15822,7 +15822,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Wskaż odcinek pierwotnej łamanej</translation>
+        <translation>Wskaż jeden z segmentów pierwotnej polilinii</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
@@ -15832,13 +15832,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Element nie może być zamkniętą linią wieloliniową.</translation>
+        <translation>Obiekt nie może być zamkniętą polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>Linia wieloliniowa została utworzona.</translation>
+        <translation>Utworzono polilinię</translation>
     </message>
 </context>
 <context>
@@ -15864,7 +15864,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>Obiekt musi być linią łamaną.</translation>
+        <translation>Obiekt musi być polilinią.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -15881,7 +15881,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Wskaż łamaną do przycięcia</translation>
+        <translation>Wskaż polilinię do przycięcia</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
@@ -15904,17 +15904,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Przesunięcie wydruku w współrzędnych papieru wynosi (%1, %2).</translation>
+        <translation>Przesunięcie wydruku we współrzędnych papieru wynosi (%1, %2).</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Przesunięcie wydruku w współrzędnych graficznych wynosi (%1, %2).</translation>
+        <translation>Przesunięcie wydruku we współrzędnych rysunku wynosi (%1, %2).</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Przesunięcie wydruku w współrzędnych graficznych.</translation>
+        <translation>Przesunięcie wydruku we współrzędnych rysunku.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
@@ -16131,7 +16131,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>Zmień zero względne</translation>
+        <translation>Ustaw względne zero</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
@@ -16186,7 +16186,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Kliknij i przeciąg aby zmienić widok</translation>
+        <translation>Kliknij i przeciągnij, aby przesunąć widok</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16197,7 +16197,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Zmiana widoku</translation>
+        <translation>Przesuwanie widoku</translation>
     </message>
 </context>
 <context>
@@ -16302,7 +16302,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Przytnij</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -17004,7 +17004,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Przytnij</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17048,7 +17048,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="32"/>
         <source>Spline Options</source>
-        <translation>Opcje krzywej Beziera</translation>
+        <translation>Opcje splajnu</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>

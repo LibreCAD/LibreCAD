@@ -33,12 +33,12 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>Align</translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Ajustes alineados...</translation>
+        <translation>Configuración de alineación...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Ajustes alineados</translation>
+        <translation>Configuración de alineación</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
@@ -143,7 +143,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -350,7 +350,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -787,7 +787,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -825,7 +825,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Divide en</translation>
+        <translation>Dividir en</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -870,7 +870,7 @@ anti-auricular.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Nuevo&quot;&lt;/i&gt;&lt;br&gt;Introduzca el nombre&lt;br&gt;para una nueva capa&lt;br&gt;(si es necesario)&lt;br&gt;para dibujar las marcas.</translation>
+        <translation>&lt;i&gt;&quot;Nuevo&quot;&lt;/i&gt;&lt;br&gt;Ingrese el nombre&lt;br&gt;para una nueva capa&lt;br&gt;(si es necesario)&lt;br&gt;para dibujar las marcas.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Este plugin le permite trazar ecuaciones matemáticas.
-Si no quieres usar la forma paramétrica, deja fuera &quot;Ecuación2&quot;.
-Puedes usar pi cuando necesites el valor de pi (es decir (3*pi)).
-Use t o x en su ecuación como variable/parametro.</translation>
+        <translation>Este complemento le permite trazar ecuaciones matemáticas.
+Si no desea usar la forma paramétrica, omita &quot;Ecuación2&quot;.
+Puede usar pi cuando necesite el valor de pi (por ejemplo, (3*pi)).
+Use t o x en su ecuación como variable/parámetro.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>

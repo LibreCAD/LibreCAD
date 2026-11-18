@@ -175,12 +175,12 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation>v točka</translation>
+        <translation>v točki</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ČRTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +211,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>LOK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -240,7 +240,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation>KROŽNICA</translation>
+        <translation>KROG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
@@ -275,7 +275,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>TELO</translation>
+        <translation>POLNILO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
@@ -285,17 +285,17 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>BESEDILO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>BESEDILO</translation>
+        <translation>VSEBINA BESEDILA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>VSTAVI</translation>
+        <translation>VSTAVLJEN BLOK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -330,7 +330,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>LOMLJENKA</translation>
+        <translation>POLILINIJA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -350,7 +350,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Točke</translation>
+        <translation>Oglišča</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -360,12 +360,12 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>KRIVULJA</translation>
+        <translation>ZLEPEK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPOTI</translation>
+        <translation>ZLEPEK SKOZI TOČKE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -375,32 +375,32 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>PREHOD</translation>
+        <translation>KAZALNA ČRTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>Vodilo prehoda</translation>
+        <translation>PORAVNANA KOTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>Linearni prehod</translation>
+        <translation>LINEARNA KOTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>Radialni prehod</translation>
+        <translation>KOTA POLMERA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>Prehod v smeri premera</translation>
+        <translation>KOTA PREMERA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>Kotni prehod</translation>
+        <translation>KOTNA KOTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
@@ -693,7 +693,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ČRTA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,7 +724,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>LOK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -752,7 +752,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>KROG</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,7 +767,7 @@ prva osnovna točka, druga osnovna točka, prva ciljna točka, druga ciljna toč
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLIN</translation>
+        <translation>POLILINIJA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -1011,7 +1011,7 @@ v nasprotni smeri urinega kazalca.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Število odsekov za črpanje (vmešavanje)</translation>
+        <translation>Število odsekov za risanje (prekrivanje)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1232,13 +1232,13 @@ Uporabite t ali x v enačbi kot spremenljivka/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SplinePoints</translation>
+        <translation>Zlepek skozi točke</translation>
     </message>
 </context>
 <context>

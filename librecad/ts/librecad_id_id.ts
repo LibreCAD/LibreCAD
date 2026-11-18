@@ -434,7 +434,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Busur</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -668,7 +668,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
-        <translation>Pecah/Bagi</translation>
+        <translation>Putus/Bagi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
@@ -1106,7 +1106,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Regang</translation>
+        <translation>&amp;Regangkan</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
@@ -1694,7 +1694,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>Titik kontrol parabola tidak boleh sejajar</translation>
+        <translation>Titik kontrol parabola tidak boleh segaris</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2249,7 @@ atau [%2]</translation>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Bebas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2330,7 +2330,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>Ke Persimpangan</translation>
+        <translation>Ke Perpotongan</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2531,7 +2531,7 @@ atau [%2]</translation>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Bebas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2577,7 +2577,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
         <source>Line Type Name</source>
-        <translation>Nama Tipe Garis</translation>
+        <translation>Nama Jenis Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -2587,7 +2587,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
         <source>Line Type Icon</source>
-        <translation>Ikon Tipe Garis</translation>
+        <translation>Ikon Jenis Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -2597,12 +2597,12 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Ikon Lebar Garis</translation>
+        <translation>Ikon Tebal Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Nama Lebar Garis</translation>
+        <translation>Nama Tebal Garis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -3671,7 +3671,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pena</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="734"/>
@@ -3716,7 +3716,7 @@ atau [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="892"/>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip &amp; Obrolan</translation>
+        <translation>Zulip &amp;Obrolan</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="893"/>
@@ -4702,7 +4702,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Busur</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -5024,13 +5024,13 @@ Please choose the unit you want to use for new drawings and your preferred langu
 (You can changes these settings later.)</source>
         <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Selamat datang di LibreCAD&lt;/b&gt;&lt;/font&gt;
 &lt;br&gt;
-Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan Anda.&lt;br&gt;
+Silakan pilih satuan yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan Anda.&lt;br&gt;
 (Anda dapat mengubah pengaturan ini nanti.)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="104"/>
         <source>Default Unit:</source>
-        <translation>Unit Default:</translation>
+        <translation>Satuan Default:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="114"/>
@@ -6043,7 +6043,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
         <source>Use current &amp;layer</source>
-        <translation>Gunakan Lapisan Saat Ini</translation>
+        <translation>Gunakan &amp;lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
@@ -6101,7 +6101,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="338"/>
         <source>&amp;Main drawing unit:</source>
-        <translation>Unit Gambar Utama:</translation>
+        <translation>Satuan gambar &amp;utama:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="377"/>
@@ -6199,17 +6199,17 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Kisi-kisi</translation>
+        <translation>&amp;Kisi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
         <source>Grid Settings</source>
-        <translation>Pengaturan Kisi-kisi</translation>
+        <translation>Pengaturan Kisi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
         <source>Show Grid</source>
-        <translation>Tampilkan Kisi-kisi</translation>
+        <translation>Tampilkan Kisi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6224,7 +6224,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Ukuran panah dimensi. Tidak berpengaruh jika ukuran tanda (tick size) selain 0</translation>
+        <translation>Ukuran panah dimensi. Tidak berpengaruh jika ukuran tanda selain 0</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
@@ -6289,7 +6289,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
         <source>Size in drawing units</source>
-        <translation>Ukuran dalam unit gambar</translation>
+        <translation>Ukuran dalam satuan gambar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
@@ -6514,7 +6514,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
         <source>Aligned</source>
-        <translation>Selaras</translation>
+        <translation>Sejajar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
@@ -6630,12 +6630,12 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="495"/>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Untuk format panjang &apos;Engineering&apos; dan &apos;Architectural&apos;, unit harus diatur ke Inci.</translation>
+        <translation>Untuk format panjang &apos;Engineering&apos; dan &apos;Architectural&apos;, satuan harus diatur ke Inci.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="505"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>Untuk format panjang &apos;Architectural (metrik)&apos;, unit harus diatur ke Meter.</translation>
+        <translation>Untuk format panjang &apos;Architectural (metrik)&apos;, satuan harus diatur ke Meter.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1106"/>
@@ -6728,7 +6728,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Skala grid otomatis</translation>
+        <translation>Skalakan kisi &amp;otomatis</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="258"/>
@@ -6908,7 +6908,7 @@ Silakan pilih unit yang ingin Anda gunakan untuk gambar baru dan bahasa pilihan 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Jarak Grid Minimal (p&amp;x):</translation>
+        <translation>Jarak Kisi Minimal (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -7278,7 +7278,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
         <source>Use current &amp;layer</source>
-        <translation>Gunakan lapisan saat ini</translation>
+        <translation>Gunakan &amp;lapisan saat ini</translation>
     </message>
 </context>
 <context>
@@ -7331,7 +7331,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
         <source>Use current &amp;layer</source>
-        <translation>Gunakan &amp;layer saat ini</translation>
+        <translation>Gunakan &amp;lapisan saat ini</translation>
     </message>
 </context>
 <context>
@@ -7379,7 +7379,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>Gunakan &amp;layer saat ini</translation>
+        <translation>Gunakan &amp;lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="32"/>
@@ -7587,7 +7587,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
         <source>Insert Symbol</source>
-        <translation>Masukkan Simbol</translation>
+        <translation>Sisipkan Simbol</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
@@ -8551,7 +8551,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Ekspor &amp; Lapisan Terlihat</translation>
+        <translation>Ekspor Lapisan &amp;Terlihat</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
@@ -8561,12 +8561,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Edit Lapisan &amp; Atribut</translation>
+        <translation>Edit &amp;Atribut Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="570"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Toggle Lapisan &amp; Visibilitas</translation>
+        <translation>Alihkan &amp;Visibilitas Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
@@ -8576,7 +8576,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="574"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Toggle Lapisan &amp; Pencetakan</translation>
+        <translation>Alihkan &amp;Pencetakan Lapisan</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
@@ -8797,7 +8797,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Lebar garis</translation>
+        <translation>Tebal garis</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8871,42 +8871,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Kaitkan ke Titik Ujung</translation>
+        <translation>Snap ke Titik Ujung</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Kaitkan ke titik-titik berjarak sama dari entitas</translation>
+        <translation>Snap ke titik-titik berjarak sama dari entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Kaitkan ke titik pusat</translation>
+        <translation>Snap ke titik pusat</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Kaitkan ke persimpangan secara otomatis</translation>
+        <translation>Snap ke perpotongan secara otomatis</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Kaitkan ke titik terdekat pada entitas</translation>
+        <translation>Snap ke titik terdekat pada entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Kaitkan ke titik dengan jarak tertentu ke titik ujung</translation>
+        <translation>Snap ke titik dengan jarak tertentu ke titik ujung</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Kaitkan ke persimpangan secara manual</translation>
+        <translation>Snap ke perpotongan secara manual</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Kaitkan ke kisi-kisi</translation>
+        <translation>Snap ke kisi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8921,12 +8921,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>Pindah Relatif Nol</translation>
+        <translation>Pindah Nol Relatif</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Kunci Relatif Nol</translation>
+        <translation>Kunci Nol Relatif</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
@@ -8946,7 +8946,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Snap pada Grid</translation>
+        <translation>Snap pada Kisi</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
@@ -9030,7 +9030,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Pena</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9040,7 +9040,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
         <source>Width:</source>
-        <translation>Panjang:</translation>
+        <translation>Tebal:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="59"/>
@@ -10072,7 +10072,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch gagal karena celah=%1 antara (%2, %3) dan (%4, %5)</translation>
+        <translation>Arsir gagal karena celah=%1 antara (%2, %3) dan (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
@@ -12807,7 +12807,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Tambahan Kait</translation>
+        <translation>Snap Tambahan</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -13003,7 +13003,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13024,12 +13024,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: tidak ditemukan pola. Harap atur jalur pola di preferensi aplikasi</translation>
+        <translation>Arsir:: tidak ditemukan pola. Harap atur jalur pola di preferensi aplikasi</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: gagal memuat pola: %1</translation>
+        <translation>Arsir:: gagal memuat pola: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
@@ -14158,42 +14158,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatch berhasil dibuat.</translation>
+        <translation>Arsiran berhasil dibuat.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Error Hatch: Kontur tidak valid ditemukan!</translation>
+        <translation>Kesalahan Arsir: Ditemukan kontur yang tidak valid!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Kesalahan Hatch: Pola tidak ditemukan!</translation>
+        <translation>Kesalahan Arsir: Pola tidak ditemukan!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Kesalahan Hatch: Kontur atau pola terlalu kecil!</translation>
+        <translation>Kesalahan Arsir: Kontur atau pola terlalu kecil!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Kesalahan Hatch: Kontur terlalu besar!</translation>
+        <translation>Kesalahan Arsir: Kontur terlalu besar!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Kesalahan Hatch: Kesalahan tidak terdefinisi!</translation>
+        <translation>Kesalahan Arsir: Kesalahan tidak terdefinisi!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>Total area hatch = %1</translation>
+        <translation>Total area arsiran = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Area hatch tidak valid. Harap periksa bahwa entitas yang dipilih membentuk satu atau lebih kontur tertutup.</translation>
+        <translation>Area arsiran tidak valid. Harap periksa bahwa entitas yang dipilih membentuk satu atau lebih kontur tertutup.</translation>
     </message>
 </context>
 <context>
@@ -15515,7 +15515,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Pilih entitas trim pertama</translation>
+        <translation>Pilih entitas pertama yang akan dipangkas</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15537,7 +15537,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Pilih entitas trim kedua</translation>
+        <translation>Pilih entitas kedua yang akan dipangkas</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
@@ -16151,7 +16151,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>Interseksi Manual</translation>
+        <translation>Perpotongan Ma&amp;nual</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
@@ -16304,7 +16304,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Pangkas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16968,7 +16968,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Terapkan Skala Cetak ke lebar garis</translation>
+        <translation>Terapkan Skala Cetak ke tebal garis</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
@@ -16996,7 +16996,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>Opsi Pembulatan</translation>
+        <translation>Opsi Fillet</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
@@ -17006,7 +17006,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Pangkas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>

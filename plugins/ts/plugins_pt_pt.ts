@@ -38,7 +38,7 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Alinhar as configurações...</translation>
+        <translation>Definições de alinhamento...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Alinhar configurações</translation>
+        <translation>Definições de alinhamento</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
@@ -370,7 +370,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>TRAMA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -446,7 +446,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation>importar arquivo PIC</translation>
+        <translation>importar ficheiro PIC</translation>
     </message>
 </context>
 <context>
@@ -494,7 +494,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>Conectar pontos</translation>
+        <translation>Ligar pontos</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
@@ -559,7 +559,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
-        <translation>Selecionar arquivo</translation>
+        <translation>Selecionar ficheiro</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
@@ -624,7 +624,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../asciifile/asciifile.cpp" line="364"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>Não foi possível abrir o arquivo %1.</translation>
+        <translation>Não foi possível abrir o ficheiro %1.</translation>
     </message>
 </context>
 <context>
@@ -638,7 +638,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Selecione uma linha, círculo ou arco e pressione retorno</translation>
+        <translation>Selecione uma linha, círculo ou arco e prima Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -860,12 +860,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Digite início
-ângulo, em
-graus decimais
-0° às 3 horas
-vai
-anti-horário.</translation>
+        <translation>Introduza o
+ângulo inicial,
+em graus
+decimais
+0° às 3 horas,
+sentido anti-horário.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -913,7 +913,7 @@ anti-horário.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
         <source>Unable to open file</source>
-        <translation>Não foi possível abrir o arquivo</translation>
+        <translation>Não foi possível abrir o ficheiro</translation>
     </message>
 </context>
 <context>
@@ -1120,7 +1120,7 @@ anti-horário.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation>Selecionar arquivo</translation>
+        <translation>Selecionar ficheiro</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
@@ -1135,7 +1135,7 @@ anti-horário.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>Não foi possível abrir o arquivo %1.</translation>
+        <translation>Não foi possível abrir o ficheiro %1.</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Este plugin permite- lhe desenhar equações matemáticas.
-Se você não quiser usar o formulário paramétrico, apenas deixe de fora &quot;Equation2&quot;.
-Você pode usar pi quando você precisa do valor de pi (i.e. (3*pi)).
-Use t ou x em sua equação como variável/parâmetro.</translation>
+        <translation>Este plugin permite-lhe desenhar equações matemáticas.
+Se não quiser usar a forma paramétrica, deixe simplesmente &quot;Equation2&quot; em branco.
+Pode usar pi quando precisar do valor de pi (p. ex. (3*pi)).
+Use t ou x na equação como variável/parâmetro.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>

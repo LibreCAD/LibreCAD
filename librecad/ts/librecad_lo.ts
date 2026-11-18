@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>ລະບຸຕໍາແໜ່ງເສັ້ນໂຄ້ງມິຕິ</translation>
+        <translation>ລະບຸຕຳແໜ່ງເສັ້ນໂຄ້ງບອກຂະໜາດ</translation>
     </message>
 </context>
 <context>
@@ -131,7 +131,7 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>ລັດສະໝີ=%1 ນ້ອຍເກີນໄປສໍາລັບຈຸດທີ່ເລືອກ
+        <translation>ລັດສະໝີ=%1 ນ້ອຍເກີນໄປສຳລັບຈຸດທີ່ເລືອກ
 ໄລຍະຫ່າງລະຫວ່າງຈຸດ=%2 ໃຫຍ່ກວ່າເສັ້ນຜ່າກາງ=%3</translation>
     </message>
     <message>
@@ -142,7 +142,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
         <source>Specify first point</source>
-        <translation>ລະບຸຈຸດທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="239"/>
@@ -171,7 +171,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
         <source>Foci cannot be coincident</source>
-        <translation>ຈຸດໂຟກັດບໍ່ສາມາດຢູ່ຕໍາແໜ່ງດຽວກັນໄດ້</translation>
+        <translation>ຈຸດໂຟກັດບໍ່ສາມາດຢູ່ຕຳແໜ່ງດຽວກັນໄດ້</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
@@ -181,7 +181,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
         <source>The point does not define a hyperbola with these foci</source>
-        <translation>ຈຸດນີ້ບໍ່ກໍານົດເສັ້ນໄຮເປີໂບລາດ້ວຍຈຸດໂຟກັດເຫຼົ່ານີ້</translation>
+        <translation>ຈຸດນີ້ບໍ່ກຳນົດເສັ້ນໄຮເປີໂບລາດ້ວຍຈຸດໂຟກັດເຫຼົ່ານີ້</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
@@ -196,7 +196,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
         <source>Specify the first focus</source>
-        <translation>ລະບຸໂຟກັດທໍາອິດ</translation>
+        <translation>ລະບຸໂຟກັດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
@@ -256,7 +256,8 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
-        <translation>ລະບຸໄລຍະຫ່າງ (ມູມ %1 ອົງສາ) ຫຼື [%2]</translation>
+        <translation>ລະບຸໄລຍະຫ່າງ (ມຸມ %1 ອົງສາ)
+ຫຼື [%2]</translation>
     </message>
 </context>
 <context>
@@ -269,7 +270,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="145"/>
         <source>Specify a tangent</source>
-        <translation>ລະບຸເສັ້ນສໍາຜັດ</translation>
+        <translation>ລະບຸເສັ້ນສຳຜັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
@@ -318,7 +319,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <source>Specify angle or [%2]</source>
-        <translation type="unfinished">ລະບຸມູມ ຫຼື [%1] {2]?}</translation>
+        <translation type="unfinished">ລະບຸມຸມ ຫຼື [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="453"/>
@@ -341,7 +342,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="268"/>
         <source>Specify the first point on parabola</source>
-        <translation>ລະບຸຈຸດທໍາອິດເທິງພາຣາໂບລາ</translation>
+        <translation>ລະບຸຈຸດທຳອິດເທິງພາຣາໂບລາ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="269"/>
@@ -445,7 +446,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="251"/>
         <source>Specify first control point</source>
-        <translation>ລະບຸຈຸດຄວບຄຸມທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດຄວບຄຸມທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="252"/>
@@ -576,22 +577,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
         <source>Bisector</source>
-        <translation>ເສັ້ນແບ່ງເຄິ່ງມູມ</translation>
+        <translation>ເສັ້ນແບ່ງເຄິ່ງມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Tangent (P,C)</source>
-        <translation>ເສັ້ນສໍາຜັດ (ຈຸດ, ວົງມົນ)</translation>
+        <translation>ເສັ້ນສຳຜັດ (ຈຸດ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="201"/>
         <source>Tangent (C,C)</source>
-        <translation>ເສັ້ນສໍາຜັດ (ວົງມົນ, ວົງມົນ)</translation>
+        <translation>ເສັ້ນສຳຜັດ (ວົງມົນ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="208"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>ສໍາຜັດ ແລະ ຕັ້ງສາກ (&amp;O)</translation>
+        <translation>ສຳຜັດ ແລະ ຕັ້ງສາກ (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="215"/>
@@ -606,12 +607,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>ຮູບຫຼາຍແຈ (ສູນກາງ, ມູມ) (&amp;y)</translation>
+        <translation>ຮູບຫຼາຍແຈ (ສູນກາງ, ມຸມ) (&amp;y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>ຮູບຫຼາຍແຈ (ມູມ, ມູມ) (&amp;n)</translation>
+        <translation>ຮູບຫຼາຍແຈ (ມຸມ, ມຸມ) (&amp;n)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
@@ -656,7 +657,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="318"/>
         <source>Angle From Line</source>
-        <translation>ມູມຈາກເສັ້ນ</translation>
+        <translation>ມຸມຈາກເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
@@ -743,12 +744,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="425"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>ສໍາຜັດ, 2 ຈຸດ (&amp;o)</translation>
+        <translation>ສຳຜັດ, 2 ຈຸດ (&amp;o)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>ສູນກາງ, ຈຸດ, ມູມ (&amp;C)</translation>
+        <translation>ສູນກາງ, ຈຸດ, ມຸມ (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
@@ -758,7 +759,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="458"/>
         <source>Arc &amp;Tangential</source>
-        <translation>ເສັ້ນໂຄ້ງສໍາຜັດ (&amp;T)</translation>
+        <translation>ເສັ້ນໂຄ້ງສຳຜັດ (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="468"/>
@@ -883,7 +884,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Angular</source>
-        <translation>ມູມ (&amp;A)</translation>
+        <translation>ມຸມ (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
@@ -928,7 +929,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;ໝຸນ</translation>
+        <translation>&amp;ໝູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
@@ -943,7 +944,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
-        <translation>ໝຸນສອງອັນ (&amp;w)</translation>
+        <translation>ໝູນສອງອັນ (&amp;w)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
@@ -1775,7 +1776,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1857,7 +1858,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>ກ່ຽວກັບມິຕິ</translation>
+        <translation>ກ່ຽວກັບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1962,7 +1963,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>ເລເຢີມິຕິ</translation>
+        <translation>ເລເຢີບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2055,7 +2056,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>ເພີ່ມເລເຢີມິຕິ..</translation>
+        <translation>ເພີ່ມເລເຢີບອກຂະໜາດ..</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2120,7 +2121,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;ເພີ່ມເລເຢີຍ່ອຍມິຕິ</translation>
+        <translation>&amp;ເພີ່ມເລເຢີຍ່ອຍບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2141,7 +2142,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>ປ່ຽນເປັນເລເຢີມິຕິ</translation>
+        <translation>ປ່ຽນເປັນເລເຢີບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -3376,7 +3377,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="622"/>
         <source>Ellipses</source>
-        <translation type="unfinished">ວົງລີ</translation>
+        <translation type="unfinished">ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
@@ -3391,7 +3392,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
-        <translation type="unfinished">ມິຕິ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="657"/>
@@ -3976,7 +3977,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="273"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="541"/>
         <source>Ellipse</source>
-        <translation type="unfinished">ວົງລີ</translation>
+        <translation type="unfinished">ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
@@ -3994,7 +3995,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation type="unfinished">ມິຕິ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -4132,7 +4133,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="785"/>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;ວົງລີ</translation>
+        <translation type="unfinished">&amp;ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
@@ -4147,7 +4148,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">&amp;ມິຕິ</translation>
+        <translation type="unfinished">&amp;ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
@@ -4625,12 +4626,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>ເຄື່ອງມືແກ້ໄຂປ້າຍບອກມິຕິ</translation>
+        <translation>ເຄື່ອງມືແກ້ໄຂປ້າຍບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>ປ້າຍບອກມິຕິ:</translation>
+        <translation>ປ້າຍບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4802,7 +4803,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>ການບອກມິຕິແບບເສັ້ນຊື່</translation>
+        <translation>ການບອກຂະໜາດແບບເສັ້ນຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -4825,7 +4826,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
@@ -4838,7 +4839,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="26"/>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="51"/>
@@ -5810,7 +5811,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1427"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] ຮູບແບບມິຕິນ້ອຍ</translation>
+        <translation>[FE50-FE6F] ຮູບແບບຂະໜາດນ້ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1432"/>
@@ -6009,7 +6010,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
         <source>Move/Rotate Options</source>
-        <translation>ຕົວເລືອກການຍ້າຍ/ໝຸນ</translation>
+        <translation>ຕົວເລືອກການຍ້າຍ/ໝູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
@@ -6176,7 +6177,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>ໄລຍະຫ່າງເສັ້ນມິຕິ:</translation>
+        <translation>ໄລຍະຫ່າງເສັ້ນບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -6231,7 +6232,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;ມິຕິ</translation>
+        <translation>&amp;ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -6312,7 +6313,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດຂີດໝາຍມິຕິ. ຖ້າຕັ້ງເປັນ 0 ຈະປິດການໃຊ້ງານຂີດໝາຍ. ລູກສອນມິຕິຈະບໍ່ຖືກແຕ້ມເມື່ອເປີດໃຊ້ຂີດໝາຍ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດຂີດໝາຍບອກຂະໜາດ. ຖ້າຕັ້ງເປັນ 0 ຈະປິດການໃຊ້ງານຂີດໝາຍ. ລູກສອນບອກຂະໜາດຈະບໍ່ຖືກແຕ້ມເມື່ອເປີດໃຊ້ຂີດໝາຍ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6327,12 +6328,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນຄ່າການບອກມິຕິທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນຄ່າການບອກຂະໜາດທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນເລຂາຄະນິດການມິຕິທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນເລຂາຄະນິດການບອກຂະໜາດທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6399,12 +6400,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>ຄວາມຍາວທີ່ຍື່ນອອກຈາກເສັ້ນມິຕິ</translation>
+        <translation>ຄວາມຍາວທີ່ຍື່ນອອກຈາກເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດລູກສອນມິຕິ. ຈະບໍ່ມີຜົນເມື່ອຂະໜາດຂີດໝາຍ (tick size) ມີຄ່າອື່ນທີ່ບໍ່ແມ່ນ 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດລູກສອນບອກຂະໜາດ. ຈະບໍ່ມີຜົນເມື່ອຂະໜາດຂີດໝາຍ (tick size) ມີຄ່າອື່ນທີ່ບໍ່ແມ່ນ 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6415,7 +6416,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>ເສັ້ນມິຕິ, ລູກສອນ ແລະ ຂີດໝາຍ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດ, ລູກສອນ ແລະ ຂີດໝາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6445,7 +6446,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ການຈັດວາງຂໍ້ຄວາມທຽບກັບເສັ້ນມິຕິ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ການຈັດວາງຂໍ້ຄວາມທຽບກັບເສັ້ນບອກຂະໜາດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
@@ -6465,7 +6466,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>ເສັ້ນຊ່ວຍມິຕິ (Extension lines)</translation>
+        <translation>ເສັ້ນຊ່ວຍບອກຂະໜາດ (Extension lines)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6649,7 +6650,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>ຮູບແບບການແຮັດເງົາ (Hatch):</translation>
+        <translation>ຮູບແບບລວດລາຍ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -7072,12 +7073,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>ຮູບວົງມົນຮີ / ເສັ້ນໂຄ້ງວົງມົນຮີ</translation>
+        <translation>ວົງຮີ / ເສັ້ນໂຄ້ງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>ປະມານຄ່າຮູບວົງມົນຮີ ແລະ ເສັ້ນໂຄ້ງວົງມົນຮີດ້ວຍເສັ້ນໂຄ້ງເບຊິເອ (cubic béziers)</translation>
+        <translation>ປະມານຄ່າວົງຮີ ແລະ ເສັ້ນໂຄ້ງວົງຮີດ້ວຍເສັ້ນໂຄ້ງເບຊິເອ (cubic béziers)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -7143,9 +7144,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM ເວີຊັນເດືອນມີນາ 2015 ບໍ່ສາມາດສະແດງຮູບວົງມົນຮີ ແລະ ເສັ້ນໂຄ້ງວົງມົນຮີໄດ້ຢ່າງຖືກຕ້ອງ,
-ເມື່ອພວກມັນຖືກສ້າງຂຶ້ນໂດຍໃຊ້ແທັກ &lt;ellipse&gt; ພ້ອມກັບການໝຸນໃນ
-ແອດທຣິບິວ &lt;transform&gt; ຫຼື ເປັນ &lt;path&gt; ທີ່ໃຊ້ສ່ວນຂອງເສັ້ນໂຄ້ງວົງມົນຮີ.</translation>
+        <translation>MakerCAM ເວີຊັນເດືອນມີນາ 2015 ບໍ່ສາມາດສະແດງວົງຮີ ແລະ ເສັ້ນໂຄ້ງວົງຮີໄດ້ຢ່າງຖືກຕ້ອງ,
+ເມື່ອພວກມັນຖືກສ້າງຂຶ້ນໂດຍໃຊ້ແທັກ &lt;ellipse&gt; ພ້ອມກັບການໝູນໃນ
+ແອດທຣິບິວ &lt;transform&gt; ຫຼື ເປັນ &lt;path&gt; ທີ່ໃຊ້ສ່ວນຂອງເສັ້ນໂຄ້ງວົງຮີ.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
@@ -7237,7 +7238,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="26"/>
         <source>Rotation Options</source>
-        <translation>ຕົວເລືອກການໝຸນ</translation>
+        <translation>ຕົວເລືອກການໝູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="32"/>
@@ -7285,7 +7286,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
         <source>Rotate Two Options</source>
-        <translation>ຕົວເລືອກການໝຸນສອງຈຸດ</translation>
+        <translation>ຕົວເລືອກການໝູນສອງຈຸດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
@@ -8074,7 +8075,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1418"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] ຮູບແບບມິຕິນ້ອຍ</translation>
+        <translation>[FE50-FE6F] ຮູບແບບຂະໜາດນ້ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1423"/>
@@ -8169,7 +8170,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="318"/>
         <source>Oblique:</source>
-        <translation>ເນີງ:</translation>
+        <translation>ມຸມອຽງ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="328"/>
@@ -8877,7 +8878,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation type="unfinished">ເກາະຈັບເທິງຕາໜ່າງ</translation>
+        <translation type="unfinished">ເກາະຈັບເທິງຕາຕະລາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
@@ -9248,7 +9249,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>ເລເຢີມິຕິສາມາດເພີ່ມໄດ້ສະເພາະກັບເລເຢີປົກກະຕິທີ່ກຳລັງໃຊ້ງານຢູ່ເທົ່ານັ້ນ.
+        <translation>ເລເຢີບອກຂະໜາດສາມາດເພີ່ມໄດ້ສະເພາະກັບເລເຢີປົກກະຕິທີ່ກຳລັງໃຊ້ງານຢູ່ເທົ່ານັ້ນ.
 </translation>
     </message>
     <message>
@@ -12337,7 +12338,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>ຕົວຕອງ %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13099,7 +13100,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation type="unfinished">ມິຕິ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -13180,7 +13181,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="498"/>
@@ -13299,7 +13300,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished">ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທໍາອິດ</translation>
+        <translation type="unfinished">ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13350,12 +13351,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນໂຄ້ງບອກມິຕິ</translation>
+        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນໂຄ້ງບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>ປ້ອນຂໍ້ຄວາມບອກມິຕິ:</translation>
+        <translation>ປ້ອນຂໍ້ຄວາມບອກຂະໜາດ:</translation>
     </message>
 </context>
 <context>
@@ -13425,7 +13426,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished">ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທໍາອິດ</translation>
+        <translation type="unfinished">ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13435,7 +13436,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນຂອງເສັ້ນຊ່ວຍມິຕິທີສອງ</translation>
+        <translation>ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13451,12 +13452,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished">ປ້ອນມູມເສັ້ນມິຕິ:</translation>
+        <translation type="unfinished">ປ້ອນມຸມເສັ້ນບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນມິຕິ</translation>
+        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນບອກຂະໜາດ</translation>
     </message>
 </context>
 <context>
@@ -13485,7 +13486,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished">ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ ຫຼື ປ້ອນມູມ:</translation>
+        <translation type="unfinished">ລະບຸຕຳແໜ່ງເສັ້ນບອກຂະໜາດ ຫຼື ປ້ອນມຸມ:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
@@ -13953,7 +13954,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="284"/>
         <source>Specify the first point on ellipse</source>
-        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="285"/>
@@ -13963,7 +13964,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="289"/>
         <source>Specify the second point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສອງເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສອງເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="290"/>
@@ -13975,17 +13976,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the third point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສາມເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສາມເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="299"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສີ່ເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສີ່ເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="156"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>ບໍ່ສາມາດກຳນົດວົງລີໄດ້</translation>
+        <translation>ບໍ່ສາມາດກຳນົດວົງຮີໄດ້</translation>
     </message>
 </context>
 <context>
@@ -14000,7 +14001,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="350"/>
         <source>Specify ellipse center</source>
-        <translation>ກຳນົດສູນກາງວົງລີ</translation>
+        <translation>ກຳນົດສູນກາງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="351"/>
@@ -14041,7 +14042,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="282"/>
         <source>Specify the center of ellipse</source>
-        <translation>ກຳນົດສູນກາງວົງລີ</translation>
+        <translation>ກຳນົດສູນກາງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
@@ -14052,12 +14053,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="287"/>
         <source>Specify the first point on ellipse</source>
-        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="291"/>
         <source>Specify the second point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສອງເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສອງເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
@@ -14068,7 +14069,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
         <source>Specify the third point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສາມເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສາມເທິງວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -14081,7 +14082,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="238"/>
         <source>Specify first focus of ellipse</source>
-        <translation>ກຳນົດຈຸດໂຟກັດທຳອິດຂອງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດໂຟກັດທຳອິດຂອງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="239"/>
@@ -14091,7 +14092,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="243"/>
         <source>Specify second focus of ellipse</source>
-        <translation>ກຳນົດຈຸດໂຟກັດທີສອງຂອງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດໂຟກັດທີສອງຂອງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
@@ -14102,12 +14103,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>ກຳນົດຈຸດເທິງວົງລີ ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
+        <translation>ກຳນົດຈຸດເທິງວົງຮີ ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>ກຳນົດຈຸດເທິງວົງລີ, ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
+        <translation>ກຳນົດຈຸດເທິງວົງຮີ, ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
@@ -14152,7 +14153,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>ບໍ່ສາມາດກຳນົດວົງລີໄດ້</translation>
+        <translation>ບໍ່ສາມາດກຳນົດວົງຮີໄດ້</translation>
     </message>
 </context>
 <context>
@@ -14415,7 +14416,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງລີ</translation>
+        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -14625,7 +14626,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງລີ</translation>
+        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -14633,7 +14634,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>ເລືອກ ວົງມົນ/ວົງລີ/ພາຣາໂບລາ ທຳອິດ</translation>
+        <translation>ເລືອກ ວົງມົນ/ວົງຮີ/ພາຣາໂບລາ ທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
@@ -14643,7 +14644,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>ເລືອກ ວົງມົນ/ວົງລີ/ພາຣາໂບລາ ທີສອງ</translation>
+        <translation>ເລືອກ ວົງມົນ/ວົງຮີ/ພາຣາໂບລາ ທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
@@ -15179,7 +15180,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>ອົງປະກອບຕ້ອງເປັນ ເສັ້ນຊື່, ເສັ້ນໂຄ້ງ, ວົງມົນ, ວົງລີ ຫຼື ເສັ້ນສະປລາຍ.</translation>
+        <translation>ອົງປະກອບຕ້ອງເປັນ ເສັ້ນຊື່, ເສັ້ນໂຄ້ງ, ວົງມົນ, ວົງຮີ ຫຼື ເສັ້ນໂຄ້ງສະປຼາຍ.</translation>
     </message>
 </context>
 <context>
@@ -15449,7 +15450,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>ກຳນົດອົງປະກອບທໍາອິດ ຫຼື ປ້ອນລັດສະໝີ &lt;%1&gt;</translation>
+        <translation>ກຳນົດອົງປະກອບທຳອິດ ຫຼື ປ້ອນລັດສະໝີ &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -15482,7 +15483,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
-        <translation>ກຳນົດມຸມທໍາອິດ</translation>
+        <translation>ກຳນົດມຸມທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="176"/>
@@ -15517,7 +15518,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>ເລືອກອົງປະກອບທໍາອິດທີ່ຈະຕັດ</translation>
+        <translation>ເລືອກອົງປະກອບທຳອິດທີ່ຈະຕັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15595,7 +15596,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>ເລືອກອົງປະກອບເພື່ອຈັດລໍາດັບ</translation>
+        <translation>ເລືອກອົງປະກອບເພື່ອຈັດລຳດັບ</translation>
     </message>
 </context>
 <context>
@@ -15773,7 +15774,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
         <source>Specify first node</source>
-        <translation>ກຳນົດໂນດທໍາອິດ</translation>
+        <translation>ກຳນົດໂນດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
@@ -15884,7 +15885,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
         <source>Specify first segment</source>
-        <translation>ກຳນົດສ່ວນທໍາອິດ</translation>
+        <translation>ກຳນົດສ່ວນທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
@@ -15943,7 +15944,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>ອັອບເຊັດການພິມອອກບໍ່ສົນໃຈສູນສຳພັນ. ກໍາລັງຂ້າມ &apos;@&apos;</translation>
+        <translation>ອັອບເຊັດການພິມອອກບໍ່ສົນໃຈສູນສຳພັນ. ກຳລັງຂ້າມ &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -16083,7 +16084,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>ເລືອກຈຸດທໍາອິດຂອງເສັ້ນຕັດ</translation>
+        <translation>ເລືອກຈຸດທຳອິດຂອງເສັ້ນຕັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
@@ -16152,7 +16153,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>ເລືອກອົງປະກອບທໍາອິດ</translation>
+        <translation>ເລືອກອົງປະກອບທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
@@ -16171,12 +16172,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>ສ້າງອົງປະກອບມິຕິໃໝ່ແລ້ວ %1 ລາຍການ</translation>
+        <translation>ສ້າງອົງປະກອບການບອກຂະໜາດໃໝ່ແລ້ວ %1 ລາຍການ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>ບໍ່ພົບອົງປະກອບມິຕິ</translation>
+        <translation>ບໍ່ພົບອົງປະກອບການບອກຂະໜາດ</translation>
     </message>
 </context>
 <context>
@@ -16203,7 +16204,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Specify first edge</source>
-        <translation>ກຳນົດຂອບທໍາອິດ</translation>
+        <translation>ກຳນົດຂອບທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
@@ -16354,7 +16355,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>ຕົວເລືອກມິຕິແນວເສັ້ນ</translation>
+        <translation>ຕົວເລືອກການບອກຂະໜາດແນວເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16367,7 +16368,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>ຕົວເລືອກມິຕິ</translation>
+        <translation>ຕົວເລືອກການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
@@ -16984,7 +16985,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>ຄໍານວນຈໍານວນໜ້າທີ່ຈໍາເປັນເພື່ອບັນຈຸຮູບແຕ້ມ</translation>
+        <translation>ຄຳນວນຈຳນວນໜ້າທີ່ຈຳເປັນເພື່ອບັນຈຸຮູບແຕ້ມ</translation>
     </message>
 </context>
 <context>

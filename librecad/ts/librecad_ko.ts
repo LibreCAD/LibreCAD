@@ -433,7 +433,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -491,7 +491,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>확대/축소 &amp;팬</translation>
+        <translation>줌 초점이동(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -622,7 +622,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
-        <translation>중심, &amp;반경</translation>
+        <translation>중심, 반지름(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
@@ -632,7 +632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>2 Points, Radius</source>
-        <translation>2점, 반경</translation>
+        <translation>2점, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
@@ -654,7 +654,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>접선 2원, 반경</translation>
+        <translation>접선 2원, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
@@ -1609,7 +1609,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
         <source>Radius Shift:</source>
-        <translation>반경 이동:</translation>
+        <translation>반지름 이동:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
@@ -2576,7 +2576,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
         <source>Line Type Name</source>
-        <translation>선 유형 이름</translation>
+        <translation>선종류 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -2586,7 +2586,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
         <source>Line Type Icon</source>
-        <translation>선 유형 아이콘</translation>
+        <translation>선종류 아이콘</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -2596,12 +2596,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>선 두께 아이콘</translation>
+        <translation>선가중치 아이콘</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>선 두께 이름</translation>
+        <translation>선가중치 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2898,7 +2898,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
@@ -3016,7 +3016,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
@@ -3193,7 +3193,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
@@ -3314,7 +3314,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
         <source>Radius Inner</source>
-        <translation>내부 반경</translation>
+        <translation>내부 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
@@ -3324,7 +3324,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
         <source>Radius Outer</source>
-        <translation>외부 반경</translation>
+        <translation>외부 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="86"/>
@@ -4213,7 +4213,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="919"/>
         <source>On&amp;line</source>
-        <translation>온&amp;라인</translation>
+        <translation>온라인(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="941"/>
@@ -4671,7 +4671,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (직경)</translation>
+        <translation>⌀ (지름)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
@@ -4702,7 +4702,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4761,8 +4761,8 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>선택한 삽입의 모든 하위 엔터티에도 속성을 적용합니다.
-이렇게 하면 블록 자체의 모든 엔터티가 재귀적으로 수정됩니다.</translation>
+        <translation>선택한 삽입의 모든 하위 엔티티에도 속성을 적용합니다.
+이렇게 하면 블록 자체의 모든 엔티티가 재귀적으로 수정됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -5124,12 +5124,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="93"/>
         <source>End point (x):</source>
-        <translation>끝 점(x):</translation>
+        <translation>끝점(x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
         <source>End point (y):</source>
-        <translation>끝 점(y):</translation>
+        <translation>끝점(y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="133"/>
@@ -5892,7 +5892,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
         <source>Diameter (⌀)</source>
-        <translation>직경 (⌀)</translation>
+        <translation>지름 (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
@@ -5930,7 +5930,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>미러 옵션</translation>
+        <translation>대칭 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6243,12 +6243,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
         <source>Grid Settings</source>
-        <translation>격자 설정</translation>
+        <translation>그리드 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
         <source>Show Grid</source>
-        <translation>격자 표시</translation>
+        <translation>그리드 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
@@ -6273,7 +6273,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>격자(&amp;G)</translation>
+        <translation>그리드(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
@@ -6288,7 +6288,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>등각 투영 격자와 함께 왼쪽 십자선</translation>
+        <translation>등각 투영 그리드와 함께 왼쪽 십자선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
@@ -6300,7 +6300,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>등각 투영 격자와 함께 위쪽 십자선</translation>
+        <translation>등각 투영 그리드와 함께 위쪽 십자선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
@@ -6312,7 +6312,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>등각 투영 격자와 함께 오른쪽 십자선</translation>
+        <translation>등각 투영 그리드와 함께 오른쪽 십자선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -6324,22 +6324,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
         <source>Use orthogonal grid</source>
-        <translation>직교 격자 사용</translation>
+        <translation>직교 그리드 사용</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
         <source>Orthogonal Grid</source>
-        <translation>직교 격자</translation>
+        <translation>직교 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>등각 투영 격자 사용</translation>
+        <translation>등각 투영 그리드 사용</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>등각 투영 격자</translation>
+        <translation>등각 투영 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -6502,7 +6502,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>연장선</translation>
+        <translation>치수보조선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6558,7 +6558,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>고정된 연장선 길이</translation>
+        <translation>고정된 치수보조선 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6656,7 +6656,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>해칭 패턴:</translation>
+        <translation>해치 패턴:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6731,12 +6731,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>메타(&amp;M) 모눈 색상:</translation>
+        <translation>메타 그리드 색상(&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>자동(&amp;A) 축척 모눈</translation>
+        <translation>그리드 자동 축척(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6826,7 +6826,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>선택한 개체의 레이어를 레이어 활성화 시 수정합니다.</translation>
+        <translation>선택한 엔티티의 레이어를 레이어 활성화 시 수정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -6921,7 +6921,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;활성화하면 레이어를 활성화할 때 선택한 모든 개체가 새 레이어로 수정됩니다. 여러 개체의 레이어를 변경하려면 먼저 필요한 개체를 선택한 다음 레이어 위젯에서 레이어를 활성화합니다. 이렇게 하면 선택한 모든 개체가 새 레이어에 속하도록 수정됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;활성화하면 레이어를 활성화할 때 선택한 모든 엔티티가 새 레이어로 수정됩니다. 여러 엔티티의 레이어를 변경하려면 먼저 필요한 엔티티를 선택한 다음 레이어 위젯에서 레이어를 활성화합니다. 이렇게 하면 선택한 모든 엔티티가 새 레이어에 속하도록 수정됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -6936,7 +6936,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>미리보기 개체 수:</translation>
+        <translation>미리보기 엔티티 수(&amp;U):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -6946,7 +6946,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>자동 패닝</translation>
+        <translation>자동 초점이동</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -6961,7 +6961,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>커서 아래의 개체를 시각적으로 표시합니다.</translation>
+        <translation>커서 아래의 엔티티를 시각적으로 표시합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -7031,7 +7031,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>파일을 열 때 그림을 자동으로 확대합니다.</translation>
+        <translation>파일을 열 때 도면을 자동으로 확대합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -7069,12 +7069,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Blocks</source>
-        <translation>블럭</translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>블록을 안전한 inline SVG content로 변환</translation>
+        <translation>블록을 안전한 인라인 SVG 내용으로 변환</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
@@ -7213,7 +7213,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>폴리선</translation>
+        <translation>폴리라인</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -8210,7 +8210,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
         <source>Diameter (⌀)</source>
-        <translation>직경 (⌀)</translation>
+        <translation>지름 (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
@@ -8276,7 +8276,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="130"/>
         <source>Drawing Exchange %1</source>
-        <translation>그림 교환 %1</translation>
+        <translation>도면 교환 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="138"/>
@@ -8796,12 +8796,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>선 두께</translation>
+        <translation>선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
         <source>Line type</source>
-        <translation>선 종류</translation>
+        <translation>선종류</translation>
     </message>
 </context>
 <context>
@@ -8848,7 +8848,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 요소의 개수&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 엔티티의 개수&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -8861,7 +8861,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 요소의 전체 길이&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 엔티티의 전체 길이&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8869,7 +8869,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8879,7 +8879,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>요소의 등거리점에 스냅</translation>
+        <translation>엔티티의 등거리점에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
@@ -8894,7 +8894,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>요소위의 최근접점에 스냅</translation>
+        <translation>엔티티 위의 가장 가까운 점에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
@@ -8939,7 +8939,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>모눈에 스냅</translation>
+        <translation>그리드에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
@@ -8949,7 +8949,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>요소에 스냅</translation>
+        <translation>엔티티에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
@@ -9009,7 +9009,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>상대 0점 위치는 %1입니다.</translation>
+        <translation>상대 원점 위치는 %1입니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9038,7 +9038,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
         <source>Line type:</source>
-        <translation>선 종류:</translation>
+        <translation>선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
@@ -9095,7 +9095,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>블록 &quot;%1&quot;와 그것의 모든 요소들을 제거할 것이다.</translation>
+        <translation>블록 &quot;%1&quot; 및 그 안의 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
@@ -9113,7 +9113,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>레이어 &quot;%1&quot; 및 해당 레이어의 모든 개체가 제거됩니다.
+        <translation>레이어 &quot;%1&quot; 및 해당 레이어의 모든 엔티티가 제거됩니다.
 이 작업은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
@@ -9134,7 +9134,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>나열된 레이어와 그 위에 있는 모든 개체가 제거됩니다.</translation>
+        <translation>나열된 레이어와 그 위에 있는 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9163,7 +9163,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>나열된 블록과 그 안에 있는 모든 개체가 제거됩니다.</translation>
+        <translation>나열된 블록과 그 안에 있는 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9210,7 +9210,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>엔터티가 없는 레이어가 없어 제거할 것이 없습니다.</translation>
+        <translation>엔티티가 없는 레이어가 없어 제거할 것이 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
@@ -9270,7 +9270,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>펜이 팔레트에서 제거되지만, 드로잉 개체에는 영향을 미치지 않습니다.</translation>
+        <translation>펜이 팔레트에서 제거되지만, 도면 엔티티에는 영향을 미치지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9291,7 +9291,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>팔레트에서 펜이 제거됩니다. 드로잉 개체에는 영향을 주지 않습니다.</translation>
+        <translation>팔레트에서 펜이 제거됩니다. 도면 엔티티에는 영향을 주지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9301,25 +9301,25 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>개체 선택</translation>
+        <translation>엔티티 선택 </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>현재 보이는 레이어에 해당 펜과 일치하는 개체가 없습니다.</translation>
+        <translation>현재 보이는 레이어에 해당 펜과 일치하는 엔티티가 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>해당 개체가 동결된 레이어에 있습니다.
+        <translation>해당 엔티티가 동결된 레이어에 있습니다.
 </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>해당 개체가 잠긴 레이어에 있습니다.
+        <translation>해당 엔티티가 잠긴 레이어에 있습니다.
 </translation>
     </message>
     <message>
@@ -9330,19 +9330,19 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>개체별로 펜 설정</translation>
+        <translation>엔티티별로 펜 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>펜 설정을 선택할 개체를 하나만 선택하십시오.</translation>
+        <translation>펜 설정을 선택할 엔티티를 하나만 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>엔터티가 없는 레이어가 발견되었지만 필터링되어 보이지 않습니다.
+        <translation>엔티티가 없는 레이어가 발견되었지만 필터링되어 보이지 않습니다.
 
 필터 마스크를 지우고 다시 시도하십시오.</translation>
     </message>
@@ -9725,7 +9725,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>dwg 파일에서 오프셋 읽는 중 에러</translation>
+        <translation>DWG 파일의 오프셋을 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
@@ -9735,7 +9735,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg 파일에서 요소 읽는 중 에러</translation>
+        <translation>DWG 파일의 엔티티를 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
@@ -9750,7 +9750,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>(%2, %3) 과 (%4, %5) 사이에서 gap=%1 에 의해 해칭을 실패했다.</translation>
+        <translation>(%2, %3)과 (%4, %5) 사이의 간격(gap=%1) 때문에 해치에 실패했습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -9760,12 +9760,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
         <source>error reading blocks in dwg file</source>
-        <translation>dwg 파일에서 블록 읽는 중 에러</translation>
+        <translation>DWG 파일의 블록을 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
         <source>error reading objects in dwg file</source>
-        <translation>dwg 파일에서 오브젝트 읽는 중 에러</translation>
+        <translation>DWG 파일의 객체를 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="704"/>
@@ -9961,7 +9961,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>해칭</translation>
+        <translation>해치</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -11020,7 +11020,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -12197,7 +12197,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>어쨌든 일부 개체가 식별되었습니다.</translation>
+        <translation>어쨌든 일부 엔티티가 식별되었습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12275,7 +12275,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWG 엔터티를 읽는 중 오류가 발생했습니다.</translation>
+        <translation>DXF/DWG 엔티티를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
@@ -12334,12 +12334,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>자동으로 그림을 페이지에 맞추고 가운데 정렬합니다.</translation>
+        <translation>자동으로 도면을 페이지에 맞추고 가운데 정렬합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>자동으로 그림을 페이지 가운데 정렬합니다.</translation>
+        <translation>자동으로 도면을 페이지 가운데 정렬합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
@@ -12426,7 +12426,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>사용자 지정 색상%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -13012,12 +13012,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch: 패턴을 찾을 수 없습니다. 응용 프로그램 설정에서 패턴 경로를 설정하십시오.</translation>
+        <translation>해치: 패턴을 찾을 수 없습니다. 응용 프로그램 설정에서 패턴 경로를 설정하십시오.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch: 패턴 로드 실패: %1</translation>
+        <translation>해치: 패턴 로드 실패: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13294,7 +13294,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>첫 번째 연장선 원점 지정</translation>
+        <translation>첫 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13304,7 +13304,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 연장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13320,7 +13320,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13350,7 +13350,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13368,7 +13368,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>호나 원 요소를 선택</translation>
+        <translation>호 또는 원 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13384,7 +13384,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13420,7 +13420,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>첫 번째 연장선 원점 지정</translation>
+        <translation>첫 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13430,7 +13430,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 연장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13446,7 +13446,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
@@ -13485,7 +13485,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13517,7 +13517,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="339"/>
         <source>Specify radius</source>
-        <translation>반경 지정</translation>
+        <translation>반지름 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="339"/>
@@ -13732,7 +13732,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="227"/>
         <source>Specify circle radius</source>
-        <translation>원 반경 지정</translation>
+        <translation>원 반지름 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
@@ -13742,17 +13742,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>반경=%1이(가) 유효하지 않습니다 (표현식)</translation>
+        <translation>반지름=%1이(가) 유효하지 않습니다 (표현식)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>반경=%1이(가) 유효하지 않습니다 (음수)</translation>
+        <translation>반지름=%1이(가) 유효하지 않습니다 (음수)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>반경=%1이(가) 유효하지 않습니다 (0)</translation>
+        <translation>반지름=%1이(가) 유효하지 않습니다 (0)</translation>
     </message>
 </context>
 <context>
@@ -13850,27 +13850,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="154"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>반경에 대한 유효하지 않은 표현식 &apos;%1&apos;</translation>
+        <translation>반지름에 대한 유효하지 않은 표현식 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>유효하지 않은 음수 반경 &apos;%1&apos;</translation>
+        <translation>유효하지 않은 음수 반지름 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="159"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>유효하지 않은 0 반경 &apos;%1&apos;</translation>
+        <translation>유효하지 않은 0 반지름 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="167"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>반경 &apos;%1&apos;에 대해 접선 원을 만들 수 없습니다</translation>
+        <translation>반지름 &apos;%1&apos;에 대해 접선 원을 만들 수 없습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="181"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>반경 &apos;%1&apos;에 대해 공통 접선 원이 없습니다</translation>
+        <translation>반지름 &apos;%1&apos;에 대해 공통 접선 원이 없습니다</translation>
     </message>
 </context>
 <context>
@@ -14155,42 +14155,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>유효하지 않은 해칭 영역입니다. 선택한 엔티티가 하나 이상의 닫힌 윤곽선을 형성하는지 확인하십시오.</translation>
+        <translation>유효하지 않은 해치 영역입니다. 선택한 엔티티가 하나 이상의 닫힌 윤곽선을 형성하는지 확인하십시오.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>해칭이 성공적으로 생성되었습니다.</translation>
+        <translation>해치가 성공적으로 생성되었습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>해칭 오류: 유효하지 않은 윤곽선 발견!</translation>
+        <translation>해치 오류: 유효하지 않은 윤곽선 발견!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>해칭 오류: 패턴을 찾을 수 없습니다!</translation>
+        <translation>해치 오류: 패턴을 찾을 수 없습니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>해칭 오류: 윤곽선 또는 패턴이 너무 작습니다!</translation>
+        <translation>해치 오류: 윤곽선 또는 패턴이 너무 작습니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>해칭 오류: 윤곽선이 너무 큽니다!</translation>
+        <translation>해치 오류: 윤곽선이 너무 큽니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>해칭 오류: 정의되지 않은 오류!</translation>
+        <translation>해치 오류: 정의되지 않은 오류!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>총 해칭 영역 = %1</translation>
+        <translation>총 해치 영역 = %1</translation>
     </message>
 </context>
 <context>
@@ -14351,7 +14351,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>섹터 라인 수가 범위 밖입니다: </translation>
+        <translation>섹터 선 수가 범위 밖입니다: </translation>
     </message>
 </context>
 <context>
@@ -15271,7 +15271,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>미러선 첫 번째 점 지정</translation>
+        <translation>대칭선의 첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15281,7 +15281,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>미러선 두 번째 점 지정</translation>
+        <translation>대칭선의 두 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -15434,7 +15434,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
         <source>Enter radius:</source>
-        <translation>반경 입력:</translation>
+        <translation>반지름 입력:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="428"/>
@@ -15444,7 +15444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>첫 번째 엔티티 지정 또는 반경 &lt;%1&gt; 입력</translation>
+        <translation>첫 번째 엔티티 지정 또는 반지름 입력 &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -15464,7 +15464,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>스케일 중심 지정</translation>
+        <translation>축척 중심 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
@@ -16002,12 +16002,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>스케일 위해 선택</translation>
+        <translation>축척할 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>미러 위해 선택</translation>
+        <translation>대칭할 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
@@ -16185,7 +16185,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>클릭하고 드래그하여 패닝</translation>
+        <translation>클릭하고 끌어서 초점이동</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16196,7 +16196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>확대 팬</translation>
+        <translation>줌 초점이동</translation>
     </message>
 </context>
 <context>
@@ -16266,7 +16266,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>접선 호의 반경</translation>
+        <translation>접선 호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
@@ -16277,7 +16277,7 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>반경</translation>
+        <translation>반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
@@ -16291,17 +16291,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>베벨 옵션</translation>
+        <translation>모따기 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>두 엔티티를 베벨까지 트림하려면 체크</translation>
+        <translation>두 엔티티를 모따기에 맞춰 트림하려면 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>트림</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16324,7 +16324,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
 </context>
 <context>
@@ -16337,17 +16337,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;그릴 접선 원의 반경&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;그릴 접선 원의 반지름&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>접선 원의 반경</translation>
+        <translation>접선 원의 반지름</translation>
     </message>
 </context>
 <context>
@@ -16437,7 +16437,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
         <source>Scale Factor</source>
-        <translation>스케일 계수</translation>
+        <translation>축척 비율</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -16475,7 +16475,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
         <source>Scale Factor</source>
-        <translation>스케일 계수</translation>
+        <translation>축척 비율</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
@@ -16533,7 +16533,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
         <source>Scale Factor</source>
-        <translation>스케일 계수</translation>
+        <translation>축척 비율</translation>
     </message>
 </context>
 <context>
@@ -16912,7 +16912,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>접선 반경</translation>
+        <translation>접선 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -16922,7 +16922,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
@@ -16950,7 +16950,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 스케일이 현재 값으로 잠겨 있습니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 축척이 현재 값으로 잠겨 있습니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
@@ -16975,7 +16975,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>인쇄 스케일을 선 폭에 적용</translation>
+        <translation>인쇄 축척을 선가중치에 적용</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -16993,22 +16993,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>둥글게 옵션</translation>
+        <translation>모깎기 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>두 모서리를 둥글게까지 트림하려면 체크</translation>
+        <translation>두 모서리를 모깎기에 맞춰 트림하려면 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>트림</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
 </context>
 <context>
